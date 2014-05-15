@@ -1,0 +1,109 @@
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+* ED4
+* CE: .MSNOBOL4;
+*
+* FROM GRISWOLD - USED FOR SIMPLE STREAM EDITING. EDIT HISTORY IS
+* SAVED IN FILE .ED4 WHICH CAN BE USED TO GENERATE A SNOBOL4
+* PROGRAM IF NEEDED. P242
+*
+-INCLUDE 'HOST.INC'
+-INCLUDE 'READLINE.INC'
+         TERMINAL = 'ED4 (MON FEB  3 20:09:48 EST 2014)'
+         RLAPPNAME('ED4')
+         READ_HISTORY('.ED4')
+         STIFLE_HISTORY(200)
+         FILE1    = HOST(HOST_ARGN,HOST(HOST_FIRSTARG))         :F(ERRF)
+         FILE2    = FILE1 '.tmp'
+         HOST(HOST_SYSCMD, 'cp ' FILE1 ' ' FILE1 '.bak')
+TOP      HOST(HOST_SYSCMD, 'cp ' FILE1 ' ' FILE2)
+         INPUT('IFILE',10,,FILE2)                               :F(ERRI)
+         OUTPUT('OFILE',11,,FILE1)
+         &TRIM    = 1
+         LD       = '$'
+         CTYPE    = POS(0) *LD LEN(1) . COM REM . TEMPLATE
+         SRC      = ' CURRENT '
+         DGO      = ' :F(D1)S(EDIT)'
+         FGO      = ' :F(F1)S(EDIT)'
+         RGO      = ' :F(NOMAT)S(R1)'
+         SLD      = '(ARB '
+         SGO      = ') . LEFT REM . CURRENT :F(NOMAT)S(S1)'
+         LNO      = 1
+         CURRENT  = IFILE                                        :F(EOF)
+EDIT     LINE     = READLINE('ED4: ')                              :F(E)
+         ADD_HISTORY(LINE)
+         LINE CTYPE                                           :F(INSERT)
+         COM      = REPLACE(COM,&LCASE,&UCASE)
+         'CELDFRHXQTGPKJS' COM                                  :S($COM)
+S        EXEC     = CODE(E = (SRC SLD TEMPLATE SGO))     :F(CERR)S<EXEC>
+S1       OFILE    = LEFT                                         :(EDIT)
+J        L        = IFILE                                        :F(EOF)
+         LNO      = LNO + 1
+         CURRENT  = CURRENT L                                    :(EDIT)
+Q        TEMPLATE = REVERSE(TRIM(REVERSE(TEMPLATE)))
+         E = 'LEN(1)'
+         TEMPLATE LEN(1) . LD                            :F(CERR)S(EDIT)
+P        SKIP     =
+         ECHO     = 1
+         N = IDENT(TEMPLATE) 999999999                       :S(G3)F(G1)
+K        SKIP     = 1
+         ECHO     =                                                :(G1)
+G        ECHO     =
+         SKIP     =
+G1       N        = +REVERSE(TRIM(REVERSE(E = TEMPLATE)))       :F(CERR)
+G3       LT(N,LNO)                                              :S(CERR)
+G2       OFILE    = IDENT(SKIP) CURRENT
+         LNO      = LNO + 1
+         CURRENT  = IFILE                                        :F(EOF)
+         OUTPUT   = DIFFER(ECHO) LPAD(LNO,6) ': ' CURRENT
+         EQ(N,LNO)                                         :S(EDIT)F(G2)
+E        OFILE    = CURRENT
+         CURRENT  =
+E1       LNO      = LNO + 1
+         OFILE    = IFILE                                   :S(E1)F(EOF)
+INSERT   OFILE    = LINE                                         :(EDIT)
+C        OUTPUT   = LPAD(LNO,6) ': ' CURRENT                     :(EDIT)
+L        OUTPUT   = DUPL(' ', 6) ': ' OFILE                      :(EDIT)
+D        EXEC     = CODE(E = (SRC TEMPLATE DGO))         :F(CERR)S<EXEC>
+D1       LNO      = LNO + 1
+         CURRENT  = IFILE                                 :S<EXEC>F(EOF)
+F        EXEC     = CODE(E = (SRC TEMPLATE FGO))         :F(CERR)S<EXEC>
+F1       OFILE    = CURRENT
+         LNO      = LNO + 1
+         CURRENT  = IFILE                                 :S<EXEC>F(EOF)
+R        EXEC     = CODE(E = (SRC TEMPLATE RGO))         :F(CERR)S<EXEC>
+R1       OUTPUT   = LPAD(LNO, 6) ': ' CURRENT                    :(EDIT)
+H        TERMINAL = '$C PRINT THE CURRENT LINE'
+         TERMINAL = '$D DELETE UP TO A LINE WITH PATTERN'
+         TERMINAL = '$E COPY TO THE END OF THE INPUT FILE'
+         TERMINAL = '$F FIND A LINE WITH A SPECIFIED PATTERN'
+         TERMINAL = '$G COPY TO LINE'
+         TERMINAL = '$H HELP'
+         TERMINAL = '$J JOIN'
+         TERMINAL = '$K SKIP TO LINE'
+         TERMINAL = '$L PRINT THE LAST LINE OUTPUT'
+         TERMINAL = '$P COPY/PRINT TO LINE (OR ALL LINES)'
+         TERMINAL = '$Q CHANGE COMMAND CHARACTER'
+         TERMINAL = '$R REPLACE THE STRING MATCHING PATTERN'
+         TERMINAL = '$S SPLIT AFTER PATTERN'
+         TERMINAL = '$T TOP'
+         TERMINAL = '$X EXIT'                                    :(EDIT)
+T        OFILE    = CURRENT
+         CURRENT  =
+T1       OFILE    = IFILE                                         :S(T1)
+         ENDFILE(10)
+         ENDFILE(11)
+         DETACH(.IFILE)
+         DETACH(.OFILE)                                           :(TOP)
+X        WRITE_HISTORY('.ED4')
+         OFILE    = CURRENT
+X1       OFILE    = IFILE                                         :S(X1)
+         DELETE(FILE2)                                            :(END)
+CERR     TERMINAL = '*** ERRONEOUS EDIT (' E ') ***'             :(EDIT)
+NOMAT    TERMINAL = '*** NO MATCH ***'                           :(EDIT)
+ERRF     TERMINAL = '*** NEED FILE ***'                           :(END)
+ERRI     TERMINAL = "*** CAN'T OPEN FILE ***"                     :(END)
+EOF      TERMINAL = '*** END OF FILE (' LNO ') ***'              :(EDIT)
+END
+
+

@@ -1,0 +1,53 @@
+<h1>DEXP - Simple Function Definition</h1>
+
+Simple function definition. [[DEXP(PROTO)]] defines functions in
+terms of a simple, one-line expression, such as
+
+[[
+    DEXP('AVE(X,Y) = (X + Y) / 2.0')
+]]
+
+<<DEXP>>=
+         DEFINE('DEXP(PROTO)NAME,ARGS')                      :(DEXP_END)
+*
+DEXP     PROTO POS(0) SPAN(' ') =
+         PROTO BREAK('(') . NAME BAL . ARGS = NAME
+         CODE(NAME ' ' PROTO ' :S(RETURN)F(FRETURN)')
+         DEFINE(NAME ARGS)                                     :(RETURN)
+*
+DEXP_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'DEXP.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+-STITL DEXP
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                   ######   #######  #     #  ######                  *
+*                   #     #  #         #   #   #     #                 *
+*                   #     #  #          # #    #     #                 *
+*                   #     #  #####       #     ######                  *
+*                   #     #  #          # #    #                       *
+*                   #     #  #         #   #   #                       *
+*                   ######   #######  #     #  #                       *
+*                                                                      *
+* DEXP                 SIMPLE FUNCTION DEFINTION                       *
+*                                                                      *
+************************************************************************
+*
+* DEXP.lss
+*
+<<DEXP>>
+*
+* CE: .MSNOBOL4;
+@

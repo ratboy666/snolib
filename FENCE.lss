@@ -1,0 +1,80 @@
+<h1>FENCE - Match pattern once</h1>
+
+Returns a pattern that only matches pattern P in a forward scan (once). This
+means alternatives within P are discarded if P matches.
+
+In a system implementation of FENCE(), alternatives really are
+discarded. What happens here is that the first match for P sets
+a flag that causes failure of other alternatives. In reality, all
+alternatives in P are tested (possibly causing all kinds of side
+effects). This shortcoming will be most problematic if alternatives
+within P involve ABORT, FENCE, unevaluated expressions or unconditional
+value assignment.
+
+[[
+'abbc' ('b' | rem)
+    abbc
+    b
+    bbc
+    b
+    bc
+    c
+'abbc' fence('b' | rem)
+    abbc
+    b
+    bbc
+    bc
+    c
+]]
+
+<h2>Uses</h2>
+<a href="UNIQUE.html">UNIQUE</a>
+
+<<INCLUDES>>=
+-INCLUDE 'UNIQUE.INC'
+@
+
+<<FENCE>>=
+        DEFINE('FENCE(P)N')                                 :(FENCE_END)
+*
+FENCE   N = UNIQUE()
+        FENCE = EVAL('@' N
++                    ' P '
++                    ' "" $ *$(.' N ' DIFFER(' N '))'
++                   )                                          :(RETURN)
+*
+FENCE_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'FENCE.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL FENCE
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*             #######  #######  #     #   #####   #######              *
+*             #        #        ##    #  #     #  #                    *
+*             #        #        # #   #  #        #                    *
+*             #####    #####    #  #  #  #        #####                *
+*             #        #        #   # #  #        #                    *
+*             #        #        #    ##  #     #  #                    *
+*             #        #######  #     #   #####   #######              *
+*                                                                      *
+************************************************************************
+*
+* FENCE.lss
+*
+<<FENCE>>
+*
+* CE: .MSNOBOL4;
+@

@@ -1,0 +1,90 @@
+<h1>AOPA - Apply Infix Operator to Array</h1>
+
+[[AOPA(A1,OP,A2)]] will apply the infix operator [[OP]] to
+corresponding pairs of [[A1]] and [[A2]], returning an array unless
+both are scalars.
+
+For example, [[AOPA(A,'+',1)]] will add [[1]] to each element of [[A]].
+
+[[AOPA()]] has four cases: array operation array, array operation
+scalar, scalar operation array, and finally scalar operation scalar.
+
+<h2>Uses</h2>
+<a href="SEQ.html">SEQ</a>
+
+<<INCLUDES>>=
+-INCLUDE 'SEQ.INC'
+@
+
+<<AOPA>>=
+         DEFINE('AOPA(A1,OP,A2)S1,I,S2,S')                   :(AOPA_END)
+*
+AOPA     IDENT(DATATYPE(A1), 'ARRAY')                         :S(AOPA_1)
+         IDENT(DATATYPE(A2), 'ARRAY')                         :S(AOPA_2)
+         AOPA = EVAL('A1 ' OP ' A2')                           :(RETURN)
+AOPA_1   S1 = '<I>'
+         S2 = IDENT(DATATYPE(A2), 'ARRAY')  '<I>'
+         AOPA = ARRAY(PROTOTYPE(A1))                      :(AOPA_COMMON)
+AOPA_2   S2 = '<I>'
+         AOPA = ARRAY(PROTOTYPE(A2))
+AOPA_COMMON
+         S = ' AOPA<I> = A1' S1 ' ' OP ' A2' S2
+         SEQ(S, .I)                                            :(RETURN)
+*
+AOPA_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'AOPA.INC'
+-INCLUDE 'CRACK.INC'
+         &CODE = 1
+         A = %'1,2,3'
+         B = %'10,20,30'
+* ARRAY OPERATION ARRAY
+         C = AOPA(A, '+', B)
+         EQ(C<1>, 11)                                            :F(END)
+         EQ(C<2>, 22)                                            :F(END)
+         EQ(C<3>, 33)                                            :F(END)
+* ARRAY OPERATION SCALAR
+         C = AOPA(A, '-', 1)
+         EQ(C<1>, 0)                                             :F(END)
+         EQ(C<2>, 1)                                             :F(END)
+         EQ(C<3>, 2)                                             :F(END)
+* SCALAR OPERATION SCALAR
+         C = AOPA(3, '*', B)
+         EQ(C<1>, 30)                                            :F(END)
+         EQ(C<2>, 60)                                            :F(END)
+         EQ(C<3>, 90)                                            :F(END)
+* SCALAR OPERATION SCALAR
+         EQ(AOPA(6, '/', 3), 2)                                  :F(END)
+         &CODE = 0
+END
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL AOPA
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                    #     #######  ######      #                      *
+*                   # #    #     #  #     #    # #                     *
+*                  #   #   #     #  #     #   #   #                    *
+*                 #     #  #     #  ######   #     #                   *
+*                 #######  #     #  #        #######                   *
+*                 #     #  #     #  #        #     #                   *
+*                 #     #  #######  #        #     #                   *
+*                                                                      *
+* AOPA                 APPLY OPERATOR TO ARRAY                         *
+*                                                                      *
+************************************************************************
+*
+* AOPA.lss
+*
+<<AOPA>>
+*
+* CE: .MSNOBOL4;
+@

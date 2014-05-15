@@ -1,0 +1,77 @@
+<h1>NDBM - NDBM interface for CSNOBOL4</h1>
+
+Interface to NDBM from CSNOBOL4. Allows permanent keyed storage
+on disk.  Hashed, so performance may be better than TABLE usage
+(for very large TABLEs).
+
+<<NDBM>>=
+NDBM_LOAD
+*
+         DBM_INSERT = 0
+         DBM_REPLACE = 1
+*
+         LOAD('DBM_OPEN(STRING,STRING,STRING)INTEGER')
+         LOAD('DBM_CLOSE(INTEGER)STRING')
+*
+         LOAD('DBM_STORE(INTEGER,STRING,STRING,INTEGER)INTEGER')
+         LOAD('DBM_FETCH(INTEGER,STRING)STRING')
+         LOAD('DBM_DELETE(INTEGER,STRING)INTEGER')
+*
+         LOAD('DBM_FIRSTKEY(INTEGER)STRING')
+         LOAD('DBM_NEXTKEY(INTEGER)STRING')
+*
+         LOAD('DBM_ERROR(INTEGER)STRING')
+         LOAD('DBM_CLEARERR(INTEGER)STRING')
+*
+         CODE('NDBM_LOAD')
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'NDBM.INC'
+         &CODE = 1
+         HANDLE = DBM_OPEN('db', 'CW', '0660')                   :F(END)
+         OUTPUT = HANDLE
+         DBM_CLOSE(HANDLE)                                       :F(END)
+         HANDLE = DBM_OPEN('db', 'W')                            :F(END)
+         DDD = '++' DUPL(' ', 1100) '++'
+         DBM_STORE(HANDLE, 'KEY1', DDD, DBM_REPLACE)             :F(END)
+         DBM_STORE(HANDLE, 'KEY2', 'DATA2', DBM_INSERT)          :F(END)
+         OUTPUT = DBM_FETCH(HANDLE, 'KEY1')                      :F(END)
+         OUTPUT = DBM_FETCH(HANDLE, 'KEY2')                      :F(END)
+         OUTPUT = DBM_FIRSTKEY(HANDLE)                           :F(END)
+NXTK     OUTPUT = DBM_NEXTKEY(HANDLE)                           :S(NXTK)
+         DBM_CLOSE(HANDLE)                                       :F(END)
+         DELETE('db.db')
+         &CODE = 0
+END
+@
+
+<<>>=
+-STITL NDBM
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                 #     #  ######   ######   #     #                   *
+*                 ##    #  #     #  #     #  ##   ##                   *
+*                 # #   #  #     #  #     #  # # # #                   *
+*                 #  #  #  #     #  ######   #  #  #                   *
+*                 #   # #  #     #  #     #  #     #                   *
+*                 #    ##  #     #  #     #  #     #                   *
+*                 #     #  ######   ######   #     #                   *
+*                                                                      *
+* NDBM               NDBM INTERFACE FOR CSNOBOL4                       *
+*                                                                      *
+* PHIL BUDNE <PHIL@ULTIMATE.COM>                                       *
+* DECEMBER 3, 2005                                                     *
+*                                                                      *
+************************************************************************
+*
+* NDBM.lss
+*
+<<NDBM>>
+*
+* CE: .MSNOBOL4;
+@

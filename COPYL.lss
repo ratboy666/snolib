@@ -1,0 +1,65 @@
+<h1>COPYL - Copy list</h1>
+
+[[COPYL(L)]] will copy a list of [[LINK]]s. The configuration may
+have loops.
+
+<h2>Uses</h2>
+<a href="LINK.html">LINK</a>
+
+<<INCLUDES>>=
+-INCLUDE 'LINK.INC'
+@
+
+<<COPYL>>=
+         DEFINE('COPYL(L)T')                                :(COPYL_END)
+*
+COPYL    DEFINE('COPYL(L)', 'COPYL_1')
+         T = TABLE(100)
+         COPYL = COPYL(L)
+         DEFINE('COPYL(L)T')                                   :(RETURN)
+COPYL_1  COPYL = L
+         IDENT(DATATYPE(L), 'LINK')                           :F(RETURN)
+         COPYL = T<L>
+         DIFFER(COPYL, NULL)                                  :S(RETURN)
+         COPYL = COPY(L)
+         T<L> = COPYL
+         VALUE(COPYL) = COPYL(VALUE(L))
+         NEXT(COPYL) = COPYL(NEXT(L))                          :(RETURN)
+*
+COPYL_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'COPYL.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL COPYL
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                 #####   #######  ######   #     #  #                 *
+*                #     #  #     #  #     #   #   #   #                 *
+*                #        #     #  #     #    # #    #                 *
+*                #        #     #  ######      #     #                 *
+*                #        #     #  #           #     #                 *
+*                #     #  #     #  #           #     #                 *
+*                 #####   #######  #           #     #######           *
+*                                                                      *
+* COPYL                        COPY LIST                               *
+*                                                                      *
+************************************************************************
+*
+* COPYL.lss
+*
+<<COPYL>>
+*
+* CE: .MSNOBOL4;
+@

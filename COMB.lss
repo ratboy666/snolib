@@ -1,0 +1,47 @@
+<h1>COMB - Number of combinations</h1>
+
+[[COMB(N,M)]] returns the number of combinations of [[N]] things,
+taken [[M]] at a time.
+
+<<COMB>>=
+         DEFINE('COMB(N,M)')                                 :(COMB_END)
+*
+COMB     COMB = EQ(M, 0) 1                                    :S(RETURN)
+         COMB = COMB(N - 1, M - 1) * N / M                     :(RETURN)
+*
+COMB_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'COMB.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+-STITL COMB
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                     #####   #######  #     #  ######                 *
+*                    #     #  #     #  ##   ##  #     #                *
+*                    #        #     #  # # # #  #     #                *
+*                    #        #     #  #  #  #  ######                 *
+*                    #        #     #  #     #  #     #                *
+*                    #     #  #     #  #     #  #     #                *
+*                     #####   #######  #     #  ######                 *
+*                                                                      *
+* COMB                        COMBINATIONS                             *
+*                                                                      *
+************************************************************************
+*
+* COMB.lss
+*
+<<COMB>>
+*
+* CE: .MSNOBOL4;
+@

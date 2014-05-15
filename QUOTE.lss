@@ -1,0 +1,56 @@
+<h1>QUOTE - Quote a string</h1>
+
+[[QUOTE(S)]] will convert its argument to a string which will resemble
+a SNOBOL4 expression which, when evaluated, will yield the original
+string [[S]].
+
+<h2>Uses</h2>
+<a href="REPL.html">REPL</a>
+
+<<INCLUDES>>=
+-INCLUDE 'REPL.INC'
+@
+
+<<QUOTE>>=
+         DEFINE('QUOTE(S)Q,QQ')                             :(QUOTE_END)
+*
+QUOTE    Q = "'"; QQ = '"'
+         QUOTE = Q REPL(S, Q, Q ' ' QQ Q QQ ' ' Q) Q           :(RETURN)
+*
+QUOTE_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'QUOTE.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL QUOTE
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*               #####   #     #  #######  #######  #######             *
+*              #     #  #     #  #     #     #     #                   *
+*              #     #  #     #  #     #     #     #                   *
+*              #     #  #     #  #     #     #     #####               *
+*              #   # #  #     #  #     #     #     #                   *
+*              #    #   #     #  #     #     #     #                   *
+*               #### #   #####   #######     #     #######             *
+*                                                                      *
+* QUOTE                      QUOTE A STRING                            *
+*                                                                      *
+************************************************************************
+*
+* QUOTE.lss
+*
+<<QUOTE>>
+*
+* CE: .MSNOBOL4;
+@

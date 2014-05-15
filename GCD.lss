@@ -1,0 +1,51 @@
+<h1>GCD - Greatest Common Divisor</h1>
+
+[[GCD(I,J)]] returns the GCD of [[I]] and [[J]].
+
+<<GCD>>=
+         DEFINE('GCD(I,J)')                                   :(GCD_END)
+*
+GCD      EQ(I)                                               :S(FRETURN)
+         EQ(J)                                               :S(FRETURN)
+GCD.1    GCD = REMDR(I, J)
+         GCD = EQ(GCD) J                                      :S(RETURN)
+         I = J
+         J = GCD                                                :(GCD.1)
+*
+GCD_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'GCD.INC'
+         &CODE = 1
+         EQ(GCD(1071, 1029), 21)                                 :F(END)
+         &CODE = 0
+END
+@
+
+<<>>=
+-STITL AGT
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                       #####    #####   ######                        *
+*                      #     #  #     #  #     #                       *
+*                      #        #        #     #                       *
+*                      #  ####  #        #     #                       *
+*                      #     #  #        #     #                       *
+*                      #     #  #     #  #     #                       *
+*                       #####    #####   ######                        *
+*                                                                      *
+* GCD                   GREATEST COMMON DIVISOR                        *
+*                                                                      *
+************************************************************************
+*
+* GCD.lss
+*
+<<GCD>>
+*
+* CE: .MSNOBOL4;
+@

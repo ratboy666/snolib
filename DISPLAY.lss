@@ -1,0 +1,158 @@
+<h1>DISPLAY - Display control</h1>
+
+Use [[tput]] to determine strings to control the display. [[curses]]
+may be better, but this does (at least) <b>allow</b> full-screen
+applications. We add to this file as additional display controls
+are needed.
+
+<h2>Uses</h2>
+<a href="CHARS.html">CHARS</a><br>
+<a href="BQ.html">BQ</a>
+
+<<INCLUDES>>=
+-INCLUDE 'CHARS.INC'
+-INCLUDE 'BQ.INC'
+@
+
+<<DISPLAY>>=
+DISPLAY
+*
+* GATHER STATIC TERMINAL STRINGS.
+*
+* STANDOUT (BOLD)
+         DS_SMSO  = BQ('tput smso')
+* STANDOUT OFF
+         DS_RMSO  = BQ('tput rmso')
+* UNDERLINE
+         DS_SMUL  = BQ('tput smul')
+* UNDERLINE OFF
+         DS_RMUL  = BQ('tput rmul')
+* BLINK
+         DS_BLINK = BQ('tput blink')
+* BOLD
+         DS_BOLD  = BQ('tput bold')
+* DIM (HALF-BRIGHT)
+         DS_DIM   = BQ('tput dim')
+* REVERSE
+         DS_REV   = BQ('tput rev')
+* RESET ALL
+         DS_SGR0  = BQ('tput sgr0')
+*
+* CURSOR OFF
+         DS_CIVIS = BQ('tput civis')
+* CURSOR ON
+         DS_CNORM = BQ('tput cnorm')
+* CURSOR VERY VISIBLE
+         DS_CVVIS = BQ('tput cvvis')
+*
+* ERASE TO END-LINE
+         DS_EL    = BQ('tput el')
+* HOME CURSOR
+         DS_HOME  = BQ('tput home')
+* CLEAR DISPLAY
+         DS_CLEAR = BQ('tput clear')
+*
+* NUMBER OF COLUMNS
+         DS_COLS  = BQ('tput cols')
+*
+* NUMBER OF LINES
+         DS_LINES = BQ('tput lines')
+*
+* DYNAMIC STRINGS. THESE ARE CACHED IN TABLE DS_
+*
+         DS_ = TABLE(DS_LINES * DS_COLS + 16)
+*
+         DEFINE('DS_GOTO(ROW,COL)')
+         DEFINE('DS_FOREGROUND_COLOR(N)')
+         DEFINE('DS_BACKGROUND_COLOR(N)')
+*
+* DEFINED COLORS
+*
+         DS_BLACK  = 0
+         DS_RED    = 1
+         DS_GREEN  = 2
+         DS_YELLOW = 3
+         DS_BLUE   = 4
+         DS_PURPLE = 5
+         DS_CYAN   = 6
+         DS_WHITE  = 7                                    :(DS_GOTO_END)
+*
+@
+
+These routines check to see if the entry is in the [[DS_]] table
+(cached). If so, return the string. If not, use [[tput]] to generate
+the string, insert into the cache table, and then return.
+
+<<DISPLAY>>=
+*
+* SET FOREGROUND COLOR.
+*
+DS_FOREGROUND_COLOR
+         DS_FOREGROUND_COLOR = VDIFFER(DS<'F' N>)             :S(RETURN)
+         DS_<'F' N> = BQ('tput setaf ' N)         :(DS_FOREGROUND_COLOR)
+*
+* SET BACKGROUND COLOR.
+*
+DS_BACKGROUND_COLOR
+         DS_BACKGROUND_COLOR = VDIFFER(DS<'B' N>)             :S(RETURN)
+         DS_<'B' N> = BQ('tput setab ' N)         :(DS_BACKGROUND_COLOR)
+*
+* POSITION CURSOR TO (ROW, COLUMN)
+*
+DS_GOTO  DS_GOTO = VDIFFER(DS_<ROW ' ' COL>)                  :S(RETURN)
+*
+@
+
+[[COLLECT()]] was needed here in earlier versions of CSNOBOL. It is
+no longer needed. (GC within BQ was deadly in CSNOBOL4 1.1!).
+
+<<DISPLAY>>=
+         DS_<ROW ' ' COL> = BQ('tput cup ' ROW ' ' COL)       :(DS_GOTO)
+*
+DS_GOTO_END
+*
+* IND - SCROLL UP
+* NOTE THAT IND IS NL, SO BQ RETURNS IS NOT SUITABLE WE THEREFORE
+* DON'T USE BQ('tput ind') BUT CHARS_NL DIRECTLY
+*
+         DS_IND = DS_GOTO(DS_LINES - 1, 0) CHARS_NL
+* RI - SCROLL DOWN
+         DS_RI = DS_HOME BQ('tput ri')
+*
+         CODE('DISPLAY')
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'DISPLAY.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL DISPLAY
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*     ######   ###   #####   ######   #           #     #     #        *
+*     #     #   #   #     #  #     #  #          # #     #   #         *
+*     #     #   #   #        #     #  #         #   #     # #          *
+*     #     #   #    #####   ######   #        #     #     #           *
+*     #     #   #         #  #        #        #######     #           *
+*     #     #   #   #     #  #        #        #     #     #           *
+*     ######   ###   #####   #        #######  #     #     #           *
+*                                                                      *
+* DISPLAY            DISPLAY CONTROL (FULL-SCREEN)                     *
+*                                                                      *
+************************************************************************
+*
+* DISPLAY.lss
+*
+<<DISPLAY>>
+*
+* CE: .MSNOBOL4;
+@

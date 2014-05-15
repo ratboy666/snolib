@@ -1,0 +1,70 @@
+<h1>COMPLEX - Complex numbers</h1>
+
+Basic arithmetic on complex numbers. Not complete yet.
+
+<<COMPLEX>>=
+         DATA('COMPLEX(R,I)')
+*
+         DEFINE('ADD_COMPLEX(X,Y)')
+         DEFINE('MUL_COMPLEX(X,Y)A,B,C,D')
+         DEFINE('NEG_COMPLEX(X)')
+         DEFINE('INV_COMPLEX(X)D')
+         DEFINE('PRINT_COMPLEX(X)SIGN')                   :(COMPLEX_END)
+*
+ADD_COMPLEX
+         ADD_COMPLEX = COMPLEX(R(X) + R(Y), I(X) + I(Y))       :(RETURN)
+*
+MUL_COMPLEX
+         A = R(X); B = I(X); C = R(Y); D = I(Y)
+         MUL_COMPLEX = COMPLEX(A * C - B * D, B * C + A * D)   :(RETURN)
+*
+NEG_COMPLEX
+         NEG_COMPLEX = COMPLEX(-R(X), -I(X))                   :(RETURN)
+*
+INV_COMPLEX
+         D = (R(X) * R(X)) + (I(X) * I(X))
+         INV_COMPLEX = COMPLEX(1.0 * R(X) / D, 1.0 * -I(X) / D)
++                                                              :(RETURN)
+* 
+PRINT_COMPLEX
+         SIGN = GE(I(X)) '+'
+         PRINT_COMPLEX = R(X) SIGN I(X) 'i'                    :(RETURN)
+*
+COMPLEX_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'COMPLEX.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+-STITL COMPLEX
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                                                                      *
+*     #####   #######  #     #  ######   #        #######  #     #     *
+*    #     #  #     #  ##   ##  #     #  #        #         #   #      *
+*    #        #     #  # # # #  #     #  #        #          # #       *
+*    #        #     #  #  #  #  ######   #        #####       #        *
+*    #        #     #  #     #  #        #        #          # #       *
+*    #     #  #     #  #     #  #        #        #         #   #      *
+*     #####   #######  #     #  #        #######  #######  #     #     *
+*                                                                      *
+*                                                                      *
+* COMPLEX                   COMPLEX NUMBERS                            *
+*                                                                      *
+************************************************************************
+*
+* COMPLEX.lss
+*
+<<COMPLEX>>
+*
+* CE: .MSNOBOL4;
+@

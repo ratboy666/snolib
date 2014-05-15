@@ -1,0 +1,8 @@
+spatch - Changes to CSNOBOL4 1.5 source required.
+
+The following files in the CSNOBOL4 tree are altered:
+
+	fork.c
+	init.c
+	io.c
+	main.c

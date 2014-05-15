@@ -1,0 +1,74 @@
+<h1>AI - Apply Index</h1>
+
+[[AI(A,I)]] where [[A]] and [[I]] are arrays will regard [[I]] as a
+set of indices to be applied to the array [[A]]. The result is a new
+array of the selected elements. If [[I]] is a scalar, the result is
+[[A&lt;I&gt;]].
+
+[[AI()]] creates a new array. Each element of the new array is
+populated by the [[I&lt;N&gt;]] element of [[A]]. [[AI()]] uses
+[[SEQ()]] to step through [[A]] and [[I]].
+
+If [[I]] is not an array, simply returns [[A&lt;I&gt;]].
+
+<h2>Uses</h2>
+<a href="SEQ.html">SEQ</a>
+
+<<INCLUDES>>= 
+-INCLUDE 'SEQ.INC'
+@
+
+<<AI>>=
+         DEFINE('AI(A,I)J')                                    :(AI_END)
+*
+AI       IDENT(DATATYPE(I), 'ARRAY')                            :F(AI_1)
+         AI = ARRAY(PROTOTYPE(I))
+         SEQ(' AI<J> = A<I<J>> ', .J)                          :(RETURN)
+AI_1     AI = A<I>                                  :S(RETURN)F(FRETURN)
+*
+AI_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'AI.INC'
+-INCLUDE 'CRACK.INC'
+         &CODE = 1
+         A = %'5,6,7'
+         I = %'3,2,1'
+         A2 = AI(A, I)
+         EQ(A2<1>, 7)                                            :F(END)
+         EQ(A2<2>, 6)                                            :F(END)
+         EQ(A2<3>, 5)                                            :F(END)
+         EQ(AI(A, 1), 5)                                         :F(END)
+         AI(A, 4)                                                :S(END)
+         &CODE = 0
+END
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL AI
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                                #     ###                             *
+*                               # #     #                              *
+*                              #   #    #                              *
+*                             #     #   #                              *
+*                             #######   #                              *
+*                             #     #   #                              *
+*                             #     #  ###                             *
+*                                                                      *
+* AI                          APPLY INDEX                              *
+*                                                                      *
+************************************************************************
+*
+* AI.lss
+*
+<<AI>>
+*
+* CE: .MSNOBOL4;
+@

@@ -1,0 +1,163 @@
+<h1>GETKEY - Get key, including special keys</h1>
+
+Since [[ESC]] is used by most terminals as function/arrow key leadin,
+[[ESC]] is not usable in the program. We cannot easily get around this,
+because [[C-MAINBOL]] does not allow timeouts on input operations.
+
+A solution is to define [[ESC]] as [[ESC-ESC]], which will not match
+any of leadin sequences.
+
+The following controls are not easily available
+
+<ul>
+<li>^C &ndash; terminates the application</li>
+<li>^Z &ndash; backgrounds the application</li>
+<li>^S &ndash; flow control</li>
+<li>^Q &ndash; flow control</li>
+</ul>
+
+These keys can be used by the application, if [[stty raw]] is put
+into effect. Make sure that any additional channels to the terminal
+are closed before issuing [[stty]]:
+
+[[
+    HOST(HOST_SYSCMD, 'stty -echo raw')
+    OUTPUT(.T_OUT, 10, 'T', '/dev/stdout')
+    INPUT(.T_IN, 11, 'CQ', '/dev/stdin')
+.
+    ENDFILE(10)
+    DETACH(.T_OUT)
+    ENDFILE(11)
+    DETACH(.T_IN)
+    HOST(HOST_SYSCMD, 'stty echo cooked')
+]]
+
+New key definitions are added to this file as they are needed by
+applications.
+
+<h2>Used</h2>
+<a href="BQ.html">BQ</a><br>
+<a href="CHARS.html">CHARS</a>
+
+<<INCLUDES>>=
+-INCLUDE 'BQ.INC'
+-INCLUDE 'CHARS.INC'
+@
+
+<<GETKEY>>=
+         DEFINE('GETKEY(IN)KEY,M')
+*
+GETKEY_INIT
+*
+         KEY_ESC    = CHARS_ESC CHARS_ESC
+         KEY_LEFT   = BQ('tput kcub1')
+         KEY_RIGHT  = BQ('tput kcuf1')
+         KEY_UP     = BQ('tput kcuu1')
+         KEY_DOWN   = BQ('tput kcud1')
+         KEY_PAGEDN = BQ('tput knp')
+         KEY_PAGEUP = BQ('tput kpp')
+         KEY_HOME   = BQ('tput khome')
+         KEY_END    = BQ('tput kend')
+         KEY_INS    = BQ('tput kich1')
+@
+
+xterm weirdness - kcub1 returns ESC O D
+
+Repair this in the sequences where it happens, and skip for non-xterm
+terminals. Note that xterm-256color is the normaL xterm definition
+in use by my windowing system, and linux is the normal full-screen
+console type.
+
+<<GETKEY>>=
+         BQ('echo $TERM') 'xterm'                         :F(GETKEY_END)
+         KEY_LEFT   = REPLACE(KEY_LEFT,  'O', '[')
+         KEY_RIGHT  = REPLACE(KEY_RIGHT, 'O', '[')
+         KEY_UP     = REPLACE(KEY_UP,    'O', '[')
+         KEY_DOWN   = REPLACE(KEY_DOWN,  'O', '[')
+         KEY_HOME   = REPLACE(KEY_HOME,  'O', '[')
+         KEY_END    = REPLACE(KEY_END,   'O', '[')
+         KEY_INS    = REPLACE(KEY_INS,   'O', '[')
+                                                           :(GETKEY_END)
+*
+GETKEY   &INPUT = 1; KEY =
+GK1      M = ; KEY = KEY $IN
+*
+GK2      M = ?(KEY_UP ? FENCE KEY) 1                             :F(GK3)
+         EQ(SIZE(KEY), SIZE(KEY_UP))                             :S(GKR)
+*
+GK3      M = ?(KEY_DOWN ? FENCE KEY) 1                           :F(GK4)
+         EQ(SIZE(KEY), SIZE(KEY_DOWN))                           :S(GKR)
+*
+GK4      M = ?(KEY_RIGHT ? FENCE KEY) 1                          :F(GK5)
+         EQ(SIZE(KEY), SIZE(KEY_RIGHT))                          :S(GKR)
+*
+GK5      M = ?(KEY_LEFT ? FENCE KEY) 1                           :F(GK6)
+         EQ(SIZE(KEY), SIZE(KEY_LEFT))                           :S(GKR)
+*
+GK6      M = ?(KEY_PAGEDN ? FENCE KEY) 1                         :F(GK7)
+         EQ(SIZE(KEY), SIZE(KEY_PAGEDN))                         :S(GKR)
+*
+GK7      M = ?(KEY_PAGEUP ? FENCE KEY) 1                         :F(GK8)
+         EQ(SIZE(KEY), SIZE(KEY_PAGEUP))                         :S(GKR)
+*
+GK8      M = ?(KEY_HOME ? FENCE KEY) 1                           :F(GK9)
+         EQ(SIZE(KEY), SIZE(KEY_HOME))                           :S(GKR)
+*
+GK9      M = ?(KEY_END ? FENCE KEY) 1                           :F(GK10)
+         EQ(SIZE(KEY), SIZE(KEY_END))                            :S(GKR)
+*
+GK10     M = ?(KEY_INS ? FENCE KEY) 1                           :F(GK11)
+         EQ(SIZE(KEY), SIZE(KEY_INS))                            :S(GKR)
+*
+GK11     M = ?(KEY_ESC ? FENCE KEY) 1                           :F(GK12)
+         EQ(SIZE(KEY), SIZE(KEY_ESC))                            :S(GKR)
++                                                                 F(GK1)
+@
+
+If we have a match so far, add another keystroke. Note that this is
+broken if the user manually types an escape sequence on the keyboard
+(again, no timeout is possible).
+
+<<GETKEY>>=
+GK12     DIFFER(M)                                               :S(GK1)
+GKR      GETKEY = KEY                                          :(RETURN)
+*
+         CODE('GETKEY_INIT')
+*
+GETKEY_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'GETKEY.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL GETKEY
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*           #####   #######  #######  #    #  #######  #     #         *
+*          #     #  #           #     #   #   #         #   #          *
+*          #        #           #     #  #    #          # #           *
+*          #  ####  #####       #     ###     #####       #            *
+*          #     #  #           #     #  #    #           #            *
+*          #     #  #           #     #   #   #           #            *
+*           #####   #######     #     #    #  #######     #            *
+*                                                                      *
+* GETKEY      GET KEY, INCLUDING ARROWS AND FUNCTION KEYS              *
+*                                                                      *
+************************************************************************
+*
+* GETKEY.lss
+*
+<<GETKEY>>
+*
+* CE: .MSNOBOL4;
+@

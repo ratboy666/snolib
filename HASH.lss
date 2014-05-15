@@ -1,0 +1,157 @@
+<h1>HASH - Create table from string</h1>
+
+Creates a [[TABLE]] from a string. Named after Perl's hash.
+
+Converts string in the form [['NAME=VALUE,NAME2=VALUE2...']] into a
+[[TABLE]] where the [[NAME]] is the key and the [[VALUE]] is the data.
+Can be passed the name separator (default [[=]]) and item separator
+(default [[,]]). Names may not contain the name separator, and values
+may not contain the item separator.
+
+[[TABLE]]s are used to represent rows in PSQL. [[HASH()]] attempts
+to make it easier to construct simple tables. It is [[OPSYN]]'d to
+[[#]] to make it's use more convenient.
+
+[[COPY_TABLE(T)]] returns a copy of table [[T]]. [[MERGE_TABLE(T1,T2)]]
+merges two tables together. Entries in [[T2]] override entries in
+[[T1]]. The returned table is a new table. Neither [[T1]] nor [[T2]]
+are changed. [[KEYS_IN_TABLE(T)]] returns an array of the keys in
+table [[T]].
+
+The full call is
+[[
+HASH(S,E,P,TS,TI,FK,FD,SP) where
+S is the string to break into table entries
+E is the equals separator (default =)
+P is the record separator (default ,)
+TS is the default number of table entries (default 10)
+TS is the table growth amount (default 10)
+FK() is applied to each key prior to adding the item to the table
+     (default HASH_3, which simply returns its argument).
+FD() is applied to each value before being inserted (default HASH_3).
+SP is a multi-entry separator. If NULL, new entries overwrite old
+     ones. Otherwise, the entries are concatenated with the separator.
+]]
+
+[[FK()]] may be something like [[TRIMB()]], or a function to uppercase
+or lowercase the key. This is supplied because table keys match case
+sensitive, whereas normal variables are insensitive.
+
+[[FD()]] takes one or two arguments [[FD(V,K)]], where [[V]] is the
+value and [[K]] is the key. [[FD()]] can even recursively process
+its value to produce another table!
+
+Degenerate cases are supported. [[#'XXX,NAME=YYY']] will create a
+table with a [[NULL]] key with value [['XXX']] and key [['NAME']] with
+a value of [['YYY']].  [[#'']] is pretty much the same as [[TABLE()]].
+
+<h2>Uses</h2>
+<a href="BRKREM.html">BRKREM</a><br>
+<a href="SEQ.html">SEQ</a>
+
+<h2>See Also</h2>
+<a href="PSQL.html">PSQL</a>
+
+<<INCLUDES>>=
+-INCLUDE 'BRKREM.INC'
+-INCLUDE 'SEQ.INC'
+@
+
+<<HASH>>=
+         DEFINE('HASH(S,E,P,TS,TI,FK,FV,SP)K,V,C')
+         DEFINE('HASH_3(S)')
+         DEFINE('COPY_TABLE(T)')
+         DEFINE('MERGE_TABLE(T1,T2)A,I')
+         DEFINE('KEYS_IN_TABLE(T)A,N,I')
+         OPSYN('#', 'HASH', 1)                               :(HASH_END)
+*
+HASH     HASH = TABLE(TS, TI)
+         E = IDENT(E) '='
+         P = IDENT(P) ','
+         FK = IDENT(FK) 'HASH_3'
+         FV = IDENT(FV) 'HASH_3'
+HASH_2   IDENT(S)                                             :S(RETURN)
+         S POS(0) BREAK(E P) LEN(1) . C                       :F(HASH_5)
+         C E                                                  :F(HASH_5)
+         S POS(0) BREAK(E) . K E =                            :S(HASH_4)
+HASH_5   K =
+HASH_4   S POS(0) BRKREM(P) . V (P | RPOS(0)) =               :F(RETURN)
+         K = APPLY(FK, K)
+         V = APPLY(FV, V)
+         HASH<K> = VDIFFER(HASH<K>) VDIFFER(SP) V             :S(HASH_2) 
+         HASH<K> = V                                           :(HASH_2)
+*
+HASH_3   HASH_3 = S                                            :(RETURN)
+*
+COPY_TABLE
+         COPY_TABLE = CONVERT(CONVERT(T, 'ARRAY'), 'TABLE')    :(RETURN)
+*
+MERGE_TABLE
+         MERGE_TABLE = COPY_TABLE(T1)
+         A = CONVERT(T2, 'ARRAY')
+         SEQ(' MERGE_TABLE<A<I, 1>> = A<I, 2> ', .I)           :(RETURN)
+*
+KEYS_IN_TABLE
+         A = CONVERT(T, 'ARRAY')                             :F(FRETURN)
+         PROTOTYPE(A) BREAK(',') . N                         :F(FRETURN)
+         KEYS_IN_TABLE = ARRAY(N)
+         SEQ(' KEYS_IN_TABLE<I> = A<I,1> ', .I)                :(RETURN)
+*
+HASH_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'HASH.INC'
+         &CODE = 1
+         H = #'FIRST=BOB,LAST=LOBLAW'
+         IDENT(H<'FIRST'>, 'BOB')                                :F(END)
+         IDENT(H<'LAST'>, 'LOBLAW')                              :F(END)
+         T = COPY_TABLE(H)
+         IDENT(T<'FIRST'>, 'BOB')                                :F(END)
+         T<'FIRST'> = 'FRED'
+         IDENT(H<'FIRST'>, 'BOB')                                :F(END)
+         T2 = #'ADDRESS=SOMEWHERE'
+         T3 = MERGE_TABLE(T, T2)
+         IDENT(T3<'FIRST'>, 'FRED')                              :F(END)
+         IDENT(T3<'LAST'>, 'LOBLAW')                             :F(END)
+         IDENT(T3<'ADDRESS'>, 'SOMEWHERE')                       :F(END)
+         H = #'XXX,NAME=VALUE'
+         IDENT(H<NULL>, 'XXX')                                   :F(END)
+         IDENT(H<'NAME'>, 'VALUE')                               :F(END)
+         A = KEYS_IN_TABLE(T3)                                   :F(END)
+         A = SORT(A)                                             :F(END)
+         IDENT(A<1>, 'ADDRESS')                                  :F(END)
+         IDENT(A<2>, 'FIRST')                                    :F(END)
+         IDENT(A<3>, 'LAST')                                     :F(END)
+         &CODE = 0
+END
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL PSQL
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                                                                      *
+*                  #     #     #      #####   #     #                  *
+*                  #     #    # #    #     #  #     #                  *
+*                  #     #   #   #   #        #     #                  *
+*                  #######  #     #   #####   #######                  *
+*                  #     #  #######        #  #     #                  *
+*                  #     #  #     #  #     #  #     #                  *
+*                  #     #  #     #   #####   #     #                  *
+*                                                                      *
+* HASH                   INITIALIZE A TABLE                            *
+*                                                                      *
+************************************************************************
+*
+* HASH.lss
+*
+<<HASH>>
+*
+* CE: .MSNOBOL4;
+@

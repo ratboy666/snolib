@@ -1,0 +1,175 @@
+<h1>ALL - Include all library components</h1>
+
+Include all library components. This is used for ad-hoc programming,
+and tests to ensure that library components are compatible (for
+example, no label collisions), and to determine load time.
+
+This also gives us the compilation (load) time for the library. It
+takes around 50 milliseconds to compile all of the library routines;
+80 milliseconds if producing a listing file. This would (for example)
+limit the number of CGI transactions to 200 per second on my netbook.
+
+[[
+[fred@dejah snolib]$ snobol4 -s -M -n ALL.INC ENDCARD
+The Macro Implementation of SNOBOL4 in C (CSNOBOL4) Version 1.5
+    by Philip L. Budne, October 1, 2013
+    Patch Fridtjof Weigel
+SNOBOL4 (Version 3.11, May 19, 1975)
+    Bell Telephone Laboratories, Incorporated
+
+No errors detected in source program
+
+Normal termination at level 0
+ENDCARD.lss:6: Last statement executed was 0
+SNOBOL4 statistics summary-
+         51.840 ms. Compilation time
+          0.000 ms. Execution time
+              0 Statements executed, 0 failed
+              0 Arithmetic operations performed
+              0 Pattern matches performed
+              0 Regenerations of dynamic storage
+          0.000 ms. Execution time in GC
+              0 Reads performed
+              0 Writes performed
+          0.000 ns. Average per statement executed
+[fred@dejah snolib]$ 
+]]
+
+<i>Building</i> the library from lss source takes a long time.
+
+[[
+[fred@dejah snolib] touch *.lss
+[fred@dejah snolib] time make
+
+... lots of output removed ...
+
+real    3m15.685s
+user    2m53.908s
+sys     0m50.229s
+[fred@dejah snolib]$ 
+
+The majority of the time in generating the library is spent generating
+the html documentation (mostly in the <i>ditaa</i> utility.
+]]
+
+<<INCLUDES>>=
+-INCLUDE 'AGT.INC'
+-INCLUDE 'AI.INC'
+-INCLUDE 'AOPA.INC'
+-INCLUDE 'BALREV.INC'
+-INCLUDE 'BALX.INC'
+-INCLUDE 'BLEND.INC'
+-INCLUDE 'BQ.INC'
+-INCLUDE 'BRKREM.INC'
+-INCLUDE 'CATA.INC'
+-INCLUDE 'CGI.INC'
+-INCLUDE 'CH.INC'
+-INCLUDE 'CHARS.INC'
+-INCLUDE 'COMB.INC'
+-INCLUDE 'COMPLEX.INC'
+-INCLUDE 'COOKIE.INC'
+-INCLUDE 'COPYL.INC'
+-INCLUDE 'COUNT.INC'
+-INCLUDE 'CRACK.INC'
+-INCLUDE 'CSNOBOL4.INC'
+-INCLUDE 'CVAR.INC'
+-INCLUDE 'DAY.INC'
+-INCLUDE 'DDT.INC'
+-INCLUDE 'DEXP.INC'
+-INCLUDE 'DISPLAY.INC'
+-INCLUDE 'DYNAMIC.INC'
+-INCLUDE 'FASTBAL.INC'
+-INCLUDE 'FENCE.INC'
+-INCLUDE 'FFI.INC'
+-INCLUDE 'FIND.INC'
+-INCLUDE 'FLOOR.INC'
+-INCLUDE 'FOREACH.INC'
+-INCLUDE 'GCD.INC'
+-INCLUDE 'GETKEY.INC'
+-INCLUDE 'HASH.INC'
+-INCLUDE 'HEX.INC'
+-INCLUDE 'HOST.INC'
+-INCLUDE 'HTMLESC.INC'
+-INCLUDE 'HTMLTMPL.INC'
+-INCLUDE 'INFINIP.INC'
+-INCLUDE 'JSON.INC'
+-INCLUDE 'JIT.INC'
+-INCLUDE 'LAST.INC'
+-INCLUDE 'LIKE.INC'
+-INCLUDE 'LINK.INC'
+-INCLUDE 'LOG.INC'
+-INCLUDE 'LOGIC.INC'
+-INCLUDE 'LPROG.INC'
+-INCLUDE 'MDY.INC'
+-INCLUDE 'NDBM.INC'
+-INCLUDE 'NOTP.INC'
+-INCLUDE 'ONCE.INC'
+-INCLUDE 'ORDER.INC'
+-INCLUDE 'P64.INC'
+-INCLUDE 'PSQL.INC'
+-INCLUDE 'QUOTE.INC'
+-INCLUDE 'RANDOM.INC'
+-INCLUDE 'READFILE.INC'
+-INCLUDE 'READL.INC'
+-INCLUDE 'READLINE.INC'
+-INCLUDE 'REDEFINE.INC'
+-INCLUDE 'REPL.INC'
+-INCLUDE 'RESOL.INC'
+-INCLUDE 'REVL.INC'
+-INCLUDE 'ROMAN.INC'
+-INCLUDE 'ROTATER.INC'
+-INCLUDE 'SCOOP.INC'
+-INCLUDE 'SDIFF.INC'
+-INCLUDE 'SEQ.INC'
+-INCLUDE 'SESSION.INC'
+-INCLUDE 'SKIM.INC'
+-INCLUDE 'SIZEA.INC'
+-INCLUDE 'SLOAD.INC'
+-INCLUDE 'SOUNDEX.INC'
+-INCLUDE 'SPELL.INC'
+-INCLUDE 'STACK.INC'
+-INCLUDE 'STCL.INC'
+-INCLUDE 'STROUT.INC'
+-INCLUDE 'SWAP.INC'
+-INCLUDE 'SYSLOG.INC'
+-INCLUDE 'SYSTEM.INC'
+-INCLUDE 'TEST.INC'
+-INCLUDE 'TIME.INC'
+-INCLUDE 'TIMEGC.INC'
+-INCLUDE 'TIMER.INC'
+-INCLUDE 'TRIMB.INC'
+-INCLUDE 'TRUNC.INC'
+-INCLUDE 'UNIQUE.INC'
+-INCLUDE 'UTF8.INC'
+-INCLUDE 'WRAPPER.INC'
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL ALL
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                         #     #        #                             *
+*                        # #    #        #                             *
+*                       #   #   #        #                             *
+*                      #     #  #        #                             *
+*                      #######  #        #                             *
+*                      #     #  #        #                             *
+*                      #     #  #######  #######                       *
+*                                                                      *
+*                                                                      *
+* ALL                      INCLUDE ALL                                 *
+*                                                                      *
+************************************************************************
+*
+* ALL.lss
+*
+* DEBUGGING
+*
+*-INCLUDE 'GOTOS.INC'
+*-INCLUDE 'TPROFILE.INC'
+*
+* CE: .MSNOBOL4;
+@

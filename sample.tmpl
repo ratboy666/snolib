@@ -1,0 +1,14 @@
+Sample template for testing HTMLTMPL.
+<tmpl_var var>
+<tmpl_var var4 default="the default">
+<tmpl_if var2>
+  <tmpl_var var2>
+</tmpl_if>
+<tmpl_unless var4>
+  this if var4 blank
+</tmpl_unless>
+More boilerplate material shouldn't take much effort
+<tmpl_loop var3>
+  escaping can be url, js, html, none (none is default)
+  <tmpl_var FIRST escape=url> <tmpl_var LAST>
+</tmpl_loop>

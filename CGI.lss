@@ -1,0 +1,476 @@
+<h1>CGI - CGI Support Functions</h1>
+
+[[CGI]] support functions. [[SCOOP]] is used to create a [[CGI]]
+object.  This object contains data and methods needed to support
+[[CGI]] activities.  In turn, [[CGI]] uses [[COOKIE]] to support
+[[HTTP]] cookies. The [[WEB]] application can use [[SESSION]] to
+support persistant server-side sessions. [[HTMLTMPL]] to support
+templates, [[PSQL]] to provide database for filling in templates.
+
+Logging is supported in the [[CGI]] class. This is not decoupled
+because there are very few ways to debug [[CGI]] applications.
+
+Still need: Response codes, Headers/Responses
+
+[[
+Last-modified:
+Content-type: application/octet-stream; name="filename"
+Content-disposition: attachment; filename="genome.jpg"
+
+Content-length: 3002
+Location:
+Status: 200 OK
+302 Found (301 302 303)
+400 Bad Request
+501 Not Implemented
+local redirect - just respond with Location:
+absolute URI redirect same
+with doc, respond 302 Location and doc returned
+]]
+
+<h2>See Also</h2>
+<a href="SESSION.html">SESSION</a><br>
+<a href="HTMLTMPL.html">HTMLTMPL</a><br>
+<a href="PSQL.html">PSQL</a>
+
+<h2>Uses</h2>
+<a href="SCOOP.html">SCOOP</a><br>
+<a href="COOKIE.html">SESSION</a><br>
+<a href="HOST.html">HOST</a><br>
+<a href="CRACK.html">CRACK</a><br>
+<a href="SEQ.html">SEQ</a><br>
+<a href="HTMLESC.html">HTMLESC</a><br>
+<a href="CHARS.html">CHARS</a><br>
+<a href="HASH.html">HASH</a><br>
+<a href="UNIQUE.html">UNIQUE</a>
+
+<<INCLUDES>>=
+-INCLUDE 'SCOOP.INC'
+-INCLUDE 'COOKIE.INC'
+-INCLUDE 'HOST.INC'
+-INCLUDE 'CRACK.INC'
+-INCLUDE 'SEQ.INC'
+-INCLUDE 'HTMLESC.INC'
+-INCLUDE 'CHARS.INC'
+-INCLUDE 'HASH.INC'
+-INCLUDE 'UNIQUE.INC'
+@
+
+<<CGI>>=
+         CGI_CLASS = SEND(CLASS, 'NEW_CLASS', 'CGI_CLASS')
+         DEFINE('CGI_INIT()A,C')
+         SEND(CGI_CLASS, 'ADD_METHOD', 'INIT', 'CGI_INIT')
+         SEND(CGI_CLASS, 'ADD_METHOD', 'GET_COOKIE_JAR', CODE(
++           ' SEND = ^.COOKIE_JAR :(RETURN)'))
+         SEND(CGI_CLASS, 'ADD_METHOD', 'GET_HEADER', CODE(
++           ' SEND = ^.HEADER :(RETURN)'))
+         DEFINE('CGI_HEADER()')
+         SEND(CGI_CLASS, 'ADD_METHOD', 'HEADER', 'CGI_HEADER')
+         SEND(CGI_CLASS, 'ADD_METHOD', 'GET_LOG', CODE(
++           ' SEND = ^.LOG :(RETURN)')) 
+         SEND(CGI_CLASS, 'ADD_METHOD', 'GET_OUT', CODE(
++           ' SEND = ^.OUT :(RETURN)')) 
+         DEFINE('CGI_CLOSE()A')
+         SEND(CGI_CLASS, 'ADD_METHOD', 'CLOSE', 'CGI_CLOSE')
+         SEND(CGI_CLASS, 'ADD_METHOD', 'GET_ENV', CODE(
++           ' SEND = ^.ENV :(RETURN)'))
+         SEND(CGI_CLASS, 'ADD_METHOD', 'GET_QUERY', CODE(
++           ' SEND = ^.QUERY :(RETURN)'))
+*
+                                                       :(CGI_OBJECT_END)
+*
+* CLOSE CGI OBJECT
+*
+CGI_CLOSE
+         ENDFILE(^.OUT_UNIT)
+         DETACH(^.OUT)                                         :(RETURN)
+         ENDFILE(^.LOG_UNIT)
+         DETACH(^.LOG)
+*
+* INITIALIZE CGI OBJECT
+*
+CGI_INIT CGI_INIT = SUPER('INIT')
+*
+* CREATE LOG CHANNEL
+*
+         ^.LOG_UNIT = IO_FINDUNIT()                          :F(FRETURN)
+         ^.LOG = UNIQUE()
+*
+* WITH ALL THE CHANGES GOING TO SYSTEMD, LOGGING APPEARS TO HAVE
+* SUFFERED. SPECIFICALLY, IF THE LOGGING IS ONLY FORWARDED TO
+* RSYSLOG, LOGGER LOCAL DOESN'T WORK. WE ENABLE RSYSLOG TO LISTEN TO
+* THE NETWORK, AND THEN LOGGER CAN LOG TO LOCALHOST. STRANGE, AND
+* PROBABLY NOT SUITABLE FOR PRODUCTION.
+*
+         OUTPUT(^.LOG, ^.LOG_UNIT, 'W',
++               '|/usr/bin/logger -n localhost -t CGI')      :F(FRETURN)
+*
+* CREATE OUT CHANNEL
+*
+         ^.OUT_UNIT = IO_FINDUNIT()                          :F(FRETURN)
+         ^.OUT = UNIQUE()
+         OUTPUT(^.OUT, ^.OUT_UNIT, 'B', '/dev/stdout')       :F(FRETURN)
+*
+* COLLECT ENVIRONMENT VARIABLES INTO INSTANCE VARIABLE ENV. WE ONLY
+* GATHER UP "KNOWN" ENVIRONMENT VARIABLES.
+*
+         ^.ENV = TABLE(27)
+         A = %('CONTEXT_DOCUMENT_ROOT,CONTEXT_PREFIX,DOCUMENT_ROOT,'
++              'GATEWAY_INTERFACE,HTTP_ACCEPT,HTTP_ACCEPT_ENCODING,'
++              'HTTP_ACCEPT_LANGUAGE,HTTP_CACHE_CONTROL,'
++              'HTTP_CONNECTION,HTTP_COOKIE,HTTP_HOST,HTTP_USER_AGENT,'
++              'QUERY_STRING,REMOTE_ADDR,REQUEST_METHOD,REQUEST_SCHEME,'
++              'REQUEST_URI,SCRIPT_FILENAME,SCRIPT_NAME,SERVER_ADDR,'
++              'SERVER_ADMIN,SERVER_NAME,SERVER_PORT,SERVER_PROTOCOL,'
++              'SERVER_SOFTWARE,CONTENT_LENGTH,HTTP_REFERER')
+         SEQ(' (^.ENV)<A<I>> = HOST(HOST_GETENV, A<I>); A<I> ', .I)
+*
+* FOR POST METHOD, READ (^.ENV)<'CONTENT_LENGTH'>. READ THAT NUMBER OF
+* BYTES, AND ONLY THAT NUMBER. NOTE THAT THIS MAY BE VERY LARGE. THIS
+* MAY FAIL DUE TO MEMORY EXHAUSTION. WE KNOW THAT WE CAN READ A LARGE
+* NUMBER OF BYTES, BUT I HAVE TO DETERMINE THE LIMIT.
+*
+         T3 = (^.ENV)<'CONTENT_LENGTH'>
+         IDENT(T3)                                        :S(CGI_INIT_3)
+         (INTEGER(T3) GT(T3))                             :F(CGI_INIT_3)
+         T1 = IO_FINDUNIT()                                  :F(FRETURN)
+         INPUT('T2', T1, 'B,' T3, '/dev/stdin')              :F(FRETURN)
+         (^.ENV)<'QUERY_STRING'> = T2
+         ENDFILE(T1)
+         DETACH('T2')
+CGI_INIT_3
+*
+* PARSE QUERY_STRING INTO QUERY TABLE. HASH() IS USED TO PARSE
+* QUERY_STRING, BREAKING INTO NAME=VALUE SEPARATED BY &. EACH VALUE IS
+* PROCESSED WITH URL_DECODE().
+*
+* MULTI-VALUE FIELDS ARE SEPARATED BY 0. USED BY CHECKBOXES
+*
+         ^.QUERY = HASH((^.ENV)<'QUERY_STRING'>, '=', '&',,,,
++                        'URL_DECODE', CHARS_NUL)
+*
+* PARSE HTTP_COOKIE INTO A COOKIE JAR. THERE MAY NOT BE ANY COOKIES,
+* IN WHICH CASE WE CREATE AN EMPTY COOKIE JAR. THE VALUES OF THE
+* COOKIES ARE NOT VALIDATED. HASH() PARSES THE COOKIE STRING. AFTER
+* THE TABLE IS GENERATED, IT IS CONVERTED TO AN ARRAY. SEQ() ADDS
+* EACH ELEMENT INTO THE COOKIE JAR.
+*
+         ^.COOKIE_JAR = NEW_COOKIE_JAR()
+         A = HASH((^.ENV)<'HTTP_COOKIE'>, '=', ';',,,
++                  'COOKIE_FIX_NAME', 'URL_DECODE')
+         A = CONVERT(A, 'ARRAY')                          :F(CGI_INIT_2)
+         SEQ(' PUT_COOKIE_IN_JAR(^.COOKIE_JAR,'
++                               'A<I,1>, NEW_COOKIE(A<I,2>)) ', .I)
+CGI_INIT_2
+*
+* INITIALIZE HEADER. THE HEADER IS A TABLE() WITH AT LEAST CONTENT_TYPE
+* ENTRY.
+*
+         ^.HEADER = #"CONTENT_TYPE=TEXT/HTML,CHARSET="
+*
+* WE NEED ROUTING IMPLEMENTED.
+*
+* WE NEED TO DO FURTHER PROCESSING ON THE FOLLOWING CGI ENVIRONMENT
+* VARIABLES. 
+*
+* <ISINDEX> value1+value2+..
+* HTTP_ACCEPT
+*   ='TEXT/HTML,APPLICATION/XHTML+XML,APPLICATION/XML;Q=0.9,*/*;Q=0.8'
+* HTTP_ACCEPT_ENCODING='GZIP, DEFLATE'
+* HTTP_ACCEPT_LANGUAGE='EN-US,EN;Q=0.5'
+*
+                                                               :(RETURN)
+*
+* OUTPUT THE HEADER
+*
+CGI_HEADER
+*
+* FIRST, OUTPUT THE CONTENT-TYPE. IF CHARSET HAS BEEN SPECIFIED,
+* ADD THIS TO THE CONTENT-TYPE.
+*
+         $^.OUT = 'Content-type: ' (^.HEADER)<'CONTENT_TYPE'>
+         $^.OUT = '; charset=' VDIFFER((^.HEADER)<'CHARSET'>)
+         $^.OUT =  CHARS_CR CHARS_NL
+*
+* GENERATE THE COOKIE STRING AND OUTPUT IF WE HAVE COOKIES TO SEND.
+*
+         $^.OUT = VDIFFER(COOKIE_STRING(^.COOKIE_JAR))
+*
+* THE HEADER FINISHES WITH A CR/LF
+*
+         $^.OUT = CHARS_CR CHARS_NL                            :(RETURN)
+*
+CGI_OBJECT_END
+*
+@
+
+The startup of a CGI script should explicitly set the library directory
+(if needed). As well, the path to the interpreter should be absolute.
+These are basic security measures.
+
+This unit test will test basic CGI object creation. Cookie jars and
+cookies. The session cookie and sessions. Simple logging. Templates.
+
+Template sample has jQuery lashed in. Need AJAJ (AJAX with JSON)
+server support and some sample web page stuff.
+
+Performance Notes
+
+Caching compiled templates (in a separate process), pooling database
+connections, fastcgi would all help. This code can be 50% faster with
+these techniques.
+
+Then request routing and simple JS. Session verification.
+
+No request routing or javascript as yet. No css as yet. No caching
+or database access as yet. Pick a simple application, write and
+deploy: fog the mirror would be fine. Signon, message board.
+
+CGI and PSQL use SCOOP. HTMLTMPL, SESSION and COOKIE could as well,
+but predate SCOOP.
+
+<<unit_test>>=
+#!/usr/bin/bash
+         export "SNOLIB=/home/fred/snolib"
+         exec "/usr/local/bin/snobol4" "-b" "$0" "$@"
+-INCLUDE 'CGI.INC'
+-INCLUDE 'READFILE.INC'
+-INCLUDE 'BQ.INC'
+-INCLUDE 'PSQL.INC'
+-INCLUDE 'HTMLTMPL.INC'
+-INCLUDE 'SESSION.INC'
+-INCLUDE 'JSON.INC'
+*
+-CMNT EMBED THE TEMPLATES NEEDED. FOR NORMAL USE, THE TEMPLATES WOULD
+-CMNT BE MAINTAINED SEPARATELY, BUT THIS IS THE TEST SAMPLE.
+-EMBED FILE 'CGI.tmpl'
+<!doctype html>
+<!-- A simple template -->
+<html>
+  <head>
+    <meta charset="utf=8" />
+    <title>CGI test</title>
+  </head>
+  <body>
+    <a href="http://jquery.com/">jQuery</a>
+    <script src="jquery-1.11.1.js"></script>
+    <script>
+      // js code goes here
+    </script>
+    <!-- Text with some variables to be filled in -->
+    <p>
+      HTML OUTPUT
+    <p>
+      cookie counter <tmpl_var COOKIE_COUNTER>
+    <p>
+      session counter <tmpl_var SESSION_COUNTER>
+    <p>
+      request method <tmpl_var REQUEST_METHOD>
+    <p>
+      first name <tmpl_var FIRST_NAME>
+    <p>
+      vehicle <tmpl_var VEHICLE>
+    <p>
+      <form name="input" action="cgi" method="GET">
+        First name: <input type="text" name="firstname"><br>
+        Last name: <input type="text" name="lastname"><br>
+        Password: <input type="password" name="pwd"><br>
+        <input type="radio" name="sex" value="male">Male<br>
+        <input type="radio" name="sex" value="female">Female<br>
+        <input type="checkbox" name="vehicle" value="car">
+          I have a car<br>
+        <input type="checkbox" name="vehicle" value="bike">
+          I have a bike<br>
+        <input type="submit" value="submit get"><br>
+        <input type="reset" value="reset"><br>
+        <input type="hidden" name="key" value="whatiwant">
+      </form>
+    <p>
+      <form name="input" action="cgi" method="POST">
+        First name: <input type="text" name="firstname"><br>
+        Last name: <input type="text" name="lastname"><br>
+        Password: <input type="password" name="pwd"><br>
+        <input type="radio" name="sex" value="male">Male<br>
+        <input type="radio" name="sex" value="female">Female<br>
+        <input type="checkbox" name="vehicle" value="car">
+          I have a car<br>
+        <input type="checkbox" name="vehicle" value="bike">
+          I have a bike<br>
+        <input type="submit" value="submit post"><br>
+        <input type="reset" value="reset"><br>
+        <input type="hidden" name="key" value="whatiwant">
+      </form>
+  </body>
+</html>
+-END
+         &CODE = 1
+*
+* CREATE NEW CGI OBJECT
+*
+         CGI = SEND(CGI_CLASS, 'NEW')
+*
+* GET LOGGING CHANNEL
+*
+         LOG = SEND(CGI, 'GET_LOG')
+*
+* LOG ENTRY
+*
+         $LOG = 'CGI ENTERED'
+         $LOG = 'current directory is ' BQ('pwd')
+*
+* GET THE COOKIE JAR
+*
+         JAR = SEND(CGI, 'GET_COOKIE_JAR')
+*
+* LOAD THE SESSION. SESSION ID IS TAKEN FROM COOKIE 'SESSION'. AFTER
+* USING THE SESSION COOKIE, DESTROY IT (IT WILL GET RECREATED IF
+* NEEDED WHEN THE SESSION IS PERSISTED).
+*
+         SESSION =
+         C = GET_COOKIE_FROM_JAR(JAR, 'SESSION')
+         PUT_COOKIE_IN_JAR(JAR, 'SESSION', )
+         SESSION = SESSION_LOAD(COOKIE_VALUE(VDIFFER(C)))
+*
+* CREATE SESSION IF IT DOESN'T EXIST.
+*
+         SESSION = IDENT(SESSION) SESSION_CREATE(600)
+*
+* CREATE A PSQL OBJECT. OPEN THE DATABASE, AND GET THE PIPE HANDLE
+*
+         PSQL = SEND(PSQL_CLASS, 'NEW')
+         &ERRLIMIT = 1
+         SEND(PSQL, 'OPEN')
+         &ERRLIMIT = 0
+         DB = SEND(PSQL, 'GET_PIPE')
+*
+* SET HEADER
+*
+         H = SEND(CGI, 'GET_HEADER') 
+         H<'CONTENT_TYPE'> = 'text/html'
+         H<'CHARSET'> = 'UTF-8'
+*
+* RETRIEVE THE COUNTER COOKIE. IF IT DOESN'T EXIST, CREATE IT.
+*
+         C = GET_COOKIE_FROM_JAR(JAR, 'COUNTER')
+         IDENT(C) PUT_COOKIE_IN_JAR(JAR, 'COUNTER', NEW_COOKIE(0))
+*
+* CREATE ANOTHER COOKIE 'TESTER' WITH VALUE 'SNOBOL4'
+*
+         PUT_COOKIE_IN_JAR(JAR, 'TESTER', NEW_COOKIE('SNOBOL4'))
+*
+* INCREMENT THE VALUE OF THE COUNTER COOKIE. WE VALIDATE THAT THE
+* VALUE OF COUNTER IS AN INTEGER.
+*
+         C = GET_COOKIE_FROM_JAR(JAR, 'COUNTER')
+         V = COOKIE_VALUE(C)
+         V = ~INTEGER(V) 0
+         COOKIE_SET_VALUE(C,  V + 1)
+*
+* A SESSION VARIABLE
+*
+         SESSION<'NAME'> = 'FRED'
+*
+* INCREMENT THE COUNTER SESSION VARIABLE
+*
+         V = SESSION<'COUNTER'>
+         V = ~INTEGER(V) 0
+         SESSION<'COUNTER'> = V + 1
+*
+* PERSIST THE SESSION. THIS SAVES THE SESSION TO DISK AND CREATES
+* THE BROWSER COOKIE TO ALLOW THE RETRIEVAL OF THE SESSION LATER.
+*
+         SESSION_PERSIST(SESSION)                            :F(FRETURN)
+         T = SESSION<'EXPIRE_TIME'>
+         C = NEW_COOKIE(SESSION<'UUID'>)
+         PUT_COOKIE_IN_JAR(JAR, 'SESSION', C)
+         COOKIE_SET_CRUMB(C, 'EXPIRES', COOKIE_EXPIRY(T))
+*
+* TRANSMIT HEADER
+*
+         SEND(CGI, 'HEADER')
+*
+* GET THE NAME THAT IS OUTPUT ASSOCIATED FOR THIS CGI
+*
+         OUT = SEND(CGI, 'GET_OUT')
+*
+* READ AND COMPILE THE HTML TEMPLATE.
+*
+         S = READFILE('CGI.tmpl')
+         P = TMPL_COMPILE(S)
+*
+* BUILD TABLE OF VARIABLES TO SUBSTITUTE INTO THE TEMPLATE
+* THIS HAS THE RAW COOKIE STRING, THE VALUE OF COUNTER FROM THE
+* COOKIE JAR AND THE VALUE OF COUNTER FROM THE SESSION.
+*
+         A = TABLE()
+*
+* FROM THE ENV
+*
+         E = SEND(CGI, 'GET_ENV')
+         A<'REQUEST_METHOD'> = E<'REQUEST_METHOD'>
+*
+* FROM THE COOKIE JAR
+*
+         A<'COOKIE_COUNTER'> =
++           COOKIE_VALUE(GET_COOKIE_FROM_JAR(JAR, 'COUNTER'))
+*
+* SESSION VARIABLE
+*
+         A<'SESSION_COUNTER'> =  SESSION<'COUNTER'>
+*
+* QUERY VARIABLES
+*
+         Q = SEND(CGI, 'GET_QUERY')
+         A<'FIRST_NAME'> = Q<'firstname'>
+         A<'VEHICLE'> = Q<'vehicle'>
+*
+* INTERPRET THE TEMPLATE WITH THE SUPPLIED VARIABLES
+*
+         S = TMPL_INTERPRET(P, A)
+*
+* TRANSMIT THE EXPANDED PAGE TO THE CLIENT
+*
+         $OUT = S
+*
+* CLOSE THE DATABASE
+*
+         SEND(PSQL, 'CLOSE')
+*
+* LOG COMPLETION AND SHOW PERFORMANCE DATA
+*
+         $LOG = 'CGI COMPLETE'
+         $LOG = TIME() ' MILLISECONDS FOR REQUEST'
+         $LOG = &GCTIME  ' IN GARBAGE COLLECTOR'
+         $LOG = &STEXEC ' STATEMENTS EXECUTED'
+*
+         SEND(CGI, 'CLOSE')
+         &CODE = 0
+END
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL CGI
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                                                                      *
+*                         #####    #####   ###                         *
+*                        #     #  #     #   #                          *
+*                        #        #         #                          *
+*                        #        #  ####   #                          *
+*                        #        #     #   #                          *
+*                        #     #  #     #   #                          *
+*                         #####    #####   ###                         *
+*                                                                      *
+* CGI                    CGI SUPPORT FUNCTIONS                         *
+*                                                                      *
+************************************************************************
+*
+* CGI.lss
+*
+<<CGI>>
+*
+* CE: .F.MSNOBOL4;
+@

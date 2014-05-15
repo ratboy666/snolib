@@ -1,0 +1,264 @@
+#
+# .boxes
+#
+#    http://boxes.thomasjensen.com/docs/
+#    http://boxes.thomasjensen.com/docs/config-syntax.shtml
+#
+# /usr/share/boxes/boxes
+#
+
+# The head boxes create boxes for head comments. These align to
+# column 72. Each may cover multiple languages.
+#
+# c_head	c, bc, lex, rexx, yacc
+# sno_head	snobol, text
+# ftn_head	fortran
+# asm_head	assembler, scheme
+# cbl_head	cobol
+# sh_head	sh, awk, dc, make, minicom, perl, ratfor, sed, tcl
+# p_head	pascal
+
+BOX c_head
+
+AUTHOR "Fridtjof Weigel <fred_weigel@hotmail.com>"
+REVISION "1.0"
+REVDATE "Wed Apr 24 16:04:03 EDT 2013"
+CREATED "Wed Apr 24 16:04:03 EDT 2013"
+
+SAMPLE
+/**********************************************************************
+ *                                                                    *
+ * Use for c, bc, lex, rexx, yacc                                     *
+ *                                                                    *
+ **********************************************************************/
+ENDS
+
+SHAPES {
+  NW ("/*") NE ("* ")
+   W (" *")  E ("* ")
+  SW (" *") SE ("*/")
+  N ("********************************************************************")
+  S ("********************************************************************")
+}
+
+DELIMITER ?"
+REPLACE "\*/" WITH "*\/"               # quote closing comment tags
+REVERSE "\*\\/" TO "*/"
+
+PADDING {
+  ALL 1
+}
+
+ELASTIC (W, E, N, S)
+
+INDENT "none"
+
+END c_head
+
+
+BOX sno_head
+
+AUTHOR "Fridtjof Weigel <fred_weigel@hotmail.com>"
+REVISION "1.0"
+REVDATE "Tue Nov 12 11:59:32 EST 2013"
+CREATED "Tue Nov 12 11:59:32 EST 2013"
+
+SAMPLE
+************************************************************************
+*                                                                      *
+* USE FOR SNOBOL4, TEXT                                                *
+*                                                                      *
+************************************************************************
+ENDS
+
+SHAPES {
+  NW ("*") NE ("*")
+   W ("*")  E ("*")
+  SW ("*") SE ("*")
+  N ("**********************************************************************")
+  S ("**********************************************************************")
+}
+
+PADDING {
+  ALL 1
+}
+
+ELASTIC (W, E, N, S)
+
+INDENT "none"
+
+END sno_head
+
+
+BOX ftn_head
+
+AUTHOR "Fridtjof Weigel <fred_weigel@hotmail.com>"
+REVISION "1.0"
+REVDATE "Tue Nov 12 11:59:32 EST 2013"
+CREATED "Tue Nov 12 11:59:32 EST 2013"
+
+SAMPLE
+C **********************************************************************
+C *                                                                    *
+C * USE FOR FORTRAN                                                    *
+C *                                                                    *
+C **********************************************************************
+ENDS
+
+SHAPES {
+  NW ("C *") NE ("*")
+   W ("C *")  E ("*")
+  SW ("C *") SE ("*")
+  N ("********************************************************************")
+  S ("********************************************************************")
+}
+
+PADDING {
+  ALL 1
+}
+
+ELASTIC (W, E, N, S)
+
+INDENT "none"
+
+END ftn_head
+
+
+BOX asm_head
+
+AUTHOR "Fridtjof Weigel <fred_weigel@hotmail.com>"
+REVISION "1.0"
+REVDATE "Tue Nov 12 11:59:32 EST 2013"
+CREATED "Tue Nov 12 11:59:32 EST 2013"
+
+SAMPLE
+; **********************************************************************
+; *                                                                    *
+; * USE FOR ASSEMBLER, SCHEME                                          *
+; *                                                                    *
+; **********************************************************************
+ENDS
+
+SHAPES {
+  NW ("; *") NE ("*")
+   W ("; *")  E ("*")
+  SW ("; *") SE ("*")
+  N ("********************************************************************")
+  S ("********************************************************************")
+}
+
+PADDING {
+  ALL 1
+}
+
+ELASTIC (W, E, N, S)
+
+INDENT "none"
+
+END asm_head
+
+
+BOX cbl_head
+
+AUTHOR "Fridtjof Weigel <fred_weigel@hotmail.com>"
+REVISION "1.0"
+REVDATE "Tue Nov 12 11:59:32 EST 2013"
+CREATED "Tue Nov 12 11:59:32 EST 2013"
+
+SAMPLE
+      ******************************************************************
+      *                                                                *
+      * USE FOR COBOL                                                  *
+      *                                                                *
+      ******************************************************************
+ENDS
+
+SHAPES {
+   NW ("      *") NE ("*")
+    W ("      *")  E ("*")
+   SW ("      *") SE ("*")
+   N ("****************************************************************")
+   S ("****************************************************************")
+}
+
+PADDING {
+  ALL 1
+}
+
+ELASTIC (W, E, N, S)
+
+INDENT "none"
+
+END cbl_head
+
+
+BOX sh_head
+
+AUTHOR "Fridtjof Weigel <fred_weigel@hotmail.com>"
+REVISION "1.0"
+REVDATE "Tue Nov 12 11:59:32 EST 2013"
+CREATED "Tue Nov 12 11:59:32 EST 2013"
+
+SAMPLE
+########################################################################
+#                                                                      #
+# Use for shell, awk, dc, make, minicom, perl, ratfor, sed, tcl        #
+#                                                                      #
+########################################################################
+ENDS
+
+SHAPES {
+  NW ("#") NE ("#")
+   W ("#")  E ("#")
+  SW ("#") SE ("#")
+  N ("######################################################################")
+  S ("######################################################################")
+}
+
+PADDING {
+  ALL 1
+}
+
+ELASTIC (W, E, N, S)
+
+INDENT "none"
+
+END sh_head
+
+
+BOX p_head
+
+AUTHOR "Fridtjof Weigel <fred_weigel@hotmail.com>"
+REVISION "1.0"
+REVDATE "Wed Apr 24 16:04:03 EDT 2013"
+CREATED "Wed Apr 24 16:04:03 EDT 2013"
+
+SAMPLE
+(**********************************************************************
+ *                                                                    *
+ * Use for Pascal                                                     *
+ *                                                                    *
+ **********************************************************************)
+ENDS
+
+SHAPES {
+  NW ("(*") NE ("* ")
+   W (" *")  E ("* ")
+  SW (" *") SE ("*)")
+  N ("********************************************************************")
+  S ("********************************************************************")
+}
+
+DELIMITER ?"
+REPLACE "\*\)" WITH "*\)"               # quote closing comment tags
+REVERSE "\*\\\)" TO "*)"
+
+PADDING {
+  ALL 1
+}
+
+ELASTIC (W, E, N, S)
+
+INDENT "none"
+
+END p_head

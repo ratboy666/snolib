@@ -1,0 +1,54 @@
+<h1>LOG - LOG Functions</h1>
+
+[[CLOG(X)]] will return the common log (base 10) of [[X]].<br>
+[[LOGB(X,B)]] will return the logarithm of [[X]] to the base [[B]].<br>
+[[LOGB(X)]] will return the natural logarithm of [[X]] (same as
+[[LOG(X)]]).
+
+<h2>Uses</h2>
+<a href="DEXP.html">DEXP</a>
+
+<<INCLUDES>>=
+-INCLUDE 'DEXP.INC'
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'LOG.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL LOG
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                      #        #######   #####                        *
+*                      #        #     #  #     #                       *
+*                      #        #     #  #                             *
+*                      #        #     #  #  ####                       *
+*                      #        #     #  #     #                       *
+*                      #        #     #  #     #                       *
+*                      #######  #######   #####                        *
+*                                                                      *
+* LOG                       LOG FUNCTIONS                              *
+*                                                                      *
+************************************************************************
+*
+* LOG.lss
+*
+         LN_10    = 2.3025850929940456840
+         NAT_BASE = 2.718281828459045
+         DEXP('CLOG(X) = LOG(X) / LN_10')
+         DEXP('LOGB(X,B) = NE(B, 0) LOG(X) / LOG(B) ;'
++             'LOGB      = EQ(B, 0) LOG(X)          ;')
+*
+LOG_END
+*
+* CE: .MSNOBOL4;
+@

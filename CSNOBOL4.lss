@@ -1,0 +1,488 @@
+<h1>CSNOBOL4 - Functions specific to CSNOBOL4</h1>
+
+These are functions specific to [[CSNOBOL4]] and Unix or Unix-like
+systems.
+
+We use FFI to access io_getfp() to retrieve the FILE * for a unit.
+This allows proper implementation of pipe i/o where CSNOBOL4 1.5
+has problems.
+
+[[FORK()]], [[WAIT()]], and [[SPRINTF()]] are in the CSNOBOL4 image.
+[[FTN_FORMAT()]] is in an external module. [[IO_GETFP()]] is also in
+the image, and [[FILENO()]] is available in [[clib]].
+
+<<INCLUDES>>=
+-INCLUDE 'FFI.INC'
+@
+
+<<CSNOBOL4>>=
+-SNOBOL SLOAD('BQ.INC')
+-SNOBOL SLOAD('DYNAMIC.INC')
+-SNOBOL SLOAD('WRAPPER.INC')
+-SNOBOL SLOAD('CRACK.INC')
+-SNOBOL SLOAD('SEQ.INC')
+-SNOBOL TERMINAL = 'CSNOBOL4 (MON NOV 11 12:50:40 EST 2013)'
+@
+
+<<CSNOBOL4>>=
+-EMBED C 'format'
+@
+
+<<CSNOBOL4,TYPE=C>>=
+-SNOBOL WRAPPER_STARTFILE(.EMBED)
+
+/* Adds FORTRAN IV FORMAT to CSNOBOL4 */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <errno.h>
+
+static int status;
+
+static int get_errno(void)
+{
+    return errno;
+}
+
+-SNOBOL C_WRAPPER_PROTO('GET_ERRNO()INTEGER', .EMBED)
+
+static int clear_errno(void)
+{
+    errno = 0;
+}
+
+-SNOBOL C_WRAPPER_PROTO('CLEAR_ERRNO()', .EMBED)
+
+static int waitpid_(int pid, int options)
+{
+    return waitpid(pid, &status, options);
+}
+
+-SNOBOL C_WRAPPER_PROTO('WAITPID_(INTEGER,INTEGER)INTEGER', .EMBED)
+
+static int get_status(void)
+{
+    return status;
+}
+
+-SNOBOL C_WRAPPER_PROTO('GET_STATUS()INTEGER', .EMBED)
+
+static int format(char **in_s, char **fmt, char **buf, char **limit,
+           char **base, int reps, int level)
+{
+    int w, r;
+    char *bfmt = *fmt;
+    char c;
+    int aseen = 0;
+
+    for (; reps; --reps) {
+	for (*fmt = bfmt; **fmt;) {
+	    while ((**fmt == ',') || (**fmt == ' ')) {
+		++*fmt;
+	    }
+	    if (isdigit(**fmt)) {
+		r = 0;
+		while (isdigit(**fmt)) {
+		    r = r * 10 + **fmt - '0';
+		    ++*fmt;
+		}
+		r &= 0xff;
+	    } else {
+		r = -1;
+	    }
+	    c = **fmt;
+	    ++*fmt;
+	    switch (c) {
+		case ',': break;
+		case 'X':
+		    if (r < 0) {
+			r = 1;
+		    }
+		    for (; r; --r) {
+			**buf = ' ';
+			++*buf;
+		    }
+		    break;
+		case 'A':
+		    ++aseen;
+		    if (isdigit(**fmt)) {
+			w = 0;
+			while (isdigit(**fmt)) {
+			    w = w * 10 + **fmt - '0';
+			    ++*fmt;
+			}
+		    } else {
+			w = 1;
+		    }
+		    if (r < 0) {
+			r = 1;
+		    }
+		    r *= w;
+		    for (; r; --r) {
+			if (**in_s == 0) {
+			    break;
+			}
+			**buf = **in_s;
+			++*buf;
+			++*in_s;
+		    }
+		    for (; r; --r) {
+			**buf = ' ';
+			++*buf;
+		    }
+		    break;
+		case '/':
+		    if (r < 0) {
+			r = 1;
+		    }
+		    for (; r; --r) {
+			**buf = '\n';
+			++*buf;
+			*base = *buf;
+		    }
+		    break;
+		case '\'':
+		    for (;;) {
+			if (**fmt == 0) {
+			    fprintf(stderr,
+                   "ftn_format: missing close \' in string constant\n");
+			    return 1;
+			}
+			if (**fmt == '\'') {
+			    ++*fmt;
+			    if (**fmt == '\'') {
+				**buf = '\'';
+				++*buf;
+				++*fmt;
+			    } else {
+				break;
+			    }
+			} else {
+			    **buf = **fmt;
+			    ++*buf;
+			    ++*fmt;
+			}
+		    }
+		    break;
+		case 'H':
+		    if (r == 0) {
+			break;
+		    }
+		    for (; r; --r) {
+			if (**fmt == 0) {
+			    fprintf(stderr,
+                          "ftn_format: Hollerith constant too short\n");
+			    return 1;
+			}
+			**buf = **fmt;
+			++*buf;
+			++*fmt;
+		    }
+		    break;
+		case 'T': /* T TL TR */
+		    if (**fmt == 'R') {
+			c = 'R';
+			++*fmt;
+		    } else if (**fmt == 'L') {
+			c = 'L';
+			++*fmt;
+		    }
+		    if (isdigit(**fmt)) {
+			w = 0;
+			while (isdigit(**fmt)) {
+			    w = w * 10 + **fmt - '0';
+			    ++*fmt;
+			}
+		    } else {
+			w = 1;
+		    }
+		    if (c == 'L') {
+			*buf -= w;
+		    } else if (c == 'R') {
+			*buf += w;
+		    } else {
+			*buf = *base + w - 1;
+		    }
+		    break;
+		case ')':
+		    if (**in_s == 0) {
+			return 0;
+		    }
+		    if ((level == 1) && **in_s) {
+			reps = 2;
+			goto btm;
+		    }
+		    if ((level > 1) && (reps > 1)) {
+			goto btm;
+		    }
+		    if ((level > 1) && (reps < 0) && (aseen == 0)) {
+			return 0;
+		    }
+		    goto btm;
+		    return 0;
+		case '(':
+		    r = format(in_s, fmt, buf, limit, base,
+			       r, level + 1);
+		    if (r) {
+			return r;
+		    }
+		    break;
+		default:
+		    if (c == 0) {
+			fprintf(stderr,
+                               "ftn_format: premature end of format\n");
+		    } else {
+			fprintf(stderr,
+                           "ftn_format: bad format character: %c\n", c);
+		    }
+		    return 1;
+	    }
+	    if (*limit < *buf) {
+		*limit = *buf;
+	    }
+	}
+btm: ;
+    }
+    return 0;
+}
+
+static char *ftn_format(char *s, char *f)
+{
+    char *in_s, *fmt, *buf, *limit, *base, *b;
+    int r;
+
+    /* format state */
+    base = malloc(4096);
+    fmt = f;
+    in_s = s;
+    buf = base;
+    limit = base;
+    b = base;
+
+    for (r = 0; r < 4096; ++r) {
+	base[r] = ' ';
+    }
+    if (*fmt != '(') {
+	fprintf(stderr, "ftn_format: missing begin (\n");
+	goto err;
+    }
+    if (*(fmt + strlen(fmt) - 1)  != ')') {
+	fprintf(stderr, "ftn_format: missing end )\n");
+	goto err;
+    }
+
+    ++fmt;
+    r = format(&in_s, &fmt, &buf, &limit, &b, 1, 1);
+    if (r == 0) {
+	*limit = 0;
+	return base;
+    }
+err:
+    free(base);
+    return NULL;
+}
+
+/* FTN_FORMAT(STRING,STRING)STRING_FREE
+ *
+ * First STRING is the FORMAT, second is the FORMAT
+ */
+FTN_FORMAT( LA_ALIST ) LA_DCL
+{
+    char *result;
+    char data[4096];
+    char format[1024];
+    getstring(LA_PTR(0), format, sizeof(format));
+    getstring(LA_PTR(1), data, sizeof(data));
+    result = ftn_format(data, format);
+    if (result == NULL)
+	RETFAIL;
+    RETSTR_FREE(result);
+}
+-END
+@
+
+<<CSNOBOL4>>=
+-SNOBOL DYNAMIC_DEBUG = 1
+-SNOBOL COMPILE_DYNAMIC(format) :F(ERROR) ;
+-SNOBOL OBJECTS = format ; OBJECTS '.c' = '.o'
+-SNOBOL LINK_DYNAMIC('./format', OBJECTS) :F(ERROR) ;
+-CMNT ERASE TEMPORARY FILES
+-CMNT     WE DON'T NEED THE C BITS, OR THE OBJECT FILES ANYMORE.
+-CMNT     ALL WE REQUIRE IS FORMAT.SO
+-SNOBOL A = CRACK(format ' ' OBJECTS, ' ')
+-SNOBOL SEQ(' DELETE(A<K>) ', .K)
+@
+
+[[FORK()]] copies the current process, and returns the pid (process
+identifier) of the new process. In the child, it returns 0.
+
+<<CSNOBOL4>>=
+         LOAD('FORK()INTEGER')
+@
+
+[[WAIT()]] waits for the completion of a child process. It returns the
+pid of the child process that has terminated, or negative on error.
+
+<<CSNOBOL4>>=
+         LOAD('WAIT()INTEGER')
+@
+
+To exit a child process, Unix supplies [[exit()]]. However, [[EXIT()]]
+causes execution of new image in [[CSNOBOL4]]. To exit a process,
+assign the result status to [[&amp;CODE]] and branch to [[END]].
+
+[[
+    &amp;CODE = 0  :(END)
+]]
+
+[[SPRINTF(F,V)]] formats an [[INTEGER]] or [[REAL]] value [[V]] using
+the [[C]] format [[F]] and returns the result as a string. For example:
+
+[[
+    SPRINTF("%d", I)
+    SPRINTF("%g", X)
+]]
+
+<<CSNOBOL4>>=
+         LOAD('SPRINTF(STRING,)STRING')
+@
+
+[[FTN_FORMAT(F, S)]] formats string [[S]] using [[FORTRAN IV FORMAT]]
+[[F]] and returns the result as a string. [[CSNOBOL4]] doesn't (natively)
+support [[FORTRAN IV FORMAT]] but this function provides the missing
+support.
+
+FORMAT codes supported are
+
+[[
+    N H        Hollerith
+    N A M      Alphanumeric
+    N X        Spacing
+    T N        Tab to column N
+    TL N       Tab left by N
+    TR N       Tab right by N
+    N /        Record end
+    'TEXT'     Use '' for single '
+    N ( ... )  Grouping with repetition
+]]
+
+Other [[FORTRAN IV]] conversion (I, F, etc.) not supported. FORMAT and
+DATA limited to 1023 characters. Z conversion is not supported.
+
+When outputing to a printer, FORTRAN convention is that the first
+character of the line controls line spacing and paging.The [[asa]]
+and [[asapdf]] utilities interpret such print files. Generally, a
+printer page is 132 columns by 60 lines. [[asa]] specifies 4 characters
+for control:
+
+[[
+    ' '   Single line space
+    '0'   Double line space
+    '1'   New page
+    '+'   Overprint line
+]]
+
+The [[asapdf]] utility takes an [[ASA]] file, and encodes to [[PDF]].
+[[asapdf]] adds the following line controls:
+
+[[
+    '-'   Triple line space (IBM extension)
+    'H'   Half line adance
+    'R'   No line advance, print RED
+    'G'   No line advance, print GREEN
+    'B'   No line advance, print BLUE
+    'r'   Advance, print RED
+    'g'   Advance, print GREEN
+    'b'   Advance, print BLUE
+    '^'   Overprint line, adding 127 to characters
+]]
+
+MAINBOL default formats
+
+[[
+    OUTPUT  (1X,132A1)
+    CARD    (80A1)
+]]
+
+<<CSNOBOL4>>=
+         LOAD('FTN_FORMAT(STRING,STRING)STRING', 'format.so')
+         LOAD('GET_ERRNO()INTEGER', 'format.so')
+         LOAD('CLEAR_ERRNO()', 'format.so')
+         LOAD('WAITPID_(INTEGER,INTEGER)INTEGER', 'format.so')
+         LOAD('GET_STATUS()INTEGER', 'format.so')
+@
+
+We want to retrieve the FILE * for a unit. This can be used to perform
+other forms of i/o, or to retrieve the underlying file descriptor.
+Use FFI to access [[io_getfp()]] and [[fileno()]]. There may be a
+bug in CSNOBOL4 1.5. When doing I/O using [[fgets()]] (normal line
+oriented) to a bi-direction pipe, we get errno 29 (ESPIPE) errors,
+indicating that seek on the pipe failed. Of course, we can't seek
+on the pipe; this is done solely to separate read and write. But,
+there may be a timing issue because there are two separate processes
+involved.
+
+<<CSNOBOL4>>=
+         IO_GETFP_FFI = FFI_NEW('P', 'I')
+         FFI_SET_CALLP(IO_GETFP_FFI, DLSYM(0, 'io_getfp'))
+         FILENO_FFI = FFI_NEW('I', 'P')
+         FFI_SET_CALLP(FILENO_FFI, DLSYM(0, 'fileno'))
+         DEFINE('IO_GETFP(UNIT)')
+         DEFINE('FILENO(FP)')                            :(CSNOBOL4_END)
+*
+IO_GETFP FFI_PAR_N_INTEGER(IO_GETFP_FFI, 1, UNIT)
+         IO_GETFP = FFI_CALL_PTR(IO_GETFP_FFI)                 :(RETURN)
+*
+FILENO   FFI_PAR_N_PTR(FILENO_FFI, 1, FP)
+         FILENO = FFI_CALL_INTEGER(FILENO_FFI)                 :(RETURN)
+*
+CSNOBOL4_END
+@
+
+Open /dev/stdout (fd 1) as unit 10. Write to new I/O variable.
+Obtain the FILE * (file pointer) for unit 10. Obtain the underlying
+FD for the file pointer. Display both file pointer and file number,
+and confirm that FD is 1.
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'CSNOBOL4.INC'
+         &CODE = 1
+         OUTPUT(.T_OUT, 10,, '/dev/stdout')
+         T_OUT = 'HELLO, WORLD'
+         FP = IO_GETFP(10)
+         FD = FILENO(FP)
+         OUTPUT = 'FILE * = ' FP
+         OUTPUT = 'FD     = ' FD
+         EQ(FD, 1)                                               :F(END)
+         &CODE = 0
+END
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL CSNOBOL4
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*  #####    #####   #     #  #######  ######   #######  #        #   # *
+* #     #  #     #  ##    #  #     #  #     #  #     #  #        #   # *
+* #        #        # #   #  #     #  #     #  #     #  #        #   # *
+* #         #####   #  #  #  #     #  ######   #     #  #        ##### *
+* #              #  #   # #  #     #  #     #  #     #  #            # *
+* #     #  #     #  #    ##  #     #  #     #  #     #  #            # *
+*  #####    #####   #     #  #######  ######   #######  #######      # *
+*                                                                      *
+* CSNOBOL4         FUNCTIONS SPECIFIC TO CSNOBOL4                      *
+*                                                                      *
+************************************************************************
+*
+* CSNOBOL4.lss
+*
+<<CSNOBOL4>>
+*
+* CE: .MSNOBOL4;
+@

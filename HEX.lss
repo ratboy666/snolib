@@ -1,0 +1,62 @@
+<h1>HEX - Return hex for string</h1>
+
+[[HEX(S)]] will return the hexadecimal (internal) representation of
+the string [[S]].
+
+<h2>Uses</h2>
+<a href="BLEND.html">BLEND</a>
+
+<h2>See Also</h2>
+<a href="CH.html">CH</a>
+
+<<INCLUDES>>=
+-INCLUDE 'BLEND.INC'
+@
+
+<<HEX>>=
+         DEFINE('HEX(S)')
+*
+         H = '0123456789ABCDEF'
+         HEX_2ND = DUPL(H, 16)
+HEX_1    H LEN(1) . T =                                      :F(HEX_END)
+         HEX_1ST = HEX_1ST DUPL(T, 16)                          :(HEX_1)
+HEX      HEX = BLEND(REPLACE(S, &ALPHABET, HEX_1ST),
++           REPLACE(S, &ALPHABET, HEX_2ND))                    :(RETURN)
+*
+HEX_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'HEX.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL HEX
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                      #     #  #######  #     #                       *
+*                      #     #  #         #   #                        *
+*                      #     #  #          # #                         *
+*                      #######  #####       #                          *
+*                      #     #  #          # #                         *
+*                      #     #  #         #   #                        *
+*                      #     #  #######  #     #                       *
+*                                                                      *
+* HEX                    RETURN HEX FOR STRING                         *
+*                                                                      *
+************************************************************************
+*
+* HEX.lss
+*
+<<HEX>>
+*
+* CE: .MSNOBOL4;
+@

@@ -1,0 +1,52 @@
+<h1>LPROG - Length of program</h1>
+
+Profiling and other tasks need to know the number of statements in
+the program. The [[LPROG()]] function supplies this information.
+Each statement compiled is given a new statement number. This is
+exploited by returning the statement number of a new statement.
+
+[[LPROG()]] will return the length (i.e., the number of statements)
+in the SNOBOL4 program in which it is called. Every use of [[CODE()]]
+will increase this number, so call this early during execution.
+
+<<LPROG>>=
+         DEFINE('LPROG()')                                  :(LPROG_END)
+*
+LPROG                                :<CODE(' LPROG = &STNO :(RETURN)')>
+*
+LPROG_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'LPROG.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+-STITL LPROG
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*               #        ######   ######   #######   #####             *
+*               #        #     #  #     #  #     #  #     #            *
+*               #        #     #  #     #  #     #  #                  *
+*               #        ######   ######   #     #  #  ####            *
+*               #        #        #   #    #     #  #     #            *
+*               #        #        #    #   #     #  #     #            *
+*               #######  #        #     #  #######   #####             *
+*                                                                      *
+* LPROG                    LENGTH OF PROGRAM                           *
+*                                                                      *
+************************************************************************
+*
+* LPROG.lss
+*
+<<LPROG>>
+*
+* CE: .MSNOBOL4;
+@

@@ -1,0 +1,117 @@
+<h1>FASTBAL - Pattern to match balanced strings</h1>
+
+[[FASTBAL(PARENS,QTS,S)]] will return a pattern which will match all
+non-NULL balanced strings where [[PARENS]] is used to specify paired
+brackets in nested fashion and [[QTS]] specifies characters to be
+used as quotes.  Bracket characters within quotes are ignored for
+balancing purposes.  [[S]] specifies other special characters that
+BREAK should stop at.
+
+[[FASTBAL('(<[]>)',"'" '"',',)')]] will scan for arguments in a
+function call in SNOBOL4 source.
+
+<h2>Uses</h2>
+<a href="UNIQUE.html">UNIQUE</a>
+
+<h2>See Also</h2>
+<a href="BALX.html">BALX</a>
+
+<<INCLUDES>>=
+-INCLUDE 'UNIQUE.INC'
+@
+
+<<FASTBAL>>=
+         DEFINE('FASTBAL(PARENS,QTS,S)NAME,IBAL,SPCHARS,ELEM'
++               ',LPS,Q,LP,RP')                           :(FASTBAL_END)
+*
+FASTBAL  NAME = UNIQUE()
+         IBAL = CONVERT(NAME, 'EXPRESSION')
+         IBAL = DIFFER(S, NULL) FASTBAL(PARENS, QTS)
+         SPCHARS = PARENS QTS S
+@
+
+Anything not starting with [[PARENS]] or [[QTS]] to any special
+
+'ABCD,' (NOTANY(',)') BREAK(',)')) $ TERMINAL -> ABCD
+
+<<FASTBAL>>=
+         ELEM = NOTANY(PARENS QTS) BREAK(SPCHARS)
+@
+
+Add quotes:
+
+'ABCD' (Q BREAK(Q) Q) $ TERMINAL -> 'ABCD'
+
+<<FASTBAL>>=
+FASTBAL_1
+         QTS LEN(1) . Q  =                                 :F(FASTBAL_2)
+         ELEM = Q BREAK(Q) Q | ELEM                         :(FASTBAL_1)
+@
+
+Add parentheses. First peel off the first character to [[LP]], the
+middle to [[PARENS]], and the last to [[RP]]. Then, add the expression
+[ recurse ]. [[IBAL]] is an expression that refers to a unique variable
+(which hasn't been set to anything as yet).
+
+<<FASTBAL>>=
+FASTBAL_2
+         PARENS LEN(1) . LP RTAB(1) . PARENS LEN(1) . RP   :F(FASTBAL_3)
+         ELEM = LP IBAL RP | ELEM                           :(FASTBAL_2)
+@
+
+Build the pattern - any characters up to a special, followed by an
+arbitrary number of [[ELEM]]s (which may be zero). The shortest will
+be returned.
+
+'ABC,DEF' BREAK(',()') $ TERMINAL -> ABC
+
+This pattern is then assigned to the variable referenced by name
+(assigned a unique name, eg. [[U1_]]), which then "fills in" the
+recursive part.
+
+'X,Y) ((FASTBAL('()', '"', ',)')) ')') $ TERMINAL -> X,Y)
+
+'X,Y) ((FASTBAL('()', '"', ',)'))) $ TERMINAL -> X
+
+<<FASTBAL>>=
+FASTBAL_3
+         FASTBAL = BREAK(SPCHARS) ARBNO(ELEM)
+         $NAME = FASTBAL                                       :(RETURN)
+*
+FASTBAL_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'FASTBAL.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL FASTBAL
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*    #######     #      #####   #######  ######      #     #           *
+*    #          # #    #     #     #     #     #    # #    #           *
+*    #         #   #   #           #     #     #   #   #   #           *
+*    #####    #     #   #####      #     ######   #     #  #           *
+*    #        #######        #     #     #     #  #######  #           *
+*    #        #     #  #     #     #     #     #  #     #  #           *
+*    #        #     #   #####      #     ######   #     #  #######     *
+*                                                                      *
+* FASTBAL                                                              *
+*                                                                      *
+************************************************************************
+*
+* FASTBAL.lss
+*
+<<FASTBAL>>
+*
+* CE: .MSNOBOL4;
+@

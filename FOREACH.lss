@@ -1,0 +1,86 @@
+<h1>FOREACH - Apply procedure to each element</h1>
+
+[[foreach(x,proc)]] applies procedure [[proc]] to each element of
+[[x]], where [[x]] may be an array, table or expression that
+produces a sequence of values.
+
+<<foreach>>=
+# Apply procedure proc to each element of x, where x may be an array,
+# table, or expression that produces a sequence of values.
+#
+procedure foreach(x, proc) a, i {
+   i = datatype(x)
+   if (i :: 'ARRAY') {
+      i = 1
+      prototype(x) ? fence && break(':') . i
+      while (a = x[i]) {
+	 if (~apply(proc, a))
+	    freturn
+	 i = i + 1
+      }
+   } else if (i :: 'TABLE') {
+      if (~(x = convert(x, 'ARRAY')))
+	 freturn
+      x = sort(x)
+      i = 1
+      while (a = x[i, 2]) {
+	 if (~apply(proc, a, x[i, 1]))
+	    freturn
+	 i = i + 1
+      }
+   } else if (i :: 'EXPRESSION') {
+      while (a = eval(x)) {
+	 if (~apply(proc, a))
+	    freturn
+      }
+   } else {
+      if (apply(proc, x))
+	 return
+      else
+	 freturn
+   }
+}
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'FOREACH.INC'
+-INCLUDE 'DEXP.INC'
+-INCLUDE 'CRACK.INC'
+         &CODE = 1
+         X = %'1,2,3'
+         DEXP('F(X) = (S = S + X)')
+         S = 0
+         FOREACH(X, .F)
+         EQ(S, 6)                                                :F(END)
+         &CODE = 0                                                :(END)
+END
+@
+
+<<>>=
+-STITL FOREACH
+-EJECT
+#
+########################################################################
+#                                                                      #
+#                                                                      #
+#    #######  #######  ######   #######     #      #####   #     #     #
+#    #        #     #  #     #  #          # #    #     #  #     #     #
+#    #        #     #  #     #  #         #   #   #        #     #     #
+#    #####    #     #  ######   #####    #     #  #        #######     #
+#    #        #     #  #   #    #        #######  #        #     #     #
+#    #        #     #  #    #   #        #     #  #     #  #     #     #
+#    #        #######  #     #  #######  #     #   #####   #     #     #
+#                                                                      #
+# FOREACH            APPLY PROC TO EACH ELEMENT                        #
+#                                                                      #
+########################################################################
+#
+# FOREACH.lss
+#
+
+<<foreach>>
+
+# ce: .msnocone;
+@

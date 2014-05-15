@@ -1,0 +1,130 @@
+<h1>HTMLESC - HTML, JS and URL escaping</h1>
+
+HTML (web) escaping. Provides three functions to escape a string in
+HTML, JS and URL encodings.
+
+<h2>Uses</h2>
+<a href="REPL.html">REPL</a><br>
+<a href="SDIFF.html">SDIFF</a><br>
+<a href="HEX.html">HEX</a><br>
+<a href="CH.html">CH</a><br>
+<a href="CHARS.html">HEX</a>
+
+<<INCLUDES>>=
+-INCLUDE 'REPL.INC'
+-INCLUDE 'SDIFF.INC'
+-INCLUDE 'HEX.INC'
+-INCLUDE 'CH.INC'
+-INCLUDE 'CHARS.INC'
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'HTMLESC.INC'
+         &CODE = 1
+         IDENT(HTML_ESCAPE('&<>"' "'"), '&amp;&lt;&gt;&quot;&#39;')
++                                                                :F(END)
+         IDENT(JS_ESCAPE('\' "'" '"' CHARS_NL CHARS_CR),
++                        '\\' "\'" '\"\n\r')                     :F(END)
+         IDENT(URL_ESCAPE(' +!@#'), '+%2B%21%40%23')             :F(END)
+         IDENT(URL_DECODE('AB%20+%21'), 'AB  !')                 :F(END)
+         &CODE = 0
+END
+@
+
+Escape HTML characters. Some claim that > never has to be escaped.
+Others claim that / should be escaped. Note 39 is decimal!
+
+<<HTML_ESCAPE>>=
+         DEFINE('HTML_ESCAPE(S)')                     :(END_HTML_ESCAPE)
+*
+HTML_ESCAPE
+         S = REPL(S, '&', '&amp;')
+         S = REPL(S, '<', '&lt;',)
+         S = REPL(S, '>', '&gt;',)
+         S = REPL(S, '"', '&quot;')
+         S = REPL(S, "'", '&#39;')
+         HTML_ESCAPE = S                                       :(RETURN)
+*
+END_HTML_ESCAPE
+@
+
+Escape JS characters.
+
+<<JS_ESCAPE>>=
+         DEFINE('JS_ESCAPE(S)')                         :(END_JS_ESCAPE)
+*
+JS_ESCAPE
+         S = REPL(S, '\', '\\')
+         S = REPL(S, "'", "\'")
+         S = REPL(S, '"', '\"')
+         S = REPL(S, CHARS_NL, '\n')
+         S = REPL(S, CHARS_CR, '\r')
+         JS_ESCAPE = S                                         :(RETURN)
+*
+END_JS_ESCAPE
+@
+
+Escape URL characters. Space could be escaped as %20. We complement
+the characters allowed, yielding the characters that need to be
+escaped by doing a set difference between the complete alphabet and
+the good character set. This is done at function definition time
+(into global [[URL_BAD]]).
+
+<<URL_ESCAPE>>=
+         DEFINE('URL_ESCAPE(S)L,C,R')
+         DEFINE('URL_DECODE(S)L,C,R')
+         URL_BAD = SDIFF(&ALPHABET, &UCASE &LCASE &DIGITS '_-~.')
+         URL_HEX = ANY("0123456789abcdefABCDEF")
++                                                      :(END_URL_ESCAPE)
+*
+URL_DECODE_2
+         S = R
+URL_DECODE
+         C =
+         S BREAK("+%") . L LEN(1) . C REM . R
+         URL_DECODE = IDENT(C) URL_DECODE S                   :S(RETURN)
+         URL_DECODE = IDENT(C, '+') URL_DECODE L ' '    :S(URL_DECODE_2)
+         URL_DECODE = URL_DECODE L
+         R (URL_HEX URL_HEX) . C =                      :F(URL_DECODE_2)
+         URL_DECODE = URL_DECODE CH(C)                   :(URL_DECODE_2)
+*
+URL_ESCAPE
+         S BREAK(URL_BAD) . L LEN(1) . C REM . R             :F(URLESC2)
+         URL_ESCAPE = IDENT(C, ' ') URL_ESCAPE L '+'
+         URL_ESCAPE = DIFFER(C, ' ') URL_ESCAPE L '%' HEX(C)
+         S = R                                             :(URL_ESCAPE)
+URLESC2  URL_ESCAPE = URL_ESCAPE S                             :(RETURN)
+*
+END_URL_ESCAPE
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL HTMLESC
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*    #     #  #######  #     #  #        #######   #####    #####      *
+*    #     #     #     ##   ##  #        #        #     #  #     #     *
+*    #     #     #     # # # #  #        #        #        #           *
+*    #######     #     #  #  #  #        #####     #####   #           *
+*    #     #     #     #     #  #        #              #  #           *
+*    #     #     #     #     #  #        #        #     #  #     #     *
+*    #     #     #     #     #  #######  #######   #####    #####      *
+*                                                                      *
+* HTMLESC             HTML (JS, URL) ESCAPING                          *
+*                                                                      *
+************************************************************************
+*
+* HTMLESC.lss
+*
+<<HTML_ESCAPE>>
+*
+<<JS_ESCAPE>>
+*
+<<URL_ESCAPE>>
+*
+* CE: .MSNOBOL4;

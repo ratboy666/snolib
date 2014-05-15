@@ -1,0 +1,88 @@
+<h1>BQ - Execute a shell command line and capture stdout</h1>
+
+Like [[SHELL]] backquotes (hence the name).  Optional second arg is
+string to use to separate lines.
+
+This doesn't work when [[DDT()]] is used. The [[INPUT()]] fails
+when traced.  Previously, it failed when garbage collect occurred,
+but that has been fixed. To fix this, [[BQ()]] is a wrapper which
+disables [[DDT()]] and then calls the 'real' function [[BQ2()]].
+
+<h2>See Also</h2>
+<a href="DDT.html">DDT</a>
+
+<<BQ>>=
+         DEFINE('BQ(COMMAND,OFS)DDTF')
+         DEFINE('BQ2(COMMAND,OFS)X,UNIT')                      :(BQ_END)
+*
+@
+
+[[DDT_ACTIVE]] is set if [[DDT()]] is active. If [[DDT()]] is not
+active, or hasn't been loaded at all, [[DDT_ACTIVE]] will evaluate to
+[[NULL]].  Note that SNOBOL4 will not complain about a missing function
+unless we actually try to execute it. Thus, this works whether or not
+[[DDT()]] is actually in use. [[BQ2()]] may succeed or fail. In both
+cases, we want to re-enable [[DDT()]] if it was loaded and active,
+and pass the success or failure to the caller of [[BQ()]].
+
+<<BQ>>=
+BQ       DDTF = DDT_ACTIVE
+         NE(DDTF) DDT_SUSPEND()
+         BQ = BQ2(COMMAND, OFS)                                  :F(BQ3)
+         NE(DDTF) DDT_RESUME()                                 :(RETURN)
+BQ3      NE(DDTF) DDT_RESUME()                                :(FRETURN)
+@
+
+The actual [[BQ]] implementation. Open the command using [[PIPE open]].
+Read lines and assemble the response. Use space [[' ']] as a separator
+if no explicit separator was provided.
+
+<<BQ>>=
+BQ2      UNIT = IO_FINDUNIT()                                :F(FRETURN)
+         INPUT(.X, UNIT,, '|' COMMAND)                       :F(FRETURN)
+         OFS = IDENT(OFS) ' '
+         BQ2 = X                                                 :S(BQ4)
+         ENDFILE(UNIT)
+         DETACH(.X)                                           :(FRETURN)
+BQ4      BQ2 = BQ2 OFS X                                         :S(BQ4)
+         ENDFILE(UNIT)
+         DETACH(.X)                                            :(RETURN) 
+*
+BQ_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'BQ.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+-STITL BQ
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                          ######    #####                             *
+*                          #     #  #     #                            *
+*                          #     #  #     #                            *
+*                          ######   #     #                            *
+*                          #     #  #   # #                            *
+*                          #     #  #    #                             *
+*                          ######    #### #                            *
+*                                                                      *
+* BQ          EXECUTE A SHELL COMMAND LINE AND CAPTURE STDOUT          *
+*                                                                      *
+* P BUDNE, JUNE 20, 1994                                               *
+*                                                                      *
+************************************************************************
+*
+* BQ.lss
+*
+<<BQ>>
+*
+* CE: .MSNOBOL4;
+@

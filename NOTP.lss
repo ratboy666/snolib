@@ -1,0 +1,64 @@
+<h1>NOTP - Invert Pattern</h1>
+
+[[NOTP(P)]] will return a pattern which will match the NULL string if
+[[P]] fails and fail if [[P]] matches. If [[P]] aborts, [[NOTP(P)]]
+will also abort.
+
+<h2>Used</h2>
+<a href="STACK.html">STACK</a>
+
+<<INCLUDES>>=
+-INCLUDE 'STACK.INC'
+@
+
+<<NOTP>>=
+         DEFINE('NOTP(P)')                                   :(NOTP_END)
+*
+@
+
+Gimpel's version uses [[*PUSH()]] instead of [[PUSH()]]. I think
+that is wrong.  If pattern [[P]] fails, backtracking will go further
+"left". That would cause extra [[NULL]]s to be pushed which would
+not be [[POP]]ed. Using [[PUSH()]] instead helps.
+
+<<NOTP>>=
+NOTP     NOTP = PUSH() P *?(POP() PUSH(1)) FAIL |
++               *IDENT(POP())                                  :(RETURN)
+*
+NOTP_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'NOTP.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL NOTP
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                   #     #  #######  #######  ######                  *
+*                   ##    #  #     #     #     #     #                 *
+*                   # #   #  #     #     #     #     #                 *
+*                   #  #  #  #     #     #     ######                  *
+*                   #   # #  #     #     #     #                       *
+*                   #    ##  #     #     #     #                       *
+*                   #     #  #######     #     #                       *
+*                                                                      *
+* NOTP                       INVERT PATTERN                            *
+*                                                                      *
+************************************************************************
+*
+* NOTP.lss
+*
+<<NOTP>>
+*
+* CE: .MSNOBOL4;
+@

@@ -1,0 +1,61 @@
+<h1>CH - Hex to String</h1>
+
+CH(HEX) will convert the sequence of hexadecimal digits into the
+corresponding character string. [[CH]] is the inverse of [[HEX]].
+
+<h2>Uses</h2>
+<a href="LOGIC.html">LOGIC</a>
+
+<h2>See Also</h2>
+<a href="HEX.html">HEX</a>
+
+<<INCLUDES>>=
+-INCLUDE 'LOGIC.INC'
+@
+
+<<CH>>=
+         DEFINE('CH(HEX)T,C,N')                                :(CH_END)
+*
+CH       HEX LEN(2) . T =                                     :F(RETURN)
+         C = HI(T)
+         &ALPHABET LEN(C) LEN(1) . C
+         CH = CH C                                                 :(CH)
+*
+CH_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'CH.INC'
+         &CODE = 1
+         IDENT(CH('414243'), 'ABC')                              :F(END)
+         &CODE = 0
+END
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL CH
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                            #####   #     #                           *
+*                           #     #  #     #                           *
+*                           #        #     #                           *
+*                           #        #######                           *
+*                           #        #     #                           *
+*                           #     #  #     #                           *
+*                            #####   #     #                           *
+*                                                                      *
+* CH                         HEX TO STRING                             *
+*                                                                      *
+************************************************************************
+*
+* CH.lss
+*
+<<CH>>
+*
+* CE: .MSNOBOL4;
+@

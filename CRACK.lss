@@ -1,0 +1,81 @@
+<h1>CRACK - String to array</h1>
+
+[[CRACK(S,B)]] cracks string [[S]] at break character [[B]] into
+an array.
+
+As well, unary operator <code>%</code> is defined to produce arrays
+from strings: <code>%'A,B,C'</code> creates a three-element array.
+
+<h2>Uses</h2>
+<a href="COUNT.html">COUNT</a>
+
+<h2>See Also</h2>
+<a href="STROUT.html">STROUT</a>
+
+<<INCLUDES>>=
+-INCLUDE 'COUNT.INC'
+@
+
+<<CRACK>>=
+         DEFINE('CRACK_1(S)P')
+         DEFINE('CRACK(S,B,F)I,PAT,N')
+         DEFINE('CRACK_4(S)')
+         OPSYN('%', 'CRACK_1', 1)                           :(CRACK_END)
+*
+CRACK_1  P = IDENT(P) ','
+         CRACK_1 = CRACK(S, P)                                 :(RETURN)
+*
+CRACK    F = IDENT(F) 'CRACK_4'
+         IDENT(B, NULL)                                      :S(CRACK_3)
+         S RTAB(1) B ABORT | REM . S = S B
+         N = COUNT(S, B)
+         EQ(N, 0)                                             :S(RETURN)
+         CRACK = ARRAY(N)
+         PAT = BREAK(B) . *CRACK<I> LEN(1)
+CRACK_2  I = I + 1
+         S PAT =                                              :F(RETURN)
+         CRACK<I> = APPLY(F, CRACK<I>)             :S(CRACK_2)F(FRETURN)
+CRACK_3  N = SIZE(S)
+         EQ(N, 0)                                             :S(RETURN)
+         CRACK = ARRAY(N)
+         PAT = LEN(1) . *CRACK<I>                             :(CRACK_2)
+*
+CRACK_4  CRACK_4 = S                                           :(RETURN)
+*
+CRACK_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'CRACK.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL CRACK
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*               #####   ######      #      #####   #    #              *
+*              #     #  #     #    # #    #     #  #   #               *
+*              #        #     #   #   #   #        #  #                *
+*              #        ######   #     #  #        ###                 *
+*              #        #   #    #######  #        #  #                *
+*              #     #  #    #   #     #  #     #  #   #               *
+*               #####   #     #  #     #   #####   #    #              *
+*                                                                      *
+* CRACK                    STRING TO ARRAY                             *
+*                                                                      *
+************************************************************************
+*
+* CRACK.lss
+*
+<<CRACK>>
+*
+* CE: .MSNOBOL4;
+@

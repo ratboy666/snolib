@@ -1,0 +1,42 @@
+<h1>DDTCARD - A card with DDT()</h1>
+
+Provide a card containing [[DDT()]]. For use with [[-L]] or [[-M]]
+CSNOBOL4 options.
+
+<<DDTCARD>>=
+         DDT()
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'DDTCARD.INC'
+START    &CODE = 1
+         &CODE = 0
+END START
+@
+
+<<>>=
+-STITL DDTCARD
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*    ######   ######   #######   #####      #     ######   ######      *
+*    #     #  #     #     #     #     #    # #    #     #  #     #     *
+*    #     #  #     #     #     #         #   #   #     #  #     #     *
+*    #     #  #     #     #     #        #     #  ######   #     #     *
+*    #     #  #     #     #     #        #######  #   #    #     #     *
+*    #     #  #     #     #     #     #  #     #  #    #   #     #     *
+*    ######   ######      #      #####   #     #  #     #  ######      *
+*                                                                      *
+* DDTCARD       FOR USE WITH -M (MULTI-FILE) OR -L                     *
+*                                                                      *
+************************************************************************
+*
+* DDTCARD.lss
+*
+<<DDTCARD>>
+*
+* CE: .MSNOBOL4;
+@

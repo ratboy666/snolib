@@ -1,0 +1,48 @@
+<h1>BALREV - Balanced Reverse</h1>
+
+[[BALREV(S)]] returns the balanced reversal of the string [[S]]: characters
+of [[S]] are reversed and parentheses are interchanged. [[BALREV('F(X)')]]
+returns [['(X)F']] instead of [[')X(F']] like a simple reversal.
+
+<<BALREV>>=
+         DEFINE('BALREV(S)')                               :(BALREV_END)
+*
+BALREV   BALREV = REPLACE(REVERSE(S), ')(', '()')              :(RETURN)
+*
+BALREV_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'BALREV.INC'
+         &CODE = 1
+         IDENT(BALREV('F(X)'), '(X)F')                           :F(END)
+         &CODE = 0
+END
+@
+
+<<>>=
+-STITL BALREV
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*           ######      #     #        ######   #######  #     #       *
+*           #     #    # #    #        #     #  #        #     #       *
+*           #     #   #   #   #        #     #  #        #     #       *
+*           ######   #     #  #        ######   #####    #     #       *
+*           #     #  #######  #        #   #    #         #   #        *
+*           #     #  #     #  #        #    #   #          # #         *
+*           ######   #     #  #######  #     #  #######     #          *
+*                                                                      *
+* BALREV                   BALANCED REVERSE                            *
+*                                                                      *
+************************************************************************
+*
+* BALREV.lss
+*
+<<BALREV>>
+*
+* CE: .MSNOBOL4;
+@

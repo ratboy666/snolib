@@ -1,0 +1,60 @@
+<h1>BRKREM - BREAK(S) or REM</h1>
+
+[[BRKREM(S)]] returns a pattern that will behave like BREAK(S)
+if that pattern would succeed and will match the remainder of the
+subject otherwise.
+
+<h2>Uses</h2>
+<a href="SDIFF.html">SDIFF</a>
+
+<<INCLUDES>>=
+-INCLUDE 'SDIFF.INC'
+@
+
+<<BRKREM>>=
+         DEFINE('BRKREM(S)CS')                             :(BRKREM_END)
+*
+BRKREM   BRKREM = IDENT(S) REM                                :S(RETURN)
+         CS = SDIFF(&ALPHABET, S)
+         IDENT(CS)                                            :S(RETURN)
+         BRKREM = RPOS(0) | SPAN(CS) RPOS(0) | BREAK(S)
+                                                               :(RETURN)
+*
+BRKREM_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'BRKREM.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL BRKREM
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                                                                      *
+*         ######   ######   #    #  ######   #######  #     #          *
+*         #     #  #     #  #   #   #     #  #        ##   ##          *
+*         #     #  #     #  #  #    #     #  #        # # # #          *
+*         ######   ######   ###     ######   #####    #  #  #          *
+*         #     #  #   #    #  #    #   #    #        #     #          *
+*         #     #  #    #   #   #   #    #   #        #     #          *
+*         ######   #     #  #    #  #     #  #######  #     #          *
+*                                                                      *
+* BRKREM                   BREAK(S) OR REM                             *
+*                                                                      *
+************************************************************************
+*
+* BRKREM.lss
+*
+<<BRKREM>>
+*
+* CE: .MSNOBOL4;
+@

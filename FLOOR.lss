@@ -1,0 +1,58 @@
+<h1>FLOOR - FLOOR and CEIL functions</h1>
+
+[[FLOOR(X)]] will return the largest integer not greater than [[X]].
+
+[[CEIL(X)]] will return the smallest integer not less than [[X]].
+
+<h2>Uses</h2>
+<a href="DEXP.html">DEXP</a>
+
+<<INCLUDES>>=
+-INCLUDE 'DEXP.INC'
+@
+
+<<FLOOR>>=
+         DEFINE('FLOOR(X)')
+         DEXP('CEIL(X) = -FLOOR(-X)')                       :(FLOOR_END)
+*
+FLOOR    FLOOR = CONVERT(X, 'INTEGER')
+         GE(X, 0)                                             :S(RETURN)
+         FLOOR = NE(X, FLOOR) FLOOR - 1                        :(RETURN)
+*
+FLOOR_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'FLOOR.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL FLOOR
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*              #######  #        #######  #######  ######              *
+*              #        #        #     #  #     #  #     #             *
+*              #        #        #     #  #     #  #     #             *
+*              #####    #        #     #  #     #  ######              *
+*              #        #        #     #  #     #  #   #               *
+*              #        #        #     #  #     #  #    #              *
+*              #        #######  #######  #######  #     #             *
+*                                                                      *
+* FLOOR              FLOOR AND CEIL FUNCTIONS                          *
+*                                                                      *
+************************************************************************
+*
+* FLOOR.lss
+*
+<<FLOOR>>
+*
+* CE: .MSNOBOL4;
+@

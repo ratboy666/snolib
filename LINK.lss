@@ -1,0 +1,75 @@
+<h1>LINK - Define [[LINK]] type</h1>
+
+[[LINK()]] has two members: [[VALUE()]] and [[NEXT()]] and is used
+to represent lists. [[CONS()]], [[CAR()]] and [[CDR()]] are defined
+as synonyms. [[CAAR()]] through [[CDDDR()]] are also defined.
+
+<<LINK>>=
+         DATA('LINK(VALUE,NEXT)')
+         OPSYN('CONS', 'LINK')
+         OPSYN('CAR', 'VALUE')
+         OPSYN('CDR', 'NEXT')
+         DEFINE('CAAR(L)')
+         DEFINE('CDAR(l)')
+         DEFINE('CADR(L)')
+         DEFINE('CDDR(L)')
+         DEFINE('CAAAR(L)')
+         DEFINE('CAADR(L)')
+         DEFINE('CADAR(L)')
+         DEFINE('CADDR(L)')
+         DEFINE('CDAAR(L)')
+         DEFINE('CDADR(L)')
+         DEFINE('CDDAR(L)')
+         DEFINE('CDDDR(L)')
+                                                             :(LINK_END)
+*
+CAAAR    CAAAR = CAR(CAAR(L))                                  :(RETURN)
+CAADR    CAADR = CAR(CADR(L))                                  :(RETURN)
+CADAR    CADAR = CAR(CDAR(L))                                  :(RETURN)
+CADDR    CADDR = CAR(CDDR(L))                                  :(RETURN)
+CDAAR    CDAAR = CDR(CAAR(L))                                  :(RETURN)
+CDADR    CDADR = CDR(CADR(L))                                  :(RETURN)
+CDDAR    CDDAR = CDR(CDAR(L))                                  :(RETURN)
+CDDDR    CDDDR = CDR(CDDR(L))                                  :(RETURN)
+*
+CAAR     CAAR = CAR(CAR(L))                                    :(RETURN)
+CDAR     CDAR = CDR(CAR(L))                                    :(RETURN)
+CADR     CADR = CAR(CDR(L))                                    :(RETURN)
+CDDR     CDDR = CDR(CDR(L))                                    :(RETURN)
+*
+LINK_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'LINK.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+-STITL LINK
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                    #        ###  #     #  #    #                     *
+*                    #         #   ##    #  #   #                      *
+*                    #         #   # #   #  #  #                       *
+*                    #         #   #  #  #  ###                        *
+*                    #         #   #   # #  #  #                       *
+*                    #         #   #    ##  #   #                      *
+*                    #######  ###  #     #  #    #                     *
+*                                                                      *
+* LINK                        LINK TYPE                                *
+*                                                                      *
+************************************************************************
+*
+* LINK.lss
+*
+<<LINK>>
+*
+* CE: .MSNOBOL4;
+@

@@ -1,0 +1,58 @@
+<h1>CATA - Concatenate Arrays</h1>
+
+[[CATA(A1,A2)]] will concatenate the two singly-dimensioned arrays
+[[A1]] and [[A2]]. The arrays must be defined as [['size']] and not
+[['low:high']] or this routine will not work.
+
+<h2>Uses</h2>
+<a href="SEQ.html">SEQ</a>
+
+<<INCLUDES>>=
+-INCLUDE 'SEQ.INC'
+@
+
+<<CATA>>=
+         DEFINE('CATA(A1,A2)I,N1')                           :(CATA_END)
+*
+CATA     N1 = PROTOTYPE(A1)
+         CATA = ARRAY(N1 + PROTOTYPE(A2))
+         SEQ(' CATA<I> = A1<I> ', .I)
+         SEQ(' CATA<N1 + I> = A2<I> ', .I)                     :(RETURN)
+*
+CATA_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'CATA.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL CATA
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                    #####      #     #######     #                    *
+*                   #     #    # #       #       # #                   *
+*                   #         #   #      #      #   #                  *
+*                   #        #     #     #     #     #                 *
+*                   #        #######     #     #######                 *
+*                   #     #  #     #     #     #     #                 *
+*                    #####   #     #     #     #     #                 *
+*                                                                      *
+* CATA                     CONCATENATE ARRAYS                          *
+*                                                                      *
+************************************************************************
+*
+* CATA.lss
+*
+<<CATA>>
+*
+* CE: .MSNOBOL4;
+@
