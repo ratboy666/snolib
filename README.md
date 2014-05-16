@@ -49,6 +49,12 @@ Carefully review Makefile -- especially sudo lines (in deliver).
 File .boxes is for the boxes utility to produce comment boxes
 for SNOBOL4.
 
+File std.mak is the default Makefile rules I use:
+
+export MAKEFILES=std.mak
+
+Where you use the path to std.mak
+
 Building:
 
 First step, create BINDIR, LIBDIR, and CGIDIR (if needed). Add
