@@ -179,26 +179,26 @@ cgi:          cgi.SNO      BQ.INC       CHARS.INC    CRACK.INC    \
                            SEQ.INC
 scan:         scan.SNO     HOST.INC
 
+# Doesn't clean *.so for now
+
 clean:
-	rcsclean
-	-rm *.c p64.h *.o *.bak *.lst *.SNO *.html
+	-rm  p64.h *.o *.bak *.lst *.SNO *.html *.INC *.tst
 	-rm -fr null/ images
 	-rm COBDUMPTEST COBDUMP.so
-
-realclean:
-	$(MAKE) clean
-	-rm *.INC *.so $(P)
 
 deliver: $(P)
 	sudo cp $(P) $(BINDIR)/
 	sudo rm -f $(BINDIR)/ED $(BINDIR)/EDIT
 	sudo rm -f $(BINDIR)/LIST
+	sudo rm -f $(LIBDIR)/ENDCARD
+	sudo rm -f $(LIBDIR)/DDTCARD
 	sudo ln $(BINDIR)/cpmed $(BINDIR)/ED
 	sudo ln $(BINDIR)/cpmed $(BINDIR)/EDIT
 	sudo ln $(BINDIR)/list $(BINDIR)/LIST
 	sudo cp $(L) $(LIBDIR)/
+	sudo chmod +r $(LIBDIR)/*.INC
 	sudo ln -s $(LIBDIR)/ENDCARD.INC $(LIBDIR)/ENDCARD
-	sudo ln -s $(LIBDIR)DDTCARD.INC $(LIBDIR)/DDTCARD
+	sudo ln -s $(LIBDIR)/DDTCARD.INC $(LIBDIR)/DDTCARD
 	sudo cp CGI.tst $(CGIDIR)/cgi
 	sudo cp CGI.tmpl $(CGIDIR)
 	sudo cp jquery-1.11.1.js $(CGIDIR)
