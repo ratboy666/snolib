@@ -231,7 +231,7 @@ but predate SCOOP.
 
 <<unit_test>>=
 #!/usr/bin/bash
-         export "SNOLIB=/home/fred/snolib"
+         export "SNOLIB=/usr/local/snolib"
          exec "/usr/local/bin/snobol4" "-b" "$0" "$@"
 -INCLUDE 'CGI.INC'
 -INCLUDE 'READFILE.INC'

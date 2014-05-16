@@ -4,8 +4,8 @@
 
 # Binary (executables), library (includes) and CGI directories
 
-BINDIR=~/bin
-LIBDIR=~/snolib
+BINDIR=/usr/local/bin
+LIBDIR=/usr/local/snolib
 CGIDIR=/var/www/cgi-bin
 
 # Unit tests
@@ -143,12 +143,13 @@ sc0: bundle snocone
 	chmod +x sc0
 
 bootstrap:
-	cp embed0 $(BINDIR)/embed
-	cp ifs0 $(BINDIR)/ifs
-	cp stangle0 $(BINDIR)/stangle
-	cp sweave0 $(BINDIR)/sweave
-	cp sc0 $(BINDIR)/snocone
-	cp ED4 $(BINDIR)/ED4
+	sudo cp embed0 $(BINDIR)/embed
+	sudo cp ifs0 $(BINDIR)/ifs
+	sudo cp stangle0 $(BINDIR)/stangle
+	sudo cp sweave0 $(BINDIR)/sweave
+	sudo cp sc0 $(BINDIR)/snocone
+	sudo cp ED4 $(BINDIR)/ED4
+	sudo cp g360 $(BINDIR)/g360
 
 # Utilities
 
@@ -189,16 +190,15 @@ realclean:
 	-rm *.INC *.so $(P)
 
 deliver: $(P)
-	cp $(P) $(BINDIR)/
-	rm -f $(BINDIR)/ED
-	rm -f $(BINDIR)/EDIT
-	rm -f $(BINDIR)/LIST
-	ln $(BINDIR)/cpmed $(BINDIR)/ED
-	ln $(BINDIR)/cpmed $(BINDIR)/EDIT
-	ln $(BINDIR)/list $(BINDIR)/LIST
-	#cp $(L) $(LIBDIR)/
-	#ln -s ENDCARD.INC ENDCARD
-	#ln -s DDTCARD.INC DDTCARD
+	sudo cp $(P) $(BINDIR)/
+	sudo rm -f $(BINDIR)/ED $(BINDIR)/EDIT
+	sudo rm -f $(BINDIR)/LIST
+	sudo ln $(BINDIR)/cpmed $(BINDIR)/ED
+	sudo ln $(BINDIR)/cpmed $(BINDIR)/EDIT
+	sudo ln $(BINDIR)/list $(BINDIR)/LIST
+	sudo cp $(L) $(LIBDIR)/
+	sudo ln -s $(LIBDIR)/ENDCARD.INC $(LIBDIR)/ENDCARD
+	sudo ln -s $(LIBDIR)DDTCARD.INC $(LIBDIR)/DDTCARD
 	sudo cp CGI.tst $(CGIDIR)/cgi
 	sudo cp CGI.tmpl $(CGIDIR)
 	sudo cp jquery-1.11.1.js $(CGIDIR)
@@ -258,7 +258,7 @@ docs:         AGT.html      AI.html       ALL.html      AOPA.html     \
               TIME.html     TIMER.html    TPROFILE.html TRUNC.html    \
               uban.html     UNIQUE.html   upcase.html   UTF8.html     \
               WRAPPER.html  LINK.html     HTMLESC.html  TRIMB.html    \
-              PSQL.html     BRKREM.html   HASH.html     cgi.html      \
+              PSQL.html     BRKREM.html   HASH.html                   \
               READL.html    scan.html     FOREACH.html  SCOOP.html    \
               CGI.html      READFILE.html SESSION.html  GCD.html      \
               COMPLEX.html  COOKIE.html   HTMLTMPL.html JSON.html     \
