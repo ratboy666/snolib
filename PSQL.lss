@@ -141,7 +141,6 @@ open for a long duration (for the entire application execution).
 * INSERT. USES PSQL_ESCAPE() TO ENSURE THAT VALUES ARE QUOTED CORRECTLY.
 *
 PSQL_INSERT
-         PSQL_INSERT ←
          T = CONVERT(T, 'ARRAY')
          SEQ(' N = N T<I, 1> ", "; '
 +            ' V = V PSQL_ESCAPE(T<I, 2>) ", " ', .I)
@@ -153,7 +152,6 @@ PSQL_INSERT
 * CONVERT PSQL_OUTPUT() INTO ARRAY OF TABLES
 *
 PSQL_RESULT
-         PSQL_RESULT =
          IDENT(S)                                            :S(FRETURN)
          S = S CHARS_NL
          N = COUNT(S, CHARS_NL CHARS_NL)
@@ -189,7 +187,6 @@ PSQL_D2  L = $^.PIPE
 *
 PSQL_OUTPUT
 %IF (USE_PTY)
-         PSQL_OUTPUT =
 PSQL2    L = $^.PIPE                                         :F(FRETURN)
          L POS(0) '*' RPOS(0)                                  :S(PSQL3)
          PSQL_OUTPUT = PSQL_OUTPUT L CHARS_NL                   :(PSQL2)
@@ -199,7 +196,6 @@ PSQL4    PSQL_OUTPUT BREAK(CHARS_NL) CHARS_NL REM . PSQL_OUTPUT
          PSQL_OUTPUT POS(0) '# '                      :S(PSQL4)F(RETURN)
 %ELSE
          $^.PIPE = '\echo *'                                 :F(FRETURN)
-         PSQL_OUTPUT =
 PSQL2    L = $^.PIPE                                         :F(FRETURN)
          L POS(0) '*' RPOS(0)                                 :S(RETURN)
          PSQL_OUTPUT = PSQL_OUTPUT L CHARS_NL                   :(PSQL2)

@@ -564,7 +564,7 @@ V (FILE)                VIEW FILE (DEFAULT TO LIST FILE)
 	  </pre>
 	</li>
       </ul>
-      <h2>Memory and Resource Requirements</h2
+      <h2>Memory and Resource Requirements</h2>
       <p align="justify">
 	<i>cpmed</i> is very lightweight in memory. Typically, virtual
 	memory is 6.4MB, resident size is 2.6MB with 0.5MB shared.

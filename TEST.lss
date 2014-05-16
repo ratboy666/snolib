@@ -19,7 +19,7 @@ SPITBOL does not have a one-character assumption.
 @
 
 <<TEST>>=
-         DEFINE('TEST(ARG)NAME')			:(TEST_END)
+         DEFINE('TEST(ARG)NAME')                             :(TEST_END)
 *
 TEST     IDENT(DATATYPE(ARG), 'EXPRESSION')                   :F(TEST_1)
          NAME = UNIQUE()

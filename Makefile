@@ -7,7 +7,7 @@
 BINDIR=/usr/local/bin
 LIBDIR=/usr/local/snolib
 CGIDIR=/var/www/cgi-bin
-SODIR=/var/local/lib
+SODIR=/usr/local/lib
 
 # Unit tests
 #
