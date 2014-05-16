@@ -1,0 +1,67 @@
+<h1>TEST - Bypass one character assumption</h1>
+
+[[TEST(ARG)]] accepts an unevaluated expression as argument, and
+returns a pattern bypasses SNOBOL4's one-character length assumption
+(quickscan heuristics).
+
+<aside>
+<p>
+It is never necessary to use [[TEST(ARG)]] with SPITBOL, because
+SPITBOL does not have a one-character assumption.
+</p>
+</aside>
+
+<H2>Uses</H2>
+<A HREF="UNIQUE.html">UNIQUE</A>
+
+<<INCLUDES>>=
+-INCLUDE 'UNIQUE.INC'
+@
+
+<<TEST>>=
+         DEFINE('TEST(ARG)NAME')			:(TEST_END)
+*
+TEST     IDENT(DATATYPE(ARG), 'EXPRESSION')                   :F(TEST_1)
+         NAME = UNIQUE()
+         $NAME = ARG
+         TEST = EVAL("NULL $ *TEST('" NAME "')")               :(RETURN)
+TEST_1   TEST = ?EVAL($ARG) .TEST_                 :S(NRETURN)F(FRETURN)
+*
+TEST_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'TEST.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL TEST
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                                                                      *
+*                  #######  #######   #####   #######                  *
+*                     #     #        #     #     #                     *
+*                     #     #        #           #                     *
+*                     #     #####     #####      #                     *
+*                     #     #              #     #                     *
+*                     #     #        #     #     #                     *
+*                     #     #######   #####      #                     *
+*                                                                      *
+* TEST                                                                 *
+*                                                                      *
+************************************************************************
+*
+* TEST.lss
+*
+<<TEST>>
+*
+* CE: .MSNOBOL4;
+@

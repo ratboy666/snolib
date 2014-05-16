@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<!--
+
+index
+
+SNOLIB Index
+
+This document is written directly in HTML, and serves as the index
+page for SNOLIB documentation. It has only been “tested” with
+Firefox (because that is the browser I use), but should render with
+any recent browser.
+
+index
+
+ ce: .f.mhtml;
+
+-->
+<html>
+  <head>
+    <title>SNOLIB</title>
+    <meta http-equiv="Content-type"
+          content="text/html; charset=UTF-8">
+    <meta name="description"
+          content="CSNOBOL4 Library">
+    <meta name="author"
+          content="Fridtjof Weigel">
+    <meta name="keywords"
+          content="snobol4, csnobol4, snolib">
+    <link rel="icon"
+          type="image/jpeg"
+          href="favicon.jpg">
+  </head>
+  <body>
+    <font face="Sorts Mill Goudy">
+      <h1>SNOLIB</h1>
+      <h2>Useful library functions and utilities for CSNOBOL4 1.5</h2>
+      <address>
+        <a href="mailto:fred_weigel@hotmail.com">
+	  Fridtjof Weigel
+	</a><br>
+        83 Donalda Cres.<br>
+        Toronto, Ontario<br>
+        C<small>ANADA</small> M1S 1P1<br>
+      </address>
+      <p align="justify">
+	The idea is to produce a <i>batteries included</i> version
+	of SNOBOL4 that can be used for scripting, CGI applications,
+	GUI applications and general programming. SNOLIB is a work
+	in progress. I don't expect to complete it, but will just
+	keep adding and changing components as my needs change.
+
+      </p>
+      <p align="justify">
+	Most of the components are .lss files which are literate
+	SNOBOL4. These files are run through utility “stangle” to
+	produce source.  The source is then run through “ifs” to
+	process %if conditionals and %include. The final phase runs
+	the code through “embed” which can separate files and
+	run any additional needed processing.
+
+      </p>
+      <p align="justify">
+	The majority of these library routines have been written
+	by others.  Gimpel, Budne and many others have provided
+	useful routines for SNOBOL4 over the years. Some of this work
+	is original, but that pales in comparision to the useful
+	nature of the routines that I have incorporated from other
+	sources. Special thanks to Phil Budne for his work on CSNOBOL4.
+
+      </p>
+      <p align="justify">
+	To load all of these routines into the <code>code</code>
+	program, try
+
+      </p>
+      <pre>
+	<font face="Source Code Pro">
+  SLOAD('ALL.INC')
+	</font>
+      </pre>
+      <p align="justify">
+	in the <code>code</code> utility. This takes but a fraction
+	of a second.
+
+      </p>
+      <h2>Why SNOBOL4</h2>
+      <p align="justify">
+        There are many more choices for programing now.  C provides
+        a reasonable choice for low-level development.  For higher
+        level languages, Scheme, Python and others are available.
+        structured programming would seem like an odd choice. However,
+        it is a simple language, and well suited to many problem
+        domains. I believe that it can be a very productive choice, if
+        some of its shortcomings can be addressed. Its very simplicity
+        makes for productivity.  SNOBOL4 has a very shallow learning
+        curve. It is provably accessible to (for instance) people in
+        the humanities. The compiler/interpreter is very small (by
+        todays standards).  We can view SNOBOL4 as a sophisticated
+        version of BASIC. Since SNOBOL4 handles strings and parsing
+        so well, it encourages meta-programming.
+
+      </p>
+      <p align="justify">
+	Given that things like SNOCONE to provide sntactic sugar and
+	object oriented programming are simple to provide in SNOBOL4,
+	the only reason that SNOBOL4 is not more popular is historical.
+	SNOBOL4 was a standard language in the 70's, but was considered
+	too resource intensive (compared with FORTRAN, COBOL and
+	ASSEMBLER). When computing resources caught up to SNOBOL,
+	other languages and systems were developed to take its place.
+	Perl, Python, Ruby and other systems took its place. Still,
+	SNOBOL4 provides most of the desirable features of these
+	systems in a very simple and focussed system.
+
+      <p align="justify">
+	SNOBOL4's shortcomings are very well known, and are (in most
+	cases) easy enough to overcome. The simplicity of the language
+	allows for debugging and inspection tools to be written by
+	even neophyte users. The complexity of pattern matching
+	unfortunately encourages “cargo-cult” programming in
+	the pattern sub-language. I want to pursue a SNOBOL6 effort,
+	that melds the fundamentals of what makes SNOBOL4 great with
+	the features of modern programming systems. This library is
+	meant as a step in that direction. I do not believe ICON was
+	the right approach, in that it eliminated too much of the
+	essence of SNOBOL in an effort to modernize the language.
+
+      </p>
+      <p align="justify">
+	Javascript is the main competition. We need to work with
+	Javascript, and thus this library provides JSON as an
+	important element. Javascript is the code execution choice
+	in the client browser, and we have to interoperate with it
+	for modern application delivery. Thus CGI and the other HTML
+	components are also critical pieces of this library.
+
+      <p align="justify">
+        At absolute worst, this work can be used to teach DOGs
+        (Dumb Old Guys) new tricks, such as how browser based
+        applications actually work at a low level. All components
+        of this library are at a source level and are immediately
+        inspectable and manipulable.
+
+      </p>
+@INCLUDE(workflow)
+      <h2>Utilities</h2>
+      <p align="justify">
+	SNOLIB supplies a number of utilities to assist in the
+	programming process. These are described in the
+	<a href="utility.html">Utilities</a> document.
+      </p>
+@INCLUDE(library)
+      <h2>“To do” List</h2>
+      <p align="justify">
+	Repair UTF-8. Add to unit test coverage.  FastCGI interface.
+
+      </p>
+    </font>
+  </body>
+</html>

@@ -1,0 +1,49 @@
+<h1>SWAP - Swap two variables</h1>
+
+Swap values of two variables passed by name.  [[SWAP(.N,.M)]] will
+swap the contents of the two named variables.
+
+<<SWAP>>=
+         DEFINE('SWAP(SWAP_ARG1,SWAP_ARG2)')                 :(SWAP_END)
+*
+SWAP     SWAP = $SWAP_ARG1
+         $SWAP_ARG1 = $SWAP_ARG2
+         $SWAP_ARG2 = SWAP
+         SWAP =                                                :(RETURN)
+*
+SWAP_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'SWAP.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+-STITL SWAP
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                   #####   #     #     #     ######                   *
+*                  #     #  #  #  #    # #    #     #                  *
+*                  #        #  #  #   #   #   #     #                  *
+*                   #####   #  #  #  #     #  ######                   *
+*                        #  #  #  #  #######  #                        *
+*                  #     #  #  #  #  #     #  #                        *
+*                   #####    ## ##   #     #  #                        *
+*                                                                      *
+* SWAP                    SWAP TWO VARIABLES                           *
+*                                                                      *
+************************************************************************
+*
+* SWAP.lss
+*
+<<SWAP>>
+*
+* CE: .MSNOBOL4;
+@

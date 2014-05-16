@@ -1,0 +1,78 @@
+<h1>REDEFINE - Redefine operators</h1>
+
+[[REDEFINE(OP,DEF,LBL)]] will redefine the built-in operator [[OP]]
+to the name of the function given with prototype [[DEF]] and entry
+label [[LBL]].  The old definition of the operator is preserved in
+the function name with appended period.
+
+<aside>
+<b>C<small>AUTION</small></b> - This cannot be used with SPITBOL,
+which does not permit the redefinition of built-in operators.
+
+</aside>
+
+<<REDEFINE>>=
+         DEFINE('REDEFINE(OP,DEF,LBL)NAME,N,FLAG')
+         DEFINE('REDEFINERESTORE(OP,DEF)NAME,N,FLAG')
+         DEFINE('REDEFINECOMMON()')                      :(REDEFINE_END)
+*
+REDEFINECOMMON
+         DEF BREAK('(') . NAME '(' BREAK('),') LEN(1) . FLAG
+         N = 1
+         N = IDENT(FLAG, ',') 2
+         N = IDENT(OP)
+         OP = IDENT(OP) NAME
+                                                               :(RETURN)
+*
+REDEFINE REDEFINECOMMON()
+         OPSYN(NAME '.', OP, N)
+         DEFINE(DEF, LBL)
+         OPSYN(OP, NAME, N)                                    :(RETURN)
+*
+REDEFINERESTORE
+         REDEFINECOMMON()
+         OPSYN(OP, NAME '.', N)                                :(RETURN)
+*
+REDEFINE_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'REDEFINE.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+-STITL REDEFINE
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*  ######   #######  ######   #######  #######  ###  #     #  #######  *
+*  #     #  #        #     #  #        #         #   ##    #  #        *
+*  #     #  #        #     #  #        #         #   # #   #  #        *
+*  ######   #####    #     #  #####    #####     #   #  #  #  #####    *
+*  #   #    #        #     #  #        #         #   #   # #  #        *
+*  #    #   #        #     #  #        #         #   #    ##  #        *
+*  #     #  #######  ######   #######  #        ###  #     #  #######  *
+*                                                                      *
+* REDEFINE             REDEFINE OPERATORS                              *
+*                                                                      *
+************************************************************************
+*
+* REDEFINE.lss
+*
+* FMGW:
+*
+* - ADD REDEFINERESTORE() TO ALLOW INFINIP.SNO TO ENABLE/DISABLE
+*   LONG INTEGERS
+* - FACTOR REDEFINECOMMON() TO ALLOW REDEFINE() AND REDEFINERESTORE()
+*   TO SHARE CODE
+*
+<<REDEFINE>>
+*
+* CE: .MSNOBOL4;
+@

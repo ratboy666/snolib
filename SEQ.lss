@@ -1,0 +1,76 @@
+<H1>SEQ - Sequence statement with counter</H1>
+
+[[SEQ(ARG_S,ARG_NAME,START,END)]] will sequence through a set of
+statements until failure is detected. The indexing variable is given
+by the name [[ARG_NAME]]. Can be profitably used to index the entries
+of an array.
+
+If [[START]] is omitted, the indexing begins at [[1]]. If [[END]]
+is given, it will be the last index attempted. Both [[START]] and
+[[END]] are optional.
+
+Most simple arrays are served by assuming indexing begins at [[1]].
+However [[SEQ(S, .I, LOWA(A))]] will begin indexing at the lowest
+index of [[A]].
+
+Note that [[SEQ()]] will fail if indexing a zero length array
+([[ARRAY0]]). 
+
+Since [[SEQ()]] is of more general use than just sequencing arrays,
+these issues will not be addressed.
+
+Sample usage:
+
+[[
+    SEQ(' A<K> = INPUT ', .K)
+]]
+
+<h2>See Also</h2>
+<a href="SIZEA.html">SIZEA</a>
+
+<<SEQ>>=
+         DEFINE('SEQ(ARG_S,ARG_NAME,START,END)')              :(SEQ_END)
+*
+SEQ      START = IDENT(START) 1
+         $ARG_NAME = START - 1
+         ARG_S = CODE(ARG_S  ' :S(SEQ_1)F(SEQ_2)')             :F(ERROR)
+SEQ_1    DIFFER(END) GE($ARG_NAME, END)                       :S(RETURN)
+         $ARG_NAME = $ARG_NAME + 1                              :<ARG_S>
+SEQ_2    EQ($ARG_NAME, START)                       :S(FRETURN)F(RETURN)
+*
+SEQ_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'SEQ.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+-STITL SEQ
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                       #####   #######   #####                        *
+*                      #     #  #        #     #                       *
+*                      #        #        #     #                       *
+*                       #####   #####    #     #                       *
+*                            #  #        #   # #                       *
+*                      #     #  #        #    #                        *
+*                       #####   #######   #### #                       *
+*                                                                      *
+* SEQ                SEQUENCE STATEMENT WITH COUNTER                   *
+*                                                                      *
+************************************************************************
+*
+* SEQ.lss
+*
+<<SEQ>>
+*
+* CE: .MSNOBOL4;
+@

@@ -1,0 +1,295 @@
+<h1>SCOOP - Object Oriented Programming</h1>
+
+SCOOP implements a simple OOP system. Single inheritance only. Allows
+creation of classes and objects. Does not dispatch based on type of
+arguments; simply on method name. STACK illustrates another way to
+do “OOP” programming. SCOOP is (likely) better for structuring
+larger programs. STACK is far better for performance. STACK creates
+a family of routines, with no overhead for dispatch.
+
+SCOOP is deliberately simple. It is designed to provide a very
+thin object layer to allow better variable control, and allow the
+elimination of some labels. It is designed to allow for trivial
+“monkey patching”. Indeed, that is the normal way to add methods.
+Methods may also be added to objects directly!
+
+[[THIS]] refers to the receiver of a message (sometimes known as
+self). [[SELF()]] dispatches messages from a method to the same
+receiver. [[SUPER()]] does the same, but begins the dispatch search
+with the superclass of the receiver.
+
+[[
+IVARS(THIS)<'VARIABLE NAME'>
+]]
+
+accesses instance variable [[VARIABLE NAME]] in the receiver. We
+OPSYN unary operator ^ to simplify this. [[^'var']] refers to instance
+variable [[var]] and can be used on either the left or right side of
+an assignment.
+
+[[SEND(OBJECT,MESSAGE,ARGS)]] dispatches a message to the receiver,
+with up to eight arguments.
+
+SCOOP is very useful in “hiding” variables. SNOBOL4 does not have
+any concept of scope. Bundling variables together into an object is
+one way of controlling this complexity. Thus the given name SCOOP
+which evokes OOP, scope and ice-cream scoops. Or “SNOBOL4 Crummy
+Object Oriented Programming”.
+
+[[ADD_METHOD]] can add either a name of a function to dispatch, or
+[[CODE()]]. The code compiled is run in the context of [[SEND()]].
+Arguments A1 through A8 are available, and three temporaries T1 through
+T3. The method result should be assigned to the variable [[SEND]].
+[[THIS]] is assigned to the receiver object.
+
+[[CLASS_OF()]] is primarily for development. It returns the name of
+the class the object is in. It does so without using [[SEND()]],
+but is aware of object structure. [[CLASS(OBJECT)]] evaluates to
+the class of an object. [[CLASS(CLASS(OBJECT))]] is the superclass
+(base class). Every object has a class, <i>including</i> classes!
+The only exception is the [[CLASS]] class, which has a [[NULL]] class.
+
+[[IS_A]] succeeds if the object is in the class given, or in a
+subclass. If not, it fails.
+
+After initialize, only a single class exists: [[CLASS]]. [[CLASS]]
+has methods [[NEW_CLASS]], [[NEW]], [[ADD_METHOD]], [[INIT]], [[IS_A]]
+and [[DOES_NOT_UNDERSTAND]] pre-defined.
+
+Objects are created with [[NEW]]. After the object is created, it
+should be initialized, so [[NEW]] dispatches the message [[INIT]]
+to the newly created object. The CLASS class implements an empty
+[[INIT]] method, ensuring that this will not cause problems if not
+implemented in sub-classes.
+
+The [[SEND()]] function can be used outside or inside of
+a method.  [[SELF()]] and [[SUPER()]] can only be used inside a
+method. [[IVAR()]], [[CVAR()]] (and the [[^]] operator) are restricted
+to within a method only. [[CLASS_OF()]] can be used wherever [[SEND()]]
+can be used.
+
+If a selector (method) is not matched, the search is done again,
+dispatching selector 'DOES_NOT_UNDERSTAND' to the object. If a class
+contains an implementation for this message, the exception can be
+handled (say, by loading the method implementation, dispatching it
+again, and returning the result). The [[CLASS]] class implementation
+for [[DOES_NOT_UNDERSTAND]] displays an error and terminates the
+program.
+
+We don't expect the class tree to be very deep. SCOOP is designed as
+a light OOP tool to aid in variable management. Some subclassing is
+expected, but very deep class trees are not well supported. There is
+no method caching, so every method dispatch will do a tree search.
+
+String comparisions in SNOBOL4 are inexpensive. A string compare is
+a pointer compare. This means that representing messages by strings
+is a reasonable choice.
+
+<h2>See Also</h2>
+<a href="STACK.html">STACK</a>
+
+<<SCOOP>>=
+         DATA('OBJECT(CLASS,IVARS,METHODS)')
+*
+         DEFINE('SEND(THIS,METHOD,A1,A2,A3,A4,A5,A6,A7,A8)'
++               'C,M,M_CLASS,T1,T2,T3')
+         DEFINE('SUPER(METHOD,A1,A2,A3,A4,A5,A6,A7,A8)T1,T2,T3')
+         DEFINE('SELF(METHOD,A1,A2,A3,A4,A5,A6,A7,A8)T1,T2,T3')
+         DEFINE('FIND_METHOD(OBJ,METHOD)')
+         DEFINE('IVAR(NAME)')
+         DEFINE('CVAR(NAME)')
+         DEFINE('CLASS_OF(OBJ)')
+         OPSYN('^', 'IVAR', 1)
+*
+* INITIALIZE OOP SYSTEM, CREATE ROOT CLASS. MAKE SURE ROOT CLASS CAN
+* ANSWER NEW_CLASS, NEW, INIT, DOES_NOT_UNDERSTAND AND ADD_METHOD
+* MESSAGES. ALSO, ANSWER THE IS_A MESSAGE.
+*
+         CLASS = OBJECT(, TABLE(), TABLE())
+         IVARS(CLASS)<'CLASS'> = 'CLASS'
+         METHODS(CLASS)<'ADD_METHOD'> =
++           CODE(
++              ' METHODS(THIS) = IDENT(METHODS(THIS)) TABLE();'
++              ' THAW(METHODS(THIS));'
++              ' METHODS(THIS)<A1> = A2;'
++              ' FREEZE(METHODS(THIS)) :(RETURN)')
+*
+         SEND(CLASS, 'ADD_METHOD', 'NEW_CLASS',
++           CODE(
++              ' THIS = OBJECT(THIS);'
++              ' IVAR("CLASS") = A1;'
++              ' SEND = THIS :(RETURN)'))
+         SEND(CLASS, 'ADD_METHOD', 'INIT',
++           CODE(' :(RETURN)'))
+         SEND(CLASS, 'ADD_METHOD', 'NEW',
++           CODE(
++              ' THIS = OBJECT(THIS);'
++              ' SELF("INIT", A1, A2, A3, A4, A5, A6, A7, A8);'
++              ' SEND = THIS :(RETURN)'))
+         SEND(CLASS, 'ADD_METHOD', 'DOES_NOT_UNDERSTAND',
++           CODE(
++            " TERMINAL = 'SCOOP: DOES NOT UNDERSTAND ' METHOD :(END)"))
+         DEFINE('IS_A(ACLASS)')
+         SEND(CLASS, 'ADD_METHOD', 'IS_A', 'IS_A')
+                                                              :(OOP_END)
+*
+* IS_A - IS OBJECT IN CLASS? ACLASS CAN BE A STRING WITH A CLASS NAME
+*        OR A CLASS OBJECT
+*
+IS_A     T1 = THIS
+IS_A_2   T1 = CLASS(T1)
+         IDENT(T1)                                           :S(FRETURN)
+         IDENT(T1, ACLASS)                                    :S(RETURN)
+         IDENT(IVARS(T1)<'CLASS'>, ACLASS)           :S(RETURN)F(IS_A_2)
+*
+* ACCESS INSTANCE VARIABLE. CREATE THE INSTANCE VARIABLES IF THEY DO
+* NOT YET EXIST.
+*
+IVAR     IVARS(THIS) = IDENT(IVARS(THIS)) TABLE()
+         IVAR = .(IVARS(THIS)<NAME>)                          :(NRETURN)
+*
+* ACCESS CLASS VARIABLE
+*
+CVAR     IVARS(CLASS(THIS)) = IDENT(IVARS(CLASS(THIS))) TABLE()
+         CVAR = .(IVARS(CLASS(THIS))<NAME>)                   :(NRETURN)
+*
+* CLASS_OF RETURNS THE NAME OF THE CLASS OF THE PASSED OBJECT. THE
+* CLASS NAMES SHOULD BE UNIQUE WITHIN A PROGRAM. THE ROOT CLASS HAS
+* NAME 'CLASS' (ROOT'S SUPERCLASS IS NULL)
+*
+CLASS_OF CLASS_OF = IVARS(CLASS(OBJ))<'CLASS'>                 :(RETURN)
+*
+* FIND METHOD BEGINNING AT OBJ SEARCHING UP TO THE ROOT CLASS
+*
+FIND_METHOD
+         M_CLASS =
+         IDENT(OBJ)                                          :S(FRETURN)
+         C = OBJ
+FIND_METHOD2
+         FIND_METHOD = VDIFFER(METHODS(C))<METHOD>
+         DIFFER(FIND_METHOD)                            :F(FIND_METHOD3)
+         M_CLASS = C                                           :(RETURN)
+FIND_METHOD3
+         IDENT(C = CLASS(C))                  :S(FRETURN)F(FIND_METHOD2)
+*
+* DISPATCH TO THE PARENT CLASS. THAT, IN TURN, MAY DISPATCH TO ITS
+* PARENT. THIS IS USED WITH 'INIT' (FOR EXAMPLE).
+*
+* TO IMPLEMENT SUPER, WE WANT TO START SEARCHING WITH THE CLASS OF THE
+* CLASS WE FOUND THE METHOD IN. THIS IS IN LOCAL SEND() VARIABLE
+* M_CLASS WHICH IS SET IN FIND_METHOD.
+*
+SUPER    SUPER = THIS
+         IDENT(M_CLASS)                                       :S(RETURN)
+         M = FIND_METHOD(CLASS(M_CLASS), METHOD)     :F(RETURN)S(SEND_3)
+*
+* DISPATCH METHOD FROM WITHIN A METHOD
+*
+SELF     SELF = THIS                                           :(SEND_2)
+*
+* DISPATCH METHOD TO OBJECT. DEFAULT ANSWER IS SIMPLY 'THIS' TO ALLOW
+* CHAINED METHODS
+*
+SEND     SEND = THIS
+*
+* ENSURE THAT THIS PARAMETER IS AN OBJECT (OR CLASS).
+*
+%IF(SAFE)
+         IDENT(THIS)                                         :S(FRETURN)
+         IDENT(DATATYPE(THIS), 'OBJECT')                      :S(SEND_2)
+         TERMINAL = 'SCOOP: SEND NEEDS OBJECT AS RECEIVER'        :(END)
+%ENDIF
+*
+SEND_2   M = FIND_METHOD(THIS, METHOD)                        :S(SEND_3)
+         M = FIND_METHOD(THIS, 'DOES_NOT_UNDERSTAND')         :S(SEND_3)
+*
+* THIS ERROR SHOULD NOT HAPPEN! (THE ROOT CLASS SHOULD ALWAYS ANSWER
+* DOES_NOT_UNDERSTAND).
+*
+         TERMINAL =
++           'SCOOP: ROOT CLASS MISSING DOES_NOT_UNDERSTAND'       :(END)
+*
+* WE HAVE THE METHOD, DISPATCH IT. SINCE ALL VARIABLES ARE GLOBAL,
+* ACCESS TO 'THIS' WILL SIMPLY REFER TO SELF AS PASSED TO SEND()
+* WHICH IS WHAT WE WANT.
+*
+* IF THE METHOD IS CODE, EXECUTE IT. OTHERWISE, APPLY M TO THE PASSED
+* ARGUMENTS.
+*
+SEND_3   IDENT(DATATYPE(M), 'CODE')                                :S<M>
+         SEND = APPLY(M, A1, A2, A3, A4, A5, A6, A7, A8)
++                                                   :S(RETURN)F(FRETURN)
+*
+OOP_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'SCOOP.INC'
+-INCLUDE 'TIMER.INC'
+         &CODE = 1
+         SHAPE_CLASS = SEND(CLASS, 'NEW_CLASS', 'SHAPE')
+         SQUARE_CLASS = SEND(SHAPE_CLASS, 'NEW_CLASS', 'SQUARE')
+         CIRCLE_CLASS = SEND(SHAPE_CLASS, 'NEW_CLASS', 'CIRCLE')
+*
+         M = CODE(' EQ(A1, 5) :F(END)S(RETURN)')
+         SEND(SHAPE_CLASS, 'ADD_METHOD', 'AMETHOD', M)
+*
+         SQUARE = SEND(SQUARE_CLASS, 'NEW')
+         SEND(SQUARE, 'AMETHOD', 5)
+*
+         IDENT(CLASS_OF(SQUARE), 'SQUARE')                       :F(END)
+         IDENT(CLASS_OF(CLASS(SQUARE)), 'SHAPE')                 :F(END)
+         IDENT(CLASS_OF(CLASS(CLASS(SQUARE))), 'CLASS')          :F(END)
+*
+         SEND(SQUARE, 'IS_A', SQUARE_CLASS)                      :F(END)
+         SEND(SQUARE_CLASS, 'IS_A', 'SHAPE')                     :F(END)
+         SEND(SQUARE, 'IS_A', 'CIRCLE')                          :S(END)
+*
+* TIME METHOD DISPATCH WHERE THE METHOD IS IN A SUPERCLASS
+*
+         TIMER(" SEND(SQUARE, 'AMETHOD', 5) ")
+*
+* TIME METHOD DISPATCH WHERE THE METHOD IS IN THE CLASS
+*
+         SEND(SQUARE_CLASS, 'ADD_METHOD', 'AMETHOD', M)
+         TIMER(" SEND(SQUARE, 'AMETHOD', 5) ")
+*
+* TIME METHOD DISPATCH WHERE THE METHOD IS IN THE OBJECT
+*
+         SEND(SQUARE, 'ADD_METHOD', 'AMETHOD', M)
+         TIMER(" SEND(SQUARE, 'AMETHOD', 5) ")
+*
+         &CODE = 0
+END
+@
+
+<<>>=
+-STITL SCOOP
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*              #####    #####   #######  #######  ######               *
+*             #     #  #     #  #     #  #     #  #     #              *
+*             #        #        #     #  #     #  #     #              *
+*              #####   #        #     #  #     #  ######               *
+*                   #  #        #     #  #     #  #                    *
+*             #     #  #     #  #     #  #     #  #                    *
+*              #####    #####   #######  #######  #                    *
+*                                                                      *
+* SCOOP            OBJECT ORIENTED PROGRAMMING                         *
+*                                                                      *
+************************************************************************
+*
+* SCOOP.lss
+*
+* THE SAFETY FLAG. IF 0, SOME CHECKS ARE NOT COMPILED IN. I RECOMMEND
+* THAT IT ALWAYS BE ENABLED.
+*
+%SET(SAFE,1)
+<<SCOOP>>
+*
+* CE: .F.MSNOBOL4;
+@

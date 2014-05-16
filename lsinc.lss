@@ -1,0 +1,93 @@
+<H1>lsinc</H1>
+
+List includes.
+
+<h2>Uses</h2>
+<a href="SEQ.html">SEQ</a><br>
+<a href="CRACK.html">CRACK</a><br>
+<a href="TRIMB.html">TRIMB</a>
+
+<<INCLUDES>>=
+-INCLUDE 'SEQ.INC'
+-INCLUDE 'CRACK.INC'
+-INCLUDE 'TRIMB.INC'
+@
+
+<<>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-TITLE LSINC
+START
+<<INCLUDES>>
+-STITL
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                                                                      *
+*               #         #####   ###  #     #   #####                 *
+*               #        #     #   #   ##    #  #     #                *
+*               #        #         #   # #   #  #                      *
+*               #         #####    #   #  #  #  #                      *
+*               #              #   #   #   # #  #                      *
+*               #        #     #   #   #    ##  #     #                *
+*               #######   #####   ###  #     #   #####                 *
+*                                                                      *
+* LSINC                 LIST INCLUDES NEEDED                           *
+*                                                                      *
+************************************************************************
+*
+* lsinc.lss
+*
+         TERMINAL = 'LSINC (TUE NOV 26 20:14:36 EST 2013)'
+*
+         QQ = '"'
+         Q = "'"
+         INPAT = FENCE '-' ((ANY('Ii') ('NCLUDE' | 'nclude')) |
++                           (ANY('Cc') ('OPY' | 'opy')))
++                BREAK(QQ Q) LEN(1) BREAK(QQ Q) . X
+         &TRIM =  1
+         LOADED = TABLE()
+         DEFINE('INCLUDE(FILENAME)PATH,POSITION,UNIT,LIB')
+         INCLUDE('/dev/stdin')
+         A = CONVERT(LOADED, 'ARRAY')
+         A = SORT(A)
+         SEQ(' OUTPUT = A<I,1> ', .I)                             :(END)
+*
+INCLUDE  PATH = FILENAME
+         UNIT = IO_FINDUNIT()
+         INPUT(.LIB, UNIT,, PATH)                                :S(TOP)
+         DS = HOST(HOST_DIR_SEP)
+         PS = HOST(HOST_PATH_SEP)
+         X = HOST(HOST_GETENV, 'SNOPATH')                    :S(DOINC_8)
+         X = HOST(HOST_GETENV, 'SNOLIB')                     :S(DOINC_8)
+         X = HOST(HOST_SNOLIB_DIR)                           :F(FRETURN)
+DOINC_8  A = CRACK(X, PS)
+         I = 1
+DOINC_10 P = TRIMB(A<I>)                                     :F(FRETURN)
+         PATH = P DS FILENAME
+         INPUT(.LIB, UNIT,, PATH)                                :S(TOP)
+         I = I + 1                                           :(DOINC_10)
+*
+TOP      L = LIB                                             :F(DOINC_2)
+         L INPAT                                                 :F(TOP)
+*
+         DIFFER(LOADED<X>)                                       :S(TOP)
+         POSITION = SET(UNIT, 0, 1)
+         ENDFILE(UNIT)
+         DETACH(.LIB)
+*
+         INCLUDE(X)                                          :F(FRETURN)
+*
+         INPUT(.LIB, UNIT,, PATH)                            :F(FRETURN)
+         LOADED<X> = 1
+         FILENAME FENCE '/dev/'                                  :S(TOP)
+         EQ(SET(UNIT, POSITION, 0), POSITION)          :S(TOP)F(FRETURN)
+*
+DOINC_2  ENDFILE(UNIT)
+         DETACH(.LIB)                                          :(RETURN)
+*
+END START
+*
+* CE: .MSNOBOL4;
+@

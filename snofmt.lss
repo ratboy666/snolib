@@ -1,0 +1,134 @@
+<H1>snofmt</H1>
+
+A simple and stupid SNOBOL4 formatter. Uses simple patterns. Does
+<b>not</b> parse the code. I use this to clean up “foreign” code,
+and to tidy up lines after editing.
+
+<h2>Uses</h2>
+<a href="CHARS.html">CHARS</a><br>
+<a href="BALX.html">BALX</a>
+
+<<INCLUDES>>=
+-INCLUDE 'CHARS.INC'
+-INCLUDE 'BALX.INC'
+@
+
+<<>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-TITLE SNOFMT
+START
+<<INCLUDES>>
+-STITL
+-EJECT
+************************************************************************
+*                                                                      *
+*          #####   #     #  #######  #######  #     #  #######         *
+*         #     #  ##    #  #     #  #        ##   ##     #            *
+*         #        # #   #  #     #  #        # # # #     #            *
+*          #####   #  #  #  #     #  #####    #  #  #     #            *
+*               #  #   # #  #     #  #        #     #     #            *
+*         #     #  #    ##  #     #  #        #     #     #            *
+*          #####   #     #  #######  #        #     #     #            *
+*                                                                      *
+* SNOFMT                   SNOBOL4 FORMATTER                           *
+*                                                                      *
+************************************************************************
+*
+* BASIC SIMPLE SNOBOL4 FORMATTING (TO MY STYLE) STATEMENTS BEGIN IN
+* COLUMN 10, LABELS ARE ALIGNED TO END IN COLUMN 72. CONTINUATION
+* LINES ARE INDENTED TO BEGIN AT COLUMN 13. REALLY, ONLY USED FOR
+* "OTHER PEOPLES CODE" AND TO TIDY LINES AFTER EDITS.
+*
+* snofmt.lss
+*
+         TERMINAL = 'SNOFMT (MON NOV 25 15:35:24 EST 2013)'
+*
+         DELR = TABLE()
+         DELR<'('> = ')'
+         DELR<'<'> = '>'
+         OPTWS = SPAN(' ' CHARS_TAB) | ''
+         BEX = BALX('(<[]>)', "'" '"')
+         GB = ANY('(<') $ DELL BEX *DELR<DELL>
+         GC = OPTWS (ANY('SFsf') | '') OPTWS GB
+         GP = (':' GC (GC | '') OPTWS RPOS(0)) . G
+*
+TOP      S = TRIM(INPUT)                                         :F(END)
+         LABEL =
+         G =
+*
+* COMMENTS GO THROUGH UNCHANGED
+*
+         S FENCE (ANY('*-#!|') | RPOS(0))                        :S(OUT)
+*
+* DETAB THE LINE, ASSUMING TABS AT 8 COLUMNS
+*
+DETAB    S CHARS_TAB @N = LPAD('', 8 - REMDR(N - 1, 8), ' ')   :S(DETAB)
+*
+* EMPTY LINES REPLACED WITH * COMMENT LINES
+*
+         S = TRIM(S)
+         S = IDENT(S) '*'                                        :S(OUT)
+*
+* INDENT CONTINUATION LINES (NO LABEL PADDING)
+*
+         S FENCE ANY('+.') =                                    :F(LEXT)
+TRIMIT   S FENCE ' ' =                                        :S(TRIMIT)
+         S = '+           ' S                                     :(XBR)
+*
+* EXTRACT THE LABEL
+*
+LEXT     S FENCE ' '                                            :S(STMT)
+*
+* IF WE DO HAVE A LABEL, IT MAY BE THE ONLY THING ON THE LINE
+*
+         S BREAK(' ') . LABEL =                                  :F(OUT)
+*
+* STATEMENT, KILL LEADING SPACES
+*
+STMT     S FENCE ' ' =                                          :S(STMT)
+*
+* IF THE LABEL IS GREATER THAN 8 CHARACTERS, OUTPUT IT ON A LINE BY
+* ITSELF
+*
+         OUTPUT = GT(SIZE(LABEL), 8) LABEL
+         LABEL = GT(SIZE(LABEL), 8) ''
+*
+* PAD THE LABEL TO 9 CHARACTERS
+*
+         LABEL FENCE ('END' | 'end') RPOS(0)                    :F(PAD9)
+         LABEL = LABEL ' '                                        :(XBR)
+PAD9     LABEL = RPAD(LABEL, 9)
+*
+* EXTACT BRANCH PART -- PATTERN ALSO USED IN SWEAVE
+*
+XBR      S GP =
+         G = ' ' VDIFFER(G)
+*
+* REMOVE SPACES BETWEEN STATEMENT AND BRANCH
+*
+         S = TRIM(S)
+*
+* IF THE ENTIRE STATEMENT GREATER THAN 72 COLUMNS, OUTPUT IT AS LABEL
+* STATEMENT, AND THEN BRANCH AS CONTINUATION
+*
+         GT(SIZE(S) + SIZE(G) + 9, 72)                         :S(STMT3)
+*
+* ASSEMBLE THE OUTPUT: LABEL FOLLOWED BY STATEMENT, AND THEN BRANCH
+* PADDED TO COLUMN 72
+*
+         S = LABEL S
+         S = S LPAD('', 72 - SIZE(S) - SIZE(G)) G                 :(OUT)
+*
+STMT3    S = IDENT(G) LABEL S                                    :S(OUT)
+         OUTPUT = LABEL S
+         S = '+' LPAD('', 71 - SIZE(G)) VDIFFER(G)
+*
+* OUTPUT THE STATEMENT
+*
+OUT      OUTPUT = TRIM(S)                                         :(TOP)
+*
+END START
+*
+* CE: .F.MSNOBOL4;
+@

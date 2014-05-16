@@ -1,0 +1,592 @@
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-TITLE SWEAVE
+START
+-STITL REPL
+-EJECT
+*
+-LINE 38 "REPL.lss"
+************************************************************************
+*                                                                      *
+*                   ######   #######  ######   #                       *
+*                   #     #  #        #     #  #                       *
+*                   #     #  #        #     #  #                       *
+*                   ######   #####    ######   #                       *
+*                   #   #    #        #        #                       *
+*                   #    #   #        #        #                       *
+*                   #     #  #######  #        #######                 *
+*                                                                      *
+* REPL                   REPLACE STRINGS                               *
+*                                                                      *
+************************************************************************
+*
+* repl.lss
+*
+-LINE 11 "REPL.lss"
+         DEFINE('REPL(S1,S2,S3)C,T,FINDC')                   :(REPL_END)
+*
+REPL     S2 LEN(1) . C =                                     :F(FRETURN)
+         FINDC = BREAK(C) . T LEN(1)
+         S2 = POS(0) S2
+REPL_1   S1 FINDC =                                           :F(REPL_2)
+         S1 S2 =                                              :F(REPL_3)
+         REPL = REPL T S3                                      :(REPL_1)
+REPL_3   REPL = REPL T C                                       :(REPL_1)
+REPL_2   REPL = REPL S1                                        :(RETURN)
+*
+REPL_END
+*
+* CE: .MSNOBOL4;
+-STITL BQ
+-EJECT
+*
+-LINE 67 "BQ.lss"
+************************************************************************
+*                                                                      *
+*                          ######    #####                             *
+*                          #     #  #     #                            *
+*                          #     #  #     #                            *
+*                          ######   #     #                            *
+*                          #     #  #   # #                            *
+*                          #     #  #    #                             *
+*                          ######    #### #                            *
+*                                                                      *
+* BQ          EXECUTE A SHELL COMMAND LINE AND CAPTURE STDOUT          *
+*                                                                      *
+* P BUDNE, JUNE 20, 1994                                               *
+*                                                                      *
+************************************************************************
+*
+* bq.lss
+*
+-LINE 15 "BQ.lss"
+         DEFINE('BQ(COMMAND,OFS)DDTF')
+         DEFINE('BQ2(COMMAND,OFS)X,UNIT')                      :(BQ_END)
+*
+-LINE 29 "BQ.lss"
+BQ       DDTF = DDT_ACTIVE
+         NE(DDTF) DDT_SUSPEND()
+         BQ = BQ2(COMMAND, OFS)                                  :F(BQX)
+         NE(DDTF) DDT_RESUME()                                 :(RETURN)
+BQX      NE(DDTF) DDT_RESUME()                                :(FRETURN)
+-LINE 41 "BQ.lss"
+BQ2      UNIT = IO_FINDUNIT()                                :F(FRETURN)
+         INPUT(.X, UNIT,, '|' COMMAND)                       :F(FRETURN)
+         OFS = IDENT(OFS) ' '
+         BQ2 = X                                                 :F(BQF)
+BQL      BQ2 = BQ2 OFS X                                         :S(BQL)
+         ENDFILE(UNIT)
+         DETACH(.X)                                            :(RETURN)
+BQF      ENDFILE(UNIT)
+         DETACH(.X)                                           :(FRETURN)
+*
+BQ_END
+*
+* CE: .MSNOBOL4;
+-STITL HOST
+-EJECT
+*
+-LINE 144 "HOST.lss"
+************************************************************************
+*                                                                      *
+*                 #     #  #######   #####   #######                   *
+*                 #     #  #     #  #     #     #                      *
+*                 #     #  #     #  #           #                      *
+*                 #######  #     #   #####      #                      *
+*                 #     #  #     #        #     #                      *
+*                 #     #  #     #  #     #     #                      *
+*                 #     #  #######   #####      #                      *
+*                                                                      *
+* HOST               HOST() FUNCTION CODES                             *
+*                                                                      *
+************************************************************************
+*
+* host.lss
+*
+-LINE 6 "HOST.lss"
+HOST
+-LINE 13 "HOST.lss"
+*
+* MACRO SPITBOL
+*
+* ARCH:OS:SNOBOL_VERSION
+         HOST_SYSINFO = ''
+* ARGUMENT FROM -u OR ENTIRE COMMAND LINE
+         HOST_PARAMS = 0
+*
+* CATSPAW SPITBOL
+*
+* EXEC ARG AS SHELL COMMAND, RETURN STATUS
+         HOST_SYSCMD = 1
+* N'TH TOKEN ON COMMAND LINE (INTEGER)
+         HOST_ARGN = 2
+* INDEX OF 1ST USER COMMAND LINE ARG TOKEN
+         HOST_FIRSTARG = 3
+* RETURNS ENVIRONMENT VARIABLE, OR FAILS
+         HOST_GETENV = 4
+*
+-LINE 51 "HOST.lss"
+*
+* DEFAULT SNOLIB DIR (-INCLUDE, LOAD())
+         HOST_SNOLIB_DIR = 2200
+-LINE 62 "HOST.lss"
+*
+* C COMPILER USED TO BUILD CSNOBOL4
+         HOST_CC = 2202
+* C OPTIMIZER FLAGS USED TO BUILD CSNOBOL4
+         HOST_COPT = 2203
+-LINE 82 "HOST.lss"
+*
+* DYNAMIC LOADABLE LIBRARY EXTENSION
+         HOST_DL_EXT = 2208
+* C COMPILER FLAGS FOR DYNAMIC LOADABLES
+         HOST_DL_CFLAGS = 2209
+* DYNAMIC LOADABLE FILE LOAD COMMAND
+         HOST_DL_LD = 2210
+* DYNAMIC LOADABLE FILE LOAD SWITCHES
+         HOST_DL_LDFLAGS = 2211
+*
+* DIRECTORY SEPARATOR CHAR (MAY BE EMPTY)
+         HOST_DIR_SEP = 2212
+* PATH SEPARATOR CHARACTER
+         HOST_PATH_SEP = 2213
+*
+* CSNOBOL4 1.5
+*
+* DEFAULT LIBRARY SEARCH PATH
+         HOST_DEF_SNOPATH = 2214
+* PATH FOR C HEADERS
+         HOST_INCLUDE_DIR = 2215
+*
+* NUMBER OF BITS FOR SNOBOL4 INTEGER TYPE
+         HOST_INTEGER_BITS = 2300
+* NUMBER OF BITS FOR SNOBOL4 REAL TYPE
+         HOST_REAL_BITS = 2301
+* NUMBER OF BITS FOR C POINTER TYPE
+         HOST_POINTER_BITS = 2302
+* NUMBER OF BITS FOR C LONG TYPE
+         HOST_LONG_BITS = 2303
+* NUMBER OF BITS FOR SIL 'DESCRIPTOR' TYPE
+         HOST_DESCR_BITS = 2304
+* NUMBER OF BITS FOR SIL 'SPECIFIER' TYPE
+         HOST_SPEC_BITS = 2305
+* NUMBER OF BITS FOR C CHAR TYPE
+         HOST_CHAR_BITS = 2306
+*
+* SIZE OF 'DYNAMIC' STORAGE IN DESCRIPTORS
+         HOST_DYNAMIC_SIZE = 2400
+* SIZE OF PATTERN MATCH STACK IN DESCRS
+         HOST_PMSTACK_SIZE = 2401
+* SIZE OF INTERPRETER STACK IN DESCRIPTORS
+         HOST_ISTACK_SIZE = 2402
+*
+    CODE('HOST')
+*
+HOST_END
+*
+* CE: .MSNOBOL4;
+-LINE 13 "HTMLESC.lss"
+-STITL SDIFF
+-EJECT
+*
+-LINE 31 "SDIFF.lss"
+************************************************************************
+*                                                                      *
+*                #####   ######   ###  #######  #######                *
+*               #     #  #     #   #   #        #                      *
+*               #        #     #   #   #        #                      *
+*                #####   #     #   #   #####    #####                  *
+*                     #  #     #   #   #        #                      *
+*               #     #  #     #   #   #        #                      *
+*                #####   ######   ###  #        #                      *
+*                                                                      *
+* SDIFF                     SET DIFFERENCE                             *
+*                                                                      *
+************************************************************************
+*
+* sdiff.lss
+*
+-LINE 8 "SDIFF.lss"
+         DEFINE('SDIFF(S1,S2)')                             :(SDIFF_END)
+*
+SDIFF    SDIFF = S1
+         IDENT(S2, NULL)                                      :S(RETURN)
+         S2 = SPAN(S2)
+SDIFF_1  SDIFF S2 =                                 :S(SDIFF_1)F(RETURN)
+*
+SDIFF_END
+*
+* CE: .MSNOBOL4;
+-LINE 13 "HEX.lss"
+-STITL BLEND
+-EJECT
+*
+-LINE 43 "BLEND.lss"
+************************************************************************
+*                                                                      *
+*              ######   #        #######  #     #  ######              *
+*              #     #  #        #        ##    #  #     #             *
+*              #     #  #        #        # #   #  #     #             *
+*              ######   #        #####    #  #  #  #     #             *
+*              #     #  #        #        #   # #  #     #             *
+*              #     #  #        #        #    ##  #     #             *
+*              ######   #######  #######  #     #  ######              *
+*                                                                      *
+* BLEND                      BLEND STRINGS                             *
+*                                                                      *
+************************************************************************
+*
+* blend.lss
+*
+-LINE 8 "BLEND.lss"
+         DEFINE('BLEND(S1,S2)T1,T2,ABC,XYZ,L1,L2')
+         &ALPHABET LEN(128) . ABC LEN(128) . XYZ
+BLE_1    ABC LEN(1) . T1 =                                 :F(BLEND_END)
+         XYZ LEN(1) . T2 =
+         BLENDED_ALPHABET = BLENDED_ALPHABET T1 T2              :(BLE_1)
+*
+BLEND    L1 = SIZE(S1)
+         GT(L1, 128)                                         :F(BLEND_1)
+         EQ(L1, 0)                                            :S(RETURN)
+         S1 LEN(128) . S1 REM . T1
+         S2 LEN(128) . S2 REM . T2
+         BLEND = REPLACE(BLENDED_ALPHABET, &ALPHABET, S1 S2)
+         BLEND(T1, T2)                                         :(RETURN)
+BLEND_1  L2 = SIZE(S2)
+         &ALPHABET LEN(*L1) . ABC TAB(128) LEN(*L2) . XYZ
+         BLENDED_ALPHABET LEN(*(L1 + L2)) . AXBYCZ
+         BLEND = REPLACE(AXBYCZ, ABC XYZ, S1 S2)               :(RETURN)
+*
+BLEND_END
+*
+* CE: .MSNOBOL4;
+-STITL HEX
+-EJECT
+-LINE 42 "HEX.lss"
+*
+************************************************************************
+*                                                                      *
+*                      #     #  #######  #     #                       *
+*                      #     #  #         #   #                        *
+*                      #     #  #          # #                         *
+*                      #######  #####       #                          *
+*                      #     #  #          # #                         *
+*                      #     #  #         #   #                        *
+*                      #     #  #######  #     #                       *
+*                                                                      *
+* HEX                    RETURN HEX FOR STRING                         *
+*                                                                      *
+************************************************************************
+*
+* hex.lss
+*
+-LINE 17 "HEX.lss"
+         DEFINE('HEX(S)')
+*
+         H = '0123456789ABCDEF'
+         HEX_2ND = DUPL(H, 16)
+HEX_1    H LEN(1) . T =                                      :F(HEX_END)
+         HEX_1ST = HEX_1ST DUPL(T, 16)                          :(HEX_1)
+HEX      HEX = BLEND(REPLACE(S, &ALPHABET, HEX_1ST),
++           REPLACE(S, &ALPHABET, HEX_2ND))                    :(RETURN)
+*
+HEX_END
+*
+* CE: .MSNOBOL4;
+-STITL CHARS
+-EJECT
+*
+-LINE 74 "CHARS.lss"
+************************************************************************
+*                                                                      *
+*              #####   #     #     #     ######    #####               *
+*             #     #  #     #    # #    #     #  #     #              *
+*             #        #     #   #   #   #     #  #                    *
+*             #        #######  #     #  ######    #####               *
+*             #        #     #  #######  #   #          #              *
+*             #     #  #     #  #     #  #    #   #     #              *
+*              #####   #     #  #     #  #     #   #####               *
+*                                                                      *
+* CHARS             SYMBOLIC NAMES FOR CHARACTERS                      *
+*                                                                      *
+* PHIL BUDNE <PHIL@ULTIMATE.COM>                                       *
+* DECEMBER 2001                                                        *
+*                                                                      *
+************************************************************************
+*
+* chars.lss
+*
+-LINE 10 "CHARS.lss"
+CHARS    CHARS_NUL = CHAR( 0)
+         CHARS_SOH = CHAR( 1)
+         CHARS_STX = CHAR( 2)
+         CHARS_ETX = CHAR( 3)
+         CHARS_EOT = CHAR( 4)
+         CHARS_ENQ = CHAR( 5)
+         CHARS_ACK = CHAR( 6)
+         CHARS_BEL = CHAR( 7)
+         CHARS_BS  = CHAR( 8)
+         CHARS_HT  = CHAR( 9)
+         CHARS_NL  = CHAR(10)
+         CHARS_VT  = CHAR(11)
+         CHARS_NP  = CHAR(12)
+         CHARS_CR  = CHAR(13)
+         CHARS_SO  = CHAR(14)
+         CHARS_SI  = CHAR(15)
+         CHARS_DLE = CHAR(16)
+         CHARS_DC1 = CHAR(17)
+         CHARS_DC2 = CHAR(18)
+         CHARS_DC3 = CHAR(19)
+         CHARS_DC4 = CHAR(20)
+         CHARS_NAK = CHAR(21)
+         CHARS_SYN = CHAR(22)
+         CHARS_ETB = CHAR(23)
+         CHARS_CAN = CHAR(24)
+         CHARS_EM  = CHAR(25)
+         CHARS_SUB = CHAR(26)
+         CHARS_ESC = CHAR(27)
+         CHARS_FS  = CHAR(28)
+         CHARS_GS  = CHAR(29)
+         CHARS_RS  = CHAR(30)
+         CHARS_US  = CHAR(31)
+         CHARS_SP  = CHAR(32)
+         CHARS_DEL = CHAR(127)
+-LINE 51 "CHARS.lss"
+*
+***      CHARS_CR = CHARS_NL
+*
+         CHARS_TAB = CHARS_HT
+         CHARS_SPACE = CHARS_SP
+*
+         CODE('CHARS')
+*
+*
+* CE: .MSNOBOL4;
+-STITL HTMLESC
+-EJECT
+-LINE 92 "HTMLESC.lss"
+*
+************************************************************************
+*                                                                      *
+*    #     #  #######  #     #  #        #######   #####    #####      *
+*    #     #     #     ##   ##  #        #        #     #  #     #     *
+*    #     #     #     # # # #  #        #        #        #           *
+*    #######     #     #  #  #  #        #####     #####   #           *
+*    #     #     #     #     #  #        #              #  #           *
+*    #     #     #     #     #  #        #        #     #  #     #     *
+*    #     #     #     #     #  #######  #######   #####    #####      *
+*                                                                      *
+* HTMLESC             HTML (JS, URL) ESCAPING                          *
+*                                                                      *
+************************************************************************
+*
+* htmlesc.lss
+*
+-LINE 37 "HTMLESC.lss"
+         DEFINE('HTML_ESCAPE(S)')                     :(END_HTML_ESCAPE)
+*
+HTML_ESCAPE
+         S = REPL(S, '&', '&amp;')
+         S = REPL(S, '<', '&lt;',)
+         S = REPL(S, '>', '&gt;',)
+         S = REPL(S, '"', '&quot;')
+         S = REPL(S, "'", '&#39;')
+         HTML_ESCAPE = S                                       :(RETURN)
+*
+END_HTML_ESCAPE
+*
+-LINE 53 "HTMLESC.lss"
+         DEFINE('JS_ESCAPE(S)')                         :(END_JS_ESCAPE)
+*
+JS_ESCAPE
+         S = REPL(S, '\', '\\')
+         S = REPL(S, "'", "\'")
+         S = REPL(S, '"', '\"')
+         S = REPL(S, CHARS_NL, '\n')
+         S = REPL(S, CHARS_CR, '\r')
+         JS_ESCAPE = S                                         :(RETURN)
+*
+END_JS_ESCAPE
+*
+-LINE 73 "HTMLESC.lss"
+         DEFINE('URL_ESCAPE(S)L,C,R')
+         URL_BAD = SDIFF(&ALPHABET, &UCASE &LCASE &DIGITS '_-')
++                                                      :(END_URL_ESCAPE)
+*
+URL_ESCAPE
+         URL_ESCAPE =
+URLESC2  S BREAK(URL_BAD) . L LEN(1) . C REM . R             :F(URLESC3)
+         URL_ESCAPE = IDENT(C, ' ') URL_ESCAPE L '+'
+         URL_ESCAPE = DIFFER(C, ' ') URL_ESCAPE L '%' HEX(C)
+         S = R                                                :(URLESC2)
+URLESC3  URL_ESCAPE = URL_ESCAPE S                             :(RETURN)
+*
+END_URL_ESCAPE
+*
+* CE: .MSNOBOL4;
+*
+************************************************************************
+*                                                                      *
+*          #####   #     #  #######     #     #     #  #######         *
+*         #     #  #  #  #  #          # #    #     #  #               *
+*         #        #  #  #  #         #   #   #     #  #               *
+*          #####   #  #  #  #####    #     #  #     #  #####           *
+*               #  #  #  #  #        #######   #   #   #               *
+*         #     #  #  #  #  #        #     #    # #    #               *
+*          #####    ## ##   #######  #     #     #     #######         *
+*                                                                      *
+* SWEAVE                 WEAVE HTML FROM LSS                           *
+*                                                                      *
+************************************************************************
+*
+* SEE STANGLE. SWEAVE ACCEPTS A FILE FROM STANDARD INPUT, OR NAMED.
+* IF NAMED, THE FILENAME IS USED AS THE HTML TITLE. CHUNKS ARE PARSED
+* THE SAME AS STANGLE, BUT ARE NOT COMBINED. INSTEAD, EACH CHUNK IS
+* IDENTIFIED AS HTML OR CODE. IF HTML, THE CHUNK IS PASSED THROUGH TO
+* THE OUTPUT, LOOKING FOR [[ ]] SEQUENCES, AND CHANGING THE FONT TO
+* CODE FONT. UNBALANCED [[ CAUSES LINES TO BE RENDERED "<PRE>" WITH
+* A CHANGE BAR AT THE LEFT. CODE LINES ARE SUBJECT TO HTML CHARACTER
+* REPLACEMENT FOR &, < AND >. THE OPENING <<>>= SEQUENCE IS MODIFIED
+* TO CHEVRONS AND EQUIV SYMBOL TO LOOK BETTER.
+*
+* HTML CHUNKS ARE PASSED THOUGH, LOOKING FOR CHEVRONS (<< >>) SEQUENCES.
+* THESE ARE RENDERED AS CHEVRONS, IN CF (CODE FONT). NORMAL FONT IS HF
+* (HTML FONT).
+*
+* sweave
+*
+         TERMINAL = 'SWEAVE (FRI DEC 13 12:21:14 EST 2013)'
+         FN = HOST(HOST_ARGN, HOST(HOST_FIRSTARG))            :F(NONAME)
+         FFN = FN
+         INPUT(.INPUT, 10,, FN)
+NONAME   BL = ' ' | CHARS_TAB
+         OPT_WS = SPAN(' ' CHARS_TAB) | NULL
+         NL = CHARS_NL
+         NAME_PAT = OPT_WS '<<' BREAK('>') . CHUNK_NAME '>>=' RPOS(0)
+         REF_PAT = OPT_WS '<<' BREAK('>') . CHUNK_NAME '>>' RPOS(0)
+         L_PAT = POS(0) ('#line' | '-LINE' | '-line' '%line' | '%LINE')
++           BL OPT_WS SPAN(&DIGITS) . N
++           ((OPT_WS '"' BREAK('"') . F '"') | NULL)
+*
+* FONT DEFINITIONS -- THESE TWO WILL BE AVAILABLE ON ALMOST ANY
+* BROWSER
+*        HF = '<font face="Arial">'
+*        CF = '<font face="Courier">'
+*
+* MY PREFERRED FONTS. I LIKE THE CLASSIC FEEL OF GOUDY OLD
+* STYLE. SOURCE CODE PRO IS A NICE SOURCE CODE FONT.
+*
+         HF = '<font face="Sorts Mill Goudy">'
+         CF = '<font face="Source Code Pro">'
+         AF = '<font face="Dijkstra">'
+*
+* HTML PREAMBLE
+*
+         OUTPUT = '<!DOCTYPE html>'
+         OUTPUT = '<html><head>'
+         OUTPUT = '<title>' VDIFFER(FN) '</title>'
+         OUTPUT = '<meta http-equiv="content-type"'
+         OUTPUT = '      content="text/html; charset=UTF-8">'
+         OUTPUT = '<meta name="description"'
+         OUTPUT = '      content="sweave generated">' IDENT(FN)
+         OUTPUT = '      content="sweave generated from '
++                 VDIFFER(FN) '">'
+         OUTPUT = '</head><body>' HF
+*
+* SKIP EMPTY LINES
+*
+TOP      L = TRIM(INPUT)                                       :F(CLOSE)
+         IDENT(L)                                                :S(TOP)
+*
+* ARE WE AT THE BEGINNING OF A CODE CHUNK: <<NAME>>= GIVING NAMED CHUNK
+* WE MAY WANT TO ESCAPE THE CHUNK NAME ITSELF.. TWO APPLICATIONS OF
+* NAME_PAT WOULD DO.
+*
+         CHUNK_NAME =
+         L NAME_PAT = '<b>&laquo;' CHUNK_NAME '&raquo;&equiv;</b>'
++                                                  :S(CODE_CHUNK)F(HTML)
+*
+* PROCESSING HTML CHUNK. OPENS A PARAGRAPH. STOPS ON FIRST BLANK LINE.
+* '@' IS NOT USED TO CLOSE DOCUMENTATION (ONLY CODE). MAY BE AN
+* ANNOTATION IF IT BEGINS WITH {{.
+*
+* LOOK FOR [[ SEQUENCES AND SWITCH TO CODE FONT. LOOK FOR {{ AND
+* SWITCH TO ANNOTATION FONT.
+*
+HTML     L FENCE '{{' RPOS(0)                             :S(ANNOTATION)
+         OUTPUT = '<p align="justify">' HF                        :(HL2)
+*
+HLOOP    L = TRIM(INPUT)                                       :F(CLOSE)
+         IDENT(L)                                               :S(HL10)
+* [[ ]] SEQUENCES, {{ }} SEQUENCES
+HL2      L '[[' ARB . S ']]' = CF S '</font>'                    :S(HL2)
+HL2A     L '{{' ARB . S '}}' = AF S '</font>'                   :S(HL2A)
+         L '[[' = '</font></p><pre>' CF                          :F(HL9)
+* UNBALANCED [[. SCAN UNTIL ]] IS SEEN
+         OUTPUT = L
+HL3      L = TRIM(INPUT)                                       :F(CLOSE)
+         L ']]'  = '</font></pre>'                               :S(HL9)
+HL7      OUTPUT = '| ' L                                          :(HL3)
+* LINES BEGINNING WITH '.' HAVE THE '.' REMOVED. THIS ALLOWS BLANK
+* LINES WITHIN DOCUMENTATION (FOR EXTERNAL PROCESSORS LIKE DITAA).
+* LINE DIRECTIVES ARE SIMPLY IGNORED.
+HL9      L L_PAT                                               :S(HLOOP)
+         L POS(0) '.' =
+         OUTPUT = L                                             :(HLOOP)
+HL10     OUTPUT = '</font></p>'                                   :(TOP)
+*
+* AN ANNOTATION COMES BEFORE THE DOCUMENTATION OR CODE CHUNK IT
+* REFERS TO. IT IS A DOCUMENTATION CHUNK STARTED BY {{ AND ENDED
+* BY }}.
+ANNOTATION
+         OUTPUT = '<div style="width:15em;'
++                             'margin-left:0.5em;'
++                             'float:right;'
++                             'background-image:url(blutextb.gif)">'
+         OUTPUT = AF '<p align="left">'
+ALOOP    L = TRIM(INPUT)                                       :F(CLOSE)
+AL2      L '[[' ARB . S ']]' = CF S '</font>'                    :S(AL2)
+         L FENCE '}}'                                          :S(ADONE)
+         OUTPUT = L                                             :(ALOOP)
+ADONE    OUTPUT = '</p></font></div>'                             :(TOP)
+*
+* PROCESSING CODE CHUNK.
+*
+* LOOK FOR <<NAME>> SEQUENCES.
+*
+CODE_CHUNK
+         OUTPUT = '<div style="background-image: url(greenbar.gif)">'
+         OUTPUT = '<pre>' CF                                      :(CL2)
+*
+CLOOP    L = TRIM(INPUT)                                      :F(CLOSE2)
+         L POS(0) '@' RPOS(0)                                 :S(CLOOP3)
+         L REF_PAT = '<b>&laquo;' CHUNK_NAME '&raquo;</b>'       :S(CL2)
+         L = HTML_ESCAPE(L)
+* SPECIAL SNOBOL4/SNOCONE HANDLING. IF THE FIRST CHARACTER IS '*' OR
+* '#', BOLD THE LINE.
+CL2      L FENCE ('*' | '#')                                     :F(CL3)
+         L = '<b>' L '</b>'
+CL3      L L_PAT                                               :S(CLOOP)
+         OUTPUT = L                                             :(CLOOP)
+CLOOP3   OUTPUT = '<b>@</b>'
+CLOOP2   OUTPUT = '</font></pre></div>'                           :(TOP)
+*
+* FINAL HTML CODE. GENERATE A FOOTER WITH A LINK BACK TO THE INDEX.
+* USES A TABLE TO GET LEFT/CENTER/RIGHT FORMATTING. IF A FILENAME
+* WAS USED, MENTION THAT AS THE SOURCE. INDICATE THE DATE THAT THE
+* DOCUMENT WAS GENERATED.
+*
+CLOSE2   OUTPUT = '</pre></div>'
+CLOSE    OUTPUT = '<footer><hr><table width="100%" border="0">'
+         OUTPUT = '<tr><td><p align=left>'
+         OUTPUT = 'Produced by <code>sweave</code>'
+         OUTPUT = 'from <code><b>' VDIFFER(FFN) '</b></code>'
+         OUTPUT = '</p></td><td><p align=center>'
+         OUTPUT = BQ('date') '</p></td><td><p align=right>'
+         OUTPUT = 'Return to <a href="index.html">index</a>'
+         OUTPUT = '</p></td></table></footer>'
+         OUTPUT = '</font></body></html>'
+*
+* CE: .MSNOBOL4;
+*
+END START

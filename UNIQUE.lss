@@ -1,0 +1,90 @@
+<h1>UNIQUE - Generate unique name</h1>
+
+Returns a string that can be used as a unique variable name.
+
+If [[UNIQUE()]] is called with a non-null argument, all unique
+variables are cleared, and the global variable [[UNIQUE_]] is set to
+[[0]].
+
+Gimpel generates unique variable names with the keyword
+[[&amp;STCOUNT]].  However, in some implementations [[&amp;STCOUNT]]
+is not updated if the keyword [[&amp;STLIMIT]] is set to [[-1]].
+
+This function uses a global variable [[UNIQUE_]].
+
+[[MAKE_UNIQUE(SUF)]] creates a [[UNIQUESUF()]] function that uses
+its own global variable. This is preferred to using [[UNIQUE()]] if
+the generated variables are cleared. This minimizes impact to other
+modules using [[UNIQUE()]].
+
+<h2>Uses</h2>
+<a href="REPL.html">REPL</a>
+
+<<INCLUDES>>=
+-INCLUDE 'REPL.INC'
+@
+
+<<UNIQUE>>=
+         DEFINE('MAKE_UNIQUE(SUF)S')
+         MAKE_UNIQUE()                                     :(UNIQUE_END)
+*
+MAKE_UNIQUE
+         S =
++ 'UNIQUESUF  UNIQUESUF_ = IDENT(I) UNIQUESUF_ + 1 :F(UNIQUECSUF);'
++ '           UNIQUESUF = "USUF" UNIQUESUF_ "_"         :(RETURN);'
++ 'UNIQUECSUF $("USUF" UNIQUESUF_ "_") = '
++ '           ?(UNIQUESUF_ = GT(UNIQUESUF_,0) UNIQUESUF_ - 1)'
++ '                                       :S(UNIQUECSUF)F(RETURN);'
+         CODE(REPL(S, 'SUF', SUF))
+         DEFINE('UNIQUE' SUF '(I)')                            :(RETURN)
+*
+UNIQUE_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'UNIQUE.INC'
+         &CODE = 1
+         U1 = UNIQUE()
+         IDENT($U1)                                              :F(END)
+         $U1 = 1
+         U2 = UNIQUE()
+         IDENT($U2)                                              :F(END)
+         $U2 = 2
+         NE($U1, $U2)                                            :F(END)
+         U3 = 'U3_'
+         $U3 = 3
+         UNIQUE('CLEAR')
+         IDENT($U1)                                              :F(END)
+         IDENT($U2)                                              :F(END)
+         EQ($U3, 3)                                              :F(END)
+         &CODE = 0
+END
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL UNIQUE
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*           #     #  #     #  ###   #####   #     #  #######           *
+*           #     #  ##    #   #   #     #  #     #  #                 *
+*           #     #  # #   #   #   #     #  #     #  #                 *
+*           #     #  #  #  #   #   #     #  #     #  #####             *
+*           #     #  #   # #   #   #   # #  #     #  #                 *
+*           #     #  #    ##   #   #    #   #     #  #                 *
+*            #####   #     #  ###   #### #   #####   #######           *
+*                                                                      *
+* UNIQUE                 GENERATE UNIQUE NAME                          *
+*                                                                      *
+************************************************************************
+*
+* UNIQUE.lss
+*
+<<UNIQUE>>
+*
+* CE: .MSNOBOL4;
+@

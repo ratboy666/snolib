@@ -1,0 +1,47 @@
+#!/bin/bash
+#
+# unit_tests
+#
+# run unit tests
+#
+# READLINE and STCL are not run, because they must be interactive.
+#
+# Unit tests should cover both function and performance. The unit
+# testing is very light right now and needs expansion.
+#
+# A lot of the low level functions originate with Gimpel. Names are
+# currently the same as Gimpel's, but this can change. For example
+# REVL() and other functions suffixed by L for list. Gimpeel names
+# string replace REPL which would imply REP list (repeat list?). REVL()
+# could simply be subsumed into REVERSE (which is natively supplied by
+# CSNOBOL4). If the data type is list, invoke list reverse, else use
+# native REVERSE(). Similarily COPY() copies an array, while COPYL()
+# copies a list and COPY_TABLE() copies a table.
+#
+
+for c in AGT AI AOPA BALREV BALX BLEND BQ BRKREM CATA CGI CH \
+         CHARS COMB COMPLEX COOKIE COPYL COUNT CRACK CSNOBOL4 CVAR \
+         DAY DDTCARD DDT DEXP DISPLAY DYNAMIC ENDCARD FASTBAL FENCE \
+         FFI FLOOR FOREACH GCD GETKEY GOTOS HASH HEX HOST HTMLESC \
+         HTMLTMPL INFINIP JIT JSON LAST LIKE LINK LOGIC LOG LPROG \
+         MDY NDBM NOTP ONCE ORDER P64 PSQL QUOTE RANDOM \
+         READLINE READL REDEFINE REPL RESOL REVL ROMAN ROTATER \
+         SCOOP SDIFF SEQ SESSION SIZEA SKIM SLOAD SOUNDEX SPELL \
+         STACK STROUT SWAP SYSLOG SYSTEM TEST TIMEGC TIME TIMER \
+         TPROFILE TRIMB TRUNC UNIQUE WRAPPER; do
+  echo testing $c.tst
+  ./$c.tst || echo $c failed
+done
+
+# Modules with no unit test:
+#
+# BALX,BQ,BRKREM,CATA,CHARS,COMB,COMPLEX,COOKIE,COPYL,COUNT,CRACK
+# CVAR,DAY,DDT,DEXP,DISPLAY,DYNAMIC,FASTBAL,FENCE,FFI,FLOOR,GETKEY
+# GOTOS,HEX,HOST,INIFINP,JIT,LAST,LIKE,LINK,LOGIC,LOG,LPROG,MDY
+# NOTP,ONCE,ORDER,P64,QUOTE,RANDOM,READFILE,READLINE,READL,REDEFINE
+# REPL,REVL,ROTATER,SDIFF,SEQ,SKIM,SLOAD,SPELL,STACK,STROUT,SWAP
+# SYSLOG,SYSTEM,TEST,TIME,TIMER,TPROFILE,TRUNC,WRAPPER
+#
+# Modules under construction:
+#
+# MVC,ROUTE

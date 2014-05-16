@@ -1,0 +1,453 @@
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-LINE 116 "embed.lss"
+TITLE EMBED
+START
+-LINE 55 "embed.lss"
+-STITL CHARS
+-EJECT
+-LINE 74 "CHARS.lss"
+*
+************************************************************************
+*                                                                      *
+*              #####   #     #     #     ######    #####               *
+*             #     #  #     #    # #    #     #  #     #              *
+*             #        #     #   #   #   #     #  #                    *
+*             #        #######  #     #  ######    #####               *
+*             #        #     #  #######  #   #          #              *
+*             #     #  #     #  #     #  #    #   #     #              *
+*              #####   #     #  #     #  #     #   #####               *
+*                                                                      *
+* CHARS             SYMBOLIC NAMES FOR CHARACTERS                      *
+*                                                                      *
+* PHIL BUDNE <PHIL@ULTIMATE.COM>                                       *
+* DECEMBER 2001                                                        *
+*                                                                      *
+************************************************************************
+*
+* chars.lss
+*
+-LINE 10 "CHARS.lss"
+CHARS    CHARS_NUL = CHAR( 0)
+         CHARS_SOH = CHAR( 1)
+         CHARS_STX = CHAR( 2)
+         CHARS_ETX = CHAR( 3)
+         CHARS_EOT = CHAR( 4)
+         CHARS_ENQ = CHAR( 5)
+         CHARS_ACK = CHAR( 6)
+         CHARS_BEL = CHAR( 7)
+         CHARS_BS  = CHAR( 8)
+         CHARS_HT  = CHAR( 9)
+         CHARS_NL  = CHAR(10)
+         CHARS_VT  = CHAR(11)
+         CHARS_NP  = CHAR(12)
+         CHARS_CR  = CHAR(13)
+         CHARS_SO  = CHAR(14)
+         CHARS_SI  = CHAR(15)
+         CHARS_DLE = CHAR(16)
+         CHARS_DC1 = CHAR(17)
+         CHARS_DC2 = CHAR(18)
+         CHARS_DC3 = CHAR(19)
+         CHARS_DC4 = CHAR(20)
+         CHARS_NAK = CHAR(21)
+         CHARS_SYN = CHAR(22)
+         CHARS_ETB = CHAR(23)
+         CHARS_CAN = CHAR(24)
+         CHARS_EM  = CHAR(25)
+         CHARS_SUB = CHAR(26)
+         CHARS_ESC = CHAR(27)
+         CHARS_FS  = CHAR(28)
+         CHARS_GS  = CHAR(29)
+         CHARS_RS  = CHAR(30)
+         CHARS_US  = CHAR(31)
+         CHARS_SP  = CHAR(32)
+         CHARS_DEL = CHAR(127)
+-LINE 51 "CHARS.lss"
+*
+***      CHARS_CR = CHARS_NL
+*
+         CHARS_TAB = CHARS_HT
+         CHARS_SPACE = CHARS_SP
+*
+         CODE('CHARS')
+*
+*
+* CE: .MSNOBOL4;
+-LINE 12 "SLOAD.lss"
+-STITL HOST
+-EJECT
+-LINE 144 "HOST.lss"
+*
+************************************************************************
+*                                                                      *
+*                 #     #  #######   #####   #######                   *
+*                 #     #  #     #  #     #     #                      *
+*                 #     #  #     #  #           #                      *
+*                 #######  #     #   #####      #                      *
+*                 #     #  #     #        #     #                      *
+*                 #     #  #     #  #     #     #                      *
+*                 #     #  #######   #####      #                      *
+*                                                                      *
+* HOST               HOST() FUNCTION CODES                             *
+*                                                                      *
+************************************************************************
+*
+* host.lss
+*
+-LINE 6 "HOST.lss"
+HOST
+-LINE 13 "HOST.lss"
+*
+* MACRO SPITBOL
+*
+* ARCH:OS:SNOBOL_VERSION
+         HOST_SYSINFO = ''
+* ARGUMENT FROM -u OR ENTIRE COMMAND LINE
+         HOST_PARAMS = 0
+*
+* CATSPAW SPITBOL
+*
+* EXEC ARG AS SHELL COMMAND, RETURN STATUS
+         HOST_SYSCMD = 1
+* N'TH TOKEN ON COMMAND LINE (INTEGER)
+         HOST_ARGN = 2
+* INDEX OF 1ST USER COMMAND LINE ARG TOKEN
+         HOST_FIRSTARG = 3
+* RETURNS ENVIRONMENT VARIABLE, OR FAILS
+         HOST_GETENV = 4
+*
+-LINE 51 "HOST.lss"
+*
+* DEFAULT SNOLIB DIR (-INCLUDE, LOAD())
+         HOST_SNOLIB_DIR = 2200
+-LINE 62 "HOST.lss"
+*
+* C COMPILER USED TO BUILD CSNOBOL4
+         HOST_CC = 2202
+* C OPTIMIZER FLAGS USED TO BUILD CSNOBOL4
+         HOST_COPT = 2203
+-LINE 82 "HOST.lss"
+*
+* DYNAMIC LOADABLE LIBRARY EXTENSION
+         HOST_DL_EXT = 2208
+* C COMPILER FLAGS FOR DYNAMIC LOADABLES
+         HOST_DL_CFLAGS = 2209
+* DYNAMIC LOADABLE FILE LOAD COMMAND
+         HOST_DL_LD = 2210
+* DYNAMIC LOADABLE FILE LOAD SWITCHES
+         HOST_DL_LDFLAGS = 2211
+*
+* DIRECTORY SEPARATOR CHAR (MAY BE EMPTY)
+         HOST_DIR_SEP = 2212
+* PATH SEPARATOR CHARACTER
+         HOST_PATH_SEP = 2213
+*
+* CSNOBOL4 1.5
+*
+* DEFAULT LIBRARY SEARCH PATH
+         HOST_DEF_SNOPATH = 2214
+* PATH FOR C HEADERS
+         HOST_INCLUDE_DIR = 2215
+*
+* NUMBER OF BITS FOR SNOBOL4 INTEGER TYPE
+         HOST_INTEGER_BITS = 2300
+* NUMBER OF BITS FOR SNOBOL4 REAL TYPE
+         HOST_REAL_BITS = 2301
+* NUMBER OF BITS FOR C POINTER TYPE
+         HOST_POINTER_BITS = 2302
+* NUMBER OF BITS FOR C LONG TYPE
+         HOST_LONG_BITS = 2303
+* NUMBER OF BITS FOR SIL 'DESCRIPTOR' TYPE
+         HOST_DESCR_BITS = 2304
+* NUMBER OF BITS FOR SIL 'SPECIFIER' TYPE
+         HOST_SPEC_BITS = 2305
+* NUMBER OF BITS FOR C CHAR TYPE
+         HOST_CHAR_BITS = 2306
+*
+* SIZE OF 'DYNAMIC' STORAGE IN DESCRIPTORS
+         HOST_DYNAMIC_SIZE = 2400
+* SIZE OF PATTERN MATCH STACK IN DESCRS
+         HOST_PMSTACK_SIZE = 2401
+* SIZE OF INTERPRETER STACK IN DESCRIPTORS
+         HOST_ISTACK_SIZE = 2402
+*
+    CODE('HOST')
+*
+HOST_END
+*
+* CE: .MSNOBOL4;
+-LINE 13 "CRACK.lss"
+-STITL COUNT
+-EJECT
+-LINE 30 "COUNT.lss"
+*
+************************************************************************
+*                                                                      *
+*               #####   #######  #     #  #     #  #######             *
+*              #     #  #     #  #     #  ##    #     #                *
+*              #        #     #  #     #  # #   #     #                *
+*              #        #     #  #     #  #  #  #     #                *
+*              #        #     #  #     #  #   # #     #                *
+*              #     #  #     #  #     #  #    ##     #                *
+*               #####   #######   #####   #     #     #                *
+*                                                                      *
+* COUNT              COUNT STRING OCCURRENCES                          *
+*                                                                      *
+* COUNT(S1,S2) COUNTS THE NUMBER OF OCCURRENCES OF STRING S2 IN STRING *
+* S1.                                                                  *
+*                                                                      *
+************************************************************************
+*
+* count.lss
+*
+-LINE 6 "COUNT.lss"
+         DEFINE('COUNT(S1,S2)FIRST,REST,P')                 :(COUNT_END)
+*
+COUNT    COUNT = 0
+         S2 LEN(1) . FIRST REM . REST                         :F(RETURN)
+         P = POS(0) BREAKX(FIRST) S2
+COUNT_1  S1 P = REST                                          :F(RETURN)
+         COUNT = COUNT + 1                                    :(COUNT_1)
+*
+COUNT_END
+*
+* CE: .MSNOBOL4;
+-STITL CRACK
+-LINE 44 "CRACK.lss"
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*               #####   ######      #      #####   #    #              *
+*              #     #  #     #    # #    #     #  #   #               *
+*              #        #     #   #   #   #        #  #                *
+*              #        ######   #     #  #        ###                 *
+*              #        #   #    #######  #        #  #                *
+*              #     #  #    #   #     #  #     #  #   #               *
+*               #####   #     #  #     #   #####   #    #              *
+*                                                                      *
+* CRACK                    STRING TO ARRAY                             *
+*                                                                      *
+************************************************************************
+*
+* crack.lss
+*
+-LINE 17 "CRACK.lss"
+         DEFINE('CRACK(S,B)I,PAT')                          :(CRACK_END)
+*
+CRACK    IDENT(B, NULL)                                      :S(CRACK_1)
+         S RTAB(1) B ABORT | REM . S = S B
+         CRACK = ARRAY(COUNT(S, B))
+         PAT = BREAK(B) . *CRACK<I> LEN(1)
+CRACK_2  I = I + 1
+         S PAT =                                    :S(CRACK_2)F(RETURN)
+CRACK_1  CRACK = ARRAY(SIZE(S))
+         PAT = LEN(1) . *CRACK<I>                             :(CRACK_2)
+*
+CRACK_END
+*
+* CE: .MSNOBOL4;
+-STITL TRIMB
+-EJECT
+-LINE 28 "TRIMB.lss"
+*
+************************************************************************
+*                                                                      *
+*               #######  ######   ###  #     #  ######                 *
+*                  #     #     #   #   ##   ##  #     #                *
+*                  #     #     #   #   # # # #  #     #                *
+*                  #     ######    #   #  #  #  ######                 *
+*                  #     #   #     #   #     #  #     #                *
+*                  #     #    #    #   #     #  #     #                *
+*                  #     #     #  ###  #     #  ######                 *
+*                                                                      *
+* TRIMB            TRIM BOTH LEFT AND RIGHT OF STRING                  *
+*                                                                      *
+************************************************************************
+*
+* trimb.lss
+*
+-LINE 6 "TRIMB.lss"
+         DEFINE('TRIMB(S)')                                 :(TRIMB_END)
+*
+TRIMB    TRIMB = REVERSE(TRIM(REVERSE(TRIM(S))))               :(RETURN)
+*
+TRIMB_END
+*
+* CE: .MSNOBOL4;
+-STITL SLOAD
+-LINE 110 "SLOAD.lss"
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*              #####   #        #######     #     ######               *
+*             #     #  #        #     #    # #    #     #              *
+*             #        #        #     #   #   #   #     #              *
+*              #####   #        #     #  #     #  #     #              *
+*                   #  #        #     #  #######  #     #              *
+*             #     #  #        #     #  #     #  #     #              *
+*              #####   #######  #######  #     #  ######               *
+*                                                                      *
+* SLOAD                LOAD SNOBOL4 SOURCE                             *
+*                                                                      *
+* (C) COPYRIGHT 1985, 1987 - CATSPAW, INCORPORATED                     *
+*                                                                      *
+* MODIFIED TO SUPPORT /DEV FILES, SEARCH CSNOBOL4 PATHS                *
+*                                                                      *
+************************************************************************
+*
+* sload.lss
+*
+-LINE 18 "SLOAD.lss"
+         DEFINE('SLOAD(FILENAME)'
++               'LIB,CODE,PATH,X,A,I,P,PS,DS,TRIM_SAV,POSITION,UNIT')
+         Q_ = "'"
+         QQ_ = '"'
+         SLOAD_STMT = ARBNO(Q_ BREAK(Q_) Q_ | QQ_ BREAK(QQ_) QQ_ |
++                     NOTANY(Q_ QQ_) BREAK(Q_ QQ_ ';')) ';'
+         SLOAD_STMTS = FENCE (';' ARBNO(SLOAD_STMT)) . X '*' REM
+* NOTE THAT ; FOLLOWED BY ANYTHING OTHER THAN . OR + IS ALSO A COMMENT
+         SLOAD_CCPAT = FENCE ('*' | '-' | '#' | '!' | '|' | RPOS(0))
+         SLOAD_CNPAT = FENCE (';.' | ';+')
+         SLOAD_INPAT = FENCE '-' ((ANY('Ii') ('NCLUDE' | 'nclude')) |
++                                (ANY('Cc') ('OPY' | 'opy')))
++                      BREAK(QQ_ Q_) LEN(1) BREAK(QQ_ Q_) . X
+         SLOAD_TAB = TABLE()                                :(SLOAD_END)
+*
+* FUNCTION TO READ AND COMPILE SNOBOL4 FUNCTIONS FROM A DISK FILE.
+* THE FILENAME IS SPECIFIED AS THE ARGUMENT TO FUNCTION SLOAD.
+*
+SLOAD    UNIT = IO_FINDUNIT()
+         PATH = FILENAME
+         INPUT(.LIB, UNIT,, PATH)                            :S(SLOAD_0)
+         DS = HOST(HOST_DIR_SEP)
+         PS = HOST(HOST_PATH_SEP)
+         X = HOST(HOST_GETENV, 'SNOPATH')                    :S(SLOAD_8)
+         X = HOST(HOST_GETENV, 'SNOLIB')                     :S(SLOAD_8)
+         X = HOST(HOST_SNOLIB_DIR)                           :F(FRETURN)
+SLOAD_8  A = CRACK(X, PS)
+         I = 1
+SLOAD_10 P = TRIMB(A<I>)                                     :F(FRETURN)
+         PATH = P DS FILENAME
+         INPUT(.LIB, UNIT,, PATH)                            :S(SLOAD_0)
+         I = I + 1                                           :(SLOAD_10)
+*
+SLOAD_0  TRIM_SAV = &TRIM
+         &TRIM = 1
+*
+SLOAD_1  X = LIB                                             :F(SLOAD_2)
+         X SLOAD_CCPAT                                       :S(SLOAD_4)
+         X = ';' X
+         X SLOAD_CNPAT = ' '
+         X SLOAD_STMTS
+         CODE = CODE X                                        :(SLOAD_1)
+*
+SLOAD_4  X SLOAD_INPAT                                       :F(SLOAD_1)
+         DIFFER(SLOAD_TAB<X>)                                :S(SLOAD_1)
+*
+         POSITION = SET(UNIT, 0, 1)
+         ENDFILE(UNIT)
+         DETACH(.LIB)
+*
+         SLOAD(X)                                            :F(FRETURN)
+*
+         INPUT(.LIB, UNIT,, PATH)                            :F(FRETURN)
+*
+         SLOAD_TAB<X> = 1
+         FILENAME FENCE '/dev/'                              :S(SLOAD_1)
+         EQ(SET(UNIT, POSITION, 0), POSITION)      :S(SLOAD_1)F(FRETURN)
+*
+SLOAD_2  ENDFILE(UNIT)
+         DETACH(.LIB)
+         CODE = CODE(CODE '; :(SLOAD_3)')                       :S<CODE>
+         TERMINAL = 'COMPILATION ERROR, FILE: ' FILENAME
+*
+* ERROR. TAKE CODE APART STATEMENT BY STATEMENT TO FIND THE PROBLEM.
+* FIRST REMOVE FROM INCLUDE FILE TABLE, THEN REMOVE INITIAL ';'
+*
+         SLOAD_TAB<X> =
+         CODE = SUBSTR(CODE, 2)
+SLOAD_6  CODE FENCE SLOAD_STMT . X =                         :F(SLOAD_7)
+         CODE(X)                                             :S(SLOAD_6)
+         X RTAB(1) . TERMINAL
+SLOAD_7  &TRIM = TRIM_SAV
+         TERMINAL = &ERRTEXT                                  :(FRETURN)
+*
+SLOAD_3  &TRIM = TRIM_SAV                                      :(RETURN)
+*
+SLOAD_END
+*
+* CE: .MSNOBOL4;
+-STITL
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*             #######  #     #  ######   #######  ######               *
+*             #        ##   ##  #     #  #        #     #              *
+*             #        # # # #  #     #  #        #     #              *
+*             #####    #  #  #  ######   #####    #     #              *
+*             #        #     #  #     #  #        #     #              *
+*             #        #     #  #     #  #        #     #              *
+*             #######  #     #  ######   #######  ######               *
+*                                                                      *
+* EMBED                    EMBEDDED SNOBOL CODE                        *
+*                                                                      *
+************************************************************************
+*
+* embed.lss
+
+-LINE 60 "embed.lss"
+         TERMINAL = 'EMBED (SUN DEC  1 16:15:39 EST 2013)'
+*
+         WHITE_ = SPAN(' ' CHARS_TAB) | ''
+         Q_ = "'"
+         QQ_ = '"'
+         LEAD = DUPL(' ', 9)
+*
+TOP      LINE = INPUT                                            :F(END)
+*
+         LINE FENCE '-' ('snobol' | 'SNOBOL') (ANY('xX') | '') WHITE_
++            REM . S                                        :F(TRYEMBED)
+TRYX1    REVERSE(TRIM(S)) FENCE '+' REM . X                    :F(TRYX2)
+         S = REVERSE(X) ' ' INPUT                               :(TRYX1)
+TRYX2    CODE = CODE(' ' S ' :(TOP)')                           :S<CODE>
+         TERMINAL = 'EMBED: -SNOBOL CODE BAD: ' S                 :(END)
+*
+TRYEMBED LINE FENCE '-' ('embed' | 'EMBED') WHITE_ ARB . TYPE
++            WHITE_ (Q_ | QQ_) $ DELIM ARB . VNAME *DELIM     :S(STARTC)
+         LINE FENCE '-' ('cmnt' | 'CMNT')                        :S(TOP)
+         OUTPUT = LINE                                            :(TOP)
+STARTC   FNAME = VNAME
+         FNAME = ?(TYPE ? 'c' | 'C') FNAME '.c'
+         FNAME = ?(TYPE ? 'fortran' | 'FORTRAN') FNAME '.FTN'
+         FNAME = ?(TYPE ? 'cobol' | 'COBOL') FNAME '.CBL'
+         FNAME = ?(TYPE ? 'scheme' | 'SCHEME') FNAME '.SCM'
+         FNAME = ?(TYPE ? 'data' | 'DATA') FNAME '.DAT'
+         OUTPUT = LEAD VNAME ' = ' Q_ FNAME Q_
+         $VNAME = FNAME
+         OUTPUT(.EMBED, 10,, FNAME)
+*
+COPYL    LINE = INPUT                                            :F(END)
+         OFLAG =
+         LINE FENCE '-' ('cmnt' | 'CMNT')                      :S(COPYL)
+         LINE FENCE '-' ('end' | 'END')                       :S(COPYL3)
+         LINE FENCE '-' ('snobol' | 'SNOBOL')
++            ((ANY('xX') *?(OFLAG = 1)) | '')
++            WHITE_ REM . SNC                                 :F(COPYL2)
+*
+DOMORE   REVERSE(TRIM(SNC)) FENCE '+' REM . X                :F(EXECSNC)
+         SNC = REVERSE(X) ' ' INPUT                            :(DOMORE)
+*
+EXECSNC  OUTPUT = DIFFER(OFLAG) LEAD SNC
+         CODE = CODE(' ' SNC ' :(COPYL)')                       :S<CODE>
+         &CODE = 1
+         TERMINAL = 'EMBED: -SNOBOL(X) CODE BAD: ' SNC            :(END)
+COPYL2   EMBED = LINE                                           :(COPYL)
+COPYL3   DETACH(.EMBED)
+         ENDFILE(10)                                              :(TOP)
+*
+END START
+*
+* CE: .MSNOBOL4;

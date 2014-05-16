@@ -1,0 +1,1315 @@
+#!/usr/bin/bash 
+ exec "snobol4" "-b" "-P100k" "$0" "$@" 
+-PLUSOPS 1 
+MAIN. CODE('MAIN.')
+* #/usr/local/bin/snobol4 -bP100k 
+-LINE 10 "sc.sc"
+ label_lead = "L."
+-LINE 11
+ label_lead = HOST(4,"LABEL")
+-LINE 12
+ initial_label = newlab()
+-LINE 13
+ gl_options = ""
+-LINE 14
+ IDENT(.A,'A') :F(L.2)
+-LINE 16
+ OPSYN("MB_INPUT","INPUT")
+-LINE 17
+ OPSYN("MB_OUTPUT","OUTPUT")
+-LINE 18
+ CODE("SETEXIT :(RETURN)")
+-LINE 19
+ CODE("INPUT MB_INPUT(n,u,,fn) :S(RETURN)F(FRETURN)")
+-LINE 20
+ CODE("OUTPUT MB_OUTPUT(n,u,,fn) :S(RETURN)F(FRETURN)")
+-LINE 21
+ DEFINE("SETEXIT()")
+-LINE 22
+ DEFINE("INPUT(n,u,fn)")
+-LINE 23
+ DEFINE("OUTPUT(n,u,fn)")
+-LINE 24
+ gl_options = "-+ "
+-LINE 27
+L.2 DATA("b(op,l,r)")
+-LINE 28
+ DATA("u(op,r)")
+-LINE 29
+ DATA("i_fcall(name,head,tail)")
+-LINE 30
+ DATA("fcall(name,args,l,r)")
+-LINE 31
+ DATA("argexp(expr,next)")
+-LINE 33
+ stack = TABLE()
+-LINE 34
+ bconv = TABLE(30)
+-LINE 35
+ deflist = TABLE(50)
+-LINE 36
+ inctab = TABLE()
+-LINE 37
+ stno_tab = TABLE(100)
+-LINE 54
+ DATA("binfo(out,lp,rp,slp,srp,fn)")
+-LINE 58
+ bconv<'('> = par_binfo = binfo('',0)
+-LINE 60
+ bconv<'='> = binfo('=',1,2,0,1)
+-LINE 61
+ bconv<'?'> = binfo('?',2,2,1,1)
+-LINE 62
+ bconv<'|'> = binfo('|',3,3,2,2)
+-LINE 63
+ bconv<'||'> = or_binfo = binfo('',4,4,0,0,1)
+-LINE 64
+ bconv<'&&'> = cat_binfo = binfo(' ',5,5,4,4)
+-LINE 65
+ bconv<'>'> = binfo('GT',6,6,0,0,1)
+-LINE 66
+ bconv<'<'> = binfo('LT',6,6,0,0,1)
+-LINE 67
+ bconv<'>='> = binfo('GE',6,6,0,0,1)
+-LINE 68
+ bconv<'<='> = binfo('LE',6,6,0,0,1)
+-LINE 69
+ bconv<'=='> = binfo('EQ',6,6,0,0,1)
+-LINE 70
+ bconv<'!='> = binfo('NE',6,6,0,0,1)
+-LINE 71
+ bconv<'::'> = binfo('IDENT',6,6,0,0,1)
+-LINE 72
+ bconv<':!:'> = binfo('DIFFER',6,6,0,0,1)
+-LINE 73
+ bconv<':>:'> = binfo('LGT',6,6,0,0,1)
+-LINE 74
+ bconv<':<:'> = binfo('LLT',6,6,0,0,1)
+-LINE 75
+ bconv<':>=:'> = binfo('LGE',6,6,0,0,1)
+-LINE 76
+ bconv<':<=:'> = binfo('LLE',6,6,0,0,1)
+-LINE 77
+ bconv<':==:'> = binfo('LEQ',6,6,0,0,1)
+-LINE 78
+ bconv<':!=:'> = binfo('LNE',6,6,0,0,1)
+-LINE 79
+ bconv<'+'> = binfo('+',7,7,5,5)
+-LINE 80
+ bconv<'-'> = binfo('-',7,7,5,5)
+-LINE 81
+ bconv<'/'> = binfo('/',8,8,7,7)
+-LINE 82
+ bconv<'*'> = binfo('*',8,8,8,8)
+-LINE 83
+ bconv<'%'> = binfo('REMDR',8,8,0,0,1)
+-LINE 84
+ bconv<'^'> = binfo('**',9,10,10,11)
+-LINE 85
+ bconv<'.'> = binfo('.',10,10,11,11)
+-LINE 86
+ bconv<'$'> = binfo('$',10,10,11,11)
+-LINE 88
+ ht = char(9)
+-LINE 89
+ optblank = nspan(" " ht)
+-LINE 90
+ blank = SPAN(" " ht)
+-LINE 91
+ digits = "0123456789"
+-LINE 92
+ letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_"
+-LINE 94
+ integer = SPAN(digits)
+-LINE 95
+ exponent = ANY("eEdD") (ANY("+-") | "") integer
+-LINE 96
+ real = integer "." (integer | "") (exponent | "") 
++| integer exponent | "." integer (exponent | "")
+-LINE 98
+ number = real | integer
+-LINE 100
+ string = ANY("'" '"') $ squote BREAK(*squote) LEN(1)
+-LINE 102
+ constant = number | string
+-LINE 103
+ identifier = ANY(letters) nspan(letters digits)
+-LINE 104
+ unaryop = ANY("+-*&@~?.$")
+-LINE 105
+ binaryop = "==" | "!=" | "<=" | ">=" | "&&" | "||"
++ | ":==:" | ":!=:" | ":>:" | ":<:" | ":>=" | ":<=:"
++ | "::" | ":!:" | ANY("+-*/<>=^.$?|%")
+-LINE 109
+ fcall = identifier . *mkfcall() optblank ("(" list(*expr 
++. *invoke(.mkarg),optblank ",") optblank ")" . *invoke(.endfc) 
++| "[" list(*expr . *invoke(.mkarg),optblank ",") optblank 
++"]" . *invoke(.endfc) . *invoke(.mkarray))
+-LINE 115
+ term = optblank (constant . *push() . *dotck() | identifier 
++. *push() | "(" *expr optblank ")" | fcall)
+-LINE 117
+ operand = term | optblank unaryop . *push() *operand 
++. *invoke(.unop)
+-LINE 119
+ expr = "" . *begexp() *operand ARBNO(optblank binaryop 
++. *push() . *invoke(.mkbinfo) *operand . *invoke(.binop)) 
++"" . *endexp()
+-LINE 123
+ label = optblank identifier . lab . *emitlab(lab) optblank ":"
+-LINE 125
+ clausend = ANY("{}") . del | RPOS(0)
+-LINE 127
+ clause = FENCE ARBNO(label) optblank ("if" . cl_type 
++optblank "(" *expr optblank ")" | "while" . cl_type 
++optblank "(" *expr optblank ")" | (kw("return") | 
++kw("freturn") | kw("nreturn")) . cl_type optblank 
++("" . *push() | *expr) optblank clausend | "go" optblank 
++"to" blank identifier . dest . *invoke(.gocl) | ("{"
++ | "}") . cl_type | ("do" | kw("else")) . cl_type 
++(SPAN(" " ht) | RPOS(0)) | "procedure" . cl_type blank 
++identifier . fname | "struct" . cl_type blank identifier 
++. stname | "for" . cl_type optblank "(" *expr optblank 
++"," *expr optblank "," *expr optblank ")" | RPOS(0) 
++. cl_type *invoke(.emiteos) | *expr optblank clausend 
++. *invoke(.expcl))
+-LINE 145
+ gl_files = TABLE()
+-LINE 146
+ gl_lines = TABLE()
+-LINE 147
+ gl_index = 9
+-LINE 148
+ gl_first = 10
+-LINE 150
+ emit_stno = 0
+-LINE 152
+ &STLIMIT = -1
+-LINE 157
+ HOST() ? FENCE BREAKX(":") (":MS-DOS" | ":OS/2" | 
++":WinNT" | ":Win95") :F(L.3)
+-LINE 159
+ gl_extension = ".exe"
+-LINE 160
+ gl_delete = "del " :(L.4)
+-LINE 163
+L.3 gl_extension = ""
+-LINE 164
+ gl_delete = "rm "
+-LINE 166
+L.4 EXIT(3,"snocone" gl_extension)
+-LINE 169
+ gl_arg = HOST(3) - 1
+-LINE 170
+ HOST(2,HOST(3)) :S(L.5)
+-LINE 171
+ OUTPUT = "snocone: nothing to compile" :(END)
+-LINE 175
+L.5 gl_nextfile() :S(L.6)F(END)
+-LINE 180
+L.6 outfile = IDENT(outfile) "a"
+-LINE 181
+ &ERRLIMIT = &ERRLIMIT + 1
+-LINE 182
+ savexit = SETEXIT()
+-LINE 183
+ gl_options ? "-+" :F(L.7)
+-LINE 184
+ extension = ".sno" :(L.8)
+-LINE 186
+L.7 extension = ".spt"
+-LINE 187
+L.8 gl_options ? "-m" :F(L.9)
+-LINE 188
+ module = 1 :(L.10)
+-LINE 190
+L.9 module = 0
+-LINE 191
+L.10 OUTPUT(.outf,9,outfile extension) :S(L.11)
+-LINE 192
+ OUTPUT = "cannot write " outfile extension :(END)
+-LINE 195
+L.11 &ERRLIMIT = &ERRLIMIT - 1
+-LINE 196
+ SETEXIT(savexit)
+-LINE 205
+ options = ""
+-LINE 206
+ gl_options ? "-+" :F(L.12)
+-LINE 207
+ emitlab("#!/usr/bin/bash")
+-LINE 208
+ emitlab(' exec "snobol4" ' options '"-b" "$0" "$@"')
+-LINE 209
+ emitlab("-PLUSOPS 1")
+-LINE 210
+ emiteos()
+-LINE 212
+L.12 EQ(module,1) :F(L.13)
+-LINE 213
+ emitg(initial_label)
+-LINE 214
+ emiteos() :(L.14)
+-LINE 216
+L.13 emitlab("MAIN.")
+-LINE 217
+ emit("CODE('MAIN.')")
+-LINE 218
+ emiteos()
+-LINE 222
+L.14 nclause(1) :F(L.15)
+-LINE 223
+ IDENT(cl_type,"procedure") :F(L.16)
+-LINE 224
+ funct() :(L.17)
+-LINE 225
+L.16 IDENT(cl_type,"struct") :F(L.18)
+-LINE 226
+ dostruct() :(L.19)
+-LINE 228
+L.18 dostmt()
+L.19 
+-LINE 229
+L.17  :(L.14)
+L.15 
+-LINE 233
+EXIT EQ(module,1) :F(L.20)
+-LINE 235
+ emitlab(initial_label) :(L.21)
+-LINE 237
+L.20 emitg("END")
+-LINE 238
+ emitlab("START.")
+-LINE 239
+ emit("CODE('START.')")
+-LINE 241
+L.21 i = 1
+L.22 LE(i,deflist<0>) :F(L.23)
+-LINE 242
+ emiteos()
+-LINE 243
+ emit(deflist<i>)
+-LINE 244
+ i = i + 1 :(L.22)
+-LINE 247
+L.23 emiteos()
+-LINE 248
+ gl_options ? "-+" :S(L.24)
+-LINE 249
+ emit("EXIT(3,'" outfile gl_extension "')")
+-LINE 251
+L.24 EQ(module,0) :F(L.25)
+-LINE 254
+ emit("&FULLSCAN = 1")
+-LINE 255
+ emiteos()
+-LINE 256
+ emit("&TRIM = 1")
+-LINE 257
+ emitg("MAIN.")
+-LINE 258
+ emiteos()
+-LINE 261
+L.25 EQ(module,0) :F(L.26)
+-LINE 262
+ outf = "END	START."
+-LINE 263
+L.26 ENDFILE(9) :(nspan.END)
+-LINE 285
+nspan nspan = SPAN(str) | "" :(RETURN)
+-LINE 290
+nspan.END  :(list.END)
+-LINE 291
+list list = item ARBNO(delim item) | "" :(RETURN)
+-LINE 296
+list.END  :(kw.END)
+-LINE 297
+kw kw = SPAN(letters) $ dummy CONVERT("ident(dummy,'"
++ s "')","EXPRESSION") :(RETURN)
+-LINE 302
+kw.END  :(push.END)
+-LINE 303
+push stackptr = stackptr + 1
+-LINE 304
+ push = .stack<stackptr> :(NRETURN)
+-LINE 308
+push.END  :(pop.END)
+-LINE 309
+pop pop = stack<stackptr>
+-LINE 310
+ stack<stackptr> = ""
+-LINE 311
+ stackptr = stackptr - 1 :(RETURN)
+-LINE 315
+pop.END  :(peek.END)
+-LINE 316
+peek GE(n,stackptr) :S(err)
+-LINE 318
+ peek = .stack<stackptr - n> :(NRETURN)
+-LINE 323
+peek.END  :(top.END)
+-LINE 324
+top top = .stack<stackptr> :(NRETURN)
+-LINE 332
+top.END  :(isbin.END)
+-LINE 333
+isbin (DIFFER(DATATYPE(x),'B'),DIFFER(fn(op(x)))) :S(FRETURN)F(L.27)
+-LINE 335
+L.27  :(RETURN)
+-LINE 339
+isbin.END  :(isneg.END)
+-LINE 340
+isneg (DIFFER(DATATYPE(x),'U'),DIFFER(op(x),'~')) :S(FRETURN)F(L.28)
+-LINE 342
+L.28  :(RETURN)
+-LINE 346
+isneg.END  :(dprint.END)
+-LINE 347
+dprint d = DATATYPE(x)
+-LINE 348
+ IDENT(d,'STRING') :F(L.29)
+-LINE 349
+ emit(x) :(RETURN)
+-LINE 353
+L.29 IDENT(d,'U') :F(L.30)
+-LINE 355
+ emit(op(x))
+-LINE 356
+ isbin(r(x)) :F(L.31)
+-LINE 357
+ emit('(')
+-LINE 358
+L.31 dprint(r(x))
+-LINE 359
+ isbin(r(x)) :F(L.32)
+-LINE 360
+ emit(')')
+-LINE 361
+L.32  :(RETURN)
+-LINE 365
+L.30 IDENT(d,'FCALL') :F(L.33)
+-LINE 367
+ emit(name(x))
+-LINE 368
+ emit(l(x))
+-LINE 369
+ r = args(x)
+-LINE 370
+L.34 DIFFER(r) :F(L.35)
+-LINE 371
+ emit(del)
+-LINE 372
+ dprint(expr(r))
+-LINE 373
+ del = ','
+-LINE 374
+ r = next(r) :(L.34)
+-LINE 376
+L.35 emit(r(x)) :(RETURN)
+-LINE 380
+L.33 IDENT(d,'B') :F(L.36)
+-LINE 382
+ op = op(x)
+-LINE 383
+ IDENT(op,or_binfo) :F(L.37)
+-LINE 384
+ emit('(')
+-LINE 385
+ bprint(x)
+-LINE 386
+ emit(')') :(RETURN)
+-LINE 389
+L.37 l = (isbin(l(x)) LT(slp(op(l(x))),srp(op)) 1,"")
+-LINE 390
+ r = (isbin(r(x)) GT(slp(op),srp(op(r(x)))) 1,"")
+-LINE 393
+ DIFFER(fn(op)) :F(L.38)
+-LINE 394
+ emit(out(op))
+-LINE 395
+ emit('(')
+-LINE 396
+ dprint(l(x))
+-LINE 397
+ emit(',')
+-LINE 398
+ dprint(r(x))
+-LINE 399
+ emit(')') :(RETURN)
+-LINE 404
+L.38 DIFFER(l) :F(L.39)
+-LINE 405
+ emit('(')
+-LINE 406
+L.39 dprint(l(x))
+-LINE 407
+ DIFFER(l) :F(L.40)
+-LINE 408
+ emit(')')
+-LINE 409
+L.40 emitb(out(op))
+-LINE 410
+ DIFFER(r) :F(L.41)
+-LINE 411
+ emit('(')
+-LINE 412
+L.41 dprint(r(x))
+-LINE 413
+ DIFFER(r) :F(L.42)
+-LINE 414
+ emit(')')
+-LINE 415
+L.42  :(RETURN)
+-LINE 419
+L.36 i = 1
+-LINE 420
+ emit(d)
+-LINE 421
+ emit('(')
+-LINE 422
+L.43 dprint(APPLY(FIELD(d,i),x)) :F(L.44)
+-LINE 423
+ i = i + 1
+-LINE 424
+ emit(',') :(L.43)
+-LINE 426
+L.44 emit(')') :(RETURN)
+-LINE 434
+dprint.END  :(bprint.END)
+-LINE 435
+bprint (DIFFER(DATATYPE(x),'B'),DIFFER(op(x),or_binfo)) :F(L.45)
+-LINE 436
+ dprint(x) :(RETURN)
+-LINE 439
+L.45 bprint(l(x))
+-LINE 440
+ emit(',')
+-LINE 441
+ bprint(r(x)) :(RETURN)
+-LINE 450
+bprint.END  :(sprint.END)
+-LINE 451
+sprint (IDENT(DATATYPE(x),'B') IDENT(op(x),cat_binfo)) :F(L.46)
+-LINE 452
+ emit('(')
+-LINE 453
+L.46 dprint(x)
+-LINE 454
+ (IDENT(DATATYPE(x),'B') IDENT(op(x),cat_binfo)) :F(L.47)
+-LINE 455
+ emit(')')
+-LINE 456
+L.47 emiteob() :(RETURN)
+-LINE 462
+sprint.END  :(invoke.END)
+-LINE 463
+invoke APPLY(f,'')
+-LINE 464
+ invoke = .dummy :(NRETURN)
+-LINE 468
+invoke.END  :(unop.END)
+-LINE 469
+unop r = pop()
+-LINE 470
+ op = pop()
+-LINE 471
+ push() = u(op,r) :(RETURN)
+-LINE 476
+unop.END  :(mkfcall.END)
+-LINE 477
+mkfcall push() = i_fcall()
+-LINE 478
+ mkfcall = .name(top()) :(NRETURN)
+-LINE 482
+mkfcall.END  :(mkarg.END)
+-LINE 483
+mkarg x = argexp(pop(),"")
+-LINE 484
+ f = top()
+-LINE 485
+ DIFFER(tail(f)) :F(L.48)
+-LINE 486
+ next(tail(f)) = x
+-LINE 487
+L.48 tail(f) = x
+-LINE 488
+ head(f) = IDENT(head(f)) x :(RETURN)
+-LINE 492
+mkarg.END  :(endfc.END)
+-LINE 493
+endfc f = pop()
+-LINE 494
+ push() = fcall(name(f),head(f),'(',')') :(RETURN)
+-LINE 498
+endfc.END  :(mkarray.END)
+-LINE 499
+mkarray t = top()
+-LINE 500
+ l(t) = '<'
+-LINE 501
+ r(t) = '>' :(RETURN)
+-LINE 505
+mkarray.END  :(begexp.END)
+-LINE 506
+begexp push() = bconv<'('>
+-LINE 507
+ begexp = .dummy :(NRETURN)
+-LINE 513
+begexp.END  :(binop.END)
+-LINE 514
+binop GE(lp(peek(3)),rp(peek(1))) :F(L.49)
+-LINE 515
+ newr = pop()
+-LINE 516
+ newop = pop()
+-LINE 517
+ r = pop()
+-LINE 518
+ op = pop()
+-LINE 519
+ l = pop()
+-LINE 520
+ push() = b(op,l,r)
+-LINE 521
+ push() = newop
+-LINE 522
+ push() = newr :(binop)
+-LINE 524
+L.49  :(RETURN)
+-LINE 527
+binop.END  :(endexp.END)
+-LINE 528
+endexp DIFFER(peek(1),par_binfo) :F(L.50)
+-LINE 529
+ r = pop()
+-LINE 530
+ op = pop()
+-LINE 531
+ l = pop()
+-LINE 532
+ push() = b(op,l,r) :(endexp)
+-LINE 534
+L.50 r = pop()
+-LINE 535
+ pop()
+-LINE 536
+ push() = r
+-LINE 537
+ endexp = .dummy :(NRETURN)
+-LINE 543
+endexp.END  :(mkbinfo.END)
+-LINE 544
+mkbinfo op = bconv<pop()>
+-LINE 545
+ IDENT(op) :S(err)
+-LINE 547
+ push() = op :(RETURN)
+-LINE 555
+mkbinfo.END  :(dotck.END)
+-LINE 556
+dotck top() ? FENCE '.' = '0.'
+-LINE 557
+ dotck = .dummy :(NRETURN)
+-LINE 561
+dotck.END  :(emitlab.END)
+-LINE 562
+emitlab DIFFER(l) :F(L.51)
+-LINE 563
+ emiteos()
+-LINE 564
+ st_lab = l
+-LINE 566
+L.51 emitlab = .dummy :(NRETURN)
+-LINE 570
+emitlab.END  :(emit.END)
+-LINE 571
+emit DIFFER(emit_eob) :F(L.52)
+-LINE 572
+ emiteos()
+-LINE 573
+L.52 st_body = st_body s :(RETURN)
+-LINE 577
+emit.END  :(emiteob.END)
+-LINE 578
+emiteob IDENT(emit_eob) :F(L.53)
+-LINE 579
+ buildstab(emit_stno,gi_file,gi_line)
+-LINE 580
+ emit_eob = 1
+-LINE 582
+L.53  :(RETURN)
+-LINE 585
+emiteob.END  :(emits.END)
+-LINE 586
+emits emiteob()
+-LINE 587
+ st_s = l :(RETURN)
+-LINE 592
+emits.END  :(emitf.END)
+-LINE 593
+emitf emiteob()
+-LINE 594
+ st_f = l :(RETURN)
+-LINE 598
+emitf.END  :(emitg.END)
+-LINE 599
+emitg emiteob()
+-LINE 600
+ st_s = IDENT(st_s) l
+-LINE 601
+ st_f = IDENT(st_f) l :(RETURN)
+-LINE 605
+emitg.END  :(emitb.END)
+-LINE 606
+emitb emit(' ')
+-LINE 607
+ DIFFER(s,' ') :F(L.54)
+-LINE 608
+ emit(s)
+-LINE 609
+ emit(' ')
+-LINE 611
+L.54  :(RETURN)
+-LINE 615
+emitb.END  :(emiteos.END)
+-LINE 616
+emiteos emit_eob = ""
+-LINE 617
+ (DIFFER(st_lab),DIFFER(st_body),DIFFER(st_s),DIFFER(st_f)) :F(L.55)
+-LINE 618
+ emit_stno = emit_stno + 1
+-LINE 619
+ out = st_lab " " st_body
+-LINE 620
+ (DIFFER(st_s),DIFFER(st_f)) :F(L.56)
+-LINE 621
+ goto = " :"
+-LINE 622
+ IDENT(st_s,st_f) :F(L.57)
+-LINE 623
+ goto = goto "(" st_s ")" :(L.58)
+-LINE 625
+L.57 DIFFER(st_s) :F(L.59)
+-LINE 626
+ goto = goto "S(" st_s ")"
+-LINE 627
+L.59 DIFFER(st_f) :F(L.60)
+-LINE 628
+ goto = goto "F(" st_f ")"
+L.60 
+L.58 
+-LINE 631
+L.56 out = out goto
+-LINE 632
+L.61 (GE(SIZE(out),70) (out ? FENCE (ARBNO(BREAK(" '"
++ '"') (" " | ANY("'" '"') $ del BREAK(*del) LEN(1))) 
++$ s *GT(SIZE(s),50)) . outf = "+")) :S(L.61)F(L.62)
+-LINE 638
+L.62 outf = out
+-LINE 639
+ st_lab = st_body = st_s = st_f = ""
+-LINE 641
+L.55  :(RETURN)
+-LINE 644
+emiteos.END  :(getline.END)
+getline 
+-LINE 647
+next_line x = gl_in :F(L.63)
+-LINE 651
+ gl_line = gl_line + 1
+-LINE 654
+ x ? FENCE "-" :F(L.64)
+-LINE 655
+ emitlab(x)
+-LINE 656
+ emiteos()
+-LINE 659
+ x_ln = -1
+-LINE 660
+ x_fn = ""
+-LINE 661
+ x ? FENCE "-LINE" SPAN(" ") BREAK SPAN(&DIGITS) . x_ln REM . x_file
+-LINE 662
+ x_file ? '"' BREAK('"') . x_fn
+-LINE 663
+ GT(x_ln,0) :F(L.65)
+-LINE 664
+ gl_line = x_ln
+-LINE 665
+L.65 gl_file = VDIFFER(x_fn) :(next_line)
+-LINE 669
+L.64 x ? FENCE "//" :F(L.66)
+-LINE 670
+ x ? FENCE "//" REM . x
+-LINE 671
+ emitlab(x)
+-LINE 672
+ emiteos() :(next_line)
+-LINE 677
+L.66 x ? FENCE "#" *optblank "include" *optblank ANY('"<{'
++ "'") $ del BREAK(*REPLACE(del,'<{','>}')) . file 
++LEN(1) *optblank RPOS(0) :S(L.67)
+-LINE 681
+ getline = x :(RETURN)
+-LINE 688
+L.67 "'" '"' ? del :F(L.68)
+-LINE 689
+ LNE(SUBSTR(file,1,1),'/') :F(L.69)
+-LINE 690
+ gl_file '/' ? FENCE (BREAKX('/') LEN(1)) . dir BREAK('/'
++) LEN(1) RPOS(0) :F(L.70)
+-LINE 693
+ file = dir file
+L.70 
+-LINE 695
+L.69  :(L.71)
+-LINE 696
+L.68 file = "/export/home/fred/snolib/" file
+-LINE 703
+L.71 ('"<' ? del,IDENT(inctab<file>)) :F(L.72)
+-LINE 704
+ inctab<file> = 1
+-LINE 705
+ gl_open(file)
+-LINE 707
+L.72  :(next_line)
+-LINE 710
+L.63 ENDFILE(gl_index)
+-LINE 711
+ gl_close()
+-LINE 712
+ (GE(gl_index,gl_first),gl_nextfile()) :S(getline)F(FRETURN)
+-LINE 719
+getline.END  :(gl_nextfile.END)
+-LINE 720
+gl_nextfile gl_arg = gl_arg + 1
+-LINE 721
+L.73 IDENT(SUBSTR(HOST(2,gl_arg),1,1),"-") :F(L.74)
+-LINE 722
+ gl_options = gl_options HOST(2,gl_arg) " "
+-LINE 723
+ gl_arg = gl_arg + 1 :(L.73)
+-LINE 725
+L.74 gl_open(HOST(2,gl_arg)) :S(L.75)F(FRETURN)
+-LINE 727
+L.75  :(RETURN)
+-LINE 729
+gl_nextfile.END  :(gl_close.END)
+-LINE 730
+gl_close gl_index = gl_index - 1
+-LINE 731
+ gl_file = gl_files<gl_index>
+-LINE 732
+ gl_line = gl_lines<gl_index>
+-LINE 733
+ GE(gl_index,gl_first) :F(L.76)
+-LINE 734
+ INPUT(.gl_in,gl_index)
+-LINE 735
+L.76 gl_files<gl_index> = gl_lines<gl_index> = "" :(RETURN)
+-LINE 738
+gl_close.END  :(gl_open.END)
+-LINE 739
+gl_open gl_files<gl_index> = gl_file
+-LINE 740
+ gl_lines<gl_index> = gl_line
+-LINE 741
+ gl_index = gl_index + 1
+-LINE 742
+ gl_line = 0
+-LINE 743
+ gl_file = file
+-LINE 744
+ &ERRLIMIT = &ERRLIMIT + 1
+-LINE 745
+ t = SETEXIT()
+-LINE 746
+ (INPUT(.gl_in,gl_index,file),INPUT(.gl_in,gl_index,gl_file 
++= file ".sc")) :F(L.77)
+-LINE 748
+ SETEXIT(t)
+-LINE 749
+ &ERRLIMIT = &ERRLIMIT - 1
+-LINE 750
+ file ? IDENT(outfile) (BREAK(".") | REM) . outfile :(RETURN)
+-LINE 753
+L.77 SETEXIT(t)
+-LINE 754
+ gl_close()
+-LINE 755
+ error("cannot read " file) :(FRETURN)
+-LINE 761
+gl_open.END  :(getinput.END)
+-LINE 764
+getinput DIFFER(gi_eof) :S(FRETURN)F(L.78)
+-LINE 767
+L.78 line = line getline() :F(L.79)
+-LINE 770
+ IDENT(recur) :F(L.80)
+-LINE 771
+ gi_file = gl_file
+-LINE 772
+ gi_line = gl_line
+-LINE 776
+L.80 line ? FENCE (ARBNO(BREAK("'" '"') LEN(1) $ del 
++BREAK(*del) LEN(1)) BREAK("'" '"#')) . line "#"
+-LINE 783
+ line ? ANY("@$%^&*(-+=[<>|~,?:") optblank RPOS(0) :F(L.81)
+-LINE 784
+ line = line getinput(1)
+-LINE 786
+L.81 getinput = line :(RETURN)
+-LINE 790
+L.79 gi_eof = 1 :(FRETURN)
+-LINE 796
+getinput.END  :(phrase.END)
+-LINE 797
+phrase ph_buf ? FENCE optblank RPOS(0) :F(L.82)
+-LINE 798
+ ph_buf = phbuf getinput() :F(L.83)
+-LINE 799
+ phrase = phrase() :(RETURN)
+-LINE 801
+L.83  :(FRETURN)
+L.84 
+-LINE 804
+L.82 ph_buf ? FENCE (ARBNO(BREAK('"' "'") LEN(1) $ 
++del BREAK(*del) LEN(1)) BREAK('"' "';")) . phrase 
++';' = '' :S(RETURN)F(L.85)
+-LINE 809
+L.85 phrase = ph_buf
+-LINE 810
+ ph_buf = '' :(RETURN)
+-LINE 814
+phrase.END  :(newlab.END)
+-LINE 815
+newlab nl_count = nl_count + 1
+-LINE 817
+ newlab = label_lead nl_count :(RETURN)
+-LINE 822
+newlab.END  :(marklab.END)
+-LINE 823
+marklab (DIFFER(st_lab) IDENT(emit_eob)) :F(L.86)
+-LINE 824
+ marklab = st_lab :(RETURN)
+-LINE 825
+L.86 marklab = newlab()
+-LINE 826
+ emitlab(marklab) :(RETURN)
+-LINE 832
+marklab.END  :(expcl.END)
+-LINE 833
+expcl cl_type = "expr" :(RETURN)
+-LINE 837
+expcl.END  :(gocl.END)
+-LINE 838
+gocl cl_type = "goto" :(RETURN)
+-LINE 845
+gocl.END  :(nclause.END)
+nclause 
+-LINE 846
+nclause_start DIFFER(rep_clause) :F(L.87)
+-LINE 848
+ rep_clause = ""
+-LINE 849
+ IDENT(eof) :S(RETURN)F(L.88)
+-LINE 852
+L.88  :(FRETURN)
+L.89 
+-LINE 854
+L.87 linebuf ? FENCE *optblank RPOS(0) :F(L.90)
+-LINE 855
+ linebuf = phrase() :S(nclause_start)
+-LINE 859
+ IDENT(okeof) :F(L.91)
+-LINE 860
+ error('premature EOF') :(EXIT)
+-LINE 863
+L.91 eof = 1 :(FRETURN)
+-LINE 868
+L.90 linebuf ? clause = del :S(RETURN)F(L.92)
+-LINE 870
+L.92 error("syntax error")
+-LINE 871
+ linebuf = "" :(nclause_start)
+-LINE 875
+nclause.END  :(error.END)
+-LINE 876
+error IDENT(gl_file) :F(L.93)
+-LINE 877
+ prefix = "snocone" :(L.94)
+-LINE 879
+L.93 prefix = gl_file "(" gl_line ")"
+-LINE 880
+L.94 terminal = prefix ": " msg
+-LINE 881
+ &CODE = 1 :(RETURN)
+-LINE 885
+error.END  :(dostmt.END)
+-LINE 887
+dostmt IDENT(cl_type,"expr") :F(L.95)
+-LINE 890
+ sprint(pop()) :(RETURN)
+-LINE 895
+L.95 IDENT(cl_type,"{") :F(L.96)
+-LINE 896
+ nclause()
+-LINE 897
+L.97 DIFFER(cl_type,"}") :F(L.98)
+-LINE 898
+ dostmt()
+-LINE 899
+ nclause() :(L.97)
+-LINE 901
+L.98  :(RETURN)
+-LINE 905
+L.96 IDENT(cl_type,"goto") :F(L.99)
+-LINE 906
+ emitg(dest) :(RETURN)
+-LINE 911
+L.99 IDENT(cl_type,"if") :F(L.100)
+-LINE 912
+ e1 = pop()
+-LINE 915
+ isneg(e1) :F(L.101)
+-LINE 916
+ flip = 1
+-LINE 917
+ e1 = r(e1)
+-LINE 920
+L.101 sprint(e1)
+-LINE 923
+ nclause()
+-LINE 924
+ IDENT(cl_type,"goto") :F(L.102)
+-LINE 925
+ IDENT(flip) :F(L.103)
+-LINE 926
+ emits(dest) :(L.104)
+-LINE 928
+L.103 emitf(dest)
+-LINE 932
+L.104 (~nclause(1),DIFFER(cl_type,"else")) :F(L.105)
+-LINE 933
+ rep_clause = 1
+-LINE 934
+ emitlab(lab) :(RETURN)
+-LINE 937
+L.105 nclause()
+-LINE 938
+ dostmt() :(RETURN)
+-LINE 944
+L.102 lab = newlab()
+-LINE 945
+ IDENT(flip) :F(L.106)
+-LINE 946
+ emitf(lab) :(L.107)
+-LINE 948
+L.106 emits(lab)
+-LINE 949
+L.107 dostmt()
+-LINE 952
+ (nclause(1) IDENT(cl_type,"else")) :F(L.108)
+-LINE 955
+ lab2 = newlab()
+-LINE 956
+ emitg(lab2)
+-LINE 957
+ emitlab(lab)
+-LINE 958
+ nclause()
+-LINE 959
+ dostmt()
+-LINE 960
+ emitlab(lab2) :(RETURN)
+-LINE 965
+L.108 rep_clause = 1
+-LINE 966
+ emitlab(lab) :(RETURN)
+-LINE 971
+L.100 IDENT(cl_type,"while") :F(L.109)
+-LINE 972
+ lab = marklab()
+-LINE 975
+ e1 = pop()
+-LINE 976
+ isneg(e1) :F(L.110)
+-LINE 977
+ flip = 1
+-LINE 978
+ e1 = r(e1)
+-LINE 981
+L.110 sprint(e1)
+-LINE 982
+ lab2 = newlab()
+-LINE 983
+ IDENT(flip) :F(L.111)
+-LINE 984
+ emitf(lab2) :(L.112)
+-LINE 986
+L.111 emits(lab2)
+-LINE 987
+L.112 nclause()
+-LINE 988
+ dostmt()
+-LINE 989
+ emitg(lab)
+-LINE 990
+ emitlab(lab2) :(RETURN)
+-LINE 995
+L.109 IDENT(cl_type,"do") :F(L.113)
+-LINE 996
+ lab = marklab()
+-LINE 997
+ nclause()
+-LINE 998
+ dostmt()
+-LINE 999
+ nclause()
+-LINE 1000
+ DIFFER(cl_type,"while") :F(L.114)
+-LINE 1001
+ error("expected 'while', found " cl_type)
+-LINE 1002
+ rep_clause = 1 :(RETURN)
+-LINE 1005
+L.114 e1 = pop()
+-LINE 1006
+ isneg(e1) :F(L.115)
+-LINE 1007
+ flip = 1
+-LINE 1008
+ e1 = r(e1)
+-LINE 1010
+L.115 sprint(e1)
+-LINE 1011
+ IDENT(flip) :F(L.116)
+-LINE 1012
+ emits(lab) :(L.117)
+-LINE 1014
+L.116 emitf(lab)
+-LINE 1015
+L.117  :(RETURN)
+-LINE 1019
+L.113 IDENT(cl_type,"for") :F(L.118)
+-LINE 1020
+ e3 = pop()
+-LINE 1021
+ e2 = pop()
+-LINE 1022
+ e1 = pop()
+-LINE 1023
+ sprint(e1)
+-LINE 1024
+ emiteob()
+-LINE 1025
+ lab = marklab()
+-LINE 1026
+ lab2 = newlab()
+-LINE 1027
+ isneg(e2) :F(L.119)
+-LINE 1028
+ flip = 1
+-LINE 1029
+ e2 = r(e2)
+-LINE 1031
+L.119 sprint(e2)
+-LINE 1032
+ IDENT(flip) :F(L.120)
+-LINE 1033
+ emitf(lab2) :(L.121)
+-LINE 1035
+L.120 emits(lab2)
+-LINE 1036
+L.121 nclause()
+-LINE 1037
+ dostmt()
+-LINE 1038
+ sprint(e3)
+-LINE 1039
+ emitg(lab)
+-LINE 1040
+ emitlab(lab2) :(RETURN)
+-LINE 1045
+L.118 cl_type ? "return" :F(L.122)
+-LINE 1046
+ e1 = pop()
+-LINE 1047
+ DIFFER(e1) :F(L.123)
+-LINE 1048
+ DIFFER(fname) :F(L.124)
+-LINE 1049
+ e1 = b(bconv<"=">,fname,e1)
+-LINE 1050
+L.124 sprint(e1)
+-LINE 1052
+L.123 emitg(REPLACE(cl_type,"abcdefghijklmnopqrstuvwxyz"
++,"ABCDEFGHIJKLMNOPQRSTUVWXYZ")) :(RETURN)
+-LINE 1059
+L.122 IDENT(cl_type) :S(RETURN)F(L.125)
+-LINE 1062
+L.125 error("bad " cl_type " clause, ignored") :(RETURN)
+-LINE 1066
+dostmt.END  :(dostruct.END)
+-LINE 1067
+dostruct expect('{') :F(L.126)
+-LINE 1068
+ args = getlist('}')
+-LINE 1069
+ deflist<deflist<0> = deflist<0> + 1> = "DATA('" stname 
++"(" args ")')" :(L.127)
+-LINE 1072
+L.126 error("bad structure definition")
+-LINE 1073
+L.127 expect('}') :(RETURN)
+-LINE 1077
+dostruct.END  :(funct.END)
+-LINE 1078
+funct expect('(') :F(L.128)
+-LINE 1079
+ args = getlist(')') :F(fu_error)
+-LINE 1081
+ expect(')')
+-LINE 1082
+ locals = getlist('{') :F(fu_error)
+-LINE 1086
+L.128 deflist<deflist<0> = deflist<0> + 1> = "DEFINE('"
++ fname '(' args ')' locals "')"
+-LINE 1091
+ IDENT(emit_eob) st_lab ? ".END" :F(L.129)
+-LINE 1092
+ flabel = st_lab
+-LINE 1093
+ st_lab = ""
+-LINE 1094
+ emitlab(fname)
+-LINE 1095
+ nclause()
+-LINE 1096
+ dostmt()
+-LINE 1097
+ emitg("RETURN")
+-LINE 1098
+ emitlab(flabel) :(RETURN)
+-LINE 1102
+L.129 emitg(fname '.END')
+-LINE 1103
+ emitlab(fname)
+-LINE 1104
+ nclause()
+-LINE 1105
+ dostmt()
+-LINE 1106
+ emitg("RETURN")
+-LINE 1107
+ emitlab(fname '.END') :(RETURN)
+-LINE 1110
+fu_error error("bad function definition") :(RETURN)
+-LINE 1116
+funct.END  :(expect.END)
+-LINE 1119
+expect linebuf ? FENCE optblank RPOS(0) :F(L.130)
+-LINE 1120
+ linebuf = phrase() :S(L.131)F(FRETURN)
+-LINE 1122
+L.131  :(expect)
+-LINE 1125
+L.130 linebuf ? FENCE optblank *p = "" :S(RETURN)F(L.132)
+-LINE 1129
+L.132  :(FRETURN)
+-LINE 1133
+expect.END  :(getid.END)
+-LINE 1134
+getid expect(*identifier . getid) :S(RETURN)F(L.133)
+-LINE 1136
+L.133  :(FRETURN)
+-LINE 1140
+getid.END  :(getlist.END)
+getlist 
+-LINE 1141
+getlist_start expect(tail) :F(L.134)
+-LINE 1143
+ linebuf = tail linebuf :(RETURN)
+-LINE 1146
+L.134 getlist = getlist del getid() :F(L.135)
+-LINE 1147
+ expect(',')
+-LINE 1148
+ del = ',' :(getlist_start)
+-LINE 1151
+L.135 expect(tail) :S(RETURN)F(L.136)
+-LINE 1153
+L.136  :(FRETURN)
+-LINE 1159
+getlist.END  :(buildstab.END)
+-LINE 1160
+buildstab DIFFER(file,bst_file) :F(L.137)
+-LINE 1161
+ outf = "-LINE " line ' "' file '"' :(L.138)
+-LINE 1162
+L.137 DIFFER(line,bst_line) :F(L.139)
+-LINE 1163
+ outf = "-LINE " line
+L.139 
+-LINE 1174
+L.138 bst_stmt = stmt
+-LINE 1175
+ bst_file = file
+-LINE 1176
+ bst_line = line :(RETURN)
+-LINE 1177
+buildstab.END  :(END)
+START. CODE('START.')
+ DEFINE('nspan(str)')
+ DEFINE('list(item,delim)')
+ DEFINE('kw(s)')
+ DEFINE('push()')
+ DEFINE('pop()')
+ DEFINE('peek(n)')
+ DEFINE('top()')
+ DEFINE('isbin(x)')
+ DEFINE('isneg(x)')
+ DEFINE('dprint(x)op,l,r,d,i,del')
+ DEFINE('bprint(x)')
+ DEFINE('sprint(x)')
+ DEFINE('invoke(f)')
+ DEFINE('unop()r,op')
+ DEFINE('mkfcall()')
+ DEFINE('mkarg()x,f')
+ DEFINE('endfc()f')
+ DEFINE('mkarray()t')
+ DEFINE('begexp()')
+ DEFINE('binop()l,r,op,newr,newop')
+ DEFINE('endexp()l,r,op')
+ DEFINE('mkbinfo()op')
+ DEFINE('dotck()')
+ DEFINE('emitlab(l)')
+ DEFINE('emit(s)')
+ DEFINE('emiteob()')
+ DEFINE('emits(l)')
+ DEFINE('emitf(l)')
+ DEFINE('emitg(l)')
+ DEFINE('emitb(s)')
+ DEFINE('emiteos()out,goto,s,del')
+ DEFINE('getline()x,file,del,dir')
+ DEFINE('gl_nextfile()')
+ DEFINE('gl_close()')
+ DEFINE('gl_open(file)t')
+ DEFINE('getinput(recur)del,line')
+ DEFINE('phrase()del')
+ DEFINE('newlab()')
+ DEFINE('marklab()')
+ DEFINE('expcl()')
+ DEFINE('gocl()')
+ DEFINE('nclause(okeof)del')
+ DEFINE('error(msg)prefix')
+ DEFINE('dostmt()lab,lab2,e1,e2,e3,flip')
+ DEFINE('dostruct()args')
+ DEFINE('funct()args,locals,flabel')
+ DEFINE('expect(p)')
+ DEFINE('getid()')
+ DEFINE('getlist(tail)del')
+ DEFINE('buildstab(stmt,file,line)desc,pad')
+ &FULLSCAN = 1
+ &TRIM = 1 :(MAIN.)
+END	START.

@@ -1,0 +1,57 @@
+<h1>RESOL - Timer resolution in milliseconds</h1>
+
+[[RESOLUTION()]] returns the clock resolution of the machine as a
+REAL number of milliseconds.
+
+<<RESOL>>=
+         DEFINE('RESOLUTION()T,N,R')                   :(RESOLUTION_END)
+*
+RESOLUTION
+         DIFFER(RESOLUTION_)                                 :S(RESOL_4)
+         T = TIME()
+RESOL_1  EQ(T, TIME())                                       :S(RESOL_1)
+RESOL_2  T = TIME()
+RESOL_3  EQ(T, TIME())                                       :S(RESOL_3)
+         R = R + (TIME() - T)
+         N = N + 1
+         LE(N, 100000)                                       :S(RESOL_2)
+         RESOLUTION_ = R / 100000
+RESOL_4  RESOLUTION = RESOLUTION_                              :(RETURN)
+*
+RESOLUTION_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'RESOL.INC'
+         &CODE = 1
+         OUTPUT = RESOLUTION()
+         &CODE = 0
+END
+@
+
+<<>>=
+-STITL RESOL
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                 ######   #######   #####   #######  #                *
+*                 #     #  #        #     #  #     #  #                *
+*                 #     #  #        #        #     #  #                *
+*                 ######   #####     #####   #     #  #                *
+*                 #   #    #              #  #     #  #                *
+*                 #    #   #        #     #  #     #  #                *
+*                 #     #  #######   #####   #######  #######          *
+*                                                                      *
+* RESOL             TIMER RESOLUTION IN MILLISECONDS                   *
+*                                                                      *
+************************************************************************
+*
+* RESOL.lss
+*
+<<RESOL>>
+*
+* CE: .MSNOBOL4;
+@

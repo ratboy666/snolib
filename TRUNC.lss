@@ -1,0 +1,58 @@
+<H1>TRUNC - Truncate array</H1>
+
+[[TRUNC(A,L,H)]] will return the truncation of the singly-dimensioned
+array [[A]]. That is, a new array will be created and returned
+consisting of the elements
+[[A<sub>L</sub>, A<sub>L+1</sub>, ..., A<sub>H</sub>]].
+
+<H2>Uses</H2>
+<A HREF="SEQ.html">SEQ</A>
+
+<<INCLUDES>>=
+-INCLUDE 'SEQ.INC'
+@
+
+<<TRUNC>>=
+         DEFINE('TRUNC(A,L,H)')                             :(TRUNC_END)
+*
+TRUNC    TRUNC = ARRAY(H - L + 1)
+         L = L - 1
+         SEQ(' TRUNC<I> = A<L + I> ',.I)                       :(RETURN)
+*
+TRUNC_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'TRUNC.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL TRUNC
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*             #######  ######   #     #  #     #   #####               *
+*                #     #     #  #     #  ##    #  #     #              *
+*                #     #     #  #     #  # #   #  #                    *
+*                #     ######   #     #  #  #  #  #                    *
+*                #     #   #    #     #  #   # #  #                    *
+*                #     #    #   #     #  #    ##  #     #              *
+*                #     #     #   #####   #     #   #####               *
+*                                                                      *
+* TRUNC                     TRUNCATE ARRAY                             *
+*                                                                      *
+************************************************************************
+*
+* TRUNC.lss
+*
+<<TRUNC>>
+*
+* CE: .MSNOBOL4;
+@

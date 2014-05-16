@@ -1,0 +1,49 @@
+<h1>SDIFF - Set difference</h1>
+
+[[SDIFF(S1, S2)]] will return the set difference, [[S1 - S2]], which
+is a string containing all those characters that are in [[S1]] and not
+[[S2]].
+
+<<SDIFF>>=
+         DEFINE('SDIFF(S1,S2)')                             :(SDIFF_END)
+*
+SDIFF    SDIFF = S1
+         IDENT(S2, NULL)                                      :S(RETURN)
+         S2 = SPAN(S2)
+SDIFF_1  SDIFF S2 =                                 :S(SDIFF_1)F(RETURN)
+*
+SDIFF_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'SDIFF.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+-STITL SDIFF
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                #####   ######   ###  #######  #######                *
+*               #     #  #     #   #   #        #                      *
+*               #        #     #   #   #        #                      *
+*                #####   #     #   #   #####    #####                  *
+*                     #  #     #   #   #        #                      *
+*               #     #  #     #   #   #        #                      *
+*                #####   ######   ###  #        #                      *
+*                                                                      *
+* SDIFF                     SET DIFFERENCE                             *
+*                                                                      *
+************************************************************************
+*
+* SDIFF.lss
+*
+<<SDIFF>>
+*
+* CE: .MSNOBOL4;

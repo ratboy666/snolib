@@ -1,0 +1,140 @@
+<h1>embed</h1>
+
+The EMBED utility is used to preprocess snobol code that requires
+inline data, or that contains embedded C or FORTRAN code.  It may
+also have utility as a CGI (WEB) tool.
+
+Adds some control cards to SNOBOL4. These are handled by [[EMBED]],
+and are not passed through. All other control cards are simply
+copied through:
+
+[[
+-SNOBOL SNOBOL_CODE
+-EMBED C|FORTRAN|COBOL|SCHEME|DATA|FILE 'VNAME'
+-END
+-SNOBOLX SNOBOL_CODE
+-CMNT COMMENT
+]]
+
+[[EMBED]] copies its source file, until it sees one of its controls.
+[[-SNOBOL]] immediately executes its code (use [[+]] at the end of
+lines to continue them). [[-SNOBOLX]] is the same, but also copies
+its code to the output (allowing consistent definitions at both
+times). [[-EMBED]] to [[-END]] is extracted and copied into a file,
+whose name is made available to the program as [[VNAME]].
+
+See [[P64.lss]] for an example. [[P64.lss]] is processed by
+[[stangle]] into [[P64.SNO]], which is then processed by [[EMBED]]
+to produce [[p64.so]], and [[P64.INC]] which is the associated INCLUDE
+file. [[EMBED]] extracts the embedded [[C]] code, generating wrappers
+using the [[WRAPPER]] function. and then runs the [[C]] compiler
+using the [[DYNAMIC]] function to compile and produce the shared
+object needed when the [[P64]] library function is used.
+
+In effect, the building of the code is controlled by the SNOBOL4 source
+itself, and the entire module is self contained. Neither [[WRAPPER]]
+nor [[DYNAMIC]] need be present at “run time” but are only used
+when the [[P64]] module itself is updated.
+
+I am sure that other uses for [[EMBED]] will occur to the reader.
+Embedding unit test cases; creation of run-time data files;
+implementation of domain specific languages and more. The idea of
+[[EMBED]] is to provide an approximate equivalent to LISP macros
+to SNOBOL4.
+
+<h2>Uses</h2>
+<a href="CHARS.html">CHARS</a><br>
+<a href="SLOAD.html">SLOAD</a>
+
+<h2>See Also</h2>
+<a href="WRAPPER.html">WRAPPER</a><br>
+<a href="DYNAMIC.html">DYNAMIC</a><br>
+<a href="P64.html">P64</a>
+
+<<INCLUDES>>=
+-INCLUDE 'CHARS.INC'
+-INCLUDE 'SLOAD.INC'
+@
+
+<<embed>>=
+         TERMINAL = 'EMBED (SUN DEC  1 16:15:39 EST 2013)'
+*
+         WHITE_ = SPAN(' ' CHARS_TAB) | ''
+         Q_ = "'"
+         QQ_ = '"'
+         LEAD = DUPL(' ', 9)
+*
+TOP      LINE = INPUT                                            :F(END)
+*
+         LINE FENCE '-' ('snobol' | 'SNOBOL') (ANY('xX') | '') WHITE_
++            REM . S                                        :F(TRYEMBED)
+TRYX1    REVERSE(TRIM(S)) FENCE '+' REM . X                    :F(TRYX2)
+         S = REVERSE(X) ' ' INPUT                               :(TRYX1)
+TRYX2    CODE = CODE(' ' S ' :(TOP)')                           :S<CODE>
+         TERMINAL = 'EMBED: -SNOBOL CODE BAD: ' S                 :(END)
+*
+TRYEMBED LINE FENCE '-' ('embed' | 'EMBED') WHITE_ ARB . TYPE
++            WHITE_ (Q_ | QQ_) $ DELIM ARB . VNAME *DELIM     :S(STARTC)
+         LINE FENCE '-' ('cmnt' | 'CMNT')                        :S(TOP)
+         OUTPUT = LINE                                            :(TOP)
+STARTC   FNAME = VNAME
+         FNAME = ?(TYPE ? 'c' | 'C') FNAME '.c'
+         FNAME = ?(TYPE ? 'fortran' | 'FORTRAN') FNAME '.FTN'
+         FNAME = ?(TYPE ? 'cobol' | 'COBOL') FNAME '.CBL'
+         FNAME = ?(TYPE ? 'scheme' | 'SCHEME') FNAME '.SCM'
+         FNAME = ?(TYPE ? 'data' | 'DATA') FNAME '.DAT'
+         OUTPUT = LEAD VNAME ' = ' Q_ FNAME Q_
+         $VNAME = FNAME
+         OUTPUT(.EMBED, 10,, FNAME)
+*
+COPYL    LINE = INPUT                                            :F(END)
+         OFLAG =
+         LINE FENCE '-' ('cmnt' | 'CMNT')                      :S(COPYL)
+         LINE FENCE '-' ('end' | 'END')                       :S(COPYL3)
+         LINE FENCE '-' ('snobol' | 'SNOBOL')
++            ((ANY('xX') *?(OFLAG = 1)) | '')
++            WHITE_ REM . SNC                                 :F(COPYL2)
+*
+DOMORE   REVERSE(TRIM(SNC)) FENCE '+' REM . X                :F(EXECSNC)
+         SNC = REVERSE(X) ' ' INPUT                            :(DOMORE)
+*
+EXECSNC  OUTPUT = DIFFER(OFLAG) LEAD SNC
+         CODE = CODE(' ' SNC ' :(COPYL)')                       :S<CODE>
+         &CODE = 1
+         TERMINAL = 'EMBED: -SNOBOL(X) CODE BAD: ' SNC            :(END)
+COPYL2   EMBED = LINE                                           :(COPYL)
+COPYL3   DETACH(.EMBED)
+         ENDFILE(10)                                              :(TOP)
+*
+END START
+@
+
+<<>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+TITLE EMBED
+START
+<<INCLUDES>>
+-STITL
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*             #######  #     #  ######   #######  ######               *
+*             #        ##   ##  #     #  #        #     #              *
+*             #        # # # #  #     #  #        #     #              *
+*             #####    #  #  #  ######   #####    #     #              *
+*             #        #     #  #     #  #        #     #              *
+*             #        #     #  #     #  #        #     #              *
+*             #######  #     #  ######   #######  ######               *
+*                                                                      *
+* EMBED                    EMBEDDED SNOBOL CODE                        *
+*                                                                      *
+************************************************************************
+*
+* embed.lss
+*
+<<embed>>
+*
+* CE: .MSNOBOL4;
+@

@@ -1,0 +1,43 @@
+<H1>lseq</H1>
+
+<<>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-TITLE LSEQ
+START
+*
+************************************************************************
+*                                                                      *
+*                  #         #####   #######   #####                   *
+*                  #        #     #  #        #     #                  *
+*                  #        #        #        #     #                  *
+*                  #         #####   #####    #     #                  *
+*                  #              #  #        #   # #                  *
+*                  #        #     #  #        #    #                   *
+*                  #######   #####   #######   #### #                  *
+*                                                                      *
+* LSEQ          LEFT SEQUENCE NUMBER A SOURCE DECK (1-6)               *
+*                                                                      *
+************************************************************************
+*
+* lseq.lss
+*
+* USED FOR COBOL AND BASIC
+*
+         TERMINAL = 'LSEQ (SUN JUN 16 14:13:20 EDT 2013)'
+*
+         S = DUPL(' ', 6)
+         Z = DUPL('0', 6)
+         N = 10
+*
+TOP      (INPUT S) LEN(6) REM . R                                :F(END)
+         (Z N) LEN(6) . L RPOS(0)
+         N = N + 10
+         R = RPAD(R, 12, ' ')
+         (L R) ARB . L LEN(6) RPOS(0) 
+         OUTPUT = TRIM(L)                                         :(TOP)
+*
+END START
+*
+* CE: .MSNOBOL4;
+@

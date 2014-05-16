@@ -1,0 +1,178 @@
+<h1>compile - Compile a SNOBOL4 program into a real executable</h1>
+
+Compile an application into a custom SNOBOL4 executable. For a complete
+stand-alone application, includes must be gathered using <i>bundle</i>.
+This utility discards comments, blank lines and non-essential control
+cards. Each line is quoted as a C string. Spaces and tabs not in
+SNOBOL4 quoted strings are compressed to a single space.
+
+The result is written into the CSNOBOL4 source directory as prog.inc.
+CSNOBOL4 is the configured with MEM_IO and memory sizing. CSNOBOL4
+is then rebuilt, and the resulting executable which now incorporates
+the given SNOBOL4 program is copied to the output.
+
+<b>This utility is considered experimental</b>. Not much testing has
+been done. Squeezing the code should be factored out into a separate
+<i>squeeze</i> utility. It is possible that even interpreted programs
+would benefit (from reduced loading, tokenization and parsing). This
+would reduce the function of <i>compile</i> to C quoting and running
+the build itself. Continuation lines should be merged by squeezing as
+well.
+
+<h2>Uses</h2>
+<a href="CRACK.html">CRACK</a><br>
+<a href="HOST.html">HOST</a><br>
+<a href="TRIMB.html">TRIMB</a><br>
+<a href="REPL.html">REPL</a>
+
+<<INCLUDES>>=
+-INCLUDE 'CRACK.INC'
+-INCLUDE 'HOST.INC'
+-INCLUDE 'TRIMB.INC'
+-INCLUDE 'REPL.INC'
+@
+
+<<compile>>=
+         TERMINAL = 'COMPILE (THU DEC  5 12:10:58 EST 2013)'
+*
+         DEFINE('SQUISH(S)')
+         DEFINE('PROCESS()')
+         SNOBOL_LOC = '/export/home/fred/Projects/snobol4-1.5'
+         QQ = '"'
+         Q = "'"
+         CC2 = '-EJECT' | '-eject' | '-LIST' | '-list' | '-HIDE' |
++              '-hide' | '-LINE' | '-line' | '-TITLE' | '-title' |
++              '-stitl' | '-STITL'
+         CCPAT = FENCE (ANY('*#!|') | CC2 | RPOS(0))
+         &TRIM =  1
+*
+         APP_ISTACK = 4000
+         APP_PMSTACK = 8000
+         APP_DYNAMIC = 524288
+         OPT = 2
+         INFILE =
+         OUTFILE =
+OPTLOOP  S = HOST(HOST_ARGN, OPT = OPT + 1)                    :F(USAGE)
+         SW =
+         SW = ?(S ? POS(0) '-S') .APP_ISTACK
+         SW = ?(S ? POS(0) '-P') .APP_PMSTACK
+         SW = ?(S ? POS(0) '-d') .APP_DYNAMIC
+         IDENT(SW)                                                :S(FN)
+         V = HOST(HOST_ARGN, OPT = OPT + 1)                    :F(USAGE)
+         $SW = V                                             :S(OPTLOOP)
+FN       S POS(0) '-'                                          :S(USAGE)
+         INFILE = IDENT(INFILE) S                            :S(OPTLOOP)
+         OUTFILE = IDENT(OUTFILE) S
+         (DIFFER(INFILE) DIFFER(OUTFILE))                         :S(GO)        
+*
+USAGE    TERMINAL = 'USAGE: COMPILE OPTIONS INFILE OUTFILE'
+         TERMINAL =
+         TERMINAL = 'OPTIONS: -S ISTACK (' APP_ISTACK ')'
+         TERMINAL = '         -P PSTACK (' APP_PMSTACK ')'
+         TERMINAL = '         -d DYNAMIC (' APP_DYNAMIC ')'
+         TERMINAL =
+         N = HOST(HOST_DESCR_BITS) / 8
+         TERMINAL = 'VALUES ARE IN ' N ' BYTE DESCRIPTORS, SO THAT IS '
++                   APP_DYNAMIC * N / 1024 / 1024 'MB OF DYNAMIC SPACE'
++                                                                 :(END)
+*
+GO       TERMINAL = 'COMPILING ' INFILE ' TO ' OUTFILE
+         TERMINAL = '  ISTACK  = ' LPAD(APP_ISTACK, 7)
+         TERMINAL = '  PMSTACK = ' LPAD(APP_PMSTACK, 7)
+         TERMINAL = '  DYNAMIC = ' LPAD(APP_DYNAMIC, 7)
+         TERMINAL = 'PROCESSING SNOBOL4 CODE'
+*
+         OUNIT = IO_FINDUNIT()
+         SUNIT = IO_FINDUNIT()
+         OUTPUT(.OBJ, OUNIT,, SNOBOL_LOC '/lib/prog.inc')
+         INPUT(.SRC, SUNIT,, INFILE)                             :S(GO2)
+         TERMINAL = "CAN'T OPEN " INFILE                          :(END)
+GO2      PROCESS()
+         ENDFILE(OUNIT)
+         ENDFILE(SUNIT)
+         DETACH(.OBJ)
+         DETACH(.SRC)
+*
+* WE SHOULD CHECK THE CONFIGURATION (IN CONFIG.H), AND IF OUR CHANGES
+* ARE THERE WE CAN SKIP THE CLEAN AND CONFIG. WE SHOULD ALSO CHECK
+* IF OUR PATCHED INIT.C FILE IS THERE AND PLACE IT IF NEEDED.
+*
+         TERMINAL = 'CONFIGURING FOR COMPILATION'
+         HOST(HOST_SYSCMD, '(cd ' SNOBOL_LOC '; make clean)'
++                          ' > compile.log 2>&1')
+         HOST(HOST_SYSCMD,
++              '(cd ' SNOBOL_LOC ';'
++               './configure --add-define=MEM_IO'
++                          ' --add-define=MEM_IO_TEST'
++                          ' --add-define=APP_ISTACK='  APP_ISTACK
++                          ' --add-define=APP_PMSTACK=' APP_PMSTACK
++                          ' --add-define=APP_DYNAMIC=' APP_DYNAMIC
++              ') >> compile.log 2>&1')
+*
+         TERMINAL = 'COMPILING'
+         HOST(HOST_SYSCMD, '(cd ' SNOBOL_LOC '; make)'
++                          ' >> compile.log 2>&1')
+*
+         TERMINAL = 'CREATING EXECUTABLE'
+         HOST(HOST_SYSCMD, '(cp ' SNOBOL_LOC '/xsnobol4 ' OUTFILE
++                ') >> compile.log 2>&1')                         
+*
+         TERMINAL = 'A LOG FILE IS IN compile.log'                :(END)
+*
+PROCESS  L = SRC                                              :F(RETURN)
+*
+* IGNORE COMMENTS, EMPTY LINES, MOST CONTROL CARDS
+*
+         L CCPAT                                             :S(PROCESS)
+*
+* CONVERT EACH LINE INTO A C STRING - QUOTE " AND \, ADD A NEWLINE
+* AND WRAP IN "". ALSO, SQUISH SPACES/TABS THAT ARE NOT QUOTED TO
+* SINGLE SPACES, SAVING SPACE FOR THE C COMPILER. I HAVE TESTED GCC
+* WITH A STRING CONSTANT OF UP TO 256000 CHARACTERS, BUT WE SHOULD
+* TRY TO CONSERVE THIS.
+*
+         L = REPL(L, '\', '\\')
+         L = REPL(L, '"', '\"')
+         R = L
+         S =
+SS       R ARB . L (Q | QQ) $ DELIM ARB . M *DELIM REM . R      :F(DONE)
+         S = S SQUISH(L) DELIM M DELIM                             :(SS)
+DONE     S = QQ S SQUISH(R) '\n' QQ
+         OBJ = S                                              :(PROCESS)
+*
+SQUISH   S = REPL(S, CHARS_TAB, ' ')
+SQUISH2  S '  ' = ' '                                        :S(SQUISH2)
+         SQUISH = S                                            :(RETURN)
+*
+END START
+@
+
+<<>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-TITLE COMPILE
+START
+<<INCLUDES>>
+-STITL
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*       #####   #######  #     #  ######   ###  #        #######       *
+*      #     #  #     #  ##   ##  #     #   #   #        #             *
+*      #        #     #  # # # #  #     #   #   #        #             *
+*      #        #     #  #  #  #  ######    #   #        #####         *
+*      #        #     #  #     #  #         #   #        #             *
+*      #     #  #     #  #     #  #         #   #        #             *
+*       #####   #######  #     #  #        ###  #######  #######       *
+*                                                                      *
+* COMPILE  'COMPILE' A SNOBOL4 PROGRAM INTO A REAL EXECUTABLE          *
+*                                                                      *
+************************************************************************
+*
+* compile.lss
+*
+<<compile>>
+*
+* CE: .MSNOBOL4;
+@

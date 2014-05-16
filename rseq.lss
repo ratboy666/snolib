@@ -1,0 +1,45 @@
+<h1>rseq</h1>
+
+Add sequence numbers on right for FORTRAN.
+
+<<rseq>>=
+         TERMINAL = 'RSEQ (SUN JUN 16 14:13:20 EDT 2013)'
+*
+         S = DUPL(' ', 72)
+         Z = DUPL('0', 7)
+         N = 10
+*
+TOP      (INPUT S) LEN(72) . L                                   :F(END)
+         (Z N) LEN(7) . R RPOS(0)
+         N = N + 10
+         OUTPUT = L ' ' R                                         :(TOP)
+*
+END START
+@
+
+<<>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-TITLE RSEQ
+START
+*
+************************************************************************
+*                                                                      *
+*                  ######    #####   #######   #####                   *
+*                  #     #  #     #  #        #     #                  *
+*                  #     #  #        #        #     #                  *
+*                  ######    #####   #####    #     #                  *
+*                  #   #          #  #        #   # #                  *
+*                  #    #   #     #  #        #    #                   *
+*                  #     #   #####   #######   #### #                  *
+*                                                                      *
+* RSEQ            SEQUENCE NUMBER A SOURCE DECK (73-80)                *
+*                                                                      *
+************************************************************************
+*
+* rseq.lss
+*
+<<rseq>>
+*
+* CE: .MSNOBOL4;
+@

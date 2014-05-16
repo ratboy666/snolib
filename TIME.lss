@@ -1,0 +1,84 @@
+<h1>TIME - Date/time functions</h1>
+
+Date and time functions.
+
+<<TIME>>=
+         DATA('TIMEVAL(TV_SEC,TV_USEC)')
+         DATA('TM(TM_SEC,TM_MIN,TM_HOUR,TM_MDAY,TM_MON,'
++                'TM_YEAR,TM_WDAY,TM_YDAY,TM_ISDST,TM_GMTOFF)')
+*
+         LOAD('GETTIMEOFDAY_(TIMEVAL)')
+         LOAD('LOCALTIME_(INTEGER,TM)')
+         LOAD('GMTIME_(INTEGER,TM)')
+         LOAD('STRFTIME(STRING,TM)STRING')
+         LOAD('MKTIME(TM)INTEGER')
+         LOAD('SLEEP(REAL)')
+         LOAD('STRPTIME_(STRING,STRING,TM)')
+*
+         DEFINE('GETTIMEOFDAY()TIMEVAL')             :(GETTIMEOFDAY_END)
+*
+GETTIMEOFDAY
+         GETTIMEOFDAY = TIMEVAL()
+         GETTIMEOFDAY_(GETTIMEOFDAY)                :S(RETURN)F(FRETURN)
+*
+GETTIMEOFDAY_END
+*
+         DEFINE('LOCALTIME(T)TM')                       :(LOCALTIME_END)
+*
+LOCALTIME
+         LOCALTIME = TM()
+         LOCALTIME_(T, LOCALTIME)                   :S(RETURN)F(FRETURN)
+*
+LOCALTIME_END
+*
+         DEFINE('GMTIME(T)TM')                             :(GMTIME_END)
+*
+GMTIME   GMTIME = TM()
+         GMTIME_(T, GMTIME)                         :S(RETURN)F(FRETURN)
+*
+GMTIME_END
+*
+         DEFINE('STRPTIME(S,F)TM')                       :(STRPTIME_END)
+*
+STRPTIME STRPTIME = TM()
+         STRPTIME_(S, F, STRPTIME)                  :S(RETURN)F(FRETURN)
+*
+STRPTIME_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'TIME.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+-STITL TIME
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                    #######  ###  #     #  #######                    *
+*                       #      #   ##   ##  #                          *
+*                       #      #   # # # #  #                          *
+*                       #      #   #  #  #  #####                      *
+*                       #      #   #     #  #                          *
+*                       #      #   #     #  #                          *
+*                       #     ###  #     #  #######                    *
+*                                                                      *
+* TIME                    DATE/TIME FUNCTIONS                          *
+*                                                                      *
+* PHILE BUDNE <PHIL@ULTIMATE.COM>                                      *
+* DECEMBER 15, 2010                                                    *
+*                                                                      *
+************************************************************************
+*
+* TIME.lss
+*
+<<TIME>>
+*
+* CE: .MSNOBOL4;
+@

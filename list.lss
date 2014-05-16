@@ -1,0 +1,228 @@
+<h1>list - A simple file viewer</h1>
+
+list is a simple file viewer. It displays a file, and allows navigation
+using arrow keys. list provides a find function, and allows lines to
+be numbered. list is UTF-8 aware. Scrolling is reasonably efficient -
+list knows to use terminal hardware scrolling if available.
+
+<h2>Uses</h2>
+<a href="CHARS.html">CHARS</a><br>
+<a href="DISPLAY.html">DISPLAY</a><br>
+<a href="GETKEY.html">GETKEY</a><br>
+<a href="HOST.html">HOST</a><br>
+<a href="LOGIC.html">LOGIC</a><br>
+<a href="BQ.html">BQ</a><br>
+<a href="REPL.html">REPL</a><br>
+<a href="READLINE.html">READLINE</a><br>
+<a href="SEQ.html">SEQ</a>
+
+<<INCLUDES>>=
+-INCLUDE 'CHARS.INC'
+-INCLUDE 'DISPLAY.INC'
+-INCLUDE 'GETKEY.INC'
+-INCLUDE 'HOST.INC'
+-INCLUDE 'LOGIC.INC'
+-INCLUDE 'BQ.INC'
+-INCLUDE 'REPL.INC'
+-INCLUDE 'READLINE.INC'
+-INCLUDE 'SEQ.INC'
+@
+
+<<LIST>>=
+         TERMINAL = 'LIST (MON DEC 16 18:48:12 EST 2013)'
+         RLAPPNAME('LIST')
+         READ_HISTORY('.LIST')
+         STIFLE_HISTORY(50)
+         ACTIONS = TABLE()
+         ACTIONS<KEY_UP>     = 'UP'
+         ACTIONS<KEY_DOWN>   = 'DOWN'
+         ACTIONS<KEY_PAGEDN> = 'PGDN'
+         ACTIONS<KEY_PAGEUP> = 'PGUP'
+         ACTIONS<'N'>        = 'TGLN'
+         ACTIONS<'n'>        = 'TGLN'
+         ACTIONS<'R'>        = 'PAGE'
+         ACTIONS<'r'>        = 'PAGE'
+         ACTIONS<KEY_HOME>   = 'HOME'
+         ACTIONS<KEY_END>    = 'BTM'
+         ACTIONS<'?'>        = 'HELP'
+         ACTIONS<'H'>        = 'HELP'
+         ACTIONS<'h'>        = 'HELP'
+         ACTIONS<'E'>        = 'EDIT'
+         ACTIONS<'e'>        = 'EDIT'
+         ACTIONS<'Q'>        = 'QUIT'
+         ACTIONS<'q'>        = 'QUIT'
+         ACTIONS<'F'>        = 'FIND'
+         ACTIONS<'f'>        = 'FIND'
+         FN = '/dev/stdin'
+         FN = HOST(HOST_ARGN, HOST(HOST_FIRSTARG))
+         T = 1
+         UNIT = IO_FINDUNIT()
+READ     INPUT(.INFILE, UNIT,, FN)                               :S(FN1)
+         TERMINAL = "CAN'T OPEN " FN
+         TERMINAL = 'LIST FILENAME, THEN H FOR HELP'              :(END)
+*
+* READ FILE
+*
+FN1      LINES = TABLE()
+         SEQ(' LINES<L> = TRIM(INFILE) ', .L)
+         HOST(HOST_SYSCMD, 'stty -F /dev/stderr -echo raw')
+         UNIT2 = IO_FINDUNIT()
+         OUTPUT(.T_OUT, UNIT2, 'T', '/dev/stderr')
+         UNIT3 = IO_FINDUNIT()
+         INPUT(.T_IN, UNIT3, 'CQ', '/dev/stderr')
+         NUMBER =
+         SS =
+         SH =
+*
+         HC0 = HI('C0')
+         H80 = HI('80')
+         DEFINE('SHOWLINE(N)S,T,B,LS,C')                       :(SL_END)
+*
+SHOWLINE S = LINES<N>
+* IF TERMINAL TAB IS 8, MAKE LINE NUMBERING 8 CHARACTERS TO NOT
+* DISTURB TABBING WHEN 'N' IS USED
+         S = LE(N, L) DIFFER(NUMBER) LPAD(N, 6) ': ' S
+         LT(SIZE(S), DS_COLS)                                    :S(SL2)
+*
+* SKIP PRUNING LENGTH. NOTE THAT THE NEXT LINE WILL BE POSITIONED
+* (BUT WON'T BE QUITE RIGHT). ESC SEQUENCES NEED TO BE ACCOMODATED.
+*
+         T = S
+         S =
+         LS =
+* UTF8.INC IS BORKED. BUT, (BYTES & 0XCC) == 0X80 ARE MIDDLE BYTES, AND
+* DON'T ADD TO LENGTH
+SL3      IDENT(T)                                                :S(SL8)
+         T LEN(1) . C REM . T
+         S = S C
+         LS = NE(AND(ORD(C), HC0), H80) LS + 1
+         LT(LS, DS_COLS)                                         :S(SL3)
+* REMOVE THE LAST CHARACTER IF IT IS A UTF-8 START CHARACTER
+SL8      S LEN(1) . C RPOS(0)
+         LT(ORD(C), 128)                                         :S(SL2)
+         EQ(AND(ORD(C), HC0), H80)                               :S(SL2)
+         S TAB(SIZE(S) - 1) . S
+* THIS COULD INCREASE SIZE PAST DS_COLS. TO FIX, WE REDUCE THE COLUMN
+* WIDTH BY ONE IF CHARS_FF APPEARS IN THE STRING (FIXME)
+SL2      S = REPL(S, CHARS_FF, DS_REV '^L' DS_SGR0)
+         IDENT(SH)                                               :S(SL7)
+         S = REPL(S, SH, DS_REV SH DS_SGR0)
+SL7      T_OUT = S DS_EL                                       :(RETURN)
+*
+SL_END
+*
+         T_OUT = DS_CIVIS
+PAGE     T_OUT = DS_CLEAR
+         I =
+PLOOP    T_OUT = DS_GOTO(+I, 0)
+         SHOWLINE(T + I)
+         T_OUT = CHARS_CR CHARS_NL
+         I = LT(I, DS_LINES - 2) I + 1                         :S(PLOOP)
+         SHOWLINE(T + I + 1)
+*         
+TOP      A = ACTIONS<KEY = GETKEY(.T_IN)>
+         DIFFER(A)                                                :S($A)
+         T_OUT = CHARS_BEL                                        :(TOP)
+*
+DOWN     GE(T, L - 1)                                            :S(TOP)
+         T_OUT = DS_IND
+         T = T + 1
+         T_OUT = DS_GOTO(DS_LINES - 1, 0) 
++                SHOWLINE(T + DS_LINES - 1)                       :(TOP)
+*
+UP       LE(T, 1)                                                :S(TOP)
+         T_OUT = DS_RI
+         T = T - 1
+         T_OUT = DS_HOME SHOWLINE(T)                              :(TOP)
+*
+PGDN     T = T + DS_LINES
+         T = GT(T, L - 1) L - 1                                  :(PAGE)
+*
+PGUP     T = T - DS_LINES
+         T = LE(T) 1                                             :(PAGE)
+*
+TGLN     NUMBER = IDENT(NUMBER) 1                               :S(PAGE)
+         NUMBER =                                                :(PAGE)
+*
+FIND     T_OUT = DS_GOTO(DS_LINES - 1, 0) DS_EL DS_CNORM
+         HOST(HOST_SYSCMD, 'stty -F /dev/stderr echo cooked')
+         SS = TRIM(READLINE('FIND: '))
+         (DIFFER(SS) ADD_HISTORY(SS))
+         SH =
+         IDENT(SS)                                               :S(SS2)
+SLOOP    GE(T, L - 1)                                            :S(SS2)
+         T = T + 1
+         LINES<T> SS                                           :F(SLOOP)
+         SH = SS
+SS2      HOST(HOST_SYSCMD, 'stty -F /dev/stderr -echo raw')
+         T_OUT = DS_CIVIS                                        :(PAGE)
+*
+HOME     T = 1                                                   :(PAGE)
+*
+BTM      T = L - 1                                               :(PAGE)
+*
+HELP     T_OUT = DS_CLEAR 'LIST (WED JAN  8 09:54:34 EST 2014)'
+         T_OUT = CHARS_CR CHARS_NL CHARS_NL
+         T_OUT = 'UP    - SCROLL UP LINE' CHARS_CR CHARS_NL
+         T_OUT = 'DOWN  - SCROLL DOWN LINE' CHARS_CR CHARS_NL
+         T_OUT = 'PGUP  - SCROLL UP PAGE' CHARS_CR CHARS_NL
+         T_OUT = 'PGDN  - SCROLL DOWN PAGE' CHARS_CR CHARS_NL
+         T_OUT = 'Q     - QUIT' CHARS_CR CHARS_NL
+         T_OUT = 'H     - HELP' CHARS_CR CHARS_NL
+         T_OUT = 'HOME  - TOP' CHARS_CR CHARS_NL
+         T_OUT = 'END   - BOTTOM' CHARS_CR CHARS_NL
+         T_OUT = 'F     - FIND' CHARS_CR CHARS_NL
+         T_OUT = 'R     - REFRESH' CHARS_CR CHARS_NL
+         T_OUT = 'N     - TOGGLE LINE NUMBERS' CHARS_CR CHARS_NL
+         T_OUT = 'E     - EDIT' CHARS_CR CHARS_NL
+         GETKEY(.T_IN)                                           :(PAGE)
+*
+EDIT     T_OUT = IDENT(FN) CHARS_BEL                             :S(TOP)
+         T_OUT = DS_CNORM DS_GOTO(DS_LINES - 1, 0)
+         T_OUT = CHARS_CR CHARS_NL CHARS_NL
+         HOST(HOST_SYSCMD, 'stty -F /dev/stderr echo cooked')
+         WRITE_HISTORY('.LIST')
+         HOST(HOST_SYSCMD, HOST(HOST_GETENV, 'EDITOR') ' ' FN)   :(READ)
+*
+QUIT     T_OUT = DS_CNORM DS_GOTO(DS_LINES - 1, 0)
++                CHARS_CR CHARS_NL CHARS_NL
+*
+         ENDFILE(UNIT2)
+         DETACH(.T_OUT)
+         ENDFILE(UNIT3)
+         DETACH(.T_IN)
+         HOST(HOST_SYSCMD, 'stty -F /dev/stderr echo cooked')
+         WRITE_HISTORY('.LIST')
+*
+END START
+@
+
+<<>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-TITLE LIST
+START
+<<INCLUDES>>
+-STITL
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                    #        ###   #####   #######                    *
+*                    #         #   #     #     #                       *
+*                    #         #   #           #                       *
+*                    #         #    #####      #                       *
+*                    #         #         #     #                       *
+*                    #         #   #     #     #                       *
+*                    #######  ###   #####      #                       *
+*                                                                      *
+* LIST                       FILE VIEWER                               *
+*                                                                      *
+************************************************************************
+*
+* list.lss
+*
+<<LIST>>
+*
+* CE: .MSNOBOL4;
+@

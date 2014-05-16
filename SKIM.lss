@@ -1,0 +1,59 @@
+<h1>SKIM - Skim unique characters</h1>
+
+[[SKIM(S)]] “skims off” the first appearance of each different
+character of [[S]] and returns the result. [[SKIM('MISSISSIPPI')]]
+returns [['MISP']].
+
+<h2>Uses</h2>
+<a href="SDIFF.html">SDIFF</a>
+
+<<INCLUDES>>=
+-INCLUDE 'SDIFF.INC'
+@
+
+<<SKIM>>=
+         DEFINE('SKIM(S)C')                                  :(SKIM_END)
+*
+SKIM     S LEN(1) . C =                                       :F(RETURN)
+         SKIM C                                               :S(SKIM_D)
+         SKIM = SKIM C                                           :(SKIM)
+SKIM_D   S = SDIFF(S, SKIM)                                      :(SKIM)
+*
+SKIM_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'SKIM.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL SKIM
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                                                                      *
+*                    #####   #    #  ###  #     #                      *
+*                   #     #  #   #    #   ##   ##                      *
+*                   #        #  #     #   # # # #                      *
+*                    #####   ###      #   #  #  #                      *
+*                         #  #  #     #   #     #                      *
+*                   #     #  #   #    #   #     #                      *
+*                    #####   #    #  ###  #     #                      *
+*                                                                      *
+* SKIM                 SKIM UNIQUE CHARACTERS                          *
+*                                                                      *
+************************************************************************
+*
+* SKIM.lss
+*
+<<SKIM>>
+*
+* CE: .MSNOBOL4;
+@

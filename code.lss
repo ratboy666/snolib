@@ -1,0 +1,665 @@
+<h1>code</h1>
+
+Enter SNOBOL4 statements for immediate execution. Also supports a
+primitive programming environment with line numbered statements.
+
+<h2>Uses</h2>
+<a href="BQ.html">BQ</a><br>
+<a href="CHARS.html">CHARS</a><br>
+<a href="HOST.html">HOST</a><br>
+<a href="READLINE.html">READLINE</a><br>
+<a href="SEQ.html">SEQ</a><br>
+<a href="SLOAD.html">SLOAD</a>
+
+<<INCLUDES>>=
+-INCLUDE 'BQ.INC'
+-INCLUDE 'CHARS.INC'
+-INCLUDE 'HOST.INC'
+-INCLUDE 'READLINE.INC'
+-INCLUDE 'SEQ.INC'
+-INCLUDE 'SLOAD.INC'
+@
+
+<<code>>=
+<<signon>>
+<<manifest>>
+<<readline>>
+<<patterns>>
+<<functions>>
+<<main>>
+<<parse>>
+<<commands>>
+<<error function>>
+<<exit trap>>
+<<exit>>
+@
+
+Patterns used to parse commands.
+
+<<patterns>>=
+         QQ_ = '"'
+         Q_  = "'"
+         WHITE_SPACE_ = CHARS_HT ' '
+         OWS_         = SPAN(WHITE_SPACE_) | ''
+         SF_PAT_      = FENCE ANY('SsFfEe')
++                       (ANY(WHITE_SPACE_) | RPOS(0))
+         CMNT_PAT_    = FENCE ANY('*;|#!-')
+         INPAT_       = FENCE '-' ((ANY('Ii') ('NCLUDE' | 'nclude')) |
++                                  (ANY('Cc') ('OPY' | 'opy')))
++                       BREAK(QQ_ Q_) LEN(1) BREAK(QQ_ Q_) . X
+*
+         RETNPAT_  = FENCE (SPAN(&DIGITS) . LN_)
++                    ((ANY(WHITE_SPACE_) REM . CODE) | '') RPOS(0)
+         SAVEPAT_  = FENCE ANY('Ss') ('AVE' | 'ave')
++                    ((BREAK(QQ_ Q_) LEN(1) BREAK(QQ_ Q_) . FN_ LEN(1))
++                     | '')
++                    RPOS(0)
+         LOADPAT_  = FENCE ANY('Ll') ('OAD' | 'oad')
++                    ((BREAK(QQ_ Q_) LEN(1) BREAK(QQ_ Q_) . FN_ LEN(1))
++                     | '')
++                    RPOS(0)
+         NAMEPAT_  = FENCE ANY('Nn') ('AME' | 'ame')
++                    ((BREAK(QQ_ Q_) LEN(1) BREAK(QQ_ Q_) . FN2_ LEN(1))
++                     | '')
++                    RPOS(0)
+         LISTPAT_  = FENCE ANY('Ll') ('IST' | 'ist')
++                    ((ANY(WHITE_SPACE_)
++                       ((OWS_ SPAN(&DIGITS) . N1_) | '')
++                       ((OWS_ ',' OWS_ SPAN(&DIGITS) . N2_) | '')
++                    ) | '') RPOS(0)
+         RUNPAT_   = FENCE ANY('Rr') ('UN' | 'un')
++                    (ANY(WHITE_SPACE_) SPAN(&DIGITS) . LN_ | '')
++                    RPOS(0)
+         EDITPAT_  = FENCE ANY('Ee') ('DIT' | 'dit')
++                    (ANY(WHITE_SPACE_) SPAN(&DIGITS) . LN_ | '')
++                    RPOS(0)
+         RENUMPAT_ = FENCE ANY('Rr') ('ENUM' | 'enum')
++                    (ANY(WHITE_SPACE_) SPAN(&DIGITS) . LN_ | '')
++                    RPOS(0)
+         QUITPAT_  = FENCE ANY('Qq') ('UIT' | 'uit') RPOS(0)
+         NEWPAT_   = FENCE ANY('Ss') ('CRATCH' | 'cratch') RPOS(0)
+         DDTPAT_   = FENCE ANY('Dd') ('DT' | 'dt') RPOS(0)
+         EVALPAT_  = FENCE '=' REM . CODE
+         EXECPAT_  = FENCE '!' REM . CODE
+         HELPPAT_  = FENCE '?'
+@
+
+Clear the retained program. Create the last label [[NMAX_ + 1]]
+and have that branch to label [[E]]. Then, fill in the rest of the
+statements [[L__1]] to [[L__&lt;NMAX_&gt;]].
+
+This is an expensive operation. With [[NMAX_]] at its default (9999),
+10,000 statements are compiled here.
+
+On a scratch, the default filename is set back to [[SCRATCH]].
+
+[[
+CODE: SCRATCH
+]]
+
+<<clear>>=
+CLEAR_   FN_ = 'SCRATCH'
+         CODE('L__' NMAX_ + 1 ' :(E)')
+         SRC_ = ARRAY(NMAX_)
+         SEQ(" CODE(SRC_<N> 'L__' N ' :(L__' N + 1 ')')", .N)  :(RETURN)
+@
+
+Command processors for [[code]]. The first handler must be
+[[immediate]] because the parser will fall through on any command
+not otherwise parseable.
+
+<<commands>>=
+<<immediate>>
+<<retained>>
+<<edit>>
+<<ddt>>
+<<run>>
+<<list>>
+<<save>>
+<<load>>
+<<name>>
+<<renum>>
+<<complete>>
+<<eval>>
+<<shell>>
+<<help>>
+@
+
+Default is immediate execution. Compile and execute the line entered.
+
+[[
+CODE:  X = 12
+]]
+
+<<immediate>>=
+         INPT_ SF_PAT_                                       :S(SF_ERR_)
+         CODE = CODE(INPT_ ' :S(S) F(F)')                       :S<CODE>
+CPLERR_  TERMINAL = 'COMPILATION ERROR: ' &ERRTEXT
+         TERMINAL = 'REENTER STATEMENT OR EDIT ' LN_           :(RETURN)
+S        TERMINAL = 'SUCCESS'                                  :(RETURN)
+F        TERMINAL = 'FAILURE'                                  :(RETURN)
+SF_ERR_  TERMINAL = "CANNOT USE 'S', 'F', OR 'E' AS A LABEL WITH CODE"
++                                                              :(RETURN)
+@
+
+Compile in retained statement ([[1..NMAX_]]). The statement can
+be empty to delete the statement previously entered. Compiled
+statements are surroundeD by [[L__10; STATEMENT; :(L__11)]] to allow
+control to proceed from one statement to the next. The final label is
+[[L__&lt;MAX&gt;]] which is defined as the program exit. Each statement
+is preceeded by a statement setting [[LN_]] to the current statement
+number - this is used to display the retained program line if break
+or an error occurs.
+
+Source text is retained in array [[SRC_]].
+
+[[
+CODE: 1 X = 12             ADD OR REPLACE LINE 1
+CODE: 1                    REMOVE LINE 1
+CODE: 2 -INCLUDE 'SEQ'     INCLUDE SEQ. NOTE THAT INCLUDE IS
+                           DONE ON ENTRY (WHICH IS WHEN THE COMPILE
+                           IS DONE).
+CODE: 3 * COMMENT          COMMENTS ARE COMPILED TO EMPTY, BUT ARE
+                           RETAINED. (IN SRC_<>)
+]]
+
+Continuation lines are not supported. The way a continuation is
+expressed means that we can't compile until we know that no further
+continuation lines will be given. But our basic flow is to compile
+the new source immediately, and retain the source line. For this
+reason, the SAVE format is not directly compatible with the compiler.
+We add the line number and a space (5 characters) to the front. The <a
+href="deretn_processed.html">deretn (de-retain)</a> utility strips
+this. [[code]] is not meant to be used to edit or test existing
+programs - simply to try ideas and perhaps produce the basics of
+new programs.
+
+{{
+Statement numbers (&amp;STNO) are assigned as increasing integers. This
+could also be recorded (may be useful for STCOUNT traps and
+profiling). We don't yet record statement numbers.
+
+Simple line number breakpoints can be implemented by trapping on
+variable [[LN_]]. If it matched the desired line number, we could
+break.
+}}
+
+Before the actual code, a statement is compiled which tracks the
+line number, assigning it to [[LN_]]. This is reported on errors, in
+order to track the error to the offending statement.
+
+
+<<retained>>=
+RETN_    CHECKLN_(LN_)                                        :F(RETURN)
+         SRC_<LN_> = CODE
+         CODE CMNT_PAT_                                        :S(CMNT_)
+         CODE('L__' +LN_ ' LN_ = ' +LN_ ';' CODE '; :(L__' LN_ + 1 ')')
++                                                   :S(RETURN)F(CPLERR_)
+CMNT_    CODE INPAT_                                          :F(CMNT2_)
+         SLOAD(X)
+CMNT2_   CODE('L__' LN_ ' :(L__' LN_ + 1 ')')                  :(RETURN)
+@
+
+Edit a line in the retained program, or the entire retained program.
+
+When the entire retained program is edited, the editor is presented
+with a source with no line numbers. When editing is complete, this is
+read in, and line numbers assigned beginning with 1 and stepping by
+1. [[RENUM]] may then be used. This loses the line number information
+originally in the retained program, but allows syntax highlighting
+and other features of the external editor to be exploited.
+
+The external editor could be (horribly) misused to import source into
+[[code]] (edit, and then read the source in, and save/exit back to
+[[code]]).  This also provides export (but see [[deretn]]).
+
+[[
+CODE: EDIT 1               EDIT LINE 30 (USING READLINE)
+CODE: EDIT                 EDIT USING EXTERNAL EDITOR
+]]
+
+<<edit>>=
+EDIT_    DIFFER(LN_)                                          :S(EDIT2_)
+         TEMP_ = BQ('mktemp')
+         UNIT = IO_FINDUNIT()
+         OUTPUT(.F, UNIT,, TEMP_)                            :F(FILERR_)
+         SEQ(' F = VDIFFER(SRC_<N>); SRC_<N> ', .N)
+         ENDFILE(UNIT)
+         DETACH(.F)
+         UNIT = IO_FINDUNIT()
+         INPUT(.F, UNIT,, TEMP_)                             :F(FILERR_)
+         HOST(HOST_SYSCMD, EDITOR ' ' TEMP_)
+         FN2_ = FN_
+         CLEAR_()
+         FN_ = FN2_
+         LN_ = 1
+EDIT3_   INPT_ = LN_ ' ' F                                    :F(EDIT4_)
+         PRSLIN_()
+         LN_ = LN_ + 1                                         :(EDIT3_)
+EDIT4_   ENDFILE(UNIT)
+         DETACH(.F)
+         DELETE(TEMP_)                                         :(RETURN)
+EDIT2_   CHECKLN_(LN_)                                        :F(RETURN)
+         INPT_ = EDITLINE('EDIT: ', LPAD(LN_, 4, '0') ' ' SRC_<LN_>)
++                                                             :(PRSLIN_)
+@
+
+Use [[DDT]] to debug the retained program.
+
+Saves file with an entry to [[DDT()]] jammed in as the first lines.
+An [[END]] label is added at the end. The file is compiled with
+a listing, and then spawned as a separate process. We assume that
+the subprocess wilL be ok with the standard options - but we do add
+[[-b]] to suppress the normal banner. Label [[CODE_RETAINED_PROGRAM]]
+is inserted to allow [[DDT]]'s [[LABEL+OFFSET]] to make sense
+on initial entry. Label [[E]] is added to the end, because it is
+possible that [[:(E)]] is used in the retained program (instead of
+[[:(END)]]). [[END]] is typically not used in the retained program
+because it is being prepared interactively.
+
+[[
+CODE: DDT
+]]
+
+<<ddt>>=
+DDT__    TERMINAL = 'STARTING DDT'
+         TEMPSRC_ = BQ('mktemp')
+         TEMPLST_ = BQ('mktemp')
+         UNIT = IO_FINDUNIT()
+         OUTPUT(.F, UNIT,, TEMPSRC_)                         :F(FILERR_)
+         F = "-INCLUDE 'DDT.INC'"
+         F = ' DDT()'
+         F = 'CODE_RETAINED_PROGRAM'
+         SEQ(' F = VDIFFER(SRC_<N>); SRC_<N> ', .N)
+         F = 'E'
+         F = 'END'
+         ENDFILE(UNIT)
+         DETACH(.F)
+         HOST(HOST_SYSCMD, 'snobol4 -n -b -l ' TEMPLST_ ' ' TEMPSRC_)
+         HOST(HOST_SYSCMD, 'LIST=' TEMPLST_ ' snobol4 -b ' TEMPSRC_)
+         TERMINAL = 'DDT COMPLETED'
+         DELETE(TEMPSRC_)
+         DELETE(TEMPLST_)                                      :(RETURN)
+@
+
+Run retained program. Transfer control to first line [[L__1]], or
+specified line.
+
+[[
+CODE: RUN                  RUN FROM LINE 1
+CODE: RUN 50               RUN FROM LINE 50
+]]
+
+<<run>>=
+RUN_     LN_ = IDENT(LN_) 1
+         CHECKLN_(LN_)                                        :F(RETURN)
+         &TRACE = 0                                      :($('L__' LN_))
+@
+
+List retained program.
+
+[[
+CODE: LIST                 LIST ALL LINES
+CODE: LIST 10              LIST LINE 10
+CODE: LIST 10,50           LIST LINES BETWEEN 10 AND 50
+CODE: LIST ,50             LIST ALL LINES UP TO 50
+]]
+
+<<list>>=
+LIST_    N2_ = IDENT(N2_) VDIFFER(N1_)
+         SEQ(' TERMINAL = LPAD(N, 4, "0") " " VDIFFER(SRC_<N>); '
++            ' SRC_<N> ', .N, N1_, N2_)                        :(RETURN)
+@
+
+Save retained program. Default file is [[SCRATCH]].
+
+[[
+CODE: SAVE                 SAVE TO LAST FILENAME
+CODE: SAVE 'MYFILE'        SAVE TO MYFILE
+]]
+
+<<save>>=
+SAVE_    TERMINAL = 'SAVING TO ' FN_
+         UNIT = IO_FINDUNIT()
+         OUTPUT(.F, UNIT,, FN_)                              :F(FILERR_)
+         SEQ(' F = LPAD(N, 4, "0") " " VDIFFER(SRC_<N>); '
++            ' SRC_<N> ', .N)
+         ENDFILE(UNIT)
+         DETACH(.F)                                            :(RETURN)
+@
+
+Load retained program. Default file is [[SCRATCH]]. If another name
+is given, remember for future [[SAVE]] (or [[LOAD]]). Doesn't clear
+the retained program, allowing programs to be merged. Use [[SCRATCH]]
+before [[LOAD]] if required.
+
+[[
+CODE: LOAD                 LOAD FROM LAST FILENAME
+CODE: LOAD 'MYFILE'        LOAD FROM MYFILE
+]]
+
+<<load>>=
+LOAD_    TERMINAL = 'LOADING FROM ' FN_
+         UNIT = IO_FINDUNIT()
+         INPUT(.F, UNIT,, FN_)                               :F(FILERR_)
+LOAD2_   INPT_ = F                                            :F(LOAD3_)
+         PRSLIN_()                                             :(LOAD2_)
+LOAD3_   ENDFILE(UNIT)
+         DETACH(.F)                                            :(RETURN)
+FILERR_  TERMINAL = 'CANNOT OPEN FILE'                         :(RETURN)
+@
+
+[[NAME]] displays current name, or sets new name
+
+[[
+CODE: NAME                 DISPLAY FILENAME
+CODE: NAME 'MYFILE'        SET FILENAME
+]]
+
+<<name>>=
+NAME_    TERMINAL = IDENT(FN2_) 'FILE: ' FN_                  :S(RETURN)
+         FN_ = FN2_                                            :(RETURN)
+@
+
+[[RENUM]] (assign new line numbers) to retained program. Uses 10 as the
+increment, unless there are too many lines, in which case 5 (4, 3,
+or even 2) may be used as increments (5 is preferred).
+
+[[
+CODE: RENUM                RENUMBER FROM 10 BY 10
+CODE: RENUM 1000           RENUMBER FROM 1000 BY 10
+]]
+
+<<renum>>=
+RENUM_   LN_ = IDENT(LN_) 10
+         CHECKLN_(LN_)                                        :F(RETURN)
+         SC = 0
+         SEQ(' SC = DIFFER(SRC_<N>) SC + 1; SRC_<N> ', .N)
+         EQ(SC)                                               :S(RETURN)
+         Q = (NMAX_ - LN_) / SC
+         TERMINAL =  LE(Q, 1) 'TOO MANY LINES TO RENUMBER'    :S(RETURN)
+         INCR = 10
+         INCR = GE(Q, 5) LT(Q, 10) 5
+         INCR = GT(Q, 1) LT(Q, 5) Q
+         TERMINAL = 'RENUMBERING BY ' INCR ' FROM ' LN_
+         UNIT = IO_FINDUNIT()
+         INPUT(.IN, UNIT, 'U', '/dev/tmpfile')
+         OUTPUT(.OUT, UNIT, 'W')
+         SEQ(' OUT = LN_ " " VDIFFER(SRC_<N>); '
++            ' LN_ = DIFFER(SRC_<N>) LN_ + INCR; SRC_<N> ', .N)
+         FN2_ = FN_
+         CLEAR_()
+         FN_ = FN2_
+         FN_ = VDIFFER(FN2_)
+RENUM2_  INPT_ = IN                                          :F(RENUM3_)
+         PRSLIN_()                                            :(RENUM2_)
+RENUM3_  ENDFILE(UNIT)
+         DETACH(.OUT)
+         DETACH(.IN)                                           :(RETURN)
+@
+
+Label [[E]] for program completion.
+
+<<complete>>=
+E        TERMINAL = 'PROGRAM COMPLETE'                         :(RETURN)
+@
+
+Evaluate and print expression
+
+[[
+CODE: =1 + 3
+]]
+
+<<eval>>=
+EVAL_    TERMINAL = EVAL(CODE)                                 :S(S)F(F)
+@
+
+Shell to external program
+
+[[
+CODE: !ls
+]]
+
+<<shell>>=
+EXEC_    HOST(HOST_SYSCMD, CODE)                               :(RETURN)
+@
+
+Give help for the [[code]] program.
+
+[[
+CODE: ?
+]]
+
+<<help>>=
+HELP_    TERMINAL = '=EXPRESSION    DISPLAY VALUE OF EXPRESSION'
+         TERMINAL = '!COMMAND       SHELL OUT TO COMMAND'
+         TERMINAL = '?              THIS HELP'
+         TERMINAL = 'STATEMENT      EXECUTE STATEMENT'
+         TERMINAL =
+         TERMINAL = 'N STATEMENT    ENTER/REPLACE/DELETE PROGRAM LINE'
+         TERMINAL = 'RUN [N]        RUN RETAINED PROGRAM'
+         TERMINAL = 'DDT            DDT ON RETAINED PROGRAM'
+         TERMINAL = 'LIST [[N][,M]] LIST RETAINED PROGRAM'
+         TERMINAL = 'EDIT [N]       EDIT RETAINED PROGRAM'
+         TERMINAL = "SAVE ['FILE']  SAVE RETAINED PROGRAM"
+         TERMINAL = "LOAD ['FILE']  LOAD RETAINED PROGRAM"
+         TERMINAL = "NAME ['FILE']  CHANGE OR DISPLAY NAME"
+         TERMINAL = 'SCRATCH        CLEAR RETAINED PROGRAM'
+         TERMINAL = 'RENUM [N]      RENUMBER RETAINED PROGRAM'
+         TERMINAL = 'QUIT           EXIT CODE'
+         TERMINAL =
+         TERMINAL =
++ '-INCLUDE IS PROCESSED IMMEDIATELY ON ENTRY. CONTINUATION LINES ARE'
+         TERMINAL =
++ 'NOT AVAILABLE. LINES ARE IN THE RANGE 1..' NMAX_
+         TERMINAL =
+         TERMINAL = 'S, F, AND E LABELS AVAILABLE'
+         TERMINAL = 'SLOAD(' Q_ 'FILE' Q_ ') AVAILABLE'        :(RETURN)
+@
+
+Hoary interactions between [[ERRFUN_]] and [[BRKFUN_]]. We need
+[[ERRFUN_]] in some conditions, but the [[EXIT]] trap may be triggered
+anyway on return from [[ERRFUN_]].
+
+<<error function>>=
+ERRFUN_
+         (NE(&ERRTYPE, 34) SETEXIT())
+         EQ(&ERRTYPE, 34)                                     :S(RETURN)
+         TERMINAL = 'EXECUTION ERROR #' &ERRTYPE ', ' &ERRTEXT
+         TERMINAL = 'RETAINED PROGRAM LINE:' DIFFER(LN_)
+         TERMINAL = LPAD(VDIFFER(LN_), 4, 0) ' ' SRC_<LN_>     :(RETURN)
+@
+
+If [[BRKFUN_]] (exit trap) is entered, we need to know if we should
+simply resume from the command prompt, or return (again, probably to
+the prompt). Our heuristic is to test [[&amp;FNCLEVEL]], and return
+if it is 1. If it is 0, a simple branch suffices. If &gt; 0, we also
+branch, and (lose) the stack. [[DDT]] has a similar problem. Here,
+we keep track of [[&amp;FNCLEVEL]] in [[FL_]], for reporting and
+making return/branch decision.
+
+The issue is that we cannot simply pop the function stack and
+bindings. After getting input, and executing [[RUN]], we are one
+function deep ([[NEWLIN_ -&gt; PRSLIN_()]]). If we see one level
+here, we know that we can simply return and this brings us back to
+[[NEWLIN_]].  But, since the only thing we *can* do is return, if
+the level is 2 or greater, we cannot return (we would wind up back
+in the faulty code).
+
+I would like to be able to pop levels off, until only one remains,
+(or zero) and then return, or branch. But I can't! Each function
+level will also lock parameters and locals. To get around that
+memory leakage, [[PRSLIN_()]] has no parameters, and no locals.
+
+<<exit trap>>=
+BRKFUN_  ERRTYPE_ = &ERRTYPE
+         ERRTEXT_ = &ERRTEXT
+@
+
+Getting to [[END]] triggers [[&amp;ERRTYPE 0]]. We don't display
+anything, but want to get back to the prompt. An expected [[END]]
+will have removed the [[SETEXIT()]] trap, and we won't wind up here.
+
+Unfortunately, FATAL errors are not trapped. For example
+
+[[
+CODE:  :(NO_SUCH_LABEL) ;
+]]
+
+will immediately bail code. So, [[SAVE]] before [[RUN]]. Just prudent.
+Note that labels are not checked until run-time and not compile-time.
+
+<<exit trap>>=
+         EQ(ERRTYPE_, 0) EQ(&FNCLEVEL, FL_ + 1)               :S(RETURN)
+         EQ(ERRTYPE_, 0)                                     :S(NEWLIN_)
+         SETEXIT('BRKFUN_')
+         &ERRLIMIT = 999999999
+         TERMINAL = 'ERROR ' ERRTYPE_ ' (' ERRTEXT_ ')'
++           ' AT LEVEL ' &FNCLEVEL - FL_ - 1
+         TERMINAL = 'RETAINED PROGRAM LINE:' DIFFER(LN_)
+         TERMINAL = LPAD(VDIFFER(LN_), 4, 0) ' ' SRC_<LN_>
+         EQ(&FNCLEVEL, FL_ + 1)                     :S(RETURN)F(NEWLIN_)
+@
+
+Main program. Re-establish EXIT handler, input a line, parse and
+execute it, and then get the next line. Note that history expansion
+is done, but lines that begin with ! are considered special. Those
+lines are assumed to be external shell execution. The leading ! is
+stripped, then history expansion is done, and the ! is added back.
+
+Empty lines are not added to the history. The current FNCLEVEL is
+recorded for error handling.
+
+<<main>>=
+<<initialize>>
+NEWLIN_  SETEXIT('BRKFUN_')
+         &TRACE = 999999999
+         &ERRLIMIT = 999999999
+         INPT_ = READLINE('CODE:')                             :F(EXIT_)
+         INPT_ FENCE '!' REM . CODE                           :F(NEWL2_)
+         CODE = HISTORY_EXPAND(CODE)
+         INPT_ = '!' CODE                                      :(NEWL3_)
+NEWL2_   INPT_ = HISTORY_EXPAND(INPT_)
+NEWL3_   INPT_ = TRIM(INPT_)
+         ADD_HISTORY(VDIFFER(INPT_))
+         FL_ = &FNCLEVEL
+         PRSLIN_()                                            :(NEWLIN_)
+@
+
+Parse the input line, branching to the execution routine.
+
+<<parse>>=
+PRSLIN_  N1_ =
+         N2_ =
+         CODE =
+         LN_ =
+         FN2_ =
+         INPT_ EVALPAT_                                        :S(EVAL_)
+         INPT_ EXECPAT_                                        :S(EXEC_)
+         INPT_ HELPPAT_                                        :S(HELP_)
+         INPT_ LISTPAT_                                        :S(LIST_)
+         INPT_ RUNPAT_                                          :S(RUN_)
+         INPT_ EDITPAT_                                        :S(EDIT_)
+         INPT_ QUITPAT_                                        :S(EXIT_)
+         INPT_ NEWPAT_                                        :S(CLEAR_)
+         INPT_ RENUMPAT_                                      :S(RENUM_)
+         INPT_ SAVEPAT_                                        :S(SAVE_)
+         INPT_ LOADPAT_                                        :S(LOAD_)
+         INPT_ NAMEPAT_                                        :S(NAME_)
+         INPT_ DDTPAT_                                         :S(DDT__)
+         INPT_ RETNPAT_                                        :S(RETN_)
+@
+
+<<functions>>=
+*
+         DEFINE('ERRFUN_()')
+         DEFINE('PRSLIN_()')
+         DEFINE('CHECKLN_(N)')
+         DEFINE('CLEAR_()')                                   :(FN_END_)
+*
+<<checkln>>
+<<clear>>
+*
+FN_END_
+@
+
+<<checkln>>=
+CHECKLN_ GT(N) LE(N, NMAX_)                                   :S(RETURN)
+         TERMINAL = 'LINE NUMBER MUST BE 1 TO ' NMAX_         :(FRETURN)
+@
+
+Trap and report conditionally fatal execution errors in user's code.
+
+<<initialize>>=
+         &TRACE = 999999999
+         TRACE('ERRTYPE', 'KEYWORD',, 'ERRFUN_')
+         CLEAR_()
+@
+
+<<signon>>=
+         TERMINAL = 'CODE (TUE NOV 26 12:25:23 EST 2013)'
+         TERMINAL = 'ENTER SNOBOL4 STATEMENTS (TRY ? FOR HELP)'
+@
+
+<<manifest>>=
+         NMAX_ = 9999
+         EDITOR = 'ED'
+@
+
+<<readline>>=
+         RLAPPNAME('CODE')
+         READ_HISTORY('.CODE')
+         STIFLE_HISTORY(50)
+@
+
+<<exit>>=
+EXIT_    WRITE_HISTORY('.CODE')
+         SETEXIT()
+@
+
+We have thousands of statements chained together with gotos. These
+are traced during COLLECT() and the stack must be large enough.
+10,000 empty statements take around 2.5MB of memory, leaving over
+5MB for user (with 8MB default).
+
+A stack size [[-S]] of 40000 seems to be fine.
+
+<<>>=
+#!/usr/bin/bash
+         exec "snobol4" "-s" "-S 40000" "$0" "$@"
+*
+-TITLE CODE
+START_
+<<INCLUDES>>
+-STITL
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                  #####   #######  ######   #######                   *
+*                 #     #  #     #  #     #  #                         *
+*                 #        #     #  #     #  #                         *
+*                 #        #     #  #     #  #####                     *
+*                 #        #     #  #     #  #                         *
+*                 #     #  #     #  #     #  #                         *
+*                  #####   #######  ######   #######                   *
+*                                                                      *
+* CODE              ENTER TEST SNOBOL4 STATEMENTS                      *
+*                                                                      *
+* (C) COPYRIGHT 1985, 1987 - CATSPAW, INCORPORATED                     *
+*                                                                      *
+* "THIS IS MY GRANDFATHER'S AXE. MY FATHER REPLACED THE HAFT, AND I    *
+*  PUT A NEW HEAD ON IT. IT'S MY GRANDFATHER'S AXE."                   *
+*                                                                      *
+* ALSO PROVIDES A SIMPLISTIC RETAINED PROGRAM ENVIRONMENT (SIMILAR TO  *
+* BASIC -- INSPIRED BY MTS)                                            *
+*                                                                      *
+************************************************************************
+*
+* code.lss
+*
+<<code>>
+END START_
+*
+* CE: .MSNOBOL4;
+@

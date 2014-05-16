@@ -1,0 +1,73 @@
+<h1>TPROFILE - Time profile</h1>
+
+[[TPROFILE()]] will produce a time profile of the time spent in each
+SNOBOL4 statement.
+
+<h2>Uses</h2>
+<a href="LPROG.html">LPROG</a><br>
+<a href="SEQ.html">SEQ</a>
+
+<<INCLUDES>>=
+-INCLUDE 'LPROG.INC'
+-INCLUDE 'SEQ.INC'
+@
+
+<<TPROFILE>>=
+         DEFINE('TPROFILE()S,T')
+         DEFINE('TPROFILE_DUMP()I')
+         TP_ARY = ARRAY(LPROG())
+         &STLIMIT = 999999999
+         &TRACE = 999999999
+         TRACE('STCOUNT', 'KEYWORD',, 'TPROFILE')        :(TPROFILE_END)
+*
+TPROFILE S = &LASTNO
+         T = TIME()
+         TP_ARY<LAST_STNO> = TP_ARY<LAST_STNO> + T - LAST_TIME
+         LAST_STNO = S
+         LAST_TIME = TIME()                                    :(RETURN)
+*
+TPROFILE_DUMP
+         &STLIMIT = -1
+         STOPTR('STCOUNT', 'KEYWORD')
+         TERMINAL = 'TIME PROFILE'
+         TERMINAL =
+         SEQ(' TERMINAL = LPAD(I, 5) ": " TP_ARY<I> ', .I)
+                                                               :(RETURN)
+*
+TPROFILE_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'TPROFILE.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL TPROFILE
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*  #######  ######   ######   #######  #######  ###  #        #######  *
+*     #     #     #  #     #  #     #  #         #   #        #        *
+*     #     #     #  #     #  #     #  #         #   #        #        *
+*     #     ######   ######   #     #  #####     #   #        #####    *
+*     #     #        #   #    #     #  #         #   #        #        *
+*     #     #        #    #   #     #  #         #   #        #        *
+*     #     #        #     #  #######  #        ###  #######  #######  *
+*                                                                      *
+* TPROFILE                 TIME PROFILE                                *
+*                                                                      *
+************************************************************************
+*
+* TPROFILE.lss
+*
+<<TPROFILE>>
+*
+* CE: .MSNOBOL4;
+@

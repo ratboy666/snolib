@@ -1,0 +1,58 @@
+<h1>SOUNDEX - NARA SOUNDEX</h1>
+
+Return NARA SOUNDEX code.
+
+<<SOUNDEX>>=
+         DEFINE('SOUNDEX(STR)SDXMAP,INIT,CH')             :(SOUNDEX_END)
+*
+SOUNDEX  SDXMAP = '01230127022455012623017202'
+         STR = REPLACE(STR, &LCASE, &UCASE)
+SDX1     STR NOTANY(&UCASE) =                                   :S(SDX1)
+         INIT = SUBSTR(STR, 1, 1)
+         STR = REPLACE(STR, &UCASE, SDXMAP)
+SDX2     STR LEN(1) $ CH SPAN(*CH) = CH                         :S(SDX2)
+* OMIT NEXT LINE FOR KNUTH'S SIMPLE SOUNDEX
+SDX3     STR LEN(1) $ CH ('7' *CH) = CH                         :S(SDX3)
+         STR LEN(1) = INIT
+SDX4     STR ANY('07') =                                        :S(SDX4)
+         STR = SUBSTR(STR, 1, 4)
+         STR = LT(SIZE(STR), 4) STR DUPL('0', 4 - SIZE(STR))
+         SOUNDEX = STR                                         :(RETURN)
+*
+SOUNDEX_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'SOUNDEX.INC'
+         &CODE = 1
+         IDENT(SOUNDEX('washington'), 'W252')                    :F(END)
+         &CODE = 0
+END
+@
+
+<<>>=
+-STITL SOUNDEX
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*     #####   #######  #     #  #     #  ######   #######  #     #     *
+*    #     #  #     #  #     #  ##    #  #     #  #         #   #      *
+*    #        #     #  #     #  # #   #  #     #  #          # #       *
+*     #####   #     #  #     #  #  #  #  #     #  #####       #        *
+*          #  #     #  #     #  #   # #  #     #  #          # #       *
+*    #     #  #     #  #     #  #    ##  #     #  #         #   #      *
+*     #####   #######   #####   #     #  ######   #######  #     #     *
+*                                                                      *
+* SOUNDEX                   NARA SOUNDEX                               *
+*                                                                      *
+************************************************************************
+*
+* SOUNDEX.lss
+*
+<<SOUNDEX>>
+*
+* CE: .MSNOBOL4;
+@

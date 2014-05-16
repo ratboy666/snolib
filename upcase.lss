@@ -1,0 +1,63 @@
+<h1>upcase</h1>
+
+Convert SNOBOL4 program to uppercase. Does not uppercase quoted
+strings, or comments. If /L is used, converts to lowercase.
+
+<<INCLUDES>>=
+-INCLUDE 'HOST.INC'
+-INCLUDE 'SWAP.INC'
+@
+
+<<UPCASE>>=
+         TERMINAL = 'UPCASE (TUE OCT 23 16:16:46 EDT 2007)'
+         DEFINE('TOUPPER(S)')
+         Q = "'"
+         QQ = '"'
+         FROM = &LCASE
+         TO = &UCASE
+         ?(HOST(HOST_ARGN, HOST(HOST_FIRSTARG)) ('/L' | '/l'))
++           SWAP(.FROM, .TO)
+*
+TOP      R = INPUT                                               :F(END)
+*
+         S = ''
+         R FENCE ANY('*#;|!')                                   :S(CMNT)
+LOOP     R ARB . L (Q | QQ) $ DELIM ARB . M *DELIM REM . R      :F(DONE)
+         S = S TOUPPER(L) DELIM M DELIM                          :(LOOP)
+DONE     S = S TOUPPER(R)
+*
+         OUTPUT = S                                               :(TOP)
+CMNT     OUTPUT = R                                               :(TOP)
+*
+TOUPPER  TOUPPER = REPLACE(S, FROM, TO)                        :(RETURN)
+*
+END START
+@
+
+<<>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-TITLE UPCASE
+START
+<<INCLUDES>>
+*
+************************************************************************
+*                                                                      *
+*        #     #  ######    #####      #      #####   #######          *
+*        #     #  #     #  #     #    # #    #     #  #                *
+*        #     #  #     #  #         #   #   #        #                *
+*        #     #  ######   #        #     #   #####   #####            *
+*        #     #  #        #        #######        #  #                *
+*        #     #  #        #     #  #     #  #     #  #                *
+*         #####   #         #####   #     #   #####   #######          *
+*                                                                      *
+* UPCASE        CONVERTS NON-QUOTED TO UPPERCASE (SNOBOL SOURCE)       *
+*                                                                      *
+************************************************************************
+*
+* upcase.lss
+*
+<<UPCASE>>
+*
+* CE: .MSNOBOL4;
+@

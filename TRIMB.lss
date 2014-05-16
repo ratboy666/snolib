@@ -1,0 +1,47 @@
+<h1>TRIMB - Trim both left and right of string</h1>
+
+[[TRIMB(S)]] applies [[TRIMB()]] to both the left and right of [[S]].
+
+<<TRIMB>>=
+         DEFINE('TRIMB(S)')                                 :(TRIMB_END)
+*
+TRIMB    TRIMB = REVERSE(TRIM(REVERSE(TRIM(S))))               :(RETURN)
+*
+TRIMB_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'TRIMB.INC'
+         &CODE = 1
+         IDENT(TRIMB(' ABC '), 'ABC')                            :F(END)
+         &CODE = 0
+*
+END
+@
+
+<<>>=
+-STITL TRIMB
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*               #######  ######   ###  #     #  ######                 *
+*                  #     #     #   #   ##   ##  #     #                *
+*                  #     #     #   #   # # # #  #     #                *
+*                  #     ######    #   #  #  #  ######                 *
+*                  #     #   #     #   #     #  #     #                *
+*                  #     #    #    #   #     #  #     #                *
+*                  #     #     #  ###  #     #  ######                 *
+*                                                                      *
+* TRIMB            TRIM BOTH LEFT AND RIGHT OF STRING                  *
+*                                                                      *
+************************************************************************
+*
+* TRIMB.lss
+*
+<<TRIMB>>
+*
+* CE: .MSNOBOL4;
+@

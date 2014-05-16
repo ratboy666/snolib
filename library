@@ -1,0 +1,287 @@
+<!-- library -->
+<h2>Library Routines</h2>
+<ul>
+  <li><a href="AGT.html">
+    AGT - Alphabetic comparision with upper and lower equal
+  </a></li>
+  <li><a href="AI.html">
+    AI - Apply index
+  </a></li>
+  <li><a href="ALL.html">
+    ALL - Include all library components
+  </a></li>
+  <li><a href="AOPA.html">
+    AOPA - Apply infix operator to array
+  </a></li>
+  <li><a href="BALREV.html">
+    BALREV - Balanced reverse
+  </a></li>
+  <li><a href="BALX.html">
+    BALX - BAL extended
+  </a></li>
+  <li><a href="BLEND.html">
+    BLEND - Blend two strings
+  </a></li>
+  <li><a href="BQ.html">
+    BQ - Execute a shell command line and capture stdout
+  </a></li>
+  <li><a href="BRKREM.html">
+    BRKREM - BREAK(S) or REM
+  </a></li>
+  <li><a href="CATA.html">
+    CATA - Concatenate arrays
+  </a></li>
+  <li><a href="CGI.html">
+    CGI - CGI Support Functions
+  </a></li>
+  <li><a href="CHARS.html">
+    CHARS - Symbolic names for some characters
+  </a></li>
+  <li><a href="CH.html">
+    CH - Hex to string
+  </a></li>
+  <li><a href="COMB.html">
+    COMB - Number of combinations
+  </a></li>
+  <li><a href="COMPLEX.html">
+    COMPLEX - Complex numbers
+  </a></li>
+  <li><a href="COOKIE.html">
+    COOKIE - CGI COOKIE Support
+  </a></li>
+  <li><a href="COPYL.html">
+    COPYL - Copy list
+  </a></li>
+  <li><a href="COUNT.html">
+    COUNT - Count string occurences
+  </a></li>
+  <li><a href="CRACK.html">
+    CRACK - String to array
+  </a></li>
+  <li><a href="CSNOBOL4.html">
+    CSNOBOL4 - Functions specific to CSNOBOL4
+  </a></li>
+  <li><a href="CVAR.html">
+    CVAR - C variable declaration
+  </a></li>
+  <li><a href="DAY.html">
+    DAY - Day of week
+  </a></li>
+  <li><a href="DDTCARD.html">
+    DDTCARD - A card with DDT()
+  </a></li>
+  <li><a href="DDT.html">
+    DDT - An interactive SNOBOL4 debugger
+  </a></li>
+  <li><a href="DEXP.html">
+    DEXP - Simple function definition
+  </a></li>
+  <li><a href="DISPLAY.html">
+    DISPLAY - Display control
+  </a></li>
+  <li><a href="DYNAMIC.html">
+    DYNAMIC - Create dynamic modules for CSNOBOL4
+  </a></li>
+  <li><a href="ENDCARD.html">
+    ENDCARD - A card with END
+  </a></li>
+  <li><a href="FASTBAL.html">
+    FASTBAL - Pattern to match balanced strings
+  </a></li>
+  <li><a href="FENCE.html">
+    FENCE - Match pattern once
+  </a></li>
+  <li><a href="FFI.html">
+    FFI - Foreign function interface
+  </a></li>
+  <li><a href="FIND.html">
+    FIND - Find extreme
+  </a></li>
+  <li><a href="FLOOR.html">
+    FLOOR - FLOOR and CEIL functions
+  </a></li>
+  <li><a href="FOREACH.html">
+    FOREACH - Apply procedure to each element
+  </a></li>
+  <li><a href="GCD.html">
+    GCD - Greatest Common Divisor
+  </a></li>
+  <li><a href="GETKEY.html">
+    GETKEY - Get key, including special keys
+  </a></li>
+  <li><a href="GOTOS.html">
+    GOTOS - Keep the last 10 or so gotos of a program
+  </a></li>
+  <li><a href="HASH.html">
+    HASH - Convert string to TABLE
+  </a></li>
+  <li><a href="HEX.html">
+    HEX - Return hex for string
+  </a></li>
+  <li><a href="HOST.html">
+    HOST - HOST() function codes
+  </a></li>
+  <li><a href="HTMLESC.html">
+    HTMLESC - HTML, JS and URL escaping
+  </a></li>
+  <li><a href="HTMLTMPL.html">
+    HTMLTMPL - HTML template expansion
+  </a></li>
+  <li><a href="INFINIP.html">
+    INFINIP - Infinite precision integer math
+  </a></li>
+  <li><a href="JSON.html">
+    JSON - Encode/Decode JSON
+  </a></li>
+  <li><a href="JIT.html">
+    JIT - Just in time code generation
+  </a></li>
+  <li><a href="LAST.html">
+    LAST - Return last list element
+  </a></li>
+  <li><a href="LIKE.html">
+    LIKE - Pattern to match like string
+  </a></li>
+  <li><a href="LINK.html">
+    LINK - Define LINK type
+  </a></li>
+  <li><a href="LOGIC.html">
+    LOGIC - CATSPAW SPITBOL compatible LOGIC() functions
+  </a></li>
+  <li><a href="LOG.html">
+    LOG - LOG functions
+  </a></li>
+  <li><a href="LPROG.html">
+    LPROG - Length of program
+  </a></li>
+  <li><a href="MDY.html">
+    MDY - M/D/Y from Y/D
+  </a></li>
+  <li><a href="NDBM.html">
+    NDBM - NDBM interface for CSNOBOL4
+  </a></li>
+  <li><a href="NOTP.html">
+    NOTP - Invert pattern
+  </a></li>
+  <li><a href="ONCE.html">
+    ONCE - Pattern that succeeds once
+  </a></li>
+  <li><a href="ORDER.html">
+    ORDER - Order characters in string
+  </a></li>
+  <li><a href="P64.html">
+    P64 - 64 bit parameter handling
+  </a></li>
+  <li><a href="PSQL.html">
+    PSQL - Interface to PostgreSQL
+  </a></li>
+  <li><a href="QUOTE.html">
+    QUOTE - Quote a string
+  </a></li>
+  <li><a href="RANDOM.html">
+    RANDOM - Random number functions
+  </a></li>
+  <li><a href="READFILE.html">
+    READFILE - Read complete file to string
+  </a></li>
+  <li><a href="READL.html">
+    READL - Read input to list
+  </a></li>
+  <li><a href="READLINE.html">
+    READLINE - Interface to readline and history functions
+  </a></li>
+  <li><a href="REDEFINE.html">
+    REDEFINE - Redefine operators
+  </a></li>
+  <li><a href="REPL.html">
+    REPL - Replace strings
+  </a></li>
+  <li><a href="RESOL.html">
+    RESOL - Timer resolution in milliseconds
+  </a></li>
+  <li><a href="REVL.html">
+    REVL - Reverse list
+  </a></li>
+  <li><a href="ROMAN.html">
+    ROMAN - Roman numeral
+  </a></li>
+  <li><a href="ROTATER.html">
+    ROTATER - Rotate string
+  </a></li>
+  <li><a href="SCOOP.html">
+    SCOOP - Object Oriented Programming
+  </a></li>
+  <li><a href="SDIFF.html">
+    SDIFF - Set difference
+  </a></li>
+  <li><a href="SEQ.html">
+    SEQ - Sequence statement with counter
+  </a></li>
+  <li><a href="SESSION.html">
+    SESSION - CGI SESSION Support
+  </a></li>
+  <li><a href="SIZEA.html">
+    SKIM - Size of array in first dimension
+  </a></li>
+  <li><a href="SKIM.html">
+    SKIM - Skim unique characters
+  </a></li>
+  <li><a href="SLOAD.html">
+    SLOAD - Load SNOBOL4 source
+  </a></li>
+  <li><a href="SOUNDEX.html">
+    SOUNDEX - NARA SOUNDEX
+  </a></li>
+  <li><a href="SPELL.html">
+    SPELL - Spell out a number
+  </a></li>
+  <li><a href="STACK.html">
+    STACK - Create stack functions
+  </a></li>
+  <li><a href="STCL.html">
+    STCL - TCL interface for CSNOBOL4
+  </a></li>
+  <li><a href="STROUT.html">
+    STROUT - Array to string
+  </a></li>
+  <li><a href="SWAP.html">
+    SWAP - Swap two variables
+  </a></li>
+  <li><a href="SYSLOG.html">
+    SYSLOG - Interface to OPENLOG/SYSLOG/CLOSELOG
+  </a></li>
+  <li><a href="SYSTEM.html">
+    SYSTEM - Determine kind of SNOBOL4
+  </a></li>
+  <li><a href="TEST.html">
+    TEST - Bypass one character assumption
+  </a></li>
+  <li><a href="TIMEGC.html">
+    TIMEGC - Time garbage collect
+  </a></li>
+  <li><a href="TIME.html">
+    TIME - Date/time functions
+  </a></li>
+  <li><a href="TIMER.html">
+    TIMER - Time statements
+  </a></li>
+  <li><a href="TPROFILE.html">
+    TPROFILE - Time profile
+  </a></li>
+  <li><a href="TRIMB.html">
+    TRIMB - TRIM both left and right of string
+  </a></li>
+  <li><a href="TRUNC.html">
+    TRUNC - Truncate array
+  </a></li>
+  <li><a href="UNIQUE.html">
+    UNIQUE - Generate unique name
+  </a></li>
+  <li><a href="UTF8.html">
+    UTF8 - UTF-8 encoded UNICODE handling
+  </a></li>
+  <li><a href="WRAPPER.html">
+    WRAPPER - Create C code to wrap a function for LOAD()ing
+  </a></li>
+</ul>
+<!-- ce: .mhtml; -->

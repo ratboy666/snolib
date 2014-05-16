@@ -1,0 +1,51 @@
+#!/usr/local/bin/snobol4 -b
+         exec "snobol4" "-b" "$0" "$@"
+*
+-TITLE G360
+START
+-INCLUDE 'REPL.INC'
+*
+************************************************************************
+*                                                                      *
+*                     #####    ###    ###    ####                      *
+*                    #     #  #   #  #   #  #   ##                     *
+*                    #            #  #      #  # #                     *
+*                    #  ####   ###   ####   # #  #                     *
+*                    #     #      #  #   #  ##   #                     *
+*                    #     #  #   #  #   #  #    #                     *
+*                     #####    ###    ###    ####                      *
+*                                                                      *
+* G360         ALLOW 360 EXTENDED CHARACTER SET IN SOURCE              *
+*                                                                      *
+************************************************************************
+*
+* G360: IBM 360 EXTENDED GRAPHICS TO ASCII SNOBOL4. THE "GREEN BOOK"
+* PROGRAMS USE THESE EXTENDED SYMBOLS.
+*
+         TERMINAL = 'G360 (SUN FEB  9 18:44:54 EST 2014)'
+         DEFINE('G360(S)')
+         Q = "'"
+         QQ = '"'
+*
+TOP      R = INPUT                                               :F(END)
+*
+         S = ''
+         R FENCE ANY('*#;|!')                                   :S(CMNT)
+LOOP     R ARB . L (Q | QQ) $ DELIM ARB . M *DELIM REM . R      :F(DONE)
+         S = S G360(L) DELIM M DELIM                             :(LOOP)
+DONE     S = S G360(R)
+*
+         OUTPUT = S                                               :(TOP)
+CMNT     OUTPUT = R                                               :(TOP)
+*
+G360     S = REPL(S, '┌', '*')
+         S = REPL(S, '│', '*')
+         S = REPL(S, '└', '*')
+         S = REPL(S, '←', '=')
+         S = REPL(S, '¬', '~')
+         S = REPL(S, '↑', '^')
+         G360 = S                                              :(RETURN)
+*
+END START
+*
+* CE: .F.MSNOBOL4;

@@ -1,0 +1,191 @@
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-TITLE SWEAVE
+START
+-INCLUDE 'REPL.INC'
+-INCLUDE 'BQ.INC'
+-INCLUDE 'HOST.INC'
+-INCLUDE 'HTMLESC.INC'
+-INCLUDE 'CHARS.INC'
+-INCLUDE 'BALX.INC'
+*
+************************************************************************
+*                                                                      *
+*          #####   #     #  #######     #     #     #  #######         *
+*         #     #  #  #  #  #          # #    #     #  #               *
+*         #        #  #  #  #         #   #   #     #  #               *
+*          #####   #  #  #  #####    #     #  #     #  #####           *
+*               #  #  #  #  #        #######   #   #   #               *
+*         #     #  #  #  #  #        #     #    # #    #               *
+*          #####    ## ##   #######  #     #     #     #######         *
+*                                                                      *
+* SWEAVE                 WEAVE HTML FROM LSS                           *
+*                                                                      *
+************************************************************************
+*
+* SEE STANGLE. SWEAVE ACCEPTS A FILE FROM STANDARD INPUT, OR NAMED.
+* IF NAMED, THE FILENAME IS USED AS THE HTML TITLE. CHUNKS ARE PARSED
+* THE SAME AS STANGLE, BUT ARE NOT COMBINED. INSTEAD, EACH CHUNK IS
+* IDENTIFIED AS HTML OR CODE. IF HTML, THE CHUNK IS PASSED THROUGH TO
+* THE OUTPUT, LOOKING FOR [[ ]] SEQUENCES, AND CHANGING THE FONT TO
+* CODE FONT. UNBALANCED [[ CAUSES LINES TO BE RENDERED "<PRE>" WITH
+* A CHANGE BAR AT THE LEFT. CODE LINES ARE SUBJECT TO HTML CHARACTER
+* REPLACEMENT FOR &, < AND >. THE OPENING <<>>= SEQUENCE IS MODIFIED
+* TO CHEVRONS AND EQUIV SYMBOL TO LOOK BETTER.
+*
+* HTML CHUNKS ARE PASSED THOUGH, LOOKING FOR CHEVRONS (<< >>) SEQUENCES.
+* THESE ARE RENDERED AS CHEVRONS, IN CF (CODE FONT). NORMAL FONT IS HF
+* (HTML FONT).
+*
+* sweave
+*
+         TERMINAL = 'SWEAVE (FRI DEC 13 12:21:14 EST 2013)'
+         FN = HOST(HOST_ARGN, HOST(HOST_FIRSTARG))            :F(NONAME)
+         FFN = FN
+         INPUT(.INPUT, 10,, FN)
+NONAME   BL = ' ' | CHARS_TAB
+         OPT_WS = SPAN(' ' CHARS_TAB) | NULL
+         NL = CHARS_NL
+         NAME_PAT = OPT_WS '<<' BREAK('>') . CHUNK_NAME '>>=' RPOS(0)
+         REF_PAT = OPT_WS '<<' BREAK('>') . CHUNK_NAME '>>' RPOS(0)
+         L_PAT = POS(0) ('#line' | '-LINE' | '-line' '%line' | '%LINE')
++           BL OPT_WS SPAN(&DIGITS) . N
++           ((OPT_WS '"' BREAK('"') . F '"') | NULL)
+*
+         DELR = TABLE()
+         DELR<'('> = ')'
+         DELR<'<'> = '>'
+         OPTWS = SPAN(' ' CHAR(9)) | ''
+         BEX = BALX('(<[]>)', "'" '"')
+         GB = ANY('(<') $ DELL BEX *DELR<DELL>
+         GC = OPTWS (ANY('SFsf') | '') OPTWS GB
+         GP = (':' GC (GC | '') OPTWS RPOS(0)) . G
+*
+* FONT DEFINITIONS -- THESE TWO WILL BE AVAILABLE ON ALMOST ANY
+* BROWSER
+*        HF = '<font face="Arial">'
+*        CF = '<font face="Courier">'
+*
+* MY PREFERRED FONTS. I LIKE THE CLASSIC FEEL OF GOUDY OLD
+* STYLE. SOURCE CODE PRO IS A NICE SOURCE CODE FONT.
+*
+         HF = '<font face="Sorts Mill Goudy">'
+         CF = '<font face="Source Code Pro">'
+         AF = '<font face="Dijkstra">'
+*
+* HTML PREAMBLE
+*
+         OUTPUT = '<!DOCTYPE html>'
+         OUTPUT = '<html><head>'
+         OUTPUT = '<title>' VDIFFER(FN) '</title>'
+         OUTPUT = '<meta http-equiv="content-type"'
+         OUTPUT = '      content="text/html; charset=UTF-8">'
+         OUTPUT = '<meta name="description"'
+         OUTPUT = '      content="sweave generated">' IDENT(FN)
+         OUTPUT = '      content="sweave generated from '
++                 VDIFFER(FN) '">'
+         OUTPUT = '</head><body>' HF
+*
+* SKIP EMPTY LINES
+*
+TOP      L = TRIM(INPUT)                                       :F(CLOSE)
+         IDENT(L)                                                :S(TOP)
+*
+* ARE WE AT THE BEGINNING OF A CODE CHUNK: <<NAME>>= GIVING NAMED CHUNK
+* WE MAY WANT TO ESCAPE THE CHUNK NAME ITSELF.. TWO APPLICATIONS OF
+* NAME_PAT WOULD DO.
+*
+         CHUNK_NAME =
+         L NAME_PAT = '<b>&laquo;' CHUNK_NAME '&raquo;&equiv;</b>'
++                                                  :S(CODE_CHUNK)F(HTML)
+*
+* PROCESSING HTML CHUNK. OPENS A PARAGRAPH. STOPS ON FIRST BLANK LINE.
+* '@' IS NOT USED TO CLOSE DOCUMENTATION (ONLY CODE). MAY BE AN
+* ANNOTATION IF IT BEGINS WITH {{.
+*
+* LOOK FOR [[ SEQUENCES AND SWITCH TO CODE FONT. LOOK FOR {{ AND
+* SWITCH TO ANNOTATION FONT.
+*
+HTML     L FENCE '{{' RPOS(0)                             :S(ANNOTATION)
+         OUTPUT = '<p align="justify">' HF                        :(HL2)
+*
+HLOOP    L = TRIM(INPUT)                                       :F(CLOSE)
+         IDENT(L)                                               :S(HL10)
+* [[ ]] SEQUENCES, {{ }} SEQUENCES
+HL2      L '[[' ARB . S ']]' = CF S '</font>'                    :S(HL2)
+HL2A     L '{{' ARB . S '}}' = AF S '</font>'                   :S(HL2A)
+         L '[[' = '</font></p><pre>' CF                          :F(HL9)
+* UNBALANCED [[. SCAN UNTIL ]] IS SEEN
+         OUTPUT = L
+HL3      L = TRIM(INPUT)                                       :F(CLOSE)
+         L ']]'  = '</font></pre>'                               :S(HL9)
+HL7      OUTPUT = '| ' L                                          :(HL3)
+* LINES BEGINNING WITH '.' HAVE THE '.' REMOVED. THIS ALLOWS BLANK
+* LINES WITHIN DOCUMENTATION (FOR EXTERNAL PROCESSORS LIKE DITAA).
+* LINE DIRECTIVES ARE SIMPLY IGNORED.
+HL9      L L_PAT                                               :S(HLOOP)
+         L POS(0) '.' =
+         OUTPUT = L                                             :(HLOOP)
+HL10     OUTPUT = '</font></p>'                                   :(TOP)
+*
+* AN ANNOTATION COMES BEFORE THE DOCUMENTATION OR CODE CHUNK IT
+* REFERS TO. IT IS A DOCUMENTATION CHUNK STARTED BY {{ AND ENDED
+* BY }}.
+ANNOTATION
+         OUTPUT = '<div style="width:15em;'
++                             'margin-left:0.5em;'
++                             'float:right;'
++                             'background-image:url(blutextb.gif)">'
+         OUTPUT = AF '<p align="left">'
+ALOOP    L = TRIM(INPUT)                                       :F(CLOSE)
+AL2      L '[[' ARB . S ']]' = CF S '</font>'                    :S(AL2)
+         L FENCE '}}'                                          :S(ADONE)
+         OUTPUT = L                                             :(ALOOP)
+ADONE    OUTPUT = '</p></font></div>'                             :(TOP)
+*
+* PROCESSING CODE CHUNK.
+*
+* LOOK FOR <<NAME>> SEQUENCES.
+*
+CODE_CHUNK
+         OUTPUT = '<div style="background-image: url(greenbar.gif)">'
+         OUTPUT = '<pre>' CF                                      :(CL2)
+*
+CLOOP    L = TRIM(INPUT)                                      :F(CLOSE2)
+         L POS(0) '@' RPOS(0)                                 :S(CLOOP3)
+         L REF_PAT = '<b>&laquo;' CHUNK_NAME '&raquo;</b>'       :S(CL2)
+* FORMAT GOTO FIELD
+         G =
+         L GP =
+         L = HTML_ESCAPE(L)
+         G = '<b>' HTML_ESCAPE(VDIFFER(G)) '</b>'
+         L = L G
+         G =
+* SPECIAL SNOBOL4/SNOCONE HANDLING. IF THE FIRST CHARACTER IS '*' OR
+* '#', ';', '|' OR '!' FORMAT AS COMMENT.
+CL2      L FENCE ANY('*#;|!')                                     :F(CL3)
+         L = '<font color="#818181"><i>' L '</i></font>'
+CL3      L L_PAT                                               :S(CLOOP)
+         OUTPUT = L                                             :(CLOOP)
+CLOOP3   OUTPUT = '<b>@</b>'
+CLOOP2   OUTPUT = '</font></pre></div>'                           :(TOP)
+*
+* FINAL HTML CODE. GENERATE A FOOTER WITH A LINK BACK TO THE INDEX.
+* USES A TABLE TO GET LEFT/CENTER/RIGHT FORMATTING. IF A FILENAME
+* WAS USED, MENTION THAT AS THE SOURCE. INDICATE THE DATE THAT THE
+* DOCUMENT WAS GENERATED.
+*
+CLOSE2   OUTPUT = '</pre></div>'
+CLOSE    OUTPUT = '<footer><hr><table width="100%" border="0">'
+         OUTPUT = '<tr><td><p align=left>'
+         OUTPUT = 'Produced by <code>sweave</code>'
+         OUTPUT = 'from <code><b>' VDIFFER(FFN) '</b></code>'
+         OUTPUT = '</p></td><td><p align=center>'
+         OUTPUT = BQ('date') '</p></td><td><p align=right>'
+         OUTPUT = 'Return to <a href="index.html">index</a>'
+         OUTPUT = '</p></td></table></footer>'
+         OUTPUT = '</font></body></html>'
+*
+* CE: .MSNOBOL4;
+*
+END START

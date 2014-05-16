@@ -1,0 +1,58 @@
+<h1>READFILE - Read complete file into string</h1>
+
+Reads a complete file into a string. No conversions are done. Uses
+'B,65536' (binary, 64k byte buffer) for the INPUT() function. This
+is specific to CSNOBOL4.
+
+This is used to bring in content from disk (say, images, templates
+or html). This content can then be left in memory if needed.
+
+Tested w/ 1024..256K buffer size. Default 64K buffer.
+
+<<READFILE>>=
+         DEFINE('READFILE(FILE)F,U')                     :(READFILE_END)
+*
+READFILE U = IO_FINDUNIT()                                   :F(FRETURN)
+         INPUT(.F, U, 'B,65536', FILE)                       :F(FRETURN)
+READFILE2
+         READFILE = READFILE F                             :S(READFILE2)
+         ENDFILE(U)
+         DETACH(.F)                                            :(RETURN)
+*
+READFILE_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'READFILE.INC'
+-INCLUDE 'BQ.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+-STITL READLINE
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*  ######   #######     #     ######   #######  ###  #        #######  *
+*  #     #  #          # #    #     #  #         #   #        #        *
+*  #     #  #         #   #   #     #  #         #   #        #        *
+*  ######   #####    #     #  #     #  #####     #   #        #####    *
+*  #   #    #        #######  #     #  #         #   #        #        *
+*  #    #   #        #     #  #     #  #         #   #        #        *
+*  #     #  #######  #     #  ######   #        ###  #######  #######  *
+*                                                                      *
+* READFILE          READ COMPLETE FILE INTO STRING                     *
+*                                                                      *
+************************************************************************
+*
+* READFILE.lss
+*
+<<READFILE>>
+*
+* CE: .F.MSNOBOL4;
+@

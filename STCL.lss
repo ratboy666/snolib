@@ -1,0 +1,104 @@
+<h1>STCL - TCL interface for CSNOBOL4</h1>
+
+Interface to TCL.
+
+<<TCL>>=
+STCL_LOAD
+*
+         LOAD('STCL_CREATEINTERP()INTEGER')
+         LOAD('STCL_EVALFILE(INTEGER,STRING)STRING')
+         LOAD('STCL_GETVAR(INTEGER,STRING)STRING')
+         LOAD('STCL_SETVAR(INTEGER,STRING,STRING)STRING')
+         LOAD('STCL_EVAL(INTEGER,STRING)STRING')
+         LOAD('STCL_DELETEINTERP(INTEGER)STRING')
+*
+         LOAD('STCL_NEWSTRINGOBJ(STRING)INTEGER')
+         LOAD('STCL_GETSTRINGFROMOBJ(INTEGER)STRING')
+         LOAD('STCL_APPENDTOOBJ(INTEGER,STRING)STRING')
+         LOAD('STCL_EVALOBJEX(INTEGER,INTEGER,INTEGER)STRING')
+         LOAD('STCL_GETOBJRESULT(INTEGER)')
+         LOAD('STCL_OBJSETVAR2(INTEGER,STRING,STRING,INTEGER,INTEGER)'
++             'STRING')
+         LOAD('STCL_OBJGETVAR2(INTEGER,STRING,STRING,INTEGER)STRING')
+         LOAD('STCL_RELEASEOBJ(INTEGER)STRING')
+*
+         CODE('STCL_LOAD')
+@
+
+<<>>=
+-STITL STCL
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                    #####   #######   #####   #                       *
+*                   #     #     #     #     #  #                       *
+*                   #           #     #        #                       *
+*                    #####      #     #        #                       *
+*                         #     #     #        #                       *
+*                   #     #     #     #     #  #                       *
+*                    #####      #      #####   #######                 *
+*                                                                      *
+* STCL                TCL INTERFACE FOR CSNOBOL4                       *
+*                                                                      *
+* PHIL BUDNE <PHIL@ULTIMATE.COM>                                       *
+* DECEMBER 3, 2005                                                     *
+*                                                                      *
+* INSPIRED BY ARJEN MARKUS' 'FTCL' FORTRAN/TCL INTERFACE               *
+*                                                                      *
+************************************************************************
+*
+* STCL.lss
+*
+<<TCL>>
+*
+* CE: .MSNOBOL4;
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-TITLE TCL_TEST
+START
+-INCLUDE 'STCL.INC'
+-STITL
+-EJECT
+*
+         INTERP = STCL_CREATEINTERP()
+         TCL_VERSION = STCL_GETVAR(INTERP, "tcl_version")
+         OUTPUT = IDENT(TCL_VERSION) "COULD NOT GET TCL_VERSION" :S(END)
+         OUTPUT = "TCL VERSION: " TCL_VERSION
+*
+* CHECK TCL VERSION
+         NUM = SPAN('0123456789')
+         VPAT = NUM '.' NUM
+         TCL_VERSION VPAT . VER                               :S(CHECKV)
+         OUTPUT = "COULD NOT PARSE TCL_VERSION"                   :(END)
+
+CHECKV   LT(VER, 8.4)                                        :S(CHECKTK)
+
+* TCL 8.4 AND LATER CAN DYNAMICLY LOAD TK!
+         STCL_EVAL(INTERP, "package require Tk")                 :F(END)
+
+* CHECK FOR TK
+CHECKTK  TK_VERSION = STCL_GETVAR(INTERP, "tk_version")         :F(NOTK)
+         DIFFER(TK_VERSION)                                   :S(HAVETK)
+*
+NOTK     OUTPUT = "COULD NOT FIND TK_VERSION"                     :(END)
+*
+HAVETK   OUTPUT = "TK VERSION: " TK_VERSION
+*
+         STCL_EVAL(INTERP,
++           'button .hello -text "Hello, world" '
++           '              -command {set val hello};'
++           "pack .hello;"
++           'button .other -text "Other Choice" '
++           '              -command {set val other};'
++           "pack .other;"
++           "global val;"
++           "vwait val")
+*
+         OUTPUT = STCL_GETVAR(INTERP, "val")
+*
+END START
+@

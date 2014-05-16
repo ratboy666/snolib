@@ -1,0 +1,55 @@
+<h1>STROUT - Array to string</h1>
+
+[[STRINGOUT(A,SEP)]] will serve to convert from array to
+string. [[SEP]] contains a separation string to be inserted between
+strings of the array [[A]].
+
+<h2>See Also</h2>
+<a href="CRACK.html">CRACK</a>
+
+<<STROUT>>=
+         DEFINE('STRINGOUT(A,SEP)I')                    :(STRINGOUT_END)
+*
+STRINGOUT
+         I = 1
+         STRINGOUT = A<1>                                     :F(RETURN)
+STRINGOUT_1         
+         I = I + 1
+         STRINGOUT = STRINGOUT SEP A<I>         :S(STRINGOUT_1)F(RETURN)
+*
+STRINGOUT_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'STROUT.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+-STITL STROUT
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*            #####   #######  ######   #######  #     #  #######       *
+*           #     #     #     #     #  #     #  #     #     #          *
+*           #           #     #     #  #     #  #     #     #          *
+*            #####      #     ######   #     #  #     #     #          *
+*                 #     #     #   #    #     #  #     #     #          *
+*           #     #     #     #    #   #     #  #     #     #          *
+*            #####      #     #     #  #######   #####      #          *
+*                                                                      *
+* STROUT                    ARRAY TO STRING                            *
+*                                                                      *
+************************************************************************
+*
+* STROUT.lss
+*
+<<STROUT>>
+*
+* CE: .MSNOBOL4;
+@

@@ -1,0 +1,332 @@
+#!/usr/bin/bash
+         exec "snobol4" "-s" "$0" "$@"
+-TITLE ALL
+START
+-INCLUDE 'DDT.INC'
+-INCLUDE 'ALL.INC'
+-STITL
+-EJECT
+*
+************************************************************************
+*                                                                      *
+* #######  #######   #####   #######            #     #        #       *
+*    #     #        #     #     #              # #    #        #       *
+*    #     #        #           #             #   #   #        #       *
+*    #     #####     #####      #            #     #  #        #       *
+*    #     #              #     #            #######  #        #       *
+*    #     #        #     #     #            #     #  #        #       *
+*    #     #######   #####      #     #####  #     #  #######  ####### *
+*                                                                      *
+*                                                                      *
+* TEST_ALL                 TEST LIBRARY                                *
+*                                                                      *
+* INCLUDE ALL FOR LISTING (> 3500 LINES OF LIBRARY SOURCE, > 6500 WITH *
+* COMMENTS)                                                            *
+*                                                                      *
+* SNOBOL4 ALWAYS COMPILES FROM SOURCE. THIS CHARACTERISTIC IS SHARED   *
+* WITH BASIC, AND CAUSES PROGRAMS TO TAKE LONGER TO LOAD. HOWEVER,     *
+* THESE DAYS THIS IS NOT AS LARGE A CONCERN. LOADING ALL MODULES, AND  *
+* PRODUCING A LISTING FILE TAKES 85 TO 90 MILLISECONDS ON MY NETBOOK   *
+* (1.6GHZ ATOM, SINGLE CORE). THIS IS ACCEPTABLE FOR RUNNING ALMOST    *
+* ANY PROGRAM. 55MS (OR SO) WITHOUT GENERATING A LISTING.              *
+*                                                                      *
+* SO WE TRY TO INCLUDE AS MUCH AS POSSIBLE, BECAUSE SNOBOL4 EXCELS AT  *
+* 'QUICK AND DIRTY' PROGRAMMING. AS WELL, WE INCLUDE EXAMPLES OF       *
+* INCORPORATING C, FORTRAN, SCHEME AND COBOL INTO A SNOBOL4 PROGRAM,   *
+* USING THE 'LOAD()' FACILITY. 'TEST_ALL' INCORPORATES SNOO.FTN,       *
+* COO.CBL, AND TEST_GAMBIT.SCM AS WELL AS BUILDING SOME C CODE (WHICH  *
+* INCLUDES REQUIRED GLUE AND INITIALIZATION CODE).                     *
+*                                                                      *
+************************************************************************
+*
+* test_all
+*
+-CASE 1
+-PLUSOPS 1
+*
+         TERMINAL = 'ALL (THU JUL  4 14:54:49 EDT 2013)'
+*
+         NE(DDT_LOADED) DDT()
+*
+* TEST FUNCTIONS
+*
+         A = ARRAY(3)
+         I = ARRAY(3)
+         A<1> = 5; A<2> = 6; A<3> = 7
+         I<1> = 3; I<2> = 2; I<3> = 1
+         A2 = AI(A, I)
+         OUTPUT = A2<1> ' ' A2<2> ' ' A2<3>
+*
+         A2 = AOPA(1, '+', A2)
+         OUTPUT = A2<1> ' ' A2<2> ' ' A2<3>
+         A2 = AOPA(A2, '-', 1)
+         OUTPUT = A2<1> ' ' A2<2> ' ' A2<3>
+         A2 = AOPA(A2, '*', A2)
+         OUTPUT = A2<1> ' ' A2<2> ' ' A2<3>
+         OUTPUT = AOPA(1, '-', 1)
+*
+* NOTE: ARRAY('1:3') IS ALMOST ARRAY(3), EXCEPT CATA() CAN ONLY
+*       ACCEPT PROTOTYPE() IN THE SECOND FORM. USE THAT FOR VECTORS
+*       DIMENSIONS 1:N
+*
+         A2 = CATA(A, I)
+         OUTPUT = A2<1> ' ' A2<2> ' ' A2<3> ' ' A2<4> ' ' A2<5> ' '
++           A2<6>
+*
+         OUTPUT = CHARS_BEL
+*
+         L = LINK('C', NULL)
+         L = LINK('B', L)
+         L = LINK('A', L)
+         OUTPUT = VALUE(L)
+         OUTPUT = VALUE(NEXT(L))
+         OUTPUT = VALUE(NEXT(NEXT(L)))
+*
+         L2 = COPYL(L)
+         OUTPUT = VALUE(L2)
+         OUTPUT = VALUE(NEXT(L2))
+         OUTPUT = VALUE(NEXT(NEXT(L2)))
+*
+         OUTPUT = COUNT('ABCABCABC', 'AB')
+*
+         A3 = CRACK('A,B,C', ',')
+         OUTPUT = A3[1] ' ' A3[2] ' ' A3[3]
+*
+         OUTPUT = DAY()
+*
+         DEXP('AVE(X,Y) = (X + Y) / 2.0')
+         OUTPUT = AVE(1, 2)
+*
+         OUTPUT = DS_BOLD 'BOLD' DS_SGR0
+*
+         OUTPUT = FIND(A2, 'GT')
+         OUTPUT = FLOOR(1.5) ' ' CEIL(1.5)
+         OUTPUT = HEX('ABC')
+         OUTPUT = HOST(HOST_SYSINFO)
+         OUTPUT = IDENT(LAST(L)) 'NULL AT END'
+         P = LIKE('FRED')
+         OUTPUT = ('RED' ? P) ' IS LIKE FRED'
+         S = HEX('ABC')
+         OUTPUT = CH(S)
+         OUTPUT = SYSTEM()
+         OUTPUT = ISSNOBOL4() 'SNOBOL4'
+         OUTPUT = ISSPITBOL() 'SPITBOL'
+         TIMEGC()
+         B = 10; C = 20
+         TIMER(' A = B + C ')
+         OUTPUT = ROTATER('ABC', -1)
+         OUTPUT = LPROG()
+         OUTPUT = CLOG(1000)
+         OUTPUT = OR(1, 2)
+         OUTPUT = ROMAN(1003)
+         OUTPUT = SPELL(1003)
+         OUTPUT = B ' ' C
+         SWAP(.B, .C)
+         OUTPUT = B ' ' C
+*
+         OUTPUT = RESOLUTION()
+         OUTPUT = STATEMENTS_PER_SECOND
+*
+* IT IS USEFUL TO WRAP FORTRAN CODE INTO SNOBOL TO PROVIDE A TEST
+* HARNESS FOR FORTRAN, OR TO INCORPORATE NUMERIC PROCESSING.
+*
+* CALLING CONVENTIONS ARE TO BE F2C (F77) STYLE, WHICH MEANS THAT
+* SNOBOL->FORTRAN WRAPPERS HAVE TO BE PRODUCED.
+*
+* ONLY INTEGER, REAL AND STRING PARAMETERS ARE SUPPORTED BY
+* WRAPPER, WITH THE SAME RETURNS, OR PREDICATE. SPECIFICALLY,
+* ARRAYS, STRUCTS AND POINTERS ARE NOT SUPPORTED.
+*
+* SNOO4_ TAKES CHAR*, FTNLEN, AND RETURNS INTK
+* SNOO5_ TAKES THE SAME, AND RETURNS CHARACTER*(*), WHICH IS
+* ADDED AS THE FIRST PARAMETER OF THE CALL.
+*
+* COO.CBL ILLUSTRATES CALLING A COBOL PROGRAM FROM SNOBOL. THIS
+* COULD BE CONSIDERED PERVERSE. BUT IS USEFUL, SINCE COBOL HAS TERMINAL
+* FORMS.
+*
+* TEST_GAMBIT.SCM SHOWS CALLING A SCHEME PROGRAM FROM SNOBOL. POSSIBLY
+* EVEN MORE PERVERSE. THIS REQUIRES SPECIAL FUNCTIONS TO BE DEFINED
+* TO CREATE AND DESTROY THE SCHEME ENVIRONMENT.
+*
+* MOST TECTONICS ARE TAKEN CARE OF BY DYNAMIC AND WRAPPER.
+*
+* NOTE THOUGH, THAT SNOBOL4 IS PURELY INTERPRETIVE, AND SNOBOL4 CANNOT
+* BE CALLED FROM FORTRAN, C, OR COBOL. HOWEVER, PIPING CAN BE DONE FROM
+* THESE LANGUAGES.
+*
+* TRY LOADING FROM .SO
+* IF IT WORKS, WE CAN SKIP BUILDING
+*
+         LOAD('FOO(INTEGER)INTEGER)', './cbits.so')            :s(CDONE)
+*
+         TERMINAL = 'COMPILING'
+*
+* CREATE SOURCE FILE, PUT WRAPPERS INTO SAME FILE (THESE COULD BE
+* SEPARATE FILES, AND IF IT IS FORTRAN, WOULD HAVE TO BE)
+*
+         OUTPUT(.SRC, 10,, 'cbits.c')
+         WRAPPER_STARTFILE(.SRC)
+         WRAPPER_COBOL(.SRC)
+*
+* NEEDED HEADERS
+*
+         SRC =
+         SRC = '#include <stdio.h>'
+         SRC = '#include <stdlib.h>'
+         SRC = '#include <string.h>'
+         SRC =
+*
+* SET UP SCHEME
+*
+         SRC = '#define ___VERSION 406006'
+         SRC = '#include "gambit.h"'
+         SRC = '#define SCHEME_LINKER ____20_prog__'
+         SRC = '___BEGIN_C_LINKAGE'
+         SRC = 
++        'extern ___mod_or_lnk SCHEME_LINKER(___global_state_struct *);'
+         SRC = '___END_C_LINKAGE'
+         SRC = 'void test_gambit(char* str);'
+         SRC =
+*
+         SRC = 'void initscheme(void)'
+         SRC = '{'
+         SRC = '    ___setup_params_struct setup_params;'
+         SRC = '    ___setup_params_reset(&setup_params);'
+         SRC = '    setup_params.version = ___VERSION;'
+         SRC = '    setup_params.linker  = SCHEME_LINKER;'
+         SRC = '    ___setup(&setup_params);'
+         SRC = '}'
+         SRC =
+*
+         SRC = 'void finischeme(void)'
+         SRC = '{'
+         SRC = '    ___cleanup();'
+         SRC = '}'
+         SRC =
+*
+         SRC = 'int foo(int x)'
+         SRC = '{'
+         SRC = '    return x + 1;'
+         SRC = '}'
+         SRC =
+*
+         SRC = 'int foo2(int x, int y) { return x; }'
+         SRC = 'int foo3(int x, int y) { return y; }'
+*
+* FOO IS A C FUNCTION
+*
+         C_WRAPPER_PROTO('FOO(INTEGER)INTEGER', .SRC)
+         C_WRAPPER_PROTO('FOO2(INTEGER,INTEGER)INTEGER', .SRC)
+         C_WRAPPER_PROTO('FOO3(INTEGER,INTEGER)INTEGER', .SRC)
+*
+* SNOO, SNOO3 AND SNOO5 ARE FORTRAN
+*
+         FORTRAN_WRAPPER_PROTO('SNOO(INTEGER)INTEGER', .SRC)
+         FORTRAN_WRAPPER_PROTO('SNOO3(REAL)REAL', .SRC)
+         FORTRAN_WRAPPER_PROTO('SNOO5(STRING)STRING', .SRC, 5)
+*
+* COB_INIT INITIALIZES THE COBOL RUN-TIME, SAY IS COBOL
+*
+         C_WRAPPER_PROTO('COB_INIT(INTEGER,INTEGER)', .SRC)
+         COBOL_WRAPPER_PROTO('SAY(STRING,STRING)INTEGER', .SRC)
+*
+* INITSCHEME initializes the SCHEME run-time, TEST_GAMBIT is SCHEME
+*
+         C_WRAPPER_PROTO('INITSCHEME()', .SRC)
+         C_WRAPPER_PROTO('FINISCHEME()', .SRC)
+         SCHEME_WRAPPER_PROTO('TEST_GAMBIT(STRING)', .SRC)
+*
+         ENDFILE(10)
+         DETACH(.SRC)
+*
+         DYNAMIC_DEBUG = 1
+         COMPILE_SCHEME('test_gambit.scm')                     :F(ERROR)
+         COMPILE_COBOL('COO.CBL')                              :F(ERROR)
+         COMPILE_FORTRAN('SNOO.FTN')                           :F(ERROR)
+         COMPILE_DYNAMIC('cbits.c')                            :F(ERROR)
+*
+         LIBS = LIBS_COBOL() ' ' LIBS_FORTRAN() ' ' LIBS_SCHEME()
++                                                              :F(ERROR)
+         OBJECTS = 'cbits.o SNOO.o COO.o test_gambit.o'
+         L = LINK_DYNAMIC('./cbits', OBJECTS, LIBS)            :F(ERROR)
+         TERMINAL = L
+*
+* ERASE TEMPORARY FILES
+*
+*     WE DON'T NEED THE C BITS, OR THE OBJECT FILES ANYMORE.
+*     ALL WE REQUIRE IS THE CBITS.SO
+*
+         A = CRACK('cbits.c prog_.o ' OBJECTS, ' ')
+         SEQ(' DELETE(A[K]) ', .K)
+*
+* ERROR DOESN'T EXIST AS A LABEL, BUT THAT WILL END THE RUN WITH AN
+* ERROR MESSAGE.
+*
+* LOAD FUNCTIONS FROM CBITS.SO INTO CSNOBOL4
+*
+         LOAD('FOO(INTEGER)INTEGER',       './cbits.so')       :F(ERROR)
+CDONE    LOAD('SNOO(INTEGER)INTEGER',      './cbits.so')       :F(ERROR)
+         LOAD('FOO2(INTEGER,INTEGER)INTEGER', './cbits.so')    :F(ERROR)
+         LOAD('FOO3(INTEGER,INTEGER)INTEGER', './cbits.so')    :F(ERROR)
+         LOAD('FOO(INTEGER)INTEGER',       './cbits.so')       :F(ERROR)
+         LOAD('SNOO3(REAL)REAL',           './cbits.so')       :F(ERROR)
+         LOAD('SNOO5(STRING)STRING',       './cbits.so')       :F(ERROR)
+         LOAD('COB_INIT(INTEGER,INTEGER)', './cbits.so')       :F(ERROR)
+         LOAD('SAY(STRING,STRING)INTEGER', './cbits.so')       :F(ERROR)
+         LOAD('INITSCHEME()',              './cbits.so')       :F(ERROR)
+         LOAD('FINISCHEME()',              './cbits.so')       :F(ERROR)
+         LOAD('TEST_GAMBIT(STRING)',       './cbits.so')       :F(ERROR)
+*
+* TEST THE LOADED FUNCTIONS
+*
+         OUTPUT = 'C FUNCTION'
+*
+* SIMPLE FUNCTION
+*
+         OUTPUT = FOO(5)
+*
+         OUTPUT = 'FORTRAN FUNCTION'
+*
+* CSNOBOL4 REAL IS FORTRAN DOUBLE PRECISION (AT LEAST WITH A 64 BIT
+* IMPLEMENTATION, WHICH IS THE ONLY ONE I CARE ABOUT). CALL CONVENTIONS
+* ARE NOT C: ALL BY REFERENCE, STRINGS PASSED AS TWO PARAMETERS, AND
+* RETURNED STRING AS AN EXTRA PARAMETER. ONLY 1024 BYTES GET PASSED
+* ON A WRAPPER BASED CALL. STRING AS RETURN ADDS A LENGTH OF 1024
+* SO WE TRIM THE RETURNED STRING.
+*
+         OUTPUT = SNOO3(2.5)
+*
+* INTEGER, AND I/O FROM FORTRAN
+*
+         OUTPUT = SNOO(6)
+*
+* PASSING AND RETURNING A STRING
+*
+         OUTPUT = TRIM(SNOO5('GOODBYE'))
+*
+         OUTPUT = 'COBOL FUNCTION'
+         COB_INIT(0, 0)
+*
+* I/O FROM COBOL, AND LOADING AN EXTERNAL PROCEDURE FROM THE COBOL
+* FUNCTION.
+*
+         OUTPUT = SAY('HELLO ', 'WORLD ')
+*
+         OUTPUT = 'SCHEME FUNCTION'
+         INITSCHEME()
+*
+* CALL SCHEME, PASSING STRING.
+*
+         TEST_GAMBIT('WOW')
+*
+* SCHEME MUST BE DEINITIALIZED, OR CONSOLE I/O DOESN'T WORK PROPERLY.
+*
+         FINISCHEME()
+*
+         TERMINAL =
+         TERMINAL = 'ALL COMPLETE'
+*
+* ce: .msnobol4;
+*
+END START

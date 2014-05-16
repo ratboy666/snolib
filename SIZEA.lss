@@ -1,0 +1,96 @@
+<h1>SIZEA - Array size, first dimension</h1>
+
+[[SIZEA(A)]] returns the number of elements in array [[A]]. The number
+of elements in the first (leftmost) dimension is returned. [[ARRAY0]]
+is the array with no elements.
+
+Warning: this doesn't work with SPITBOL.
+
+The null string is assumed to be an array with no elements. Otherwise,
+if the datatype is not array, [[SIZEA()]] fails. The prototype is
+analyzed to determine the single size, or upper:lower, the number of
+elements is computed and returned.
+
+[[LOWA(A)]] returns the index of the first element of array [[A]].
+
+<a href="BRKREM.html">BRKREM</a><br>
+<a href="SWAP.html">SWAP</a>
+
+<<INCLUDES>>=
+-INCLUDE 'BRKREM.INC'
+-INCLUDE 'SWAP.INC'
+@
+
+<<SIZEA>>=
+         DEFINE('SIZEA(A)L,U')
+         DEFINE('LOWA(A)L,U')
+         ARRAY0 = ARRAY('0:-1')                             :(SIZEA_END)
+*
+LOWA     LOWA = IDENT(A) 0                                    :S(RETURN)
+         IDENT(DATATYPE(A), 'ARRAY')                         :F(FRETURN)
+         PROTOTYPE(A) (BRKREM(':,') . L) ((':' BRKREM(',') . U) | NULL)
+         IDENT(L)                                            :S(FRETURN)
+         LOWA = L
+         LOWA = IDENT(U) 1                                     :(RETURN)
+*
+SIZEA    SIZEA = IDENT(A) 0                                   :S(RETURN)
+         IDENT(DATATYPE(A), 'ARRAY')                         :F(FRETURN)
+         L =
+         U =
+         PROTOTYPE(A) (BRKREM(':,') . L) ((':' BRKREM(',') . U) | NULL)
+         IDENT(L)                                            :S(FRETURN)
+         U = IDENT(U) 1                                      :F(SIZEA_2)
+         SWAP(.L, .U)
+SIZEA_2  SIZEA = LT(U, L) 0                                   :S(RETURN)
+         SIZEA = U - L + 1                                     :(RETURN)
+*
+SIZEA_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "/usr/local/bin/snobol4" "-b" "$0" "$@"
+-INCLUDE 'SIZEA.INC'
+*
+         &CODE = 1
+         OUTPUT = 'SIZEA/LOWA ARRAY(10)'
+         OUTPUT = SIZEA(ARRAY(10))
+         OUTPUT = LOWA(ARRAY(10))
+         OUTPUT = 'SIZEA/LOWA NULL'
+         OUTPUT = SIZEA('')
+         OUTPUT = LOWA('')
+         OUTPUT = 'SIZEA/LOWA ARRAY(-10:10)'
+         OUTPUT = SIZEA(ARRAY('-10:10'))
+         OUTPUT = LOWA(ARRAY('-10:10'))
+         OUTPUT = 'SIZEA/LOWA ARRAY0'
+         OUTPUT = SIZEA(ARRAY0)
+         OUTPUT = LOWA(ARRAY0)
+         &CODE = 0
+END
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL SIZEA
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                 #####   ###  #######  #######     #                  *
+*                #     #   #        #   #          # #                 *
+*                #         #       #    #         #   #                *
+*                 #####    #     #      #####    #     #               *
+*                      #   #    #       #        #######               *
+*                #     #   #   #        #        #     #               *
+*                 #####   ###  #######  #######  #     #               *
+*                                                                      *
+* SIZEA                       SIZE OF ARRAY                            *
+*                                                                      *
+************************************************************************
+*
+* SIZEA.lss
+*
+<<SIZEA>>
+*
+* CE: .F.MSNOBOL4;
+@

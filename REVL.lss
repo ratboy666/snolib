@@ -1,0 +1,63 @@
+<h1>REVL - Reverse list</h1>
+
+[[REVL(L)]] returns the reverse of the list passed. Many recursive
+list algorithms “cons” the results and thus return the answer as
+a list that needs reversing.
+
+<h2>Uses</h2>
+<a href="LINK.html">LINK</a>
+
+<<INCLUDES>>=
+-INCLUDE 'LINK.INC'
+@
+
+<<REVL>>=
+         DEFINE('REVL(L)T')                                  :(REVL_END)
+*
+REVL     REVL = L
+         IDENT(DATATYPE(L), 'LINK')                           :F(RETURN)
+         L = NEXT(REVL)
+         NEXT(REVL) =
+REVL_1   IDENT(L)                                             :S(RETURN)
+         T = NEXT(L)
+         NEXT(L) = REVL
+         REVL = L
+         L = T                                                 :(REVL_1)
+*
+REVL_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'REVL.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL REVL
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                    ######   #######  #     #  #                      *
+*                    #     #  #        #     #  #                      *
+*                    #     #  #        #     #  #                      *
+*                    ######   #####    #     #  #                      *
+*                    #   #    #         #   #   #                      *
+*                    #    #   #          # #    #                      *
+*                    #     #  #######     #     #######                *
+*                                                                      *
+* REVL                      REVERSE LIST                               *
+*                                                                      *
+************************************************************************
+*
+* REVL.lss
+*
+<<REVL>>
+*
+* CE: .MSNOBOL4;
+@

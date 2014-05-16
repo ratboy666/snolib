@@ -1,0 +1,43 @@
+<h1>deseq</h1>
+
+Desequence a FORTRAN source deck. Keeps columns 1 through 72, and
+discards columns 73 and beyond. This removes sequence numbers from
+fixed format FORTRAN programs.
+
+<<deseq>>=
+         TERMINAL = 'DESEQ (SUN JUN 16 14:13:20 EDT 2013)'
+*
+         S = DUPL(' ', 72)
+*
+TOP      (INPUT S) LEN(72) . L                                   :F(END)
+         OUTPUT = TRIM(L)                                         :(TOP)
+*
+END START
+@
+
+<<>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-TITLE DESEQ
+START
+*
+************************************************************************
+*                                                                      *
+*             ######   #######   #####   #######   #####               *
+*             #     #  #        #     #  #        #     #              *
+*             #     #  #        #        #        #     #              *
+*             #     #  #####     #####   #####    #     #              *
+*             #     #  #              #  #        #   # #              *
+*             #     #  #        #     #  #        #    #               *
+*             ######   #######   #####   #######   #### #              *
+*                                                                      *
+* DESEQ             DESEQUENCE A SOURCE DECK (73-80)                   *
+*                                                                      *
+************************************************************************
+*
+* deseq.lss
+*
+<<deseq>>
+*
+* CE: .MSNOBOL4;
+@
