@@ -1,4 +1,3 @@
-////* #/usr/local/bin/snobol4 -bP100k
 # Modified to include ^, %, | as unary operators.
 # Modified to use module name as label prefix if LABEL= not used and
 # -m in effect.

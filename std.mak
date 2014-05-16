@@ -421,17 +421,17 @@ P2CC_CC=$(CC)
 # Convert html to executable -- use firefox
 # (could use lynx, links or w3m)
 
-.html:
-	rm -f $@
-	echo "#!/bin/bash" >$@
-	echo 't=`mktemp --suffix=.html`' >>$@
-	echo 'cat >$$t <<_END' >>$@
-	cat $< >>$@
-	echo '_END' >>$@
-	#echo 'lynx file:///$$t' >>$@
-	#echo 'rm $$t' >>$@
-	echo 'exo-open --launch WebBrowser file:///$$t' >>$@
-	chmod a+x $@
+##.html:
+##	rm -f $@
+##	echo "#!/bin/bash" >$@
+##	echo 't=`mktemp --suffix=.html`' >>$@
+##	echo 'cat >$$t <<_END' >>$@
+##	cat $< >>$@
+##	echo '_END' >>$@
+##	#echo 'lynx file:///$$t' >>$@
+##	#echo 'rm $$t' >>$@
+##	echo 'exo-open --launch WebBrowser file:///$$t' >>$@
+##	chmod a+x $@
 
 .bc:
 	rm -f $@

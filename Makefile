@@ -138,16 +138,16 @@ stangle0: bundle stangle
 	./bundle <stangle >stangle0
 	chmod +x stangle0
 
-sc0: bundle snocone
-	./bundle <snocone >sc0
-	chmod +x sc0
+snocone0: bundle snocone
+	./bundle <snocone >snocone0
+	chmod +x snocone0
 
 bootstrap:
 	sudo cp embed0 $(BINDIR)/embed
 	sudo cp ifs0 $(BINDIR)/ifs
 	sudo cp stangle0 $(BINDIR)/stangle
 	sudo cp sweave0 $(BINDIR)/sweave
-	sudo cp sc0 $(BINDIR)/snocone
+	sudo cp snocone0 $(BINDIR)/snocone
 	sudo cp ED4 $(BINDIR)/ED4
 	sudo cp g360 $(BINDIR)/g360
 
