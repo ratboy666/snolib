@@ -1,13 +1,13 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
--LINE 344 "ifs.lss"
 -TITLE IFS
+-LINE 344 "ifs.lss"
 START
 -LINE 61 "ifs.lss"
 -STITL CHARS
 -EJECT
--LINE 74 "CHARS.lss"
 *
+-LINE 86 "CHARS.lss"
 ************************************************************************
 *                                                                      *
 *              #####   #     #     #     ######    #####               *
@@ -25,7 +25,7 @@ START
 *                                                                      *
 ************************************************************************
 *
-* chars.lss
+* CHARS.lss
 *
 -LINE 10 "CHARS.lss"
 CHARS    CHARS_NUL = CHAR( 0)
@@ -62,21 +62,18 @@ CHARS    CHARS_NUL = CHAR( 0)
          CHARS_US  = CHAR(31)
          CHARS_SP  = CHAR(32)
          CHARS_DEL = CHAR(127)
--LINE 51 "CHARS.lss"
+-LINE 55 "CHARS.lss"
 *
-***      CHARS_CR = CHARS_NL
-*
-         CHARS_TAB = CHARS_HT
+         CHARS_TAB   = CHARS_HT
          CHARS_SPACE = CHARS_SP
-*
-         CODE('CHARS')
-*
+         CHARS_FF    = CHARS_NP
+         CHARS_LF    = CHARS_NL
 *
 * CE: .MSNOBOL4;
 -STITL HOST
 -EJECT
--LINE 144 "HOST.lss"
 *
+-LINE 130 "HOST.lss"
 ************************************************************************
 *                                                                      *
 *                 #     #  #######   #####   #######                   *
@@ -91,11 +88,11 @@ CHARS    CHARS_NUL = CHAR( 0)
 *                                                                      *
 ************************************************************************
 *
-* host.lss
+* HOST.lss
 *
 -LINE 6 "HOST.lss"
 HOST
--LINE 13 "HOST.lss"
+-LINE 10 "HOST.lss"
 *
 * MACRO SPITBOL
 *
@@ -115,17 +112,13 @@ HOST
 * RETURNS ENVIRONMENT VARIABLE, OR FAILS
          HOST_GETENV = 4
 *
--LINE 51 "HOST.lss"
-*
 * DEFAULT SNOLIB DIR (-INCLUDE, LOAD())
          HOST_SNOLIB_DIR = 2200
--LINE 62 "HOST.lss"
 *
 * C COMPILER USED TO BUILD CSNOBOL4
          HOST_CC = 2202
 * C OPTIMIZER FLAGS USED TO BUILD CSNOBOL4
          HOST_COPT = 2203
--LINE 82 "HOST.lss"
 *
 * DYNAMIC LOADABLE LIBRARY EXTENSION
          HOST_DL_EXT = 2208
@@ -175,11 +168,11 @@ HOST
 HOST_END
 *
 * CE: .MSNOBOL4;
--LINE 13 "CRACK.lss"
+-LINE 16 "CRACK.lss"
 -STITL COUNT
 -EJECT
--LINE 30 "COUNT.lss"
 *
+-LINE 30 "COUNT.lss"
 ************************************************************************
 *                                                                      *
 *               #####   #######  #     #  #     #  #######             *
@@ -197,7 +190,7 @@ HOST_END
 *                                                                      *
 ************************************************************************
 *
-* count.lss
+* COUNT.lss
 *
 -LINE 6 "COUNT.lss"
          DEFINE('COUNT(S1,S2)FIRST,REST,P')                 :(COUNT_END)
@@ -212,8 +205,8 @@ COUNT_END
 *
 * CE: .MSNOBOL4;
 -STITL CRACK
--LINE 44 "CRACK.lss"
 -EJECT
+-LINE 61 "CRACK.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -229,27 +222,77 @@ COUNT_END
 *                                                                      *
 ************************************************************************
 *
-* crack.lss
+* CRACK.lss
 *
--LINE 17 "CRACK.lss"
-         DEFINE('CRACK(S,B)I,PAT')                          :(CRACK_END)
+-LINE 20 "CRACK.lss"
+         DEFINE('CRACK_1(S)P')
+         DEFINE('CRACK(S,B,F)I,PAT,N')
+         DEFINE('CRACK_4(S)')
+         OPSYN('%', 'CRACK_1', 1)                           :(CRACK_END)
 *
-CRACK    IDENT(B, NULL)                                      :S(CRACK_1)
+CRACK_1  P = IDENT(P) ','
+         CRACK_1 = CRACK(S, P)                                 :(RETURN)
+*
+CRACK    F = IDENT(F) 'CRACK_4'
+         IDENT(B, NULL)                                      :S(CRACK_3)
          S RTAB(1) B ABORT | REM . S = S B
-         CRACK = ARRAY(COUNT(S, B))
+         N = COUNT(S, B)
+         EQ(N, 0)                                             :S(RETURN)
+         CRACK = ARRAY(N)
          PAT = BREAK(B) . *CRACK<I> LEN(1)
 CRACK_2  I = I + 1
-         S PAT =                                    :S(CRACK_2)F(RETURN)
-CRACK_1  CRACK = ARRAY(SIZE(S))
+         S PAT =                                              :F(RETURN)
+         CRACK<I> = APPLY(F, CRACK<I>)             :S(CRACK_2)F(FRETURN)
+CRACK_3  N = SIZE(S)
+         EQ(N, 0)                                             :S(RETURN)
+         CRACK = ARRAY(N)
          PAT = LEN(1) . *CRACK<I>                             :(CRACK_2)
+*
+CRACK_4  CRACK_4 = S                                           :(RETURN)
 *
 CRACK_END
 *
 * CE: .MSNOBOL4;
 -LINE 20 "FASTBAL.lss"
+-LINE 24 "UNIQUE.lss"
+-STITL REPL
+-EJECT
+*
+-LINE 38 "REPL.lss"
+************************************************************************
+*                                                                      *
+*                   ######   #######  ######   #                       *
+*                   #     #  #        #     #  #                       *
+*                   #     #  #        #     #  #                       *
+*                   ######   #####    ######   #                       *
+*                   #   #    #        #        #                       *
+*                   #    #   #        #        #                       *
+*                   #     #  #######  #        #######                 *
+*                                                                      *
+* REPL                   REPLACE STRINGS                               *
+*                                                                      *
+************************************************************************
+*
+* REPL.lss
+*
+-LINE 11 "REPL.lss"
+         DEFINE('REPL(S1,S2,S3)C,T,FINDC')                   :(REPL_END)
+*
+REPL     S2 LEN(1) . C =                                     :F(FRETURN)
+         FINDC = BREAK(C) . T LEN(1)
+         S2 = POS(0) S2
+REPL_1   S1 FINDC =                                           :F(REPL_2)
+         S1 S2 =                                              :F(REPL_3)
+         REPL = REPL T S3                                      :(REPL_1)
+REPL_3   REPL = REPL T C                                       :(REPL_1)
+REPL_2   REPL = REPL S1                                        :(RETURN)
+*
+REPL_END
+*
+* CE: .MSNOBOL4;
 -STITL UNIQUE
 -EJECT
--LINE 38 "UNIQUE.lss"
+-LINE 70 "UNIQUE.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -265,21 +308,28 @@ CRACK_END
 *                                                                      *
 ************************************************************************
 *
-* unique.lss
+* UNIQUE.lss
 *
--LINE 16 "UNIQUE.lss"
-         DEFINE("UNIQUE(I)")                               :(UNIQUE_END)
+-LINE 28 "UNIQUE.lss"
+         DEFINE('MAKE_UNIQUE(SUF)S')
+         MAKE_UNIQUE()                                     :(UNIQUE_END)
 *
-UNIQUE   UNIQUE_ = IDENT(I) UNIQUE_ + 1                      :F(UNIQUEC)
-         UNIQUE = "U" UNIQUE_ "_"                              :(RETURN)
-UNIQUEC  $("U" UNIQUE_ "_") = ?(UNIQUE_ = GT(UNIQUE_,0) UNIQUE_ - 1)
-+                                                   :S(UNIQUEC)F(RETURN)
+MAKE_UNIQUE
+         S =
++ 'UNIQUESUF  UNIQUESUF_ = IDENT(I) UNIQUESUF_ + 1 :F(UNIQUECSUF);'
++ '           UNIQUESUF = "USUF" UNIQUESUF_ "_"         :(RETURN);'
++ 'UNIQUECSUF $("USUF" UNIQUESUF_ "_") = '
++ '           ?(UNIQUESUF_ = GT(UNIQUESUF_,0) UNIQUESUF_ - 1)'
++ '                                       :S(UNIQUECSUF)F(RETURN);'
+         CODE(REPL(S, 'SUF', SUF))
+         DEFINE('UNIQUE' SUF '(I)')                            :(RETURN)
+*
 UNIQUE_END
 *
 * CE: .MSNOBOL4;
 -STITL FASTBAL
--LINE 97 "FASTBAL.lss"
 -EJECT
+-LINE 97 "FASTBAL.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -295,7 +345,7 @@ UNIQUE_END
 *                                                                      *
 ************************************************************************
 *
-* fastbal.lss
+* FASTBAL.lss
 *
 -LINE 24 "FASTBAL.lss"
          DEFINE('FASTBAL(PARENS,QTS,S)NAME,IBAL,SPCHARS,ELEM'

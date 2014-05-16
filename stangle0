@@ -4,8 +4,8 @@
 START
 -STITL HOST
 -EJECT
--LINE 144 "HOST.lss"
 *
+-LINE 130 "HOST.lss"
 ************************************************************************
 *                                                                      *
 *                 #     #  #######   #####   #######                   *
@@ -20,11 +20,11 @@ START
 *                                                                      *
 ************************************************************************
 *
-* host.lss
+* HOST.lss
 *
 -LINE 6 "HOST.lss"
 HOST
--LINE 13 "HOST.lss"
+-LINE 10 "HOST.lss"
 *
 * MACRO SPITBOL
 *
@@ -44,17 +44,13 @@ HOST
 * RETURNS ENVIRONMENT VARIABLE, OR FAILS
          HOST_GETENV = 4
 *
--LINE 51 "HOST.lss"
-*
 * DEFAULT SNOLIB DIR (-INCLUDE, LOAD())
          HOST_SNOLIB_DIR = 2200
--LINE 62 "HOST.lss"
 *
 * C COMPILER USED TO BUILD CSNOBOL4
          HOST_CC = 2202
 * C OPTIMIZER FLAGS USED TO BUILD CSNOBOL4
          HOST_COPT = 2203
--LINE 82 "HOST.lss"
 *
 * DYNAMIC LOADABLE LIBRARY EXTENSION
          HOST_DL_EXT = 2208
@@ -118,6 +114,8 @@ HOST_END
 * STANGLE         TANGLE LSS FILE TO SOURCE CODE                       *
 *                                                                      *
 ************************************************************************
+*
+* FIXME: LINE TRACKING IS OFF AGAIN
 *
 * THIS IS THE MOST PRIMITIVE OF MY PROGRAMMING UTILITIES. IT TANGLES
 * THE INPUT FILE INTO SOURCE CODE.

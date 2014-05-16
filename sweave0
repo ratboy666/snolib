@@ -20,7 +20,7 @@ START
 *                                                                      *
 ************************************************************************
 *
-* repl.lss
+* REPL.lss
 *
 -LINE 11 "REPL.lss"
          DEFINE('REPL(S1,S2,S3)C,T,FINDC')                   :(REPL_END)
@@ -57,7 +57,7 @@ REPL_END
 *                                                                      *
 ************************************************************************
 *
-* bq.lss
+* BQ.lss
 *
 -LINE 15 "BQ.lss"
          DEFINE('BQ(COMMAND,OFS)DDTF')
@@ -66,19 +66,19 @@ REPL_END
 -LINE 29 "BQ.lss"
 BQ       DDTF = DDT_ACTIVE
          NE(DDTF) DDT_SUSPEND()
-         BQ = BQ2(COMMAND, OFS)                                  :F(BQX)
+         BQ = BQ2(COMMAND, OFS)                                  :F(BQ3)
          NE(DDTF) DDT_RESUME()                                 :(RETURN)
-BQX      NE(DDTF) DDT_RESUME()                                :(FRETURN)
+BQ3      NE(DDTF) DDT_RESUME()                                :(FRETURN)
 -LINE 41 "BQ.lss"
 BQ2      UNIT = IO_FINDUNIT()                                :F(FRETURN)
          INPUT(.X, UNIT,, '|' COMMAND)                       :F(FRETURN)
          OFS = IDENT(OFS) ' '
-         BQ2 = X                                                 :F(BQF)
-BQL      BQ2 = BQ2 OFS X                                         :S(BQL)
+         BQ2 = X                                                 :S(BQ4)
+         ENDFILE(UNIT)
+         DETACH(.X)                                           :(FRETURN)
+BQ4      BQ2 = BQ2 OFS X                                         :S(BQ4)
          ENDFILE(UNIT)
          DETACH(.X)                                            :(RETURN)
-BQF      ENDFILE(UNIT)
-         DETACH(.X)                                           :(FRETURN)
 *
 BQ_END
 *
@@ -86,7 +86,7 @@ BQ_END
 -STITL HOST
 -EJECT
 *
--LINE 144 "HOST.lss"
+-LINE 130 "HOST.lss"
 ************************************************************************
 *                                                                      *
 *                 #     #  #######   #####   #######                   *
@@ -101,11 +101,11 @@ BQ_END
 *                                                                      *
 ************************************************************************
 *
-* host.lss
+* HOST.lss
 *
 -LINE 6 "HOST.lss"
 HOST
--LINE 13 "HOST.lss"
+-LINE 10 "HOST.lss"
 *
 * MACRO SPITBOL
 *
@@ -125,17 +125,13 @@ HOST
 * RETURNS ENVIRONMENT VARIABLE, OR FAILS
          HOST_GETENV = 4
 *
--LINE 51 "HOST.lss"
-*
 * DEFAULT SNOLIB DIR (-INCLUDE, LOAD())
          HOST_SNOLIB_DIR = 2200
--LINE 62 "HOST.lss"
 *
 * C COMPILER USED TO BUILD CSNOBOL4
          HOST_CC = 2202
 * C OPTIMIZER FLAGS USED TO BUILD CSNOBOL4
          HOST_COPT = 2203
--LINE 82 "HOST.lss"
 *
 * DYNAMIC LOADABLE LIBRARY EXTENSION
          HOST_DL_EXT = 2208
@@ -185,7 +181,7 @@ HOST
 HOST_END
 *
 * CE: .MSNOBOL4;
--LINE 13 "HTMLESC.lss"
+-LINE 14 "HTMLESC.lss"
 -STITL SDIFF
 -EJECT
 *
@@ -204,7 +200,7 @@ HOST_END
 *                                                                      *
 ************************************************************************
 *
-* sdiff.lss
+* SDIFF.lss
 *
 -LINE 8 "SDIFF.lss"
          DEFINE('SDIFF(S1,S2)')                             :(SDIFF_END)
@@ -236,7 +232,7 @@ SDIFF_END
 *                                                                      *
 ************************************************************************
 *
-* blend.lss
+* BLEND.lss
 *
 -LINE 8 "BLEND.lss"
          DEFINE('BLEND(S1,S2)T1,T2,ABC,XYZ,L1,L2')
@@ -278,7 +274,7 @@ BLEND_END
 *                                                                      *
 ************************************************************************
 *
-* hex.lss
+* HEX.lss
 *
 -LINE 17 "HEX.lss"
          DEFINE('HEX(S)')
@@ -293,10 +289,121 @@ HEX      HEX = BLEND(REPLACE(S, &ALPHABET, HEX_1ST),
 HEX_END
 *
 * CE: .MSNOBOL4;
+-LINE 13 "CH.lss"
+-STITL LOGIC
+-EJECT
+*
+-LINE 74 "LOGIC.lss"
+************************************************************************
+*                                                                      *
+*             #        #######   #####   ###   #####                   *
+*             #        #     #  #     #   #   #     #                  *
+*             #        #     #  #         #   #                        *
+*             #        #     #  #  ####   #   #                        *
+*             #        #     #  #     #   #   #                        *
+*             #        #     #  #     #   #   #     #                  *
+*             #######  #######   #####   ###   #####                   *
+*                                                                      *
+* LOGIC       CATSPAW SPITBOL COMPATIBLE LOGIC() FUNCTIONS             *
+*                                                                      *
+* PHIL BUDNE <PHIL@ULTIMATE.COM>                                       *
+* JANUARY 21, 2002                                                     *
+*                                                                      *
+************************************************************************
+*
+* LOGIC.lss
+*
+-LINE 6 "LOGIC.lss"
+*
+* NOTE! BASE ARGUMENT MUST BE PASSED A EXPLICIT NULL STRING FOR DEFAULT
+*
+* INTEGER/INTEGER, STRING/INTEGER, STRING/STRING
+*
+         LOAD('LOGIC(INTEGER,,)')
+*
+         DEFINE('NOT(ARG)')
+         DEFINE('AND(ARG1,ARG2)')
+         DEFINE('OR(ARG1,ARG2)')
+         DEFINE('XOR(ARG1,ARG2)')
+         DEFINE('NAND(ARG1,ARG2)')
+         DEFINE('NOR(ARG1,ARG2)')
+         DEFINE('UPLUS(ARG1,ARG2)')
+         DEFINE('UMINUS(ARG1,ARG2)')
+         DEFINE('UMUL(ARG1,ARG2)')
+         DEFINE('UDIV(ARG1,ARG2)')
+         DEFINE('SHL(ARG1,ARG2)')
+         DEFINE('SHR(ARG1,ARG2)')
+         DEFINE('SAR(ARG1,ARG2)')
+         DEFINE('ROL(ARG1,ARG2)')
+         DEFINE('ROR(ARG1,ARG2)')
+         DEFINE('HI(ARG)')
+         DEFINE('IH(ARG)')
+         DEFINE('DIB(ARG,BASE)')
+         DEFINE('IDB(ARG,BASE)')                            :(LOGIC_END)
+*
+NOT      NOT    = LOGIC( 1, ARG)                    :S(RETURN)F(FRETURN)
+AND      AND    = LOGIC( 2, ARG1, ARG2)             :S(RETURN)F(FRETURN)
+OR       OR     = LOGIC( 3, ARG1, ARG2)             :S(RETURN)F(FRETURN)
+XOR      XOR    = LOGIC( 4, ARG1, ARG2)             :S(RETURN)F(FRETURN)
+NAND     NAND   = LOGIC( 5, ARG1, ARG2)             :S(RETURN)F(FRETURN)
+NOR      NOR    = LOGIC( 6, ARG1, ARG2)             :S(RETURN)F(FRETURN)
+UPLUS    UPLUS  = LOGIC( 7, ARG1, ARG2)             :S(RETURN)F(FRETURN)
+UMINUS   UMINUS = LOGIC( 8, ARG1, ARG2)             :S(RETURN)F(FRETURN)
+UMUL     UMUL   = LOGIC( 9, ARG1, ARG2)             :S(RETURN)F(FRETURN)
+UDIV     UDIV   = LOGIC(10, ARG1, ARG2)             :S(RETURN)F(FRETURN)
+SHL      SHL    = LOGIC(11, ARG1, ARG2)             :S(RETURN)F(FRETURN)
+SHR      SHR    = LOGIC(12, ARG1, ARG2)             :S(RETURN)F(FRETURN)
+SAR      SAR    = LOGIC(13, ARG1, ARG2)             :S(RETURN)F(FRETURN)
+ROL      ROL    = LOGIC(14, ARG1, ARG2)             :S(RETURN)F(FRETURN)
+ROR      ROR    = LOGIC(15, ARG1, ARG2)             :S(RETURN)F(FRETURN)
+HI       HI     = LOGIC(16, CONVERT(ARG, 'STRING'), '')
++                                                   :S(RETURN)F(FRETURN)
+IH       IH     = LOGIC(17, CONVERT(ARG, 'INTEGER'), '')
++                                                   :S(RETURN)F(FRETURN)
+DIB      DIB    = LOGIC(16, CONVERT(ARG, 'STRING'), BASE)
++                                                   :S(RETURN)F(FRETURN)
+IDB      IDB    = LOGIC(17, CONVERT(ARG, 'INTEGER'), BASE)
++                                                   :S(RETURN)F(FRETURN)
+*
+LOGIC_END
+         CODE('LOGIC')
+*
+* CE: .MSNOBOL4;
+-STITL CH
+-EJECT
+-LINE 41 "CH.lss"
+*
+************************************************************************
+*                                                                      *
+*                            #####   #     #                           *
+*                           #     #  #     #                           *
+*                           #        #     #                           *
+*                           #        #######                           *
+*                           #        #     #                           *
+*                           #     #  #     #                           *
+*                            #####   #     #                           *
+*                                                                      *
+* CH                         HEX TO STRING                             *
+*                                                                      *
+************************************************************************
+*
+* CH.lss
+*
+-LINE 17 "CH.lss"
+         DEFINE('CH(HEX)T,C,N')                                :(CH_END)
+*
+CH       HEX LEN(2) . T =                                     :F(RETURN)
+         C = HI(T)
+         &ALPHABET LEN(C) LEN(1) . C
+         CH = CH C                                                 :(CH)
+*
+CH_END
+*
+* CE: .MSNOBOL4;
 -STITL CHARS
 -EJECT
 *
--LINE 74 "CHARS.lss"
+-LINE 86 "CHARS.lss"
 ************************************************************************
 *                                                                      *
 *              #####   #     #     #     ######    #####               *
@@ -314,7 +421,7 @@ HEX_END
 *                                                                      *
 ************************************************************************
 *
-* chars.lss
+* CHARS.lss
 *
 -LINE 10 "CHARS.lss"
 CHARS    CHARS_NUL = CHAR( 0)
@@ -351,20 +458,17 @@ CHARS    CHARS_NUL = CHAR( 0)
          CHARS_US  = CHAR(31)
          CHARS_SP  = CHAR(32)
          CHARS_DEL = CHAR(127)
--LINE 51 "CHARS.lss"
+-LINE 55 "CHARS.lss"
 *
-***      CHARS_CR = CHARS_NL
-*
-         CHARS_TAB = CHARS_HT
+         CHARS_TAB   = CHARS_HT
          CHARS_SPACE = CHARS_SP
-*
-         CODE('CHARS')
-*
+         CHARS_FF    = CHARS_NP
+         CHARS_LF    = CHARS_NL
 *
 * CE: .MSNOBOL4;
 -STITL HTMLESC
 -EJECT
--LINE 92 "HTMLESC.lss"
+-LINE 107 "HTMLESC.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -380,9 +484,9 @@ CHARS    CHARS_NUL = CHAR( 0)
 *                                                                      *
 ************************************************************************
 *
-* htmlesc.lss
+* HTMLESC.lss
 *
--LINE 37 "HTMLESC.lss"
+-LINE 40 "HTMLESC.lss"
          DEFINE('HTML_ESCAPE(S)')                     :(END_HTML_ESCAPE)
 *
 HTML_ESCAPE
@@ -395,7 +499,7 @@ HTML_ESCAPE
 *
 END_HTML_ESCAPE
 *
--LINE 53 "HTMLESC.lss"
+-LINE 56 "HTMLESC.lss"
          DEFINE('JS_ESCAPE(S)')                         :(END_JS_ESCAPE)
 *
 JS_ESCAPE
@@ -408,20 +512,107 @@ JS_ESCAPE
 *
 END_JS_ESCAPE
 *
--LINE 73 "HTMLESC.lss"
+-LINE 76 "HTMLESC.lss"
          DEFINE('URL_ESCAPE(S)L,C,R')
-         URL_BAD = SDIFF(&ALPHABET, &UCASE &LCASE &DIGITS '_-')
+         DEFINE('URL_DECODE(S)L,C,R')
+         URL_BAD = SDIFF(&ALPHABET, &UCASE &LCASE &DIGITS '_-~.')
+         URL_HEX = ANY("0123456789abcdefABCDEF")
 +                                                      :(END_URL_ESCAPE)
 *
+URL_DECODE_2
+         S = R
+URL_DECODE
+         C =
+         S BREAK("+%") . L LEN(1) . C REM . R
+         URL_DECODE = IDENT(C) URL_DECODE S                   :S(RETURN)
+         URL_DECODE = IDENT(C, '+') URL_DECODE L ' '    :S(URL_DECODE_2)
+         URL_DECODE = URL_DECODE L
+         R (URL_HEX URL_HEX) . C =                      :F(URL_DECODE_2)
+         URL_DECODE = URL_DECODE CH(C)                   :(URL_DECODE_2)
+*
 URL_ESCAPE
-         URL_ESCAPE =
-URLESC2  S BREAK(URL_BAD) . L LEN(1) . C REM . R             :F(URLESC3)
+         S BREAK(URL_BAD) . L LEN(1) . C REM . R             :F(URLESC2)
          URL_ESCAPE = IDENT(C, ' ') URL_ESCAPE L '+'
          URL_ESCAPE = DIFFER(C, ' ') URL_ESCAPE L '%' HEX(C)
-         S = R                                                :(URLESC2)
-URLESC3  URL_ESCAPE = URL_ESCAPE S                             :(RETURN)
+         S = R                                             :(URL_ESCAPE)
+URLESC2  URL_ESCAPE = URL_ESCAPE S                             :(RETURN)
 *
 END_URL_ESCAPE
+*
+* CE: .MSNOBOL4;
+-LINE 19 "BALX.lss"
+-LINE 24 "UNIQUE.lss"
+-STITL UNIQUE
+-EJECT
+-LINE 70 "UNIQUE.lss"
+*
+************************************************************************
+*                                                                      *
+*           #     #  #     #  ###   #####   #     #  #######           *
+*           #     #  ##    #   #   #     #  #     #  #                 *
+*           #     #  # #   #   #   #     #  #     #  #                 *
+*           #     #  #  #  #   #   #     #  #     #  #####             *
+*           #     #  #   # #   #   #   # #  #     #  #                 *
+*           #     #  #    ##   #   #    #   #     #  #                 *
+*            #####   #     #  ###   #### #   #####   #######           *
+*                                                                      *
+* UNIQUE                 GENERATE UNIQUE NAME                          *
+*                                                                      *
+************************************************************************
+*
+* UNIQUE.lss
+*
+-LINE 28 "UNIQUE.lss"
+         DEFINE('MAKE_UNIQUE(SUF)S')
+         MAKE_UNIQUE()                                     :(UNIQUE_END)
+*
+MAKE_UNIQUE
+         S =
++ 'UNIQUESUF  UNIQUESUF_ = IDENT(I) UNIQUESUF_ + 1 :F(UNIQUECSUF);'
++ '           UNIQUESUF = "USUF" UNIQUESUF_ "_"         :(RETURN);'
++ 'UNIQUECSUF $("USUF" UNIQUESUF_ "_") = '
++ '           ?(UNIQUESUF_ = GT(UNIQUESUF_,0) UNIQUESUF_ - 1)'
++ '                                       :S(UNIQUECSUF)F(RETURN);'
+         CODE(REPL(S, 'SUF', SUF))
+         DEFINE('UNIQUE' SUF '(I)')                            :(RETURN)
+*
+UNIQUE_END
+*
+* CE: .MSNOBOL4;
+-STITL BALX
+-EJECT
+-LINE 51 "BALX.lss"
+*
+************************************************************************
+*                                                                      *
+*                  ######      #     #        #     #                  *
+*                  #     #    # #    #         #   #                   *
+*                  #     #   #   #   #          # #                    *
+*                  ######   #     #  #           #                     *
+*                  #     #  #######  #          # #                    *
+*                  #     #  #     #  #         #   #                   *
+*                  ######   #     #  #######  #     #                  *
+*                                                                      *
+* BALX                      BAL EXTENDED                               *
+*                                                                      *
+************************************************************************
+*
+* BALX.lss
+*
+-LINE 23 "BALX.lss"
+         DEFINE('BALX(PARENS,QTS)Q,GBAL,NAME,STAR,LP,RP')    :(BALX_END)
+*
+BALX     NAME = UNIQUE()
+         STAR = CONVERT(NAME, 'EXPRESSION')
+         GBAL = NOTANY(PARENS QTS)
+BALX_1   QTS LEN(1) . Q =                                     :F(BALX_2)
+         GBAL = Q BREAK(Q) Q | GBAL                            :(BALX_1)
+BALX_2   PARENS LEN(1) . LP  RTAB(1) . PARENS  LEN(1) . RP    :F(BALX_3)
+         GBAL = LP  (STAR | NULL) RP  |  GBAL                  :(BALX_2)
+BALX_3   BALX = GBAL ARBNO(GBAL)
+         $NAME = BALX                                          :(RETURN)
+*
+BALX_END
 *
 * CE: .MSNOBOL4;
 *
@@ -467,6 +658,15 @@ NONAME   BL = ' ' | CHARS_TAB
          L_PAT = POS(0) ('#line' | '-LINE' | '-line' '%line' | '%LINE')
 +           BL OPT_WS SPAN(&DIGITS) . N
 +           ((OPT_WS '"' BREAK('"') . F '"') | NULL)
+*
+         DELR = TABLE()
+         DELR<'('> = ')'
+         DELR<'<'> = '>'
+         OPTWS = SPAN(' ' CHAR(9)) | ''
+         BEX = BALX('(<[]>)', "'" '"')
+         GB = ANY('(<') $ DELL BEX *DELR<DELL>
+         GC = OPTWS (ANY('SFsf') | '') OPTWS GB
+         GP = (':' GC (GC | '') OPTWS RPOS(0)) . G
 *
 * FONT DEFINITIONS -- THESE TWO WILL BE AVAILABLE ON ALMOST ANY
 * BROWSER
@@ -561,11 +761,17 @@ CODE_CHUNK
 CLOOP    L = TRIM(INPUT)                                      :F(CLOSE2)
          L POS(0) '@' RPOS(0)                                 :S(CLOOP3)
          L REF_PAT = '<b>&laquo;' CHUNK_NAME '&raquo;</b>'       :S(CL2)
+* FORMAT GOTO FIELD
+         G =
+         L GP =
          L = HTML_ESCAPE(L)
+         G = '<b>' HTML_ESCAPE(VDIFFER(G)) '</b>'
+         L = L G
+         G =
 * SPECIAL SNOBOL4/SNOCONE HANDLING. IF THE FIRST CHARACTER IS '*' OR
-* '#', BOLD THE LINE.
-CL2      L FENCE ('*' | '#')                                     :F(CL3)
-         L = '<b>' L '</b>'
+* '#', ';', '|' OR '!' FORMAT AS COMMENT.
+CL2      L FENCE ANY('*#;|!')                                     :F(CL3)
+         L = '<font color="#818181"><i>' L '</i></font>'
 CL3      L L_PAT                                               :S(CLOOP)
          OUTPUT = L                                             :(CLOOP)
 CLOOP3   OUTPUT = '<b>@</b>'

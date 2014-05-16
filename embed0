@@ -1,13 +1,13 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
--LINE 116 "embed.lss"
 TITLE EMBED
+-LINE 116 "embed.lss"
 START
 -LINE 55 "embed.lss"
 -STITL CHARS
 -EJECT
--LINE 74 "CHARS.lss"
 *
+-LINE 86 "CHARS.lss"
 ************************************************************************
 *                                                                      *
 *              #####   #     #     #     ######    #####               *
@@ -25,7 +25,7 @@ START
 *                                                                      *
 ************************************************************************
 *
-* chars.lss
+* CHARS.lss
 *
 -LINE 10 "CHARS.lss"
 CHARS    CHARS_NUL = CHAR( 0)
@@ -62,22 +62,19 @@ CHARS    CHARS_NUL = CHAR( 0)
          CHARS_US  = CHAR(31)
          CHARS_SP  = CHAR(32)
          CHARS_DEL = CHAR(127)
--LINE 51 "CHARS.lss"
+-LINE 55 "CHARS.lss"
 *
-***      CHARS_CR = CHARS_NL
-*
-         CHARS_TAB = CHARS_HT
+         CHARS_TAB   = CHARS_HT
          CHARS_SPACE = CHARS_SP
-*
-         CODE('CHARS')
-*
+         CHARS_FF    = CHARS_NP
+         CHARS_LF    = CHARS_NL
 *
 * CE: .MSNOBOL4;
 -LINE 12 "SLOAD.lss"
 -STITL HOST
 -EJECT
--LINE 144 "HOST.lss"
 *
+-LINE 130 "HOST.lss"
 ************************************************************************
 *                                                                      *
 *                 #     #  #######   #####   #######                   *
@@ -92,11 +89,11 @@ CHARS    CHARS_NUL = CHAR( 0)
 *                                                                      *
 ************************************************************************
 *
-* host.lss
+* HOST.lss
 *
 -LINE 6 "HOST.lss"
 HOST
--LINE 13 "HOST.lss"
+-LINE 10 "HOST.lss"
 *
 * MACRO SPITBOL
 *
@@ -116,17 +113,13 @@ HOST
 * RETURNS ENVIRONMENT VARIABLE, OR FAILS
          HOST_GETENV = 4
 *
--LINE 51 "HOST.lss"
-*
 * DEFAULT SNOLIB DIR (-INCLUDE, LOAD())
          HOST_SNOLIB_DIR = 2200
--LINE 62 "HOST.lss"
 *
 * C COMPILER USED TO BUILD CSNOBOL4
          HOST_CC = 2202
 * C OPTIMIZER FLAGS USED TO BUILD CSNOBOL4
          HOST_COPT = 2203
--LINE 82 "HOST.lss"
 *
 * DYNAMIC LOADABLE LIBRARY EXTENSION
          HOST_DL_EXT = 2208
@@ -176,11 +169,11 @@ HOST
 HOST_END
 *
 * CE: .MSNOBOL4;
--LINE 13 "CRACK.lss"
+-LINE 16 "CRACK.lss"
 -STITL COUNT
 -EJECT
--LINE 30 "COUNT.lss"
 *
+-LINE 30 "COUNT.lss"
 ************************************************************************
 *                                                                      *
 *               #####   #######  #     #  #     #  #######             *
@@ -198,7 +191,7 @@ HOST_END
 *                                                                      *
 ************************************************************************
 *
-* count.lss
+* COUNT.lss
 *
 -LINE 6 "COUNT.lss"
          DEFINE('COUNT(S1,S2)FIRST,REST,P')                 :(COUNT_END)
@@ -213,8 +206,8 @@ COUNT_END
 *
 * CE: .MSNOBOL4;
 -STITL CRACK
--LINE 44 "CRACK.lss"
 -EJECT
+-LINE 61 "CRACK.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -230,27 +223,41 @@ COUNT_END
 *                                                                      *
 ************************************************************************
 *
-* crack.lss
+* CRACK.lss
 *
--LINE 17 "CRACK.lss"
-         DEFINE('CRACK(S,B)I,PAT')                          :(CRACK_END)
+-LINE 20 "CRACK.lss"
+         DEFINE('CRACK_1(S)P')
+         DEFINE('CRACK(S,B,F)I,PAT,N')
+         DEFINE('CRACK_4(S)')
+         OPSYN('%', 'CRACK_1', 1)                           :(CRACK_END)
 *
-CRACK    IDENT(B, NULL)                                      :S(CRACK_1)
+CRACK_1  P = IDENT(P) ','
+         CRACK_1 = CRACK(S, P)                                 :(RETURN)
+*
+CRACK    F = IDENT(F) 'CRACK_4'
+         IDENT(B, NULL)                                      :S(CRACK_3)
          S RTAB(1) B ABORT | REM . S = S B
-         CRACK = ARRAY(COUNT(S, B))
+         N = COUNT(S, B)
+         EQ(N, 0)                                             :S(RETURN)
+         CRACK = ARRAY(N)
          PAT = BREAK(B) . *CRACK<I> LEN(1)
 CRACK_2  I = I + 1
-         S PAT =                                    :S(CRACK_2)F(RETURN)
-CRACK_1  CRACK = ARRAY(SIZE(S))
+         S PAT =                                              :F(RETURN)
+         CRACK<I> = APPLY(F, CRACK<I>)             :S(CRACK_2)F(FRETURN)
+CRACK_3  N = SIZE(S)
+         EQ(N, 0)                                             :S(RETURN)
+         CRACK = ARRAY(N)
          PAT = LEN(1) . *CRACK<I>                             :(CRACK_2)
+*
+CRACK_4  CRACK_4 = S                                           :(RETURN)
 *
 CRACK_END
 *
 * CE: .MSNOBOL4;
 -STITL TRIMB
 -EJECT
--LINE 28 "TRIMB.lss"
 *
+-LINE 28 "TRIMB.lss"
 ************************************************************************
 *                                                                      *
 *               #######  ######   ###  #     #  ######                 *
@@ -265,7 +272,7 @@ CRACK_END
 *                                                                      *
 ************************************************************************
 *
-* trimb.lss
+* TRIMB.lss
 *
 -LINE 6 "TRIMB.lss"
          DEFINE('TRIMB(S)')                                 :(TRIMB_END)
@@ -276,8 +283,8 @@ TRIMB_END
 *
 * CE: .MSNOBOL4;
 -STITL SLOAD
--LINE 110 "SLOAD.lss"
 -EJECT
+-LINE 110 "SLOAD.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -297,7 +304,7 @@ TRIMB_END
 *                                                                      *
 ************************************************************************
 *
-* sload.lss
+* SLOAD.lss
 *
 -LINE 18 "SLOAD.lss"
          DEFINE('SLOAD(FILENAME)'
@@ -397,7 +404,7 @@ SLOAD_END
 ************************************************************************
 *
 * embed.lss
-
+*
 -LINE 60 "embed.lss"
          TERMINAL = 'EMBED (SUN DEC  1 16:15:39 EST 2013)'
 *
