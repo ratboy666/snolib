@@ -11,6 +11,8 @@ has problems.
 [[FTN_FORMAT()]] is in an external module. [[IO_GETFP()]] is also in
 the image, and [[FILENO()]] is available in [[clib]].
 
+time() is signed long
+
 <<INCLUDES>>=
 -INCLUDE 'FFI.INC'
 @
@@ -37,6 +39,7 @@ the image, and [[FILENO()]] is available in [[clib]].
 #include <stdlib.h>
 #include <ctype.h>
 #include <errno.h>
+#include <time.h>
 
 static int status;
 

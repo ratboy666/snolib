@@ -72,6 +72,7 @@ store (and then put into a session).
 <a href="TIME.html">TIME</a><br>
 <a href="CHARS.html">CHARS</a><br>
 <a href="REPL.html">REPL</a>
+<a href="CSNOBOL4.html">CSNOBOL4</a>
 
 <<INCLUDES>>=
 -INCLUDE 'BQ.INC'
@@ -82,6 +83,7 @@ store (and then put into a session).
 -INCLUDE 'TIME.INC'
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'REPL.INC'
+-INCLUDE 'CSNOBOL4.INC'
 @
 
 <<SESSION>>=
@@ -109,7 +111,7 @@ SESSION_CREATE
 SESSION_TOUCH
          IDENT(SESSION)                                      :S(FRETURN)
          SESSION<'EXPIRE'> = TV_SEC(GETTIMEOFDAY()) +
-+                            SESSION<'EXPIRE_TIME'>            :(RETURN)
++                               SESSION<'EXPIRE_TIME'>        :S(RETURN)
 *
 * PERSIST SESSION TO DISK. SCALAR VARIABLES ONLY. ARRAYS AND TABLES
 * ARE NOT PERSISTED (ONLY AS THEY PRINT).

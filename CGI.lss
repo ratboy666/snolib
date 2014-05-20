@@ -10,6 +10,9 @@ templates, [[PSQL]] to provide database for filling in templates.
 Logging is supported in the [[CGI]] class. This is not decoupled
 because there are very few ways to debug [[CGI]] applications.
 
+USE_FCGI is set to true in FCGI.lss if Fast CGI is in use. So,
+include FCGI.INC before CGI.INC to prepare for Fast CGI.
+
 Still need: Response codes, Headers/Responses
 
 [[
@@ -64,12 +67,14 @@ with doc, respond 302 Location and doc returned
 +           ' SEND = ^.COOKIE_JAR :(RETURN)'))
          SEND(CGI_CLASS, 'ADD_METHOD', 'GET_HEADER', CODE(
 +           ' SEND = ^.HEADER :(RETURN)'))
-         DEFINE('CGI_HEADER()')
-         SEND(CGI_CLASS, 'ADD_METHOD', 'HEADER', 'CGI_HEADER')
+         DEFINE('CGI_SEND()S')
+         SEND(CGI_CLASS, 'ADD_METHOD', 'SEND', 'CGI_SEND')
          SEND(CGI_CLASS, 'ADD_METHOD', 'GET_LOG', CODE(
 +           ' SEND = ^.LOG :(RETURN)')) 
-         SEND(CGI_CLASS, 'ADD_METHOD', 'GET_OUT', CODE(
-+           ' SEND = ^.OUT :(RETURN)')) 
+         SEND(CGI_CLASS, 'ADD_METHOD', 'GET_CONTENT', CODE(
++           ' SEND = ^.CONTENT :(RETURN)')) 
+         SEND(CGI_CLASS, 'ADD_METHOD', 'SET_CONTENT', CODE(
++           ' ^.CONTENT = A1 :(RETURN)')) 
          DEFINE('CGI_CLOSE()A')
          SEND(CGI_CLASS, 'ADD_METHOD', 'CLOSE', 'CGI_CLOSE')
          SEND(CGI_CLASS, 'ADD_METHOD', 'GET_ENV', CODE(
@@ -102,8 +107,11 @@ CGI_INIT CGI_INIT = SUPER('INIT')
 * THE NETWORK, AND THEN LOGGER CAN LOG TO LOCALHOST. STRANGE, AND
 * PROBABLY NOT SUITABLE FOR PRODUCTION.
 *
+* IF USING SYSTEMD LOGGER, DON'T USE -n localhost
+*
          OUTPUT(^.LOG, ^.LOG_UNIT, 'W',
-+               '|/usr/bin/logger -n localhost -t CGI')      :F(FRETURN)
++               '|/usr/bin/logger -t CGI')                   :F(FRETURN)
+*+              '|/usr/bin/logger -n localhost -t CGI')      :F(FRETURN)
 *
 * CREATE OUT CHANNEL
 *
@@ -113,6 +121,8 @@ CGI_INIT CGI_INIT = SUPER('INIT')
 *
 * COLLECT ENVIRONMENT VARIABLES INTO INSTANCE VARIABLE ENV. WE ONLY
 * GATHER UP "KNOWN" ENVIRONMENT VARIABLES.
+*
+         ^.ENV = DIFFER(USE_FCGI) FCGI_ENV                 :S(CGI_ENV_2)
 *
          ^.ENV = TABLE(27)
          A = %('CONTEXT_DOCUMENT_ROOT,CONTEXT_PREFIX,DOCUMENT_ROOT,'
@@ -124,12 +134,17 @@ CGI_INIT CGI_INIT = SUPER('INIT')
 +              'SERVER_ADMIN,SERVER_NAME,SERVER_PORT,SERVER_PROTOCOL,'
 +              'SERVER_SOFTWARE,CONTENT_LENGTH,HTTP_REFERER')
          SEQ(' (^.ENV)<A<I>> = HOST(HOST_GETENV, A<I>); A<I> ', .I)
+CGI_ENV_2
 *
 * FOR POST METHOD, READ (^.ENV)<'CONTENT_LENGTH'>. READ THAT NUMBER OF
 * BYTES, AND ONLY THAT NUMBER. NOTE THAT THIS MAY BE VERY LARGE. THIS
 * MAY FAIL DUE TO MEMORY EXHAUSTION. WE KNOW THAT WE CAN READ A LARGE
 * NUMBER OF BYTES, BUT I HAVE TO DETERMINE THE LIMIT.
 *
+* FOR FCGI, USE FCGI_IN. FIXME: SHOULD TEST CONTENT_LENGTH
+*
+         (^.ENV)<'QUERY_STRING'> = DIFFER(USE_FCGI) FCGI_IN
++                                                         :S(CGI_INIT_3)
          T3 = (^.ENV)<'CONTENT_LENGTH'>
          IDENT(T3)                                        :S(CGI_INIT_3)
          (INTEGER(T3) GT(T3))                             :F(CGI_INIT_3)
@@ -168,6 +183,10 @@ CGI_INIT_2
 *
          ^.HEADER = #"CONTENT_TYPE=TEXT/HTML,CHARSET="
 *
+* INITIALIZE CONTENT
+*
+         ^.CONTENT =
+*
 * WE NEED ROUTING IMPLEMENTED.
 *
 * WE NEED TO DO FURTHER PROCESSING ON THE FOLLOWING CGI ENVIRONMENT
@@ -181,24 +200,34 @@ CGI_INIT_2
 *
                                                                :(RETURN)
 *
-* OUTPUT THE HEADER
+* OUTPUT THE HEADER AND CONTENT
 *
-CGI_HEADER
+CGI_SEND
 *
 * FIRST, OUTPUT THE CONTENT-TYPE. IF CHARSET HAS BEEN SPECIFIED,
 * ADD THIS TO THE CONTENT-TYPE.
 *
-         $^.OUT = 'Content-type: ' (^.HEADER)<'CONTENT_TYPE'>
-         $^.OUT = '; charset=' VDIFFER((^.HEADER)<'CHARSET'>)
-         $^.OUT =  CHARS_CR CHARS_NL
+         S = 'Content-type: ' (^.HEADER)<'CONTENT_TYPE'>
+         S = S '; charset=' VDIFFER((^.HEADER)<'CHARSET'>)
+         S = S CHARS_CR CHARS_NL
 *
 * GENERATE THE COOKIE STRING AND OUTPUT IF WE HAVE COOKIES TO SEND.
 *
-         $^.OUT = VDIFFER(COOKIE_STRING(^.COOKIE_JAR))
+         S = S VDIFFER(COOKIE_STRING(^.COOKIE_JAR))
 *
 * THE HEADER FINISHES WITH A CR/LF
 *
-         $^.OUT = CHARS_CR CHARS_NL                            :(RETURN)
+         S = S CHARS_CR CHARS_NL
+         $^.OUT = IDENT(USE_FCGI) S
+         DIFFER(USE_FCGI) FCGI_SEND(S)
+*
+* SEND CONTENT
+*
+         $^.OUT = IDENT(USE_FCGI) ^.CONTENT
+         DIFFER(USE_FCGI) FCGI_SEND(^.CONTENT)
+         DIFFER(USE_FCGI) FCGI_SEND('')
+         DIFFER(USE_FCGI) FCGI_END(0, FCGI_REQUEST_COMPLETE)
+                                                               :(RETURN)
 *
 CGI_OBJECT_END
 *
@@ -231,8 +260,9 @@ but predate SCOOP.
 
 <<unit_test>>=
 #!/usr/bin/bash
-         export "SNOLIB=/usr/local/snolib"
+         export "SNOLIB=/export/home/fred/snolib/snolib"; export "SNOPATH=/export/home/fred/snolib/snolib"
          exec "/usr/local/bin/snobol4" "-b" "$0" "$@"
+-INCLUDE 'FCGI.INC'
 -INCLUDE 'CGI.INC'
 -INCLUDE 'READFILE.INC'
 -INCLUDE 'BQ.INC'
@@ -240,7 +270,9 @@ but predate SCOOP.
 -INCLUDE 'HTMLTMPL.INC'
 -INCLUDE 'SESSION.INC'
 -INCLUDE 'JSON.INC'
+*-INCLUDE 'DDT.INC'
 *
+*        DDT()
 -CMNT EMBED THE TEMPLATES NEEDED. FOR NORMAL USE, THE TEMPLATES WOULD
 -CMNT BE MAINTAINED SEPARATELY, BUT THIS IS THE TEST SAMPLE.
 -EMBED FILE 'CGI.tmpl'
@@ -253,7 +285,7 @@ but predate SCOOP.
   </head>
   <body>
     <a href="http://jquery.com/">jQuery</a>
-    <script src="jquery-1.11.1.js"></script>
+    <!-- <script src="jquery-1.11.1.js"></script> -->
     <script>
       // js code goes here
     </script>
@@ -271,7 +303,7 @@ but predate SCOOP.
     <p>
       vehicle <tmpl_var VEHICLE>
     <p>
-      <form name="input" action="cgi" method="GET">
+      <form name="input" action="cgi.cgi" method="GET">
         First name: <input type="text" name="firstname"><br>
         Last name: <input type="text" name="lastname"><br>
         Password: <input type="password" name="pwd"><br>
@@ -286,7 +318,7 @@ but predate SCOOP.
         <input type="hidden" name="key" value="whatiwant">
       </form>
     <p>
-      <form name="input" action="cgi" method="POST">
+      <form name="input" action="cgi.cgi" method="POST">
         First name: <input type="text" name="firstname"><br>
         Last name: <input type="text" name="lastname"><br>
         Password: <input type="password" name="pwd"><br>
@@ -305,7 +337,13 @@ but predate SCOOP.
 -END
          &CODE = 1
 *
+         BASE_TIME = TIME()
+         BASE_ST = &STEXEC
+*
 * CREATE NEW CGI OBJECT
+*
+* NOTE THAT THIS IS IN AN ACCEPT LOOP IF FCGI IS IN USE. DATABASE
+* ACCESS CAN BE HOISTED OUTSIDE THIS LOOP AS WELL, IN THAT CASE.
 *
          CGI = SEND(CGI_CLASS, 'NEW')
 *
@@ -317,6 +355,8 @@ but predate SCOOP.
 *
          $LOG = 'CGI ENTERED'
          $LOG = 'current directory is ' BQ('pwd')
+         $LOG = DIFFER(USE_FCGI) 'FAST CGI'
+         $LOG = IDENT(USE_FCGI) 'CGI'
 *
 * GET THE COOKIE JAR
 *
@@ -335,13 +375,17 @@ but predate SCOOP.
 *
          SESSION = IDENT(SESSION) SESSION_CREATE(600)
 *
-* CREATE A PSQL OBJECT. OPEN THE DATABASE, AND GET THE PIPE HANDLE
+* CREATE A PSQL OBJECT. OPEN THE DATABASE, AND GET THE PIPE HANDLE.
+* WE WILL LEAVE THE DATABASE OBJECT AROUND, FOR EFFICIENCY WITH
+* FCGI.
 *
+         DIFFER(PSQL)                                      :S(PSQL_CONN)
          PSQL = SEND(PSQL_CLASS, 'NEW')
          &ERRLIMIT = 1
          SEND(PSQL, 'OPEN')
          &ERRLIMIT = 0
          DB = SEND(PSQL, 'GET_PIPE')
+PSQL_CONN
 *
 * SET HEADER
 *
@@ -385,18 +429,12 @@ but predate SCOOP.
          PUT_COOKIE_IN_JAR(JAR, 'SESSION', C)
          COOKIE_SET_CRUMB(C, 'EXPIRES', COOKIE_EXPIRY(T))
 *
-* TRANSMIT HEADER
+* READ AND COMPILE THE HTML TEMPLATE. WE CACHE THIS FOR FCGI.
 *
-         SEND(CGI, 'HEADER')
-*
-* GET THE NAME THAT IS OUTPUT ASSOCIATED FOR THIS CGI
-*
-         OUT = SEND(CGI, 'GET_OUT')
-*
-* READ AND COMPILE THE HTML TEMPLATE.
-*
-         S = READFILE('CGI.tmpl')
-         P = TMPL_COMPILE(S)
+         DIFFER(P_TM)                                         :S(NO_T_C)
+         S_TM = READFILE('CGI.tmpl')
+         P_TM = TMPL_COMPILE(S_TM)
+NO_T_C
 *
 * BUILD TABLE OF VARIABLES TO SUBSTITUTE INTO THE TEMPLATE
 * THIS HAS THE RAW COOKIE STRING, THE VALUE OF COUNTER FROM THE
@@ -426,25 +464,32 @@ but predate SCOOP.
 *
 * INTERPRET THE TEMPLATE WITH THE SUPPLIED VARIABLES
 *
-         S = TMPL_INTERPRET(P, A)
+         S = TMPL_INTERPRET(P_TM, A)
 *
 * TRANSMIT THE EXPANDED PAGE TO THE CLIENT
 *
-         $OUT = S
+         SEND(CGI, 'SET_CONTENT', S)
+*
+         SEND(CGI, 'SEND')
 *
 * CLOSE THE DATABASE
 *
-         SEND(PSQL, 'CLOSE')
+*        SEND(PSQL, 'CLOSE')
 *
 * LOG COMPLETION AND SHOW PERFORMANCE DATA
 *
          $LOG = 'CGI COMPLETE'
-         $LOG = TIME() ' MILLISECONDS FOR REQUEST'
-         $LOG = &GCTIME  ' IN GARBAGE COLLECTOR'
-         $LOG = &STEXEC ' STATEMENTS EXECUTED'
+         $LOG = TIME() - BASE_TIME ' MILLISECONDS FOR REQUEST'
+         $LOG = &GCTIME  ' IN GARBAGE COLLECTOR (TOTAL)'
+         $LOG = &STEXEC - BASE_ST ' STATEMENTS EXECUTED'
 *
          SEND(CGI, 'CLOSE')
          &CODE = 0
+*
+* IF USING FCGI, LOOP BACK TO THE ACCEPT() CALL RATHER THAN EXIT THE
+* PROCESS.
+*
+         DIFFER(USE_FCGI)                                   :S(FCGI_TOP)
 END
 @
 

@@ -523,7 +523,8 @@ static int dlclose_ffi(void) { return dlclose(p); }
 -END
 @
 
-Build ffi.so.
+Build ffi.so. Note that pwd is wrong -- we need to have run-time
+search start with actual library directory.
 
 <<FFI>>=
 -SNOBOL DYNAMIC_DEBUG = 1
