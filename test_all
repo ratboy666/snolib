@@ -64,8 +64,6 @@ START
          OUTPUT = VALUE(NEXT(L2))
          OUTPUT = VALUE(NEXT(NEXT(L2)))
 *
-         OUTPUT = COUNT('ABCABCABC', 'AB')
-*
          A3 = CRACK('A,B,C', ',')
          OUTPUT = A3[1] ' ' A3[2] ' ' A3[3]
 *
