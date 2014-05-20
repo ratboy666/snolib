@@ -10,6 +10,9 @@ templates, [[PSQL]] to provide database for filling in templates.
 Logging is supported in the [[CGI]] class. This is not decoupled
 because there are very few ways to debug [[CGI]] applications.
 
+USE_FCGI is set to true in FCGI.lss if Fast CGI is in use. So,
+include FCGI.INC before CGI.INC to prepare for Fast CGI.
+
 Still need: Response codes, Headers/Responses
 
 [[
@@ -64,12 +67,14 @@ with doc, respond 302 Location and doc returned
 +           ' SEND = ^.COOKIE_JAR :(RETURN)'))
          SEND(CGI_CLASS, 'ADD_METHOD', 'GET_HEADER', CODE(
 +           ' SEND = ^.HEADER :(RETURN)'))
-         DEFINE('CGI_HEADER()')
-         SEND(CGI_CLASS, 'ADD_METHOD', 'HEADER', 'CGI_HEADER')
+         DEFINE('CGI_SEND()')
+         SEND(CGI_CLASS, 'ADD_METHOD', 'SEND', 'CGI_SEND')
          SEND(CGI_CLASS, 'ADD_METHOD', 'GET_LOG', CODE(
 +           ' SEND = ^.LOG :(RETURN)')) 
-         SEND(CGI_CLASS, 'ADD_METHOD', 'GET_OUT', CODE(
-+           ' SEND = ^.OUT :(RETURN)')) 
+         SEND(CGI_CLASS, 'ADD_METHOD', 'GET_CONTENT', CODE(
++           ' SEND = ^.CONTENT :(RETURN)')) 
+         SEND(CGI_CLASS, 'ADD_METHOD', 'SET_CONTENT', CODE(
++           ' ^.CONTENT = A1 :(RETURN)')) 
          DEFINE('CGI_CLOSE()A')
          SEND(CGI_CLASS, 'ADD_METHOD', 'CLOSE', 'CGI_CLOSE')
          SEND(CGI_CLASS, 'ADD_METHOD', 'GET_ENV', CODE(
@@ -102,8 +107,11 @@ CGI_INIT CGI_INIT = SUPER('INIT')
 * THE NETWORK, AND THEN LOGGER CAN LOG TO LOCALHOST. STRANGE, AND
 * PROBABLY NOT SUITABLE FOR PRODUCTION.
 *
+* IF USING SYSTEMD LOGGER, DON'T USE -n localhost
+*
          OUTPUT(^.LOG, ^.LOG_UNIT, 'W',
-+               '|/usr/bin/logger -n localhost -t CGI')      :F(FRETURN)
++               '|/usr/bin/logger -t CGI')                   :F(FRETURN)
+*+              '|/usr/bin/logger -n localhost -t CGI')      :F(FRETURN)
 *
 * CREATE OUT CHANNEL
 *
@@ -168,6 +176,10 @@ CGI_INIT_2
 *
          ^.HEADER = #"CONTENT_TYPE=TEXT/HTML,CHARSET="
 *
+* INITIALIZE CONTENT
+*
+         ^.CONTENT =
+*
 * WE NEED ROUTING IMPLEMENTED.
 *
 * WE NEED TO DO FURTHER PROCESSING ON THE FOLLOWING CGI ENVIRONMENT
@@ -183,7 +195,7 @@ CGI_INIT_2
 *
 * OUTPUT THE HEADER
 *
-CGI_HEADER
+CGI_SEND
 *
 * FIRST, OUTPUT THE CONTENT-TYPE. IF CHARSET HAS BEEN SPECIFIED,
 * ADD THIS TO THE CONTENT-TYPE.
@@ -198,7 +210,10 @@ CGI_HEADER
 *
 * THE HEADER FINISHES WITH A CR/LF
 *
-         $^.OUT = CHARS_CR CHARS_NL                            :(RETURN)
+         $^.OUT = CHARS_CR CHARS_NL
+*
+* SEND CONTENT
+         $^.OUT = ^.CONTENT                                    :(RETURN)
 *
 CGI_OBJECT_END
 *
@@ -231,8 +246,9 @@ but predate SCOOP.
 
 <<unit_test>>=
 #!/usr/bin/bash
-         export "SNOLIB=/usr/local/snolib"
+         export "SNOLIB=/export/home/fred/snolib-master"; export "SNOPATH=/export/home/fred/snolib-master"
          exec "/usr/local/bin/snobol4" "-b" "$0" "$@"
+-INCLUDE 'FCGI.INC'
 -INCLUDE 'CGI.INC'
 -INCLUDE 'READFILE.INC'
 -INCLUDE 'BQ.INC'
@@ -240,7 +256,9 @@ but predate SCOOP.
 -INCLUDE 'HTMLTMPL.INC'
 -INCLUDE 'SESSION.INC'
 -INCLUDE 'JSON.INC'
+-INCLUDE 'DDT.INC'
 *
+*        DDT()
 -CMNT EMBED THE TEMPLATES NEEDED. FOR NORMAL USE, THE TEMPLATES WOULD
 -CMNT BE MAINTAINED SEPARATELY, BUT THIS IS THE TEST SAMPLE.
 -EMBED FILE 'CGI.tmpl'
@@ -253,7 +271,7 @@ but predate SCOOP.
   </head>
   <body>
     <a href="http://jquery.com/">jQuery</a>
-    <script src="jquery-1.11.1.js"></script>
+    <!-- <script src="jquery-1.11.1.js"></script> -->
     <script>
       // js code goes here
     </script>
@@ -271,7 +289,7 @@ but predate SCOOP.
     <p>
       vehicle <tmpl_var VEHICLE>
     <p>
-      <form name="input" action="cgi" method="GET">
+      <form name="input" action="cgi.cgi" method="GET">
         First name: <input type="text" name="firstname"><br>
         Last name: <input type="text" name="lastname"><br>
         Password: <input type="password" name="pwd"><br>
@@ -286,7 +304,7 @@ but predate SCOOP.
         <input type="hidden" name="key" value="whatiwant">
       </form>
     <p>
-      <form name="input" action="cgi" method="POST">
+      <form name="input" action="cgi.cgi" method="POST">
         First name: <input type="text" name="firstname"><br>
         Last name: <input type="text" name="lastname"><br>
         Password: <input type="password" name="pwd"><br>
@@ -307,6 +325,9 @@ but predate SCOOP.
 *
 * CREATE NEW CGI OBJECT
 *
+* NOTE THAT THIS IS IN AN ACCEPT LOOP IF FCGI IS IN USE. DATABASE
+* ACCESS CAN BE HOISTED OUTSIDE THIS LOOP AS WELL, IN THAT CASE.
+*
          CGI = SEND(CGI_CLASS, 'NEW')
 *
 * GET LOGGING CHANNEL
@@ -317,6 +338,8 @@ but predate SCOOP.
 *
          $LOG = 'CGI ENTERED'
          $LOG = 'current directory is ' BQ('pwd')
+         $LOG = DIFFER(USE_FCGI) 'FAST CGI' :S(END)
+         $LOG = IDENT(USE_FCGI) 'CGI'
 *
 * GET THE COOKIE JAR
 *
@@ -335,13 +358,14 @@ but predate SCOOP.
 *
          SESSION = IDENT(SESSION) SESSION_CREATE(600)
 *
-* CREATE A PSQL OBJECT. OPEN THE DATABASE, AND GET THE PIPE HANDLE
+* CREATE A PSQL OBJECT. OPEN THE DATABASE, AND GET THE PIPE HANDLE.
+* DON'T USE ERRNO REPORTING SNOBOL4 (ERRNO: 5)
 *
-         PSQL = SEND(PSQL_CLASS, 'NEW')
-         &ERRLIMIT = 1
-         SEND(PSQL, 'OPEN')
-         &ERRLIMIT = 0
-         DB = SEND(PSQL, 'GET_PIPE')
+**         PSQL = SEND(PSQL_CLASS, 'NEW')
+**         &ERRLIMIT = 1
+**         SEND(PSQL, 'OPEN')
+**         &ERRLIMIT = 0
+**         DB = SEND(PSQL, 'GET_PIPE')
 *
 * SET HEADER
 *
@@ -385,14 +409,6 @@ but predate SCOOP.
          PUT_COOKIE_IN_JAR(JAR, 'SESSION', C)
          COOKIE_SET_CRUMB(C, 'EXPIRES', COOKIE_EXPIRY(T))
 *
-* TRANSMIT HEADER
-*
-         SEND(CGI, 'HEADER')
-*
-* GET THE NAME THAT IS OUTPUT ASSOCIATED FOR THIS CGI
-*
-         OUT = SEND(CGI, 'GET_OUT')
-*
 * READ AND COMPILE THE HTML TEMPLATE.
 *
          S = READFILE('CGI.tmpl')
@@ -430,11 +446,13 @@ but predate SCOOP.
 *
 * TRANSMIT THE EXPANDED PAGE TO THE CLIENT
 *
-         $OUT = S
+         SEND(CGI, 'SET_CONTENT', S)
+*
+         SEND(CGI, 'SEND')
 *
 * CLOSE THE DATABASE
 *
-         SEND(PSQL, 'CLOSE')
+**         SEND(PSQL, 'CLOSE')
 *
 * LOG COMPLETION AND SHOW PERFORMANCE DATA
 *
@@ -445,6 +463,11 @@ but predate SCOOP.
 *
          SEND(CGI, 'CLOSE')
          &CODE = 0
+*
+* IF USING FCGI, LOOP BACK TO THE ACCEPT() CALL RATHER THAN EXIT THE
+* PROCESS.
+*
+         DIFFER(USE_FCGI)                                   :S(FCGI_TOP)
 END
 @
 
