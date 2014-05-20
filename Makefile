@@ -32,7 +32,7 @@ T = AGT.tst      AI.tst       AOPA.tst     BALREV.tst   BALX.tst     \
     WRAPPER.tst  LINK.tst     HTMLESC.tst  TRIMB.tst    PSQL.tst     \
     BRKREM.tst   HASH.tst     READL.tst    FOREACH.tst  SCOOP.tst    \
     CGI.tst      READFILE.tst SESSION.tst  GCD.tst      COMPLEX.tst  \
-    COOKIE.tst   HTMLTMPL.tst JSON.tst
+    COOKIE.tst   HTMLTMPL.tst JSON.tst     FCGI.tst
 
 # Library files FIXME: TRIAL should be removed.
 
@@ -109,6 +109,7 @@ JSON.INC:     CHARS.INC    HASH.INC     SIZEA.INC    HEX.INC      \
               CH.INC       SEQ.INC
 SIZEA.INC:    BRKREM.INC   SWAP.INC
 UNIQUE.INC:   REPL.INC
+FCGI.INC:     FFI.INC
 
 # Bootstrapping. We need embed, ifs, sweave, stanglek snocone and ED4
 # to build the code. We keep embed0, ifs0, sweave0 and stangle0 for
@@ -201,10 +202,12 @@ deliver: $(P)
 	sudo chmod +r $(LIBDIR)/*.INC
 	sudo ln -s $(LIBDIR)/ENDCARD.INC $(LIBDIR)/ENDCARD
 	sudo ln -s $(LIBDIR)/DDTCARD.INC $(LIBDIR)/DDTCARD
-	sudo cp CGI.tst $(CGIDIR)/cgi
+	sudo cp CGI.tst $(CGIDIR)/cgi.cgi
+	sudo cp CGI.tst $(CGIDIR)/cgi.fcgi
 	sudo cp CGI.tmpl $(CGIDIR)
 	sudo cp jquery-1.11.1.js $(CGIDIR)
-	sudo chown apache:apache $(CGIDIR)/cgi \
+	sudo chown apache:apache $(CGIDIR)/cgi.cgi \
+				 $(CGIDIR)/cgi.fcgi \
 	                         $(CGIDIR)/CGI.tmpl \
 	                         $(CGIDIR)/jquery-1.11.1.js
 
@@ -265,7 +268,8 @@ docs:         AGT.html      AI.html       ALL.html      AOPA.html     \
               CGI.html      READFILE.html SESSION.html  GCD.html      \
               COMPLEX.html  COOKIE.html   HTMLTMPL.html JSON.html     \
               stangle       sweave        greenbar.gif  index.html    \
-              utility.html  snocone.html  cpmed.html    ED4
+              utility.html  snocone.html  cpmed.html    ED4           \
+              FCGI.html
 	touch docs
 
 snocone.html: snocone.htm
@@ -380,3 +384,4 @@ COOKIE.INC: COOKIE.SNO
 HTMLTMPL.INC: HTMLTMPL.sc
 JSON.INC: JSON.SNO
 SIZEA.INC: SIZEA.SNO
+FCGI.INC: FCGI.SNO

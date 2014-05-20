@@ -1,0 +1,165 @@
+<h1>FCGI - FCGI (Fast CGI) Support Functions</h1>
+
+[[FCGI]] support functions. Need to suck in CGI to actually handle
+requests. This should be a wrapper for CGI. Note that logging, header
+and body creation is different. But, should be consistent with however
+CGI normally does things. If getpeername fails, use CGI straight-up
+
+This is the simplest possible implementation of [[FCGI]]. This is
+going to provide a speed-up in that the script will not need
+re-compilation. But, this is not the initial goal. Initial goal is
+simple functionality.
+
+After we have baseline function, we will refactor the code to provide
+services for CGI. CGI will then call into FCGI to do needed data
+transmissions.
+
+When this is functional, we will work on performance.
+
+<<INCLUDES>>=
+-INCLUDE 'P64.INC'
+-INCLUDE 'FFI.INC'
+-INCLUDE 'BQ.INC'
+-INCLUDE 'CSNOBOL4.INC'
+@
+
+<<FCGI>>=
+         FCGI_LOG = '/usr/bin/logger -t FCGI '
+         STDIN_FILENO = 0
+         FCGI_LISTENSOCK_FILENO = STDIN_FILENO
+         FCGI_BEGIN_REQUEST     =  1
+         FCGI_ABORT_REQUEST     =  2
+         FCGI_END_REQUEST       =  3
+         FCGI_PARAMS            =  4
+         FCGI_STDIN             =  5
+         FCGI_STDOUT            =  6
+         FCGI_STDERR            =  7
+         FCGI_DATA              =  8
+         FCGI_GET_VALUES        =  9
+         FCGI_GET_VALUES_RESULT = 10
+         FCGI_UNKNOWN_TYPE      = 11
+*
+* getpeername RETURNS PEER NAME FOR STDIN IF RUNNING UNDER FCGI. IT
+* ACTUALLY RETURNS TRANSPORT END-POINT NOT CONNECTED. IF IT ISN'T A
+* SOCKET AT ALL, DEFINITELY CGI CASE.
+*
+         PEER = BQ('/usr/bin/getpeername 2>&1')             :F(NOT_FCGI)
+         PEER 'Socket operation on non-socket'              :S(NOT_FCGI)
+*
+         HOST(1, FCGI_LOG '"FCGI: FCGI"')
+*
+* INFORM CGI THAT FAST CGI IS IN USE. DEFINE THE ACCEPT() FUNCTION.
+* LISTEN() HAS ALREADY BEEN DONE IN THE WEB SERVER.
+*
+         USE_FCGI = 1
+         FFI_ACCEPT = FFI_NEW('I', 'I,P,P')
+         FFI_SET_CALLP(FFI_ACCEPT, DLSYM(0, 'accept'))
+         DEFINE('ACCEPT(SOCKET,P1,P2)')
+         DEFINE('FGCI_GET()')                              :(ACCEPT_END)
+*
+ACCEPT   CLEAR_ERRNO()
+         FFI_PAR_N_INTEGER(FFI_ACCEPT, 1, SOCKET)
+         FFI_PAR_N_PTR(FFI_ACCEPT, 2, P1)
+         FFI_PAR_N_PTR(FFI_ACCEPT, 3, P2)
+         ACCEPT = FFI_CALL_INTEGER(FFI_ACCEPT)                 :(RETURN)
+*
+FCGI_GET VERSION = ORD(FCGI)
+         HOST(1, FCGI_LOG '"FCGI: VERSION = ' VERSION '"')
+         DIFFER(VERSION, 1) HOST(1, FCGI_LOG '"FCGI: VERSION <> 1"')
++                                                                :S(END)
+         TYPE = ORD(FCGI)
+         HOST(1, FCGI_LOG '"FCGI: TYPE = ' TYPE '"')
+         REQUESTID = ORD(FCGI) * 256
+         REQUESTID = REQUESTID + ORD(FCGI)
+         HOST(1, FCGI_LOG '"FCGI: REQUESTID = ' REQUESTID '"')
+         CONTENTLENGTH = ORD(FCGI) * 256
+         CONTENTLENGTH = CONTENTLENGTH + ORD(FCGI)
+         HOST(1, FCGI_LOG '"FCGI: CONTENTLENGTH = ' CONTENTLENGTH '"')
+         PADDINGLENGTH = ORD(FCGI)
+         HOST(1, FCGI_LOG '"FCGI: PADDINGLENGTH = ' PADDINGLENGTH '"')
+         RESERVED = ORD(FCGI)
+         HOST(1, FCGI_LOG '"FCGI: RESERVED = ' RESERVED '"')
+         HOST(1, FCGI_LOG '"FCGI: READING CONTENT"')
+         FCGI_GET = ARRAY(CONTENTLENGTH)
+         I = 1
+FCGI_4   GT(I, CONTENTLENGTH)                                 :S(FCGI_5)
+         FCGI_GET<I> = ORD(FCGI)
+         I = I + 1                                             :(FCGI_4)
+FCGI_5   HOST(1, FCGI_LOG '"FCGI: SKIPPING PADDING"')
+         I = 1
+FCGI_6   GT(I, PADDINGLENGTH)                                 :S(RETURN)
+         S = FCGI
+         I = I + 1                                             :(FCGI_6)
+*
+ACCEPT_END
+*
+FCGI_TOP SOCKET = ACCEPT(FCGI_LISTENSOCK_FILENO, 0, 0)
+         GE(SOCKET)                                           :S(FCGI_2)
+*
+* ON ERROR IN ACCEPT, WE DISPLAY ERRNO AND EXIT THE PROCESS
+*
+         ERRNO = GET_ERRNO()
+         HOST(1, FCGI_LOG '"FCGI: ACCEPT: '
++           'ERRNO = ' ERRNO '"')                                 :(END)
+*
+* READ AND DIGEST PACKETS FROM SOCKET.
+*
+FCGI_2   HOST(1, FCGI_LOG '"FCGI: AT FCGI_2"')
+         HOST(1, FCGI_LOG '"FCGI: SOCKET = ' SOCKET '"')
+         HOST(1, FCGI_LOG, '"FCGI: UNIT = ' UNIT '"')
+*
+         UNIT = IO_FINDUNIT()
+         HOST(1, FCGI_LOG, '"FCGI: UNIT = ' UNIT '"')
+         INPUT(.FCGI, UNIT, 'U,B,1', '/dev/fd/' SOCKET)
+*
+         CONTENT = FCGI_GET()
+   :(FCGI_END)
+*
+* TYPE, CONTENT
+*
+NOT_FCGI
+         HOST(1, FCGI_LOG '"FCGI: CGI"')
+*
+* NOT FCGI, WE SKIP OVER THE ACCEPT AND PRESUME CGI. THE WEB
+* APPLICATION WILL END IN EITHER PROCESS TERMINATION (CGI CASE) OR
+* A BRANCH TO FCGI_TOP (FCGI CASE).
+*
+FCGI_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         export "SNOLIB=/export/home/fred/snolib-master"; export "SNOPATH=/export/home/fred/snolib-master"
+         exec "/usr/local/bin/snobol4" "-b" "$0" "$@"
+-INCLUDE 'FCGI.INC'
+*
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL FCGI
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                    #######   #####    #####   ###                    *
+*                    #        #     #  #     #   #                     *
+*                    #        #        #         #                     *
+*                    #####    #        #  ####   #                     *
+*                    #        #        #     #   #                     *
+*                    #        #     #  #     #   #                     *
+*                    #         #####    #####   ###                    *
+*                                                                      *
+* FCGI                   FCGI SUPPORT FUNCTIONS                        *
+*                                                                      *
+************************************************************************
+*
+* FCGI.lss
+*
+<<FCGI>>
+*
+* CE: .F.MSNOBOL4;
+@
