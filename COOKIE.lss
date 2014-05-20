@@ -42,7 +42,8 @@ be returned (probably as a session cookie).
 <a href="TIME.html">TIME</a><br>
 <a href="DEXP.html">DEXP</a><br>
 <a href="CHARS.html">CHARS</a><br>
-<a href="TRIMB.html">TRIMB</a>
+<a href="TRIMB.html">TRIMB</a><br>
+<a href="CSNOBOL4.html">CSNOBOL4</a>
 
 <<INCLUDES>>=
 -INCLUDE 'HASH.INC'
@@ -50,6 +51,7 @@ be returned (probably as a session cookie).
 -INCLUDE 'DEXP.INC'
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'TRIMB.INC'
+-INCLUDE 'CSNOBOL4.INC'
 @
 
 <<COOKIE>>=

@@ -26,6 +26,7 @@ FIXME: Needs management packets. Needs STDOUT/END/ABORT request.
 -INCLUDE 'LOGIC.INC'
 -INCLUDE 'HASH.INC'
 -INCLUDE 'SEQ.INC'
+-INCLUDE 'TIME.INC'
 @
 
 <<FCGI>>=
@@ -68,15 +69,15 @@ FIXME: Needs management packets. Needs STDOUT/END/ABORT request.
 * INFORM CGI THAT FAST CGI IS IN USE. DEFINE THE ACCEPT() FUNCTION.
 * LISTEN() HAS ALREADY BEEN DONE IN THE WEB SERVER.
 *
-* FIXME: NEED TO DEFINE STDOUT/STDERR/COMPLETE/ABORT
-*
          USE_FCGI = 1
          FFI_ACCEPT = FFI_NEW('I', 'I,P,P')
          FFI_SET_CALLP(FFI_ACCEPT, DLSYM(0, 'accept'))
          DEFINE('ACCEPT(SOCKET,P1,P2)')
          DEFINE('FCGI_NAMES(T,A)')
          DEFINE('FCGI_SEND(S)')
-         DEFINE('FCGI_END(APP_STATUS,PROT_STATUS)')
+         DEFINE('FCGI_SEND_ERR(S)')
+         DEFINE('FCGI_SEND_(D,S)')
+         DEFINE('FCGI_END(APP_STATUS,PROT_STATUS)S,B0,B1,B2,B3')
          DEFINE('FCGI_GET()')                                :(FCGI_TOP)
 *
 ACCEPT   CLEAR_ERRNO()
@@ -87,13 +88,19 @@ ACCEPT   CLEAR_ERRNO()
 *
 * FIXME: SEND IN BLOCKS OF 64K
 *
-FCGI_SEND
-         FCGI_LOG = 'FCGI_SEND: ' SIZE(S)
-         S = CHAR(1) CHAR(FCGI_STDOUT)
+FCGI_SEND_
+         FCGI_LOG = 'FCGI_SEND: '  D ' ' SIZE(S)
+         S = CHAR(1) CHAR(D)
 +            CHAR(FCGI_REQUESTID / 256) CHAR(REMDR(FCGI_REQUESTID, 256))
 +            CHAR(SIZE(S) / 256) CHAR(REMDR(SIZE(S), 256))
 +            CHAR(0) CHAR(0) S
-         FCGI_OUT = S :(RETURN)
+         FCGI_OUT = S                                          :(RETURN)
+*
+FCGI_SEND
+         FCGI_SEND_(FCGI_STDOUT, S)                            :(RETURN)
+*
+FCGI_SEND_ERR
+         FCGI_SEND_(FCGI_STDERR, S)                            :(RETURN)
 *
 FCGI_END FCGI_LOG = 'FCGI_END: ' APP_STATUS ' ' PROT_STATUS
          B3 = APP_STATUS / 16777216
@@ -109,8 +116,6 @@ FCGI_END FCGI_LOG = 'FCGI_END: ' APP_STATUS ' ' PROT_STATUS
          S = CHAR(1) CHAR(FCGI_END_REQUEST) CHAR(B1) CHAR(B0)
 +            CHAR(0) CHAR(8) CHAR(0) CHAR(0) S
          FCGI_OUT = S                                          :(RETURN)
-*
-* FCGI_END(0, FCGI_REQUEST_COMPLETE)
 *
 FCGI_GET VERSION = ORD(FCGI)
          FCGI_LOG = DIFFER(VERSION, 1) 'VERSION <> 1'            :S(END)
@@ -187,11 +192,15 @@ FCGI_TOP FCGI_LOG = 'AT FCGI_TOP: WAITING'
 *
 * READ AND DIGEST PACKETS FROM SOCKET.
 *
-FCGI_2   FCGI_LOG = 'SOCKET = ' SOCKET
-         UNIT = IO_FINDUNIT()
-         FCGI_LOG = 'UNIT = ' UNIT
-         INPUT(.FCGI, UNIT, 'U,B,1', '/dev/fd/' SOCKET)
-         OUTPUT(.FCGI_OUT, UNIT, 'W,B,2')
+FCGI_2   IDENT(FCGI_INSTANCE_UNIT)                            :S(FCGI_8)
+         DETACH(.FCGI)
+         DETACH(.FCGI_OUT)
+         ENDFILE(FCGI_INSTANCE_UNIT)
+FCGI_8   FCGI_LOG = 'SOCKET = ' SOCKET
+         FCGI_INSTANCE_UNIT = IO_FINDUNIT()
+         FCGI_LOG = 'UNIT = ' FCGI_INSTANCE_UNIT
+         INPUT(.FCGI, FCGI_INSTANCE_UNIT, 'U,B,1', '/dev/fd/' SOCKET)
+         OUTPUT(.FCGI_OUT, FCGI_INSTANCE_UNIT, 'W,B,1')
 *
          FCGI_ENV = TABLE()
          FCGI_IN =
@@ -244,6 +253,11 @@ NOT_FCGI
 * A BRANCH TO FCGI_TOP (FCGI CASE).
 *
 FCGI_END_
+*
+* BUG ALERT: IF THIS IS NOT DONE, GETTIMEOFDAY(), GMTIME() ETC.
+* FAULT ON THE SECOND PASS THROUGH FCGI. HAPPENS WITH CSNOBOL4 1.5
+*
+         T = GETTIMEOFDAY()
 @
 
 <<unit_test>>=
