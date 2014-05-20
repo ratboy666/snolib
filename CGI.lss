@@ -246,7 +246,7 @@ but predate SCOOP.
 
 <<unit_test>>=
 #!/usr/bin/bash
-         export "SNOLIB=/export/home/fred/snolib-master"; export "SNOPATH=/export/home/fred/snolib-master"
+         export "SNOLIB=/export/home/fred/snolib/snolib"; export "SNOPATH=/export/home/fred/snolib/snolib"
          exec "/usr/local/bin/snobol4" "-b" "$0" "$@"
 -INCLUDE 'FCGI.INC'
 -INCLUDE 'CGI.INC'
