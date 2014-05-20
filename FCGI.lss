@@ -16,16 +16,22 @@ transmissions.
 
 When this is functional, we will work on performance.
 
+FIXME: Needs management packets. Needs STDOUT/END/ABORT request.
+
 <<INCLUDES>>=
 -INCLUDE 'P64.INC'
 -INCLUDE 'FFI.INC'
 -INCLUDE 'BQ.INC'
 -INCLUDE 'CSNOBOL4.INC'
 -INCLUDE 'LOGIC.INC'
+-INCLUDE 'HASH.INC'
+-INCLUDE 'SEQ.INC'
 @
 
 <<FCGI>>=
-         FCGI_LOG = '/usr/bin/logger -t FCGI '
+         FCGI_LOGUNIT = IO_FINDUNIT()
+         OUTPUT(.FCGI_LOG, FCGI_LOGUNIT, 'W', 
++               '|/usr/bin/logger -t FCGI')
          STDIN_FILENO = 0
          FCGI_LISTENSOCK_FILENO = STDIN_FILENO
 *
@@ -45,6 +51,11 @@ When this is functional, we will work on performance.
          FCGI_AUTHORIZER = 2
          FCGI_FILTER     = 3
 *
+         FCGI_REQUEST_COMPLETE = 0
+         FCGI_CANT_MPX_CONN    = 1
+         FCGI_OVERLOADED       = 2
+         FCGI_UNKNOWN_ROLE     = 3
+*
 * getpeername RETURNS PEER NAME FOR STDIN IF RUNNING UNDER FCGI. IT
 * ACTUALLY RETURNS TRANSPORT END-POINT NOT CONNECTED. IF IT ISN'T A
 * SOCKET AT ALL, DEFINITELY CGI CASE.
@@ -52,16 +63,20 @@ When this is functional, we will work on performance.
          PEER = BQ('/usr/bin/getpeername 2>&1')             :F(NOT_FCGI)
          PEER 'Socket operation on non-socket'              :S(NOT_FCGI)
 *
-         HOST(1, FCGI_LOG '"FCGI: FCGI"')
+         FCGI_LOG = 'FCGI'
 *
 * INFORM CGI THAT FAST CGI IS IN USE. DEFINE THE ACCEPT() FUNCTION.
 * LISTEN() HAS ALREADY BEEN DONE IN THE WEB SERVER.
+*
+* FIXME: NEED TO DEFINE STDOUT/STDERR/COMPLETE/ABORT
 *
          USE_FCGI = 1
          FFI_ACCEPT = FFI_NEW('I', 'I,P,P')
          FFI_SET_CALLP(FFI_ACCEPT, DLSYM(0, 'accept'))
          DEFINE('ACCEPT(SOCKET,P1,P2)')
-         DEFINE('FCGI_NAMES(A)')
+         DEFINE('FCGI_NAMES(T,A)')
+         DEFINE('FCGI_SEND(S)')
+         DEFINE('FCGI_END(APP_STATUS,PROT_STATUS)')
          DEFINE('FCGI_GET()')                                :(FCGI_TOP)
 *
 ACCEPT   CLEAR_ERRNO()
@@ -70,11 +85,35 @@ ACCEPT   CLEAR_ERRNO()
          FFI_PAR_N_PTR(FFI_ACCEPT, 3, P2)
          ACCEPT = FFI_CALL_INTEGER(FFI_ACCEPT)                 :(RETURN)
 *
-FCGI_GET HOST(1, FCGI_LOG '"FCGI: IN FCGI_GET"')
-         VERSION = ORD(FCGI)
-         HOST(1, FCGI_LOG '"FCGI: VERSION = ' VERSION '"')
-         DIFFER(VERSION, 1) HOST(1, FCGI_LOG '"FCGI: VERSION <> 1"')
-+                                                                :S(END)
+* FIXME: SEND IN BLOCKS OF 64K
+*
+FCGI_SEND
+         FCGI_LOG = 'FCGI_SEND: ' SIZE(S)
+         S = CHAR(1) CHAR(FCGI_STDOUT)
++            CHAR(FCGI_REQUESTID / 256) CHAR(REMDR(FCGI_REQUESTID, 256))
++            CHAR(SIZE(S) / 256) CHAR(REMDR(SIZE(S), 256))
++            CHAR(0) CHAR(0) S
+         FCGI_OUT = S :(RETURN)
+*
+FCGI_END FCGI_LOG = 'FCGI_END: ' APP_STATUS ' ' PROT_STATUS
+         B3 = APP_STATUS / 16777216
+         APP_STATUS = REMDR(APP_STATUS, 16777216)
+         B2 = APP_STATUS / 65536
+         APP_STATUS = REMDR(APP_STATUS, 65536)
+         B1 = APP_STATUS / 256
+         B0 = REMDR(APP_STATUS, 256)
+         S = CHAR(B3) CHAR(B2) CHAR(B1) CHAR(B0) CHAR(PROT_STATUS)
++            CHAR(0) CHAR(0) CHAR(0)
+         B1 = FCGI_REQUESTID / 256
+         B0 = REMDR(FCGI_REQUESTID, 256)
+         S = CHAR(1) CHAR(FCGI_END_REQUEST) CHAR(B1) CHAR(B0)
++            CHAR(0) CHAR(8) CHAR(0) CHAR(0) S
+         FCGI_OUT = S                                          :(RETURN)
+*
+* FCGI_END(0, FCGI_REQUEST_COMPLETE)
+*
+FCGI_GET VERSION = ORD(FCGI)
+         FCGI_LOG = DIFFER(VERSION, 1) 'VERSION <> 1'            :S(END)
          TYPE = ORD(FCGI)
          REQUESTID = ORD(FCGI) * 256
          REQUESTID = REQUESTID + ORD(FCGI)
@@ -82,6 +121,10 @@ FCGI_GET HOST(1, FCGI_LOG '"FCGI: IN FCGI_GET"')
          CONTENTLENGTH = CONTENTLENGTH + ORD(FCGI)
          PADDINGLENGTH = ORD(FCGI)
          RESERVED = ORD(FCGI)
+*
+* WE COULD READ THIS IN ONE GULP, AND AVOID CONVERTING TO ARRAY AND
+* THEN BACK INTO STRING.
+*
          FCGI_GET = NE(CONTENTLENGTH) ARRAY(CONTENTLENGTH)
          I = 1
 FCGI_4   GT(I, CONTENTLENGTH)                                 :S(FCGI_5)
@@ -96,122 +139,116 @@ FCGI_6   GT(I, PADDINGLENGTH)                                 :S(RETURN)
 * THEN THE ACTUAL NAME AND DATA.
 *
 FCGI_NAMES
-         FCGI_NAMES = TABLE()
          I = 1
 FCGI_NAMES_7
          NL = A<I>
-         EQ(AND(NL, 128)) :S(FCGI_NAMES_2)
+         EQ(AND(NL, 128))                               :S(FCGI_NAMES_2)
          NL = AND(A<I>, 127) * 16777216 +
 +             A<I + 1> * 65536 +
 +             A<I + 2> * 256 +
 +             A<I + 3>
          I = I + 3
 FCGI_NAMES_2
-         HOST(1, FCGI_LOG '"' 'NAME LEN = ' NL '"')
          I = I + 1
          DL = A<I>
-         EQ(AND(NL, 128)) :S(FCGI_NAMES_3)
+         EQ(AND(NL, 128))                               :S(FCGI_NAMES_3)
          DL = AND(A<I>, 127) * 16777216 +
 +             A<I + 1> * 65536 +
 +             A<I + 2> * 256 +
 +             A<I + 3>
          I = I + 3
 FCGI_NAMES_3
-         HOST(1, FCGI_LOG '"' 'DATA LEN = ' DL '"')
          I = I + 1
          NM =
          DA =
 FCGI_NAMES_4
-         EQ(NL) :S(FCGI_NAMES_5)
+         EQ(NL)                                         :S(FCGI_NAMES_5)
          NM = NM CHAR(A<I>)
          I = I + 1
-         NL = NL - 1 :(FCGI_NAMES_4)
+         NL = NL - 1                                     :(FCGI_NAMES_4)
 FCGI_NAMES_5
-         EQ(DL) :S(FCGI_NAMES_6)
+         EQ(DL)                                         :S(FCGI_NAMES_6)
          DA = DA CHAR(A<I>)
          I = I + 1
-         DL = DL - 1 :(FCGI_NAMES_5)
+         DL = DL - 1                                     :(FCGI_NAMES_5)
 FCGI_NAMES_6
-         HOST(1, FCGI_LOG '"' NM '=' DA '"')
-         A<I> :F(RETURN)S(FCGI_NAMES_7)
+         T<NM> = DA
+         A<I>                                  :F(RETURN)S(FCGI_NAMES_7)
 *
-FCGI_TOP HOST(1, FCGI_LOG '"FCGI: AT FCGI_TOP: WAITING"')
+FCGI_TOP FCGI_LOG = 'AT FCGI_TOP: WAITING'
          SOCKET = ACCEPT(FCGI_LISTENSOCK_FILENO, 0, 0)
-         HOST(1, FCGI_LOG '"FCGI: AFTER ACCEPT"')
+         FCGI_LOG = 'AFTER ACCEPT'
          GE(SOCKET)                                           :S(FCGI_2)
 *
 * ON ERROR IN ACCEPT, WE DISPLAY ERRNO AND EXIT THE PROCESS
 *
          ERRNO = GET_ERRNO()
-         HOST(1, FCGI_LOG '"FCGI: ACCEPT: '
-+           'ERRNO = ' ERRNO '"')                                 :(END)
+         FCGI_LOG = 'ACCEPT: ERRNO = ' ERRNO                      :(END)
 *
 * READ AND DIGEST PACKETS FROM SOCKET.
 *
-FCGI_2   HOST(1, FCGI_LOG '"FCGI: SOCKET = ' SOCKET '"')
+FCGI_2   FCGI_LOG = 'SOCKET = ' SOCKET
          UNIT = IO_FINDUNIT()
-         HOST(1, FCGI_LOG '"FCGI: UNIT = ' UNIT '"')
+         FCGI_LOG = 'UNIT = ' UNIT
          INPUT(.FCGI, UNIT, 'U,B,1', '/dev/fd/' SOCKET)
+         OUTPUT(.FCGI_OUT, UNIT, 'W,B,2')
 *
-* FIXME: SHOULD BE MUCH MORE GENERIC -- INTERPRET FCGI_GET_VALUES
+         FCGI_ENV = TABLE()
+         FCGI_IN =
+         FCGI_REQUESTID =
 *
+* PACKET LOOP
+*
+FCGI_PLOOP
          CONTENT = FCGI_GET()
+         FCGI_REQUESTID = IDENT(FCGI_REQUESTID) REQUESTID
+         EQ(REQUESTID, FCGI_REQUESTID)                  :S(FCGI_PLOOP_2)
+         FCGI_LOG = 'ONLY SINGLE REQUESTID SUPPORTED'             :(END)
 *
-* TYPE, CONTENT, REQUESTID
-* INTERPRET CONTENT<> ACCORDING TO TYPE
 * WE DO NOT MULTIPLEX REQUESTID, NEED TO SET INDICATION OF THAT
 * IN FCGI_GET().
 *
-         HOST(1, FCGI_LOG '"' 'REQUEST TYPE = ' TYPE '"')
-         EQ(TYPE, FCGI_BEGIN_REQUEST) :F(FCGI_10)
-         ROLE = CONTENT<1> * 256 + CONTENT<2>
-         FLAGS = CONTENT<3>
-         HOST(1, FCGI_LOG '"' 'FCGI_BEGIN_REQUEST'
-+                             ' ROLE = ' ROLE
-+                             ' FLAGS = ' FLAGS
-+                         '"')
+FCGI_PLOOP_2
+         EQ(TYPE, FCGI_BEGIN_REQUEST)                        :F(FCGI_10)
+         FCGI_LOG = 'FCGI_BEGIN_REQUEST'
+         FCGI_ROLE = CONTENT<1> * 256 + CONTENT<2>
+         FCGI_LOG = NE(FCGI_ROLE, FCGI_RESPONDER)
++           'ROLE NOT RESPONDER'                                 :S(END)
+         FCGI_FLAGS = CONTENT<3>
+         FCGI_REQUESTID = REQUESTID                        :(FCGI_PLOOP)
 *
-* WE CAN ONLY DO ROLE = FCGI_RESPONDER
+FCGI_10  EQ(TYPE, FCGI_PARAMS)                               :F(FCGI_11)
+         FCGI_LOG = 'FCGI_PARAMS'
+         IDENT(CONTENT)                                   :S(FCGI_PLOOP)
+         FCGI_NAMES(FCGI_ENV, CONTENT)                     :(FCGI_PLOOP)
 *
-FCGI_10
+FCGI_11  EQ(TYPE, FCGI_STDIN)                                :F(FCGI_12)
+         FCGI_LOG = 'FCGI_STDIN'
+         IDENT(CONTENT)                                      :S(FCGI_GO)
+         I = 1
+FCGI_13  FCGI_IN = FCGI_IN CONTENT<I>                     :F(FCGI_PLOOP)
+         I = I + 1                                            :(FCGI_13)
 *
-* TYPE 4 EXPECTED
+FCGI_12
+         FCGI_LOG = 'BAD TYPE: ' TYPE                             :(END)
 *
-         CONTENT = FCGI_GET()
-         HOST(1, FCGI_LOG '"' 'REQUEST TYPE = ' TYPE '"')
-         DIFFER(CONTENT) HOST(1, FCGI_LOG '"' 'LEN = ' PROTOTYPE(CONTENT) '"')
-         NAMES = FCGI_NAMES(CONTENT)
-*
-* DO ANOTHER -- NOTE THAT WE EVENTUALLY GET TYPE 4 WITH NO CONTENT
-*
-         CONTENT = FCGI_GET()
-         HOST(1, FCGI_LOG '"' 'REQUEST TYPE = ' TYPE '"')
-         DIFFER(CONTENT) HOST(1, FCGI_LOG '"' 'LEN = ' PROTOTYPE(CONTENT) '"')
-         IDENT(CONTENT) HOST(1, FCGI_LOG '"' 'LEN = 0' '"')
-*
-* REQUEST TYPE 5, STDIN
-*
-         CONTENT = FCGI_GET()
-         HOST(1, FCGI_LOG '"' 'REQUEST TYPE = ' TYPE '"')
-         DIFFER(CONTENT) HOST(1, FCGI_LOG '"' 'LEN = ' PROTOTYPE(CONTENT) '"')
-         IDENT(CONTENT) HOST(1, FCGI_LOG '"' 'LEN = 0' '"')
-*
-         CONTENT = FCGI_GET()
-         HOST(1, FCGI_LOG '"' 'REQUEST TYPE = ' TYPE '"')
+FCGI_GO
+         FCGI_LOG = 'FCGI_GO'
+                                                            :(FCGI_END_)
 *
 NOT_FCGI
-         HOST(1, FCGI_LOG '"FCGI: CGI"')
+         FCGI_LOG = 'CGI'
 *
 * NOT FCGI, WE SKIP OVER THE ACCEPT AND PRESUME CGI. THE WEB
 * APPLICATION WILL END IN EITHER PROCESS TERMINATION (CGI CASE) OR
 * A BRANCH TO FCGI_TOP (FCGI CASE).
 *
-FCGI_END
+FCGI_END_
 @
 
 <<unit_test>>=
 #!/usr/bin/bash
-         export "SNOLIB=/export/home/fred/snolib-master"; export "SNOPATH=/export/home/fred/snolib-master"
+         export "SNOLIB=/export/home/fred/snolib/snolib"; export "SNOPATH=/export/home/fred/snolib/snolib"
          exec "/usr/local/bin/snobol4" "-b" "$0" "$@"
 -INCLUDE 'FCGI.INC'
 *

@@ -67,7 +67,7 @@ with doc, respond 302 Location and doc returned
 +           ' SEND = ^.COOKIE_JAR :(RETURN)'))
          SEND(CGI_CLASS, 'ADD_METHOD', 'GET_HEADER', CODE(
 +           ' SEND = ^.HEADER :(RETURN)'))
-         DEFINE('CGI_SEND()')
+         DEFINE('CGI_SEND()S')
          SEND(CGI_CLASS, 'ADD_METHOD', 'SEND', 'CGI_SEND')
          SEND(CGI_CLASS, 'ADD_METHOD', 'GET_LOG', CODE(
 +           ' SEND = ^.LOG :(RETURN)')) 
@@ -122,6 +122,8 @@ CGI_INIT CGI_INIT = SUPER('INIT')
 * COLLECT ENVIRONMENT VARIABLES INTO INSTANCE VARIABLE ENV. WE ONLY
 * GATHER UP "KNOWN" ENVIRONMENT VARIABLES.
 *
+         ^.ENV = DIFFER(USE_FCGI) FCGI_ENV                 :S(CGI_ENV_2)
+*
          ^.ENV = TABLE(27)
          A = %('CONTEXT_DOCUMENT_ROOT,CONTEXT_PREFIX,DOCUMENT_ROOT,'
 +              'GATEWAY_INTERFACE,HTTP_ACCEPT,HTTP_ACCEPT_ENCODING,'
@@ -132,12 +134,17 @@ CGI_INIT CGI_INIT = SUPER('INIT')
 +              'SERVER_ADMIN,SERVER_NAME,SERVER_PORT,SERVER_PROTOCOL,'
 +              'SERVER_SOFTWARE,CONTENT_LENGTH,HTTP_REFERER')
          SEQ(' (^.ENV)<A<I>> = HOST(HOST_GETENV, A<I>); A<I> ', .I)
+CGI_ENV_2
 *
 * FOR POST METHOD, READ (^.ENV)<'CONTENT_LENGTH'>. READ THAT NUMBER OF
 * BYTES, AND ONLY THAT NUMBER. NOTE THAT THIS MAY BE VERY LARGE. THIS
 * MAY FAIL DUE TO MEMORY EXHAUSTION. WE KNOW THAT WE CAN READ A LARGE
 * NUMBER OF BYTES, BUT I HAVE TO DETERMINE THE LIMIT.
 *
+* FOR FCGI, USE FCGI_IN. FIXME: SHOULD TEST CONTENT_LENGTH
+*
+         (^.ENV)<'QUERY_STRING'> = DIFFER(USE_FCGI) FCGI_IN
++                                                         :S(CGI_INIT_3)
          T3 = (^.ENV)<'CONTENT_LENGTH'>
          IDENT(T3)                                        :S(CGI_INIT_3)
          (INTEGER(T3) GT(T3))                             :F(CGI_INIT_3)
@@ -193,27 +200,34 @@ CGI_INIT_2
 *
                                                                :(RETURN)
 *
-* OUTPUT THE HEADER
+* OUTPUT THE HEADER AND CONTENT
 *
 CGI_SEND
 *
 * FIRST, OUTPUT THE CONTENT-TYPE. IF CHARSET HAS BEEN SPECIFIED,
 * ADD THIS TO THE CONTENT-TYPE.
 *
-         $^.OUT = 'Content-type: ' (^.HEADER)<'CONTENT_TYPE'>
-         $^.OUT = '; charset=' VDIFFER((^.HEADER)<'CHARSET'>)
-         $^.OUT =  CHARS_CR CHARS_NL
+         S = 'Content-type: ' (^.HEADER)<'CONTENT_TYPE'>
+         S = S '; charset=' VDIFFER((^.HEADER)<'CHARSET'>)
+         S = S CHARS_CR CHARS_NL
 *
 * GENERATE THE COOKIE STRING AND OUTPUT IF WE HAVE COOKIES TO SEND.
 *
-         $^.OUT = VDIFFER(COOKIE_STRING(^.COOKIE_JAR))
+         S = S VDIFFER(COOKIE_STRING(^.COOKIE_JAR))
 *
 * THE HEADER FINISHES WITH A CR/LF
 *
-         $^.OUT = CHARS_CR CHARS_NL
+         S = S CHARS_CR CHARS_NL
+         $^.OUT = IDENT(USE_FCGI) S
+         DIFFER(USE_FCGI) FCGI_SEND(S)
 *
 * SEND CONTENT
-         $^.OUT = ^.CONTENT                                    :(RETURN)
+*
+         $^.OUT = IDENT(USE_FCGI) ^.CONTENT
+         DIFFER(USE_FCGI) FCGI_SEND(^.CONTENT)
+         DIFFER(USE_FCGI) FCGI_SEND('')
+         DIFFER(USE_FCGI) FCGI_END(0, FCGI_REQUEST_COMPLETE)
+                                                               :(RETURN)
 *
 CGI_OBJECT_END
 *
@@ -338,7 +352,7 @@ but predate SCOOP.
 *
          $LOG = 'CGI ENTERED'
          $LOG = 'current directory is ' BQ('pwd')
-         $LOG = DIFFER(USE_FCGI) 'FAST CGI' :S(END)
+         $LOG = DIFFER(USE_FCGI) 'FAST CGI'
          $LOG = IDENT(USE_FCGI) 'CGI'
 *
 * GET THE COOKIE JAR
