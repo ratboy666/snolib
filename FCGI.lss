@@ -16,8 +16,6 @@ transmissions.
 
 When this is functional, we will work on performance.
 
-FIXME: Needs management packets. Needs STDOUT/END/ABORT request.
-
 <<INCLUDES>>=
 -INCLUDE 'P64.INC'
 -INCLUDE 'FFI.INC'
@@ -27,12 +25,13 @@ FIXME: Needs management packets. Needs STDOUT/END/ABORT request.
 -INCLUDE 'HASH.INC'
 -INCLUDE 'SEQ.INC'
 -INCLUDE 'TIME.INC'
+-INCLUDE 'JSON.INC'
 @
 
 <<FCGI>>=
          FCGI_LOGUNIT = IO_FINDUNIT()
          OUTPUT(.FCGI_LOG, FCGI_LOGUNIT, 'W', 
-+               '|/usr/bin/logger -t FCGI')
++               '|/usr/bin/logger -n localhost -t FCGI')
          STDIN_FILENO = 0
          FCGI_LISTENSOCK_FILENO = STDIN_FILENO
 *
@@ -243,6 +242,13 @@ FCGI_12
 *
 FCGI_GO
          FCGI_LOG = 'FCGI_GO'
+         FCGI_LOG = 'FCGI_ENV: '
+*
+* HERE WE ILLUSTRATE AN INTERESTING TECHNIQUE. SINCE JSON_ENCODE WILL
+* TRAVERSE TABLES AND ARRAYS, WE CAN USE IT TO EXAMINE VARIABLES BY
+* SENDING THE JSON ENCODING TO A LOG FILE.
+*
+         FCGI_LOG = JSON_ENCODE(FCGI_ENV)
                                                             :(FCGI_END_)
 *
 NOT_FCGI

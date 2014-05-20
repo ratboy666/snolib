@@ -281,9 +281,9 @@ JSON_END
 <<unit_test>>=
 #!/usr/bin/bash
          exec "/usr/local/bin/snobol4" "-b" "$0" "$@"
+-INCLUDE 'DDT.INC'
 -INCLUDE 'JSON.INC'
 -INCLUDE 'CRACK.INC'
--INCLUDE 'DDT.INC'
 *
          &CODE = 1
          OUTPUT = JSON_ENCODE()

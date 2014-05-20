@@ -61,6 +61,7 @@ characters, and CHARS_HIGH are 129..255.
 
 Break up &ALPHABET into three classes: control, printable and high.
 
+<<CHARS>>=
 *
          &ALPHABET LEN(32) .  CHARS_CONTROL
 +                  LEN(95) .  CHARS_PRINTABLE
