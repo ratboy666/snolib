@@ -191,6 +191,7 @@ clean:
 deliver: $(P)
 	sudo cp $(P) $(BINDIR)/
 	sudo cp *.so $(SODIR)/
+	sudo cp *.so $(LIBDIR)/
 	sudo rm -f $(BINDIR)/ED $(BINDIR)/EDIT
 	sudo rm -f $(BINDIR)/LIST
 	sudo rm -f $(LIBDIR)/ENDCARD
@@ -199,7 +200,8 @@ deliver: $(P)
 	sudo ln $(BINDIR)/cpmed $(BINDIR)/EDIT
 	sudo ln $(BINDIR)/list $(BINDIR)/LIST
 	sudo cp $(L) $(LIBDIR)/
-	sudo chmod +r $(LIBDIR)/*.INC
+	sudo chmod +r $(LIBDIR)/*.INC $(LIBDIR)/*.so
+	sudo chmod +x $(LIBDIR)/*.so
 	sudo ln -s $(LIBDIR)/ENDCARD.INC $(LIBDIR)/ENDCARD
 	sudo ln -s $(LIBDIR)/DDTCARD.INC $(LIBDIR)/DDTCARD
 	sudo cp CGI.tst $(CGIDIR)/cgi.cgi
