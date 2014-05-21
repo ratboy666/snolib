@@ -208,9 +208,9 @@ PSQL_OPEN
          ^.UNIT = IO_FINDUNIT()                              :F(FRETURN)
          ^.PIPE = UNIQUE()
 %IF (USE_PTY)
-         INPUT(^.PIPE, ^.UNIT, 'U', '||psql -q')             :F(FRETURN)
+         INPUT(^.PIPE, ^.UNIT, 'U', '||/usr/bin/psql -q')    :F(FRETURN)
 %ELSE
-         INPUT(^PIPE, ^.UNIT, 'U', '|psql -q')               :F(FRETURN)
+         INPUT(^PIPE, ^.UNIT, 'U', '|/usr/bin/psql -q')      :F(FRETURN)
 %ENDIF
          OUTPUT(^.PIPE, ^.UNIT)                              :F(FRETURN)
 %IF (USE_PTY)
@@ -218,9 +218,9 @@ PSQL_OPEN
          SELF('DISCARD')                                     :F(FRETURN)
          $^.PIPE = "\set PROMPT2 '# '"                       :F(FRETURN)
          SELF('DISCARD')                                     :F(FRETURN)
+%ENDIF
          $^.PIPE = "\pset pager off"                         :F(FRETURN)
          SELF('DISCARD')                                     :F(FRETURN)
-%ENDIF
          $^.PIPE = "\a"                                      :F(FRETURN)
          SELF('DISCARD')                                     :F(FRETURN)
          $^.PIPE = "\x on"                                   :F(FRETURN)

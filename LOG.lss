@@ -3,7 +3,7 @@
 [[CLOG(X)]] will return the common log (base 10) of [[X]].<br>
 [[LOGB(X,B)]] will return the logarithm of [[X]] to the base [[B]].<br>
 [[LOGB(X)]] will return the natural logarithm of [[X]] (same as
-[[LOG(X)]]).
+[[LOG(X)]]). Note that CSNOBOL4 also has [[LN(X)]] for natural log.
 
 <h2>Uses</h2>
 <a href="DEXP.html">DEXP</a>
@@ -16,7 +16,11 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -INCLUDE 'LOG.INC'
+-INCLUDE 'FLOOR.INC'
          &CODE = 1
+         EQ(CEIL(CLOG(1000)), 3)                                 :F(END)
+         X = CLOG(EULERS_NUMBER) * LN(10)
+         EQ(CEIL(X * 10000), 10000)                              :F(END)
          &CODE = 0
 END
 @
@@ -42,8 +46,18 @@ END
 *
 * LOG.lss
 *
-         LN_10    = 2.3025850929940456840
-         NAT_BASE = 2.718281828459045
+* CONSTANTS TO 50 PLACES
+*
+* SEE
+* http://numbers.computation.free.fr/Constants/Miscellaneous/digits.html
+*
+         LN_10    =
++                   2.30258509299404568401799145468436420760110148862877
+         EULERS_NUMBER =
++                   2.71828182845904523536028747135266249775724709369995
+         PI =
++                   3.14159265358979323846264338327950288419716939937510
+*
          DEXP('CLOG(X) = LOG(X) / LN_10')
          DEXP('LOGB(X,B) = NE(B, 0) LOG(X) / LOG(B) ;'
 +             'LOGB      = EQ(B, 0) LOG(X)          ;')

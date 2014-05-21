@@ -22,6 +22,7 @@ LPROG_END
          exec "snobol4" "-b" "$0" "$@"
 -INCLUDE 'LPROG.INC'
          &CODE = 1
+         EQ(LPROG(), 9)                                          :F(END)
          &CODE = 0
 END
 @
