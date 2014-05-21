@@ -88,6 +88,9 @@
   <li><a href="FASTBAL.html">
     FASTBAL - Pattern to match balanced strings
   </a></li>
+  <li><a href="FCGI.html">
+    FCGI - Fast CGI
+  </a></li>
   <li><a href="FENCE.html">
     FENCE - Match pattern once
   </a></li>

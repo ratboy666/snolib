@@ -261,6 +261,11 @@ because it is being prepared interactively.
 CODE: DDT
 ]]
 
+We copy all lines beginning with -INCLUDE before inserting the
+DDT codes.  This allows debugging retained programs with -INCLUDE
+directives. Because of single inclusion, we don't bother removing
+the lines from the rest of the source. They won't do anything.
+
 <<ddt>>=
 DDT__    TERMINAL = 'STARTING DDT'
          TEMPSRC_ = BQ('mktemp')
@@ -268,6 +273,7 @@ DDT__    TERMINAL = 'STARTING DDT'
          UNIT = IO_FINDUNIT()
          OUTPUT(.F, UNIT,, TEMPSRC_)                         :F(FILERR_)
          F = "-INCLUDE 'DDT.INC'"
+         SEQ(' F = ?(SRC_<N> ? INPAT_) SRC_<N>; SRC_<N> ', .N)
          F = ' DDT()'
          F = 'CODE_RETAINED_PROGRAM'
          SEQ(' F = VDIFFER(SRC_<N>); SRC_<N> ', .N)

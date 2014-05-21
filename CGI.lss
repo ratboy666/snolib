@@ -45,7 +45,8 @@ with doc, respond 302 Location and doc returned
 <a href="HTMLESC.html">HTMLESC</a><br>
 <a href="CHARS.html">CHARS</a><br>
 <a href="HASH.html">HASH</a><br>
-<a href="UNIQUE.html">UNIQUE</a>
+<a href="UNIQUE.html">UNIQUE</a><br>
+<a href="JSON.html">JSON</a>
 
 <<INCLUDES>>=
 -INCLUDE 'SCOOP.INC'
@@ -288,12 +289,27 @@ but predate SCOOP.
   <head>
     <meta charset="utf=8" />
     <title>CGI test</title>
+    <style>
+      a.test {
+        font-weight: bold;
+      }
+    </style>
   </head>
   <body>
     <a href="http://jquery.com/">jQuery</a>
-    <!-- <script src="jquery-1.11.1.js"></script> -->
+    <script src="/jquery-1.11.1.js"></script>
     <script>
       // js code goes here
+      $( document ).ready(function() {
+        // Your code here.
+        $( "a" ).click(function( event ) {
+          alert( "The link will no longer take you to jquery.com" );
+          event.preventDefault();
+          $( this ).hide( "slow" );
+        });
+        $( "a" ).addClass( "test" );
+        //removeClass()
+        });
     </script>
     <!-- Text with some variables to be filled in -->
     <p>
@@ -360,7 +376,7 @@ but predate SCOOP.
 * LOG ENTRY
 *
          $LOG = 'CGI ENTERED'
-         $LOG = 'current directory is ' BQ('pwd')
+         $LOG = 'CURRENT DIRECTORY IS ' BQ('pwd')
          $LOG = DIFFER(USE_FCGI) 'FAST CGI'
          $LOG = IDENT(USE_FCGI) 'CGI'
 *

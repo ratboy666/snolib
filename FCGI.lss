@@ -16,6 +16,17 @@ transmissions.
 
 When this is functional, we will work on performance.
 
+<h2>Uses</h2>
+<a href="P64.html">P64</a><br>
+<a href="FFI.html">FFI</a><br>
+<a href="BQ.html">BQ</a><br>
+<a href="CSNOBOL4.html">CSNOBOL4</a><br>
+<a href="LOGIC.html">LOGIC</a><br>
+<a href="HASH.html">HASH</a><br>
+<a href="SEQ.html">SEQ</a><br>
+<a href="TIME.html">TIME</a><br>
+<a href="JSON.html">JSON</a>
+
 <<INCLUDES>>=
 -INCLUDE 'P64.INC'
 -INCLUDE 'FFI.INC'
@@ -75,7 +86,7 @@ When this is functional, we will work on performance.
          DEFINE('FCGI_NAMES(T,A)')
          DEFINE('FCGI_SEND(S)')
          DEFINE('FCGI_SEND_ERR(S)')
-         DEFINE('FCGI_SEND_(D,S)')
+         DEFINE('FCGI_SEND_(D,S)B')
          DEFINE('FCGI_END(APP_STATUS,PROT_STATUS)S,B0,B1,B2,B3')
          DEFINE('FCGI_GET()')                                :(FCGI_TOP)
 *
@@ -85,9 +96,14 @@ ACCEPT   CLEAR_ERRNO()
          FFI_PAR_N_PTR(FFI_ACCEPT, 3, P2)
          ACCEPT = FFI_CALL_INTEGER(FFI_ACCEPT)                 :(RETURN)
 *
-* FIXME: SEND IN BLOCKS OF 64K
+* IF THE DATA TO SEND IS 0...65535 BYTES, SEND IT. IF GREATER,
+* SEND THE FIRST 65535, AND LOOP FOR THE REST
 *
 FCGI_SEND_
+         LT(SIZE(S), 65536)                              :S(FCGI_SEND_2)
+         S LEN(65535) . B REM . S
+         FCGI_SEND_(D, B)                                  :(FCGI_SEND_)
+FCGI_SEND_2
          FCGI_LOG = 'FCGI_SEND: '  D ' ' SIZE(S)
          S = CHAR(1) CHAR(D)
 +            CHAR(FCGI_REQUESTID / 256) CHAR(REMDR(FCGI_REQUESTID, 256))
@@ -189,7 +205,9 @@ FCGI_TOP FCGI_LOG = 'AT FCGI_TOP: WAITING'
          ERRNO = GET_ERRNO()
          FCGI_LOG = 'ACCEPT: ERRNO = ' ERRNO                      :(END)
 *
-* READ AND DIGEST PACKETS FROM SOCKET.
+* READ AND DIGEST PACKETS FROM SOCKET. CLEAN UP OLD INSTANCE I/O
+* (FCGI IS GOING TO STAY AROUND EXECUTING REQUESTS). tHEN
+* OPEN THE SOCKET PASSED TO US BY ACCEPT().
 *
 FCGI_2   IDENT(FCGI_INSTANCE_UNIT)                            :S(FCGI_8)
          DETACH(.FCGI)
@@ -234,7 +252,11 @@ FCGI_11  EQ(TYPE, FCGI_STDIN)                                :F(FCGI_12)
          FCGI_LOG = 'FCGI_STDIN'
          IDENT(CONTENT)                                      :S(FCGI_GO)
          I = 1
-FCGI_13  FCGI_IN = FCGI_IN CONTENT<I>                     :F(FCGI_PLOOP)
+* FIXME: WE READ IT AS A STRING, CONVERT TO ARRAY OF SMALL INTEGERS,
+* AND THEN MAKE IT A STRING AGAIN. THIS IS DONE BECAUSE WE ARE GOING
+* TO DO PACKET DISASSEMBLY, AND THAT IS ARGUABLY EASIER IN THE SMALL
+* INTEGER SPACE. STILL, IT SHOULD BE FIXED.
+FCGI_13  FCGI_IN = FCGI_IN CHAR(CONTENT<I>)               :F(FCGI_PLOOP)
          I = I + 1                                            :(FCGI_13)
 *
 FCGI_12

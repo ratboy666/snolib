@@ -7,6 +7,7 @@
 BINDIR=/usr/local/bin
 LIBDIR=/usr/local/snolib
 CGIDIR=/var/www/cgi-bin
+HTMLDIR=/var/www/html
 SODIR=/usr/local/lib
 
 # Unit tests
@@ -97,9 +98,9 @@ PSQL.INC:     REPL.INC     COUNT.INC    CHARS.INC    SEQ.INC      \
 HASH.INC:     BRKREM.INC
 READL.INC:    LINK.INC
 SCOOP.INC:    HASH.INC
-CGI.INC:      SCOOP.INC    COOKIE.INC   SESSION.INC  HOST.INC     \
-              CRACK.INC    SEQ.INC      TRIMB.INC    CHARS.INC    \
-              HASH.INC     UNIQUE.INC   HTMLTMPL.INC
+CGI.INC:      SCOOP.INC    COOKIE.INC   HOST.INC     CRACK.INC    \
+              SEQ.INC      HTMLESC.INC  TRIMB.INC    CHARS.INC    \
+              HASH.INC     UNIQUE.INC   JSON.INC
 SESSION.INC:  BQ.INC       NDBM.INC     SEQ.INC      CRACK.INC    \
               HASH.INC     TIME.INC
 COOKIE.INC:   HASH.INC     TIME.INC     DEXP.INC     CHARS.INC
@@ -109,9 +110,11 @@ JSON.INC:     CHARS.INC    HASH.INC     SIZEA.INC    HEX.INC      \
               CH.INC       SEQ.INC
 SIZEA.INC:    BRKREM.INC   SWAP.INC
 UNIQUE.INC:   REPL.INC
-FCGI.INC:     FFI.INC
+FCGI.INC:     FFI.INC      P64.INC      BQ.INC       CSNOBOL4.INC \
+              LOGIC.INC    HASH.INC     SEQ.INC      TIME.INC     \
+              JSON.INC
 
-# Bootstrapping. We need embed, ifs, sweave, stanglek snocone and ED4
+# Bootstrapping. We need embed, ifs, sweave, stangle, snocone and ED4
 # to build the code. We keep embed0, ifs0, sweave0 and stangle0 for
 # bootstrapping.  After the library is built, the bootstrap utilities
 # can be generated from the most recent using the bundle utility.
@@ -207,11 +210,11 @@ deliver: $(P)
 	sudo cp CGI.tst $(CGIDIR)/cgi.cgi
 	sudo cp CGI.tst $(CGIDIR)/cgi.fcgi
 	sudo cp CGI.tmpl $(CGIDIR)
-	sudo cp jquery-1.11.1.js $(CGIDIR)
+	sudo cp jquery-1.11.1.js $(HTMLDIR)
 	sudo chown apache:apache $(CGIDIR)/cgi.cgi \
 				 $(CGIDIR)/cgi.fcgi \
 	                         $(CGIDIR)/CGI.tmpl \
-	                         $(CGIDIR)/jquery-1.11.1.js
+	                         $(HTMLDIR)/jquery-1.11.1.js
 
 # Testing
 
