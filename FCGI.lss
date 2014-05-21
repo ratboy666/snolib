@@ -80,15 +80,17 @@ When this is functional, we will work on performance.
 * LISTEN() HAS ALREADY BEEN DONE IN THE WEB SERVER.
 *
          USE_FCGI = 1
+NOT_FCGI FCGI_LOG = IDENT(USER_FCGI) 'NORMAL CGI'
          FFI_ACCEPT = FFI_NEW('I', 'I,P,P')
          FFI_SET_CALLP(FFI_ACCEPT, DLSYM(0, 'accept'))
+         DEFINE('FCGI_ACCEPT()')
          DEFINE('ACCEPT(SOCKET,P1,P2)')
          DEFINE('FCGI_NAMES(T,A)')
          DEFINE('FCGI_SEND(S)')
          DEFINE('FCGI_SEND_ERR(S)')
          DEFINE('FCGI_SEND_(D,S)B')
          DEFINE('FCGI_END(APP_STATUS,PROT_STATUS)S,B0,B1,B2,B3')
-         DEFINE('FCGI_GET()')                                :(FCGI_TOP)
+         DEFINE('FCGI_GET()')                               :(FCGI_END_)
 *
 ACCEPT   CLEAR_ERRNO()
          FFI_PAR_N_INTEGER(FFI_ACCEPT, 1, SOCKET)
@@ -195,7 +197,11 @@ FCGI_NAMES_6
          T<NM> = DA
          A<I>                                  :F(RETURN)S(FCGI_NAMES_7)
 *
-FCGI_TOP FCGI_LOG = 'AT FCGI_TOP: WAITING'
+* MAIN FCGI FUNCTION
+*
+FCGI_ACCEPT
+         IDENT(USE_FCGI)                                      :S(RETURN)
+         FCGI_LOG = 'FCGI_ACCEPT: WAITING'
          SOCKET = ACCEPT(FCGI_LISTENSOCK_FILENO, 0, 0)
          FCGI_LOG = 'AFTER ACCEPT'
          GE(SOCKET)                                           :S(FCGI_2)
@@ -264,28 +270,23 @@ FCGI_12
 *
 FCGI_GO
          FCGI_LOG = 'FCGI_GO'
-         FCGI_LOG = 'FCGI_ENV: '
 *
 * HERE WE ILLUSTRATE AN INTERESTING TECHNIQUE. SINCE JSON_ENCODE WILL
 * TRAVERSE TABLES AND ARRAYS, WE CAN USE IT TO EXAMINE VARIABLES BY
 * SENDING THE JSON ENCODING TO A LOG FILE.
 *
+         FCGI_LOG = 'FCGI_ENV: '
          FCGI_LOG = JSON_ENCODE(FCGI_ENV)
-                                                            :(FCGI_END_)
-*
-NOT_FCGI
-         FCGI_LOG = 'CGI'
-*
-* NOT FCGI, WE SKIP OVER THE ACCEPT AND PRESUME CGI. THE WEB
-* APPLICATION WILL END IN EITHER PROCESS TERMINATION (CGI CASE) OR
-* A BRANCH TO FCGI_TOP (FCGI CASE).
-*
-FCGI_END_
 *
 * BUG ALERT: IF THIS IS NOT DONE, GETTIMEOFDAY(), GMTIME() ETC.
 * FAULT ON THE SECOND PASS THROUGH FCGI. HAPPENS WITH CSNOBOL4 1.5
 *
+* TRY TO ISOLATE THIS FURTHER.
+*
          T = GETTIMEOFDAY()
+                                                               :(RETURN)
+*
+FCGI_END_
 @
 
 <<unit_test>>=
