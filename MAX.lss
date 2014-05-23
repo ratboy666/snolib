@@ -1,0 +1,49 @@
+<h1>MAX - MAX and MIN Functions</h1>
+
+[[MAX(X,Y)]] will return the maximum of [[X]] and [[Y]]. [[MIN(X,Y)]]
+returns the minimum of [[X]] and [[Y]].
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'MAX.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL MAX
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                      #     #     #     #     #                       *
+*                      ##   ##    # #     #   #                        *
+*                      # # # #   #   #     # #                         *
+*                      #  #  #  #     #     #                          *
+*                      #     #  #######    # #                         *
+*                      #     #  #     #   #   #                        *
+*                      #     #  #     #  #     #                       *
+*                                                                      *
+* MAX                      MAX/MIN FUNCTIONS                           *
+*                                                                      *
+************************************************************************
+*
+* MAX.lss
+*
+         DEFINE('MAX(X,Y)')
+         DEFINE('MIN(X,Y)')                                   :(MAX_END)
+*
+MAX      MAX = GT(X, Y) X                                     :S(RETURN)
+         MAX = Y                                               :(RETURN)
+*
+MIN      MIN = LT(X, Y) X                                     :S(RETURN)
+         MIN = Y                                               :(RETURN)
+*
+MAX_END
+*
+* CE: .MSNOBOL4;
+@
