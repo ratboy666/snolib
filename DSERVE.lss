@@ -1,0 +1,166 @@
+<h1>DSERVE - DDT Server</h1>
+
+[[DSERVE]] provides a method to allow debugging applications that
+cannot normally be debugged. The application will call [[DSERVE_INIT()]]
+to initialize. This creates a listener process that waits for telnet
+connections. When a connection is made, two processes will shuttle
+data between telnet and [[DDT]].
+
+<h2>Uses</h2>
+<a href="CHARS">CHARS</a><br>
+<a href="REPL">REPL</a><br>
+<a href="CSNOBOL4">CSNOBOL4</a><br>
+<a href="HOST">HOST</a><br>
+<a href="MAX"></a><br>
+<a href="DDT"></a>
+
+<<INCLUDES>>= 
+-INCLUDE 'CHARS.INC'
+-INCLUDE 'REPL.INC'
+-INCLUDE 'CSNOBOL4.INC'
+-INCLUDE 'HOST.INC'
+-INCLUDE 'MAX.INC'
+-INCLUDE 'DDT.INC'
+@
+
+<<DSERVE>>=
+         DEFINE('DSERVE_INIT(APPNAME,PORT,KEY)')      :(DSERVE_INIT_END)
+*
+DSERVE_INIT
+         DSERVE_KEY = KEY
+         DSERVE_PORT = PORT
+         DSERVE_APPNAME = APPNAME
+*
+         LT(CREATEPIPE())                                    :S(DSERVE9)
+         DSERVE_P1_RFD = GETPIPEFD(0)
+         DSERVE_P1_WFD = GETPIPEFD(1)
+         LT(CREATEPIPE())                                    :S(DSERVE9)
+         DSERVE_P2_RFD = GETPIPEFD(0)
+         DSERVE_P2_WFD = GETPIPEFD(1)
+         PID = FORK()                                        :F(DSERVE9)
+         LT(PID)                                             :S(DSERVE9)
+         EQ(PID)                                             :S(DSERVE2)
+*
+* PRIMORDIAL PROCESS - POLLS WITH DSERVE() WAITING FOR CONNECTION AND
+* DEBUGGER ENTRY
+*
+         DSERVE_FDS = MALLOC(SIZEOF_FD_SET())
+         DSERVE_TV = MALLOC(SIZEOF_TIMEVAL())                  :(RETURN)
+*
+DSERVE_INIT_END
+*
+         DEFINE('DSERVE()N,S')                             :(DSERVE_END)
+DSERVE   SET_TIMEVAL(DSERVE_TV, 0, 0)
+         FD_ZERO(DSERVE_FDS)
+         FD_SET(DSERVE_P2_RFD, DSERVE_FDS)
+         N = SELECT(DSERVE_P2_RFD + 1, DSERVE_FDS, 0, 0, DSERVE_TV)
+         EQ(N)                                                :S(RETURN)
+*
+         OUTPUT(.DDT_T, 10, 'W', '/dev/fd/' DSERVE_P1_WFD)   :F(DSERVE9)
+         INPUT(.DDT_R, 11,, '/dev/fd/' DSERVE_P2_RFD)        :F(DSERVE9)
+*
+* WAIT FOR MESSAGE FROM NET PROCESS
+*
+         S = DDT_R
+         IDENT(S, 'DDT')                                     :S(DSERVE7)
+         DDT_T = 'OPTION ' S ' NOT AVAILABLE'                  :(RETURN)
+DSERVE7  DDT_T = NE(DDT_ACTIVE) 'APP ALREADY IN DDT'          :S(RETURN)
+         DDT_USE_R = 1
+         DSERVE = 'DDT'
+         DDT()
+                                                               :(RETURN)
+*
+* CONNECTION LISTENER PROCESS
+*
+DSERVE2  INPUT(.FROM_PRIMORDIAL, 12,, '/dev/fd/' DSERVE_P1_RFD)
++                                                            :F(DSERVE9)
+         OUTPUT(.TO_PRIMORDIAL, 13, 'W', '/dev/fd/' DSERVE_P2_WFD)
++                                                            :F(DSERVE9)
+*
+DSERVE3  FDN = SERV_LISTEN('inet', 'stream', DSERVE_PORT)    :F(DSERVE9)
+         INPUT(.NET, 9, 'UWT', '/dev/fd/' FDN)               :F(DSERVE9)
+         OUTPUT(.NET, 9)                                     :F(DSERVE9)
+         CRLF = CHARS_CR CHARS_LF
+*
+         NET = 'DSERVE ' DSERVE_APPNAME CRLF
+         NET = CRLF
+         NET = 'LOGIN REQUIRED: ' CRLF
+         S = NET
+         S = REPL(S, CRLF)
+         S = TRIMB(S)
+*
+* LOGIN IS PLAINTEXT. THIS SHOULD ONLY BE USED OVER TELNET RUNNING ON
+* THE SAME HOST AS THE APPLICATION BEING DEBUGGED. THERE IS NO USER
+* NAME/PASSWORD -- JUST A SINGLE MAGIC WORD.
+*
+         IDENT(S, DSERVE_KEY)                                :S(DSERVE8)
+         NET = 'BAD LOGIN' CRLF                                   :(END)
+DSERVE8  NET = 'LOGIN CONFIRM' CRLF
+*
+* SEND MESSAGE TO PRIMORDIAL.
+*
+         TO_PRIMORDIAL = 'DDT'
+*
+* FORK TO TWO COPY LOOPS: PRIMORDIAL -> NET AND NET -> PRIMORDIAL
+*
+         PID = FORK()
+         LT(PID)                                             :S(DSERVE9)
+         EQ(PID)                                            :S(DSERVE12)
+*
+* PRIMORDIAL -> NET COPY PROCESS
+*
+DSERVE11 S = FROM_PRIMORDIAL                                     :F(END)
+         NET = S CRLF                                        :(DSERVE11)
+*
+* NET -> PRIMORDIAL COPY PROCESS
+*
+DSERVE12 S = NET                                                 :F(END)
+         S = REPL(S, CRLF)
+         TO_PRIMORDIAL = S                                   :(DSERVE12)
+*
+DSERVE9  TERMINAL = 'DSERVE: INTERNAL FAILURE'                    :(END)
+*
+DSERVE_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'DSERVE.INC'
+         &CODE = 1
+         DSERVE_INIT('TEST', 54321, 'magic')
+LUP      DSERVE()
+         MAJOR = MAJOR + 1
+         TERMINAL = 'MAJOR = ' MAJOR
+         N = 0
+LUP2     N = N + 1
+         LT(N, 10000000)                                  :S(LUP2)F(LUP)
+         &CODE = 0
+END
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL DSERVE
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*         ######    #####   #######  ######   #     #  #######         *
+*         #     #  #     #  #        #     #  #     #  #               *
+*         #     #  #        #        #     #  #     #  #               *
+*         #     #   #####   #####    ######   #     #  #####           *
+*         #     #        #  #        #   #     #   #   #               *
+*         #     #  #     #  #        #    #     # #    #               *
+*         ######    #####   #######  #     #     #     #######         *
+*                                                                      *
+* DSERVE                     DDT SERVER                                *
+*                                                                      *
+************************************************************************
+*
+* DSERVE.lss
+*
+<<DSERVE>>
+*
+* CE: .MSNOBOL4;
+@
