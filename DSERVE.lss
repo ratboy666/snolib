@@ -6,6 +6,8 @@ to initialize. This creates a listener process that waits for telnet
 connections. When a connection is made, two processes will shuttle
 data between telnet and [[DDT]].
 
+Not very good at cleaning up, but this does work.
+
 <h2>Uses</h2>
 <a href="CHARS">CHARS</a><br>
 <a href="REPL">REPL</a><br>
@@ -50,7 +52,8 @@ DSERVE_INIT
 DSERVE_INIT_END
 *
          DEFINE('DSERVE()N,S')                             :(DSERVE_END)
-DSERVE   SET_TIMEVAL(DSERVE_TV, 0, 0)
+DSERVE   NE(DDT_ACTIVE)                                        :(RETURN)
+         SET_TIMEVAL(DSERVE_TV, 0, 0)
          FD_ZERO(DSERVE_FDS)
          FD_SET(DSERVE_P2_RFD, DSERVE_FDS)
          N = SELECT(DSERVE_P2_RFD + 1, DSERVE_FDS, 0, 0, DSERVE_TV)
@@ -115,7 +118,8 @@ DSERVE11 S = FROM_PRIMORDIAL                                     :F(END)
 * NET -> PRIMORDIAL COPY PROCESS
 *
 DSERVE12 S = NET                                                 :F(END)
-         S = REPL(S, CRLF)
+         S = REPL(S, CHARS_CR)
+         S = REPL(S, CHARS_LF)
          TO_PRIMORDIAL = S                                   :(DSERVE12)
 *
 DSERVE9  TERMINAL = 'DSERVE: INTERNAL FAILURE'                    :(END)
