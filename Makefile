@@ -33,7 +33,8 @@ T = AGT.tst      AI.tst       AOPA.tst     BALREV.tst   BALX.tst     \
     WRAPPER.tst  LINK.tst     HTMLESC.tst  TRIMB.tst    PSQL.tst     \
     BRKREM.tst   HASH.tst     READL.tst    FOREACH.tst  SCOOP.tst    \
     CGI.tst      READFILE.tst SESSION.tst  GCD.tst      COMPLEX.tst  \
-    COOKIE.tst   HTMLTMPL.tst JSON.tst     FCGI.tst
+    COOKIE.tst   HTMLTMPL.tst JSON.tst     FCGI.tst     MAX.tst      \
+    DSERVE.tst
 
 # Library files FIXME: TRIAL should be removed.
 
@@ -113,6 +114,8 @@ UNIQUE.INC:   REPL.INC
 FCGI.INC:     FFI.INC      P64.INC      BQ.INC       CSNOBOL4.INC \
               LOGIC.INC    HASH.INC     SEQ.INC      TIME.INC     \
               JSON.INC
+DSERVE.INC:   CHARS.INC    REPL.INC     CSNOBOL4.INC HOST.INC     \
+              MAX.INC      DDT.INC
 
 # Bootstrapping. We need embed, ifs, sweave, stangle, snocone and ED4
 # to build the code. We keep embed0, ifs0, sweave0 and stangle0 for
@@ -268,13 +271,13 @@ docs:         AGT.html      AI.html       ALL.html      AOPA.html     \
               TIME.html     TIMER.html    TPROFILE.html TRUNC.html    \
               uban.html     UNIQUE.html   upcase.html   UTF8.html     \
               WRAPPER.html  LINK.html     HTMLESC.html  TRIMB.html    \
-              PSQL.html     BRKREM.html   HASH.html                   \
+              PSQL.html     BRKREM.html   HASH.html     MAX.html      \
               READL.html    scan.html     FOREACH.html  SCOOP.html    \
               CGI.html      READFILE.html SESSION.html  GCD.html      \
               COMPLEX.html  COOKIE.html   HTMLTMPL.html JSON.html     \
               stangle       sweave        greenbar.gif  index.html    \
               utility.html  snocone.html  cpmed.html    ED4           \
-              FCGI.html
+              FCGI.html     DSERVE.html
 	touch docs
 
 snocone.html: snocone.htm
@@ -390,3 +393,5 @@ HTMLTMPL.INC: HTMLTMPL.sc
 JSON.INC: JSON.SNO
 SIZEA.INC: SIZEA.SNO
 FCGI.INC: FCGI.SNO
+MAX.INC: MAX.SNO
+DSERVE.INC: DSERVE.SNO

@@ -79,6 +79,9 @@
   <li><a href="DISPLAY.html">
     DISPLAY - Display control
   </a></li>
+  <li><a href="DSERVE.html">
+    DSERVE - DDT Service (telnet)
+  </a></li>
   <li><a href="DYNAMIC.html">
     DYNAMIC - Create dynamic modules for CSNOBOL4
   </a></li>
@@ -156,6 +159,9 @@
   </a></li>
   <li><a href="LPROG.html">
     LPROG - Length of program
+  </a></li>
+  <li><a href="MAX.html">
+    MAX - MAX() and MIN()
   </a></li>
   <li><a href="MDY.html">
     MDY - M/D/Y from Y/D

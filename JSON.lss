@@ -157,6 +157,7 @@ JSON_ENCODE_VALUE
          JSON_ENCODE_VALUE = IDENT(DATATYPE(X), 'INTEGER') X  :S(RETURN)
          JSON_ENCODE_VALUE = IDENT(DATATYPE(X), 'REAL') X
 +                                                :F(JSON_ENCODE_VALUE_2)
+         JSON_ENCODE_VALUE 'nan' | 'inf'         :S(JSON_ENCODE_VALUE_3)
          JSON_ENCODE_VALUE RTAB(1) '.'                        :F(RETURN)
          JSON_ENCODE_VALUE = JSON_ENCODE_VALUE '0'             :(RETURN)
 JSON_ENCODE_VALUE_2
@@ -166,8 +167,10 @@ JSON_ENCODE_VALUE_2
 +                            JSON_ENCODE_OBJECT(X)            :S(RETURN)
          JSON_ENCODE_VALUE = IDENT(DATATYPE(X), 'ARRAY')
 +                            JSON_ENCODE_ARRAY(X)             :S(RETURN)
-         TERMINAL = 'JSON_ENCODE_VALUE: CANNOT ENCODE: ' DATATYPE(X)
-+                                                                 :(END)
+JSON_ENCODE_VALUE_3
+         TERMINAL = 'JSON_ENCODE_VALUE: CANNOT ENCODE: '
++                   DATATYPE(X) ' ' X
+                                                                  :(END)
 *
 JSON_INDENT
          JSON_INDENT = DUPL(JSON_IN, L)                        :(RETURN)
@@ -345,7 +348,21 @@ JSON_END
          OUTPUT = JSON_ENCODE(X)
          X = JSON_DECODE('[[] {}]')
          OUTPUT = JSON_ENCODE(X)
+         JSON_DECODE('[')                                        :S(END)
+         JSON_DECODE('{')                                        :S(END)
+         S = '1 2 3'
+         JSON_DECODE(S)                                          :F(END)
+         JSON_DECODE(JSON_REST)                                  :F(END)
+         JSON_DECODE(JSON_REST)                                  :F(END)
+         JSON_DECODE(JSON_REST)                                  :S(END)
+*
+* FIXME: USE SETEXIT() HERE TO CATCH BRANCH TO END, AND MAKE TEST
+* SUCCESSFUL. GENERALLY, WE SHOULD HAVE A HARNESS THAT PERMITS, AND
+* CHECKS AND LOGS OUTPUTS. A LIGHTWEIGHT TEST HARNESS FOR UNIT TESTING.
+*
          &CODE = 0
+         JSON_ENCODE(1E309)                                      :S(END)
+         &CODE = 1
 END
 @
 

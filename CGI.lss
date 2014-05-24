@@ -325,6 +325,8 @@ but predate SCOOP.
     <p>
       vehicle <tmpl_var VEHICLE>
     <p>
+      request uri <tmpl_var REQUEST_URI>
+    <p>
       <form name="input" action="cgi.fcgi" method="GET">
         First name: <input type="text" name="firstname"><br>
         Last name: <input type="text" name="lastname"><br>
@@ -478,6 +480,11 @@ NO_T_C
 *
          E = SEND(CGI, 'GET_ENV')
          A<'REQUEST_METHOD'> = E<'REQUEST_METHOD'>
+*
+* REQUEST URI http://localhost/cgi-bin/cgi.fcgi/x/y?...
+* ON GET, APPENDS '/' ACTION TO THE END BEFORE THE ? PART.
+*
+         A<'REQUEST_URI'> = E<'REQUEST_URI'>
 *
 * FROM THE COOKIE JAR
 *
