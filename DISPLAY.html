@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>DISPLAY - Display control</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Use <font face="Source Code Pro">tput</font> to determine strings to control the display. <font face="Source Code Pro">curses</font>
+may be better, but this does (at least) <b>allow</b> full-screen
+applications. We add to this file as additional display controls
+are needed.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="CHARS.html">CHARS</a><br>
+<a href="BQ.html">BQ</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;CHARS.INC&#39;
+-INCLUDE &#39;BQ.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;DISPLAY&raquo;&equiv;</b>
+DISPLAY
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* GATHER STATIC TERMINAL STRINGS.</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* STANDOUT (BOLD)</i></font>
+         DS_SMSO  = BQ(&#39;tput smso&#39;)
+<font color="#818181"><i>* STANDOUT OFF</i></font>
+         DS_RMSO  = BQ(&#39;tput rmso&#39;)
+<font color="#818181"><i>* UNDERLINE</i></font>
+         DS_SMUL  = BQ(&#39;tput smul&#39;)
+<font color="#818181"><i>* UNDERLINE OFF</i></font>
+         DS_RMUL  = BQ(&#39;tput rmul&#39;)
+<font color="#818181"><i>* BLINK</i></font>
+         DS_BLINK = BQ(&#39;tput blink&#39;)
+<font color="#818181"><i>* BOLD</i></font>
+         DS_BOLD  = BQ(&#39;tput bold&#39;)
+<font color="#818181"><i>* DIM (HALF-BRIGHT)</i></font>
+         DS_DIM   = BQ(&#39;tput dim&#39;)
+<font color="#818181"><i>* REVERSE</i></font>
+         DS_REV   = BQ(&#39;tput rev&#39;)
+<font color="#818181"><i>* RESET ALL</i></font>
+         DS_SGR0  = BQ(&#39;tput sgr0&#39;)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CURSOR OFF</i></font>
+         DS_CIVIS = BQ(&#39;tput civis&#39;)
+<font color="#818181"><i>* CURSOR ON</i></font>
+         DS_CNORM = BQ(&#39;tput cnorm&#39;)
+<font color="#818181"><i>* CURSOR VERY VISIBLE</i></font>
+         DS_CVVIS = BQ(&#39;tput cvvis&#39;)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* ERASE TO END-LINE</i></font>
+         DS_EL    = BQ(&#39;tput el&#39;)
+<font color="#818181"><i>* HOME CURSOR</i></font>
+         DS_HOME  = BQ(&#39;tput home&#39;)
+<font color="#818181"><i>* CLEAR DISPLAY</i></font>
+         DS_CLEAR = BQ(&#39;tput clear&#39;)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* NUMBER OF COLUMNS</i></font>
+         DS_COLS  = BQ(&#39;tput cols&#39;)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* NUMBER OF LINES</i></font>
+         DS_LINES = BQ(&#39;tput lines&#39;)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* DYNAMIC STRINGS. THESE ARE CACHED IN TABLE DS_</i></font>
+<font color="#818181"><i>*</i></font>
+         DS_ = TABLE(DS_LINES * DS_COLS + 16)
+<font color="#818181"><i>*</i></font>
+         DEFINE(&#39;DS_GOTO(ROW,COL)&#39;)
+         DEFINE(&#39;DS_FOREGROUND_COLOR(N)&#39;)
+         DEFINE(&#39;DS_BACKGROUND_COLOR(N)&#39;)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* DEFINED COLORS</i></font>
+<font color="#818181"><i>*</i></font>
+         DS_BLACK  = 0
+         DS_RED    = 1
+         DS_GREEN  = 2
+         DS_YELLOW = 3
+         DS_BLUE   = 4
+         DS_PURPLE = 5
+         DS_CYAN   = 6
+         DS_WHITE  = 7                                    <b>:(DS_GOTO_END)</b>
+<font color="#818181"><i>*</i></font>
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+These routines check to see if the entry is in the <font face="Source Code Pro">DS_</font> table
+(cached). If so, return the string. If not, use <font face="Source Code Pro">tput</font> to generate
+the string, insert into the cache table, and then return.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;DISPLAY&raquo;&equiv;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* SET FOREGROUND COLOR.</i></font>
+<font color="#818181"><i>*</i></font>
+DS_FOREGROUND_COLOR
+         DS_FOREGROUND_COLOR = VDIFFER(DS&lt;&#39;F&#39; N&gt;)             <b>:S(RETURN)</b>
+         DS_&lt;&#39;F&#39; N&gt; = BQ(&#39;tput setaf &#39; N)         <b>:(DS_FOREGROUND_COLOR)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* SET BACKGROUND COLOR.</i></font>
+<font color="#818181"><i>*</i></font>
+DS_BACKGROUND_COLOR
+         DS_BACKGROUND_COLOR = VDIFFER(DS&lt;&#39;B&#39; N&gt;)             <b>:S(RETURN)</b>
+         DS_&lt;&#39;B&#39; N&gt; = BQ(&#39;tput setab &#39; N)         <b>:(DS_BACKGROUND_COLOR)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* POSITION CURSOR TO (ROW, COLUMN)</i></font>
+<font color="#818181"><i>*</i></font>
+DS_GOTO  DS_GOTO = VDIFFER(DS_&lt;ROW &#39; &#39; COL&gt;)                  <b>:S(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">COLLECT()</font> was needed here in earlier versions of CSNOBOL. It is
+no longer needed. (GC within BQ was deadly in CSNOBOL4 1.1!).
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;DISPLAY&raquo;&equiv;</b>
+         DS_&lt;ROW &#39; &#39; COL&gt; = BQ(&#39;tput cup &#39; ROW &#39; &#39; COL)       <b>:(DS_GOTO)</b>
+<font color="#818181"><i>*</i></font>
+DS_GOTO_END
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* IND - SCROLL UP</i></font>
+<font color="#818181"><i>* NOTE THAT IND IS NL, SO BQ RETURNS IS NOT SUITABLE WE THEREFORE</i></font>
+<font color="#818181"><i>* DON&#39;T USE BQ(&#39;tput ind&#39;) BUT CHARS_NL DIRECTLY</i></font>
+<font color="#818181"><i>*</i></font>
+         DS_IND = DS_GOTO(DS_LINES - 1, 0) CHARS_NL
+<font color="#818181"><i>* RI - SCROLL DOWN</i></font>
+         DS_RI = DS_HOME BQ(&#39;tput ri&#39;)
+<font color="#818181"><i>*</i></font>
+         CODE(&#39;DISPLAY&#39;)
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;DISPLAY.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL DISPLAY
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*     ######   ###   #####   ######   #           #     #     #        *</i></font>
+<font color="#818181"><i>*     #     #   #   #     #  #     #  #          # #     #   #         *</i></font>
+<font color="#818181"><i>*     #     #   #   #        #     #  #         #   #     # #          *</i></font>
+<font color="#818181"><i>*     #     #   #    #####   ######   #        #     #     #           *</i></font>
+<font color="#818181"><i>*     #     #   #         #  #        #        #######     #           *</i></font>
+<font color="#818181"><i>*     #     #   #   #     #  #        #        #     #     #           *</i></font>
+<font color="#818181"><i>*     ######   ###   #####   #        #######  #     #     #           *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* DISPLAY            DISPLAY CONTROL (FULL-SCREEN)                     *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* DISPLAY.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;DISPLAY&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:07 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

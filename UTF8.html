@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>UTF8 - UTF-8 encoded UNICODE handling</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+UTF-8 encoded UNICODE handling. This module is borked. Needs fixing
+but I add it to the library anyway.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;UTF8&raquo;&equiv;</b>
+<font color="#818181"><i>* PHIL BUDNE &lt;PHIL@ULTIMATE.COM&gt;</i></font>
+<font color="#818181"><i>* SEPTEMBER 1996</i></font>
+<font color="#818181"><i>* UPDATED FOR 4/5/6 BYTE RUNES JUNE 1997</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* MOST OF THIS IS JUST AWFUL, BUT THIS IS JUST A PROOF OF CONCEPT,</i></font>
+<font color="#818181"><i>* AND LIKE ALL SNOBOL THERE IS ALWAYS A SMALLER, FASTER AND MORE</i></font>
+<font color="#818181"><i>* PERVERSE WAY TO DO ANYTHING.</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* TODO</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* UTFNOTANY</i></font>
+<font color="#818181"><i>* UTFSPAN</i></font>
+<font color="#818181"><i>* UTFBREAK</i></font>
+<font color="#818181"><i>* UTFBREAKX</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* PATTERN TO MATCH ONE UTF ENCODED RUNE</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* SNOBOL4 LACKS CHAR(), SPITBOL CHAR() LOSES ON CHAR(0)!</i></font>
+<font color="#818181"><i>*</i></font>
+         DEFINE(&quot;XCHAR(N)&quot;)                                    <b>:(EXCHAR)</b>
+<font color="#818181"><i>*</i></font>
+XCHAR    &amp;ALPHABET ARB POS(N) LEN(1) . XCHAR        <b>:S(RETURN)F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+EXCHAR
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* HELPER FUNCTION TO PATTERN THAT MATCHES A RANGE OF BYTE VALUES.</i></font>
+<font color="#818181"><i>* THE TRUE SNO-HEAD MIGHT IMPLEMENT THIS AS A FUNCTION THAT TAKES</i></font>
+<font color="#818181"><i>* STRINGS OF SPAN(&#39;01&#39;) ARBNO(&#39;X&#39;) DIRECTLY!!</i></font>
+<font color="#818181"><i>*</i></font>
+         DEFINE(&quot;RANGE(START,END)&quot;)                            <b>:(ERANGE)</b>
+<font color="#818181"><i>*</i></font>
+RANGE
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* SPITBOL COMPILES ANY() INTO A BITMAP;</i></font>
+         &amp;ALPHABET ARB (XCHAR(START) ARB XCHAR(END)) . RANGE <b>:F(FRETURN)</b>
+<font color="#818181"><i>* SPITBOL COMPILES TABLES ONCE</i></font>
+         RANGE = ANY(RANGE)                                    <b>:(RETURN)</b>
+<font color="#818181"><i>* FOR SNOBOL4; CREATE BIG PATTERN</i></font>
+<font color="#818181"><i>*        GE(START, END)                                      <b>:S(FRETURN)</b></i></font>
+<font color="#818181"><i>*        RANGE = XCHAR(START)</i></font>
+<font color="#818181"><i>*RANGE1  GE(STAT, END)                                        <b>:S(RETURN)</b></i></font>
+<font color="#818181"><i>*        START = START + 1</i></font>
+<font color="#818181"><i>*        RANGE = RANGE | XCHAR(START)                          <b>:(RANGE1)</b></i></font>
+<font color="#818181"><i>*</i></font>
+ERANGE
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* SINGLE BYTE:       0XXXXXXX  VALUES 0..0X7F</i></font>
+<font color="#818181"><i>*</i></font>
+         UTF.T1 = RANGE(0, 127)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* TWO-BYTE LEADER:   110XXXXX  VALUES 0X80..0X7FF</i></font>
+<font color="#818181"><i>*</i></font>
+         UTF.T2 = RANGE(192, 223)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* THREE-BYTE LEADER: 1110XXXX  VALUES 0X800..0XFFFF</i></font>
+<font color="#818181"><i>*</i></font>
+         UTF.T3 = RANGE(224, 239)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* FOUR-BYTE LEADER:  11110XXX  VALUES 0X10000..0X1FFFFF</i></font>
+<font color="#818181"><i>*</i></font>
+         UTF.T4 = RANGE(240, 247)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* FIVE-BYTE LEADER:  111110XX  VALUES 0X200000..0X3FFFFFF</i></font>
+<font color="#818181"><i>*</i></font>
+         UTF.T5 = RANGE(248, 251)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* FIVE-BYTE LEADER:  1111110X  VALUES 0X4000000..0X7FFFFFFF</i></font>
+<font color="#818181"><i>*</i></font>
+         UTF.T6 = RANGE(252, 253)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* SUBSEQUENT BYTE:   10XXXXXX</i></font>
+<font color="#818181"><i>*</i></font>
+         UTF.TX = RANGE(128, 191)
+<font color="#818181"><i>*</i></font>
+         UTF.RUNE = FENCE
++           (UTF.T1 |
++            UTF.T2 UTF.TX |
++            UTF.T3 UTF.TX UTF.TX |
++            UTF.T4 UTF.TX UTF.TX UTF.TX |
++            UTF.T5 UTF.TX UTF.TX UTF.TX UTF.TX |
++            UTF.T6 UTF.TX UTF.TX UTF.TX UTF.TX UTF.TX)
+<font color="#818181"><i>*</i></font>
+         UTF.RUNE0 = POS(0) UTF.RUNE
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* PATTERN TO MOVE TO NEXY SYNC CHAR;</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>*        UTF.SYNC = BREAKX(UTF.T1 UTF.T2 UTF.T3 UTF.T4 UTF.T5 UTF.T6)</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* UTF ANALOG OF ARB</i></font>
+<font color="#818181"><i>*</i></font>
+         UTFARB = ARBNO(UTF.RUNE)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* UTF ANALOG OF LEN</i></font>
+<font color="#818181"><i>*</i></font>
+         DEFINE(&quot;UTFLEN(N)&quot;)                                  <b>:(EUTFLEN)</b>
+<font color="#818181"><i>*</i></font>
+UTFLEN   LT(N, 0)                                             <b>:(FRETURN)</b>
+         UTFLEN =
+UTFLEN2  EQ(N, 0)                                             <b>:S(RETURN)</b>
+         UTFLEN = UTFLEN UTF.RUNE
+         N = N - 1                                            <b>:(UTFLEN2)</b>
+<font color="#818181"><i>*</i></font>
+EUTFLEN
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* UTF ANALOG FOR ANY(STR)</i></font>
+<font color="#818181"><i>*</i></font>
+         DEFINE(&quot;UTFANY(STR)R&quot;)                               <b>:(EUTFANY)</b>
+<font color="#818181"><i>*</i></font>
+UTFANY   STR UTF.RUNE0 . UTFANY =                            <b>:F(FRETURN)</b>
+UTFANY2  IDENT(STR)                                           <b>:S(RETURN)</b>
+         STR UTF.RUNE0 . R =                                 <b>:F(FRETURN)</b>
+         UTFANY = UTFANY | R                                  <b>:(UTFANY2)</b>
+EUTFANY
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* UTF ANALOG FOR CHAR(N)</i></font>
+<font color="#818181"><i>*</i></font>
+         DEFINE(&quot;RUNE(N)&quot;)                                      <b>:(ERUNE)</b>
+<font color="#818181"><i>*</i></font>
+RUNE     LT(N, 0)                                            <b>:S(FRETURN)</b>
+         GT(N, 127)                                            <b>:S(RUNE2)</b>
+<font color="#818181"><i>* SINGLE BYTE RUNE</i></font>
+         RUNE = XCHAR(N)                                       <b>:(RETURN)</b>
+RUNE2    GT(N, 2047)                                           <b>:S(RUNE3)</b>
+<font color="#818181"><i>* TWO-BYTE RUNE</i></font>
+         RUNE = XCHAR(192 + (N / 64))
++               XCHAR(128 + REMDR(N, 64))                      <b>:(RETURN)</b>
+<font color="#818181"><i>* THREE-BYTE RUNE</i></font>
+RUNE3    GT(N, 65535)                                          <b>:S(RUNE4)</b>
+         RUNE = XCHAR(224 + N / 4096)
++               XCHAR(128 + REMDR(N / 64, 64))
++               XCHAR(128 + REMDR(N, 64))                      <b>:(RETURN)</b>
+<font color="#818181"><i>* FOUR-BYTE RUNE</i></font>
+RUNE4    GT(N, 2097151)                                        <b>:S(RUNE5)</b>
+         RUNE = XCHAR(240 + N / 262144)
++               XCHAR(128 + REMDR(N / 65536, 64))
++               XCHAR(128 + REMDR(N / 64, 64))
++               XCHAR(128 + REMDR(N, 64))                      <b>:(RETURN)</b>
+<font color="#818181"><i>* FIVE-BYTE RUNE</i></font>
+RUNE5    GT(N, 67108863)                                       <b>:S(RUNE6)</b>
+         RUNE = XCHAR(248 + N / 16777216)
++               XCHAR(128 + REMDR(N / 262144, 64))
++               XCHAR(128 + REMDR(N / 4096, 64))
++               XCHAR(128 + REMDR(N / 64, 64))
++               XCHAR(128 + REMDR(N, 64))                      <b>:(RETURN)</b>
+<font color="#818181"><i>* SIX-BYTE RUNE</i></font>
+RUNE6    GT(N, 2147483647)                                   <b>:S(FRETURN)</b>
+         RUNE = XCHAR(252 + N / 1073741824)
++               XCHAR(128 + REMDR(N / 16777216, 64))
++               XCHAR(128 + REMDR(N / 262144, 64))
++               XCHAR(128 + REMDR(N / 4096, 64))
++               XCHAR(128 + REMDR(N / 64, 64))
++               XCHAR(128 + REMDR(N, 64))                      <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+ERUNE
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* UTF ANALOG FOR SIZE(STR)</i></font>
+<font color="#818181"><i>*</i></font>
+         DEFINE(&quot;UTFSIZE(STR)&quot;)                              <b>:(EUTFSIZE)</b>
+<font color="#818181"><i>*</i></font>
+UTFSIZE  STR UTF.RUNE =                                      <b>:F(UTFSIZ2)</b>
+         UTFSIZE = UTFSIZE + 1                                <b>:(UTFSIZE)</b>
+UTFSIZ2  IDENT(STR)                                 <b>:S(RETURN)F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+EUTFSIZE
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* UTF ANALOG FOR REPLACE()</i></font>
+<font color="#818181"><i>*</i></font>
+         DEFINE(&quot;UTFREPLACE(IN,FROM,TO)T,R1,R2&quot;)          <b>:(EUTFREPLACE)</b>
+<font color="#818181"><i>*</i></font>
+UTFREPLACE
+         T = TABLE()
+<font color="#818181"><i>* PEEL RUNES OFF INPUT AND OUTPUT LANGUAGES ONE AT A TIME</i></font>
+UTFREP1  FROM UTF.RUNE0 . R1 =                               <b>:F(UTFREP2)</b>
+         TO UTF.RUNE0 . R2 =                                 <b>:F(UTFREP2)</b>
+         T&lt;R1&gt; = R2                                           <b>:(UTFREP1)</b>
+<font color="#818181"><i>* BOTH INPUT AND OUTPUT LANGUAGES SHOULD NOW BE EMPTY</i></font>
+UTFREP2  DIFFER(FROM)                                        <b>:S(FRETURN)</b>
+         DIFFER(TO)                                          <b>:S(FRETURN)</b>
+<font color="#818181"><i>* FREEZE TABLE FOR SNOBOL4+?</i></font>
+<font color="#818181"><i>* PEEL RUNES INPUT ONE AT A TIME, FEED THRU TABLE</i></font>
+         UTFREPLACE =
+UTFREP3  IN UTF.RUNE0 . R1 =                                 <b>:F(UTFREP4)</b>
+         UTFREPLACE = UTFREPLACE (IDENT(T&lt;R1&gt;) R1, T&lt;R1&gt;)     <b>:(UTFREP3)</b>
+UTFREP4  IDENT(IN)                                  <b>:S(RETURN)F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+EUTFREPLACE
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* TESTS</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>*        &amp;ANCHOR = 1</i></font>
+<font color="#818181"><i>*        S = &quot;Hello World!!&quot;</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>*        OUTPUT = UTFREPLACE(S,&amp;UCASE &quot;!&quot;,&amp;LCASE &quot;?&quot;)</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>*L       S UTF.RUNE $ OUTPUT =                                     <b>:S(L)</b></i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>*        &quot;HELLO WORLD!&quot; UTFARB . OUTPUT RPOS(0)</i></font>
+<font color="#818181"><i>*        &quot;Hello World!&quot; UTFARB UTFANY(&amp;LCASE) . OUTPUT</i></font>
+<font color="#818181"><i>*        &quot;Hello World!&quot; UTFANY(&amp;UCASE) . OUTPUT</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>*        OUTPUT = RUNE(0)</i></font>
+<font color="#818181"><i>*        OUTPUT = RUNE(127)</i></font>
+<font color="#818181"><i>*        OUTPUT = &#39;-------&#39;</i></font>
+<font color="#818181"><i>*        OUTPUT = RUNE(128)</i></font>
+<font color="#818181"><i>*        OUTPUT = RUNE(255)</i></font>
+<font color="#818181"><i>*        OUTPUT = RUNE(2047)</i></font>
+<font color="#818181"><i>*        OUTPUT = &#39;-------&#39;</i></font>
+<font color="#818181"><i>*        OUTPUT = RUNE(2048)</i></font>
+<font color="#818181"><i>*        OUTPUT = RUNE(65535)</i></font>
+<font color="#818181"><i>*        OUTPUT = &#39;-------&#39;</i></font>
+<font color="#818181"><i>*        OUTPUT = RUNE(65536)</i></font>
+<font color="#818181"><i>*        OUTPUT = RUNE(2097151)</i></font>
+<font color="#818181"><i>*        OUTPUT = &#39;-------&#39;</i></font>
+<font color="#818181"><i>*        OUTPUT = RUNE(2097152)</i></font>
+<font color="#818181"><i>*        OUTPUT = RUNE(67108863)</i></font>
+<font color="#818181"><i>*        OUTPUT = &#39;-------&#39;</i></font>
+<font color="#818181"><i>*        OUTPUT = RUNE(67108864)</i></font>
+<font color="#818181"><i>*        OUTPUT = RUNE(2147483647)</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>*END</i></font>
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;UTF8.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+-STITL UTF8
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                   #     #  #######  #######   ###                    *</i></font>
+<font color="#818181"><i>*                   #     #     #     #        #   #                   *</i></font>
+<font color="#818181"><i>*                   #     #     #     #        #   #                   *</i></font>
+<font color="#818181"><i>*                   #     #     #     #####     ###                    *</i></font>
+<font color="#818181"><i>*                   #     #     #     #        #   #                   *</i></font>
+<font color="#818181"><i>*                   #     #     #     #        #   #                   *</i></font>
+<font color="#818181"><i>*                    #####      #     #         ###                    *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* UTF8                                                                 *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* SNOBOL4 FUNCTIONS TO IMPLEMENT UTF-ENCODED UNICODE HANDLING</i></font>
+<font color="#818181"><i>* UTF8.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;UTF8&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:40 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

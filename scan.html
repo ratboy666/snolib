@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<H1>scan - Scan extension for cpmed</H1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Use passed pattern to scan input. Output line deltas to next match
+line.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Usage: as an editor command for <font face="Source Code Pro">cpmed</font>, try:
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+| b-#.!scan /G %LAST
+| .n$
+| &amp;l
+| &amp;l
+</font></pre>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+This sequence sets the current point to the beginning of the buffer.
+All lines are piped to the <font face="Source Code Pro">scan</font> command with an argument of
+<font face="Source Code Pro">'LAST'</font>.  The output which is the line deltas to each matching
+line are save to file <font face="Source Code Pro">$</font> (the default transfer file). Set the index
+file to <font face="Source Code Pro">$</font>.  Read the index file, and move forward that many lines,
+positioning to the first occurence of <font face="Source Code Pro">'LAST'</font>. Repeat.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Using <i>scan</i> from <i>cpmed</i> is slightly automated. The |
+command in <i>cpmed</i> calls the scan command. This feature is still
+being refined.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Command quoting is a bit tricky, because <font face="Source Code Pro">shell</font> must be accomodated.
+Also, only a single file can be edited by <font face="Source Code Pro">cpmed</font> at a time. The
+transfer file is automatically erased by <font face="Source Code Pro">cpmed</font>. Any SNOBOL4
+pattern can be used.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+We ease quoting the following way. If an argument begins with %, we
+strip the % and surround the argument with single quotes ('). Since
+arguments are delimited by spaces and we put a single space between
+when assembling the command, this works well (saves many 3 characters
+per literal).
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+The first argument can be / which is followed by G. If /G is specified
+for a FIND, all matching lines numbers are output.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+A substitute is identified if one of the arguments is =.  If substitute
+then substituted line is output, else relative line from top of file,
+followed by relative line from current line (cpmed L arguments).
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+G for substitute means substitute on all lines, all occurences on each
+line. Not using G only substitutes the first occurence on each of the
+lines.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="SLOAD.html">SLOAD</a><br>
+<a href="HOST.html">HOST</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;SLOAD.INC&#39;
+-INCLUDE &#39;HOST.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-TITLE SCAN
+START
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                   #####    #####      #     #     #                  *</i></font>
+<font color="#818181"><i>*                  #     #  #     #    # #    ##    #                  *</i></font>
+<font color="#818181"><i>*                  #        #         #   #   # #   #                  *</i></font>
+<font color="#818181"><i>*                   #####   #        #     #  #  #  #                  *</i></font>
+<font color="#818181"><i>*                        #  #        #######  #   # #                  *</i></font>
+<font color="#818181"><i>*                  #     #  #     #  #     #  #    ##                  *</i></font>
+<font color="#818181"><i>*                   #####    #####   #     #  #     #                  *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* SCAN                  SCAN LINES FOR PATTERN                         *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* scan.lss</i></font>
+<font color="#818181"><i>*</i></font>
+         TERMINAL = &#39;SCAN (MON JAN 27 14:19:34 EST 2014)&#39;
+<font color="#818181"><i>*</i></font>
+         &amp;CODE = 1
+         SLOAD(&#39;SCAN.INC&#39;)
+         LINE_NUMBER =
+         LAST_LINE = 1
+         N = HOST(HOST_FIRSTARG)
+<font color="#818181"><i>* POSSIBLE /G ARGUMENT</i></font>
+         O = HOST(HOST_ARGN, N)                                  <b>:F(END)</b>
+         O POS(0) &#39;/&#39;                                            <b>:F(CLL)</b>
+         N = N + 1
+         G = ?(O ? ANY(&#39;Gg&#39;)) 1
+                                                                 <b>:(CLL2)</b>
+<font color="#818181"><i>* COLLECT FIND OR SUBSTITUTE STATEMENT. IF &#39;=&#39; IS ARGUMENT THEN</i></font>
+<font color="#818181"><i>* COMMAND IS SUBSTITUTE</i></font>
+CLL      SUB = ?(O ? (POS(0) &#39;=&#39; RPOS(0))) 1                    <b>:S(ADDS)</b>
+         O POS(0) &#39;%&#39;                                           <b>:F(ADDS)</b>
+         O POS(0) LEN(1) REM . O
+         O = &quot;&#39;&quot; O &quot;&#39;&quot;
+ADDS     S = S &#39; &#39; O
+         N = N + 1
+CLL2     O = HOST(HOST_ARGN, N)                                  <b>:S(CLL)</b>
+<font color="#818181"><i>*</i></font>
+TOPAT    TERMINAL = IDENT(SUB) &#39;FIND: &#39; S
+         TERMINAL = DIFFER(SUB) IDENT(G) &#39;SUBSTITUTE: &#39; S
+         TERMINAL = DIFFER(SUB) DIFFER(G) &#39;SUBSTITUTE GLOBAL: &#39; S
+<font color="#818181"><i>* EMPTY STATEMENT IS NO OPERATION</i></font>
+         S = TRIM(S)
+         IDENT(S)                                                <b>:S(END)</b>
+<font color="#818181"><i>* COMPILE STATEMENT AS A NON-G COMMAND FIRST. ADDS LABELS</i></font>
+         LB = DIFFER(SUB) &#39; :(BTM)&#39;
+         LB = IDENT(SUB) &#39; :S(BTM)F(TOP)&#39;
+         C = CODE(&#39; LINE &#39; S LB)                              <b>:F(SYNTAX)</b>
+         IDENT(SUB)                                              <b>:S(TOP)</b>
+         IDENT(G)                                                <b>:S(TOP)</b>
+<font color="#818181"><i>* IF S AND G, ADD LOCAL LOOP.</i></font>
+         C = CODE(&#39;LUP LINE &#39; S &#39; :S(LUP)F(BTM)&#39;)             <b>:F(SYNTAX)</b>
+<font color="#818181"><i>*</i></font>
+TOP      LINE = INPUT                                            <b>:F(END)</b>
+         LINE_NUMBER = LINE_NUMBER + 1                              <b>:&lt;C&gt;</b>
+<font color="#818181"><i>*</i></font>
+BTM      &amp;CODE = 0
+         OUTPUT = DIFFER(SUB) LINE                              <b>:S(BTM2)</b>
+         OUTPUT = LINE_NUMBER - LAST_LINE
+         LAST_LINE = LINE_NUMBER
+BTM2     DIFFER(SUB)                                             <b>:S(TOP)</b>
+         IDENT(G)                                          <b>:S(END)F(TOP)</b>
+SYNTAX   TERMINAL = &#39;SYNTAX ERROR IN &#39; S
+END
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:44 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

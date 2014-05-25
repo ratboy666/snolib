@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>QUOTE - Quote a string</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">QUOTE(S)</font> will convert its argument to a string which will resemble
+a SNOBOL4 expression which, when evaluated, will yield the original
+string <font face="Source Code Pro">S</font>.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="REPL.html">REPL</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;REPL.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;QUOTE&raquo;&equiv;</b>
+         DEFINE(&#39;QUOTE(S)Q,QQ&#39;)                             <b>:(QUOTE_END)</b>
+<font color="#818181"><i>*</i></font>
+QUOTE    Q = &quot;&#39;&quot;; QQ = &#39;&quot;&#39;
+         QUOTE = Q REPL(S, Q, Q &#39; &#39; QQ Q QQ &#39; &#39; Q) Q           <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+QUOTE_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;QUOTE.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL QUOTE
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*               #####   #     #  #######  #######  #######             *</i></font>
+<font color="#818181"><i>*              #     #  #     #  #     #     #     #                   *</i></font>
+<font color="#818181"><i>*              #     #  #     #  #     #     #     #                   *</i></font>
+<font color="#818181"><i>*              #     #  #     #  #     #     #     #####               *</i></font>
+<font color="#818181"><i>*              #   # #  #     #  #     #     #     #                   *</i></font>
+<font color="#818181"><i>*              #    #   #     #  #     #     #     #                   *</i></font>
+<font color="#818181"><i>*               #### #   #####   #######     #     #######             *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* QUOTE                      QUOTE A STRING                            *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* QUOTE.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;QUOTE&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:23 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

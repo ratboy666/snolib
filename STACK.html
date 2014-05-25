@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>STACK - Create stack functions</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">STACK(SUF)</font> will create unique stack functions with the given
+suffix. <font face="Source Code Pro">STACK('A')</font> creates functions <font face="Source Code Pro">PUSHA(V)</font>, <font face="Source Code Pro">POPA()</font>,
+and <font face="Source Code Pro">TOPA()</font>.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="LINK.html">LINK</a><br>
+<a href="REPL.html">REPL</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;LINK.INC&#39;
+-INCLUDE &#39;REPL.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;STACK&raquo;&equiv;</b>
+         DEFINE(&#39;STACK(SUF)S&#39;)
+         STACK()                                            <b>:(STACK_END)</b>
+<font color="#818181"><i>*</i></font>
+STACK    S = &#39;PUSHSUF STACK_SUF = LINK(V, STACK_SUF)        ;&#39;
++            &#39;        PUSHSUF = .VALUE(STACK_SUF) :(NRETURN);&#39;
++            &#39;POPSUF  IDENT(STACK_SUF)           :S(FRETURN);&#39;
++            &#39;        POPSUF = VALUE(STACK_SUF)             ;&#39;
++            &#39;        STACK_SUF = NEXT(STACK_SUF)  :(RETURN);&#39;
++            &#39;TOPSUF  IDENT(STACK_SUF)           :S(FRETURN);&#39;
++            &#39;        TOPSUF = .VALUE(STACK_SUF)  :(NRETURN);&#39;
+         CODE(REPL(S, &#39;SUF&#39;, SUF))
+         DEFINE(&#39;PUSH&#39; SUF &#39;(V)&#39;)
+         DEFINE(&#39;POP&#39;  SUF &#39;()&#39; )
+         DEFINE(&#39;TOP&#39;  SUF &#39;()&#39; )                              <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+STACK_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;STACK.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL STACK
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*               #####   #######     #      #####   #    #              *</i></font>
+<font color="#818181"><i>*              #     #     #       # #    #     #  #   #               *</i></font>
+<font color="#818181"><i>*              #           #      #   #   #        #  #                *</i></font>
+<font color="#818181"><i>*               #####      #     #     #  #        ###                 *</i></font>
+<font color="#818181"><i>*                    #     #     #######  #        #  #                *</i></font>
+<font color="#818181"><i>*              #     #     #     #     #  #     #  #   #               *</i></font>
+<font color="#818181"><i>*               #####      #     #     #   #####   #    #              *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* STACK                     CREATE STACK                               *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* STACK.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;STACK&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:32 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

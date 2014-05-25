@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>FCGI - FCGI (Fast CGI) Support Functions</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">FCGI</font> support functions. Need to suck in CGI to actually handle
+requests. This should be a wrapper for CGI. Note that logging, header
+and body creation is different. But, should be consistent with however
+CGI normally does things. If getpeername fails, use CGI straight-up
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+This is the simplest possible implementation of <font face="Source Code Pro">FCGI</font>. This is
+going to provide a speed-up in that the script will not need
+re-compilation. But, this is not the initial goal. Initial goal is
+simple functionality.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+After we have baseline function, we will refactor the code to provide
+services for CGI. CGI will then call into FCGI to do needed data
+transmissions.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+When this is functional, we will work on performance.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="P64.html">P64</a><br>
+<a href="FFI.html">FFI</a><br>
+<a href="BQ.html">BQ</a><br>
+<a href="CSNOBOL4.html">CSNOBOL4</a><br>
+<a href="LOGIC.html">LOGIC</a><br>
+<a href="HASH.html">HASH</a><br>
+<a href="SEQ.html">SEQ</a><br>
+<a href="TIME.html">TIME</a><br>
+<a href="JSON.html">JSON</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;P64.INC&#39;
+-INCLUDE &#39;FFI.INC&#39;
+-INCLUDE &#39;BQ.INC&#39;
+-INCLUDE &#39;CSNOBOL4.INC&#39;
+-INCLUDE &#39;LOGIC.INC&#39;
+-INCLUDE &#39;HASH.INC&#39;
+-INCLUDE &#39;SEQ.INC&#39;
+-INCLUDE &#39;TIME.INC&#39;
+-INCLUDE &#39;JSON.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;FCGI&raquo;&equiv;</b>
+         FCGI_LOGUNIT = IO_FINDUNIT()
+         OUTPUT(.FCGI_LOG, FCGI_LOGUNIT, &#39;W&#39;,
++               &#39;|/usr/bin/logger -n localhost -t FCGI&#39;)
+         STDIN_FILENO = 0
+         FCGI_LISTENSOCK_FILENO = STDIN_FILENO
+<font color="#818181"><i>*</i></font>
+         FCGI_BEGIN_REQUEST     =  1
+         FCGI_ABORT_REQUEST     =  2
+         FCGI_END_REQUEST       =  3
+         FCGI_PARAMS            =  4
+         FCGI_STDIN             =  5
+         FCGI_STDOUT            =  6
+         FCGI_STDERR            =  7
+         FCGI_DATA              =  8
+         FCGI_GET_VALUES        =  9
+         FCGI_GET_VALUES_RESULT = 10
+         FCGI_UNKNOWN_TYPE      = 11
+<font color="#818181"><i>*</i></font>
+         FCGI_RESPONDER  = 1
+         FCGI_AUTHORIZER = 2
+         FCGI_FILTER     = 3
+<font color="#818181"><i>*</i></font>
+         FCGI_REQUEST_COMPLETE = 0
+         FCGI_CANT_MPX_CONN    = 1
+         FCGI_OVERLOADED       = 2
+         FCGI_UNKNOWN_ROLE     = 3
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* getpeername RETURNS PEER NAME FOR STDIN IF RUNNING UNDER FCGI. IT</i></font>
+<font color="#818181"><i>* ACTUALLY RETURNS TRANSPORT END-POINT NOT CONNECTED. IF IT ISN&#39;T A</i></font>
+<font color="#818181"><i>* SOCKET AT ALL, DEFINITELY CGI CASE.</i></font>
+<font color="#818181"><i>*</i></font>
+         PEER = BQ(&#39;/usr/bin/getpeername 2&gt;&amp;1&#39;)             <b>:F(NOT_FCGI)</b>
+         PEER &#39;Socket operation on non-socket&#39;              <b>:S(NOT_FCGI)</b>
+<font color="#818181"><i>*</i></font>
+         FCGI_LOG = &#39;FCGI&#39;
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* INFORM CGI THAT FAST CGI IS IN USE. DEFINE THE ACCEPT() FUNCTION.</i></font>
+<font color="#818181"><i>* LISTEN() HAS ALREADY BEEN DONE IN THE WEB SERVER.</i></font>
+<font color="#818181"><i>*</i></font>
+         USE_FCGI = 1
+NOT_FCGI FCGI_LOG = IDENT(USER_FCGI) &#39;NORMAL CGI&#39;
+         FFI_ACCEPT = FFI_NEW(&#39;I&#39;, &#39;I,P,P&#39;)
+         FFI_SET_CALLP(FFI_ACCEPT, DLSYM(0, &#39;accept&#39;))
+         DEFINE(&#39;FCGI_ACCEPT()&#39;)
+         DEFINE(&#39;ACCEPT(SOCKET,P1,P2)&#39;)
+         DEFINE(&#39;FCGI_NAMES(T,A)&#39;)
+         DEFINE(&#39;FCGI_SEND(S)&#39;)
+         DEFINE(&#39;FCGI_SEND_ERR(S)&#39;)
+         DEFINE(&#39;FCGI_SEND_(D,S)B&#39;)
+         DEFINE(&#39;FCGI_END(APP_STATUS,PROT_STATUS)S,B0,B1,B2,B3&#39;)
+         DEFINE(&#39;FCGI_GET()&#39;)                               <b>:(FCGI_END_)</b>
+<font color="#818181"><i>*</i></font>
+ACCEPT   CLEAR_ERRNO()
+         FFI_PAR_N_INTEGER(FFI_ACCEPT, 1, SOCKET)
+         FFI_PAR_N_PTR(FFI_ACCEPT, 2, P1)
+         FFI_PAR_N_PTR(FFI_ACCEPT, 3, P2)
+         ACCEPT = FFI_CALL_INTEGER(FFI_ACCEPT)                 <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* IF THE DATA TO SEND IS 0...65535 BYTES, SEND IT. IF GREATER,</i></font>
+<font color="#818181"><i>* SEND THE FIRST 65535, AND LOOP FOR THE REST</i></font>
+<font color="#818181"><i>*</i></font>
+FCGI_SEND_
+         LT(SIZE(S), 65536)                              <b>:S(FCGI_SEND_2)</b>
+         S LEN(65535) . B REM . S
+         FCGI_SEND_(D, B)                                  <b>:(FCGI_SEND_)</b>
+FCGI_SEND_2
+         FCGI_LOG = &#39;FCGI_SEND: &#39;  D &#39; &#39; SIZE(S)
+         S = CHAR(1) CHAR(D)
++            CHAR(FCGI_REQUESTID / 256) CHAR(REMDR(FCGI_REQUESTID, 256))
++            CHAR(SIZE(S) / 256) CHAR(REMDR(SIZE(S), 256))
++            CHAR(0) CHAR(0) S
+         FCGI_OUT = S                                          <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+FCGI_SEND
+         FCGI_SEND_(FCGI_STDOUT, S)                            <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+FCGI_SEND_ERR
+         FCGI_SEND_(FCGI_STDERR, S)                            <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+FCGI_END FCGI_LOG = &#39;FCGI_END: &#39; APP_STATUS &#39; &#39; PROT_STATUS
+         B3 = APP_STATUS / 16777216
+         APP_STATUS = REMDR(APP_STATUS, 16777216)
+         B2 = APP_STATUS / 65536
+         APP_STATUS = REMDR(APP_STATUS, 65536)
+         B1 = APP_STATUS / 256
+         B0 = REMDR(APP_STATUS, 256)
+         S = CHAR(B3) CHAR(B2) CHAR(B1) CHAR(B0) CHAR(PROT_STATUS)
++            CHAR(0) CHAR(0) CHAR(0)
+         B1 = FCGI_REQUESTID / 256
+         B0 = REMDR(FCGI_REQUESTID, 256)
+         S = CHAR(1) CHAR(FCGI_END_REQUEST) CHAR(B1) CHAR(B0)
++            CHAR(0) CHAR(8) CHAR(0) CHAR(0) S
+         FCGI_OUT = S                                          <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+FCGI_GET VERSION = ORD(FCGI)
+         FCGI_LOG = DIFFER(VERSION, 1) &#39;VERSION &lt;&gt; 1&#39;            <b>:S(END)</b>
+         TYPE = ORD(FCGI)
+         REQUESTID = ORD(FCGI) * 256
+         REQUESTID = REQUESTID + ORD(FCGI)
+         CONTENTLENGTH = ORD(FCGI) * 256
+         CONTENTLENGTH = CONTENTLENGTH + ORD(FCGI)
+         PADDINGLENGTH = ORD(FCGI)
+         RESERVED = ORD(FCGI)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* WE COULD READ THIS IN ONE GULP, AND AVOID CONVERTING TO ARRAY AND</i></font>
+<font color="#818181"><i>* THEN BACK INTO STRING.</i></font>
+<font color="#818181"><i>*</i></font>
+         FCGI_GET = NE(CONTENTLENGTH) ARRAY(CONTENTLENGTH)
+         I = 1
+FCGI_4   GT(I, CONTENTLENGTH)                                 <b>:S(FCGI_5)</b>
+         FCGI_GET&lt;I&gt; = ORD(FCGI)
+         I = I + 1                                             <b>:(FCGI_4)</b>
+FCGI_5   I = 1
+FCGI_6   GT(I, PADDINGLENGTH)                                 <b>:S(RETURN)</b>
+         S = FCGI
+         I = I + 1                                             <b>:(FCGI_6)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* EXTRACT NAMES FROM ARRAY. TWO LENGTH FIELDS, EITHER 1 OR 4 BYTES,</i></font>
+<font color="#818181"><i>* THEN THE ACTUAL NAME AND DATA.</i></font>
+<font color="#818181"><i>*</i></font>
+FCGI_NAMES
+         I = 1
+FCGI_NAMES_7
+         NL = A&lt;I&gt;
+         EQ(AND(NL, 128))                               <b>:S(FCGI_NAMES_2)</b>
+         NL = AND(A&lt;I&gt;, 127) * 16777216 +
++             A&lt;I + 1&gt; * 65536 +
++             A&lt;I + 2&gt; * 256 +
++             A&lt;I + 3&gt;
+         I = I + 3
+FCGI_NAMES_2
+         I = I + 1
+         DL = A&lt;I&gt;
+         EQ(AND(NL, 128))                               <b>:S(FCGI_NAMES_3)</b>
+         DL = AND(A&lt;I&gt;, 127) * 16777216 +
++             A&lt;I + 1&gt; * 65536 +
++             A&lt;I + 2&gt; * 256 +
++             A&lt;I + 3&gt;
+         I = I + 3
+FCGI_NAMES_3
+         I = I + 1
+         NM =
+         DA =
+FCGI_NAMES_4
+         EQ(NL)                                         <b>:S(FCGI_NAMES_5)</b>
+         NM = NM CHAR(A&lt;I&gt;)
+         I = I + 1
+         NL = NL - 1                                     <b>:(FCGI_NAMES_4)</b>
+FCGI_NAMES_5
+         EQ(DL)                                         <b>:S(FCGI_NAMES_6)</b>
+         DA = DA CHAR(A&lt;I&gt;)
+         I = I + 1
+         DL = DL - 1                                     <b>:(FCGI_NAMES_5)</b>
+FCGI_NAMES_6
+         T&lt;NM&gt; = DA
+         A&lt;I&gt;                                  <b>:F(RETURN)S(FCGI_NAMES_7)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* MAIN FCGI FUNCTION</i></font>
+<font color="#818181"><i>*</i></font>
+FCGI_ACCEPT
+         IDENT(USE_FCGI)                                      <b>:S(RETURN)</b>
+         FCGI_LOG = &#39;FCGI_ACCEPT: WAITING&#39;
+         SOCKET = ACCEPT(FCGI_LISTENSOCK_FILENO, 0, 0)
+         FCGI_LOG = &#39;AFTER ACCEPT&#39;
+         GE(SOCKET)                                           <b>:S(FCGI_2)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* ON ERROR IN ACCEPT, WE DISPLAY ERRNO AND EXIT THE PROCESS</i></font>
+<font color="#818181"><i>*</i></font>
+         ERRNO = GET_ERRNO()
+         FCGI_LOG = &#39;ACCEPT: ERRNO = &#39; ERRNO                      <b>:(END)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* READ AND DIGEST PACKETS FROM SOCKET. CLEAN UP OLD INSTANCE I/O</i></font>
+<font color="#818181"><i>* (FCGI IS GOING TO STAY AROUND EXECUTING REQUESTS). tHEN</i></font>
+<font color="#818181"><i>* OPEN THE SOCKET PASSED TO US BY ACCEPT().</i></font>
+<font color="#818181"><i>*</i></font>
+FCGI_2   IDENT(FCGI_INSTANCE_UNIT)                            <b>:S(FCGI_8)</b>
+         DETACH(.FCGI)
+         DETACH(.FCGI_OUT)
+         ENDFILE(FCGI_INSTANCE_UNIT)
+FCGI_8   FCGI_LOG = &#39;SOCKET = &#39; SOCKET
+         FCGI_INSTANCE_UNIT = IO_FINDUNIT()
+         FCGI_LOG = &#39;UNIT = &#39; FCGI_INSTANCE_UNIT
+         INPUT(.FCGI, FCGI_INSTANCE_UNIT, &#39;U,B,1&#39;, &#39;/dev/fd/&#39; SOCKET)
+         OUTPUT(.FCGI_OUT, FCGI_INSTANCE_UNIT, &#39;W,B,1&#39;)
+<font color="#818181"><i>*</i></font>
+         FCGI_ENV = TABLE()
+         FCGI_IN =
+         FCGI_REQUESTID =
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* PACKET LOOP</i></font>
+<font color="#818181"><i>*</i></font>
+FCGI_PLOOP
+         CONTENT = FCGI_GET()
+         FCGI_REQUESTID = IDENT(FCGI_REQUESTID) REQUESTID
+         EQ(REQUESTID, FCGI_REQUESTID)                  <b>:S(FCGI_PLOOP_2)</b>
+         FCGI_LOG = &#39;ONLY SINGLE REQUESTID SUPPORTED&#39;             <b>:(END)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* WE DO NOT MULTIPLEX REQUESTID, NEED TO SET INDICATION OF THAT</i></font>
+<font color="#818181"><i>* IN FCGI_GET().</i></font>
+<font color="#818181"><i>*</i></font>
+FCGI_PLOOP_2
+         EQ(TYPE, FCGI_BEGIN_REQUEST)                        <b>:F(FCGI_10)</b>
+         FCGI_LOG = &#39;FCGI_BEGIN_REQUEST&#39;
+         FCGI_ROLE = CONTENT&lt;1&gt; * 256 + CONTENT&lt;2&gt;
+         FCGI_LOG = NE(FCGI_ROLE, FCGI_RESPONDER)
++           &#39;ROLE NOT RESPONDER&#39;                                 <b>:S(END)</b>
+         FCGI_FLAGS = CONTENT&lt;3&gt;
+         FCGI_REQUESTID = REQUESTID                        <b>:(FCGI_PLOOP)</b>
+<font color="#818181"><i>*</i></font>
+FCGI_10  EQ(TYPE, FCGI_PARAMS)                               <b>:F(FCGI_11)</b>
+         FCGI_LOG = &#39;FCGI_PARAMS&#39;
+         IDENT(CONTENT)                                   <b>:S(FCGI_PLOOP)</b>
+         FCGI_NAMES(FCGI_ENV, CONTENT)                     <b>:(FCGI_PLOOP)</b>
+<font color="#818181"><i>*</i></font>
+FCGI_11  EQ(TYPE, FCGI_STDIN)                                <b>:F(FCGI_12)</b>
+         FCGI_LOG = &#39;FCGI_STDIN&#39;
+         IDENT(CONTENT)                                      <b>:S(FCGI_GO)</b>
+         I = 1
+<font color="#818181"><i>* FIXME: WE READ IT AS A STRING, CONVERT TO ARRAY OF SMALL INTEGERS,</i></font>
+<font color="#818181"><i>* AND THEN MAKE IT A STRING AGAIN. THIS IS DONE BECAUSE WE ARE GOING</i></font>
+<font color="#818181"><i>* TO DO PACKET DISASSEMBLY, AND THAT IS ARGUABLY EASIER IN THE SMALL</i></font>
+<font color="#818181"><i>* INTEGER SPACE. STILL, IT SHOULD BE FIXED.</i></font>
+FCGI_13  FCGI_IN = FCGI_IN CHAR(CONTENT&lt;I&gt;)               <b>:F(FCGI_PLOOP)</b>
+         I = I + 1                                            <b>:(FCGI_13)</b>
+<font color="#818181"><i>*</i></font>
+FCGI_12
+         FCGI_LOG = &#39;BAD TYPE: &#39; TYPE                             <b>:(END)</b>
+<font color="#818181"><i>*</i></font>
+FCGI_GO
+         FCGI_LOG = &#39;FCGI_GO&#39;
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* HERE WE ILLUSTRATE AN INTERESTING TECHNIQUE. SINCE JSON_ENCODE WILL</i></font>
+<font color="#818181"><i>* TRAVERSE TABLES AND ARRAYS, WE CAN USE IT TO EXAMINE VARIABLES BY</i></font>
+<font color="#818181"><i>* SENDING THE JSON ENCODING TO A LOG FILE.</i></font>
+<font color="#818181"><i>*</i></font>
+         FCGI_LOG = &#39;FCGI_ENV: &#39;
+         FCGI_LOG = JSON_ENCODE(FCGI_ENV)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* BUG ALERT: IF THIS IS NOT DONE, GETTIMEOFDAY(), GMTIME() ETC.</i></font>
+<font color="#818181"><i>* FAULT ON THE SECOND PASS THROUGH FCGI. HAPPENS WITH CSNOBOL4 1.5</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* TRY TO ISOLATE THIS FURTHER.</i></font>
+<font color="#818181"><i>*</i></font>
+         T = GETTIMEOFDAY()
+                                                               <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+FCGI_END_
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         export &quot;SNOLIB=/export/home/fred/snolib/snolib&quot;; export &quot;SNOPATH=/export/home/fred/snolib/snolib&quot;
+         exec &quot;/usr/local/bin/snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;FCGI.INC&#39;
+<font color="#818181"><i>*</i></font>
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL FCGI
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                    #######   #####    #####   ###                    *</i></font>
+<font color="#818181"><i>*                    #        #     #  #     #   #                     *</i></font>
+<font color="#818181"><i>*                    #        #        #         #                     *</i></font>
+<font color="#818181"><i>*                    #####    #        #  ####   #                     *</i></font>
+<font color="#818181"><i>*                    #        #        #     #   #                     *</i></font>
+<font color="#818181"><i>*                    #        #     #  #     #   #                     *</i></font>
+<font color="#818181"><i>*                    #         #####    #####   ###                    *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* FCGI                   FCGI SUPPORT FUNCTIONS                        *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* FCGI.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;FCGI&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .F.MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Wed May 21 15:01:32 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>COPYL - Copy list</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">COPYL(L)</font> will copy a list of <font face="Source Code Pro">LINK</font>s. The configuration may
+have loops.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="LINK.html">LINK</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;LINK.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;COPYL&raquo;&equiv;</b>
+         DEFINE(&#39;COPYL(L)T&#39;)                                <b>:(COPYL_END)</b>
+<font color="#818181"><i>*</i></font>
+COPYL    DEFINE(&#39;COPYL(L)&#39;, &#39;COPYL_1&#39;)
+         T = TABLE(100)
+         COPYL = COPYL(L)
+         DEFINE(&#39;COPYL(L)T&#39;)                                   <b>:(RETURN)</b>
+COPYL_1  COPYL = L
+         IDENT(DATATYPE(L), &#39;LINK&#39;)                           <b>:F(RETURN)</b>
+         COPYL = T&lt;L&gt;
+         DIFFER(COPYL, NULL)                                  <b>:S(RETURN)</b>
+         COPYL = COPY(L)
+         T&lt;L&gt; = COPYL
+         VALUE(COPYL) = COPYL(VALUE(L))
+         NEXT(COPYL) = COPYL(NEXT(L))                          <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+COPYL_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;COPYL.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL COPYL
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                 #####   #######  ######   #     #  #                 *</i></font>
+<font color="#818181"><i>*                #     #  #     #  #     #   #   #   #                 *</i></font>
+<font color="#818181"><i>*                #        #     #  #     #    # #    #                 *</i></font>
+<font color="#818181"><i>*                #        #     #  ######      #     #                 *</i></font>
+<font color="#818181"><i>*                #        #     #  #           #     #                 *</i></font>
+<font color="#818181"><i>*                #     #  #     #  #           #     #                 *</i></font>
+<font color="#818181"><i>*                 #####   #######  #           #     #######           *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* COPYL                        COPY LIST                               *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* COPYL.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;COPYL&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:01 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

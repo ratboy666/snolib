@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>list - A simple file viewer</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+list is a simple file viewer. It displays a file, and allows navigation
+using arrow keys. list provides a find function, and allows lines to
+be numbered. list is UTF-8 aware. Scrolling is reasonably efficient -
+list knows to use terminal hardware scrolling if available.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="CHARS.html">CHARS</a><br>
+<a href="DISPLAY.html">DISPLAY</a><br>
+<a href="GETKEY.html">GETKEY</a><br>
+<a href="HOST.html">HOST</a><br>
+<a href="LOGIC.html">LOGIC</a><br>
+<a href="BQ.html">BQ</a><br>
+<a href="REPL.html">REPL</a><br>
+<a href="READLINE.html">READLINE</a><br>
+<a href="SEQ.html">SEQ</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;CHARS.INC&#39;
+-INCLUDE &#39;DISPLAY.INC&#39;
+-INCLUDE &#39;GETKEY.INC&#39;
+-INCLUDE &#39;HOST.INC&#39;
+-INCLUDE &#39;LOGIC.INC&#39;
+-INCLUDE &#39;BQ.INC&#39;
+-INCLUDE &#39;REPL.INC&#39;
+-INCLUDE &#39;READLINE.INC&#39;
+-INCLUDE &#39;SEQ.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;LIST&raquo;&equiv;</b>
+         TERMINAL = &#39;LIST (MON DEC 16 18:48:12 EST 2013)&#39;
+         RLAPPNAME(&#39;LIST&#39;)
+         READ_HISTORY(&#39;.LIST&#39;)
+         STIFLE_HISTORY(50)
+         ACTIONS = TABLE()
+         ACTIONS&lt;KEY_UP&gt;     = &#39;UP&#39;
+         ACTIONS&lt;KEY_DOWN&gt;   = &#39;DOWN&#39;
+         ACTIONS&lt;KEY_PAGEDN&gt; = &#39;PGDN&#39;
+         ACTIONS&lt;KEY_PAGEUP&gt; = &#39;PGUP&#39;
+         ACTIONS&lt;&#39;N&#39;&gt;        = &#39;TGLN&#39;
+         ACTIONS&lt;&#39;n&#39;&gt;        = &#39;TGLN&#39;
+         ACTIONS&lt;&#39;R&#39;&gt;        = &#39;PAGE&#39;
+         ACTIONS&lt;&#39;r&#39;&gt;        = &#39;PAGE&#39;
+         ACTIONS&lt;KEY_HOME&gt;   = &#39;HOME&#39;
+         ACTIONS&lt;KEY_END&gt;    = &#39;BTM&#39;
+         ACTIONS&lt;&#39;?&#39;&gt;        = &#39;HELP&#39;
+         ACTIONS&lt;&#39;H&#39;&gt;        = &#39;HELP&#39;
+         ACTIONS&lt;&#39;h&#39;&gt;        = &#39;HELP&#39;
+         ACTIONS&lt;&#39;E&#39;&gt;        = &#39;EDIT&#39;
+         ACTIONS&lt;&#39;e&#39;&gt;        = &#39;EDIT&#39;
+         ACTIONS&lt;&#39;Q&#39;&gt;        = &#39;QUIT&#39;
+         ACTIONS&lt;&#39;q&#39;&gt;        = &#39;QUIT&#39;
+         ACTIONS&lt;&#39;F&#39;&gt;        = &#39;FIND&#39;
+         ACTIONS&lt;&#39;f&#39;&gt;        = &#39;FIND&#39;
+         FN = &#39;/dev/stdin&#39;
+         FN = HOST(HOST_ARGN, HOST(HOST_FIRSTARG))
+         T = 1
+         UNIT = IO_FINDUNIT()
+READ     INPUT(.INFILE, UNIT,, FN)                               <b>:S(FN1)</b>
+         TERMINAL = &quot;CAN&#39;T OPEN &quot; FN
+         TERMINAL = &#39;LIST FILENAME, THEN H FOR HELP&#39;              <b>:(END)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* READ FILE</i></font>
+<font color="#818181"><i>*</i></font>
+FN1      LINES = TABLE()
+         SEQ(&#39; LINES&lt;L&gt; = TRIM(INFILE) &#39;, .L)
+         HOST(HOST_SYSCMD, &#39;stty -F /dev/stderr -echo raw&#39;)
+         UNIT2 = IO_FINDUNIT()
+         OUTPUT(.T_OUT, UNIT2, &#39;T&#39;, &#39;/dev/stderr&#39;)
+         UNIT3 = IO_FINDUNIT()
+         INPUT(.T_IN, UNIT3, &#39;CQ&#39;, &#39;/dev/stderr&#39;)
+         NUMBER =
+         SS =
+         SH =
+<font color="#818181"><i>*</i></font>
+         HC0 = HI(&#39;C0&#39;)
+         H80 = HI(&#39;80&#39;)
+         DEFINE(&#39;SHOWLINE(N)S,T,B,LS,C&#39;)                       <b>:(SL_END)</b>
+<font color="#818181"><i>*</i></font>
+SHOWLINE S = LINES&lt;N&gt;
+<font color="#818181"><i>* IF TERMINAL TAB IS 8, MAKE LINE NUMBERING 8 CHARACTERS TO NOT</i></font>
+<font color="#818181"><i>* DISTURB TABBING WHEN &#39;N&#39; IS USED</i></font>
+         S = LE(N, L) DIFFER(NUMBER) LPAD(N, 6) &#39;: &#39; S
+         LT(SIZE(S), DS_COLS)                                    <b>:S(SL2)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* SKIP PRUNING LENGTH. NOTE THAT THE NEXT LINE WILL BE POSITIONED</i></font>
+<font color="#818181"><i>* (BUT WON&#39;T BE QUITE RIGHT). ESC SEQUENCES NEED TO BE ACCOMODATED.</i></font>
+<font color="#818181"><i>*</i></font>
+         T = S
+         S =
+         LS =
+<font color="#818181"><i>* UTF8.INC IS BORKED. BUT, (BYTES &amp; 0XCC) == 0X80 ARE MIDDLE BYTES, AND</i></font>
+<font color="#818181"><i>* DON&#39;T ADD TO LENGTH</i></font>
+SL3      IDENT(T)                                                <b>:S(SL8)</b>
+         T LEN(1) . C REM . T
+         S = S C
+         LS = NE(AND(ORD(C), HC0), H80) LS + 1
+         LT(LS, DS_COLS)                                         <b>:S(SL3)</b>
+<font color="#818181"><i>* REMOVE THE LAST CHARACTER IF IT IS A UTF-8 START CHARACTER</i></font>
+SL8      S LEN(1) . C RPOS(0)
+         LT(ORD(C), 128)                                         <b>:S(SL2)</b>
+         EQ(AND(ORD(C), HC0), H80)                               <b>:S(SL2)</b>
+         S TAB(SIZE(S) - 1) . S
+<font color="#818181"><i>* THIS COULD INCREASE SIZE PAST DS_COLS. TO FIX, WE REDUCE THE COLUMN</i></font>
+<font color="#818181"><i>* WIDTH BY ONE IF CHARS_FF APPEARS IN THE STRING (FIXME)</i></font>
+SL2      S = REPL(S, CHARS_FF, DS_REV &#39;^L&#39; DS_SGR0)
+         IDENT(SH)                                               <b>:S(SL7)</b>
+         S = REPL(S, SH, DS_REV SH DS_SGR0)
+SL7      T_OUT = S DS_EL                                       <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+SL_END
+<font color="#818181"><i>*</i></font>
+         T_OUT = DS_CIVIS
+PAGE     T_OUT = DS_CLEAR
+         I =
+PLOOP    T_OUT = DS_GOTO(+I, 0)
+         SHOWLINE(T + I)
+         T_OUT = CHARS_CR CHARS_NL
+         I = LT(I, DS_LINES - 2) I + 1                         <b>:S(PLOOP)</b>
+         SHOWLINE(T + I + 1)
+<font color="#818181"><i>*</i></font>
+TOP      A = ACTIONS&lt;KEY = GETKEY(.T_IN)&gt;
+         DIFFER(A)                                                <b>:S($A)</b>
+         T_OUT = CHARS_BEL                                        <b>:(TOP)</b>
+<font color="#818181"><i>*</i></font>
+DOWN     GE(T, L - 1)                                            <b>:S(TOP)</b>
+         T_OUT = DS_IND
+         T = T + 1
+         T_OUT = DS_GOTO(DS_LINES - 1, 0)
++                SHOWLINE(T + DS_LINES - 1)                       <b>:(TOP)</b>
+<font color="#818181"><i>*</i></font>
+UP       LE(T, 1)                                                <b>:S(TOP)</b>
+         T_OUT = DS_RI
+         T = T - 1
+         T_OUT = DS_HOME SHOWLINE(T)                              <b>:(TOP)</b>
+<font color="#818181"><i>*</i></font>
+PGDN     T = T + DS_LINES
+         T = GT(T, L - 1) L - 1                                  <b>:(PAGE)</b>
+<font color="#818181"><i>*</i></font>
+PGUP     T = T - DS_LINES
+         T = LE(T) 1                                             <b>:(PAGE)</b>
+<font color="#818181"><i>*</i></font>
+TGLN     NUMBER = IDENT(NUMBER) 1                               <b>:S(PAGE)</b>
+         NUMBER =                                                <b>:(PAGE)</b>
+<font color="#818181"><i>*</i></font>
+FIND     T_OUT = DS_GOTO(DS_LINES - 1, 0) DS_EL DS_CNORM
+         HOST(HOST_SYSCMD, &#39;stty -F /dev/stderr echo cooked&#39;)
+         SS = TRIM(READLINE(&#39;FIND: &#39;))
+         (DIFFER(SS) ADD_HISTORY(SS))
+         SH =
+         IDENT(SS)                                               <b>:S(SS2)</b>
+SLOOP    GE(T, L - 1)                                            <b>:S(SS2)</b>
+         T = T + 1
+         LINES&lt;T&gt; SS                                           <b>:F(SLOOP)</b>
+         SH = SS
+SS2      HOST(HOST_SYSCMD, &#39;stty -F /dev/stderr -echo raw&#39;)
+         T_OUT = DS_CIVIS                                        <b>:(PAGE)</b>
+<font color="#818181"><i>*</i></font>
+HOME     T = 1                                                   <b>:(PAGE)</b>
+<font color="#818181"><i>*</i></font>
+BTM      T = L - 1                                               <b>:(PAGE)</b>
+<font color="#818181"><i>*</i></font>
+HELP     T_OUT = DS_CLEAR &#39;LIST (WED JAN  8 09:54:34 EST 2014)&#39;
+         T_OUT = CHARS_CR CHARS_NL CHARS_NL
+         T_OUT = &#39;UP    - SCROLL UP LINE&#39; CHARS_CR CHARS_NL
+         T_OUT = &#39;DOWN  - SCROLL DOWN LINE&#39; CHARS_CR CHARS_NL
+         T_OUT = &#39;PGUP  - SCROLL UP PAGE&#39; CHARS_CR CHARS_NL
+         T_OUT = &#39;PGDN  - SCROLL DOWN PAGE&#39; CHARS_CR CHARS_NL
+         T_OUT = &#39;Q     - QUIT&#39; CHARS_CR CHARS_NL
+         T_OUT = &#39;H     - HELP&#39; CHARS_CR CHARS_NL
+         T_OUT = &#39;HOME  - TOP&#39; CHARS_CR CHARS_NL
+         T_OUT = &#39;END   - BOTTOM&#39; CHARS_CR CHARS_NL
+         T_OUT = &#39;F     - FIND&#39; CHARS_CR CHARS_NL
+         T_OUT = &#39;R     - REFRESH&#39; CHARS_CR CHARS_NL
+         T_OUT = &#39;N     - TOGGLE LINE NUMBERS&#39; CHARS_CR CHARS_NL
+         T_OUT = &#39;E     - EDIT&#39; CHARS_CR CHARS_NL
+         GETKEY(.T_IN)                                           <b>:(PAGE)</b>
+<font color="#818181"><i>*</i></font>
+EDIT     T_OUT = IDENT(FN) CHARS_BEL                             <b>:S(TOP)</b>
+         T_OUT = DS_CNORM DS_GOTO(DS_LINES - 1, 0)
+         T_OUT = CHARS_CR CHARS_NL CHARS_NL
+         HOST(HOST_SYSCMD, &#39;stty -F /dev/stderr echo cooked&#39;)
+         WRITE_HISTORY(&#39;.LIST&#39;)
+         HOST(HOST_SYSCMD, HOST(HOST_GETENV, &#39;EDITOR&#39;) &#39; &#39; FN)   <b>:(READ)</b>
+<font color="#818181"><i>*</i></font>
+QUIT     T_OUT = DS_CNORM DS_GOTO(DS_LINES - 1, 0)
++                CHARS_CR CHARS_NL CHARS_NL
+<font color="#818181"><i>*</i></font>
+         ENDFILE(UNIT2)
+         DETACH(.T_OUT)
+         ENDFILE(UNIT3)
+         DETACH(.T_IN)
+         HOST(HOST_SYSCMD, &#39;stty -F /dev/stderr echo cooked&#39;)
+         WRITE_HISTORY(&#39;.LIST&#39;)
+<font color="#818181"><i>*</i></font>
+END START
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-TITLE LIST
+START
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                    #        ###   #####   #######                    *</i></font>
+<font color="#818181"><i>*                    #         #   #     #     #                       *</i></font>
+<font color="#818181"><i>*                    #         #   #           #                       *</i></font>
+<font color="#818181"><i>*                    #         #    #####      #                       *</i></font>
+<font color="#818181"><i>*                    #         #         #     #                       *</i></font>
+<font color="#818181"><i>*                    #         #   #     #     #                       *</i></font>
+<font color="#818181"><i>*                    #######  ###   #####      #                       *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* LIST                       FILE VIEWER                               *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* list.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;LIST&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:19 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

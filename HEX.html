@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>HEX - Return hex for string</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">HEX(S)</font> will return the hexadecimal (internal) representation of
+the string <font face="Source Code Pro">S</font>.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="BLEND.html">BLEND</a>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>See Also</h2>
+<a href="CH.html">CH</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;BLEND.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;HEX&raquo;&equiv;</b>
+         DEFINE(&#39;HEX(S)&#39;)
+<font color="#818181"><i>*</i></font>
+         H = &#39;0123456789ABCDEF&#39;
+         HEX_2ND = DUPL(H, 16)
+HEX_1    H LEN(1) . T =                                      <b>:F(HEX_END)</b>
+         HEX_1ST = HEX_1ST DUPL(T, 16)                          <b>:(HEX_1)</b>
+HEX      HEX = BLEND(REPLACE(S, &amp;ALPHABET, HEX_1ST),
++           REPLACE(S, &amp;ALPHABET, HEX_2ND))                    <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+HEX_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;HEX.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL HEX
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                      #     #  #######  #     #                       *</i></font>
+<font color="#818181"><i>*                      #     #  #         #   #                        *</i></font>
+<font color="#818181"><i>*                      #     #  #          # #                         *</i></font>
+<font color="#818181"><i>*                      #######  #####       #                          *</i></font>
+<font color="#818181"><i>*                      #     #  #          # #                         *</i></font>
+<font color="#818181"><i>*                      #     #  #         #   #                        *</i></font>
+<font color="#818181"><i>*                      #     #  #######  #     #                       *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* HEX                    RETURN HEX FOR STRING                         *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* HEX.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;HEX&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:12 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

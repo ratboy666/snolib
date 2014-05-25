@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>SPELL - Spell out a number</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">SPELL(N)</font> will return an english phrase designating the integer
+<font face="Source Code Pro">N</font>.  Thus <font face="Source Code Pro">SPELL(13)</font> will return <font face="Source Code Pro">'THIRTEEN'</font>.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;SPELL&raquo;&equiv;</b>
+         DEFINE(&#39;SPELL(N)M&#39;)                                <b>:(SPELL_END)</b>
+<font color="#818181"><i>*</i></font>
+SPELL    GE(N, 1000)                                      <b>:S(SPELL_1000)</b>
+         GE(N, 100)                                        <b>:S(SPELL_100)</b>
+         GE(N, 20)                                          <b>:S(SPELL_20)</b>
+         GE(N, 13)                                          <b>:S(SPELL_13)</b>
+         (&#39;1ONE,2TWO,3THREE,4FOUR,5FIVE,6SIX,7SEVEN,8EIGHT,9NINE,&#39;
++           &#39;10TEN,11ELEVEN,12TWELVE,&#39;) N ARB . SPELL &#39;,&#39;      <b>:(RETURN)</b>
+SPELL_13 N 1 LEN(1) . M
+         SPELL = SPELL(M 0)
+         SPELL &#39;TY&#39; = &#39;TEEN&#39;
+         SPELL &#39;FOR&#39; = &#39;FOUR&#39;                                  <b>:(RETURN)</b>
+SPELL_20 N LEN(1) . M =
+         &#39;2TWEN,3THIR,4FOR,5FIF,6SIX,7SEVEN,8EIGH,9NINE,&#39;
++           M BREAK(&#39;,&#39;) . SPELL
+         SPELL = SPELL &#39;TY&#39;
+         SPELL = NE(N,0) SPELL &#39;-&#39; SPELL(N)                    <b>:(RETURN)</b>
+SPELL_100
+         N LEN(1) . M  =
+         SPELL = SPELL(M) &#39; HUNDRED&#39;
+         SPELL = NE(N, 0) SPELL &#39; AND &#39; SPELL(+N)              <b>:(RETURN)</b>
+SPELL_1000
+         N RTAB(3) . M  =
+         SPELL = SPELL(M)
+         SPELL &#39;THOUSAND&#39; = &#39;MILLION&#39;
+         SPELL = SPELL &#39; THOUSAND&#39;
+         SPELL = NE(N, 0) SPELL &#39; AND &#39; SPELL(+N)              <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+SPELL_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;SPELL.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+-STITL SPELL
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                 #####   ######   #######  #        #                 *</i></font>
+<font color="#818181"><i>*                #     #  #     #  #        #        #                 *</i></font>
+<font color="#818181"><i>*                #        #     #  #        #        #                 *</i></font>
+<font color="#818181"><i>*                 #####   ######   #####    #        #                 *</i></font>
+<font color="#818181"><i>*                      #  #        #        #        #                 *</i></font>
+<font color="#818181"><i>*                #     #  #        #        #        #                 *</i></font>
+<font color="#818181"><i>*                 #####   #        #######  #######  #######           *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* SPELL                    SPELL OUT A NUMBER                          *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* SPELL.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;SPELL&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:31 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

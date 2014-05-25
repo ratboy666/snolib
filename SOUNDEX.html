@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>SOUNDEX - NARA SOUNDEX</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Return NARA SOUNDEX code.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;SOUNDEX&raquo;&equiv;</b>
+         DEFINE(&#39;SOUNDEX(STR)SDXMAP,INIT,CH&#39;)             <b>:(SOUNDEX_END)</b>
+<font color="#818181"><i>*</i></font>
+SOUNDEX  SDXMAP = &#39;01230127022455012623017202&#39;
+         STR = REPLACE(STR, &amp;LCASE, &amp;UCASE)
+SDX1     STR NOTANY(&amp;UCASE) =                                   <b>:S(SDX1)</b>
+         INIT = SUBSTR(STR, 1, 1)
+         STR = REPLACE(STR, &amp;UCASE, SDXMAP)
+SDX2     STR LEN(1) $ CH SPAN(*CH) = CH                         <b>:S(SDX2)</b>
+<font color="#818181"><i>* OMIT NEXT LINE FOR KNUTH&#39;S SIMPLE SOUNDEX</i></font>
+SDX3     STR LEN(1) $ CH (&#39;7&#39; *CH) = CH                         <b>:S(SDX3)</b>
+         STR LEN(1) = INIT
+SDX4     STR ANY(&#39;07&#39;) =                                        <b>:S(SDX4)</b>
+         STR = SUBSTR(STR, 1, 4)
+         STR = LT(SIZE(STR), 4) STR DUPL(&#39;0&#39;, 4 - SIZE(STR))
+         SOUNDEX = STR                                         <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+SOUNDEX_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;SOUNDEX.INC&#39;
+         &amp;CODE = 1
+         IDENT(SOUNDEX(&#39;washington&#39;), &#39;W252&#39;)                    <b>:F(END)</b>
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+-STITL SOUNDEX
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*     #####   #######  #     #  #     #  ######   #######  #     #     *</i></font>
+<font color="#818181"><i>*    #     #  #     #  #     #  ##    #  #     #  #         #   #      *</i></font>
+<font color="#818181"><i>*    #        #     #  #     #  # #   #  #     #  #          # #       *</i></font>
+<font color="#818181"><i>*     #####   #     #  #     #  #  #  #  #     #  #####       #        *</i></font>
+<font color="#818181"><i>*          #  #     #  #     #  #   # #  #     #  #          # #       *</i></font>
+<font color="#818181"><i>*    #     #  #     #  #     #  #    ##  #     #  #         #   #      *</i></font>
+<font color="#818181"><i>*     #####   #######   #####   #     #  ######   #######  #     #     *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* SOUNDEX                   NARA SOUNDEX                               *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* SOUNDEX.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;SOUNDEX&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:31 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

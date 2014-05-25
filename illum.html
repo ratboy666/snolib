@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>illum - Produce illuminated first character</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">illum</font> takes a sentence as input. It illuminates the first
+character, and outputs the character (from <font face="Source Code Pro">banner</font>) and the rest
+of the sentence boxed with UTF-8 linedraw characters.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="BQ.html">BQ</a><br>
+<a href="CRACK.html">CRACK</a><br>
+<a href="SEQ.html">SEQ</a><br>
+<a href="TRIMB.html">TRIMB</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;BQ.INC&#39;
+-INCLUDE &#39;CRACK.INC&#39;
+-INCLUDE &#39;SEQ.INC&#39;
+-INCLUDE &#39;TRIMB.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;ILLUM&raquo;&equiv;</b>
+         TERMINAL = &#39;ILLUM (SUN NOV 24 01:32:15 EST 2013)&#39;
+<font color="#818181"><i>*</i></font>
+         S = TRIMB(INPUT)                                        <b>:F(END)</b>
+         S LEN(1) . C REM . S                                    <b>:F(END)</b>
+         S = &#39; &#39; VDIFFER(S)
+         F = BQ(&#39;banner &#39; C, &#39;/&#39;)
+         F = CRACK(F &#39;/&#39;, &#39;/&#39;)
+         SEQ(&#39; F&lt;I&gt; = SUBSTR(F&lt;I&gt;, 1, SIZE(F&lt;I&gt;) - 2)&#39;, .I, 2)
+         W = SIZE(F&lt;2&gt;)
+         G = I - 1
+         F&lt;1&gt; = &#39;┌&#39; DUPL(&#39;─&#39;, SIZE(F&lt;2&gt;) + SIZE(S)) &#39;┐&#39;
+         F&lt;2&gt; = &#39;│&#39; F&lt;2&gt; S &#39;│&#39;
+         F&lt;3&gt; = &#39;│&#39; F&lt;3&gt; &#39;│&#39; EQ(SIZE(S))                       <b>:S(ILLU0)</b>
+         F&lt;3&gt; = &#39;│&#39; F&lt;3&gt; &#39;┌&#39; DUPL(&#39;─&#39;, SIZE(S) - 1) &#39;┘&#39;
+ILLU0    SEQ(&#39; F&lt;I&gt; = &quot;│&quot; F&lt;I&gt; &quot;│&quot;&#39;, .I, 4, G)
+         F&lt;I + 1&gt; = &#39;└&#39; DUPL(&#39;─&#39;, W) &#39;┘&#39;
+         SEQ(&#39; OUTPUT = F&lt;I&gt;&#39;, .I)
+<font color="#818181"><i>*</i></font>
+END START
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-TITLE ILLUM
+START
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*               ###  #        #        #     #  #     #                *</i></font>
+<font color="#818181"><i>*                #   #        #        #     #  ##   ##                *</i></font>
+<font color="#818181"><i>*                #   #        #        #     #  # # # #                *</i></font>
+<font color="#818181"><i>*                #   #        #        #     #  #  #  #                *</i></font>
+<font color="#818181"><i>*                #   #        #        #     #  #     #                *</i></font>
+<font color="#818181"><i>*                #   #        #        #     #  #     #                *</i></font>
+<font color="#818181"><i>*               ###  #######  #######   #####   #     #                *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* ILLUM           PRODUCE ILLUMINATED FIRST CHARACTER                  *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* illum.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;ILLUM&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .F.MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:14 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

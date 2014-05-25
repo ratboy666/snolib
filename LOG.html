@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>LOG - LOG Functions</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">CLOG(X)</font> will return the common log (base 10) of <font face="Source Code Pro">X</font>.<br>
+<font face="Source Code Pro">LOGB(X,B)</font> will return the logarithm of <font face="Source Code Pro">X</font> to the base <font face="Source Code Pro">B</font>.<br>
+<font face="Source Code Pro">LOGB(X)</font> will return the natural logarithm of <font face="Source Code Pro">X</font> (same as
+<font face="Source Code Pro">LOG(X)</font>). Note that CSNOBOL4 also has <font face="Source Code Pro">LN(X)</font> for natural log.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="DEXP.html">DEXP</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;DEXP.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;LOG.INC&#39;
+-INCLUDE &#39;FLOOR.INC&#39;
+         &amp;CODE = 1
+         EQ(CEIL(CLOG(1000)), 3)                                 <b>:F(END)</b>
+         X = CLOG(EULERS_NUMBER) * LN(10)
+         EQ(CEIL(X * 10000), 10000)                              <b>:F(END)</b>
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL LOG
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                      #        #######   #####                        *</i></font>
+<font color="#818181"><i>*                      #        #     #  #     #                       *</i></font>
+<font color="#818181"><i>*                      #        #     #  #                             *</i></font>
+<font color="#818181"><i>*                      #        #     #  #  ####                       *</i></font>
+<font color="#818181"><i>*                      #        #     #  #     #                       *</i></font>
+<font color="#818181"><i>*                      #        #     #  #     #                       *</i></font>
+<font color="#818181"><i>*                      #######  #######   #####                        *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* LOG                       LOG FUNCTIONS                              *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* LOG.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CONSTANTS TO 50 PLACES</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* SEE</i></font>
+<font color="#818181"><i>* http://numbers.computation.free.fr/Constants/Miscellaneous/digits.html</i></font>
+<font color="#818181"><i>*</i></font>
+         LN_10    =
++                   2.30258509299404568401799145468436420760110148862877
+         EULERS_NUMBER =
++                   2.71828182845904523536028747135266249775724709369995
+         PI =
++                   3.14159265358979323846264338327950288419716939937510
+<font color="#818181"><i>*</i></font>
+         DEXP(&#39;CLOG(X) = LOG(X) / LN_10&#39;)
+         DEXP(&#39;LOGB(X,B) = NE(B, 0) LOG(X) / LOG(B) ;&#39;
++             &#39;LOGB      = EQ(B, 0) LOG(X)          ;&#39;)
+<font color="#818181"><i>*</i></font>
+LOG_END
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Wed May 21 19:01:25 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

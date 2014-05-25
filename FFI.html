@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>FFI - Foreign Function Interface</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+An interface to <font face="Source Code Pro">libffi</font> providing a Foreign Function Interface
+(FFI) for SNOBOL4.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="P64.html">P64</a>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+When building, the following INCLUDEs are also needed:
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<a href="BQ.html">BQ</a><br>
+<a href="DYNAMIC.html">DYNAMIC</a><br>
+<a href="WRAPPER.html">WRAPPER</a><br>
+<a href="CRACK.html">CRACK</a><br>
+<a href="SEQ.html">SEQ</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;P64.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;FFI&raquo;&equiv;</b>
+-CASE 1
+-PLUSOPS 1
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+When building ffi.so the following INCLUDES are needed.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;FFI&raquo;&equiv;</b>
+-SNOBOL SLOAD(&#39;BQ.INC&#39;)
+-SNOBOL SLOAD(&#39;DYNAMIC.INC&#39;)
+-SNOBOL SLOAD(&#39;WRAPPER.INC&#39;)
+-SNOBOL SLOAD(&#39;CRACK.INC&#39;)
+-SNOBOL SLOAD(&#39;SEQ.INC&#39;)
+-SNOBOL TERMINAL = &#39;FFI (MON NOV 11 12:50:40 EST 2013)&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;FFI&raquo;&equiv;</b>
+-EMBED C &#39;ffi&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;FFI,TYPE=C&raquo;&equiv;</b>
+-SNOBOL WRAPPER_STARTFILE(.EMBED)
+
+<font color="#818181"><i>#include &lt;ffi.h&gt;</i></font>
+<font color="#818181"><i>#include &lt;stdio.h&gt;</i></font>
+<font color="#818181"><i>#include &lt;stdlib.h&gt;</i></font>
+<font color="#818181"><i>#include &lt;string.h&gt;</i></font>
+<font color="#818181"><i>#include &lt;dlfcn.h&gt;</i></font>
+<font color="#818181"><i>#include &quot;p64.h&quot;</i></font>
+
+static int errors;
+static ffi_status ffi_error;
+
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Interpret types - these are expressed as strings, separated by comma.
+Spaces are ignored.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+| U8, U16, U32, U64
+| S8, S16, S32, S64
+| F, D, E for FLOAT, DOUBLE, EXTENDED (E is LONG DOUBLE)
+| C, T, I, L, P for CHAR, SHORT, INT, LONG, POINTER
+</font></pre>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Default is SIGNED, 32 bit
+Examine string encoded type in <font face="Source Code Pro">**s</font>, return ffi_type pointer,
+or NULL. Increment <font face="Source Code Pro">errors</font> on an error.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;FFI,TYPE=C&raquo;&equiv;</b>
+
+static void *interpret_ptype(char **s)
+{
+    int w = 32;
+    int t = 2;
+    if (**s == &#39;,&#39;)
+	++(*s);
+    if (**s == 0)
+	return NULL;
+    for (; **s &amp;&amp; (**s != &#39;,&#39;); ++(*s)) {
+	switch (**s) {
+	case &#39; &#39;:
+	case &#39;3&#39;:
+	case &#39;6&#39;:         break;
+	case &#39;v&#39;:
+	case &#39;V&#39;: t =  0; break;
+	case &#39;u&#39;:
+	case &#39;U&#39;: t =  1; break;
+	case &#39;s&#39;:
+	case &#39;S&#39;: t =  2; break;
+	case &#39;f&#39;:
+	case &#39;F&#39;: t =  3; break;
+	case &#39;d&#39;:
+	case &#39;D&#39;: t =  4; break;
+	case &#39;p&#39;:
+	case &#39;P&#39;: t =  5; break;
+	case &#39;e&#39;:
+	case &#39;E&#39;: t =  6; break;
+	case &#39;c&#39;:
+	case &#39;C&#39;:
+	case &#39;8&#39;: w =  8; break;
+	case &#39;1&#39;: w = 16; break;
+	case &#39;i&#39;:
+	case &#39;I&#39;:
+	case &#39;2&#39;: w = 32; break;
+	case &#39;l&#39;:
+	case &#39;L&#39;:
+	case &#39;4&#39;: w = 64; break;
+	default: ++errors; return NULL;
+	}
+    }
+    switch (t) {
+    case 0: return &amp;ffi_type_void;
+    case 1: switch (w) {
+	    case  8: return &amp;ffi_type_uint8;
+	    case 16: return &amp;ffi_type_uint16;
+	    case 32: return &amp;ffi_type_uint32;
+	    case 64: return &amp;ffi_type_uint64;
+	    default: ++errors; return NULL;
+	    }
+    case 2: switch (w) {
+	    case  8: return &amp;ffi_type_sint8;
+	    case 16: return &amp;ffi_type_sint16;
+	    case 32: return &amp;ffi_type_sint32;
+	    case 64: return &amp;ffi_type_sint64;
+	    default: +errors; return NULL;
+	    }
+    case 3: return &amp;ffi_type_float;
+    case 4: return &amp;ffi_type_double;
+    case 5: return &amp;ffi_type_pointer;
+    case 6: return &amp;ffi_type_longdouble;
+    default: ++errors; return NULL;
+    }
+    ++errors;
+    return NULL;
+}
+
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Structure describing an FFI call. Contains the <font face="Source Code Pro">ffi_cif</font>,
+vectors for the argument types, argument pointers <font face="Source Code Pro">arg_ptrs</font>, the
+<font face="Source Code Pro">result</font> and its type (<font face="Source Code Pro">result_type</font>), <font face="Source Code Pro">nargs</font> - number of
+arguments, and a vector which indicates whether <font face="Source Code Pro">free()</font> is needed
+on the parameter after the call returns.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;FFI,TYPE=C&raquo;&equiv;</b>
+
+typedef struct {
+    ffi_cif *cif;
+    ffi_type **arg_types;
+    ffi_arg *arg_values;
+    void **arg_ptrs;
+    int *arg_needfree;
+    ffi_type *result_type;
+    ffi_arg result;
+    int nargs;
+    void *callp;
+} ffi_t;
+
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Create a new FFI descriptor, given return type <font face="Source Code Pro">*r</font> with argument
+types <font face="Source Code Pro">*s</font>. Return 0 on error, 1 if ok, allowing this function to
+be used as a predicate. Result is stored in global pointers <font face="Source Code Pro">p</font>
+and <font face="Source Code Pro">p2</font>.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;FFI,TYPE=C&raquo;&equiv;</b>
+
+static int new_ffi(char *r, char *s)
+{
+    ffi_t *ffip;
+    int n = 0;
+    char *s2 = s;
+    ffi_error = FFI_OK;
+    ffip = malloc(sizeof(ffi_t));
+    if (ffip == NULL) {
+	return 0;
+    }
+    p = ffip;
+    p2 = p;
+    ffip-&gt;result_type = interpret_ptype(&amp;r);
+    if (ffip-&gt;result_type == NULL) {
+	return 0;
+    }
+    errors = 0;
+    while (interpret_ptype(&amp;s)) {
+	++n;
+	if (errors)
+	    return 0;
+    }
+    ffip-&gt;nargs = n;
+    if (n == 0)
+	n = 1;
+    ffip-&gt;cif = malloc(sizeof(ffi_cif));
+    ffip-&gt;arg_types = malloc((n + 1) * (sizeof(ffi_type *)));
+    ffip-&gt;arg_values = malloc((n + 1) * (sizeof(ffi_arg)));
+    ffip-&gt;arg_needfree = malloc((n + 1) * (sizeof(int)));
+    ffip-&gt;arg_ptrs = malloc((n + 1) * (sizeof(void *)));
+    if ((ffip-&gt;arg_types == NULL) ||
+	(ffip-&gt;arg_values == NULL) ||
+	(ffip-&gt;arg_ptrs == NULL) ||
+	(ffip-&gt;arg_needfree == NULL) ||
+	(ffip-&gt;cif == NULL))
+	return 0;
+    s = s2;
+    n = 0;
+    while ((ffip-&gt;arg_types[n] = interpret_ptype(&amp;s)) != NULL) {
+	ffip-&gt;arg_ptrs[n] = &amp;ffip-&gt;arg_values[n];
+	ffip-&gt;arg_needfree[n] = 0;
+	++n;
+    }
+    ffi_error = ffi_prep_cif(ffip-&gt;cif,
+			     FFI_DEFAULT_ABI,
+			     ffip-&gt;nargs,
+			     ffip-&gt;result_type,
+			     ffip-&gt;arg_types);
+    if (ffi_error != FFI_OK)
+	return 0;
+    return 1;
+}
+
+-SNOBOL C_WRAPPER_PROTO(&#39;NEW_FFI(STRING,STRING)PREDICATE&#39;, .EMBED)
+
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Clear FFI descriptor after a call has been made. Deallocates
+(<font face="Source Code Pro">free()</font>) any parameters indicated by <font face="Source Code Pro">arg_needfree</font>.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;FFI,TYPE=C&raquo;&equiv;</b>
+
+static void clear_ffi(void)
+{
+    ffi_t *ffip = p;
+    int i;
+    for (i = 0; i &lt; ffip-&gt;nargs; ++i) {
+	if (ffip-&gt;arg_needfree[i]) {
+	    free((void *)ffip-&gt;arg_values[i]);
+	    ffip-&gt;arg_needfree[i] = 0;
+	}
+    }
+}
+
+-SNOBOL C_WRAPPER_PROTO(&#39;CLEAR_FFI()&#39;, .EMBED)
+
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Destroy FFI descriptor.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;FFI,TYPE=C&raquo;&equiv;</b>
+
+static void free_ffi(void)
+{
+    ffi_t *ffip = p;
+    free(ffip-&gt;arg_values);
+    free(ffip-&gt;arg_types);
+    free(ffip-&gt;arg_needfree);
+    free(ffip-&gt;cif);
+    free(ffip);
+}
+
+-SNOBOL C_WRAPPER_PROTO(&#39;FREE_FFI()&#39;, .EMBED)
+
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Indicate that parameter <font face="Source Code Pro">n</font> (counting from 1) requires deallocation
+(<font face="Source Code Pro">free()</font>) after call.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;FFI,TYPE=C&raquo;&equiv;</b>
+
+static int par_n_needfree(int n)
+{
+    ffi_t *ffip = p;
+    if ((n &lt; 1) || (n &gt; ffip-&gt;nargs))
+	return 0;
+    ffip-&gt;arg_needfree[n - 1] = 1;
+    return 1;
+}
+
+-SNOBOL C_WRAPPER_PROTO(&#39;PAR_N_NEEDFREE(INTEGER)PREDICATE&#39;, .EMBED)
+
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Set value of parameter <font face="Source Code Pro">n</font> to integer <font face="Source Code Pro">v</font> (32 bit).
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;FFI,TYPE=C&raquo;&equiv;</b>
+
+static int set_par_n_integer(int n, int v)
+{
+    ffi_t *ffip = p;
+    if ((n &lt; 1) || (n &gt; ffip-&gt;nargs))
+	return 0;
+    ffip-&gt;arg_values[n - 1] = v;
+    return 1;
+}
+
+-SNOBOL C_WRAPPER_PROTO(&#39;SET_PAR_N_INTEGER(INTEGER,INTEGER)PREDICATE&#39;, +
+           .EMBED)
+
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Set value of parameter <font face="Source Code Pro">n</font> to double <font face="Source Code Pro">v</font>. Nominally type <font face="Source Code Pro">double</font>
+but this should be useable to get a REAL parameter into a double.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;FFI,TYPE=C&raquo;&equiv;</b>
+
+static int set_par_n_real(int n, double v)
+{
+    ffi_t *ffip = p;
+    if ((n &lt; 1) || (n &gt; ffip-&gt;nargs))
+	return 0;
+    ffip-&gt;arg_values[n - 1] = v;
+    return 1;
+}
+
+-SNOBOL C_WRAPPER_PROTO(&#39;SET_PAR_N_REAL(INTEGER,REAL)PREDICATE&#39;, .EMBED)
+
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Set value of parameter <font face="Source Code Pro">n</font> to 64 bit <font face="Source Code Pro">p</font>. <font face="Source Code Pro">p2</font> will be the
+FFI descriptor and <font face="Source Code Pro">p</font> the 64 bit long or pointer argument.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;FFI,TYPE=C&raquo;&equiv;</b>
+
+static int set_par_n_p(int n)
+{
+    ffi_t *ffip = p2;
+    if ((n &lt; 1) || (n &gt; ffip-&gt;nargs))
+	return 0;
+    ffip-&gt;arg_values[n - 1] = (long)p;
+    return 1;
+}
+
+-SNOBOL C_WRAPPER_PROTO(&#39;SET_PAR_N_P(INTEGER)PREDICATE&#39;, .EMBED)
+
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Set value of parameter <font face="Source Code Pro">n</font> to float <font face="Source Code Pro">f</font>.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;FFI,TYPE=C&raquo;&equiv;</b>
+
+static int set_par_n_f(int n)
+{
+    ffi_t *ffip = p;
+    if ((n &lt; 1) || (n &gt; ffip-&gt;nargs))
+	return 0;
+    ffip-&gt;arg_values[n - 1] = f;
+    return 1;
+}
+
+-SNOBOL C_WRAPPER_PROTO(&#39;SET_PAR_N_F(INTEGER)PREDICATE&#39;, .EMBED)
+
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Set value of parameter <font face="Source Code Pro">n</font> to double <font face="Source Code Pro">d</font>.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;FFI,TYPE=C&raquo;&equiv;</b>
+
+static int set_par_n_d(int n)
+{
+    ffi_t *ffip = p;
+    if ((n &lt; 1) || (n &gt; ffip-&gt;nargs))
+	return 0;
+    ffip-&gt;arg_values[n - 1] = d;
+    return 1;
+}
+
+-SNOBOL C_WRAPPER_PROTO(&#39;SET_PAR_N_D(INTEGER)PREDICATE&#39;, .EMBED)
+
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Set value of parameter <font face="Source Code Pro">n</font> to long double <font face="Source Code Pro">ld</font>.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;FFI,TYPE=C&raquo;&equiv;</b>
+
+static int set_par_n_ld(int n)
+{
+    ffi_t *ffip = p;
+    if ((n &lt; 1) || (n &gt; ffip-&gt;nargs))
+	return 0;
+    ffip-&gt;arg_values[n - 1] = ld;
+    return 1;
+}
+
+-SNOBOL C_WRAPPER_PROTO(&#39;SET_PAR_N_LD(INTEGER)PREDICATE&#39;, .EMBED)
+
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Set value of parameter <font face="Source Code Pro">n</font> to string <font face="Source Code Pro">s</font>. Uses <font face="Source Code Pro">strdup()</font> to make
+a copy of the string, and marks it for <font face="Source Code Pro">free()</font> after call returns.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;FFI,TYPE=C&raquo;&equiv;</b>
+
+static int set_par_n_string(int n, char *s)
+{
+    ffi_t *ffip = p;
+    if ((n &lt; 1) || (n &gt; ffip-&gt;nargs))
+        return 0;
+    ffip-&gt;arg_values[n - 1] = (long)strdup(s);
+    if (ffip-&gt;arg_values[n - 1] == (long)NULL)
+        return 0;
+    ffip-&gt;arg_needfree[n - 1] = 1;
+    return 1;
+}
+
+-SNOBOL C_WRAPPER_PROTO(&#39;SET_PAR_N_STRING(INTEGER,STRING)PREDICATE&#39;,   +
+           .EMBED)
+
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Set pointer to function in FFI descriptor.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;FFI,TYPE=C&raquo;&equiv;</b>
+
+/* CIF in P2, FN in P */
+static void set_callp(void)
+{
+    ffi_t *ffip = p2;
+    ffip-&gt;callp = p;
+}
+
+-SNOBOL C_WRAPPER_PROTO(&#39;SET_CALLP()&#39;, .EMBED)
+
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Call FFI function.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;FFI,TYPE=C&raquo;&equiv;</b>
+
+static void call_ffi(void)
+{
+    ffi_t *ffip = p;
+    ffi_call(ffip-&gt;cif, FFI_FN(ffip-&gt;callp),
+	     &amp;ffip-&gt;result, ffip-&gt;arg_ptrs);
+    if (ffip-&gt;result_type == &amp;ffi_type_void) /* */ ;
+    else if ((ffip-&gt;result_type == &amp;ffi_type_uint8) ||
+	     (ffip-&gt;result_type == &amp;ffi_type_sint8) ||
+	     (ffip-&gt;result_type == &amp;ffi_type_uint16) ||
+	     (ffip-&gt;result_type == &amp;ffi_type_sint16) ||
+	     (ffip-&gt;result_type == &amp;ffi_type_uint32) ||
+	     (ffip-&gt;result_type == &amp;ffi_type_sint32) ||
+	     (ffip-&gt;result_type == &amp;ffi_type_uint64) ||
+	     (ffip-&gt;result_type == &amp;ffi_type_sint64) ||
+	     (ffip-&gt;result_type == &amp;ffi_type_pointer))
+	p = (void *)(long)ffip-&gt;result;
+    else if (ffip-&gt;result_type == &amp;ffi_type_float)
+	f = ffip-&gt;result;
+    else if (ffip-&gt;result_type == &amp;ffi_type_double)
+	d = ffip-&gt;result;
+    else if (ffip-&gt;result_type == &amp;ffi_type_longdouble)
+	ld = ffip-&gt;result;
+}
+
+-SNOBOL C_WRAPPER_PROTO(&#39;CALL_FFI()&#39;, .EMBED)
+
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Simplified calls, actually returning result (instead of just leaving
+it in P64 global variables).
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;FFI,TYPE=C&raquo;&equiv;</b>
+
+static int call_integer_ffi(void)
+{
+    ffi_t *ffip = p;
+    ffi_call(ffip-&gt;cif, FFI_FN(ffip-&gt;callp),
+	     &amp;ffip-&gt;result, ffip-&gt;arg_ptrs);
+    return ffip-&gt;result;
+}
+
+-SNOBOL C_WRAPPER_PROTO(&#39;CALL_INTEGER_FFI()INTEGER&#39;, .EMBED)
+
+static double call_real_ffi(void)
+{
+    ffi_t *ffip = p;
+    ffi_call(ffip-&gt;cif, FFI_FN(ffip-&gt;callp),
+	     &amp;ffip-&gt;result, ffip-&gt;arg_ptrs);
+    return ffip-&gt;result;
+}
+
+-SNOBOL C_WRAPPER_PROTO(&#39;CALL_REAL_FFI()REAL&#39;, .EMBED)
+
+static char *call_string_ffi(void)
+{
+    ffi_t *ffip = p;
+    ffi_call(ffip-&gt;cif, FFI_FN(ffip-&gt;callp),
+	     &amp;ffip-&gt;result, ffip-&gt;arg_ptrs);
+    return (char *)ffip-&gt;result;
+}
+
+-SNOBOL C_WRAPPER_PROTO(&#39;CALL_STRING_FFI()STRING&#39;, .EMBED)
+
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+DL (Dynamic Library) functions, Open, close, retrieve error and
+resolve symbols in an external library (or within the program itself,
+if a handle of NULL is used).
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;FFI,TYPE=C&raquo;&equiv;</b>
+
+/* DL functions
+ */
+static void dlopen_ffi(char *s, int n) { p = dlopen(s, n); }
+
+-SNOBOL C_WRAPPER_PROTO(&#39;DLOPEN_FFI(STRING,INTEGER)&#39;, .EMBED)
+
+static char *dlerror_ffi(void)
+{
+    char *s = dlerror();
+    if (s == NULL) return &quot;&quot;;
+    return s;
+}
+
+-SNOBOL C_WRAPPER_PROTO(&#39;DLERROR_FFI()STRING&#39;, .EMBED)
+
+static void dlsym_ffi(char *s) { p = dlsym(p, s); }
+
+-SNOBOL C_WRAPPER_PROTO(&#39;DLSYM_FFI(STRING)&#39;, .EMBED)
+
+static int dlclose_ffi(void) { return dlclose(p); }
+
+-SNOBOL C_WRAPPER_PROTO(&#39;DLCLOSE_FFI()INTEGER&#39;, .EMBED)
+
+-END
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Build ffi.so. Note that pwd is wrong -- we need to have run-time
+search start with actual library directory.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;FFI&raquo;&equiv;</b>
+-SNOBOL DYNAMIC_DEBUG = 1
+-SNOBOL COMPILE_DYNAMIC(ffi) :F(ERROR) ;
+-SNOBOL P64 = BQ(&#39;pwd&#39;) &#39;/p64.so&#39;
+-SNOBOL LIBS = P64 &#39; -L/usr/local/lib -lffi -ldl&#39;
+-SNOBOL OBJECTS = ffi ; OBJECTS &#39;.c&#39; = &#39;.o&#39;
+-SNOBOL LINK_DYNAMIC(&#39;./ffi&#39;, OBJECTS, LIBS) :F(ERROR) ;
+-CMNT ERASE TEMPORARY FILES
+-CMNT     WE DON&#39;T NEED THE C BITS, OR THE OBJECT FILES ANYMORE.
+-CMNT     ALL WE REQUIRE IS FFI.SO
+-SNOBOL A = CRACK(ffi &#39; &#39; OBJECTS, &#39; &#39;)
+-SNOBOL SEQ(&#39; DELETE(A&lt;K&gt;) &#39;, .K)
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Actually <font face="Source Code Pro">LOAD()</font> the functions defined into CSNOBOL4.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;FFI&raquo;&equiv;</b>
+         LOAD(&#39;FREE_FFI()&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;CLEAR_FFI()&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;NEW_FFI(STRING,STRING)&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;PAR_N_NEEDFREE(INTEGER)&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;SET_PAR_N_INTEGER(INTEGER,INTEGER)&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;SET_PAR_N_REAL(INTEGER,REAL)&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;SET_PAR_N_STRING(INTEGER,STRING)&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;SET_PAR_N_P(INTEGER)&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;SET_PAR_N_F(INTEGER)&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;SET_PAR_N_D(INTEGER)&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;SET_PAR_N_LD(INTEGER)&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;SET_CALLP()&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;CALL_FFI()&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;CALL_INTEGER_FFI()INTEGER&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;CALL_REAL_FFI()REAL&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;CALL_STRING_FFI()STRING&#39;, &#39;ffi.so&#39;)
+<font color="#818181"><i>*</i></font>
+         RTLD_LAZY   = 1
+         RTLD_NOW    = 2
+         RTLD_GLOBAL = 256
+         RTLD_LOCAL  = 0
+<font color="#818181"><i>*</i></font>
+         LOAD(&#39;DLOPEN_FFI(STRING,INTEGER)&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;DLERROR_FFI()STRING&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;DLSYM_FFI(STRING)&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;DLCLOSE_FFI()INTEGER&#39;, &#39;ffi.so&#39;)
+<font color="#818181"><i>*</i></font>
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+The actual “API” for FFI. This also gives opportunity to run pre or
+post functions. CLEAR_FFI() as an example, which free()s strdup()d
+parameters after an FFI call.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;FFI&raquo;&equiv;</b>
+         DEFINE(&#39;DLOPEN(S,I)&#39;)
+         DEFINE(&#39;DLERROR()&#39;)
+         DEFINE(&#39;DLSYM(H,S)&#39;)
+         DEFINE(&#39;DLCLOSE(H)&#39;)
+<font color="#818181"><i>*</i></font>
+         DEFINE(&#39;FFI_NEW(RS,PS)&#39;)
+         DEFINE(&#39;FFI_FREE(FFI)&#39;)
+         DEFINE(&#39;FFI_PAR_N_INTEGER(FFI,N,I)&#39;)
+         DEFINE(&#39;FFI_PAR_N_REAL(FFI,N,R)&#39;)
+         DEFINE(&#39;FFI_PAR_N_STRING(FFI,N,S)&#39;)
+         DEFINE(&#39;FFI_PAR_N_PTR(FFI,N,P)&#39;)
+         DEFINE(&#39;FFI_SET_CALLP(FFI,PROC)&#39;)
+         DEFINE(&#39;FFI_CALL_VOID(FFI)&#39;)
+         DEFINE(&#39;FFI_CALL_INTEGER(FFI)&#39;)
+         DEFINE(&#39;FFI_CALL_REAL(FFI)&#39;)
+         DEFINE(&#39;FFI_CALL_STRING(FFI)&#39;)
+         DEFINE(&#39;FFI_CALL_PTR(FFI)&#39;)                          <b>:(FFI_END)</b>
+<font color="#818181"><i>*</i></font>
+DLOPEN   DLOPEN_FFI(S, I)
+         DLOPEN = GET_P()                                      <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+DLERROR  DLERROR = DLERROR_FFI()                               <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+DLSYM    SET_P(H)
+         DLSYM_FFI(S)
+         DLSYM = GET_P()                                       <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+DLCLOSE  SET_P(H)
+         DLCLOSE = DLCLOSE_FFI()                               <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+FFI_NEW  NEW_FFI(RS, PS)                                     <b>:F(FRETURN)</b>
+         FFI_NEW = GET_P()                                     <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+FFI_FREE SET_P(FFI)
+         FREE_FFI()                                            <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+FFI_PAR_N_INTEGER
+         SET_P(FFI)
+         SET_PAR_N_INTEGER(N, I)                    <b>:S(RETURN)F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+FFI_PAR_N_REAL
+         SET_P(FFI)
+         SET_PAR_N_REAL(N, R)                       <b>:S(RETURN)F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+FFI_PAR_N_STRING
+         SET_P(FFI)
+         SET_PAR_N_STRING(N, S)                     <b>:S(RETURN)F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+FFI_PAR_N_PTR
+         SET_P(FFI)
+         P_TO_P2()
+         SET_P(P)
+         SET_PAR_N_P(N)                             <b>:S(RETURN)F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+FFI_SET_CALLP
+         SET_P(FFI)
+         P_TO_P2
+         SET_P(PROC)
+         SET_CALLP()                                           <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+FFI_CALL_VOID
+         SET_P(FFI)
+         CALL_FFI()
+         CLEAR_FFI()                                           <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+FFI_CALL_INTEGER
+         SET_P(FFI)
+         FFI_CALL_INTEGER = CALL_INTEGER_FFI()
+         CLEAR_FFI()                                           <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+FFI_CALL_REAL
+         SET_P(FFI)
+         FFI_CALL_REAL = CALL_REAL_FFI()
+         CLEAR_FFI()                                           <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+FFI_CALL_STRING
+         SET_P(FFI)
+         FFI_CALL_STRING = CALL_STRING_FFI()
+         CLEAR_FFI()                                           <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+FFI_CALL_PTR
+         SET_P(FFI)
+         CALL_FFI()
+         FFI_CALL_PTR = GET_P()
+         SET_P(FFI)
+         CLEAR_FFI()                                           <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+FFI_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;FFI.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL FFI
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                         #######  #######  ###                        *</i></font>
+<font color="#818181"><i>*                         #        #         #                         *</i></font>
+<font color="#818181"><i>*                         #        #         #                         *</i></font>
+<font color="#818181"><i>*                         #####    #####     #                         *</i></font>
+<font color="#818181"><i>*                         #        #         #                         *</i></font>
+<font color="#818181"><i>*                         #        #         #                         *</i></font>
+<font color="#818181"><i>*                         #        #        ###                        *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* FFI                  FOREIGN FUNCTION INTERFACE                      *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* FFI.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;FFI&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .F.MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Thu May 22 23:02:24 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>BLEND - Blend two strings</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">BLEND(S1,S2)</font> will blend the two (equi-length) strings <font face="Source Code Pro">S1</font> and
+<font face="Source Code Pro">S2</font> such that every other character is taken from each string. Thus,
+<font face="Source Code Pro">BLEND('ABC','123')</font> will return <font face="Source Code Pro">'A1B2C3'</font>.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;BLEND&raquo;&equiv;</b>
+         DEFINE(&#39;BLEND(S1,S2)T1,T2,ABC,XYZ,L1,L2&#39;)
+         &amp;ALPHABET LEN(128) . ABC LEN(128) . XYZ
+BLE_1    ABC LEN(1) . T1 =                                 <b>:F(BLEND_END)</b>
+         XYZ LEN(1) . T2 =
+         BLENDED_ALPHABET = BLENDED_ALPHABET T1 T2              <b>:(BLE_1)</b>
+<font color="#818181"><i>*</i></font>
+BLEND    L1 = SIZE(S1)
+         GT(L1, 128)                                         <b>:F(BLEND_1)</b>
+         EQ(L1, 0)                                            <b>:S(RETURN)</b>
+         S1 LEN(128) . S1 REM . T1
+         S2 LEN(128) . S2 REM . T2
+         BLEND = REPLACE(BLENDED_ALPHABET, &amp;ALPHABET, S1 S2)
+         BLEND(T1, T2)                                         <b>:(RETURN)</b>
+BLEND_1  L2 = SIZE(S2)
+         &amp;ALPHABET LEN(*L1) . ABC TAB(128) LEN(*L2) . XYZ
+         BLENDED_ALPHABET LEN(*(L1 + L2)) . AXBYCZ
+         BLEND = REPLACE(AXBYCZ, ABC XYZ, S1 S2)               <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+BLEND_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;BLEND.INC&#39;
+         &amp;CODE = 1
+         IDENT(BLEND(&#39;ABC&#39;, &#39;123&#39;), &#39;A1B2C3&#39;)                    <b>:F(END)</b>
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+-STITL BLEND
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*              ######   #        #######  #     #  ######              *</i></font>
+<font color="#818181"><i>*              #     #  #        #        ##    #  #     #             *</i></font>
+<font color="#818181"><i>*              #     #  #        #        # #   #  #     #             *</i></font>
+<font color="#818181"><i>*              ######   #        #####    #  #  #  #     #             *</i></font>
+<font color="#818181"><i>*              #     #  #        #        #   # #  #     #             *</i></font>
+<font color="#818181"><i>*              #     #  #        #        #    ##  #     #             *</i></font>
+<font color="#818181"><i>*              ######   #######  #######  #     #  ######              *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* BLEND                      BLEND STRINGS                             *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* BLEND.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;BLEND&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:10:57 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>TIMER - Time statements</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">TIMER(S)</font> will time a statement (or statements) passed to it as
+argument. Example: <font face="Source Code Pro">TIMER(' A = B + C ')</font>. Multiple statements
+should be separated by semicolons.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="SYSTEM.html">SYSTEM</a><br>
+<a href="RESOL.html">RESOL</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;SYSTEM.INC&#39;
+-INCLUDE &#39;RESOL.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;TIMER&raquo;&equiv;</b>
+         DEFINE(&#39;TIMER(S_,N_)C_,T_,I_&#39;)                     <b>:(TIMER_END)</b>
+<font color="#818181"><i>*</i></font>
+TIMER    EQ(N_, 0)                                           <b>:F(TIMER_N)</b>
+         N_ = 10
+TIMER_1  T_ = TIMER(&#39; ;&#39; S_, N_) - TIMER(, N_)               <b>:F(FRETURN)</b>
+<font color="#818181"><i>* WAS 20 * RESOLUTION. NOW THAT RESOLUTION IS ON THE ORDER OF 4</i></font>
+<font color="#818181"><i>* MICROSECONDS, WE LOOK FOR 2000 * RESOLUTION (8 MILLISECONDS).</i></font>
+         N_ = LT(T_, 2000 * RESOLUTION()) N_ * 2             <b>:S(TIMER_1)</b>
+         T_ = CONVERT(T_, &#39;REAL&#39;)
+         OUTPUT =
+         OUTPUT = &#39;THE STATEMENT&#39;
+         OUTPUT = S_
+<font color="#818181"><i>* CALCULATE THE TIME, AND SCALE TO MICROSECONDS, MILLISECONDS OR</i></font>
+<font color="#818181"><i>* SECONDS.</i></font>
+         T_ = T_ / N_
+         C_ = &#39; MILLISECONDS&#39;
+         (GE(T_, 1.0) LT(T_, 1000.0))                        <b>:S(TIMER_2)</b>
+         C_ = GE(T_, 1000.0) &#39; SECONDS&#39;
+         T_ = GE(T_, 1000.0) T_ / 1000.0                     <b>:S(TIMER_2)</b>
+         T_ = T_ * 1000.0
+         C_ = &#39; MICROSECONDS&#39;
+TIMER_2  OUTPUT = &#39;REQUIRED &#39; T_ C_ &#39; +/- 10%&#39;
++           &#39; TO EXECUTE IN &#39;  SYSTEM()                        <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+TIMER_N  I_ = 1
+         C_ = &#39;          COLLECT()                             ;&#39;
++             &#39;          TIMER = TIME()                        ;&#39;
++             &#39;TIMER_4   EQ(TIMER, TIME())          :S(TIMER_4);&#39;
++             &#39;          TIMER = TIME()                        ;&#39;
++             &#39;TIMER_3 &#39; S_                                   &#39;;&#39;
++             &#39;          I_ = I_ + 1 LT(I_, &#39; N_ &#39;) :S(TIMER_3);&#39;
++             &#39;          TIMER = TIME() - TIMER       :(RETURN)&#39;
+         C_ = CODE(C_)                                  <b>:S&lt;C_&gt;F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+TIMER_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;TIMER.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL TIMER
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                 #######  ###  #     #  #######  ######               *</i></font>
+<font color="#818181"><i>*                    #      #   ##   ##  #        #     #              *</i></font>
+<font color="#818181"><i>*                    #      #   # # # #  #        #     #              *</i></font>
+<font color="#818181"><i>*                    #      #   #  #  #  #####    ######               *</i></font>
+<font color="#818181"><i>*                    #      #   #     #  #        #   #                *</i></font>
+<font color="#818181"><i>*                    #      #   #     #  #        #    #               *</i></font>
+<font color="#818181"><i>*                    #     ###  #     #  #######  #     #              *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* TIMER                       TIME STATEMENTS                          *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* TIMER.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;TIMER&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:37 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

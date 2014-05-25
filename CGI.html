@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>CGI - CGI Support Functions</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">CGI</font> support functions. <font face="Source Code Pro">SCOOP</font> is used to create a <font face="Source Code Pro">CGI</font>
+object.  This object contains data and methods needed to support
+<font face="Source Code Pro">CGI</font> activities.  In turn, <font face="Source Code Pro">CGI</font> uses <font face="Source Code Pro">COOKIE</font> to support
+<font face="Source Code Pro">HTTP</font> cookies. The <font face="Source Code Pro">WEB</font> application can use <font face="Source Code Pro">SESSION</font> to
+support persistant server-side sessions. <font face="Source Code Pro">HTMLTMPL</font> to support
+templates, <font face="Source Code Pro">PSQL</font> to provide database for filling in templates.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Logging is supported in the <font face="Source Code Pro">CGI</font> class. This is not decoupled
+because there are very few ways to debug <font face="Source Code Pro">CGI</font> applications.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+USE_FCGI is set to true in FCGI.lss if Fast CGI is in use. So,
+include FCGI.INC before CGI.INC to prepare for Fast CGI.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Still need: Response codes, Headers/Responses
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+| Last-modified:
+| Content-type: application/octet-stream; name="filename"
+| Content-disposition: attachment; filename="genome.jpg"
+| 
+| Content-length: 3002
+| Location:
+| Status: 200 OK
+| 302 Found (301 302 303)
+| 400 Bad Request
+| 501 Not Implemented
+| local redirect - just respond with Location:
+| absolute URI redirect same
+| with doc, respond 302 Location and doc returned
+</font></pre>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>See Also</h2>
+<a href="SESSION.html">SESSION</a><br>
+<a href="HTMLTMPL.html">HTMLTMPL</a><br>
+<a href="PSQL.html">PSQL</a>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="SCOOP.html">SCOOP</a><br>
+<a href="COOKIE.html">SESSION</a><br>
+<a href="HOST.html">HOST</a><br>
+<a href="CRACK.html">CRACK</a><br>
+<a href="SEQ.html">SEQ</a><br>
+<a href="HTMLESC.html">HTMLESC</a><br>
+<a href="CHARS.html">CHARS</a><br>
+<a href="HASH.html">HASH</a><br>
+<a href="UNIQUE.html">UNIQUE</a><br>
+<a href="JSON.html">JSON</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;SCOOP.INC&#39;
+-INCLUDE &#39;COOKIE.INC&#39;
+-INCLUDE &#39;HOST.INC&#39;
+-INCLUDE &#39;CRACK.INC&#39;
+-INCLUDE &#39;SEQ.INC&#39;
+-INCLUDE &#39;HTMLESC.INC&#39;
+-INCLUDE &#39;CHARS.INC&#39;
+-INCLUDE &#39;HASH.INC&#39;
+-INCLUDE &#39;UNIQUE.INC&#39;
+-INCLUDE &#39;JSON.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;CGI&raquo;&equiv;</b>
+         CGI_CLASS = SEND(CLASS, &#39;NEW_CLASS&#39;, &#39;CGI_CLASS&#39;)
+         DEFINE(&#39;CGI_INIT()A,C&#39;)
+         SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;INIT&#39;, &#39;CGI_INIT&#39;)
+         SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;GET_COOKIE_JAR&#39;, CODE(
++           &#39; SEND = ^.COOKIE_JAR :(RETURN)&#39;))
+         SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;GET_HEADER&#39;, CODE(
++           &#39; SEND = ^.HEADER :(RETURN)&#39;))
+         DEFINE(&#39;CGI_SEND()S&#39;)
+         SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;SEND&#39;, &#39;CGI_SEND&#39;)
+         SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;GET_LOG&#39;, CODE(
++           &#39; SEND = ^.LOG :(RETURN)&#39;))
+         SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;GET_CONTENT&#39;, CODE(
++           &#39; SEND = ^.CONTENT :(RETURN)&#39;))
+         SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;SET_CONTENT&#39;, CODE(
++           &#39; ^.CONTENT = A1 :(RETURN)&#39;))
+         DEFINE(&#39;CGI_CLOSE()A&#39;)
+         SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;CLOSE&#39;, &#39;CGI_CLOSE&#39;)
+         SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;GET_ENV&#39;, CODE(
++           &#39; SEND = ^.ENV :(RETURN)&#39;))
+         SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;GET_QUERY&#39;, CODE(
++           &#39; SEND = ^.QUERY :(RETURN)&#39;))
+<font color="#818181"><i>*</i></font>
+                                                       <b>:(CGI_OBJECT_END)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CLOSE CGI OBJECT</i></font>
+<font color="#818181"><i>*</i></font>
+CGI_CLOSE
+         ENDFILE(^.OUT_UNIT)
+         DETACH(^.OUT)
+         ENDFILE(^.LOG_UNIT)
+         DETACH(^.LOG)                                         <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* INITIALIZE CGI OBJECT</i></font>
+<font color="#818181"><i>*</i></font>
+CGI_INIT CGI_INIT = SUPER(&#39;INIT&#39;)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CREATE LOG CHANNEL</i></font>
+<font color="#818181"><i>*</i></font>
+         ^.LOG_UNIT = IO_FINDUNIT()                          <b>:F(FRETURN)</b>
+         ^.LOG = UNIQUE()
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* WITH ALL THE CHANGES GOING TO SYSTEMD, LOGGING APPEARS TO HAVE</i></font>
+<font color="#818181"><i>* SUFFERED. SPECIFICALLY, IF THE LOGGING IS ONLY FORWARDED TO</i></font>
+<font color="#818181"><i>* RSYSLOG, LOGGER LOCAL DOESN&#39;T WORK. WE ENABLE RSYSLOG TO LISTEN TO</i></font>
+<font color="#818181"><i>* THE NETWORK, AND THEN LOGGER CAN LOG TO LOCALHOST. STRANGE, AND</i></font>
+<font color="#818181"><i>* PROBABLY NOT SUITABLE FOR PRODUCTION.</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* IF USING SYSTEMD LOGGER, DON&#39;T USE -n localhost</i></font>
+<font color="#818181"><i>*</i></font>
+         OUTPUT(^.LOG, ^.LOG_UNIT, &#39;W&#39;,
++               &#39;|/usr/bin/logger -n localhost -t CGI&#39;)      <b>:F(FRETURN)</b>
+<font color="#818181"><i>*+              &#39;|/usr/bin/logger -t CGI&#39;)                   <b>:F(FRETURN)</b></i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CREATE OUT CHANNEL</i></font>
+<font color="#818181"><i>*</i></font>
+         ^.OUT_UNIT = IO_FINDUNIT()                          <b>:F(FRETURN)</b>
+         ^.OUT = UNIQUE()
+         OUTPUT(^.OUT, ^.OUT_UNIT, &#39;B&#39;, &#39;/dev/stdout&#39;)       <b>:F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* COLLECT ENVIRONMENT VARIABLES INTO INSTANCE VARIABLE ENV. WE ONLY</i></font>
+<font color="#818181"><i>* GATHER UP &quot;KNOWN&quot; ENVIRONMENT VARIABLES.</i></font>
+<font color="#818181"><i>*</i></font>
+         ^.ENV = DIFFER(USE_FCGI) FCGI_ENV                 <b>:S(CGI_ENV_2)</b>
+<font color="#818181"><i>*</i></font>
+         ^.ENV = TABLE(27)
+         A = %(&#39;CONTEXT_DOCUMENT_ROOT,CONTEXT_PREFIX,DOCUMENT_ROOT,&#39;
++              &#39;GATEWAY_INTERFACE,HTTP_ACCEPT,HTTP_ACCEPT_ENCODING,&#39;
++              &#39;HTTP_ACCEPT_LANGUAGE,HTTP_CACHE_CONTROL,&#39;
++              &#39;HTTP_CONNECTION,HTTP_COOKIE,HTTP_HOST,HTTP_USER_AGENT,&#39;
++              &#39;QUERY_STRING,REMOTE_ADDR,REQUEST_METHOD,REQUEST_SCHEME,&#39;
++              &#39;REQUEST_URI,SCRIPT_FILENAME,SCRIPT_NAME,SERVER_ADDR,&#39;
++              &#39;SERVER_ADMIN,SERVER_NAME,SERVER_PORT,SERVER_PROTOCOL,&#39;
++              &#39;SERVER_SOFTWARE,CONTENT_LENGTH,HTTP_REFERER&#39;)
+         SEQ(&#39; (^.ENV)&lt;A&lt;I&gt;&gt; = HOST(HOST_GETENV, A&lt;I&gt;); A&lt;I&gt; &#39;, .I)
+CGI_ENV_2
+         $^.LOG = &#39;FCGI_ENV IN CGI&#39;
+         $^.LOG = JSON_ENCODE(FCGI_ENV)
+         $^.LOG = &#39;QUERY_STRING: &#39; (^.ENV)&lt;&#39;QUERY_STRING&#39;&gt;
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* FOR POST METHOD, READ (^.ENV)&lt;&#39;CONTENT_LENGTH&#39;&gt;. READ THAT NUMBER OF</i></font>
+<font color="#818181"><i>* BYTES, AND ONLY THAT NUMBER. NOTE THAT THIS MAY BE VERY LARGE. THIS</i></font>
+<font color="#818181"><i>* MAY FAIL DUE TO MEMORY EXHAUSTION. WE KNOW THAT WE CAN READ A LARGE</i></font>
+<font color="#818181"><i>* NUMBER OF BYTES, BUT I HAVE TO DETERMINE THE LIMIT.</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* FOR FCGI, USE FCGI_IN. FIXME: SHOULD TEST CONTENT_LENGTH</i></font>
+<font color="#818181"><i>*</i></font>
+         (^.ENV)&lt;&#39;QUERY_STRING&#39;&gt; = DIFFER(USE_FCGI) VDIFFER(FCGI_IN)
++                                                         <b>:S(CGI_INIT_3)</b>
+         T3 = (^.ENV)&lt;&#39;CONTENT_LENGTH&#39;&gt;
+         IDENT(T3)                                        <b>:S(CGI_INIT_3)</b>
+         (INTEGER(T3) GT(T3))                             <b>:F(CGI_INIT_3)</b>
+         T1 = IO_FINDUNIT()                                  <b>:F(FRETURN)</b>
+         INPUT(&#39;T2&#39;, T1, &#39;B,&#39; T3, &#39;/dev/stdin&#39;)              <b>:F(FRETURN)</b>
+         (^.ENV)&lt;&#39;QUERY_STRING&#39;&gt; = T2
+         ENDFILE(T1)
+         DETACH(&#39;T2&#39;)
+CGI_INIT_3
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* PARSE QUERY_STRING INTO QUERY TABLE. HASH() IS USED TO PARSE</i></font>
+<font color="#818181"><i>* QUERY_STRING, BREAKING INTO NAME=VALUE SEPARATED BY &amp;. EACH VALUE IS</i></font>
+<font color="#818181"><i>* PROCESSED WITH URL_DECODE().</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* MULTI-VALUE FIELDS ARE SEPARATED BY 0. USED BY CHECKBOXES</i></font>
+<font color="#818181"><i>*</i></font>
+         ^.QUERY = HASH((^.ENV)&lt;&#39;QUERY_STRING&#39;&gt;, &#39;=&#39;, &#39;&amp;&#39;,,,,
++                        &#39;URL_DECODE&#39;, CHARS_NUL)
+         $^.LOG = &#39;QUERY TABLE&#39;
+         $^.LOG = JSON_ENCODE(^.QUERY)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* PARSE HTTP_COOKIE INTO A COOKIE JAR. THERE MAY NOT BE ANY COOKIES,</i></font>
+<font color="#818181"><i>* IN WHICH CASE WE CREATE AN EMPTY COOKIE JAR. THE VALUES OF THE</i></font>
+<font color="#818181"><i>* COOKIES ARE NOT VALIDATED. HASH() PARSES THE COOKIE STRING. AFTER</i></font>
+<font color="#818181"><i>* THE TABLE IS GENERATED, IT IS CONVERTED TO AN ARRAY. SEQ() ADDS</i></font>
+<font color="#818181"><i>* EACH ELEMENT INTO THE COOKIE JAR.</i></font>
+<font color="#818181"><i>*</i></font>
+         ^.COOKIE_JAR = NEW_COOKIE_JAR()
+         A = HASH((^.ENV)&lt;&#39;HTTP_COOKIE&#39;&gt;, &#39;=&#39;, &#39;;&#39;,,,
++                  &#39;COOKIE_FIX_NAME&#39;, &#39;URL_DECODE&#39;)
+         A = CONVERT(A, &#39;ARRAY&#39;)                          <b>:F(CGI_INIT_2)</b>
+         SEQ(&#39; PUT_COOKIE_IN_JAR(^.COOKIE_JAR,&#39;
++                               &#39;A&lt;I,1&gt;, NEW_COOKIE(A&lt;I,2&gt;)) &#39;, .I)
+CGI_INIT_2
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* INITIALIZE HEADER. THE HEADER IS A TABLE() WITH AT LEAST CONTENT_TYPE</i></font>
+<font color="#818181"><i>* ENTRY.</i></font>
+<font color="#818181"><i>*</i></font>
+         ^.HEADER = #&quot;CONTENT_TYPE=TEXT/HTML,CHARSET=&quot;
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* INITIALIZE CONTENT</i></font>
+<font color="#818181"><i>*</i></font>
+         ^.CONTENT =
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* WE NEED ROUTING IMPLEMENTED.</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* WE NEED TO DO FURTHER PROCESSING ON THE FOLLOWING CGI ENVIRONMENT</i></font>
+<font color="#818181"><i>* VARIABLES.</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* &lt;ISINDEX&gt; value1+value2+..</i></font>
+<font color="#818181"><i>* HTTP_ACCEPT</i></font>
+<font color="#818181"><i>*   =&#39;TEXT/HTML,APPLICATION/XHTML+XML,APPLICATION/XML;Q=0.9,*/*;Q=0.8&#39;</i></font>
+<font color="#818181"><i>* HTTP_ACCEPT_ENCODING=&#39;GZIP, DEFLATE&#39;</i></font>
+<font color="#818181"><i>* HTTP_ACCEPT_LANGUAGE=&#39;EN-US,EN;Q=0.5&#39;</i></font>
+<font color="#818181"><i>*</i></font>
+                                                               <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* OUTPUT THE HEADER AND CONTENT</i></font>
+<font color="#818181"><i>*</i></font>
+CGI_SEND
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* FIRST, OUTPUT THE CONTENT-TYPE. IF CHARSET HAS BEEN SPECIFIED,</i></font>
+<font color="#818181"><i>* ADD THIS TO THE CONTENT-TYPE.</i></font>
+<font color="#818181"><i>*</i></font>
+         S = &#39;Content-type: &#39; (^.HEADER)&lt;&#39;CONTENT_TYPE&#39;&gt;
+         S = S &#39;; charset=&#39; VDIFFER((^.HEADER)&lt;&#39;CHARSET&#39;&gt;)
+         S = S CHARS_CR CHARS_NL
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* GENERATE THE COOKIE STRING AND OUTPUT IF WE HAVE COOKIES TO SEND.</i></font>
+<font color="#818181"><i>*</i></font>
+         S = S VDIFFER(COOKIE_STRING(^.COOKIE_JAR))
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* THE HEADER FINISHES WITH A CR/LF</i></font>
+<font color="#818181"><i>*</i></font>
+         S = S CHARS_CR CHARS_NL
+         $^.OUT = IDENT(USE_FCGI) S
+         DIFFER(USE_FCGI) FCGI_SEND(S)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* SEND CONTENT</i></font>
+<font color="#818181"><i>*</i></font>
+         $^.OUT = IDENT(USE_FCGI) ^.CONTENT
+         DIFFER(USE_FCGI) FCGI_SEND(^.CONTENT)
+         DIFFER(USE_FCGI) FCGI_SEND(&#39;&#39;)
+         DIFFER(USE_FCGI) FCGI_END(0, FCGI_REQUEST_COMPLETE)
+                                                               <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+CGI_OBJECT_END
+<font color="#818181"><i>*</i></font>
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+The startup of a CGI script should explicitly set the library directory
+(if needed). As well, the path to the interpreter should be absolute.
+These are basic security measures.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+This unit test will test basic CGI object creation. Cookie jars and
+cookies. The session cookie and sessions. Simple logging. Templates.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Template sample has jQuery lashed in. Need AJAJ (AJAX with JSON)
+server support and some sample web page stuff.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Performance Notes
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Caching compiled templates (in a separate process), pooling database
+connections, fastcgi would all help. This code can be 50% faster with
+these techniques.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Then request routing and simple JS. Session verification.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+No request routing or javascript as yet. No css as yet. No caching
+or database access as yet. Pick a simple application, write and
+deploy: fog the mirror would be fine. Signon, message board.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+CGI and PSQL use SCOOP. HTMLTMPL, SESSION and COOKIE could as well,
+but predate SCOOP.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         export &quot;SNOLIB=/home/fred/snolib&quot;; export &quot;SNOPATH=/home/fred/snolib&quot;
+         exec &quot;/usr/local/bin/snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;FCGI.INC&#39;
+-INCLUDE &#39;CGI.INC&#39;
+-INCLUDE &#39;READFILE.INC&#39;
+-INCLUDE &#39;BQ.INC&#39;
+-INCLUDE &#39;PSQL.INC&#39;
+-INCLUDE &#39;HTMLTMPL.INC&#39;
+-INCLUDE &#39;SESSION.INC&#39;
+-INCLUDE &#39;JSON.INC&#39;
+<font color="#818181"><i>*-INCLUDE &#39;DDT.INC&#39;</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>*        DDT()</i></font>
+-CMNT EMBED THE TEMPLATES NEEDED. FOR NORMAL USE, THE TEMPLATES WOULD
+-CMNT BE MAINTAINED SEPARATELY, BUT THIS IS THE TEST SAMPLE.
+-EMBED FILE &#39;CGI.tmpl&#39;
+&lt;!doctype html&gt;
+&lt;!-- A simple template --&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;utf=8&quot; /&gt;
+    &lt;title&gt;CGI test&lt;/title&gt;
+    &lt;style&gt;
+      a.test {
+        font-weight: bold;
+      }
+    &lt;/style&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;a href=&quot;http://jquery.com/&quot;&gt;jQuery&lt;/a&gt;
+    &lt;script src=&quot;/jquery-1.11.1.js&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;
+      // js code goes here
+      $( document ).ready(function() {
+        // Your code here.
+        $( &quot;a&quot; ).click(function( event ) {
+          alert( &quot;The link will no longer take you to jquery.com&quot; );
+          event.preventDefault();
+          $( this ).hide( &quot;slow&quot; );
+        });
+        $( &quot;a&quot; ).addClass( &quot;test&quot; );
+        //removeClass()
+        });
+    &lt;/script&gt;
+    &lt;!-- Text with some variables to be filled in --&gt;
+    &lt;p&gt;
+      HTML OUTPUT
+    &lt;p&gt;
+      cookie counter &lt;tmpl_var COOKIE_COUNTER&gt;
+    &lt;p&gt;
+      session counter &lt;tmpl_var SESSION_COUNTER&gt;
+    &lt;p&gt;
+      request method &lt;tmpl_var REQUEST_METHOD&gt;
+    &lt;p&gt;
+      first name &lt;tmpl_var FIRST_NAME&gt;
+    &lt;p&gt;
+      vehicle &lt;tmpl_var VEHICLE&gt;
+    &lt;p&gt;
+      request uri &lt;tmpl_var REQUEST_URI&gt;
+    &lt;p&gt;
+      &lt;form name=&quot;input&quot; action=&quot;cgi.fcgi&quot; method=&quot;GET&quot;&gt;
+        First name<b>: &lt;input type=&quot;text&quot; name=&quot;firstname&quot;&gt;&lt;br&gt;</b>
+        Last name<b>: &lt;input type=&quot;text&quot; name=&quot;lastname&quot;&gt;&lt;br&gt;</b>
+        Password<b>: &lt;input type=&quot;password&quot; name=&quot;pwd&quot;&gt;&lt;br&gt;</b>
+        &lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;male&quot;&gt;Male&lt;br&gt;
+        &lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;female&quot;&gt;Female&lt;br&gt;
+        &lt;input type=&quot;checkbox&quot; name=&quot;vehicle&quot; value=&quot;car&quot;&gt;
+          I have a car&lt;br&gt;
+        &lt;input type=&quot;checkbox&quot; name=&quot;vehicle&quot; value=&quot;bike&quot;&gt;
+          I have a bike&lt;br&gt;
+        &lt;input type=&quot;submit&quot; value=&quot;submit get&quot;&gt;&lt;br&gt;
+        &lt;input type=&quot;reset&quot; value=&quot;reset&quot;&gt;&lt;br&gt;
+        &lt;input type=&quot;hidden&quot; name=&quot;key&quot; value=&quot;whatiwant&quot;&gt;
+      &lt;/form&gt;
+    &lt;p&gt;
+      &lt;form name=&quot;input&quot; action=&quot;cgi.fcgi&quot; method=&quot;POST&quot;&gt;
+        First name<b>: &lt;input type=&quot;text&quot; name=&quot;firstname&quot;&gt;&lt;br&gt;</b>
+        Last name<b>: &lt;input type=&quot;text&quot; name=&quot;lastname&quot;&gt;&lt;br&gt;</b>
+        Password<b>: &lt;input type=&quot;password&quot; name=&quot;pwd&quot;&gt;&lt;br&gt;</b>
+        &lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;male&quot;&gt;Male&lt;br&gt;
+        &lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;female&quot;&gt;Female&lt;br&gt;
+        &lt;input type=&quot;checkbox&quot; name=&quot;vehicle&quot; value=&quot;car&quot;&gt;
+          I have a car&lt;br&gt;
+        &lt;input type=&quot;checkbox&quot; name=&quot;vehicle&quot; value=&quot;bike&quot;&gt;
+          I have a bike&lt;br&gt;
+        &lt;input type=&quot;submit&quot; value=&quot;submit post&quot;&gt;&lt;br&gt;
+        &lt;input type=&quot;reset&quot; value=&quot;reset&quot;&gt;&lt;br&gt;
+        &lt;input type=&quot;hidden&quot; name=&quot;key&quot; value=&quot;whatiwant&quot;&gt;
+      &lt;/form&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+-END
+         &amp;CODE = 1
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* A CGI APPLICATION IS EITHER A SINGLE-RUN CGI SCRIPT, OR AN FCGI</i></font>
+<font color="#818181"><i>* (FAST CGI) APPLICATION. AN FCGI APPLICATION WAITS WITH ACCEPT(),</i></font>
+<font color="#818181"><i>* GATHERS DATA USING PACKETS, AND THEN EXECUTES THE CGI PART. RESPONSES</i></font>
+<font color="#818181"><i>* ARE SENT WITH PACKETS. THIS IS HANDLED IN THE CGI CLASS, SO AS NOT</i></font>
+<font color="#818181"><i>* TO REQUIRE WEB APPLICATION CHANGES. FCGI_ACCEPT() WILL HANDLE EITHER</i></font>
+<font color="#818181"><i>* CGI OR FCGI APPLICATIONS, BUT, IF IT IS KNOWN THAT FCGI WON&#39;T BE</i></font>
+<font color="#818181"><i>* DEPLOYED, IT CAN BE OMMITED IN THAT CASE.</i></font>
+<font color="#818181"><i>*</i></font>
+CGI_TOP  FCGI_ACCEPT()
+<font color="#818181"><i>*</i></font>
+         BASE_TIME = TIME()
+         BASE_ST = &amp;STEXEC
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CREATE NEW CGI OBJECT</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* NOTE THAT THIS IS IN AN ACCEPT LOOP IF FCGI IS IN USE. DATABASE</i></font>
+<font color="#818181"><i>* ACCESS CAN BE HOISTED OUTSIDE THIS LOOP AS WELL, IN THAT CASE.</i></font>
+<font color="#818181"><i>*</i></font>
+         CGI = SEND(CGI_CLASS, &#39;NEW&#39;)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* GET LOGGING CHANNEL</i></font>
+<font color="#818181"><i>*</i></font>
+         LOG = SEND(CGI, &#39;GET_LOG&#39;)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* LOG ENTRY</i></font>
+<font color="#818181"><i>*</i></font>
+         $LOG = &#39;CGI ENTERED&#39;
+         $LOG = &#39;CURRENT DIRECTORY IS &#39; BQ(&#39;pwd&#39;)
+         $LOG = DIFFER(USE_FCGI) &#39;FAST CGI&#39;
+         $LOG = IDENT(USE_FCGI) &#39;CGI&#39;
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* GET THE COOKIE JAR</i></font>
+<font color="#818181"><i>*</i></font>
+         JAR = SEND(CGI, &#39;GET_COOKIE_JAR&#39;)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* LOAD THE SESSION. SESSION ID IS TAKEN FROM COOKIE &#39;SESSION&#39;. AFTER</i></font>
+<font color="#818181"><i>* USING THE SESSION COOKIE, DESTROY IT (IT WILL GET RECREATED IF</i></font>
+<font color="#818181"><i>* NEEDED WHEN THE SESSION IS PERSISTED).</i></font>
+<font color="#818181"><i>*</i></font>
+         SESSION =
+         C = GET_COOKIE_FROM_JAR(JAR, &#39;SESSION&#39;)
+         PUT_COOKIE_IN_JAR(JAR, &#39;SESSION&#39;, )
+         SESSION = SESSION_LOAD(COOKIE_VALUE(VDIFFER(C)))
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CREATE SESSION IF IT DOESN&#39;T EXIST.</i></font>
+<font color="#818181"><i>*</i></font>
+         SESSION = IDENT(SESSION) SESSION_CREATE(600)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CREATE A PSQL OBJECT. OPEN THE DATABASE, AND GET THE PIPE HANDLE.</i></font>
+<font color="#818181"><i>* WE WILL LEAVE THE DATABASE OBJECT AROUND, FOR EFFICIENCY WITH</i></font>
+<font color="#818181"><i>* FCGI.</i></font>
+<font color="#818181"><i>*</i></font>
+         DIFFER(PSQL)                                      <b>:S(PSQL_CONN)</b>
+         PSQL = SEND(PSQL_CLASS, &#39;NEW&#39;)
+         &amp;ERRLIMIT = 1
+         SEND(PSQL, &#39;OPEN&#39;)
+         &amp;ERRLIMIT = 0
+         DB = SEND(PSQL, &#39;GET_PIPE&#39;)
+PSQL_CONN
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* SET HEADER</i></font>
+<font color="#818181"><i>*</i></font>
+         H = SEND(CGI, &#39;GET_HEADER&#39;)
+         H&lt;&#39;CONTENT_TYPE&#39;&gt; = &#39;text/html&#39;
+         H&lt;&#39;CHARSET&#39;&gt; = &#39;UTF-8&#39;
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* RETRIEVE THE COUNTER COOKIE. IF IT DOESN&#39;T EXIST, CREATE IT.</i></font>
+<font color="#818181"><i>*</i></font>
+         C = GET_COOKIE_FROM_JAR(JAR, &#39;COUNTER&#39;)
+         IDENT(C) PUT_COOKIE_IN_JAR(JAR, &#39;COUNTER&#39;, NEW_COOKIE(0))
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CREATE ANOTHER COOKIE &#39;TESTER&#39; WITH VALUE &#39;SNOBOL4&#39;</i></font>
+<font color="#818181"><i>*</i></font>
+         PUT_COOKIE_IN_JAR(JAR, &#39;TESTER&#39;, NEW_COOKIE(&#39;SNOBOL4&#39;))
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* INCREMENT THE VALUE OF THE COUNTER COOKIE. WE VALIDATE THAT THE</i></font>
+<font color="#818181"><i>* VALUE OF COUNTER IS AN INTEGER.</i></font>
+<font color="#818181"><i>*</i></font>
+         C = GET_COOKIE_FROM_JAR(JAR, &#39;COUNTER&#39;)
+         V = COOKIE_VALUE(C)
+         V = ~INTEGER(V) 0
+         COOKIE_SET_VALUE(C,  V + 1)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* A SESSION VARIABLE</i></font>
+<font color="#818181"><i>*</i></font>
+         SESSION&lt;&#39;NAME&#39;&gt; = &#39;FRED&#39;
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* INCREMENT THE COUNTER SESSION VARIABLE</i></font>
+<font color="#818181"><i>*</i></font>
+         V = SESSION&lt;&#39;COUNTER&#39;&gt;
+         V = ~INTEGER(V) 0
+         SESSION&lt;&#39;COUNTER&#39;&gt; = V + 1
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* PERSIST THE SESSION. THIS SAVES THE SESSION TO DISK AND CREATES</i></font>
+<font color="#818181"><i>* THE BROWSER COOKIE TO ALLOW THE RETRIEVAL OF THE SESSION LATER.</i></font>
+<font color="#818181"><i>*</i></font>
+         SESSION_PERSIST(SESSION)                            <b>:F(FRETURN)</b>
+         T = SESSION&lt;&#39;EXPIRE_TIME&#39;&gt;
+         C = NEW_COOKIE(SESSION&lt;&#39;UUID&#39;&gt;)
+         PUT_COOKIE_IN_JAR(JAR, &#39;SESSION&#39;, C)
+         COOKIE_SET_CRUMB(C, &#39;EXPIRES&#39;, COOKIE_EXPIRY(T))
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* READ AND COMPILE THE HTML TEMPLATE. WE CACHE THIS FOR FCGI.</i></font>
+<font color="#818181"><i>*</i></font>
+         DIFFER(P_TM)                                         <b>:S(NO_T_C)</b>
+         S_TM = READFILE(&#39;CGI.tmpl&#39;)
+         P_TM = TMPL_COMPILE(S_TM)
+NO_T_C
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* BUILD TABLE OF VARIABLES TO SUBSTITUTE INTO THE TEMPLATE</i></font>
+<font color="#818181"><i>* THIS HAS THE RAW COOKIE STRING, THE VALUE OF COUNTER FROM THE</i></font>
+<font color="#818181"><i>* COOKIE JAR AND THE VALUE OF COUNTER FROM THE SESSION.</i></font>
+<font color="#818181"><i>*</i></font>
+         A = TABLE()
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* FROM THE ENV</i></font>
+<font color="#818181"><i>*</i></font>
+         E = SEND(CGI, &#39;GET_ENV&#39;)
+         A&lt;&#39;REQUEST_METHOD&#39;&gt; = E&lt;&#39;REQUEST_METHOD&#39;&gt;
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* REQUEST URI http://localhost/cgi-bin/cgi.fcgi/x/y?...</i></font>
+<font color="#818181"><i>* ON GET, APPENDS &#39;/&#39; ACTION TO THE END BEFORE THE ? PART.</i></font>
+<font color="#818181"><i>*</i></font>
+         A&lt;&#39;REQUEST_URI&#39;&gt; = E&lt;&#39;REQUEST_URI&#39;&gt;
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* FROM THE COOKIE JAR</i></font>
+<font color="#818181"><i>*</i></font>
+         A&lt;&#39;COOKIE_COUNTER&#39;&gt; =
++           COOKIE_VALUE(GET_COOKIE_FROM_JAR(JAR, &#39;COUNTER&#39;))
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* SESSION VARIABLE</i></font>
+<font color="#818181"><i>*</i></font>
+         A&lt;&#39;SESSION_COUNTER&#39;&gt; =  SESSION&lt;&#39;COUNTER&#39;&gt;
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* QUERY VARIABLES</i></font>
+<font color="#818181"><i>*</i></font>
+         Q = SEND(CGI, &#39;GET_QUERY&#39;)
+         A&lt;&#39;FIRST_NAME&#39;&gt; = Q&lt;&#39;firstname&#39;&gt;
+         A&lt;&#39;VEHICLE&#39;&gt; = Q&lt;&#39;vehicle&#39;&gt;
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* INTERPRET THE TEMPLATE WITH THE SUPPLIED VARIABLES</i></font>
+<font color="#818181"><i>*</i></font>
+         S = TMPL_INTERPRET(P_TM, A)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* TRANSMIT THE EXPANDED PAGE TO THE CLIENT</i></font>
+<font color="#818181"><i>*</i></font>
+         SEND(CGI, &#39;SET_CONTENT&#39;, S)
+<font color="#818181"><i>*</i></font>
+         SEND(CGI, &#39;SEND&#39;)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CLOSE THE DATABASE</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>*        SEND(PSQL, &#39;CLOSE&#39;)</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* LOG COMPLETION AND SHOW PERFORMANCE DATA</i></font>
+<font color="#818181"><i>*</i></font>
+         $LOG = &#39;CGI COMPLETE&#39;
+         $LOG = TIME() - BASE_TIME &#39; MILLISECONDS FOR REQUEST&#39;
+         $LOG = &amp;GCTIME  &#39; IN GARBAGE COLLECTOR (TOTAL)&#39;
+         $LOG = &amp;STEXEC - BASE_ST &#39; STATEMENTS EXECUTED&#39;
+<font color="#818181"><i>*</i></font>
+         SEND(CGI, &#39;CLOSE&#39;)
+         &amp;CODE = 0
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* IF USING FCGI, LOOP BACK TO THE ACCEPT() CALL RATHER THAN EXIT THE</i></font>
+<font color="#818181"><i>* PROCESS.</i></font>
+<font color="#818181"><i>*</i></font>
+         DIFFER(USE_FCGI)                                    <b>:S(CGI_TOP)</b>
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL CGI
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                         #####    #####   ###                         *</i></font>
+<font color="#818181"><i>*                        #     #  #     #   #                          *</i></font>
+<font color="#818181"><i>*                        #        #         #                          *</i></font>
+<font color="#818181"><i>*                        #        #  ####   #                          *</i></font>
+<font color="#818181"><i>*                        #        #     #   #                          *</i></font>
+<font color="#818181"><i>*                        #     #  #     #   #                          *</i></font>
+<font color="#818181"><i>*                         #####    #####   ###                         *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* CGI                    CGI SUPPORT FUNCTIONS                         *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CGI.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;CGI&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .F.MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Thu May 22 16:08:48 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

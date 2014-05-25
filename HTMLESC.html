@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>HTMLESC - HTML, JS and URL escaping</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+HTML (web) escaping. Provides three functions to escape a string in
+HTML, JS and URL encodings.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="REPL.html">REPL</a><br>
+<a href="SDIFF.html">SDIFF</a><br>
+<a href="HEX.html">HEX</a><br>
+<a href="CH.html">CH</a><br>
+<a href="CHARS.html">HEX</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;REPL.INC&#39;
+-INCLUDE &#39;SDIFF.INC&#39;
+-INCLUDE &#39;HEX.INC&#39;
+-INCLUDE &#39;CH.INC&#39;
+-INCLUDE &#39;CHARS.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;HTMLESC.INC&#39;
+         &amp;CODE = 1
+         IDENT(HTML_ESCAPE(&#39;&amp;&lt;&gt;&quot;&#39; &quot;&#39;&quot;), &#39;&amp;amp;&amp;lt;&amp;gt;&amp;quot;&amp;#39;&#39;)
++                                                                <b>:F(END)</b>
+         IDENT(JS_ESCAPE(&#39;\&#39; &quot;&#39;&quot; &#39;&quot;&#39; CHARS_NL CHARS_CR),
++                        &#39;\\&#39; &quot;\&#39;&quot; &#39;\&quot;\n\r&#39;)                     <b>:F(END)</b>
+         IDENT(URL_ESCAPE(&#39; +!@#&#39;), &#39;+%2B%21%40%23&#39;)             <b>:F(END)</b>
+         IDENT(URL_DECODE(&#39;AB%20+%21&#39;), &#39;AB  !&#39;)                 <b>:F(END)</b>
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Escape HTML characters. Some claim that > never has to be escaped.
+Others claim that / should be escaped. Note 39 is decimal!
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;HTML_ESCAPE&raquo;&equiv;</b>
+         DEFINE(&#39;HTML_ESCAPE(S)&#39;)                     <b>:(END_HTML_ESCAPE)</b>
+<font color="#818181"><i>*</i></font>
+HTML_ESCAPE
+         S = REPL(S, &#39;&amp;&#39;, &#39;&amp;amp;&#39;)
+         S = REPL(S, &#39;&lt;&#39;, &#39;&amp;lt;&#39;,)
+         S = REPL(S, &#39;&gt;&#39;, &#39;&amp;gt;&#39;,)
+         S = REPL(S, &#39;&quot;&#39;, &#39;&amp;quot;&#39;)
+         S = REPL(S, &quot;&#39;&quot;, &#39;&amp;#39;&#39;)
+         HTML_ESCAPE = S                                       <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+END_HTML_ESCAPE
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Escape JS characters.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;JS_ESCAPE&raquo;&equiv;</b>
+         DEFINE(&#39;JS_ESCAPE(S)&#39;)                         <b>:(END_JS_ESCAPE)</b>
+<font color="#818181"><i>*</i></font>
+JS_ESCAPE
+         S = REPL(S, &#39;\&#39;, &#39;\\&#39;)
+         S = REPL(S, &quot;&#39;&quot;, &quot;\&#39;&quot;)
+         S = REPL(S, &#39;&quot;&#39;, &#39;\&quot;&#39;)
+         S = REPL(S, CHARS_NL, &#39;\n&#39;)
+         S = REPL(S, CHARS_CR, &#39;\r&#39;)
+         JS_ESCAPE = S                                         <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+END_JS_ESCAPE
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Escape URL characters. Space could be escaped as %20. We complement
+the characters allowed, yielding the characters that need to be
+escaped by doing a set difference between the complete alphabet and
+the good character set. This is done at function definition time
+(into global <font face="Source Code Pro">URL_BAD</font>).
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;URL_ESCAPE&raquo;&equiv;</b>
+         DEFINE(&#39;URL_ESCAPE(S)L,C,R&#39;)
+         DEFINE(&#39;URL_DECODE(S)L,C,R&#39;)
+         URL_BAD = SDIFF(&amp;ALPHABET, &amp;UCASE &amp;LCASE &amp;DIGITS &#39;_-~.&#39;)
+         URL_HEX = ANY(&quot;0123456789abcdefABCDEF&quot;)
++                                                      <b>:(END_URL_ESCAPE)</b>
+<font color="#818181"><i>*</i></font>
+URL_DECODE_2
+         S = R
+URL_DECODE
+         C =
+         S BREAK(&quot;+%&quot;) . L LEN(1) . C REM . R
+         URL_DECODE = IDENT(C) URL_DECODE S                   <b>:S(RETURN)</b>
+         URL_DECODE = IDENT(C, &#39;+&#39;) URL_DECODE L &#39; &#39;    <b>:S(URL_DECODE_2)</b>
+         URL_DECODE = URL_DECODE L
+         R (URL_HEX URL_HEX) . C =                      <b>:F(URL_DECODE_2)</b>
+         URL_DECODE = URL_DECODE CH(C)                   <b>:(URL_DECODE_2)</b>
+<font color="#818181"><i>*</i></font>
+URL_ESCAPE
+         S BREAK(URL_BAD) . L LEN(1) . C REM . R             <b>:F(URLESC2)</b>
+         URL_ESCAPE = IDENT(C, &#39; &#39;) URL_ESCAPE L &#39;+&#39;
+         URL_ESCAPE = DIFFER(C, &#39; &#39;) URL_ESCAPE L &#39;%&#39; HEX(C)
+         S = R                                             <b>:(URL_ESCAPE)</b>
+URLESC2  URL_ESCAPE = URL_ESCAPE S                             <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+END_URL_ESCAPE
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL HTMLESC
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*    #     #  #######  #     #  #        #######   #####    #####      *</i></font>
+<font color="#818181"><i>*    #     #     #     ##   ##  #        #        #     #  #     #     *</i></font>
+<font color="#818181"><i>*    #     #     #     # # # #  #        #        #        #           *</i></font>
+<font color="#818181"><i>*    #######     #     #  #  #  #        #####     #####   #           *</i></font>
+<font color="#818181"><i>*    #     #     #     #     #  #        #              #  #           *</i></font>
+<font color="#818181"><i>*    #     #     #     #     #  #        #        #     #  #     #     *</i></font>
+<font color="#818181"><i>*    #     #     #     #     #  #######  #######   #####    #####      *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* HTMLESC             HTML (JS, URL) ESCAPING                          *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* HTMLESC.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;HTML_ESCAPE&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;JS_ESCAPE&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;URL_ESCAPE&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+</pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:41 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

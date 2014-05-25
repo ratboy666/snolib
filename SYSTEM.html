@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>SYSTEM - Determine kind of SNOBOL4</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+SYSTEM() will return which of the various SNOBOL4 processors the
+program may be running under.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+SYSTEM() returns the SNOBOL4 processor. CSNOBOL4 may be running under
+different operating systems, and different hardware platforms
+(WINDOWS, LINUX, SOLARIS, AIX, HP-UX and more; INTEL, SPARC, POWER,
+and more).
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+| HONEYWELL MAINBOL
+| IBM MAINBOL
+| IBM MAINBOL WITH BLOCKS
+| PDP-10 MAINBOL
+| CDC MAINBOL
+| UNIVAC MAINBOL
+| CSNOBOL4
+| CSNOBOL4 WITH BLOCKS
+| FASBOL
+| SITBOL
+| SPITBOL
+</font></pre>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+If source could be in CDC display code, test that first, before
+ISASCII() -- '()' is ordered the same in both of these character sets.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;SYSTEM&raquo;&equiv;</b>
+         DEFINE(&#39;SYSTEM()K&#39;)
+         DEFINE(&#39;ISSPITBOL()&#39;)
+         DEFINE(&#39;ISSNOBOL4()&#39;)
+         DEFINE(&#39;ISASCII()&#39;)
+         DEFINE(&#39;ISEBCDIC()&#39;)
+         DEFINE(&#39;ISCDC_DISPLAY_CODE()&#39;)                    <b>:(SYSTEM_END)</b>
+<font color="#818181"><i>*</i></font>
+ISASCII  &amp;ALPHABET &#39;()&#39;                             <b>:S(RETURN)F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* LLT(&#39;A&#39;,1)</i></font>
+ISEBCDIC &amp;ALPHABET &#39;(+&#39;                             <b>:S(RETURN)F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+ISCDC_DISPLAY_CODE
+         &amp;ALPHABET &#39;)*&#39;                             <b>:S(RETURN)F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+ISSPITBOL
+         DIFFER(.NAME, &#39;NAME&#39;)                      <b>:S(RETURN)F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+ISSNOBOL4
+         IDENT(.NAME, &#39;NAME&#39;)                       <b>:S(RETURN)F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+SYSTEM   IDENT(DATATYPE(.X), &#39;STRING&#39;)                      <b>:F(SYSTEM_2)</b>
+         K = SIZE(&amp;ALPHABET)
+         SYSTEM = EQ(K,512) &#39;HONEYWELL MAINBOL&#39;               <b>:S(RETURN)</b>
+         SYSTEM = EQ(K,256) &#39;IBM MAINBOL&#39;                   <b>:S(SYSTEM_0)</b>
+         SYSTEM = EQ(K,128) &#39;PDP-10 MAINBOL&#39;                  <b>:S(RETURN)</b>
+         SYSTEM =           &#39;CDC MAINBOL&#39;
+         ISASCII()                                          <b>:S(SYSTEM_1)</b>
+         SYSTEM =           &#39;UNIVAC MAINBOL&#39;                   <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* DISTINGUISH IBM MAINBOL AND CSNOBOL, ASSUME ASCII FOR CSNOBOL4.</i></font>
+<font color="#818181"><i>* NOTE THAT AFTER 1.5, CSNOBOL4 WILL LIKELY SUPPORT BLOCKS AS WELL.</i></font>
+<font color="#818181"><i>*</i></font>
+SYSTEM_0 ISASCII()                                          <b>:F(SYSTEM_1)</b>
+         SYSTEM = &#39;CSNOBOL4&#39;
+<font color="#818181"><i>*</i></font>
+SYSTEM_1 OPSYN(&#39;OLD_SHARP&#39;, &#39;#&#39;, 2)
+         OPSYN(&#39;#&#39;, &#39;+&#39;, 2)
+         T = 1 5 # 5
+         OPSYN(&#39;#&#39;, &#39;OLD_SHARP&#39;, 2)
+         EQ(T, 110)                                           <b>:S(RETURN)</b>
+         SYSTEM = SYSTEM &#39; WITH BLOCKS&#39;                        <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+SYSTEM_2 SYSTEM = DIFFER(SUBSTR(&#39;ABC&#39;, 2, 1), &#39;B&#39;) &#39;FASBOL&#39;   <b>:S(RETURN)</b>
+         SYSTEM = EQ(SIZE(&amp;ALPHABET), 128)         &#39;SITBOL&#39;   <b>:S(RETURN)</b>
+         SYSTEM =                                  &#39;SPITBOL&#39;   <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+SYSTEM_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;SYSTEM.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+-STITL SYSTEM
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*          #####   #     #   #####   #######  #######  #     #         *</i></font>
+<font color="#818181"><i>*         #     #   #   #   #     #     #     #        ##   ##         *</i></font>
+<font color="#818181"><i>*         #          # #    #           #     #        # # # #         *</i></font>
+<font color="#818181"><i>*          #####      #      #####      #     #####    #  #  #         *</i></font>
+<font color="#818181"><i>*               #     #           #     #     #        #     #         *</i></font>
+<font color="#818181"><i>*         #     #     #     #     #     #     #        #     #         *</i></font>
+<font color="#818181"><i>*          #####      #      #####      #     #######  #     #         *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* SYSTEM            DETERMINE KIND OF SNOBOL4                          *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* SYSTEM.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;SYSTEM&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:34 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

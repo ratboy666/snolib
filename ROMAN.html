@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>ROMAN - Roman numerals</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">ROMAN(N)</font> will return the roman numeral representation of the
+integer <font face="Source Code Pro">N</font>. <font face="Source Code Pro">ARABIC(R)</font> will return the arabic numeral for the
+roman numeral <font face="Source Code Pro">R</font>.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<b>N<small>OTE</small></b> - <font face="Source Code Pro">0 < N < 4000</font>.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;ROMAN&raquo;&equiv;</b>
+         DEFINE(&#39;ROMAN(N)T&#39;)                                <b>:(ROMAN_END)</b>
+<font color="#818181"><i>*</i></font>
+ROMAN    N RPOS(1) LEN(1) . T =                               <b>:F(RETURN)</b>
+         &#39;0,1I,2II,3III,4IV,5V,6VI,7VII,8VIII,9IX,&#39;
++           T BREAK(&#39;,&#39;) . T                                 <b>:F(FRETURN)</b>
+         ROMAN = REPLACE(ROMAN(N), &#39;IVXLCDM&#39;, &#39;XLCDM**&#39;) T
++                                                   <b>:S(RETURN)F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+ROMAN_END
+<font color="#818181"><i>*</i></font>
+         DEFINE(&#39;ARABIC(R)T,X&#39;)                            <b>:(ARABIC_END)</b>
+<font color="#818181"><i>*</i></font>
+ARABIC   R RPOS(1) LEN(1) . T =                               <b>:F(RETURN)</b>
+         &#39;M1000,D500,C100,L50,X10,V5,I1,&#39; T BREAK(&#39;,&#39;) . T   <b>:F(FRETURN)</b>
+         T = LT(T, X) -T
+         ARABIC = ARABIC + (X = T)                             <b>:(ARABIC)</b>
+<font color="#818181"><i>*</i></font>
+ARABIC_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;ROMAN.INC&#39;
+         &amp;CODE = 1
+LOOP     I = I + 1
+         R = ROMAN(I)
+         N = ARABIC(R)
+         OUTPUT = NE(I, N) &#39;FAIL: &#39; I &#39; &#39; R &#39; &#39; N
+         EQ(I, N)                                                <b>:F(END)</b>
+         LT(I, 3999)                                            <b>:S(LOOP)</b>
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+-STITL ROMAN
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*             ######   #######  #     #     #     #     #              *</i></font>
+<font color="#818181"><i>*             #     #  #     #  ##   ##    # #    ##    #              *</i></font>
+<font color="#818181"><i>*             #     #  #     #  # # # #   #   #   # #   #              *</i></font>
+<font color="#818181"><i>*             ######   #     #  #  #  #  #     #  #  #  #              *</i></font>
+<font color="#818181"><i>*             #   #    #     #  #     #  #######  #   # #              *</i></font>
+<font color="#818181"><i>*             #    #   #     #  #     #  #     #  #    ##              *</i></font>
+<font color="#818181"><i>*             #     #  #######  #     #  #     #  #     #              *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* ROMAN                      ROMAN NUMERAL                             *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* ROMAN.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;ROMAN&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:27 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

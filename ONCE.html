@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>ONCE - Pattern that succeeds once</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">ONCE()</font> returns a pattern that will succeed just once and only
+once and thereafter fail forever. <font face="Source Code Pro">ONCE()</font> is similar to <font face="Source Code Pro">FENCE</font>
+in that it matches the null string initially. Unlike <font face="Source Code Pro">FENCE</font>,
+however, failure in subsequent tries is like <font face="Source Code Pro">FAIL</font>, (as opposed to
+<font face="Source Code Pro">ABORT</font>) which permits other alternates to be taken.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="UNIQUE.html">UNIQUE</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;UNIQUE.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;ONCE&raquo;&equiv;</b>
+         DEFINE(&#39;ONCE(ID)NAME&#39;)                              <b>:(ONCE_END)</b>
+ONCE     ONCE = IDENT(ID, NULL)
++               CONVERT(&#39;ONCE(&#39; 1 &#39;)&#39;, &#39;EXPRESSION&#39;)          <b>:S(RETURN)</b>
+         NAME = UNIQUE()
+         ONCE = $NAME
+         $NAME = FAIL                                          <b>:(RETURN)</b>
+ONCE_END
+<font color="#818181"><i>*</i></font>
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;ONCE.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL ONCE
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                  #######  #     #   #####   #######                  *</i></font>
+<font color="#818181"><i>*                  #     #  ##    #  #     #  #                        *</i></font>
+<font color="#818181"><i>*                  #     #  # #   #  #        #                        *</i></font>
+<font color="#818181"><i>*                  #     #  #  #  #  #        #####                    *</i></font>
+<font color="#818181"><i>*                  #     #  #   # #  #        #                        *</i></font>
+<font color="#818181"><i>*                  #     #  #    ##  #     #  #                        *</i></font>
+<font color="#818181"><i>*                  #######  #     #   #####   #######                  *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* ONCE                                                                 *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* ONCE.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;ONCE&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:21 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

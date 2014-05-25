@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>BALREV - Balanced Reverse</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">BALREV(S)</font> returns the balanced reversal of the string <font face="Source Code Pro">S</font>: characters
+of <font face="Source Code Pro">S</font> are reversed and parentheses are interchanged. <font face="Source Code Pro">BALREV('F(X)')</font>
+returns <font face="Source Code Pro">'(X)F'</font> instead of <font face="Source Code Pro">')X(F'</font> like a simple reversal.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;BALREV&raquo;&equiv;</b>
+         DEFINE(&#39;BALREV(S)&#39;)                               <b>:(BALREV_END)</b>
+<font color="#818181"><i>*</i></font>
+BALREV   BALREV = REPLACE(REVERSE(S), &#39;)(&#39;, &#39;()&#39;)              <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+BALREV_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;BALREV.INC&#39;
+         &amp;CODE = 1
+         IDENT(BALREV(&#39;F(X)&#39;), &#39;(X)F&#39;)                           <b>:F(END)</b>
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+-STITL BALREV
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*           ######      #     #        ######   #######  #     #       *</i></font>
+<font color="#818181"><i>*           #     #    # #    #        #     #  #        #     #       *</i></font>
+<font color="#818181"><i>*           #     #   #   #   #        #     #  #        #     #       *</i></font>
+<font color="#818181"><i>*           ######   #     #  #        ######   #####    #     #       *</i></font>
+<font color="#818181"><i>*           #     #  #######  #        #   #    #         #   #        *</i></font>
+<font color="#818181"><i>*           #     #  #     #  #        #    #   #          # #         *</i></font>
+<font color="#818181"><i>*           ######   #     #  #######  #     #  #######     #          *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* BALREV                   BALANCED REVERSE                            *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* BALREV.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;BALREV&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:10:56 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

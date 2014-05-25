@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>COOKIE - COOKIE Support Functions</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Cookie support functions. Cookies are saved in a cookie jar, which is
+a table. In turn, each cookie has a value, and may have attributes
+(cookie and attributes are “crumbs”). The cookie is itself stored as a
+table.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Thus a cookie jar resembles an SQL table.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Browsers support 5 crumbs: Expires, Path, Secure, HttpOnly and the
+default (value) crumb. Some browsers may support Max-Age.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">RFC2965</font> (and <font face="Source Code Pro">RFC2616</font>) indicates that attribute names are
+case in-sensitive. Space may be added between tokens. <font face="Source Code Pro">Max-Age=0</font>
+effectively ends a session.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Set-Cookie2:
+Comment= CommentURL= Discard Domain= Max-Age= Path= Port=".." Secure
+Version=1
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Cache-control: no-cache="set-cookie2"
+Cache-control: private
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Cookie: $Version = v ;|,... name=value; $Path= v; $Domain= v; $Port="..."
+Names beginning with $ are attributes
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Names and values should be in the character set !..~. ',' and ';'
+are not allowed. '=' is not allowed in a name.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Attributes are not returned when the cookie is returned from the
+browser.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">COOKIE_EXPIRY(N)</font> returns the expiry string for <font face="Source Code Pro">N</font> seconds in
+the future. <font face="Source Code Pro">COOKIE_STRING(JAR)</font> returns a string with all cookie
+definitions ready to be sent to the browser. There is no attempt to
+restrict attributes or characters used. That is left to the caller.
+If a cookie with a bad name is crafted by the browser, it will simply
+be returned (probably as a session cookie).
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="HASH.html">HASH</a><br>
+<a href="TIME.html">TIME</a><br>
+<a href="DEXP.html">DEXP</a><br>
+<a href="CHARS.html">CHARS</a><br>
+<a href="TRIMB.html">TRIMB</a><br>
+<a href="CSNOBOL4.html">CSNOBOL4</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;HASH.INC&#39;
+-INCLUDE &#39;TIME.INC&#39;
+-INCLUDE &#39;DEXP.INC&#39;
+-INCLUDE &#39;CHARS.INC&#39;
+-INCLUDE &#39;TRIMB.INC&#39;
+-INCLUDE &#39;CSNOBOL4.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;COOKIE&raquo;&equiv;</b>
+         DEFINE(&#39;NEW_COOKIE_JAR()&#39;)
+         DEFINE(&#39;NEW_COOKIE(VALUE)&#39;)
+         DEFINE(&#39;COOKIE_SET_VALUE(COOKIE,VALUE)&#39;)
+         DEFINE(&#39;COOKIE_VALUE(COOKIE)&#39;)
+         DEFINE(&#39;COOKIE_SET_CRUMB(COOKIE,CRUMB_NAME,VALUE)&#39;)
+         DEFINE(&#39;COOKIE_GET_CRUMB(COOKIE,CRUMB_NAME)&#39;)
+         DEFINE(&#39;PUT_COOKIE_IN_JAR(COOKIE_JAR,COOKIE_NAME,COOKIE)&#39;)
+         DEFINE(&#39;GET_COOKIE_FROM_JAR(COOKIE_JAR,COOKIE_NAME)&#39;)
+         DEFINE(&#39;COOKIES_IN_JAR(COOKIE_JAR)&#39;)
+         DEFINE(&#39;CRUMBS_IN_COOKIE(COOKIE)&#39;)
+         DEFINE(&#39;COOKIE_EXPIRY(N)T,D,M,S&#39;)
+         DEXP(&#39;L20_(S) = LPAD(S, 2, &quot;0&quot;)&#39;)
+         DEFINE(&#39;COOKIE_STRING(COOKIE_JAR)A,B,C,I,J,S,V&#39;)
+         DEFINE(&#39;COOKIE_FIX_NAME(S)&#39;)
+                                                           <b>:(COOKIE_END)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* RETURN COOKIE STRING</i></font>
+<font color="#818181"><i>*</i></font>
+COOKIE_STRING
+         A = COOKIES_IN_JAR(COOKIE_JAR)                       <b>:F(RETURN)</b>
+COOKIE_STRING_2
+         I = I + 1
+         C = GET_COOKIE_FROM_JAR(COOKIE_JAR, A&lt;I&gt;)   <b>:F(COOKIE_STRING_5)</b>
+         B = CRUMBS_IN_COOKIE(C)                     <b>:F(COOKIE_STRING_2)</b>
+         S = S &#39;Set-Cookie: &#39; A&lt;I&gt; &#39;=&#39; COOKIE_VALUE(C)
+         J = 1
+COOKIE_STRING_3
+         J = J + 1
+         V = COOKIE_GET_CRUMB(C, B&lt;J&gt;)               <b>:F(COOKIE_STRING_4)</b>
+         S = S &#39;; &#39; B&lt;J&gt;
+         S = S &#39;=&#39; VDIFFER(V)                         <b>:(COOKIE_STRING_3)</b>
+COOKIE_STRING_4
+         S = S CHARS_CR CHARS_NL                      <b>:(COOKIE_STRING_2)</b>
+COOKIE_STRING_5
+         COOKIE_STRING = S                                     <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* RETURN EXPIRES STRING FOR N SECONDS IN THE FUTURE. THIS STRING IS</i></font>
+<font color="#818181"><i>* IN THE FORMAT:</i></font>
+<font color="#818181"><i>* Wed, 09 Jun 2021 10:18:14 GMT</i></font>
+<font color="#818181"><i>* ALL COOKIE EXPIRY IS IN GMT.</i></font>
+<font color="#818181"><i>*</i></font>
+COOKIE_EXPIRY
+         T = TV_SEC(GETTIMEOFDAY()) + N
+         T = GMTIME(T)
+         &#39;0Sun1Mon2Tue3Wed4Thu5Fri6Sat&#39; TM_WDAY(T) LEN(3) . D
+         &#39;0Jan1Feb2Mar3Apr4May5Jun6Jul7Aug8Sep9Oct10Nov11Dec&#39;
++           TM_MON(T) LEN(3) . M
+         S = D &#39;, &#39; L20_(TM_MDAY(T)) &#39; &#39; M &#39; &#39; (TM_YEAR(T) + 1900)
++        &#39; &#39; L20_(TM_HOUR(T)) &#39;:&#39; L20_(TM_MIN(T)) &#39;:&#39; L20_(TM_SEC(T))
++        &#39; GMT&#39;
+         COOKIE_EXPIRY = S                                     <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* MAKE A NEW COOKIE JAR</i></font>
+<font color="#818181"><i>*</i></font>
+NEW_COOKIE_JAR
+         NEW_COOKIE_JAR = TABLE()                              <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* MAKE A NEW COOKIE</i></font>
+<font color="#818181"><i>*</i></font>
+NEW_COOKIE
+         NEW_COOKIE = TABLE()
+         NEW_COOKIE&lt;&#39;&#39;&gt; = VDIFFER(VALUE)                       <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* SET THE VALUE OF THE COOKIE (ATRIBUTE &#39;&#39;)</i></font>
+<font color="#818181"><i>*</i></font>
+COOKIE_SET_VALUE
+         COOKIE&lt;&#39;&#39;&gt; = VALUE                                    <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* RETURN THE VALUE OF THE COOKIE (ATTRIBUTE &#39;&#39;)</i></font>
+<font color="#818181"><i>*</i></font>
+COOKIE_VALUE
+         COOKIE_VALUE = COOKIE&lt;&#39;&#39;&gt;                             <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+COOKIE_FIX_NAME
+         S = TRIMB(S)
+         S POS(0) &#39;$&#39; REM . S
+         COOKIE_FIX_NAME = S                                   <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* SET AN ATTRIBUTE ON THE COOKIE</i></font>
+<font color="#818181"><i>*</i></font>
+COOKIE_SET_CRUMB
+         CRUMB_NAME = COOKIE_FIX_NAME(CRUMB_NAME)
+         COOKIE&lt;CRUMB_NAME&gt; = VALUE                            <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* GET VALUE OF AN ATTRIBUTE FROM THE COOKIE</i></font>
+<font color="#818181"><i>*</i></font>
+COOKIE_GET_CRUMB
+         CRUMB_NAME = COOKIE_FIX_NAME(CRUMB_NAME)
+         COOKIE_GET_CRUMB = COOKIE&lt;CRUMB_NAME&gt;                 <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* PUT THE COOKIE INTO THE COOKIE JAR, WITH NAME COOKIE_NAME</i></font>
+<font color="#818181"><i>*</i></font>
+PUT_COOKIE_IN_JAR
+         COOKIE_NAME = COOKIE_FIX_NAME(COOKIE_NAME)
+         COOKIE_JAR&lt;COOKIE_NAME&gt; = COOKIE                      <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* GET COOKIE NAMED COOKIE_NAME FROM THE COOKIE JAR</i></font>
+<font color="#818181"><i>*</i></font>
+GET_COOKIE_FROM_JAR
+         COOKIE_NAME = COOKIE_FIX_NAME(COOKIE_NAME)
+         GET_COOKIE_FROM_JAR = COOKIE_JAR&lt;COOKIE_NAME&gt;         <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* RETURN ARRAY OF COOKIE NAMES IN THE COOKIE JAR, SORTED.</i></font>
+<font color="#818181"><i>*</i></font>
+COOKIES_IN_JAR
+         COOKIES_IN_JAR = KEYS_IN_TABLE(COOKIE_JAR)          <b>:F(FRETURN)</b>
+         COOKIES_IN_JAR = SORT(COOKIES_IN_JAR)                 <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* RETURN ARRAY OF CRUMBS IN THE COOKIE, SORTED. THE FIRST CRUMB WILL</i></font>
+<font color="#818181"><i>* BE THE UNAMED VALUE OF THE COOKIE.</i></font>
+<font color="#818181"><i>*</i></font>
+CRUMBS_IN_COOKIE
+         CRUMBS_IN_COOKIE = KEYS_IN_TABLE(COOKIE)            <b>:F(FRETURN)</b>
+         CRUMBS_IN_COOKIE = SORT(CRUMBS_IN_COOKIE)             <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+COOKIE_END
+<font color="#818181"><i>*</i></font>
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;/usr/local/bin/snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;COOKIE.INC&#39;
+<font color="#818181"><i>*</i></font>
+         &amp;CODE = 1
+         JAR = NEW_COOKIE_JAR()
+         COOKIE1 = NEW_COOKIE()
+         PUT_COOKIE_IN_JAR(JAR, &#39;COOKIE-1&#39;, COOKIE1)
+         COOKIE_SET_VALUE(COOKIE1, &#39;VALUE-1&#39;)
+         COOKIE2 = NEW_COOKIE(&#39;VALUE-2&#39;)
+         PUT_COOKIE_IN_JAR(JAR, &#39;COOKIE-2&#39;, COOKIE2)
+         A = COOKIES_IN_JAR(JAR)                                 <b>:F(END)</b>
+         IDENT(A&lt;1&gt;, &#39;COOKIE-1&#39;)                                 <b>:F(END)</b>
+         IDENT(A&lt;2&gt;, &#39;COOKIE-2&#39;)                                 <b>:F(END)</b>
+         COOKIE = GET_COOKIE_FROM_JAR(JAR, &#39;COOKIE-1&#39;)
+         IDENT(COOKIE, COOKIE1)                                  <b>:F(END)</b>
+         COOKIE_SET_CRUMB(COOKIE, &#39;Expires&#39;, COOKIE_EXPIRY(60 * 60))
+<font color="#818181"><i>* UNFORTUNATELY, THIS RESULT IS REALLY THE ONLY ONE THAT MATTERS, AND</i></font>
+<font color="#818181"><i>* IT HAS TO BE VISUALLY INSPECTED -- I WILL FIX THIS LATER.</i></font>
+         OUTPUT = COOKIE_STRING(JAR)
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL COOKIE
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*            #####   #######  #######  #    #  ###  #######            *</i></font>
+<font color="#818181"><i>*           #     #  #     #  #     #  #   #    #   #                  *</i></font>
+<font color="#818181"><i>*           #        #     #  #     #  #  #     #   #                  *</i></font>
+<font color="#818181"><i>*           #        #     #  #     #  ###      #   #####              *</i></font>
+<font color="#818181"><i>*           #        #     #  #     #  #  #     #   #                  *</i></font>
+<font color="#818181"><i>*           #     #  #     #  #     #  #   #    #   #                  *</i></font>
+<font color="#818181"><i>*            #####   #######  #######  #    #  ###  #######            *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* COOKIE                    HANDLE COOKIES                             *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* COOKIE.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;COOKIE&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .F.MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Tue May 20 13:48:09 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

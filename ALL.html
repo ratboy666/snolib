@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>ALL - Include all library components</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Include all library components. This is used for ad-hoc programming,
+and tests to ensure that library components are compatible (for
+example, no label collisions), and to determine load time.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+This also gives us the compilation (load) time for the library. It
+takes around 50 milliseconds to compile all of the library routines;
+80 milliseconds if producing a listing file. This would (for example)
+limit the number of CGI transactions to 200 per second on my netbook.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+| [fred@dejah snolib]$ snobol4 -s -M -n ALL.INC ENDCARD
+| The Macro Implementation of SNOBOL4 in C (CSNOBOL4) Version 1.5
+|     by Philip L. Budne, October 1, 2013
+|     Patch Fridtjof Weigel
+| SNOBOL4 (Version 3.11, May 19, 1975)
+|     Bell Telephone Laboratories, Incorporated
+| 
+| No errors detected in source program
+| 
+| Normal termination at level 0
+| ENDCARD.lss:6: Last statement executed was 0
+| SNOBOL4 statistics summary-
+|          51.840 ms. Compilation time
+|           0.000 ms. Execution time
+|               0 Statements executed, 0 failed
+|               0 Arithmetic operations performed
+|               0 Pattern matches performed
+|               0 Regenerations of dynamic storage
+|           0.000 ms. Execution time in GC
+|               0 Reads performed
+|               0 Writes performed
+|           0.000 ns. Average per statement executed
+| [fred@dejah snolib]$
+</font></pre>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<i>Building</i> the library from lss source takes a long time.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+| [fred@dejah snolib] touch *.lss
+| [fred@dejah snolib] time make
+| 
+| ... lots of output removed ...
+| 
+| real    3m15.685s
+| user    2m53.908s
+| sys     0m50.229s
+| [fred@dejah snolib]$
+| 
+| The majority of the time in generating the library is spent generating
+| the html documentation (mostly in the <i>ditaa</i> utility.
+</font></pre>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;AGT.INC&#39;
+-INCLUDE &#39;AI.INC&#39;
+-INCLUDE &#39;AOPA.INC&#39;
+-INCLUDE &#39;BALREV.INC&#39;
+-INCLUDE &#39;BALX.INC&#39;
+-INCLUDE &#39;BLEND.INC&#39;
+-INCLUDE &#39;BQ.INC&#39;
+-INCLUDE &#39;BRKREM.INC&#39;
+-INCLUDE &#39;CATA.INC&#39;
+-INCLUDE &#39;CGI.INC&#39;
+-INCLUDE &#39;CH.INC&#39;
+-INCLUDE &#39;CHARS.INC&#39;
+-INCLUDE &#39;COMB.INC&#39;
+-INCLUDE &#39;COMPLEX.INC&#39;
+-INCLUDE &#39;COOKIE.INC&#39;
+-INCLUDE &#39;COPYL.INC&#39;
+-INCLUDE &#39;COUNT.INC&#39;
+-INCLUDE &#39;CRACK.INC&#39;
+-INCLUDE &#39;CSNOBOL4.INC&#39;
+-INCLUDE &#39;CVAR.INC&#39;
+-INCLUDE &#39;DAY.INC&#39;
+-INCLUDE &#39;DDT.INC&#39;
+-INCLUDE &#39;DEXP.INC&#39;
+-INCLUDE &#39;DISPLAY.INC&#39;
+-INCLUDE &#39;DYNAMIC.INC&#39;
+-INCLUDE &#39;FASTBAL.INC&#39;
+-INCLUDE &#39;FENCE.INC&#39;
+-INCLUDE &#39;FFI.INC&#39;
+-INCLUDE &#39;FIND.INC&#39;
+-INCLUDE &#39;FLOOR.INC&#39;
+-INCLUDE &#39;FOREACH.INC&#39;
+-INCLUDE &#39;GCD.INC&#39;
+-INCLUDE &#39;GETKEY.INC&#39;
+-INCLUDE &#39;HASH.INC&#39;
+-INCLUDE &#39;HEX.INC&#39;
+-INCLUDE &#39;HOST.INC&#39;
+-INCLUDE &#39;HTMLESC.INC&#39;
+-INCLUDE &#39;HTMLTMPL.INC&#39;
+-INCLUDE &#39;INFINIP.INC&#39;
+-INCLUDE &#39;JSON.INC&#39;
+-INCLUDE &#39;JIT.INC&#39;
+-INCLUDE &#39;LAST.INC&#39;
+-INCLUDE &#39;LIKE.INC&#39;
+-INCLUDE &#39;LINK.INC&#39;
+-INCLUDE &#39;LOG.INC&#39;
+-INCLUDE &#39;LOGIC.INC&#39;
+-INCLUDE &#39;LPROG.INC&#39;
+-INCLUDE &#39;MDY.INC&#39;
+-INCLUDE &#39;NDBM.INC&#39;
+-INCLUDE &#39;NOTP.INC&#39;
+-INCLUDE &#39;ONCE.INC&#39;
+-INCLUDE &#39;ORDER.INC&#39;
+-INCLUDE &#39;P64.INC&#39;
+-INCLUDE &#39;PSQL.INC&#39;
+-INCLUDE &#39;QUOTE.INC&#39;
+-INCLUDE &#39;RANDOM.INC&#39;
+-INCLUDE &#39;READFILE.INC&#39;
+-INCLUDE &#39;READL.INC&#39;
+-INCLUDE &#39;READLINE.INC&#39;
+-INCLUDE &#39;REDEFINE.INC&#39;
+-INCLUDE &#39;REPL.INC&#39;
+-INCLUDE &#39;RESOL.INC&#39;
+-INCLUDE &#39;REVL.INC&#39;
+-INCLUDE &#39;ROMAN.INC&#39;
+-INCLUDE &#39;ROTATER.INC&#39;
+-INCLUDE &#39;SCOOP.INC&#39;
+-INCLUDE &#39;SDIFF.INC&#39;
+-INCLUDE &#39;SEQ.INC&#39;
+-INCLUDE &#39;SESSION.INC&#39;
+-INCLUDE &#39;SKIM.INC&#39;
+-INCLUDE &#39;SIZEA.INC&#39;
+-INCLUDE &#39;SLOAD.INC&#39;
+-INCLUDE &#39;SOUNDEX.INC&#39;
+-INCLUDE &#39;SPELL.INC&#39;
+-INCLUDE &#39;STACK.INC&#39;
+-INCLUDE &#39;STCL.INC&#39;
+-INCLUDE &#39;STROUT.INC&#39;
+-INCLUDE &#39;SWAP.INC&#39;
+-INCLUDE &#39;SYSLOG.INC&#39;
+-INCLUDE &#39;SYSTEM.INC&#39;
+-INCLUDE &#39;TEST.INC&#39;
+-INCLUDE &#39;TIME.INC&#39;
+-INCLUDE &#39;TIMEGC.INC&#39;
+-INCLUDE &#39;TIMER.INC&#39;
+-INCLUDE &#39;TRIMB.INC&#39;
+-INCLUDE &#39;TRUNC.INC&#39;
+-INCLUDE &#39;UNIQUE.INC&#39;
+-INCLUDE &#39;UTF8.INC&#39;
+-INCLUDE &#39;WRAPPER.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL ALL
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                         #     #        #                             *</i></font>
+<font color="#818181"><i>*                        # #    #        #                             *</i></font>
+<font color="#818181"><i>*                       #   #   #        #                             *</i></font>
+<font color="#818181"><i>*                      #     #  #        #                             *</i></font>
+<font color="#818181"><i>*                      #######  #        #                             *</i></font>
+<font color="#818181"><i>*                      #     #  #        #                             *</i></font>
+<font color="#818181"><i>*                      #     #  #######  #######                       *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* ALL                      INCLUDE ALL                                 *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* ALL.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* DEBUGGING</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>*-INCLUDE &#39;GOTOS.INC&#39;</i></font>
+<font color="#818181"><i>*-INCLUDE &#39;TPROFILE.INC&#39;</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:10:55 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

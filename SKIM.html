@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>SKIM - Skim unique characters</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">SKIM(S)</font> “skims off” the first appearance of each different
+character of <font face="Source Code Pro">S</font> and returns the result. <font face="Source Code Pro">SKIM('MISSISSIPPI')</font>
+returns <font face="Source Code Pro">'MISP'</font>.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="SDIFF.html">SDIFF</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;SDIFF.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;SKIM&raquo;&equiv;</b>
+         DEFINE(&#39;SKIM(S)C&#39;)                                  <b>:(SKIM_END)</b>
+<font color="#818181"><i>*</i></font>
+SKIM     S LEN(1) . C =                                       <b>:F(RETURN)</b>
+         SKIM C                                               <b>:S(SKIM_D)</b>
+         SKIM = SKIM C                                           <b>:(SKIM)</b>
+SKIM_D   S = SDIFF(S, SKIM)                                      <b>:(SKIM)</b>
+<font color="#818181"><i>*</i></font>
+SKIM_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;SKIM.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL SKIM
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                    #####   #    #  ###  #     #                      *</i></font>
+<font color="#818181"><i>*                   #     #  #   #    #   ##   ##                      *</i></font>
+<font color="#818181"><i>*                   #        #  #     #   # # # #                      *</i></font>
+<font color="#818181"><i>*                    #####   ###      #   #  #  #                      *</i></font>
+<font color="#818181"><i>*                         #  #  #     #   #     #                      *</i></font>
+<font color="#818181"><i>*                   #     #  #   #    #   #     #                      *</i></font>
+<font color="#818181"><i>*                    #####   #    #  ###  #     #                      *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* SKIM                 SKIM UNIQUE CHARACTERS                          *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* SKIM.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;SKIM&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:29 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

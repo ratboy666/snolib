@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>PSQL - Interface to PostgreSQL</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Interface to PostgreSQL. Uses <i>psql</i>. This is a crude
+implementation because we want to be able to quickly modify the
+API. <font face="Source Code Pro">SELECT</font> results should be directly compatible with HTML
+templating.  This is a thin layer on top of <i>psql</i>.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">PSQL = SEND(PSQL_CLASS,'NEW')</font> creates a new PSQL object.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">SEND(PSQL,'OPEN')</font> opens the connection to PSQL.  </font></p><pre><font face="Source Code Pro">PIPE =
+SEND(PSQL,'GET_PIPE')</font></pre> returns a pipe that can be written to with
+<font face="Source Code Pro">$PIPE = 'sql statement;'</font>.  After a command is written to the
+pipe, <font face="Source Code Pro">SEND(PSQL,'OUTPUT')</font> gathers the results and removes the
+command echo. Results can be processed by function <font face="Source Code Pro">PSQL_RESULT()</font>
+which returns an <font face="Source Code Pro">ARRAY</font> of <font face="Source Code Pro">TABLE</font>s or <font face="Source Code Pro">NULL</font> if no results
+are available.  If there are no result rows, message 'OUTPUT' will
+return <font face="Source Code Pro">NULL</font>.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+If command output is not needed, <font face="Source Code Pro">SEND(PSQL,'DISCARD')</font> can be
+used. Either message 'OUTPUT' or 'DISCARD' must be used after a
+command is issued, because data from <i>psql</i> must be read, and
+we have to wait for the next prompt. Multiple line commands can be
+issued. The command will be executed on receiving the ‘<font face="Source Code Pro">;</font>’
+command delimiter, or at the end of the line for ‘<font face="Source Code Pro">\</font>’ commands
+(for example, to establish a different database or user).
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+A <font face="Source Code Pro">TABLE</font> can be passed to <font face="Source Code Pro">PSQL_INSERT()</font> which will convert it
+to <font face="Source Code Pro">(NAME,...) VALUES (VALUE,...)</font> ready to be combined into an SQL
+<font face="Source Code Pro">INSERT</font> statement.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Function <font face="Source Code Pro">PSQL_INSERT()</font> uses <font face="Source Code Pro">PSQL_ESCAPE()</font> to escape and
+quote SQL strings.  <font face="Source Code Pro">PSQL_INSERT()</font> can also be used to display
+the contents of a <font face="Source Code Pro">PSQL TABLE</font>.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">SEND(PSQL,'CLOSE')</font> closes the connection to <i>psql</i>.
+</font></p>
+<div style="width:15em;margin-left:0.5em;float:right;background-image:url(blutextb.gif)">
+<font face="Dijkstra"><p align="left">
+It would be useful to catch the error, so we should probably use
+<font face="Source Code Pro">PSQL_OUTPUT()</font> from <font face="Source Code Pro">PSQL_OPEN()</font>. Not being done now, and
+will probably never be done because this should use a socket level
+interface.
+</p></font></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">&ERRLIMIT</font> is used to prevent error code 11 if (for example), the
+PostgreSQL server is not running. If the server is not running, output
+is sent back from the first result of reading <font face="Source Code Pro">PSQL_PIPE</font> with the
+error message (in <font face="Source Code Pro">PSQL_DISCARD</font>). We throw the error message away.
+After the error message, the next read causes an error because the
+psql process is no longer running. Setting <font face="Source Code Pro">&ERRLIMIT</font> converts
+the error into a failure, which is propagated back to <font face="Source Code Pro">PSQL_OPEN()</font>
+and the calling program.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>See Also</h2>
+<a href="HASH.html">HASH</a><br>
+<a href="CSNOBOL4.html">CSNOBOL4</a><br>
+<a href="BQ.html">BQ</a>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="SCOOP.html">SCOOP</a><br>
+<a href="REPL.html">REPL</a><br>
+<a href="COUNT.html">COUNT</a><br>
+<a href="CHARS.html">CHARS</a><br>
+<a href="SEQ.html">SEQ</a><br>
+<a href="CSNOBOL4.html">CSNOBOL4</a><br>
+<a href="BRKREM.html">BRKREM</a><br>
+<a href="UNIQUE.html">UNIQUE</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;SCOOP.INC&#39;
+-INCLUDE &#39;REPL.INC&#39;
+-INCLUDE &#39;COUNT.INC&#39;
+-INCLUDE &#39;CHARS.INC&#39;
+-INCLUDE &#39;SEQ.INC&#39;
+-INCLUDE &#39;CSNOBOL4.INC&#39;
+-INCLUDE &#39;BRKREM.INC&#39;
+-INCLUDE &#39;UNIQUE.INC&#39;
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+We use a <font face="Source Code Pro">PTY</font> to communicate with <i>psql</i>. This shouldn't be
+necessary, a simple bi-directional pipe should be sufficient. The
+protocol is to allow the caller to write to the pipe. The final
+thing written should activate the command. If a pipe is used for
+communication, when the 'DISCARD' or 'OUTPUT' message is sent, an
+echo command is used to generate a marker for the end of input.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+If a <font face="Source Code Pro">PTY</font> is used, the marker is generated by modifying the
+<i>psql</i> prompts (<font face="Source Code Pro">PROMPT1</font> and <font face="Source Code Pro">PROMPT2</font>). Command echo has
+to be stripped in the <font face="Source Code Pro">PSQL_OUTPUT()</font> function as well.
+</font></p>
+<div style="width:15em;margin-left:0.5em;float:right;background-image:url(blutextb.gif)">
+<font face="Dijkstra"><p align="left">
+If pipes are used, this PSQL implementation fails with <font face="Source Code Pro">errno = 29</font>
+(<font face="Source Code Pro">ESPIPE</font>, seek on pipe).  The interpreter was modified to display
+errno in these cases. I suspect that this has to do with process
+timing. Using the <font face="Source Code Pro">PTY</font> appears reliable.
+</p></font></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+For performance reasons using <font face="Source Code Pro">PTY</font> may not be a desirable
+solution. CSNOBOL4 now uses <font face="Source Code Pro">FFI</font> to allow access to <font face="Source Code Pro">io_getfp()</font>
+which returns the <font face="Source Code Pro">FILE *</font> (C library file pointer) associated with
+a unit. Also <font face="Source Code Pro">fileno()</font> is published which returns the underlying
+<font face="Source Code Pro">fd</font> (file descriptor) for a <font face="Source Code Pro">FILE *</font>. These can be used to
+generate alternate I/O routines later.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Pipes work, but the best solution would be to use a socket level
+interface to PostgreSQL.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Performance is 500 to 1,000 SQL statements per second on my netbook
+(1.6Ghz Atom) and 1,000 to 3,000 statements per second (1.4Ghz Intel
+i3).  This is far from stellar. SQL commands are always parsed since
+the interface is via the <i>psql</i> utility. A direct socket interface
+would be helpful, but this current interface should be sufficient
+for the near term. The <i>psql</i> process is started and can be left
+open for a long duration (for the entire application execution).
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;PSQL&raquo;&equiv;</b>
+%SET (USE_PTY,1)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* THESE THREE ARE FUNCTIONS -- SIMPLY EASIER THAT WAY.</i></font>
+<font color="#818181"><i>*</i></font>
+         DEFINE(&#39;PSQL_INSERT(T)N,V,I&#39;)
+         DEFINE(&#39;PSQL_RESULT(S)I,N,R,T,KEY,DAT&#39;)
+         DEFINE(&#39;PSQL_ESCAPE(S)&#39;)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CREATE CLASS PSQL_CLASS AND POPULATE ITS METHODS</i></font>
+<font color="#818181"><i>*</i></font>
+         PSQL_CLASS = SEND(CLASS, &#39;NEW_CLASS&#39;, &#39;PSQL_CLASS&#39;)
+         DEFINE(&#39;PSQL_OPEN()L&#39;)
+         SEND(PSQL_CLASS, &#39;ADD_METHOD&#39;, &#39;OPEN&#39;, &#39;PSQL_OPEN&#39;)
+         DEFINE(&#39;PSQL_CLOSE()PID&#39;)
+         SEND(PSQL_CLASS, &#39;ADD_METHOD&#39;, &#39;CLOSE&#39;, &#39;PSQL_CLOSE&#39;)
+         SEND(PSQL_CLASS, &#39;ADD_METHOD&#39;, &#39;GET_PIPE&#39;, CODE(
++           &#39; SEND = ^.PIPE :(RETURN)&#39;))
+         DEFINE(&#39;PSQL_DISCARD()L&#39;)
+         SEND(PSQL_CLASS, &#39;ADD_METHOD&#39;, &#39;DISCARD&#39;, &#39;PSQL_DISCARD&#39;)
+         DEFINE(&#39;PSQL_OUTPUT()L&#39;)
+         SEND(PSQL_CLASS, &#39;ADD_METHOD&#39;, &#39;OUTPUT&#39;, &#39;PSQL_OUTPUT&#39;)
+<font color="#818181"><i>*</i></font>
+                                                             <b>:(PSQL_END)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CONVERT TABLE TO &quot;(NAME, ...) VALUES (DATA, ...)&quot; READY FOR SQL</i></font>
+<font color="#818181"><i>* INSERT. USES PSQL_ESCAPE() TO ENSURE THAT VALUES ARE QUOTED CORRECTLY.</i></font>
+<font color="#818181"><i>*</i></font>
+PSQL_INSERT
+         T = CONVERT(T, &#39;ARRAY&#39;)
+         SEQ(&#39; N = N T&lt;I, 1&gt; &quot;, &quot;; &#39;
++            &#39; V = V PSQL_ESCAPE(T&lt;I, 2&gt;) &quot;, &quot; &#39;, .I)
+         IDENT(N)                                            <b>:S(FRETURN)</b>
+         N &#39;, &#39; RPOS(0) =
+         V &#39;, &#39; RPOS(0) =
+         PSQL_INSERT = &#39;(&#39; N &#39;) VALUES (&#39; V &#39;)&#39;                <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CONVERT PSQL_OUTPUT() INTO ARRAY OF TABLES</i></font>
+<font color="#818181"><i>*</i></font>
+PSQL_RESULT
+         IDENT(S)                                            <b>:S(FRETURN)</b>
+         S = S CHARS_NL
+         N = COUNT(S, CHARS_NL CHARS_NL)
+         EQ(N)                                               <b>:S(FRETURN)</b>
+         PSQL_RESULT = ARRAY(N)
+PSQL5    S POS(0) ARB . T CHARS_NL CHARS_NL REM . S           <b>:F(RETURN)</b>
+         R = TABLE()
+PSQL6    T POS(0) BREAK(&#39;|&#39;) . KEY &#39;|&#39;
++          BRKREM(CHARS_NL) . DAT (CHARS_NL | RPOS(0)) =       <b>:F(PSQL7)</b>
+         R&lt;KEY&gt; = DAT                                           <b>:(PSQL6)</b>
+PSQL7    I = I + 1
+         PSQL_RESULT&lt;I&gt; = R                                     <b>:(PSQL5)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* ESCAPE AND QUOTE AN SQL STRING</i></font>
+<font color="#818181"><i>*</i></font>
+PSQL_ESCAPE
+         PSQL_ESCAPE = &quot;&#39;&quot; REPL(S, &quot;&#39;&quot;, &quot;&#39;&#39;&quot;) &quot;&#39;&quot;              <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* DISCARD OUTPUT FROM LAST SQL COMMAND.</i></font>
+<font color="#818181"><i>*</i></font>
+PSQL_DISCARD
+%IF (USE_PTY)
+         L = $^.PIPE                                         <b>:F(FRETURN)</b>
+         L POS(0) &#39;*&#39; RPOS(0)                  <b>:S(RETURN)F(PSQL_DISCARD)</b>
+%ELSE
+         $^.PIPE = &#39;\echo *&#39;                                 <b>:F(FRETURN)</b>
+PSQL_D2  L = $^.PIPE
+         L POS(0) &#39;*&#39; RPOS(0)                       <b>:S(RETURN)F(PSQL_D2)</b>
+%ENDIF
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* GATHER AND RETURN OUTPUT FROM SQL COMMAND. DISCARD COMMAND ECHO,</i></font>
+<font color="#818181"><i>* RETURNING ONLY RESULTS.</i></font>
+<font color="#818181"><i>*</i></font>
+PSQL_OUTPUT
+%IF (USE_PTY)
+PSQL2    L = $^.PIPE                                         <b>:F(FRETURN)</b>
+         L POS(0) &#39;*&#39; RPOS(0)                                  <b>:S(PSQL3)</b>
+         PSQL_OUTPUT = PSQL_OUTPUT L CHARS_NL                   <b>:(PSQL2)</b>
+PSQL3    PSQL_OUTPUT CHARS_NL CHARS_NL RPOS(0) = CHARS_NL      <b>:S(PSQL3)</b>
+PSQL4    PSQL_OUTPUT BREAK(CHARS_NL) CHARS_NL REM . PSQL_OUTPUT
++                                                            <b>:F(FRETURN)</b>
+         PSQL_OUTPUT POS(0) &#39;# &#39;                      <b>:S(PSQL4)F(RETURN)</b>
+%ELSE
+         $^.PIPE = &#39;\echo *&#39;                                 <b>:F(FRETURN)</b>
+PSQL2    L = $^.PIPE                                         <b>:F(FRETURN)</b>
+         L POS(0) &#39;*&#39; RPOS(0)                                 <b>:S(RETURN)</b>
+         PSQL_OUTPUT = PSQL_OUTPUT L CHARS_NL                   <b>:(PSQL2)</b>
+%ENDIF
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* OPEN PSQL COMMAND. SEND COMMANDS TO MAKE PSQL_OUTPUT() EASIER,</i></font>
+<font color="#818181"><i>* PSQL_RESULT() FOR PARSING SELECT RESULTS AND BUILDING RESULT ARRAYS.</i></font>
+<font color="#818181"><i>*</i></font>
+PSQL_OPEN
+         ^.UNIT = IO_FINDUNIT()                              <b>:F(FRETURN)</b>
+         ^.PIPE = UNIQUE()
+%IF (USE_PTY)
+         INPUT(^.PIPE, ^.UNIT, &#39;U&#39;, &#39;||/usr/bin/psql -q&#39;)    <b>:F(FRETURN)</b>
+%ELSE
+         INPUT(^PIPE, ^.UNIT, &#39;U&#39;, &#39;|/usr/bin/psql -q&#39;)      <b>:F(FRETURN)</b>
+%ENDIF
+         OUTPUT(^.PIPE, ^.UNIT)                              <b>:F(FRETURN)</b>
+%IF (USE_PTY)
+         $^.PIPE = &quot;\set PROMPT1 &#39;\n*\n&#39;&quot;                    <b>:F(FRETURN)</b>
+         SELF(&#39;DISCARD&#39;)                                     <b>:F(FRETURN)</b>
+         $^.PIPE = &quot;\set PROMPT2 &#39;# &#39;&quot;                       <b>:F(FRETURN)</b>
+         SELF(&#39;DISCARD&#39;)                                     <b>:F(FRETURN)</b>
+%ENDIF
+         $^.PIPE = &quot;\pset pager off&quot;                         <b>:F(FRETURN)</b>
+         SELF(&#39;DISCARD&#39;)                                     <b>:F(FRETURN)</b>
+         $^.PIPE = &quot;\a&quot;                                      <b>:F(FRETURN)</b>
+         SELF(&#39;DISCARD&#39;)                                     <b>:F(FRETURN)</b>
+         $^.PIPE = &quot;\x on&quot;                                   <b>:F(FRETURN)</b>
+         SELF(&#39;DISCARD&#39;)                            <b>:F(FRETURN)S(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CLOSE PSQL</i></font>
+<font color="#818181"><i>*</i></font>
+PSQL_CLOSE
+         $^.PIPE = &#39;\q&#39;                                      <b>:F(FRETURN)</b>
+         ENDFILE(^.UNIT)                                     <b>:F(FRETURN)</b>
+         DETACH(^.PIPE)                                      <b>:F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* ENDFILE() CLOSES PSQL. INDEED, WE SEND A QUIT COMMAND (\q) FIRST!</i></font>
+<font color="#818181"><i>* BUT... THE CLOSE CODE IN THE INTERPRETER DOES NOT REAP THE ZOMBIE.</i></font>
+<font color="#818181"><i>* WAIT() IS DEFINED IN CSNOBOL4, USE WAIT() TO REAP. THIS IS WRONG,</i></font>
+<font color="#818181"><i>* WE MAY REAP THE WRONG PROCESS! SHOULD FIX THIS IN IO.C - THE CODE</i></font>
+<font color="#818181"><i>* IS IN IO.C, BUT ISN&#39;T WORKING (?)</i></font>
+<font color="#818181"><i>*</i></font>
+         PID = WAIT()                               <b>:S(RETURN)F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+PSQL_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;TIMER.INC&#39;
+-INCLUDE &#39;PSQL.INC&#39;
+-INCLUDE &#39;HASH.INC&#39;
+-INCLUDE &#39;BQ.INC&#39;
+-INCLUDE &#39;DDT.INC&#39;
+<font color="#818181"><i>*        DDT()</i></font>
+         &amp;CODE = 1
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CREATE THE PSQL OBJECT</i></font>
+<font color="#818181"><i>*</i></font>
+         PSQL = SEND(PSQL_CLASS, &#39;NEW&#39;)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* OPEN THE PSQL CONNECTION. NOTE THE &amp;ERRLIMIT SETTING TO PREVENT</i></font>
+<font color="#818181"><i>* PROBLEMS IF THE POSTGRESQL SERVER CANNOT BE REACHED.</i></font>
+<font color="#818181"><i>*</i></font>
+         &amp;ERRLIMIT = 1
+         SEND(PSQL, &#39;OPEN&#39;)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* GET THE PIPE NAME CONNECTING TO PSQL</i></font>
+<font color="#818181"><i>*</i></font>
+         P = SEND(PSQL, &#39;GET_PIPE&#39;)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* A SIMPLE PSQL COMMAND</i></font>
+<font color="#818181"><i>*</i></font>
+         $P = &quot;SELECT version();&quot;                                <b>:F(END)</b>
+         OUTPUT = SEND(PSQL, &#39;OUTPUT&#39;)                           <b>:F(END)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* ANOTHER COMMAND</i></font>
+<font color="#818181"><i>*</i></font>
+         $P = &quot;SELECT 1 + 1;&quot;                                    <b>:F(END)</b>
+         OUTPUT = SEND(PSQL, &#39;OUTPUT&#39;)                           <b>:F(END)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CREATE THE WEATHER TABLE. DROP IT FIRST IN CASE IT EXISTS</i></font>
+<font color="#818181"><i>*</i></font>
+         $P = &quot;DROP TABLE weather;&quot;                              <b>:F(END)</b>
+         SEND(PSQL, &#39;DISCARD&#39;)                                   <b>:F(END)</b>
+         $P = &quot;CREATE TABLE weather (&quot;
+         $P = &quot;  city    VARCHAR(80),&quot;
+         $P = &quot;  temp_lo INT,         -- low temperature&quot;
+         $P = &quot;  temp_hi INT,         -- high temperature&quot;
+         $P = &quot;  prcp    REAL,        -- precipitation&quot;
+         $P = &quot;  date    DATE&quot;
+         $P = &quot;);&quot;
+         SEND(PSQL, &#39;DISCARD&#39;)                                   <b>:F(END)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* INSERT TWO ROWS INTO THE WEATHER TABLE</i></font>
+<font color="#818181"><i>*</i></font>
+         $P = &quot;INSERT INTO weather&quot;                              <b>:F(END)</b>
+         $P = PSQL_INSERT(
++           #(&quot;city=San Francisco,temp_lo=46,temp_hi=50,prcp=0.25,&quot;
++           &quot;date=1994-11-27&quot;)) &quot;;&quot;                              <b>:F(END)</b>
+         SEND(PSQL, &#39;DISCARD&#39;)                                   <b>:F(END)</b>
+         $P = &quot;INSERT INTO weather&quot;                              <b>:F(END)</b>
+         $P = PSQL_INSERT(
++           #&quot;city=Hayward,temp_lo=37,temp_hi=55,date=1994-11-29&quot;)
++           &quot;;&quot;                                                  <b>:F(END)</b>
+         SEND(PSQL, &#39;DISCARD&#39;)                                   <b>:F(END)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* SELECT FROM WEATHER TABLE, FOR A CITY THAT DOESN&#39;T EXIST. WE EXPECT</i></font>
+<font color="#818181"><i>* NO RESULTS FROM THIS</i></font>
+<font color="#818181"><i>*</i></font>
+         $P = &quot;SELECT * FROM weather&quot;                            <b>:F(END)</b>
+         $P = &quot;WHERE city = &#39;xx&#39;;&quot;                               <b>:F(END)</b>
+         S = SEND(PSQL, &#39;OUTPUT&#39;)                                <b>:F(END)</b>
+         IDENT(S)                                                <b>:F(END)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* SELECT EVERYTHING FROM TABLE WEATHER. WE EXPECT TWO ROWS. NOTE THE</i></font>
+<font color="#818181"><i>* USE OF PSQL_INSERT() TO FORMAT A ROW FOR DEBUG DISPLAY</i></font>
+<font color="#818181"><i>*</i></font>
+         $P = &quot;SELECT * FROM weather;&quot;                           <b>:F(END)</b>
+         R = PSQL_RESULT(SEND(PSQL, &#39;OUTPUT&#39;))                   <b>:F(END)</b>
+         EQ(PROTOTYPE(R), 2)                                     <b>:F(END)</b>
+         OUTPUT = PSQL_INSERT(R&lt;1&gt;)                              <b>:F(END)</b>
+         OUTPUT = PSQL_INSERT(R&lt;2&gt;)                              <b>:F(END)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* USE &#39;AS&#39; TO NAME A RESULT COLUMNS. RETRIEVE THE RESULT AND DISPLAY</i></font>
+<font color="#818181"><i>*</i></font>
+         $P = &#39;SELECT 1 + 1 AS result;&#39;                          <b>:F(END)</b>
+         T = PSQL_RESULT(SEND(PSQL, &#39;OUTPUT&#39;))                   <b>:F(END)</b>
+         EQ(T&lt;1&gt;&lt;&#39;result&#39;&gt;, 2)                                   <b>:F(END)</b>
+         OUTPUT = T&lt;1&gt;&lt;&#39;result&#39;&gt;
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* SOME TIMING</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* TIME SIMPLE SELECT AND RESULT ANALYSIS</i></font>
+<font color="#818181"><i>*</i></font>
+         TIMER(&quot; $P = &#39;SELECT 1 + 1 AS result;&#39;; &quot;
++              &quot; T = PSQL_RESULT(SEND(PSQL, &#39;OUTPUT&#39;)) &quot;)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* A SIMPLE SELECT, DISCARDING RESULTS</i></font>
+<font color="#818181"><i>*</i></font>
+         TIMER(&quot; $P = &#39;SELECT 1 + 1 AS result;&#39;; &quot;
++              &quot; SEND(PSQL, &#39;DISCARD&#39;) &quot;)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* A TABLE SELECT, AND RESULT ANALYSIS</i></font>
+<font color="#818181"><i>*</i></font>
+         TIMER(&quot; $P = &#39;SELECT * FROM weather;&#39;; &quot;
++              &quot; R = PSQL_RESULT(SEND(PSQL, &#39;OUTPUT&#39;)) &quot;)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* A TABLE SELECT, DISCARDING RESULTS</i></font>
+<font color="#818181"><i>*</i></font>
+         TIMER(&quot; $P = &#39;SELECT * FROM weather;&#39;; &quot;
++              &quot; SEND(PSQL, &#39;DISCARD&#39;) &quot;)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* DROP THE WEATHER TABLE</i></font>
+<font color="#818181"><i>*</i></font>
+         $P = &quot;DROP TABLE weather;&quot;                              <b>:F(END)</b>
+         SEND(PSQL, &#39;DISCARD&#39;)                                   <b>:F(END)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CLOSE PSQL, FREEING THE PIPE AND UNIT</i></font>
+<font color="#818181"><i>*</i></font>
+         SEND(PSQL, &#39;CLOSE&#39;)                                     <b>:F(END)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* SEE IF WE HAVE ANY ZOMBIES</i></font>
+<font color="#818181"><i>*</i></font>
+         OUTPUT = BQ(&#39;ps ax | grep &quot; Z &quot;&#39;)
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL PSQL
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                  ######    #####    #####   #                        *</i></font>
+<font color="#818181"><i>*                  #     #  #     #  #     #  #                        *</i></font>
+<font color="#818181"><i>*                  #     #  #        #     #  #                        *</i></font>
+<font color="#818181"><i>*                  ######    #####   #     #  #                        *</i></font>
+<font color="#818181"><i>*                  #              #  #   # #  #                        *</i></font>
+<font color="#818181"><i>*                  #        #     #  #    #   #                        *</i></font>
+<font color="#818181"><i>*                  #         #####    #### #  #######                  *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* PSQL                 INTERFACE TO POSTGRESQL                         *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* PSQL.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;PSQL&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .F.MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Wed May 21 17:58:34 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

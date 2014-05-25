@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>CATA - Concatenate Arrays</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">CATA(A1,A2)</font> will concatenate the two singly-dimensioned arrays
+<font face="Source Code Pro">A1</font> and <font face="Source Code Pro">A2</font>. The arrays must be defined as <font face="Source Code Pro">'size'</font> and not
+<font face="Source Code Pro">'low:high'</font> or this routine will not work.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="SEQ.html">SEQ</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;SEQ.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;CATA&raquo;&equiv;</b>
+         DEFINE(&#39;CATA(A1,A2)I,N1&#39;)                           <b>:(CATA_END)</b>
+<font color="#818181"><i>*</i></font>
+CATA     N1 = PROTOTYPE(A1)
+         CATA = ARRAY(N1 + PROTOTYPE(A2))
+         SEQ(&#39; CATA&lt;I&gt; = A1&lt;I&gt; &#39;, .I)
+         SEQ(&#39; CATA&lt;N1 + I&gt; = A2&lt;I&gt; &#39;, .I)                     <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+CATA_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;CATA.INC&#39;
+-INCLUDE &#39;CRACK.INC&#39;
+         &amp;CODE = 1
+         A = %&#39;5,6,7&#39;
+         B = %&#39;3,2,1&#39;
+         C = CATA(A, B)
+         EQ(C&lt;1&gt;, 5)                                             <b>:F(END)</b>
+         EQ(C&lt;2&gt;, 6)                                             <b>:F(END)</b>
+         EQ(C&lt;3&gt;, 7)                                             <b>:F(END)</b>
+         EQ(C&lt;4&gt;, 3)                                             <b>:F(END)</b>
+         EQ(C&lt;5&gt;, 2)                                             <b>:F(END)</b>
+         EQ(C&lt;6&gt;, 1)                                             <b>:F(END)</b>
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL CATA
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                    #####      #     #######     #                    *</i></font>
+<font color="#818181"><i>*                   #     #    # #       #       # #                   *</i></font>
+<font color="#818181"><i>*                   #         #   #      #      #   #                  *</i></font>
+<font color="#818181"><i>*                   #        #     #     #     #     #                 *</i></font>
+<font color="#818181"><i>*                   #        #######     #     #######                 *</i></font>
+<font color="#818181"><i>*                   #     #  #     #     #     #     #                 *</i></font>
+<font color="#818181"><i>*                    #####   #     #     #     #     #                 *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* CATA                     CONCATENATE ARRAYS                          *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CATA.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;CATA&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 17:24:50 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

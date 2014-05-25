@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>REPL - Replace strings</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">REPL(S1,S2,S3)</font> will do a string-by-string replacement (as opposed
+to a character-by-character replacement ala <font face="Source Code Pro">REPLACE</font>) on the string
+<font face="Source Code Pro">S1</font>.  The string <font face="Source Code Pro">S1</font> is scanned for instances of the string
+<font face="Source Code Pro">S2</font> and each is replaced by <font face="Source Code Pro">S3</font>. Portions of <font face="Source Code Pro">S1</font> already
+scanned and the replaced string are not reexamined for instances of
+<font face="Source Code Pro">S2</font>.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;REPL&raquo;&equiv;</b>
+         DEFINE(&#39;REPL(S1,S2,S3)C,T,FINDC&#39;)                   <b>:(REPL_END)</b>
+<font color="#818181"><i>*</i></font>
+REPL     S2 LEN(1) . C =                                     <b>:F(FRETURN)</b>
+         FINDC = BREAK(C) . T LEN(1)
+         S2 = POS(0) S2
+REPL_1   S1 FINDC =                                           <b>:F(REPL_2)</b>
+         S1 S2 =                                              <b>:F(REPL_3)</b>
+         REPL = REPL T S3                                      <b>:(REPL_1)</b>
+REPL_3   REPL = REPL T C                                       <b>:(REPL_1)</b>
+REPL_2   REPL = REPL S1                                        <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+REPL_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;REPL.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+-STITL REPL
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                   ######   #######  ######   #                       *</i></font>
+<font color="#818181"><i>*                   #     #  #        #     #  #                       *</i></font>
+<font color="#818181"><i>*                   #     #  #        #     #  #                       *</i></font>
+<font color="#818181"><i>*                   ######   #####    ######   #                       *</i></font>
+<font color="#818181"><i>*                   #   #    #        #        #                       *</i></font>
+<font color="#818181"><i>*                   #    #   #        #        #                       *</i></font>
+<font color="#818181"><i>*                   #     #  #######  #        #######                 *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* REPL                   REPLACE STRINGS                               *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* REPL.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;REPL&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:26 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

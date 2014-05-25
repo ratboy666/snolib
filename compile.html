@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>compile - Compile a SNOBOL4 program into a real executable</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Compile an application into a custom SNOBOL4 executable. For a complete
+stand-alone application, includes must be gathered using <i>bundle</i>.
+This utility discards comments, blank lines and non-essential control
+cards. Each line is quoted as a C string. Spaces and tabs not in
+SNOBOL4 quoted strings are compressed to a single space.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+The result is written into the CSNOBOL4 source directory as prog.inc.
+CSNOBOL4 is the configured with MEM_IO and memory sizing. CSNOBOL4
+is then rebuilt, and the resulting executable which now incorporates
+the given SNOBOL4 program is copied to the output.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<b>This utility is considered experimental</b>. Not much testing has
+been done. Squeezing the code should be factored out into a separate
+<i>squeeze</i> utility. It is possible that even interpreted programs
+would benefit (from reduced loading, tokenization and parsing). This
+would reduce the function of <i>compile</i> to C quoting and running
+the build itself. Continuation lines should be merged by squeezing as
+well.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="CRACK.html">CRACK</a><br>
+<a href="HOST.html">HOST</a><br>
+<a href="TRIMB.html">TRIMB</a><br>
+<a href="REPL.html">REPL</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;CRACK.INC&#39;
+-INCLUDE &#39;HOST.INC&#39;
+-INCLUDE &#39;TRIMB.INC&#39;
+-INCLUDE &#39;REPL.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;compile&raquo;&equiv;</b>
+         TERMINAL = &#39;COMPILE (THU DEC  5 12:10:58 EST 2013)&#39;
+<font color="#818181"><i>*</i></font>
+         DEFINE(&#39;SQUISH(S)&#39;)
+         DEFINE(&#39;PROCESS()&#39;)
+         SNOBOL_LOC = &#39;/export/home/fred/Projects/snobol4-1.5&#39;
+         QQ = &#39;&quot;&#39;
+         Q = &quot;&#39;&quot;
+         CC2 = &#39;-EJECT&#39; | &#39;-eject&#39; | &#39;-LIST&#39; | &#39;-list&#39; | &#39;-HIDE&#39; |
++              &#39;-hide&#39; | &#39;-LINE&#39; | &#39;-line&#39; | &#39;-TITLE&#39; | &#39;-title&#39; |
++              &#39;-stitl&#39; | &#39;-STITL&#39;
+         CCPAT = FENCE (ANY(&#39;*#!|&#39;) | CC2 | RPOS(0))
+         &amp;TRIM =  1
+<font color="#818181"><i>*</i></font>
+         APP_ISTACK = 4000
+         APP_PMSTACK = 8000
+         APP_DYNAMIC = 524288
+         OPT = 2
+         INFILE =
+         OUTFILE =
+OPTLOOP  S = HOST(HOST_ARGN, OPT = OPT + 1)                    <b>:F(USAGE)</b>
+         SW =
+         SW = ?(S ? POS(0) &#39;-S&#39;) .APP_ISTACK
+         SW = ?(S ? POS(0) &#39;-P&#39;) .APP_PMSTACK
+         SW = ?(S ? POS(0) &#39;-d&#39;) .APP_DYNAMIC
+         IDENT(SW)                                                <b>:S(FN)</b>
+         V = HOST(HOST_ARGN, OPT = OPT + 1)                    <b>:F(USAGE)</b>
+         $SW = V                                             <b>:S(OPTLOOP)</b>
+FN       S POS(0) &#39;-&#39;                                          <b>:S(USAGE)</b>
+         INFILE = IDENT(INFILE) S                            <b>:S(OPTLOOP)</b>
+         OUTFILE = IDENT(OUTFILE) S
+         (DIFFER(INFILE) DIFFER(OUTFILE))                         <b>:S(GO)</b>
+<font color="#818181"><i>*</i></font>
+USAGE    TERMINAL = &#39;USAGE: COMPILE OPTIONS INFILE OUTFILE&#39;
+         TERMINAL =
+         TERMINAL = &#39;OPTIONS: -S ISTACK (&#39; APP_ISTACK &#39;)&#39;
+         TERMINAL = &#39;         -P PSTACK (&#39; APP_PMSTACK &#39;)&#39;
+         TERMINAL = &#39;         -d DYNAMIC (&#39; APP_DYNAMIC &#39;)&#39;
+         TERMINAL =
+         N = HOST(HOST_DESCR_BITS) / 8
+         TERMINAL = &#39;VALUES ARE IN &#39; N &#39; BYTE DESCRIPTORS, SO THAT IS &#39;
++                   APP_DYNAMIC * N / 1024 / 1024 &#39;MB OF DYNAMIC SPACE&#39;
++                                                                 <b>:(END)</b>
+<font color="#818181"><i>*</i></font>
+GO       TERMINAL = &#39;COMPILING &#39; INFILE &#39; TO &#39; OUTFILE
+         TERMINAL = &#39;  ISTACK  = &#39; LPAD(APP_ISTACK, 7)
+         TERMINAL = &#39;  PMSTACK = &#39; LPAD(APP_PMSTACK, 7)
+         TERMINAL = &#39;  DYNAMIC = &#39; LPAD(APP_DYNAMIC, 7)
+         TERMINAL = &#39;PROCESSING SNOBOL4 CODE&#39;
+<font color="#818181"><i>*</i></font>
+         OUNIT = IO_FINDUNIT()
+         SUNIT = IO_FINDUNIT()
+         OUTPUT(.OBJ, OUNIT,, SNOBOL_LOC &#39;/lib/prog.inc&#39;)
+         INPUT(.SRC, SUNIT,, INFILE)                             <b>:S(GO2)</b>
+         TERMINAL = &quot;CAN&#39;T OPEN &quot; INFILE                          <b>:(END)</b>
+GO2      PROCESS()
+         ENDFILE(OUNIT)
+         ENDFILE(SUNIT)
+         DETACH(.OBJ)
+         DETACH(.SRC)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* WE SHOULD CHECK THE CONFIGURATION (IN CONFIG.H), AND IF OUR CHANGES</i></font>
+<font color="#818181"><i>* ARE THERE WE CAN SKIP THE CLEAN AND CONFIG. WE SHOULD ALSO CHECK</i></font>
+<font color="#818181"><i>* IF OUR PATCHED INIT.C FILE IS THERE AND PLACE IT IF NEEDED.</i></font>
+<font color="#818181"><i>*</i></font>
+         TERMINAL = &#39;CONFIGURING FOR COMPILATION&#39;
+         HOST(HOST_SYSCMD, &#39;(cd &#39; SNOBOL_LOC &#39;; make clean)&#39;
++                          &#39; &gt; compile.log 2&gt;&amp;1&#39;)
+         HOST(HOST_SYSCMD,
++              &#39;(cd &#39; SNOBOL_LOC &#39;;&#39;
++               &#39;./configure --add-define=MEM_IO&#39;
++                          &#39; --add-define=MEM_IO_TEST&#39;
++                          &#39; --add-define=APP_ISTACK=&#39;  APP_ISTACK
++                          &#39; --add-define=APP_PMSTACK=&#39; APP_PMSTACK
++                          &#39; --add-define=APP_DYNAMIC=&#39; APP_DYNAMIC
++              &#39;) &gt;&gt; compile.log 2&gt;&amp;1&#39;)
+<font color="#818181"><i>*</i></font>
+         TERMINAL = &#39;COMPILING&#39;
+         HOST(HOST_SYSCMD, &#39;(cd &#39; SNOBOL_LOC &#39;; make)&#39;
++                          &#39; &gt;&gt; compile.log 2&gt;&amp;1&#39;)
+<font color="#818181"><i>*</i></font>
+         TERMINAL = &#39;CREATING EXECUTABLE&#39;
+         HOST(HOST_SYSCMD, &#39;(cp &#39; SNOBOL_LOC &#39;/xsnobol4 &#39; OUTFILE
++                &#39;) &gt;&gt; compile.log 2&gt;&amp;1&#39;)
+<font color="#818181"><i>*</i></font>
+         TERMINAL = &#39;A LOG FILE IS IN compile.log&#39;                <b>:(END)</b>
+<font color="#818181"><i>*</i></font>
+PROCESS  L = SRC                                              <b>:F(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* IGNORE COMMENTS, EMPTY LINES, MOST CONTROL CARDS</i></font>
+<font color="#818181"><i>*</i></font>
+         L CCPAT                                             <b>:S(PROCESS)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CONVERT EACH LINE INTO A C STRING - QUOTE &quot; AND \, ADD A NEWLINE</i></font>
+<font color="#818181"><i>* AND WRAP IN &quot;&quot;. ALSO, SQUISH SPACES/TABS THAT ARE NOT QUOTED TO</i></font>
+<font color="#818181"><i>* SINGLE SPACES, SAVING SPACE FOR THE C COMPILER. I HAVE TESTED GCC</i></font>
+<font color="#818181"><i>* WITH A STRING CONSTANT OF UP TO 256000 CHARACTERS, BUT WE SHOULD</i></font>
+<font color="#818181"><i>* TRY TO CONSERVE THIS.</i></font>
+<font color="#818181"><i>*</i></font>
+         L = REPL(L, &#39;\&#39;, &#39;\\&#39;)
+         L = REPL(L, &#39;&quot;&#39;, &#39;\&quot;&#39;)
+         R = L
+         S =
+SS       R ARB . L (Q | QQ) $ DELIM ARB . M *DELIM REM . R      <b>:F(DONE)</b>
+         S = S SQUISH(L) DELIM M DELIM                             <b>:(SS)</b>
+DONE     S = QQ S SQUISH(R) &#39;\n&#39; QQ
+         OBJ = S                                              <b>:(PROCESS)</b>
+<font color="#818181"><i>*</i></font>
+SQUISH   S = REPL(S, CHARS_TAB, &#39; &#39;)
+SQUISH2  S &#39;  &#39; = &#39; &#39;                                        <b>:S(SQUISH2)</b>
+         SQUISH = S                                            <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+END START
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-TITLE COMPILE
+START
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*       #####   #######  #     #  ######   ###  #        #######       *</i></font>
+<font color="#818181"><i>*      #     #  #     #  ##   ##  #     #   #   #        #             *</i></font>
+<font color="#818181"><i>*      #        #     #  # # # #  #     #   #   #        #             *</i></font>
+<font color="#818181"><i>*      #        #     #  #  #  #  ######    #   #        #####         *</i></font>
+<font color="#818181"><i>*      #        #     #  #     #  #         #   #        #             *</i></font>
+<font color="#818181"><i>*      #     #  #     #  #     #  #         #   #        #             *</i></font>
+<font color="#818181"><i>*       #####   #######  #     #  #        ###  #######  #######       *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* COMPILE  &#39;COMPILE&#39; A SNOBOL4 PROGRAM INTO A REAL EXECUTABLE          *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* compile.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;compile&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:01 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

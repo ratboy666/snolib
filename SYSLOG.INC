@@ -1,0 +1,95 @@
+-LINE 10 "SYSLOG.lss"
+-INCLUDE 'P64.INC'
+-INCLUDE 'FFI.INC'
+-STITL SYSLOG
+-EJECT
+-LINE 98 "SYSLOG.lss"
+*
+************************************************************************
+*                                                                      *
+*                                                                      *
+*          #####   #     #   #####   #        #######   #####          *
+*         #     #   #   #   #     #  #        #     #  #     #         *
+*         #          # #    #        #        #     #  #               *
+*          #####      #      #####   #        #     #  #  ####         *
+*               #     #           #  #        #     #  #     #         *
+*         #     #     #     #     #  #        #     #  #     #         *
+*          #####      #      #####   #######  #######   #####          *
+*                                                                      *
+* SYSLOG        INTERFACE TO OPENLOG/SYSLOG/CLOSELOG                   *
+*                                                                      *
+************************************************************************
+*
+* SYSLOG.lss
+*
+-LINE 15 "SYSLOG.lss"
+         FFI_OPENLOG = FFI_NEW('V', 'P,I,I')
+         FFI_SET_CALLP(FFI_OPENLOG, DLSYM(0, 'openlog'))
+         FFI_SYSLOG = FFI_NEW('V', 'I,P,P')
+         FFI_SET_CALLP(FFI_SYSLOG, DLSYM(0, 'syslog'))
+         FFI_CLOSELOG = FFI_NEW('V', 'V')
+         FFI_SET_CALLP(FFI_CLOSELOG, DLSYM(0, 'closelog'))
+*
+* PRIORITY
+*
+         LOG_EMERG   = 0
+         LOG_ALERT   = 1
+         LOG_CRIT    = 2
+         LOG_ERR     = 3
+         LOG_WARNING = 4
+         LOG_NOTICE  = 5
+         LOG_INFO    = 6
+         LOG_DEBUG   = 7
+*
+* FACILITY
+*
+         LOG_KERN     =  0 * 8
+         LOG_USER     =  1 * 8
+         LOG_MAIL     =  2 * 8
+         LOG_DAEMON   =  3 * 8
+         LOG_AUTH     =  4 * 8
+         LOG_SYSLOG   =  5 * 8
+         LOG_LPR      =  6 * 8
+         LOG_NEWS     =  7 * 8
+         LOG_UUCP     =  8 * 8
+         LOG_CRON     =  9 * 8
+         LOG_AUTHPRIV = 10 * 8
+         LOG_FTP      = 11 * 8
+         LOG_LOCAL0   = 16 * 8
+         LOG_LOCAL1   = 17 * 8
+         LOG_LOCAL2   = 18 * 8
+         LOG_LOCAL3   = 19 * 8
+         LOG_LOCAL4   = 20 * 8
+         LOG_LOCAL5   = 21 * 8
+         LOG_LOCAL6   = 22 * 8
+         LOG_LOCAL7   = 23 * 8
+*
+* OPTIONS
+*
+         LOG_PID    =  1
+         LOG_CONS   =  2
+         LOG_ODELAY =  4
+         LOG_NDELAY =  8
+         LOG_NOWAIT = 16
+         LOG_PERROR = 32
+*
+         DEFINE('OPENLOG(IDENT,OPTION,FACILITY)P')
+         DEFINE('SYSLOG(PRIORITY,S)')
+         DEFINE('CLOSELOG()')                           :(SYSLOG_FN_END)
+*
+OPENLOG  P = STRDUP(IDENT)
+         FFI_PAR_N_PTR(FFI_OPENLOG, 1, P)
+         FFI_PAR_N_INTEGER(FFI_OPENLOG, 2, OPTION)
+         FFI_PAR_N_INTEGER(FFI_OPENLOG, 3, FACILITY)
+         FFI_CALL_VOID(FFI_OPENLOG)                            :(RETURN)
+*
+SYSLOG   FFI_PAR_N_INTEGER(FFI_SYSLOG, 1, PRIORITY)
+         FFI_PAR_N_STRING(FFI_SYSLOG, 2, '%s')
+         FFI_PAR_N_STRING(FFI_SYSLOG, 3, S)
+         FFI_CALL_VOID(FFI_SYSLOG)                             :(RETURN)
+*
+CLOSELOG FFI_CALL_VOID(FFI_CLOSELOG)                           :(RETURN)
+*
+SYSLOG_FN_END
+*
+* CE: .MSNOBOL4;

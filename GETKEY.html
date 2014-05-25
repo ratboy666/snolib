@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>GETKEY - Get key, including special keys</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Since <font face="Source Code Pro">ESC</font> is used by most terminals as function/arrow key leadin,
+<font face="Source Code Pro">ESC</font> is not usable in the program. We cannot easily get around this,
+because <font face="Source Code Pro">C-MAINBOL</font> does not allow timeouts on input operations.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+A solution is to define <font face="Source Code Pro">ESC</font> as <font face="Source Code Pro">ESC-ESC</font>, which will not match
+any of leadin sequences.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+The following controls are not easily available
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<ul>
+<li>^C &ndash; terminates the application</li>
+<li>^Z &ndash; backgrounds the application</li>
+<li>^S &ndash; flow control</li>
+<li>^Q &ndash; flow control</li>
+</ul>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+These keys can be used by the application, if <font face="Source Code Pro">stty raw</font> is put
+into effect. Make sure that any additional channels to the terminal
+are closed before issuing <font face="Source Code Pro">stty</font>:
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+|     HOST(HOST_SYSCMD, 'stty -echo raw')
+|     OUTPUT(.T_OUT, 10, 'T', '/dev/stdout')
+|     INPUT(.T_IN, 11, 'CQ', '/dev/stdin')
+| .
+|     ENDFILE(10)
+|     DETACH(.T_OUT)
+|     ENDFILE(11)
+|     DETACH(.T_IN)
+|     HOST(HOST_SYSCMD, 'stty echo cooked')
+</font></pre>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+New key definitions are added to this file as they are needed by
+applications.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Used</h2>
+<a href="BQ.html">BQ</a><br>
+<a href="CHARS.html">CHARS</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;BQ.INC&#39;
+-INCLUDE &#39;CHARS.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;GETKEY&raquo;&equiv;</b>
+         DEFINE(&#39;GETKEY(IN)KEY,M&#39;)
+<font color="#818181"><i>*</i></font>
+GETKEY_INIT
+<font color="#818181"><i>*</i></font>
+         KEY_ESC    = CHARS_ESC CHARS_ESC
+         KEY_LEFT   = BQ(&#39;tput kcub1&#39;)
+         KEY_RIGHT  = BQ(&#39;tput kcuf1&#39;)
+         KEY_UP     = BQ(&#39;tput kcuu1&#39;)
+         KEY_DOWN   = BQ(&#39;tput kcud1&#39;)
+         KEY_PAGEDN = BQ(&#39;tput knp&#39;)
+         KEY_PAGEUP = BQ(&#39;tput kpp&#39;)
+         KEY_HOME   = BQ(&#39;tput khome&#39;)
+         KEY_END    = BQ(&#39;tput kend&#39;)
+         KEY_INS    = BQ(&#39;tput kich1&#39;)
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+xterm weirdness - kcub1 returns ESC O D
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Repair this in the sequences where it happens, and skip for non-xterm
+terminals. Note that xterm-256color is the normaL xterm definition
+in use by my windowing system, and linux is the normal full-screen
+console type.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;GETKEY&raquo;&equiv;</b>
+         BQ(&#39;echo $TERM&#39;) &#39;xterm&#39;                         <b>:F(GETKEY_END)</b>
+         KEY_LEFT   = REPLACE(KEY_LEFT,  &#39;O&#39;, &#39;[&#39;)
+         KEY_RIGHT  = REPLACE(KEY_RIGHT, &#39;O&#39;, &#39;[&#39;)
+         KEY_UP     = REPLACE(KEY_UP,    &#39;O&#39;, &#39;[&#39;)
+         KEY_DOWN   = REPLACE(KEY_DOWN,  &#39;O&#39;, &#39;[&#39;)
+         KEY_HOME   = REPLACE(KEY_HOME,  &#39;O&#39;, &#39;[&#39;)
+         KEY_END    = REPLACE(KEY_END,   &#39;O&#39;, &#39;[&#39;)
+         KEY_INS    = REPLACE(KEY_INS,   &#39;O&#39;, &#39;[&#39;)
+                                                           <b>:(GETKEY_END)</b>
+<font color="#818181"><i>*</i></font>
+GETKEY   &amp;INPUT = 1; KEY =
+GK1      M = ; KEY = KEY $IN
+<font color="#818181"><i>*</i></font>
+GK2      M = ?(KEY_UP ? FENCE KEY) 1                             <b>:F(GK3)</b>
+         EQ(SIZE(KEY), SIZE(KEY_UP))                             <b>:S(GKR)</b>
+<font color="#818181"><i>*</i></font>
+GK3      M = ?(KEY_DOWN ? FENCE KEY) 1                           <b>:F(GK4)</b>
+         EQ(SIZE(KEY), SIZE(KEY_DOWN))                           <b>:S(GKR)</b>
+<font color="#818181"><i>*</i></font>
+GK4      M = ?(KEY_RIGHT ? FENCE KEY) 1                          <b>:F(GK5)</b>
+         EQ(SIZE(KEY), SIZE(KEY_RIGHT))                          <b>:S(GKR)</b>
+<font color="#818181"><i>*</i></font>
+GK5      M = ?(KEY_LEFT ? FENCE KEY) 1                           <b>:F(GK6)</b>
+         EQ(SIZE(KEY), SIZE(KEY_LEFT))                           <b>:S(GKR)</b>
+<font color="#818181"><i>*</i></font>
+GK6      M = ?(KEY_PAGEDN ? FENCE KEY) 1                         <b>:F(GK7)</b>
+         EQ(SIZE(KEY), SIZE(KEY_PAGEDN))                         <b>:S(GKR)</b>
+<font color="#818181"><i>*</i></font>
+GK7      M = ?(KEY_PAGEUP ? FENCE KEY) 1                         <b>:F(GK8)</b>
+         EQ(SIZE(KEY), SIZE(KEY_PAGEUP))                         <b>:S(GKR)</b>
+<font color="#818181"><i>*</i></font>
+GK8      M = ?(KEY_HOME ? FENCE KEY) 1                           <b>:F(GK9)</b>
+         EQ(SIZE(KEY), SIZE(KEY_HOME))                           <b>:S(GKR)</b>
+<font color="#818181"><i>*</i></font>
+GK9      M = ?(KEY_END ? FENCE KEY) 1                           <b>:F(GK10)</b>
+         EQ(SIZE(KEY), SIZE(KEY_END))                            <b>:S(GKR)</b>
+<font color="#818181"><i>*</i></font>
+GK10     M = ?(KEY_INS ? FENCE KEY) 1                           <b>:F(GK11)</b>
+         EQ(SIZE(KEY), SIZE(KEY_INS))                            <b>:S(GKR)</b>
+<font color="#818181"><i>*</i></font>
+GK11     M = ?(KEY_ESC ? FENCE KEY) 1                           <b>:F(GK12)</b>
+         EQ(SIZE(KEY), SIZE(KEY_ESC))                            <b>:S(GKR)</b>
++                                                                 F(GK1)
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+If we have a match so far, add another keystroke. Note that this is
+broken if the user manually types an escape sequence on the keyboard
+(again, no timeout is possible).
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;GETKEY&raquo;&equiv;</b>
+GK12     DIFFER(M)                                               <b>:S(GK1)</b>
+GKR      GETKEY = KEY                                          <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+         CODE(&#39;GETKEY_INIT&#39;)
+<font color="#818181"><i>*</i></font>
+GETKEY_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;GETKEY.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL GETKEY
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*           #####   #######  #######  #    #  #######  #     #         *</i></font>
+<font color="#818181"><i>*          #     #  #           #     #   #   #         #   #          *</i></font>
+<font color="#818181"><i>*          #        #           #     #  #    #          # #           *</i></font>
+<font color="#818181"><i>*          #  ####  #####       #     ###     #####       #            *</i></font>
+<font color="#818181"><i>*          #     #  #           #     #  #    #           #            *</i></font>
+<font color="#818181"><i>*          #     #  #           #     #   #   #           #            *</i></font>
+<font color="#818181"><i>*           #####   #######     #     #    #  #######     #            *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* GETKEY      GET KEY, INCLUDING ARROWS AND FUNCTION KEYS              *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* GETKEY.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;GETKEY&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:11 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

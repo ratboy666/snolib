@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>FIND - Find extreme</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">FIND(A,PRED)</font> will search array <font face="Source Code Pro">A</font> for an extreme element. The
+type of extreme element will be determined by the predicate <font face="Source Code Pro">PRED</font>.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+|     Examples: FIND(A,'GE')
+|               FIND(A,'~LGT')
+</font></pre>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;FIND&raquo;&equiv;</b>
+         DEFINE(&#39;FIND(A,PRED)EX,I,MAX,TEST&#39;)                 <b>:(FIND_END)</b>
+<font color="#818181"><i>*</i></font>
+FIND     EX = CONVERT(PRED &#39;(MAX,TEST)&#39;, &#39;EXPRESSION&#39;)
+         FIND = 1
+         MAX = A&lt;FIND&gt;
+         I = 1
+FIND_1   I = I + 1
+         TEST = A&lt;I&gt;                                          <b>:F(RETURN)</b>
+         EVAL(EX)                                             <b>:S(FIND_1)</b>
+         MAX = TEST
+         FIND = I                                              <b>:(FIND_1)</b>
+<font color="#818181"><i>*</i></font>
+FIND_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;FIND.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+-STITL FIND
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                    #######  ###  #     #  ######                     *</i></font>
+<font color="#818181"><i>*                    #         #   ##    #  #     #                    *</i></font>
+<font color="#818181"><i>*                    #         #   # #   #  #     #                    *</i></font>
+<font color="#818181"><i>*                    #####     #   #  #  #  #     #                    *</i></font>
+<font color="#818181"><i>*                    #         #   #   # #  #     #                    *</i></font>
+<font color="#818181"><i>*                    #         #   #    ##  #     #                    *</i></font>
+<font color="#818181"><i>*                    #        ###  #     #  ######                     *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* FIND                       FIND EXTREME                              *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* FIND.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;FIND&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:11 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

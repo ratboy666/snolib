@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<H1>snofmt</H1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+A simple and stupid SNOBOL4 formatter. Uses simple patterns. Does
+<b>not</b> parse the code. I use this to clean up “foreign” code,
+and to tidy up lines after editing.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="CHARS.html">CHARS</a><br>
+<a href="BALX.html">BALX</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;CHARS.INC&#39;
+-INCLUDE &#39;BALX.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-TITLE SNOFMT
+START
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL
+-EJECT
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*          #####   #     #  #######  #######  #     #  #######         *</i></font>
+<font color="#818181"><i>*         #     #  ##    #  #     #  #        ##   ##     #            *</i></font>
+<font color="#818181"><i>*         #        # #   #  #     #  #        # # # #     #            *</i></font>
+<font color="#818181"><i>*          #####   #  #  #  #     #  #####    #  #  #     #            *</i></font>
+<font color="#818181"><i>*               #  #   # #  #     #  #        #     #     #            *</i></font>
+<font color="#818181"><i>*         #     #  #    ##  #     #  #        #     #     #            *</i></font>
+<font color="#818181"><i>*          #####   #     #  #######  #        #     #     #            *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* SNOFMT                   SNOBOL4 FORMATTER                           *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* BASIC SIMPLE SNOBOL4 FORMATTING (TO MY STYLE) STATEMENTS BEGIN IN</i></font>
+<font color="#818181"><i>* COLUMN 10, LABELS ARE ALIGNED TO END IN COLUMN 72. CONTINUATION</i></font>
+<font color="#818181"><i>* LINES ARE INDENTED TO BEGIN AT COLUMN 13. REALLY, ONLY USED FOR</i></font>
+<font color="#818181"><i>* &quot;OTHER PEOPLES CODE&quot; AND TO TIDY LINES AFTER EDITS.</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* snofmt.lss</i></font>
+<font color="#818181"><i>*</i></font>
+         TERMINAL = &#39;SNOFMT (MON NOV 25 15:35:24 EST 2013)&#39;
+<font color="#818181"><i>*</i></font>
+         DELR = TABLE()
+         DELR&lt;&#39;(&#39;&gt; = &#39;)&#39;
+         DELR&lt;&#39;&lt;&#39;&gt; = &#39;&gt;&#39;
+         OPTWS = SPAN(&#39; &#39; CHARS_TAB) | &#39;&#39;
+         BEX = BALX(&#39;(&lt;[]&gt;)&#39;, &quot;&#39;&quot; &#39;&quot;&#39;)
+         GB = ANY(&#39;(&lt;&#39;) $ DELL BEX *DELR&lt;DELL&gt;
+         GC = OPTWS (ANY(&#39;SFsf&#39;) | &#39;&#39;) OPTWS GB
+         GP = (&#39;:&#39; GC (GC | &#39;&#39;) OPTWS RPOS(0)) . G
+<font color="#818181"><i>*</i></font>
+TOP      S = TRIM(INPUT)                                         <b>:F(END)</b>
+         LABEL =
+         G =
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* COMMENTS GO THROUGH UNCHANGED</i></font>
+<font color="#818181"><i>*</i></font>
+         S FENCE (ANY(&#39;*-#!|&#39;) | RPOS(0))                        <b>:S(OUT)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* DETAB THE LINE, ASSUMING TABS AT 8 COLUMNS</i></font>
+<font color="#818181"><i>*</i></font>
+DETAB    S CHARS_TAB @N = LPAD(&#39;&#39;, 8 - REMDR(N - 1, 8), &#39; &#39;)   <b>:S(DETAB)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* EMPTY LINES REPLACED WITH * COMMENT LINES</i></font>
+<font color="#818181"><i>*</i></font>
+         S = TRIM(S)
+         S = IDENT(S) &#39;*&#39;                                        <b>:S(OUT)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* INDENT CONTINUATION LINES (NO LABEL PADDING)</i></font>
+<font color="#818181"><i>*</i></font>
+         S FENCE ANY(&#39;+.&#39;) =                                    <b>:F(LEXT)</b>
+TRIMIT   S FENCE &#39; &#39; =                                        <b>:S(TRIMIT)</b>
+         S = &#39;+           &#39; S                                     <b>:(XBR)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* EXTRACT THE LABEL</i></font>
+<font color="#818181"><i>*</i></font>
+LEXT     S FENCE &#39; &#39;                                            <b>:S(STMT)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* IF WE DO HAVE A LABEL, IT MAY BE THE ONLY THING ON THE LINE</i></font>
+<font color="#818181"><i>*</i></font>
+         S BREAK(&#39; &#39;) . LABEL =                                  <b>:F(OUT)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* STATEMENT, KILL LEADING SPACES</i></font>
+<font color="#818181"><i>*</i></font>
+STMT     S FENCE &#39; &#39; =                                          <b>:S(STMT)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* IF THE LABEL IS GREATER THAN 8 CHARACTERS, OUTPUT IT ON A LINE BY</i></font>
+<font color="#818181"><i>* ITSELF</i></font>
+<font color="#818181"><i>*</i></font>
+         OUTPUT = GT(SIZE(LABEL), 8) LABEL
+         LABEL = GT(SIZE(LABEL), 8) &#39;&#39;
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* PAD THE LABEL TO 9 CHARACTERS</i></font>
+<font color="#818181"><i>*</i></font>
+         LABEL FENCE (&#39;END&#39; | &#39;end&#39;) RPOS(0)                    <b>:F(PAD9)</b>
+         LABEL = LABEL &#39; &#39;                                        <b>:(XBR)</b>
+PAD9     LABEL = RPAD(LABEL, 9)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* EXTACT BRANCH PART -- PATTERN ALSO USED IN SWEAVE</i></font>
+<font color="#818181"><i>*</i></font>
+XBR      S GP =
+         G = &#39; &#39; VDIFFER(G)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* REMOVE SPACES BETWEEN STATEMENT AND BRANCH</i></font>
+<font color="#818181"><i>*</i></font>
+         S = TRIM(S)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* IF THE ENTIRE STATEMENT GREATER THAN 72 COLUMNS, OUTPUT IT AS LABEL</i></font>
+<font color="#818181"><i>* STATEMENT, AND THEN BRANCH AS CONTINUATION</i></font>
+<font color="#818181"><i>*</i></font>
+         GT(SIZE(S) + SIZE(G) + 9, 72)                         <b>:S(STMT3)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* ASSEMBLE THE OUTPUT: LABEL FOLLOWED BY STATEMENT, AND THEN BRANCH</i></font>
+<font color="#818181"><i>* PADDED TO COLUMN 72</i></font>
+<font color="#818181"><i>*</i></font>
+         S = LABEL S
+         S = S LPAD(&#39;&#39;, 72 - SIZE(S) - SIZE(G)) G                 <b>:(OUT)</b>
+<font color="#818181"><i>*</i></font>
+STMT3    S = IDENT(G) LABEL S                                    <b>:S(OUT)</b>
+         OUTPUT = LABEL S
+         S = &#39;+&#39; LPAD(&#39;&#39;, 71 - SIZE(G)) VDIFFER(G)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* OUTPUT THE STATEMENT</i></font>
+<font color="#818181"><i>*</i></font>
+OUT      OUTPUT = TRIM(S)                                         <b>:(TOP)</b>
+<font color="#818181"><i>*</i></font>
+END START
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .F.MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:30 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

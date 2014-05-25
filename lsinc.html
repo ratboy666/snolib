@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<H1>lsinc</H1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+List includes.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="SEQ.html">SEQ</a><br>
+<a href="CRACK.html">CRACK</a><br>
+<a href="TRIMB.html">TRIMB</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;SEQ.INC&#39;
+-INCLUDE &#39;CRACK.INC&#39;
+-INCLUDE &#39;TRIMB.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-TITLE LSINC
+START
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*               #         #####   ###  #     #   #####                 *</i></font>
+<font color="#818181"><i>*               #        #     #   #   ##    #  #     #                *</i></font>
+<font color="#818181"><i>*               #        #         #   # #   #  #                      *</i></font>
+<font color="#818181"><i>*               #         #####    #   #  #  #  #                      *</i></font>
+<font color="#818181"><i>*               #              #   #   #   # #  #                      *</i></font>
+<font color="#818181"><i>*               #        #     #   #   #    ##  #     #                *</i></font>
+<font color="#818181"><i>*               #######   #####   ###  #     #   #####                 *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* LSINC                 LIST INCLUDES NEEDED                           *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* lsinc.lss</i></font>
+<font color="#818181"><i>*</i></font>
+         TERMINAL = &#39;LSINC (TUE NOV 26 20:14:36 EST 2013)&#39;
+<font color="#818181"><i>*</i></font>
+         QQ = &#39;&quot;&#39;
+         Q = &quot;&#39;&quot;
+         INPAT = FENCE &#39;-&#39; ((ANY(&#39;Ii&#39;) (&#39;NCLUDE&#39; | &#39;nclude&#39;)) |
++                           (ANY(&#39;Cc&#39;) (&#39;OPY&#39; | &#39;opy&#39;)))
++                BREAK(QQ Q) LEN(1) BREAK(QQ Q) . X
+         &amp;TRIM =  1
+         LOADED = TABLE()
+         DEFINE(&#39;INCLUDE(FILENAME)PATH,POSITION,UNIT,LIB&#39;)
+         INCLUDE(&#39;/dev/stdin&#39;)
+         A = CONVERT(LOADED, &#39;ARRAY&#39;)
+         A = SORT(A)
+         SEQ(&#39; OUTPUT = A&lt;I,1&gt; &#39;, .I)                             <b>:(END)</b>
+<font color="#818181"><i>*</i></font>
+INCLUDE  PATH = FILENAME
+         UNIT = IO_FINDUNIT()
+         INPUT(.LIB, UNIT,, PATH)                                <b>:S(TOP)</b>
+         DS = HOST(HOST_DIR_SEP)
+         PS = HOST(HOST_PATH_SEP)
+         X = HOST(HOST_GETENV, &#39;SNOPATH&#39;)                    <b>:S(DOINC_8)</b>
+         X = HOST(HOST_GETENV, &#39;SNOLIB&#39;)                     <b>:S(DOINC_8)</b>
+         X = HOST(HOST_SNOLIB_DIR)                           <b>:F(FRETURN)</b>
+DOINC_8  A = CRACK(X, PS)
+         I = 1
+DOINC_10 P = TRIMB(A&lt;I&gt;)                                     <b>:F(FRETURN)</b>
+         PATH = P DS FILENAME
+         INPUT(.LIB, UNIT,, PATH)                                <b>:S(TOP)</b>
+         I = I + 1                                           <b>:(DOINC_10)</b>
+<font color="#818181"><i>*</i></font>
+TOP      L = LIB                                             <b>:F(DOINC_2)</b>
+         L INPAT                                                 <b>:F(TOP)</b>
+<font color="#818181"><i>*</i></font>
+         DIFFER(LOADED&lt;X&gt;)                                       <b>:S(TOP)</b>
+         POSITION = SET(UNIT, 0, 1)
+         ENDFILE(UNIT)
+         DETACH(.LIB)
+<font color="#818181"><i>*</i></font>
+         INCLUDE(X)                                          <b>:F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+         INPUT(.LIB, UNIT,, PATH)                            <b>:F(FRETURN)</b>
+         LOADED&lt;X&gt; = 1
+         FILENAME FENCE &#39;/dev/&#39;                                  <b>:S(TOP)</b>
+         EQ(SET(UNIT, POSITION, 0), POSITION)          <b>:S(TOP)F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+DOINC_2  ENDFILE(UNIT)
+         DETACH(.LIB)                                          <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+END START
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:20 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

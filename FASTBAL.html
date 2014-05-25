@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>FASTBAL - Pattern to match balanced strings</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">FASTBAL(PARENS,QTS,S)</font> will return a pattern which will match all
+non-NULL balanced strings where <font face="Source Code Pro">PARENS</font> is used to specify paired
+brackets in nested fashion and <font face="Source Code Pro">QTS</font> specifies characters to be
+used as quotes.  Bracket characters within quotes are ignored for
+balancing purposes.  <font face="Source Code Pro">S</font> specifies other special characters that
+BREAK should stop at.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">FASTBAL('(<[]>)',"'" '"',',)')</font> will scan for arguments in a
+function call in SNOBOL4 source.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="UNIQUE.html">UNIQUE</a>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>See Also</h2>
+<a href="BALX.html">BALX</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;UNIQUE.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;FASTBAL&raquo;&equiv;</b>
+         DEFINE(&#39;FASTBAL(PARENS,QTS,S)NAME,IBAL,SPCHARS,ELEM&#39;
++               &#39;,LPS,Q,LP,RP&#39;)                           <b>:(FASTBAL_END)</b>
+<font color="#818181"><i>*</i></font>
+FASTBAL  NAME = UNIQUE()
+         IBAL = CONVERT(NAME, &#39;EXPRESSION&#39;)
+         IBAL = DIFFER(S, NULL) FASTBAL(PARENS, QTS)
+         SPCHARS = PARENS QTS S
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Anything not starting with <font face="Source Code Pro">PARENS</font> or <font face="Source Code Pro">QTS</font> to any special
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+'ABCD,' (NOTANY(',)') BREAK(',)')) $ TERMINAL -> ABCD
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;FASTBAL&raquo;&equiv;</b>
+         ELEM = NOTANY(PARENS QTS) BREAK(SPCHARS)
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Add quotes:
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+'ABCD' (Q BREAK(Q) Q) $ TERMINAL -> 'ABCD'
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;FASTBAL&raquo;&equiv;</b>
+FASTBAL_1
+         QTS LEN(1) . Q  =                                 <b>:F(FASTBAL_2)</b>
+         ELEM = Q BREAK(Q) Q | ELEM                         <b>:(FASTBAL_1)</b>
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Add parentheses. First peel off the first character to <font face="Source Code Pro">LP</font>, the
+middle to <font face="Source Code Pro">PARENS</font>, and the last to <font face="Source Code Pro">RP</font>. Then, add the expression
+[ recurse ]. <font face="Source Code Pro">IBAL</font> is an expression that refers to a unique variable
+(which hasn't been set to anything as yet).
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;FASTBAL&raquo;&equiv;</b>
+FASTBAL_2
+         PARENS LEN(1) . LP RTAB(1) . PARENS LEN(1) . RP   <b>:F(FASTBAL_3)</b>
+         ELEM = LP IBAL RP | ELEM                           <b>:(FASTBAL_2)</b>
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Build the pattern - any characters up to a special, followed by an
+arbitrary number of <font face="Source Code Pro">ELEM</font>s (which may be zero). The shortest will
+be returned.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+'ABC,DEF' BREAK(',()') $ TERMINAL -> ABC
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+This pattern is then assigned to the variable referenced by name
+(assigned a unique name, eg. <font face="Source Code Pro">U1_</font>), which then "fills in" the
+recursive part.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+'X,Y) ((FASTBAL('()', '"', ',)')) ')') $ TERMINAL -> X,Y)
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+'X,Y) ((FASTBAL('()', '"', ',)'))) $ TERMINAL -> X
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;FASTBAL&raquo;&equiv;</b>
+FASTBAL_3
+         FASTBAL = BREAK(SPCHARS) ARBNO(ELEM)
+         $NAME = FASTBAL                                       <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+FASTBAL_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;FASTBAL.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL FASTBAL
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*    #######     #      #####   #######  ######      #     #           *</i></font>
+<font color="#818181"><i>*    #          # #    #     #     #     #     #    # #    #           *</i></font>
+<font color="#818181"><i>*    #         #   #   #           #     #     #   #   #   #           *</i></font>
+<font color="#818181"><i>*    #####    #     #   #####      #     ######   #     #  #           *</i></font>
+<font color="#818181"><i>*    #        #######        #     #     #     #  #######  #           *</i></font>
+<font color="#818181"><i>*    #        #     #  #     #     #     #     #  #     #  #           *</i></font>
+<font color="#818181"><i>*    #        #     #   #####      #     ######   #     #  #######     *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* FASTBAL                                                              *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* FASTBAL.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;FASTBAL&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:09 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

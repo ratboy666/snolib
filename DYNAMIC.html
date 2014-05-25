@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>DYNAMIC - Create Dynamic Modules for CSNOBOL4</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Create dynamic modules for <font face="Source Code Pro">CSNOBOL4</font>.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="BQ.html">BQ</a><br>
+<a href="HOST.html">HOST</a><br>
+<a href="REPL.html">HOST</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;BQ.INC&#39;
+-INCLUDE &#39;HOST.INC&#39;
+-INCLUDE &#39;REPL.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;DYNAMIC&raquo;&equiv;</b>
+DYNAMIC  DEFINE(&#39;COMPILE_COBOL(SRC)CMD,COBC&#39;)
+         DEFINE(&#39;COMPILE_FORTRAN(SRC)CMD&#39;)
+         DEFINE(&#39;COMPILE_SCHEME(SRC)CMD,CC,DL_CFLAGS,COPT&#39;)
+         DEFINE(&#39;COMPILE_DYNAMIC(SRC)CMD,CC,DL_CFLAGS,COPT,CINC&#39;)
+         DEFINE(&#39;LIBS_FORTRAN()&#39;)
+         DEFINE(&#39;LIBS_COBOL()&#39;)
+         DEFINE(&#39;LIBS_SCHEME()&#39;)                  <b>:(COMPILE_DYNAMIC_END)</b>
+<font color="#818181"><i>*</i></font>
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Return libraries needed for <font face="Source Code Pro">FORTRAN</font> subprograms.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;DYNAMIC&raquo;&equiv;</b>
+LIBS_FORTRAN
+         LIBS_FORTRAN = &#39;-lgfortran&#39;                           <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Return libraries needed for <font face="Source Code Pro">COBOL</font> subprograms. Use <font face="Source Code Pro">cob-config</font>
+to provide the information needed.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;DYNAMIC&raquo;&equiv;</b>
+LIBS_COBOL
+         LIBS_COBOL = BQ(&#39;cob-config --libs&#39;)                  <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Return libraries needed for <font face="Source Code Pro">SCHEME</font> subprograms.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;DYNAMIC&raquo;&equiv;</b>
+LIBS_SCHEME
+         LIBS_SCHEME = &#39;prog_.o -lgambc -ldl -lm -lutil&#39;       <b>:(RETURN)</b>
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Compile <font face="Source Code Pro">COBOL</font> source to <font face="Source Code Pro">.o</font>, prior to building <font face="Source Code Pro">.so</font> shared
+object.  Uses <font face="Source Code Pro">cobc</font> to compile <font face="Source Code Pro">COBOL</font> to <font face="Source Code Pro">C</font>, and then <font face="Source Code Pro">gcc</font>
+to compile <font face="Source Code Pro">C</font> to <font face="Source Code Pro">object</font>.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;DYNAMIC&raquo;&equiv;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* DYNAMIC COMPILE COBOL SOURCE</i></font>
+<font color="#818181"><i>*</i></font>
+COMPILE_COBOL
+         CMD = &#39;cobc -C &#39; SRC
+         TERMINAL = DIFFER(DYNAMIC_DEBUG) CMD
+         HOST(HOST_SYSCMD, CMD)                              <b>:F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+         COBC = BQ(&#39;cob-config --cflags&#39;)
+         SRC &#39;.cbl&#39; =
+         SRC &#39;.CBL&#39; =
+         CC = HOST(HOST_CC)                                  <b>:F(FRETURN)</b>
+         IDENT(CC)                                           <b>:S(FRETURN)</b>
+         DL_CFLAGS = HOST(HOST_DL_CFLAGS) &#39; &#39;
+         COPT = HOST(HOST_COPT) &#39; &#39;
+         CMD = CC &#39; -c &#39; COPT DL_CFLAGS &#39; -DPIC -O3 &#39; COBC &#39; &#39; SRC &#39;.c&#39;
+         TERMINAL = DIFFER(DYNAMIC_DEBUG) CMD
+         HOST(HOST_SYSCMD, CMD)                              <b>:F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+         DELETE(SRC &#39;.c&#39;)
+         DELETE(SRC &#39;.c.h&#39;)
+         DELETE(SRC &#39;.c.l.h&#39;)                                  <b>:(RETURN)</b>
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Compile <font face="Source Code Pro">FORTRAN</font> source to <font face="Source Code Pro">.o</font>, prior to building <font face="Source Code Pro">.so</font>
+shared object. Uses <font face="Source Code Pro">gfortran</font> as the compiler. <font face="Source Code Pro">-ff2c</font> and
+<font face="Source Code Pro">-std=legacy</font> used to control parameter passing, and some details
+of the compilation. I am mostly interested in running older code using
+<font face="Source Code Pro">FORTRAN 77</font> or earlier standards.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;DYNAMIC&raquo;&equiv;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* DYNAMIC COMPILE FORTRAN SOURCE</i></font>
+<font color="#818181"><i>*</i></font>
+COMPILE_FORTRAN
+         CMD = &#39;gfortran -c -fpic -O3 -ff2c -std=legacy &#39; SRC
+         TERMINAL = DIFFER(DYNAMIC_DEBUG) CMD
+         HOST(HOST_SYSCMD, CMD)                     <b>:F(FRETURN)S(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Only compile in a single <font face="Source Code Pro">SCHEME</font> module. In turn, that can load
+other files as needed. The issue is the link file that is needed
+(second invocation of <font face="Source Code Pro">gsc</font> -- yes, it should be factored out).
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;DYNAMIC&raquo;&equiv;</b>
+COMPILE_SCHEME
+         CMD = &#39;gsc -c &#39; SRC
+         TERMINAL = DIFFER(DYNAMIC_DEBUG) CMD
+         HOST(HOST_SYSCMD, CMD)                              <b>:F(FRETURN)</b>
+         SRC &#39;.scm&#39; = &#39;.c&#39;
+         SRC &#39;.six&#39; = &#39;.c&#39;
+         CMD = &#39;gsc -link -o prog_.c &#39; SRC
+         TERMINAL = DIFFER(DYNAMIC_DEBUG) CMD
+         HOST(HOST_SYSCMD, CMD)                              <b>:F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+         CC = HOST(HOST_CC)                                  <b>:F(FRETURN)</b>
+         IDENT(CC)                                           <b>:S(FRETURN)</b>
+         DL_CFLAGS = HOST(HOST_DL_CFLAGS) &#39; &#39;
+         COPT = HOST(HOST_COPT) &#39; &#39;
+         CMD = CC &#39; -c -D___LIBRARY &#39; COPT DL_CFLAGS &#39; &#39; SRC &#39; prog_.c&#39;
+         TERMINAL = DIFFER(DYNAMIC_DEBUG) CMD
+         HOST(HOST_SYSCMD, CMD)                              <b>:F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+         DELETE(SRC)
+         DELETE(&#39;prog_.c&#39;)                                     <b>:(RETURN)</b>
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Compile <font face="Source Code Pro">C</font> source to object. Uses the same compiler used for
+building <font face="Source Code Pro">CSNOBOL4</font> itself.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;DYNAMIC&raquo;&equiv;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* DYNAMIC COMPILE C SOURCE</i></font>
+<font color="#818181"><i>*</i></font>
+COMPILE_DYNAMIC
+         CC = HOST(HOST_CC)                                  <b>:F(FRETURN)</b>
+         IDENT(CC)                                           <b>:S(FRETURN)</b>
+         DL_CFLAGS = HOST(HOST_DL_CFLAGS) &#39; &#39;
+         COPT = HOST(HOST_COPT) &#39; &#39;
+         CINC = HOST(HOST_SNOLIB_DIR)
+         CINC = HOST(HOST_INCLUDE_DIR)
+         CMD = CC &#39; -c &#39; COPT DL_CFLAGS &#39; -I&#39; CINC &#39; &#39; SRC
+         TERMINAL = DIFFER(DYNAMIC_DEBUG) CMD
+         HOST(HOST_SYSCMD, CMD)                     <b>:F(FRETURN)S(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+COMPILE_DYNAMIC_END
+<font color="#818181"><i>*</i></font>
+         DEFINE(&#39;LINK_DYNAMIC(OUT,OBJ,LIBS)&#39;
++               &#39;CMD,DL_LD,DL_EXT,DL_LDFLAGS,DSEP&#39;)  <b>:(LINK_DYNAMIC_END)</b>
+<font color="#818181"><i>*</i></font>
+LINK_DYNAMIC
+         DL_LD = HOST(HOST_DL_LD)                            <b>:F(FRETURN)</b>
+         IDENT(DL_LD)                                        <b>:S(FRETURN)</b>
+         DL_EXT = HOST(HOST_DL_EXT)
+         OUT = DIFFER(DL_EXT) OUT DL_EXT
+         DL_LDFLAGS = HOST(HOST_DL_LDFLAGS) &#39; &#39;
+         CMD = DL_LD &#39; &#39; DL_LDFLAGS &#39;-o &#39; OUT &#39; &#39; OBJ
++                    &#39; -L/usr/local/lib &#39; LIBS
+         TERMINAL = DIFFER(DYNAMIC_DEBUG) CMD
+         HOST(HOST_SYSCMD, CMD)                              <b>:F(FRETURN)</b>
+         LINK_DYNAMIC = OUT
+         DSEP = HOST(HOST_DIR_SEP)
+         LINK_DYNAMIC BREAK(DSEP) DSEP                        <b>:S(RETURN)</b>
+         LINK_DYNAMIC = &#39;.&#39; DSEP LINK_DYNAMIC                  <b>:(RETURN)</b>
+LINK_DYNAMIC_END
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* MAKE A DYNAMIC MODULE, GIVEN C SOURCES</i></font>
+<font color="#818181"><i>* LIBS MAY CONTAIN BOTH OBJECTS AND LIBRARIES</i></font>
+<font color="#818181"><i>*</i></font>
+         DEFINE(&#39;MAKE_DYNAMIC_MODULE(OUT,SRC,LIBS)OBJ&#39;)
+                                              <b>:(MAKE_DYNAMIC_MODULE_END)</b>
+MAKE_DYNAMIC_MODULE
+         IDENT(SRC)                                         <b>:S(MDM_LINK)</b>
+         COMPILE_DYNAMIC(SRC)                                <b>:F(FRETURN)</b>
+         OBJ = REPL(SRC, &#39;.o&#39;, &#39;.c&#39;)
+MDM_LINK IDENT(OBJ LIBS)                                     <b>:S(FRETURN)</b>
+         MAKE_DYNAMIC_MODULE = LINK_DYNAMIC(OUT, OBJ, LIBS)  <b>:F(FRETURN)</b>
+                                                               <b>:(RETURN)</b>
+MAKE_DYNAMIC_MODULE_END
+<font color="#818181"><i>*</i></font>
+DYNAMIC_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;DYNAMIC.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL DYNAMIC
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*    ######   #     #  #     #     #     #     #  ###   #####          *</i></font>
+<font color="#818181"><i>*    #     #   #   #   ##    #    # #    ##   ##   #   #     #         *</i></font>
+<font color="#818181"><i>*    #     #    # #    # #   #   #   #   # # # #   #   #               *</i></font>
+<font color="#818181"><i>*    #     #     #     #  #  #  #     #  #  #  #   #   #               *</i></font>
+<font color="#818181"><i>*    #     #     #     #   # #  #######  #     #   #   #               *</i></font>
+<font color="#818181"><i>*    #     #     #     #    ##  #     #  #     #   #   #     #         *</i></font>
+<font color="#818181"><i>*    ######      #     #     #  #     #  #     #  ###   #####          *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* DYNAMIC       CREATE DYNAMICALLY LOADABLE MODULE FOR LOAD()          *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* PHIL BUDNE, NOVEMBER 2005                                            *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* DYNAMIC.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;DYNAMIC&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:08 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

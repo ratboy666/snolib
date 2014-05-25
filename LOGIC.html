@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>LOGIC - CATSPAW SPITBOL compatible LOGIC() functions</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">LOGIC()</font> works on integers or buffers (strings).
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;LOGIC&raquo;&equiv;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* NOTE! BASE ARGUMENT MUST BE PASSED A EXPLICIT NULL STRING FOR DEFAULT</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* INTEGER/INTEGER, STRING/INTEGER, STRING/STRING</i></font>
+<font color="#818181"><i>*</i></font>
+         LOAD(&#39;LOGIC(INTEGER,,)&#39;)
+<font color="#818181"><i>*</i></font>
+         DEFINE(&#39;NOT(ARG)&#39;)
+         DEFINE(&#39;AND(ARG1,ARG2)&#39;)
+         DEFINE(&#39;OR(ARG1,ARG2)&#39;)
+         DEFINE(&#39;XOR(ARG1,ARG2)&#39;)
+         DEFINE(&#39;NAND(ARG1,ARG2)&#39;)
+         DEFINE(&#39;NOR(ARG1,ARG2)&#39;)
+         DEFINE(&#39;UPLUS(ARG1,ARG2)&#39;)
+         DEFINE(&#39;UMINUS(ARG1,ARG2)&#39;)
+         DEFINE(&#39;UMUL(ARG1,ARG2)&#39;)
+         DEFINE(&#39;UDIV(ARG1,ARG2)&#39;)
+         DEFINE(&#39;SHL(ARG1,ARG2)&#39;)
+         DEFINE(&#39;SHR(ARG1,ARG2)&#39;)
+         DEFINE(&#39;SAR(ARG1,ARG2)&#39;)
+         DEFINE(&#39;ROL(ARG1,ARG2)&#39;)
+         DEFINE(&#39;ROR(ARG1,ARG2)&#39;)
+         DEFINE(&#39;HI(ARG)&#39;)
+         DEFINE(&#39;IH(ARG)&#39;)
+         DEFINE(&#39;DIB(ARG,BASE)&#39;)
+         DEFINE(&#39;IDB(ARG,BASE)&#39;)                            <b>:(LOGIC_END)</b>
+<font color="#818181"><i>*</i></font>
+NOT      NOT    = LOGIC( 1, ARG)                    <b>:S(RETURN)F(FRETURN)</b>
+AND      AND    = LOGIC( 2, ARG1, ARG2)             <b>:S(RETURN)F(FRETURN)</b>
+OR       OR     = LOGIC( 3, ARG1, ARG2)             <b>:S(RETURN)F(FRETURN)</b>
+XOR      XOR    = LOGIC( 4, ARG1, ARG2)             <b>:S(RETURN)F(FRETURN)</b>
+NAND     NAND   = LOGIC( 5, ARG1, ARG2)             <b>:S(RETURN)F(FRETURN)</b>
+NOR      NOR    = LOGIC( 6, ARG1, ARG2)             <b>:S(RETURN)F(FRETURN)</b>
+UPLUS    UPLUS  = LOGIC( 7, ARG1, ARG2)             <b>:S(RETURN)F(FRETURN)</b>
+UMINUS   UMINUS = LOGIC( 8, ARG1, ARG2)             <b>:S(RETURN)F(FRETURN)</b>
+UMUL     UMUL   = LOGIC( 9, ARG1, ARG2)             <b>:S(RETURN)F(FRETURN)</b>
+UDIV     UDIV   = LOGIC(10, ARG1, ARG2)             <b>:S(RETURN)F(FRETURN)</b>
+SHL      SHL    = LOGIC(11, ARG1, ARG2)             <b>:S(RETURN)F(FRETURN)</b>
+SHR      SHR    = LOGIC(12, ARG1, ARG2)             <b>:S(RETURN)F(FRETURN)</b>
+SAR      SAR    = LOGIC(13, ARG1, ARG2)             <b>:S(RETURN)F(FRETURN)</b>
+ROL      ROL    = LOGIC(14, ARG1, ARG2)             <b>:S(RETURN)F(FRETURN)</b>
+ROR      ROR    = LOGIC(15, ARG1, ARG2)             <b>:S(RETURN)F(FRETURN)</b>
+HI       HI     = LOGIC(16, CONVERT(ARG, &#39;STRING&#39;), &#39;&#39;)
++                                                   <b>:S(RETURN)F(FRETURN)</b>
+IH       IH     = LOGIC(17, CONVERT(ARG, &#39;INTEGER&#39;), &#39;&#39;)
++                                                   <b>:S(RETURN)F(FRETURN)</b>
+DIB      DIB    = LOGIC(16, CONVERT(ARG, &#39;STRING&#39;), BASE)
++                                                   <b>:S(RETURN)F(FRETURN)</b>
+IDB      IDB    = LOGIC(17, CONVERT(ARG, &#39;INTEGER&#39;), BASE)
++                                                   <b>:S(RETURN)F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+LOGIC_END
+         CODE(&#39;LOGIC&#39;)
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;LOGIC.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+-STITL LOGIC
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*             #        #######   #####   ###   #####                   *</i></font>
+<font color="#818181"><i>*             #        #     #  #     #   #   #     #                  *</i></font>
+<font color="#818181"><i>*             #        #     #  #         #   #                        *</i></font>
+<font color="#818181"><i>*             #        #     #  #  ####   #   #                        *</i></font>
+<font color="#818181"><i>*             #        #     #  #     #   #   #                        *</i></font>
+<font color="#818181"><i>*             #        #     #  #     #   #   #     #                  *</i></font>
+<font color="#818181"><i>*             #######  #######   #####   ###   #####                   *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* LOGIC       CATSPAW SPITBOL COMPATIBLE LOGIC() FUNCTIONS             *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* PHIL BUDNE &lt;PHIL@ULTIMATE.COM&gt;                                       *</i></font>
+<font color="#818181"><i>* JANUARY 21, 2002                                                     *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* LOGIC.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;LOGIC&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:17 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

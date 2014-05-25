@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>NDBM - NDBM interface for CSNOBOL4</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Interface to NDBM from CSNOBOL4. Allows permanent keyed storage
+on disk.  Hashed, so performance may be better than TABLE usage
+(for very large TABLEs).
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;NDBM&raquo;&equiv;</b>
+NDBM_LOAD
+<font color="#818181"><i>*</i></font>
+         DBM_INSERT = 0
+         DBM_REPLACE = 1
+<font color="#818181"><i>*</i></font>
+         LOAD(&#39;DBM_OPEN(STRING,STRING,STRING)INTEGER&#39;)
+         LOAD(&#39;DBM_CLOSE(INTEGER)STRING&#39;)
+<font color="#818181"><i>*</i></font>
+         LOAD(&#39;DBM_STORE(INTEGER,STRING,STRING,INTEGER)INTEGER&#39;)
+         LOAD(&#39;DBM_FETCH(INTEGER,STRING)STRING&#39;)
+         LOAD(&#39;DBM_DELETE(INTEGER,STRING)INTEGER&#39;)
+<font color="#818181"><i>*</i></font>
+         LOAD(&#39;DBM_FIRSTKEY(INTEGER)STRING&#39;)
+         LOAD(&#39;DBM_NEXTKEY(INTEGER)STRING&#39;)
+<font color="#818181"><i>*</i></font>
+         LOAD(&#39;DBM_ERROR(INTEGER)STRING&#39;)
+         LOAD(&#39;DBM_CLEARERR(INTEGER)STRING&#39;)
+<font color="#818181"><i>*</i></font>
+         CODE(&#39;NDBM_LOAD&#39;)
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;NDBM.INC&#39;
+         &amp;CODE = 1
+         HANDLE = DBM_OPEN(&#39;db&#39;, &#39;CW&#39;, &#39;0660&#39;)                   <b>:F(END)</b>
+         OUTPUT = HANDLE
+         DBM_CLOSE(HANDLE)                                       <b>:F(END)</b>
+         HANDLE = DBM_OPEN(&#39;db&#39;, &#39;W&#39;)                            <b>:F(END)</b>
+         DDD = &#39;++&#39; DUPL(&#39; &#39;, 1100) &#39;++&#39;
+         DBM_STORE(HANDLE, &#39;KEY1&#39;, DDD, DBM_REPLACE)             <b>:F(END)</b>
+         DBM_STORE(HANDLE, &#39;KEY2&#39;, &#39;DATA2&#39;, DBM_INSERT)          <b>:F(END)</b>
+         OUTPUT = DBM_FETCH(HANDLE, &#39;KEY1&#39;)                      <b>:F(END)</b>
+         OUTPUT = DBM_FETCH(HANDLE, &#39;KEY2&#39;)                      <b>:F(END)</b>
+         OUTPUT = DBM_FIRSTKEY(HANDLE)                           <b>:F(END)</b>
+NXTK     OUTPUT = DBM_NEXTKEY(HANDLE)                           <b>:S(NXTK)</b>
+         DBM_CLOSE(HANDLE)                                       <b>:F(END)</b>
+         DELETE(&#39;db.db&#39;)
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+-STITL NDBM
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                 #     #  ######   ######   #     #                   *</i></font>
+<font color="#818181"><i>*                 ##    #  #     #  #     #  ##   ##                   *</i></font>
+<font color="#818181"><i>*                 # #   #  #     #  #     #  # # # #                   *</i></font>
+<font color="#818181"><i>*                 #  #  #  #     #  ######   #  #  #                   *</i></font>
+<font color="#818181"><i>*                 #   # #  #     #  #     #  #     #                   *</i></font>
+<font color="#818181"><i>*                 #    ##  #     #  #     #  #     #                   *</i></font>
+<font color="#818181"><i>*                 #     #  ######   ######   #     #                   *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* NDBM               NDBM INTERFACE FOR CSNOBOL4                       *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* PHIL BUDNE &lt;PHIL@ULTIMATE.COM&gt;                                       *</i></font>
+<font color="#818181"><i>* DECEMBER 3, 2005                                                     *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* NDBM.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;NDBM&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:21 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

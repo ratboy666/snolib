@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>SLOAD - Load SNOBOL4 source</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Find and load a SNOBOL4 source file. Recursively load any INCLUDE
+files needed.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="HOST.html">HOST</a><br>
+<a href="CRACK.html">CRACK</a><br>
+<a href="TRIMB.html">TRIMB</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;HOST.INC&#39;
+-INCLUDE &#39;CRACK.INC&#39;
+-INCLUDE &#39;TRIMB.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;SLOAD&raquo;&equiv;</b>
+         DEFINE(&#39;SLOAD(FILENAME)&#39;
++               &#39;LIB,CODE,PATH,X,A,I,P,PS,DS,TRIM_SAV,POSITION,UNIT&#39;)
+         Q_ = &quot;&#39;&quot;
+         QQ_ = &#39;&quot;&#39;
+         SLOAD_STMT = ARBNO(Q_ BREAK(Q_) Q_ | QQ_ BREAK(QQ_) QQ_ |
++                     NOTANY(Q_ QQ_) BREAK(Q_ QQ_ &#39;;&#39;)) &#39;;&#39;
+         SLOAD_STMTS = FENCE (&#39;;&#39; ARBNO(SLOAD_STMT)) . X &#39;*&#39; REM
+<font color="#818181"><i>* NOTE THAT ; FOLLOWED BY ANYTHING OTHER THAN . OR + IS ALSO A COMMENT</i></font>
+         SLOAD_CCPAT = FENCE (&#39;*&#39; | &#39;-&#39; | &#39;#&#39; | &#39;!&#39; | &#39;|&#39; | RPOS(0))
+         SLOAD_CNPAT = FENCE (&#39;;.&#39; | &#39;;+&#39;)
+         SLOAD_INPAT = FENCE &#39;-&#39; ((ANY(&#39;Ii&#39;) (&#39;NCLUDE&#39; | &#39;nclude&#39;)) |
++                                (ANY(&#39;Cc&#39;) (&#39;OPY&#39; | &#39;opy&#39;)))
++                      BREAK(QQ_ Q_) LEN(1) BREAK(QQ_ Q_) . X
+         SLOAD_TAB = TABLE()                                <b>:(SLOAD_END)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* FUNCTION TO READ AND COMPILE SNOBOL4 FUNCTIONS FROM A DISK FILE.</i></font>
+<font color="#818181"><i>* THE FILENAME IS SPECIFIED AS THE ARGUMENT TO FUNCTION SLOAD.</i></font>
+<font color="#818181"><i>*</i></font>
+SLOAD    UNIT = IO_FINDUNIT()
+         PATH = FILENAME
+         INPUT(.LIB, UNIT,, PATH)                            <b>:S(SLOAD_0)</b>
+         DS = HOST(HOST_DIR_SEP)
+         PS = HOST(HOST_PATH_SEP)
+         X = HOST(HOST_GETENV, &#39;SNOPATH&#39;)                    <b>:S(SLOAD_8)</b>
+         X = HOST(HOST_GETENV, &#39;SNOLIB&#39;)                     <b>:S(SLOAD_8)</b>
+         X = HOST(HOST_SNOLIB_DIR)                           <b>:F(FRETURN)</b>
+SLOAD_8  A = CRACK(X, PS)
+         I = 1
+SLOAD_10 P = TRIMB(A&lt;I&gt;)                                     <b>:F(FRETURN)</b>
+         PATH = P DS FILENAME
+         INPUT(.LIB, UNIT,, PATH)                            <b>:S(SLOAD_0)</b>
+         I = I + 1                                           <b>:(SLOAD_10)</b>
+<font color="#818181"><i>*</i></font>
+SLOAD_0  TRIM_SAV = &amp;TRIM
+         &amp;TRIM = 1
+<font color="#818181"><i>*</i></font>
+SLOAD_1  X = LIB                                             <b>:F(SLOAD_2)</b>
+         X SLOAD_CCPAT                                       <b>:S(SLOAD_4)</b>
+         X = &#39;;&#39; X
+         X SLOAD_CNPAT = &#39; &#39;
+         X SLOAD_STMTS
+         CODE = CODE X                                        <b>:(SLOAD_1)</b>
+<font color="#818181"><i>*</i></font>
+SLOAD_4  X SLOAD_INPAT                                       <b>:F(SLOAD_1)</b>
+         DIFFER(SLOAD_TAB&lt;X&gt;)                                <b>:S(SLOAD_1)</b>
+<font color="#818181"><i>*</i></font>
+         POSITION = SET(UNIT, 0, 1)
+         ENDFILE(UNIT)
+         DETACH(.LIB)
+<font color="#818181"><i>*</i></font>
+         SLOAD(X)                                            <b>:F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+         INPUT(.LIB, UNIT,, PATH)                            <b>:F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+         SLOAD_TAB&lt;X&gt; = 1
+         FILENAME FENCE &#39;/dev/&#39;                              <b>:S(SLOAD_1)</b>
+         EQ(SET(UNIT, POSITION, 0), POSITION)      <b>:S(SLOAD_1)F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+SLOAD_2  ENDFILE(UNIT)
+         DETACH(.LIB)
+         CODE = CODE(CODE &#39;; :(SLOAD_3)&#39;)                       <b>:S&lt;CODE&gt;</b>
+         TERMINAL = &#39;COMPILATION ERROR, FILE: &#39; FILENAME
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* ERROR. TAKE CODE APART STATEMENT BY STATEMENT TO FIND THE PROBLEM.</i></font>
+<font color="#818181"><i>* FIRST REMOVE FROM INCLUDE FILE TABLE, THEN REMOVE INITIAL &#39;;&#39;</i></font>
+<font color="#818181"><i>*</i></font>
+         SLOAD_TAB&lt;X&gt; =
+         CODE = SUBSTR(CODE, 2)
+SLOAD_6  CODE FENCE SLOAD_STMT . X =                         <b>:F(SLOAD_7)</b>
+         CODE(X)                                             <b>:S(SLOAD_6)</b>
+         X RTAB(1) . TERMINAL
+SLOAD_7  &amp;TRIM = TRIM_SAV
+         TERMINAL = &amp;ERRTEXT                                  <b>:(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+SLOAD_3  &amp;TRIM = TRIM_SAV                                      <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+SLOAD_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;SLOAD.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL SLOAD
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*              #####   #        #######     #     ######               *</i></font>
+<font color="#818181"><i>*             #     #  #        #     #    # #    #     #              *</i></font>
+<font color="#818181"><i>*             #        #        #     #   #   #   #     #              *</i></font>
+<font color="#818181"><i>*              #####   #        #     #  #     #  #     #              *</i></font>
+<font color="#818181"><i>*                   #  #        #     #  #######  #     #              *</i></font>
+<font color="#818181"><i>*             #     #  #        #     #  #     #  #     #              *</i></font>
+<font color="#818181"><i>*              #####   #######  #######  #     #  ######               *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* SLOAD                LOAD SNOBOL4 SOURCE                             *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* (C) COPYRIGHT 1985, 1987 - CATSPAW, INCORPORATED                     *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* MODIFIED TO SUPPORT /DEV FILES, SEARCH CSNOBOL4 PATHS                *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* SLOAD.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;SLOAD&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:30 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

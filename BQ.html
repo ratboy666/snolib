@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>BQ - Execute a shell command line and capture stdout</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Like <font face="Source Code Pro">SHELL</font> backquotes (hence the name).  Optional second arg is
+string to use to separate lines.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+This doesn't work when <font face="Source Code Pro">DDT()</font> is used. The <font face="Source Code Pro">INPUT()</font> fails
+when traced.  Previously, it failed when garbage collect occurred,
+but that has been fixed. To fix this, <font face="Source Code Pro">BQ()</font> is a wrapper which
+disables <font face="Source Code Pro">DDT()</font> and then calls the 'real' function <font face="Source Code Pro">BQ2()</font>.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>See Also</h2>
+<a href="DDT.html">DDT</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;BQ&raquo;&equiv;</b>
+         DEFINE(&#39;BQ(COMMAND,OFS)DDTF&#39;)
+         DEFINE(&#39;BQ2(COMMAND,OFS)X,UNIT&#39;)                      <b>:(BQ_END)</b>
+<font color="#818181"><i>*</i></font>
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">DDT_ACTIVE</font> is set if <font face="Source Code Pro">DDT()</font> is active. If <font face="Source Code Pro">DDT()</font> is not
+active, or hasn't been loaded at all, <font face="Source Code Pro">DDT_ACTIVE</font> will evaluate to
+<font face="Source Code Pro">NULL</font>.  Note that SNOBOL4 will not complain about a missing function
+unless we actually try to execute it. Thus, this works whether or not
+<font face="Source Code Pro">DDT()</font> is actually in use. <font face="Source Code Pro">BQ2()</font> may succeed or fail. In both
+cases, we want to re-enable <font face="Source Code Pro">DDT()</font> if it was loaded and active,
+and pass the success or failure to the caller of <font face="Source Code Pro">BQ()</font>.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;BQ&raquo;&equiv;</b>
+BQ       DDTF = DDT_ACTIVE
+         NE(DDTF) DDT_SUSPEND()
+         BQ = BQ2(COMMAND, OFS)                                  <b>:F(BQ3)</b>
+         NE(DDTF) DDT_RESUME()                                 <b>:(RETURN)</b>
+BQ3      NE(DDTF) DDT_RESUME()                                <b>:(FRETURN)</b>
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+The actual <font face="Source Code Pro">BQ</font> implementation. Open the command using <font face="Source Code Pro">PIPE open</font>.
+Read lines and assemble the response. Use space <font face="Source Code Pro">' '</font> as a separator
+if no explicit separator was provided.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;BQ&raquo;&equiv;</b>
+BQ2      UNIT = IO_FINDUNIT()                                <b>:F(FRETURN)</b>
+         INPUT(.X, UNIT,, &#39;|&#39; COMMAND)                       <b>:F(FRETURN)</b>
+         OFS = IDENT(OFS) &#39; &#39;
+         BQ2 = X                                                 <b>:S(BQ4)</b>
+         ENDFILE(UNIT)
+         DETACH(.X)                                           <b>:(FRETURN)</b>
+BQ4      BQ2 = BQ2 OFS X                                         <b>:S(BQ4)</b>
+         ENDFILE(UNIT)
+         DETACH(.X)                                            <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+BQ_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;BQ.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+-STITL BQ
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                          ######    #####                             *</i></font>
+<font color="#818181"><i>*                          #     #  #     #                            *</i></font>
+<font color="#818181"><i>*                          #     #  #     #                            *</i></font>
+<font color="#818181"><i>*                          ######   #     #                            *</i></font>
+<font color="#818181"><i>*                          #     #  #   # #                            *</i></font>
+<font color="#818181"><i>*                          #     #  #    #                             *</i></font>
+<font color="#818181"><i>*                          ######    #### #                            *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* BQ          EXECUTE A SHELL COMMAND LINE AND CAPTURE STDOUT          *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* P BUDNE, JUNE 20, 1994                                               *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* BQ.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;BQ&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:10:57 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

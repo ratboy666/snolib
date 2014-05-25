@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>GCD - Greatest Common Divisor</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">GCD(I,J)</font> returns the GCD of <font face="Source Code Pro">I</font> and <font face="Source Code Pro">J</font>.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;GCD&raquo;&equiv;</b>
+         DEFINE(&#39;GCD(I,J)&#39;)                                   <b>:(GCD_END)</b>
+<font color="#818181"><i>*</i></font>
+GCD      EQ(I)                                               <b>:S(FRETURN)</b>
+         EQ(J)                                               <b>:S(FRETURN)</b>
+GCD.1    GCD = REMDR(I, J)
+         GCD = EQ(GCD) J                                      <b>:S(RETURN)</b>
+         I = J
+         J = GCD                                                <b>:(GCD.1)</b>
+<font color="#818181"><i>*</i></font>
+GCD_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;GCD.INC&#39;
+         &amp;CODE = 1
+         EQ(GCD(1071, 1029), 21)                                 <b>:F(END)</b>
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+-STITL AGT
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                       #####    #####   ######                        *</i></font>
+<font color="#818181"><i>*                      #     #  #     #  #     #                       *</i></font>
+<font color="#818181"><i>*                      #        #        #     #                       *</i></font>
+<font color="#818181"><i>*                      #  ####  #        #     #                       *</i></font>
+<font color="#818181"><i>*                      #     #  #        #     #                       *</i></font>
+<font color="#818181"><i>*                      #     #  #     #  #     #                       *</i></font>
+<font color="#818181"><i>*                       #####    #####   ######                        *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* GCD                   GREATEST COMMON DIVISOR                        *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* GCD.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;GCD&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:47 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

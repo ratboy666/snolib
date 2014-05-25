@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>DAY - Day of Week</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Returns current day of the week (SUNDAY..SATURDAY). If no argument
+is supplied, use today. Date is specified as M/D/Y. If year is not
+specified, this year is used. If year is two digits, interpret as 20XX.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;DAY&raquo;&equiv;</b>
+         DEFINE(&#39;DAY(DATE)M,Y,CD&#39;)
+         YEAR_ = 365
+         YEAR_4 = 4 * YEAR_ + 1
+         CENT_ = (25 * YEAR_4) - 1
+         CENT_4 = 4 * CENT_ + 1
+         DAY_ZERO = 2                                         <b>:(DAY_END)</b>
+<font color="#818181"><i>*</i></font>
+DAY      CD = DATE()
+         DIFFER(DATE)                                          <b>:S(DAY_3)</b>
+<font color="#818181"><i>* IF NO DATE GIVEN, USE TODAY</i></font>
+         CD ARB . DATE &#39; &#39;
+DAY_3    DATE BREAK(&#39;/&#39;) . M LEN(1)
++           (BREAK(&#39;/&#39;) . D LEN(1) REM . Y | REM . D)
+<font color="#818181"><i>* IF NO YEAR GIVEN, USE THIS YEAR</i></font>
+         (IDENT(Y) CD) &#39;/&#39; ARB &#39;/&#39; LEN(4) . Y
+<font color="#818181"><i>* TWO DIGIT YEAR IS 20XX</i></font>
+         Y = EQ(SIZE(Y), 2) &#39;20&#39; Y
+         M = LE(M, 2) M + 12                                   <b>:F(DAY_1)</b>
+         Y = Y - 1
+DAY_1    M = M - 3
+DAY_2    DAY = (Y / 400) * CENT_4 + (REMDR(Y, 400) / 100) * CENT_
++           +  (REMDR(Y, 100) / 4) * YEAR_4 +  REMDR(Y, 4) * YEAR_
+         DAY = DAY + ((153 * M) + 2) / 5 + D + DAY_ZERO
+         D = REMDR(DAY, 7)
+         &#39;0SUN1MON2TUES3WEDNES4THURS5FRI6SATUR7&#39;
++           D BREAK(&#39;01234567&#39;) . DAY
+         DAY = DAY &#39;DAY&#39;                                       <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+DAY_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;DAY.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+-STITL DAY
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                      ######      #     #     #                       *</i></font>
+<font color="#818181"><i>*                      #     #    # #     #   #                        *</i></font>
+<font color="#818181"><i>*                      #     #   #   #     # #                         *</i></font>
+<font color="#818181"><i>*                      #     #  #     #     #                          *</i></font>
+<font color="#818181"><i>*                      #     #  #######     #                          *</i></font>
+<font color="#818181"><i>*                      #     #  #     #     #                          *</i></font>
+<font color="#818181"><i>*                      ######   #     #     #                          *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* DAY                         DAY OF WEEK                              *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* DAY.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;DAY&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:04 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

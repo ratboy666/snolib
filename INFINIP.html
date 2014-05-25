@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>INFINIP - Infinite precision integer math</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Infinite precision integer math.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="REDEFINE.html">REDEFINE</a><br>
+<a href="SWAP.html">SWAP</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;REDEFINE.INC&#39;
+-INCLUDE &#39;SWAP.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INFINIP&raquo;&equiv;</b>
+         SIGN_OFF  = POS(0) &#39;-&#39;
+         LDG_ZEROS = BREAK(&#39;123456789&#39;) | RTAB(1)
+         NO_DIGITS = 4
+<font color="#818181"><i>*</i></font>
+         DEFINE(&#39;XYZERO()&#39;)
+         DEFINE(&#39;INFFLOAT()&#39;)
+         DEFINE(&#39;SMALL()&#39;)
+         DEFINE(&#39;SPLIT(NAME,PAT)&#39;)
+         DEFINE(&#39;INFINIP_START()&#39;)
+         DEFINE(&#39;INFINIP_STOP()&#39;)                         <b>:(INFINIP_END)</b>
+<font color="#818181"><i>*</i></font>
+INFINIP_START
+         REDEFINE(&#39;-&#39;, &#39;MINUS(X)Y&#39;)
+         REDEFINE(   , &#39;GT(X,Y)&#39;)
+         REDEFINE(   , &#39;EQ(X,Y)&#39;)
+         REDEFINE(   , &#39;GE(X,Y)&#39;)
+         REDEFINE(   , &#39;NE(X,Y)&#39;)
+         REDEFINE(   , &#39;LT(X,Y)&#39;)
+         REDEFINE(   , &#39;LE(X,Y)&#39;)
+         REDEFINE(&#39;-&#39;, &#39;DIFF(X,Y)&#39;)
+         REDEFINE(&#39;+&#39;, &#39;SUM(X,Y)X1,X2,Y1,Y2,K&#39;)
+         REDEFINE(&#39;*&#39;, &#39;MULT(X,Y)X1,X2,K&#39;)
+         REDEFINE(&#39;/&#39;, &#39;DIV(X,Y)X1,X2,Y1,Y2,T,T1,T2,KX,KY&#39;)
+         REDEFINE(   , &#39;REMDR(X,Y)&#39;)                           <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+INFINIP_STOP
+         REDEFINERESTORE(&#39;-&#39;, &#39;MINUS(X)Y&#39;)
+         REDEFINERESTORE(   , &#39;GT(X,Y)&#39;)
+         REDEFINERESTORE(   , &#39;EQ(X,Y)&#39;)
+         REDEFINERESTORE(   , &#39;GE(X,Y)&#39;)
+         REDEFINERESTORE(   , &#39;NE(X,Y)&#39;)
+         REDEFINERESTORE(   , &#39;LT(X,Y)&#39;)
+         REDEFINERESTORE(   , &#39;LE(X,Y)&#39;)
+         REDEFINERESTORE(&#39;-&#39;, &#39;DIFF(X,Y)&#39;)
+         REDEFINERESTORE(&#39;+&#39;, &#39;SUM(X,Y)X1,X2,Y1,Y2,K&#39;)
+         REDEFINERESTORE(&#39;*&#39;, &#39;MULT(X,Y)X1,X2,K&#39;)
+         REDEFINERESTORE(&#39;/&#39;, &#39;DIV(X,Y)X1,X2,Y1,Y2,T,T1,T2,KX,KY&#39;)
+         REDEFINERESTORE(   , &#39;REMDR(X,Y)&#39;)                    <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* FMGW:</i></font>
+<font color="#818181"><i>* ADDED XYZERO TO ALLOW &#39;&#39; + 1 ETC. TO WORK AS NORMAL</i></font>
+<font color="#818181"><i>* INFFLOAT TO ALLOW REAL TO WORK AS NORMAL</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* THERE IS STILL THE PROBLEM OF MIXING A LARGE INTEGER WITH A REAL IN</i></font>
+<font color="#818181"><i>* ARITHMETIC. THIS WILL NOT WORK CORRECTLY. IF THE LARGE INTEGER CANNOT</i></font>
+<font color="#818181"><i>* BE CONVERTED, AN ERROR WILL BE RAISED. WE SHOULD CHECK THE RANGE,</i></font>
+<font color="#818181"><i>* AND CONVERT THE INTEGER TO REAL OURSELVES. THIS CAN BE DONE IN</i></font>
+<font color="#818181"><i>* THE INFFLOAT() FUNCTION. NOTE THAT INFFLOAT() IS CALLED AFTER</i></font>
+<font color="#818181"><i>* XYZERO(), SO BOTH X AND Y ARE (AT LEAST) 0, AND NOT THE EMPTY STRING.</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* XYZERO() AND INFFLOAT() COULD BE MERGED, BUT ARE KEPT SEPARATE FOR</i></font>
+<font color="#818181"><i>* CLARITY.</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* INFINIP_START() AND INFINIP_STOP() ADDED TO CONTROL THE REDEFINITION</i></font>
+<font color="#818181"><i>* OF OPERATIONS.</i></font>
+<font color="#818181"><i>*</i></font>
+INFFLOAT DATATYPE(X) &#39;REAL&#39;                                   <b>:S(RETURN)</b>
+         DATATYPE(Y) &#39;REAL&#39;                                   <b>:S(RETURN)</b>
+                                                              <b>:(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+XYZERO   X = IDENT(X) 0
+         Y = IDENT(Y) 0                                        <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+SMALL    (LE.(SIZE(X), NO_DIGITS)
++         LE.(SIZE(Y), NO_DIGITS))                  <b>:S(RETURN)F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+SPLIT    PAT = IDENT(PAT) LEN(SIZE($NAME) / 2)
+         $NAME (PAT | &#39;&#39;) . $(NAME 1) @SPLIT  (SPAN(&#39;0&#39;) | &#39;&#39;)
++           REM . $(NAME 2)
+         SPLIT = SIZE($NAME) - SPLIT                           <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+MINUS    XYZERO()
+         MINUS = INFFLOAT() MINUS.(X)                         <b>:S(RETURN)</b>
+         MINUS = SMALL() MINUS.(X)                            <b>:S(RETURN)</b>
+         MINUS = X
+         MINUS SIGN_OFF =                                     <b>:S(RETURN)</b>
+         MINUS = &#39;-&#39; X                                         <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+GT       XYZERO()
+         INFFLOAT()                                             <b>:S(GT_3)</b>
+         SMALL()                                                <b>:F(GT_1)</b>
+GT_3     GT.(X,Y)                                   <b>:S(RETURN)F(FRETURN)</b>
+GT_1     X SIGN_OFF =                                           <b>:F(GT_2)</b>
+         Y SIGN_OFF =                                        <b>:F(FRETURN)</b>
+         SWAP(.X, .Y)
+GT_2     Y SIGN_OFF =                                         <b>:S(RETURN)</b>
+         LGT(LPAD(X, SIZE(Y), &#39;0&#39;),
++            LPAD(Y, SIZE(X), &#39;0&#39;))                 <b>:S(RETURN)F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+EQ       XYZERO()
+         INFFLOAT()                                             <b>:S(EQ_2)</b>
+         SMALL()                                                <b>:F(EQ_1)</b>
+EQ_2     EQ.(X, Y)                                  <b>:S(RETURN)F(FRETURN)</b>
+EQ_1     IDENT(X, Y)                                <b>:S(RETURN)F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+GE       ~(~GT(X, Y) ~EQ(X, Y))                     <b>:S(RETURN)F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+NE       EQ(X, Y)                                   <b>:S(FRETURN)F(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+LT       GE(X, Y)                                   <b>:S(FRETURN)F(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+LE       GT(X, Y)                                   <b>:S(FRETURN)F(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+DIFF     DIFF = X + -Y                                         <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+SUM      XYZERO()
+         SUM = INFFLOAT() SUM.(X, Y)                          <b>:S(RETURN)</b>
+         SUM = SMALL() SUM.(X, Y)                             <b>:S(RETURN)</b>
+         SUM = LT(X,0) -(-X + -Y)                             <b>:S(RETURN)</b>
+         Y SIGN_OFF =                                          <b>:S(SUM_1)</b>
+         (LT(X, Y) SWAP(.X, .Y))
+         K = SPLIT(.X)
+         Y = Y + X2
+         SPLIT(.Y, RTAB(K))
+         SUM = (Y1 + X1) LPAD(Y2, K, &#39;0&#39;)                      <b>:(RETURN)</b>
+SUM_1    SUM = GT(Y, X) -(Y - X)                              <b>:S(RETURN)</b>
+         Y = LPAD(Y, SIZE(X), &#39;0&#39;)
+<font color="#818181"><i>* ADD 10&#39;s COMPLEMENT OF Y</i></font>
+         SUM = X + 1 + REPLACE(Y, &#39;0123456789&#39;, &#39;9876543210&#39;)
+         SUM &#39;1&#39; LDG_ZEROS REM . SUM                           <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+MULT     XYZERO()
+         MULT = INFFLOAT() MULT.(X, Y)                        <b>:S(RETURN)</b>
+         MULT = LE(SIZE(X) + SIZE(Y), NO_DIGITS)
++           MULT.(X, Y)                                       <b>:S(RETURN)</b>
+         MULT = LT(X, 0) -X * -Y                              <b>:S(RETURN)</b>
+         MULT = LT(Y, 0) -(X * -Y)                            <b>:S(RETURN)</b>
+         (GT(Y, X)  SWAP(.X, .Y))
+         MULT = EQ(Y, 0) 0                                    <b>:S(RETURN)</b>
+         K = SPLIT(.X)
+         MULT = (Y * X1) DUPL(&#39;0&#39;, K)
+         MULT = MULT + X2 * Y                                  <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+DIV      XYZERO()
+         DIV = INFFLOAT() DIV.(X, Y)                          <b>:S(RETURN)</b>
+         DIV = SMALL() DIV.(X, Y)                             <b>:S(RETURN)</b>
+         DIV = LT(X, 0) -(-X / Y)                             <b>:S(RETURN)</b>
+         DIV = LT(Y, 0) -(X / -Y)                             <b>:S(RETURN)</b>
+         DIV = GT(Y, X) 0                                     <b>:S(RETURN)</b>
+<font color="#818181"><i>* ORIGINAL STATEMENTS FROM BOOK:</i></font>
+<font color="#818181"><i>*        KY = SPLIT(.Y, LEN(NO_DIGITS / 2) | REM)</i></font>
+<font color="#818181"><i>*        KX = SPLIT(.X, LEN(NO_DIGITS))</i></font>
+<font color="#818181"><i>* SUGGESTED REPLACEMENT TO AVOID GENERATING ERROR TERMS THAT ARE</i></font>
+<font color="#818181"><i>* LARGER THAN THE INCOMING NUMERATOR. SUCH A SITUATION CAN PRODUCE</i></font>
+<font color="#818181"><i>* CYCLES.</i></font>
+         KY = SPLIT(.Y, LEN(NO_DIGITS / 2) | REM)
+         KX = SPLIT(.X, LEN(NO_DIGITS / 2) | REM)
+         KX = LT.(X1, Y1) SPLIT(.X, LEN(NO_DIGITS / 2 + 1) | REM)
+<font color="#818181"><i>* END OF REPLACEMENT STATEMENTS.</i></font>
+         T1 = X1 / Y1
+         T2 = DUPL(&#39;0&#39;, KX - KY)
+         T = X - ((T1 * Y)  T2)
+         DIV = T1 T2
+         T = LT(T, 0) T + 1 - Y
+         DIV = DIV + (T / Y)                                   <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+REMDR    REMDR = X - (X / Y) * Y                               <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+INFINIP_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;INFINIP.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL INFINIP
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*            ###  #     #  #######  ###  #     #  ###  ######          *</i></font>
+<font color="#818181"><i>*             #   ##    #  #         #   ##    #   #   #     #         *</i></font>
+<font color="#818181"><i>*             #   # #   #  #         #   # #   #   #   #     #         *</i></font>
+<font color="#818181"><i>*             #   #  #  #  #####     #   #  #  #   #   ######          *</i></font>
+<font color="#818181"><i>*             #   #   # #  #         #   #   # #   #   #               *</i></font>
+<font color="#818181"><i>*             #   #    ##  #         #   #    ##   #   #               *</i></font>
+<font color="#818181"><i>*            ###  #     #  #        ###  #     #  ###  #               *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* INFINIP          INFINITE PRECISION INTEGER MATH                     *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* INFINIP.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;INFINIP&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:15 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

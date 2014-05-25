@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>SWAP - Swap two variables</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Swap values of two variables passed by name.  <font face="Source Code Pro">SWAP(.N,.M)</font> will
+swap the contents of the two named variables.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;SWAP&raquo;&equiv;</b>
+         DEFINE(&#39;SWAP(SWAP_ARG1,SWAP_ARG2)&#39;)                 <b>:(SWAP_END)</b>
+<font color="#818181"><i>*</i></font>
+SWAP     SWAP = $SWAP_ARG1
+         $SWAP_ARG1 = $SWAP_ARG2
+         $SWAP_ARG2 = SWAP
+         SWAP =                                                <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+SWAP_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;SWAP.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+-STITL SWAP
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                   #####   #     #     #     ######                   *</i></font>
+<font color="#818181"><i>*                  #     #  #  #  #    # #    #     #                  *</i></font>
+<font color="#818181"><i>*                  #        #  #  #   #   #   #     #                  *</i></font>
+<font color="#818181"><i>*                   #####   #  #  #  #     #  ######                   *</i></font>
+<font color="#818181"><i>*                        #  #  #  #  #######  #                        *</i></font>
+<font color="#818181"><i>*                  #     #  #  #  #  #     #  #                        *</i></font>
+<font color="#818181"><i>*                   #####    ## ##   #     #  #                        *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* SWAP                    SWAP TWO VARIABLES                           *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* SWAP.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;SWAP&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:33 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

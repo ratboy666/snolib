@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>TIMEGC - Time garbage collect</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">TIMEGC(N)</font> will scatter strings, array elements and
+programmer-defined data about in memory, then time a 'typical'
+garbage collection. <font face="Source Code Pro">N</font> determines the amount and type of litter.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="LINK.html">LINK</a><br>
+<a href="SYSTEM.html">SYSTEM</a><br>
+<a href="RESOL.html">RESOL</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;LINK.INC&#39;
+-INCLUDE &#39;SYSTEM.INC&#39;
+-INCLUDE &#39;RESOL.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;TIMEGC&raquo;&equiv;</b>
+         DEFINE(&#39;TIMEGC(N)I,S,A,L,T,K,FREED&#39;)              <b>:(TIMEGC_END)</b>
+<font color="#818181"><i>*</i></font>
+TIMEGC   I = ; S = ; A = ; L =
+         COLLECT()
+         N = IDENT(N) 25
+         A = ARRAY(N)
+TIMEGC_1 I = I + 1
+         $I = DUPL(&#39; &#39;, 78) I
+         A&lt;I&gt; = DUPL(&#39;*&#39;, I)
+         L = LINK(NULL, L)
+         GE(I, N)                                           <b>:F(TIMEGC_1)</b>
+         STREM = COLLECT()
+TIMEGC_2 $I = ; A&lt;I&gt; = ; L = NEXT(L)
+         I = I - 2 GT(I, 2)                                 <b>:S(TIMEGC_2)</b>
+         T = TIME()
+         FREED = FREED + (COLLECT() - STREM)
+         TIMEGC = TIMEGC + (TIME() - T)
+         K = K + 1
+<font color="#818181"><i>*        LT(TIMEGC, 50 * RESOLUTION())                        <b>:S(TIMEGC)</b></i></font>
+         LT(TIMEGC, 5000 * RESOLUTION())                      <b>:S(TIMEGC)</b>
+         OUTPUT =
+         OUTPUT = &#39;IN &#39; SYSTEM() &#39; &#39; K &#39; GARBAGE COLLECTS&#39;
++           &#39; REQUIRED A TOTAL OF &#39; TIMEGC &#39; MILLISECONDS TO FREE &#39;
++           FREED &#39; STORAGE UNITS.&#39;
+         TIMEGC = CONVERT(TIMEGC, &#39;REAL&#39;)
+<font color="#818181"><i>*        OUTPUT = &#39;THIS AVERAGES TO &#39; (TIMEGC / K) &#39;MSEC. PER&#39;</i></font>
+<font color="#818181"><i>*+          &#39; GARBAGE COLLECT AND &#39; (TIMEGC / FREED) &#39; MSEC.&#39;</i></font>
+<font color="#818181"><i>*+          &#39; PER STORAGE UNIT.&#39;                               <b>:(RETURN)</b></i></font>
+         OUTPUT = &#39;THIS AVERAGES TO &#39; (TIMEGC / K) &#39;MSEC. PER&#39;
++           &#39; GARBAGE COLLECT AND &#39; (TIMEGC * 1000 / FREED) &#39; USEC.&#39;
++           &#39; PER STORAGE UNIT.&#39;                               <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+TIMEGC_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;-s&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;TIMEGC.INC&#39;
+         &amp;CODE = 1
+<font color="#818181"><i>* DEFAULT MEMORY IS 8MB</i></font>
+         TIMEGC(3500)
+         TIMEGC(25)
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL TIMEGC
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*           #######  ###  #     #  #######   #####    #####            *</i></font>
+<font color="#818181"><i>*              #      #   ##   ##  #        #     #  #     #           *</i></font>
+<font color="#818181"><i>*              #      #   # # # #  #        #        #                 *</i></font>
+<font color="#818181"><i>*              #      #   #  #  #  #####    #  ####  #                 *</i></font>
+<font color="#818181"><i>*              #      #   #     #  #        #     #  #                 *</i></font>
+<font color="#818181"><i>*              #      #   #     #  #        #     #  #     #           *</i></font>
+<font color="#818181"><i>*              #     ###  #     #  #######   #####    #####            *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* TIMEGC                TIME GARBAGE COLLECT                           *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* TIMEGC.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;TIMEGC&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:35 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

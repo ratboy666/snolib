@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>LINK - Define <font face="Source Code Pro">LINK</font> type</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">LINK()</font> has two members: <font face="Source Code Pro">VALUE()</font> and <font face="Source Code Pro">NEXT()</font> and is used
+to represent lists. <font face="Source Code Pro">CONS()</font>, <font face="Source Code Pro">CAR()</font> and <font face="Source Code Pro">CDR()</font> are defined
+as synonyms. <font face="Source Code Pro">CAAR()</font> through <font face="Source Code Pro">CDDDR()</font> are also defined.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;LINK&raquo;&equiv;</b>
+         DATA(&#39;LINK(VALUE,NEXT)&#39;)
+         OPSYN(&#39;CONS&#39;, &#39;LINK&#39;)
+         OPSYN(&#39;CAR&#39;, &#39;VALUE&#39;)
+         OPSYN(&#39;CDR&#39;, &#39;NEXT&#39;)
+         DEFINE(&#39;CAAR(L)&#39;)
+         DEFINE(&#39;CDAR(l)&#39;)
+         DEFINE(&#39;CADR(L)&#39;)
+         DEFINE(&#39;CDDR(L)&#39;)
+         DEFINE(&#39;CAAAR(L)&#39;)
+         DEFINE(&#39;CAADR(L)&#39;)
+         DEFINE(&#39;CADAR(L)&#39;)
+         DEFINE(&#39;CADDR(L)&#39;)
+         DEFINE(&#39;CDAAR(L)&#39;)
+         DEFINE(&#39;CDADR(L)&#39;)
+         DEFINE(&#39;CDDAR(L)&#39;)
+         DEFINE(&#39;CDDDR(L)&#39;)
+                                                             <b>:(LINK_END)</b>
+<font color="#818181"><i>*</i></font>
+CAAAR    CAAAR = CAR(CAAR(L))                                  <b>:(RETURN)</b>
+CAADR    CAADR = CAR(CADR(L))                                  <b>:(RETURN)</b>
+CADAR    CADAR = CAR(CDAR(L))                                  <b>:(RETURN)</b>
+CADDR    CADDR = CAR(CDDR(L))                                  <b>:(RETURN)</b>
+CDAAR    CDAAR = CDR(CAAR(L))                                  <b>:(RETURN)</b>
+CDADR    CDADR = CDR(CADR(L))                                  <b>:(RETURN)</b>
+CDDAR    CDDAR = CDR(CDAR(L))                                  <b>:(RETURN)</b>
+CDDDR    CDDDR = CDR(CDDR(L))                                  <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+CAAR     CAAR = CAR(CAR(L))                                    <b>:(RETURN)</b>
+CDAR     CDAR = CDR(CAR(L))                                    <b>:(RETURN)</b>
+CADR     CADR = CAR(CDR(L))                                    <b>:(RETURN)</b>
+CDDR     CDDR = CDR(CDR(L))                                    <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+LINK_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;LINK.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+-STITL LINK
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                    #        ###  #     #  #    #                     *</i></font>
+<font color="#818181"><i>*                    #         #   ##    #  #   #                      *</i></font>
+<font color="#818181"><i>*                    #         #   # #   #  #  #                       *</i></font>
+<font color="#818181"><i>*                    #         #   #  #  #  ###                        *</i></font>
+<font color="#818181"><i>*                    #         #   #   # #  #  #                       *</i></font>
+<font color="#818181"><i>*                    #         #   #    ##  #   #                      *</i></font>
+<font color="#818181"><i>*                    #######  ###  #     #  #    #                     *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* LINK                        LINK TYPE                                *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* LINK.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;LINK&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:41 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

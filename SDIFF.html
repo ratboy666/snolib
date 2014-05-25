@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>SDIFF - Set difference</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">SDIFF(S1, S2)</font> will return the set difference, <font face="Source Code Pro">S1 - S2</font>, which
+is a string containing all those characters that are in <font face="Source Code Pro">S1</font> and not
+<font face="Source Code Pro">S2</font>.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;SDIFF&raquo;&equiv;</b>
+         DEFINE(&#39;SDIFF(S1,S2)&#39;)                             <b>:(SDIFF_END)</b>
+<font color="#818181"><i>*</i></font>
+SDIFF    SDIFF = S1
+         IDENT(S2, NULL)                                      <b>:S(RETURN)</b>
+         S2 = SPAN(S2)
+SDIFF_1  SDIFF S2 =                                 <b>:S(SDIFF_1)F(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+SDIFF_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;SDIFF.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+-STITL SDIFF
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                #####   ######   ###  #######  #######                *</i></font>
+<font color="#818181"><i>*               #     #  #     #   #   #        #                      *</i></font>
+<font color="#818181"><i>*               #        #     #   #   #        #                      *</i></font>
+<font color="#818181"><i>*                #####   #     #   #   #####    #####                  *</i></font>
+<font color="#818181"><i>*                     #  #     #   #   #        #                      *</i></font>
+<font color="#818181"><i>*               #     #  #     #   #   #        #                      *</i></font>
+<font color="#818181"><i>*                #####   ######   ###  #        #                      *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* SDIFF                     SET DIFFERENCE                             *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* SDIFF.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;SDIFF&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+</pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:29 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

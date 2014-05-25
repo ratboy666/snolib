@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>SIZEA - Array size, first dimension</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">SIZEA(A)</font> returns the number of elements in array <font face="Source Code Pro">A</font>. The number
+of elements in the first (leftmost) dimension is returned. <font face="Source Code Pro">ARRAY0</font>
+is the array with no elements.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Warning: this doesn't work with SPITBOL.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+The null string is assumed to be an array with no elements. Otherwise,
+if the datatype is not array, <font face="Source Code Pro">SIZEA()</font> fails. The prototype is
+analyzed to determine the single size, or upper:lower, the number of
+elements is computed and returned.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">LOWA(A)</font> returns the index of the first element of array <font face="Source Code Pro">A</font>.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<a href="BRKREM.html">BRKREM</a><br>
+<a href="SWAP.html">SWAP</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;BRKREM.INC&#39;
+-INCLUDE &#39;SWAP.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;SIZEA&raquo;&equiv;</b>
+         DEFINE(&#39;SIZEA(A)L,U&#39;)
+         DEFINE(&#39;LOWA(A)L,U&#39;)
+         ARRAY0 = ARRAY(&#39;0:-1&#39;)                             <b>:(SIZEA_END)</b>
+<font color="#818181"><i>*</i></font>
+LOWA     LOWA = IDENT(A) 0                                    <b>:S(RETURN)</b>
+         IDENT(DATATYPE(A), &#39;ARRAY&#39;)                         <b>:F(FRETURN)</b>
+         PROTOTYPE(A) (BRKREM(&#39;:,&#39;) . L) ((&#39;:&#39; BRKREM(&#39;,&#39;) . U) | NULL)
+         IDENT(L)                                            <b>:S(FRETURN)</b>
+         LOWA = L
+         LOWA = IDENT(U) 1                                     <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+SIZEA    SIZEA = IDENT(A) 0                                   <b>:S(RETURN)</b>
+         IDENT(DATATYPE(A), &#39;ARRAY&#39;)                         <b>:F(FRETURN)</b>
+         L =
+         U =
+         PROTOTYPE(A) (BRKREM(&#39;:,&#39;) . L) ((&#39;:&#39; BRKREM(&#39;,&#39;) . U) | NULL)
+         IDENT(L)                                            <b>:S(FRETURN)</b>
+         U = IDENT(U) 1                                      <b>:F(SIZEA_2)</b>
+         SWAP(.L, .U)
+SIZEA_2  SIZEA = LT(U, L) 0                                   <b>:S(RETURN)</b>
+         SIZEA = U - L + 1                                     <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+SIZEA_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;/usr/local/bin/snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;SIZEA.INC&#39;
+<font color="#818181"><i>*</i></font>
+         &amp;CODE = 1
+         OUTPUT = &#39;SIZEA/LOWA ARRAY(10)&#39;
+         OUTPUT = SIZEA(ARRAY(10))
+         OUTPUT = LOWA(ARRAY(10))
+         OUTPUT = &#39;SIZEA/LOWA NULL&#39;
+         OUTPUT = SIZEA(&#39;&#39;)
+         OUTPUT = LOWA(&#39;&#39;)
+         OUTPUT = &#39;SIZEA/LOWA ARRAY(-10:10)&#39;
+         OUTPUT = SIZEA(ARRAY(&#39;-10:10&#39;))
+         OUTPUT = LOWA(ARRAY(&#39;-10:10&#39;))
+         OUTPUT = &#39;SIZEA/LOWA ARRAY0&#39;
+         OUTPUT = SIZEA(ARRAY0)
+         OUTPUT = LOWA(ARRAY0)
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL SIZEA
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                 #####   ###  #######  #######     #                  *</i></font>
+<font color="#818181"><i>*                #     #   #        #   #          # #                 *</i></font>
+<font color="#818181"><i>*                #         #       #    #         #   #                *</i></font>
+<font color="#818181"><i>*                 #####    #     #      #####    #     #               *</i></font>
+<font color="#818181"><i>*                      #   #    #       #        #######               *</i></font>
+<font color="#818181"><i>*                #     #   #   #        #        #     #               *</i></font>
+<font color="#818181"><i>*                 #####   ###  #######  #######  #     #               *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* SIZEA                       SIZE OF ARRAY                            *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* SIZEA.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;SIZEA&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .F.MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:23 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

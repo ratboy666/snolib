@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>upcase</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Convert SNOBOL4 program to uppercase. Does not uppercase quoted
+strings, or comments. If /L is used, converts to lowercase.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;HOST.INC&#39;
+-INCLUDE &#39;SWAP.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;UPCASE&raquo;&equiv;</b>
+         TERMINAL = &#39;UPCASE (TUE OCT 23 16:16:46 EDT 2007)&#39;
+         DEFINE(&#39;TOUPPER(S)&#39;)
+         Q = &quot;&#39;&quot;
+         QQ = &#39;&quot;&#39;
+         FROM = &amp;LCASE
+         TO = &amp;UCASE
+         ?(HOST(HOST_ARGN, HOST(HOST_FIRSTARG)) (&#39;/L&#39; | &#39;/l&#39;))
++           SWAP(.FROM, .TO)
+<font color="#818181"><i>*</i></font>
+TOP      R = INPUT                                               <b>:F(END)</b>
+<font color="#818181"><i>*</i></font>
+         S = &#39;&#39;
+         R FENCE ANY(&#39;*#;|!&#39;)                                   <b>:S(CMNT)</b>
+LOOP     R ARB . L (Q | QQ) $ DELIM ARB . M *DELIM REM . R      <b>:F(DONE)</b>
+         S = S TOUPPER(L) DELIM M DELIM                          <b>:(LOOP)</b>
+DONE     S = S TOUPPER(R)
+<font color="#818181"><i>*</i></font>
+         OUTPUT = S                                               <b>:(TOP)</b>
+CMNT     OUTPUT = R                                               <b>:(TOP)</b>
+<font color="#818181"><i>*</i></font>
+TOUPPER  TOUPPER = REPLACE(S, FROM, TO)                        <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+END START
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-TITLE UPCASE
+START
+<b>&laquo;INCLUDES&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*        #     #  ######    #####      #      #####   #######          *</i></font>
+<font color="#818181"><i>*        #     #  #     #  #     #    # #    #     #  #                *</i></font>
+<font color="#818181"><i>*        #     #  #     #  #         #   #   #        #                *</i></font>
+<font color="#818181"><i>*        #     #  ######   #        #     #   #####   #####            *</i></font>
+<font color="#818181"><i>*        #     #  #        #        #######        #  #                *</i></font>
+<font color="#818181"><i>*        #     #  #        #     #  #     #  #     #  #                *</i></font>
+<font color="#818181"><i>*         #####   #         #####   #     #   #####   #######          *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* UPCASE        CONVERTS NON-QUOTED TO UPPERCASE (SNOBOL SOURCE)       *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* upcase.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;UPCASE&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:39 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

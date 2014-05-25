@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>code</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Enter SNOBOL4 statements for immediate execution. Also supports a
+primitive programming environment with line numbered statements.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="BQ.html">BQ</a><br>
+<a href="CHARS.html">CHARS</a><br>
+<a href="HOST.html">HOST</a><br>
+<a href="READLINE.html">READLINE</a><br>
+<a href="SEQ.html">SEQ</a><br>
+<a href="SLOAD.html">SLOAD</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;BQ.INC&#39;
+-INCLUDE &#39;CHARS.INC&#39;
+-INCLUDE &#39;HOST.INC&#39;
+-INCLUDE &#39;READLINE.INC&#39;
+-INCLUDE &#39;SEQ.INC&#39;
+-INCLUDE &#39;SLOAD.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;code&raquo;&equiv;</b>
+<b>&laquo;signon&raquo;</b>
+<b>&laquo;manifest&raquo;</b>
+<b>&laquo;readline&raquo;</b>
+<b>&laquo;patterns&raquo;</b>
+<b>&laquo;functions&raquo;</b>
+<b>&laquo;main&raquo;</b>
+<b>&laquo;parse&raquo;</b>
+<b>&laquo;commands&raquo;</b>
+<b>&laquo;error function&raquo;</b>
+<b>&laquo;exit trap&raquo;</b>
+<b>&laquo;exit&raquo;</b>
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Patterns used to parse commands.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;patterns&raquo;&equiv;</b>
+         QQ_ = &#39;&quot;&#39;
+         Q_  = &quot;&#39;&quot;
+         WHITE_SPACE_ = CHARS_HT &#39; &#39;
+         OWS_         = SPAN(WHITE_SPACE_) | &#39;&#39;
+         SF_PAT_      = FENCE ANY(&#39;SsFfEe&#39;)
++                       (ANY(WHITE_SPACE_) | RPOS(0))
+         CMNT_PAT_    = FENCE ANY(&#39;*;|#!-&#39;)
+         INPAT_       = FENCE &#39;-&#39; ((ANY(&#39;Ii&#39;) (&#39;NCLUDE&#39; | &#39;nclude&#39;)) |
++                                  (ANY(&#39;Cc&#39;) (&#39;OPY&#39; | &#39;opy&#39;)))
++                       BREAK(QQ_ Q_) LEN(1) BREAK(QQ_ Q_) . X
+<font color="#818181"><i>*</i></font>
+         RETNPAT_  = FENCE (SPAN(&amp;DIGITS) . LN_)
++                    ((ANY(WHITE_SPACE_) REM . CODE) | &#39;&#39;) RPOS(0)
+         SAVEPAT_  = FENCE ANY(&#39;Ss&#39;) (&#39;AVE&#39; | &#39;ave&#39;)
++                    ((BREAK(QQ_ Q_) LEN(1) BREAK(QQ_ Q_) . FN_ LEN(1))
++                     | &#39;&#39;)
++                    RPOS(0)
+         LOADPAT_  = FENCE ANY(&#39;Ll&#39;) (&#39;OAD&#39; | &#39;oad&#39;)
++                    ((BREAK(QQ_ Q_) LEN(1) BREAK(QQ_ Q_) . FN_ LEN(1))
++                     | &#39;&#39;)
++                    RPOS(0)
+         NAMEPAT_  = FENCE ANY(&#39;Nn&#39;) (&#39;AME&#39; | &#39;ame&#39;)
++                    ((BREAK(QQ_ Q_) LEN(1) BREAK(QQ_ Q_) . FN2_ LEN(1))
++                     | &#39;&#39;)
++                    RPOS(0)
+         LISTPAT_  = FENCE ANY(&#39;Ll&#39;) (&#39;IST&#39; | &#39;ist&#39;)
++                    ((ANY(WHITE_SPACE_)
++                       ((OWS_ SPAN(&amp;DIGITS) . N1_) | &#39;&#39;)
++                       ((OWS_ &#39;,&#39; OWS_ SPAN(&amp;DIGITS) . N2_) | &#39;&#39;)
++                    ) | &#39;&#39;) RPOS(0)
+         RUNPAT_   = FENCE ANY(&#39;Rr&#39;) (&#39;UN&#39; | &#39;un&#39;)
++                    (ANY(WHITE_SPACE_) SPAN(&amp;DIGITS) . LN_ | &#39;&#39;)
++                    RPOS(0)
+         EDITPAT_  = FENCE ANY(&#39;Ee&#39;) (&#39;DIT&#39; | &#39;dit&#39;)
++                    (ANY(WHITE_SPACE_) SPAN(&amp;DIGITS) . LN_ | &#39;&#39;)
++                    RPOS(0)
+         RENUMPAT_ = FENCE ANY(&#39;Rr&#39;) (&#39;ENUM&#39; | &#39;enum&#39;)
++                    (ANY(WHITE_SPACE_) SPAN(&amp;DIGITS) . LN_ | &#39;&#39;)
++                    RPOS(0)
+         QUITPAT_  = FENCE ANY(&#39;Qq&#39;) (&#39;UIT&#39; | &#39;uit&#39;) RPOS(0)
+         NEWPAT_   = FENCE ANY(&#39;Ss&#39;) (&#39;CRATCH&#39; | &#39;cratch&#39;) RPOS(0)
+         DDTPAT_   = FENCE ANY(&#39;Dd&#39;) (&#39;DT&#39; | &#39;dt&#39;) RPOS(0)
+         EVALPAT_  = FENCE &#39;=&#39; REM . CODE
+         EXECPAT_  = FENCE &#39;!&#39; REM . CODE
+         HELPPAT_  = FENCE &#39;?&#39;
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Clear the retained program. Create the last label <font face="Source Code Pro">NMAX_ + 1</font>
+and have that branch to label <font face="Source Code Pro">E</font>. Then, fill in the rest of the
+statements <font face="Source Code Pro">L__1</font> to <font face="Source Code Pro">L__&lt;NMAX_&gt;</font>.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+This is an expensive operation. With <font face="Source Code Pro">NMAX_</font> at its default (9999),
+10,000 statements are compiled here.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+On a scratch, the default filename is set back to <font face="Source Code Pro">SCRATCH</font>.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+| CODE: SCRATCH
+</font></pre>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;clear&raquo;&equiv;</b>
+CLEAR_   FN_ = &#39;SCRATCH&#39;
+         CODE(&#39;L__&#39; NMAX_ + 1 &#39; :(E)&#39;)
+         SRC_ = ARRAY(NMAX_)
+         SEQ(&quot; CODE(SRC_&lt;N&gt; &#39;L__&#39; N &#39; :(L__&#39; N + 1 &#39;)&#39;)&quot;, .N)  <b>:(RETURN)</b>
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Command processors for <font face="Source Code Pro">code</font>. The first handler must be
+<font face="Source Code Pro">immediate</font> because the parser will fall through on any command
+not otherwise parseable.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;commands&raquo;&equiv;</b>
+<b>&laquo;immediate&raquo;</b>
+<b>&laquo;retained&raquo;</b>
+<b>&laquo;edit&raquo;</b>
+<b>&laquo;ddt&raquo;</b>
+<b>&laquo;run&raquo;</b>
+<b>&laquo;list&raquo;</b>
+<b>&laquo;save&raquo;</b>
+<b>&laquo;load&raquo;</b>
+<b>&laquo;name&raquo;</b>
+<b>&laquo;renum&raquo;</b>
+<b>&laquo;complete&raquo;</b>
+<b>&laquo;eval&raquo;</b>
+<b>&laquo;shell&raquo;</b>
+<b>&laquo;help&raquo;</b>
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Default is immediate execution. Compile and execute the line entered.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+| CODE:  X = 12
+</font></pre>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;immediate&raquo;&equiv;</b>
+         INPT_ SF_PAT_                                       <b>:S(SF_ERR_)</b>
+         CODE = CODE(INPT_ &#39; :S(S) F(F)&#39;)                       <b>:S&lt;CODE&gt;</b>
+CPLERR_  TERMINAL = &#39;COMPILATION ERROR: &#39; &amp;ERRTEXT
+         TERMINAL = &#39;REENTER STATEMENT OR EDIT &#39; LN_           <b>:(RETURN)</b>
+S        TERMINAL = &#39;SUCCESS&#39;                                  <b>:(RETURN)</b>
+F        TERMINAL = &#39;FAILURE&#39;                                  <b>:(RETURN)</b>
+SF_ERR_  TERMINAL = &quot;CANNOT USE &#39;S&#39;, &#39;F&#39;, OR &#39;E&#39; AS A LABEL WITH CODE&quot;
++                                                              <b>:(RETURN)</b>
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Compile in retained statement (<font face="Source Code Pro">1..NMAX_</font>). The statement can
+be empty to delete the statement previously entered. Compiled
+statements are surroundeD by <font face="Source Code Pro">L__10; STATEMENT; :(L__11)</font> to allow
+control to proceed from one statement to the next. The final label is
+<font face="Source Code Pro">L__&lt;MAX&gt;</font> which is defined as the program exit. Each statement
+is preceeded by a statement setting <font face="Source Code Pro">LN_</font> to the current statement
+number - this is used to display the retained program line if break
+or an error occurs.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Source text is retained in array <font face="Source Code Pro">SRC_</font>.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+| CODE: 1 X = 12             ADD OR REPLACE LINE 1
+| CODE: 1                    REMOVE LINE 1
+| CODE: 2 -INCLUDE 'SEQ'     INCLUDE SEQ. NOTE THAT INCLUDE IS
+|                            DONE ON ENTRY (WHICH IS WHEN THE COMPILE
+|                            IS DONE).
+| CODE: 3 * COMMENT          COMMENTS ARE COMPILED TO EMPTY, BUT ARE
+|                            RETAINED. (IN SRC_<>)
+</font></pre>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Continuation lines are not supported. The way a continuation is
+expressed means that we can't compile until we know that no further
+continuation lines will be given. But our basic flow is to compile
+the new source immediately, and retain the source line. For this
+reason, the SAVE format is not directly compatible with the compiler.
+We add the line number and a space (5 characters) to the front. The <a
+href="deretn_processed.html">deretn (de-retain)</a> utility strips
+this. <font face="Source Code Pro">code</font> is not meant to be used to edit or test existing
+programs - simply to try ideas and perhaps produce the basics of
+new programs.
+</font></p>
+<div style="width:15em;margin-left:0.5em;float:right;background-image:url(blutextb.gif)">
+<font face="Dijkstra"><p align="left">
+Statement numbers (&amp;STNO) are assigned as increasing integers. This
+could also be recorded (may be useful for STCOUNT traps and
+profiling). We don't yet record statement numbers.
+
+Simple line number breakpoints can be implemented by trapping on
+variable <font face="Source Code Pro">LN_</font>. If it matched the desired line number, we could
+break.
+</p></font></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Before the actual code, a statement is compiled which tracks the
+line number, assigning it to <font face="Source Code Pro">LN_</font>. This is reported on errors, in
+order to track the error to the offending statement.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;retained&raquo;&equiv;</b>
+RETN_    CHECKLN_(LN_)                                        <b>:F(RETURN)</b>
+         SRC_&lt;LN_&gt; = CODE
+         CODE CMNT_PAT_                                        <b>:S(CMNT_)</b>
+         CODE(&#39;L__&#39; +LN_ &#39; LN_ = &#39; +LN_ &#39;;&#39; CODE &#39;; :(L__&#39; LN_ + 1 &#39;)&#39;)
++                                                   <b>:S(RETURN)F(CPLERR_)</b>
+CMNT_    CODE INPAT_                                          <b>:F(CMNT2_)</b>
+         SLOAD(X)
+CMNT2_   CODE(&#39;L__&#39; LN_ &#39; :(L__&#39; LN_ + 1 &#39;)&#39;)                  <b>:(RETURN)</b>
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Edit a line in the retained program, or the entire retained program.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+When the entire retained program is edited, the editor is presented
+with a source with no line numbers. When editing is complete, this is
+read in, and line numbers assigned beginning with 1 and stepping by
+1. <font face="Source Code Pro">RENUM</font> may then be used. This loses the line number information
+originally in the retained program, but allows syntax highlighting
+and other features of the external editor to be exploited.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+The external editor could be (horribly) misused to import source into
+<font face="Source Code Pro">code</font> (edit, and then read the source in, and save/exit back to
+<font face="Source Code Pro">code</font>).  This also provides export (but see <font face="Source Code Pro">deretn</font>).
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+| CODE: EDIT 1               EDIT LINE 30 (USING READLINE)
+| CODE: EDIT                 EDIT USING EXTERNAL EDITOR
+</font></pre>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;edit&raquo;&equiv;</b>
+EDIT_    DIFFER(LN_)                                          <b>:S(EDIT2_)</b>
+         TEMP_ = BQ(&#39;mktemp&#39;)
+         UNIT = IO_FINDUNIT()
+         OUTPUT(.F, UNIT,, TEMP_)                            <b>:F(FILERR_)</b>
+         SEQ(&#39; F = VDIFFER(SRC_&lt;N&gt;); SRC_&lt;N&gt; &#39;, .N)
+         ENDFILE(UNIT)
+         DETACH(.F)
+         UNIT = IO_FINDUNIT()
+         INPUT(.F, UNIT,, TEMP_)                             <b>:F(FILERR_)</b>
+         HOST(HOST_SYSCMD, EDITOR &#39; &#39; TEMP_)
+         FN2_ = FN_
+         CLEAR_()
+         FN_ = FN2_
+         LN_ = 1
+EDIT3_   INPT_ = LN_ &#39; &#39; F                                    <b>:F(EDIT4_)</b>
+         PRSLIN_()
+         LN_ = LN_ + 1                                         <b>:(EDIT3_)</b>
+EDIT4_   ENDFILE(UNIT)
+         DETACH(.F)
+         DELETE(TEMP_)                                         <b>:(RETURN)</b>
+EDIT2_   CHECKLN_(LN_)                                        <b>:F(RETURN)</b>
+         INPT_ = EDITLINE(&#39;EDIT: &#39;, LPAD(LN_, 4, &#39;0&#39;) &#39; &#39; SRC_&lt;LN_&gt;)
++                                                             <b>:(PRSLIN_)</b>
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Use <font face="Source Code Pro">DDT</font> to debug the retained program.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Saves file with an entry to <font face="Source Code Pro">DDT()</font> jammed in as the first lines.
+An <font face="Source Code Pro">END</font> label is added at the end. The file is compiled with
+a listing, and then spawned as a separate process. We assume that
+the subprocess wilL be ok with the standard options - but we do add
+<font face="Source Code Pro">-b</font> to suppress the normal banner. Label <font face="Source Code Pro">CODE_RETAINED_PROGRAM</font>
+is inserted to allow <font face="Source Code Pro">DDT</font>'s <font face="Source Code Pro">LABEL+OFFSET</font> to make sense
+on initial entry. Label <font face="Source Code Pro">E</font> is added to the end, because it is
+possible that <font face="Source Code Pro">:(E)</font> is used in the retained program (instead of
+<font face="Source Code Pro">:(END)</font>). <font face="Source Code Pro">END</font> is typically not used in the retained program
+because it is being prepared interactively.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+| CODE: DDT
+</font></pre>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+We copy all lines beginning with -INCLUDE before inserting the
+DDT codes.  This allows debugging retained programs with -INCLUDE
+directives. Because of single inclusion, we don't bother removing
+the lines from the rest of the source. They won't do anything.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;ddt&raquo;&equiv;</b>
+DDT__    TERMINAL = &#39;STARTING DDT&#39;
+         TEMPSRC_ = BQ(&#39;mktemp&#39;)
+         TEMPLST_ = BQ(&#39;mktemp&#39;)
+         UNIT = IO_FINDUNIT()
+         OUTPUT(.F, UNIT,, TEMPSRC_)                         <b>:F(FILERR_)</b>
+         F = &quot;-INCLUDE &#39;DDT.INC&#39;&quot;
+         SEQ(&#39; F = ?(SRC_&lt;N&gt; ? INPAT_) SRC_&lt;N&gt;; SRC_&lt;N&gt; &#39;, .N)
+         F = &#39; DDT()&#39;
+         F = &#39;CODE_RETAINED_PROGRAM&#39;
+         SEQ(&#39; F = VDIFFER(SRC_&lt;N&gt;); SRC_&lt;N&gt; &#39;, .N)
+         F = &#39;E&#39;
+         F = &#39;END&#39;
+         ENDFILE(UNIT)
+         DETACH(.F)
+         HOST(HOST_SYSCMD, &#39;snobol4 -n -b -l &#39; TEMPLST_ &#39; &#39; TEMPSRC_)
+         HOST(HOST_SYSCMD, &#39;LIST=&#39; TEMPLST_ &#39; snobol4 -b &#39; TEMPSRC_)
+         TERMINAL = &#39;DDT COMPLETED&#39;
+         DELETE(TEMPSRC_)
+         DELETE(TEMPLST_)                                      <b>:(RETURN)</b>
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Run retained program. Transfer control to first line <font face="Source Code Pro">L__1</font>, or
+specified line.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+| CODE: RUN                  RUN FROM LINE 1
+| CODE: RUN 50               RUN FROM LINE 50
+</font></pre>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;run&raquo;&equiv;</b>
+RUN_     LN_ = IDENT(LN_) 1
+         CHECKLN_(LN_)                                        <b>:F(RETURN)</b>
+         &amp;TRACE = 0                                      <b>:($(&#39;L__&#39; LN_))</b>
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+List retained program.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+| CODE: LIST                 LIST ALL LINES
+| CODE: LIST 10              LIST LINE 10
+| CODE: LIST 10,50           LIST LINES BETWEEN 10 AND 50
+| CODE: LIST ,50             LIST ALL LINES UP TO 50
+</font></pre>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;list&raquo;&equiv;</b>
+LIST_    N2_ = IDENT(N2_) VDIFFER(N1_)
+         SEQ(&#39; TERMINAL = LPAD(N, 4, &quot;0&quot;) &quot; &quot; VDIFFER(SRC_&lt;N&gt;); &#39;
++            &#39; SRC_&lt;N&gt; &#39;, .N, N1_, N2_)                        <b>:(RETURN)</b>
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Save retained program. Default file is <font face="Source Code Pro">SCRATCH</font>.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+| CODE: SAVE                 SAVE TO LAST FILENAME
+| CODE: SAVE 'MYFILE'        SAVE TO MYFILE
+</font></pre>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;save&raquo;&equiv;</b>
+SAVE_    TERMINAL = &#39;SAVING TO &#39; FN_
+         UNIT = IO_FINDUNIT()
+         OUTPUT(.F, UNIT,, FN_)                              <b>:F(FILERR_)</b>
+         SEQ(&#39; F = LPAD(N, 4, &quot;0&quot;) &quot; &quot; VDIFFER(SRC_&lt;N&gt;); &#39;
++            &#39; SRC_&lt;N&gt; &#39;, .N)
+         ENDFILE(UNIT)
+         DETACH(.F)                                            <b>:(RETURN)</b>
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Load retained program. Default file is <font face="Source Code Pro">SCRATCH</font>. If another name
+is given, remember for future <font face="Source Code Pro">SAVE</font> (or <font face="Source Code Pro">LOAD</font>). Doesn't clear
+the retained program, allowing programs to be merged. Use <font face="Source Code Pro">SCRATCH</font>
+before <font face="Source Code Pro">LOAD</font> if required.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+| CODE: LOAD                 LOAD FROM LAST FILENAME
+| CODE: LOAD 'MYFILE'        LOAD FROM MYFILE
+</font></pre>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;load&raquo;&equiv;</b>
+LOAD_    TERMINAL = &#39;LOADING FROM &#39; FN_
+         UNIT = IO_FINDUNIT()
+         INPUT(.F, UNIT,, FN_)                               <b>:F(FILERR_)</b>
+LOAD2_   INPT_ = F                                            <b>:F(LOAD3_)</b>
+         PRSLIN_()                                             <b>:(LOAD2_)</b>
+LOAD3_   ENDFILE(UNIT)
+         DETACH(.F)                                            <b>:(RETURN)</b>
+FILERR_  TERMINAL = &#39;CANNOT OPEN FILE&#39;                         <b>:(RETURN)</b>
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">NAME</font> displays current name, or sets new name
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+| CODE: NAME                 DISPLAY FILENAME
+| CODE: NAME 'MYFILE'        SET FILENAME
+</font></pre>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;name&raquo;&equiv;</b>
+NAME_    TERMINAL = IDENT(FN2_) &#39;FILE: &#39; FN_                  <b>:S(RETURN)</b>
+         FN_ = FN2_                                            <b>:(RETURN)</b>
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">RENUM</font> (assign new line numbers) to retained program. Uses 10 as the
+increment, unless there are too many lines, in which case 5 (4, 3,
+or even 2) may be used as increments (5 is preferred).
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+| CODE: RENUM                RENUMBER FROM 10 BY 10
+| CODE: RENUM 1000           RENUMBER FROM 1000 BY 10
+</font></pre>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;renum&raquo;&equiv;</b>
+RENUM_   LN_ = IDENT(LN_) 10
+         CHECKLN_(LN_)                                        <b>:F(RETURN)</b>
+         SC = 0
+         SEQ(&#39; SC = DIFFER(SRC_&lt;N&gt;) SC + 1; SRC_&lt;N&gt; &#39;, .N)
+         EQ(SC)                                               <b>:S(RETURN)</b>
+         Q = (NMAX_ - LN_) / SC
+         TERMINAL =  LE(Q, 1) &#39;TOO MANY LINES TO RENUMBER&#39;    <b>:S(RETURN)</b>
+         INCR = 10
+         INCR = GE(Q, 5) LT(Q, 10) 5
+         INCR = GT(Q, 1) LT(Q, 5) Q
+         TERMINAL = &#39;RENUMBERING BY &#39; INCR &#39; FROM &#39; LN_
+         UNIT = IO_FINDUNIT()
+         INPUT(.IN, UNIT, &#39;U&#39;, &#39;/dev/tmpfile&#39;)
+         OUTPUT(.OUT, UNIT, &#39;W&#39;)
+         SEQ(&#39; OUT = LN_ &quot; &quot; VDIFFER(SRC_&lt;N&gt;); &#39;
++            &#39; LN_ = DIFFER(SRC_&lt;N&gt;) LN_ + INCR; SRC_&lt;N&gt; &#39;, .N)
+         FN2_ = FN_
+         CLEAR_()
+         FN_ = FN2_
+         FN_ = VDIFFER(FN2_)
+RENUM2_  INPT_ = IN                                          <b>:F(RENUM3_)</b>
+         PRSLIN_()                                            <b>:(RENUM2_)</b>
+RENUM3_  ENDFILE(UNIT)
+         DETACH(.OUT)
+         DETACH(.IN)                                           <b>:(RETURN)</b>
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Label <font face="Source Code Pro">E</font> for program completion.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;complete&raquo;&equiv;</b>
+E        TERMINAL = &#39;PROGRAM COMPLETE&#39;                         <b>:(RETURN)</b>
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Evaluate and print expression
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+| CODE: =1 + 3
+</font></pre>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;eval&raquo;&equiv;</b>
+EVAL_    TERMINAL = EVAL(CODE)                                 <b>:S(S)F(F)</b>
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Shell to external program
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+| CODE: !ls
+</font></pre>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;shell&raquo;&equiv;</b>
+EXEC_    HOST(HOST_SYSCMD, CODE)                               <b>:(RETURN)</b>
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Give help for the <font face="Source Code Pro">code</font> program.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+| CODE: ?
+</font></pre>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;help&raquo;&equiv;</b>
+HELP_    TERMINAL = &#39;=EXPRESSION    DISPLAY VALUE OF EXPRESSION&#39;
+         TERMINAL = &#39;!COMMAND       SHELL OUT TO COMMAND&#39;
+         TERMINAL = &#39;?              THIS HELP&#39;
+         TERMINAL = &#39;STATEMENT      EXECUTE STATEMENT&#39;
+         TERMINAL =
+         TERMINAL = &#39;N STATEMENT    ENTER/REPLACE/DELETE PROGRAM LINE&#39;
+         TERMINAL = &#39;RUN [N]        RUN RETAINED PROGRAM&#39;
+         TERMINAL = &#39;DDT            DDT ON RETAINED PROGRAM&#39;
+         TERMINAL = &#39;LIST [[N][,M]] LIST RETAINED PROGRAM&#39;
+         TERMINAL = &#39;EDIT [N]       EDIT RETAINED PROGRAM&#39;
+         TERMINAL = &quot;SAVE [&#39;FILE&#39;]  SAVE RETAINED PROGRAM&quot;
+         TERMINAL = &quot;LOAD [&#39;FILE&#39;]  LOAD RETAINED PROGRAM&quot;
+         TERMINAL = &quot;NAME [&#39;FILE&#39;]  CHANGE OR DISPLAY NAME&quot;
+         TERMINAL = &#39;SCRATCH        CLEAR RETAINED PROGRAM&#39;
+         TERMINAL = &#39;RENUM [N]      RENUMBER RETAINED PROGRAM&#39;
+         TERMINAL = &#39;QUIT           EXIT CODE&#39;
+         TERMINAL =
+         TERMINAL =
++ &#39;-INCLUDE IS PROCESSED IMMEDIATELY ON ENTRY. CONTINUATION LINES ARE&#39;
+         TERMINAL =
++ &#39;NOT AVAILABLE. LINES ARE IN THE RANGE 1..&#39; NMAX_
+         TERMINAL =
+         TERMINAL = &#39;S, F, AND E LABELS AVAILABLE&#39;
+         TERMINAL = &#39;SLOAD(&#39; Q_ &#39;FILE&#39; Q_ &#39;) AVAILABLE&#39;        <b>:(RETURN)</b>
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Hoary interactions between <font face="Source Code Pro">ERRFUN_</font> and <font face="Source Code Pro">BRKFUN_</font>. We need
+<font face="Source Code Pro">ERRFUN_</font> in some conditions, but the <font face="Source Code Pro">EXIT</font> trap may be triggered
+anyway on return from <font face="Source Code Pro">ERRFUN_</font>.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;error function&raquo;&equiv;</b>
+ERRFUN_
+         (NE(&amp;ERRTYPE, 34) SETEXIT())
+         EQ(&amp;ERRTYPE, 34)                                     <b>:S(RETURN)</b>
+         TERMINAL = &#39;EXECUTION ERROR #&#39; &amp;ERRTYPE &#39;, &#39; &amp;ERRTEXT
+         TERMINAL = &#39;RETAINED PROGRAM LINE:&#39; DIFFER(LN_)
+         TERMINAL = LPAD(VDIFFER(LN_), 4, 0) &#39; &#39; SRC_&lt;LN_&gt;     <b>:(RETURN)</b>
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+If <font face="Source Code Pro">BRKFUN_</font> (exit trap) is entered, we need to know if we should
+simply resume from the command prompt, or return (again, probably to
+the prompt). Our heuristic is to test <font face="Source Code Pro">&amp;FNCLEVEL</font>, and return
+if it is 1. If it is 0, a simple branch suffices. If &gt; 0, we also
+branch, and (lose) the stack. <font face="Source Code Pro">DDT</font> has a similar problem. Here,
+we keep track of <font face="Source Code Pro">&amp;FNCLEVEL</font> in <font face="Source Code Pro">FL_</font>, for reporting and
+making return/branch decision.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+The issue is that we cannot simply pop the function stack and
+bindings. After getting input, and executing <font face="Source Code Pro">RUN</font>, we are one
+function deep (<font face="Source Code Pro">NEWLIN_ -&gt; PRSLIN_()</font>). If we see one level
+here, we know that we can simply return and this brings us back to
+<font face="Source Code Pro">NEWLIN_</font>.  But, since the only thing we *can* do is return, if
+the level is 2 or greater, we cannot return (we would wind up back
+in the faulty code).
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+I would like to be able to pop levels off, until only one remains,
+(or zero) and then return, or branch. But I can't! Each function
+level will also lock parameters and locals. To get around that
+memory leakage, <font face="Source Code Pro">PRSLIN_()</font> has no parameters, and no locals.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;exit trap&raquo;&equiv;</b>
+BRKFUN_  ERRTYPE_ = &amp;ERRTYPE
+         ERRTEXT_ = &amp;ERRTEXT
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Getting to <font face="Source Code Pro">END</font> triggers <font face="Source Code Pro">&amp;ERRTYPE 0</font>. We don't display
+anything, but want to get back to the prompt. An expected <font face="Source Code Pro">END</font>
+will have removed the <font face="Source Code Pro">SETEXIT()</font> trap, and we won't wind up here.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Unfortunately, FATAL errors are not trapped. For example
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+| CODE:  :(NO_SUCH_LABEL) ;
+</font></pre>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+will immediately bail code. So, <font face="Source Code Pro">SAVE</font> before <font face="Source Code Pro">RUN</font>. Just prudent.
+Note that labels are not checked until run-time and not compile-time.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;exit trap&raquo;&equiv;</b>
+         EQ(ERRTYPE_, 0) EQ(&amp;FNCLEVEL, FL_ + 1)               <b>:S(RETURN)</b>
+         EQ(ERRTYPE_, 0)                                     <b>:S(NEWLIN_)</b>
+         SETEXIT(&#39;BRKFUN_&#39;)
+         &amp;ERRLIMIT = 999999999
+         TERMINAL = &#39;ERROR &#39; ERRTYPE_ &#39; (&#39; ERRTEXT_ &#39;)&#39;
++           &#39; AT LEVEL &#39; &amp;FNCLEVEL - FL_ - 1
+         TERMINAL = &#39;RETAINED PROGRAM LINE:&#39; DIFFER(LN_)
+         TERMINAL = LPAD(VDIFFER(LN_), 4, 0) &#39; &#39; SRC_&lt;LN_&gt;
+         EQ(&amp;FNCLEVEL, FL_ + 1)                     <b>:S(RETURN)F(NEWLIN_)</b>
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Main program. Re-establish EXIT handler, input a line, parse and
+execute it, and then get the next line. Note that history expansion
+is done, but lines that begin with ! are considered special. Those
+lines are assumed to be external shell execution. The leading ! is
+stripped, then history expansion is done, and the ! is added back.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Empty lines are not added to the history. The current FNCLEVEL is
+recorded for error handling.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;main&raquo;&equiv;</b>
+<b>&laquo;initialize&raquo;</b>
+NEWLIN_  SETEXIT(&#39;BRKFUN_&#39;)
+         &amp;TRACE = 999999999
+         &amp;ERRLIMIT = 999999999
+         INPT_ = READLINE(&#39;CODE:&#39;)                             <b>:F(EXIT_)</b>
+         INPT_ FENCE &#39;!&#39; REM . CODE                           <b>:F(NEWL2_)</b>
+         CODE = HISTORY_EXPAND(CODE)
+         INPT_ = &#39;!&#39; CODE                                      <b>:(NEWL3_)</b>
+NEWL2_   INPT_ = HISTORY_EXPAND(INPT_)
+NEWL3_   INPT_ = TRIM(INPT_)
+         ADD_HISTORY(VDIFFER(INPT_))
+         FL_ = &amp;FNCLEVEL
+         PRSLIN_()                                            <b>:(NEWLIN_)</b>
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Parse the input line, branching to the execution routine.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;parse&raquo;&equiv;</b>
+PRSLIN_  N1_ =
+         N2_ =
+         CODE =
+         LN_ =
+         FN2_ =
+         INPT_ EVALPAT_                                        <b>:S(EVAL_)</b>
+         INPT_ EXECPAT_                                        <b>:S(EXEC_)</b>
+         INPT_ HELPPAT_                                        <b>:S(HELP_)</b>
+         INPT_ LISTPAT_                                        <b>:S(LIST_)</b>
+         INPT_ RUNPAT_                                          <b>:S(RUN_)</b>
+         INPT_ EDITPAT_                                        <b>:S(EDIT_)</b>
+         INPT_ QUITPAT_                                        <b>:S(EXIT_)</b>
+         INPT_ NEWPAT_                                        <b>:S(CLEAR_)</b>
+         INPT_ RENUMPAT_                                      <b>:S(RENUM_)</b>
+         INPT_ SAVEPAT_                                        <b>:S(SAVE_)</b>
+         INPT_ LOADPAT_                                        <b>:S(LOAD_)</b>
+         INPT_ NAMEPAT_                                        <b>:S(NAME_)</b>
+         INPT_ DDTPAT_                                         <b>:S(DDT__)</b>
+         INPT_ RETNPAT_                                        <b>:S(RETN_)</b>
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;functions&raquo;&equiv;</b>
+<font color="#818181"><i>*</i></font>
+         DEFINE(&#39;ERRFUN_()&#39;)
+         DEFINE(&#39;PRSLIN_()&#39;)
+         DEFINE(&#39;CHECKLN_(N)&#39;)
+         DEFINE(&#39;CLEAR_()&#39;)                                   <b>:(FN_END_)</b>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;checkln&raquo;</b>
+<b>&laquo;clear&raquo;</b>
+<font color="#818181"><i>*</i></font>
+FN_END_
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;checkln&raquo;&equiv;</b>
+CHECKLN_ GT(N) LE(N, NMAX_)                                   <b>:S(RETURN)</b>
+         TERMINAL = &#39;LINE NUMBER MUST BE 1 TO &#39; NMAX_         <b>:(FRETURN)</b>
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Trap and report conditionally fatal execution errors in user's code.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;initialize&raquo;&equiv;</b>
+         &amp;TRACE = 999999999
+         TRACE(&#39;ERRTYPE&#39;, &#39;KEYWORD&#39;,, &#39;ERRFUN_&#39;)
+         CLEAR_()
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;signon&raquo;&equiv;</b>
+         TERMINAL = &#39;CODE (TUE NOV 26 12:25:23 EST 2013)&#39;
+         TERMINAL = &#39;ENTER SNOBOL4 STATEMENTS (TRY ? FOR HELP)&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;manifest&raquo;&equiv;</b>
+         NMAX_ = 9999
+         EDITOR = &#39;ED&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;readline&raquo;&equiv;</b>
+         RLAPPNAME(&#39;CODE&#39;)
+         READ_HISTORY(&#39;.CODE&#39;)
+         STIFLE_HISTORY(50)
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;exit&raquo;&equiv;</b>
+EXIT_    WRITE_HISTORY(&#39;.CODE&#39;)
+         SETEXIT()
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+We have thousands of statements chained together with gotos. These
+are traced during COLLECT() and the stack must be large enough.
+10,000 empty statements take around 2.5MB of memory, leaving over
+5MB for user (with 8MB default).
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+A stack size <font face="Source Code Pro">-S</font> of 40000 seems to be fine.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-s&quot; &quot;-S 40000&quot; &quot;$0&quot; &quot;$@&quot;
+<font color="#818181"><i>*</i></font>
+-TITLE CODE
+START_
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                  #####   #######  ######   #######                   *</i></font>
+<font color="#818181"><i>*                 #     #  #     #  #     #  #                         *</i></font>
+<font color="#818181"><i>*                 #        #     #  #     #  #                         *</i></font>
+<font color="#818181"><i>*                 #        #     #  #     #  #####                     *</i></font>
+<font color="#818181"><i>*                 #        #     #  #     #  #                         *</i></font>
+<font color="#818181"><i>*                 #     #  #     #  #     #  #                         *</i></font>
+<font color="#818181"><i>*                  #####   #######  ######   #######                   *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* CODE              ENTER TEST SNOBOL4 STATEMENTS                      *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* (C) COPYRIGHT 1985, 1987 - CATSPAW, INCORPORATED                     *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* &quot;THIS IS MY GRANDFATHER&#39;S AXE. MY FATHER REPLACED THE HAFT, AND I    *</i></font>
+<font color="#818181"><i>*  PUT A NEW HEAD ON IT. IT&#39;S MY GRANDFATHER&#39;S AXE.&quot;                   *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* ALSO PROVIDES A SIMPLISTIC RETAINED PROGRAM ENVIRONMENT (SIMILAR TO  *</i></font>
+<font color="#818181"><i>* BASIC -- INSPIRED BY MTS)                                            *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* code.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;code&raquo;</b>
+END START_
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Wed May 21 14:21:48 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

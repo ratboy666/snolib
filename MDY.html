@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>MDY - M/D/Y from Y/D</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">MDY(Y,DY)</font> will convert a year,day date into a month/day/year date.
+For example <font face="Source Code Pro">MDY(71,83)</font> will return '3/24/71'. The global variables
+M and D are set to equal to the month and day respectively.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;MDY&raquo;&equiv;</b>
+         DEFINE(&#39;MDY(Y,DY)X,T&#39;)
+         DAY_MONTH = &#39;(334,12)(304,11)(273,10)(243,9)&#39;
++           &#39;(212,8)(181,7)(151,6)(120,5)(90,4)(59,3)(31,2)(0,1)&#39;
+         LY_DAY_MONTH = &#39;(335,12)(305,11)(274,10)(244,9)&#39;
++           &#39;(213,8)(182,7)(152,6)(121,5)(91,4)(60,3)(31,2)(0,1)&#39;
+         I = SPAN(&#39;0123456789&#39;)
+         SEARCH.X.M = &#39;(&#39; I $ X *GT(DY, X) &#39;,&#39; I $ M          <b>:(MDY_END)</b>
+<font color="#818181"><i>*</i></font>
+MDY      T = EQ(REMDR(Y, 400), 0) LY_DAY_MONTH                 <b>:S(MDY_1)</b>
+         T = EQ(REMDR(Y, 100), 0) DAY_MONTH                    <b>:S(MDY_1)</b>
+         T = EQ(REMDR(Y,   4), 0) LY_DAY_MONTH                 <b>:S(MDY_1)</b>
+         T = DAY_MONTH
+MDY_1    T SEARCH.X.M                                        <b>:F(FRETURN)</b>
+         D = DY - X
+         GT(D, 31)                                           <b>:S(FRETURN)</b>
+         MDY = M &#39;/&#39; D &#39;/&#39; Y                                   <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+MDY_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;MDY.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+-STITL MDY
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                      #     #  ######   #     #                       *</i></font>
+<font color="#818181"><i>*                      ##   ##  #     #   #   #                        *</i></font>
+<font color="#818181"><i>*                      # # # #  #     #    # #                         *</i></font>
+<font color="#818181"><i>*                      #  #  #  #     #     #                          *</i></font>
+<font color="#818181"><i>*                      #     #  #     #     #                          *</i></font>
+<font color="#818181"><i>*                      #     #  #     #     #                          *</i></font>
+<font color="#818181"><i>*                      #     #  ######      #                          *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* MDY                       M/D/Y FROM Y/D                             *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* MDY.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;MDY&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:20 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

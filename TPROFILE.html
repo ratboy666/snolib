@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>TPROFILE - Time profile</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">TPROFILE()</font> will produce a time profile of the time spent in each
+SNOBOL4 statement.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="LPROG.html">LPROG</a><br>
+<a href="SEQ.html">SEQ</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;LPROG.INC&#39;
+-INCLUDE &#39;SEQ.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;TPROFILE&raquo;&equiv;</b>
+         DEFINE(&#39;TPROFILE()S,T&#39;)
+         DEFINE(&#39;TPROFILE_DUMP()I&#39;)
+         TP_ARY = ARRAY(LPROG())
+         &amp;STLIMIT = 999999999
+         &amp;TRACE = 999999999
+         TRACE(&#39;STCOUNT&#39;, &#39;KEYWORD&#39;,, &#39;TPROFILE&#39;)        <b>:(TPROFILE_END)</b>
+<font color="#818181"><i>*</i></font>
+TPROFILE S = &amp;LASTNO
+         T = TIME()
+         TP_ARY&lt;LAST_STNO&gt; = TP_ARY&lt;LAST_STNO&gt; + T - LAST_TIME
+         LAST_STNO = S
+         LAST_TIME = TIME()                                    <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+TPROFILE_DUMP
+         &amp;STLIMIT = -1
+         STOPTR(&#39;STCOUNT&#39;, &#39;KEYWORD&#39;)
+         TERMINAL = &#39;TIME PROFILE&#39;
+         TERMINAL =
+         SEQ(&#39; TERMINAL = LPAD(I, 5) &quot;: &quot; TP_ARY&lt;I&gt; &#39;, .I)
+                                                               <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+TPROFILE_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;TPROFILE.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL TPROFILE
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*  #######  ######   ######   #######  #######  ###  #        #######  *</i></font>
+<font color="#818181"><i>*     #     #     #  #     #  #     #  #         #   #        #        *</i></font>
+<font color="#818181"><i>*     #     #     #  #     #  #     #  #         #   #        #        *</i></font>
+<font color="#818181"><i>*     #     ######   ######   #     #  #####     #   #        #####    *</i></font>
+<font color="#818181"><i>*     #     #        #   #    #     #  #         #   #        #        *</i></font>
+<font color="#818181"><i>*     #     #        #    #   #     #  #         #   #        #        *</i></font>
+<font color="#818181"><i>*     #     #        #     #  #######  #        ###  #######  #######  *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* TPROFILE                 TIME PROFILE                                *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* TPROFILE.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;TPROFILE&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:37 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

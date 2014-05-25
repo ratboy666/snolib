@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>DEXP - Simple Function Definition</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Simple function definition. <font face="Source Code Pro">DEXP(PROTO)</font> defines functions in
+terms of a simple, one-line expression, such as
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+|     DEXP('AVE(X,Y) = (X + Y) / 2.0')
+</font></pre>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;DEXP&raquo;&equiv;</b>
+         DEFINE(&#39;DEXP(PROTO)NAME,ARGS&#39;)                      <b>:(DEXP_END)</b>
+<font color="#818181"><i>*</i></font>
+DEXP     PROTO POS(0) SPAN(&#39; &#39;) =
+         PROTO BREAK(&#39;(&#39;) . NAME BAL . ARGS = NAME
+         CODE(NAME &#39; &#39; PROTO &#39; :S(RETURN)F(FRETURN)&#39;)
+         DEFINE(NAME ARGS)                                     <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+DEXP_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;DEXP.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+-STITL DEXP
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                   ######   #######  #     #  ######                  *</i></font>
+<font color="#818181"><i>*                   #     #  #         #   #   #     #                 *</i></font>
+<font color="#818181"><i>*                   #     #  #          # #    #     #                 *</i></font>
+<font color="#818181"><i>*                   #     #  #####       #     ######                  *</i></font>
+<font color="#818181"><i>*                   #     #  #          # #    #                       *</i></font>
+<font color="#818181"><i>*                   #     #  #         #   #   #                       *</i></font>
+<font color="#818181"><i>*                   ######   #######  #     #  #                       *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* DEXP                 SIMPLE FUNCTION DEFINTION                       *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* DEXP.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;DEXP&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:07 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

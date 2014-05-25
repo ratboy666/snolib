@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<H1>SEQ - Sequence statement with counter</H1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">SEQ(ARG_S,ARG_NAME,START,END)</font> will sequence through a set of
+statements until failure is detected. The indexing variable is given
+by the name <font face="Source Code Pro">ARG_NAME</font>. Can be profitably used to index the entries
+of an array.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+If <font face="Source Code Pro">START</font> is omitted, the indexing begins at <font face="Source Code Pro">1</font>. If <font face="Source Code Pro">END</font>
+is given, it will be the last index attempted. Both <font face="Source Code Pro">START</font> and
+<font face="Source Code Pro">END</font> are optional.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Most simple arrays are served by assuming indexing begins at <font face="Source Code Pro">1</font>.
+However <font face="Source Code Pro">SEQ(S, .I, LOWA(A))</font> will begin indexing at the lowest
+index of <font face="Source Code Pro">A</font>.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Note that <font face="Source Code Pro">SEQ()</font> will fail if indexing a zero length array
+(<font face="Source Code Pro">ARRAY0</font>).
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Since <font face="Source Code Pro">SEQ()</font> is of more general use than just sequencing arrays,
+these issues will not be addressed.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Sample usage:
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+|     SEQ(' A<K> = INPUT ', .K)
+</font></pre>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>See Also</h2>
+<a href="SIZEA.html">SIZEA</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;SEQ&raquo;&equiv;</b>
+         DEFINE(&#39;SEQ(ARG_S,ARG_NAME,START,END)&#39;)              <b>:(SEQ_END)</b>
+<font color="#818181"><i>*</i></font>
+SEQ      START = IDENT(START) 1
+         $ARG_NAME = START - 1
+         ARG_S = CODE(ARG_S  &#39; :S(SEQ_1)F(SEQ_2)&#39;)             <b>:F(ERROR)</b>
+SEQ_1    DIFFER(END) GE($ARG_NAME, END)                       <b>:S(RETURN)</b>
+         $ARG_NAME = $ARG_NAME + 1                              <b>:&lt;ARG_S&gt;</b>
+SEQ_2    EQ($ARG_NAME, START)                       <b>:S(FRETURN)F(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+SEQ_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;SEQ.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+-STITL SEQ
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                       #####   #######   #####                        *</i></font>
+<font color="#818181"><i>*                      #     #  #        #     #                       *</i></font>
+<font color="#818181"><i>*                      #        #        #     #                       *</i></font>
+<font color="#818181"><i>*                       #####   #####    #     #                       *</i></font>
+<font color="#818181"><i>*                            #  #        #   # #                       *</i></font>
+<font color="#818181"><i>*                      #     #  #        #    #                        *</i></font>
+<font color="#818181"><i>*                       #####   #######   #### #                       *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* SEQ                SEQUENCE STATEMENT WITH COUNTER                   *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* SEQ.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;SEQ&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:29 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

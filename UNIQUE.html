@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>UNIQUE - Generate unique name</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Returns a string that can be used as a unique variable name.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+If <font face="Source Code Pro">UNIQUE()</font> is called with a non-null argument, all unique
+variables are cleared, and the global variable <font face="Source Code Pro">UNIQUE_</font> is set to
+<font face="Source Code Pro">0</font>.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Gimpel generates unique variable names with the keyword
+<font face="Source Code Pro">&amp;STCOUNT</font>.  However, in some implementations <font face="Source Code Pro">&amp;STCOUNT</font>
+is not updated if the keyword <font face="Source Code Pro">&amp;STLIMIT</font> is set to <font face="Source Code Pro">-1</font>.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+This function uses a global variable <font face="Source Code Pro">UNIQUE_</font>.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">MAKE_UNIQUE(SUF)</font> creates a <font face="Source Code Pro">UNIQUESUF()</font> function that uses
+its own global variable. This is preferred to using <font face="Source Code Pro">UNIQUE()</font> if
+the generated variables are cleared. This minimizes impact to other
+modules using <font face="Source Code Pro">UNIQUE()</font>.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="REPL.html">REPL</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;REPL.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;UNIQUE&raquo;&equiv;</b>
+         DEFINE(&#39;MAKE_UNIQUE(SUF)S&#39;)
+         MAKE_UNIQUE()                                     <b>:(UNIQUE_END)</b>
+<font color="#818181"><i>*</i></font>
+MAKE_UNIQUE
+         S =
++ &#39;UNIQUESUF  UNIQUESUF_ = IDENT(I) UNIQUESUF_ + 1 :F(UNIQUECSUF);&#39;
++ &#39;           UNIQUESUF = &quot;USUF&quot; UNIQUESUF_ &quot;_&quot;         :(RETURN);&#39;
++ &#39;UNIQUECSUF $(&quot;USUF&quot; UNIQUESUF_ &quot;_&quot;) = &#39;
++ &#39;           ?(UNIQUESUF_ = GT(UNIQUESUF_,0) UNIQUESUF_ - 1)&#39;
++ &#39;                                       :S(UNIQUECSUF)F(RETURN);&#39;
+         CODE(REPL(S, &#39;SUF&#39;, SUF))
+         DEFINE(&#39;UNIQUE&#39; SUF &#39;(I)&#39;)                            <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+UNIQUE_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;UNIQUE.INC&#39;
+         &amp;CODE = 1
+         U1 = UNIQUE()
+         IDENT($U1)                                              <b>:F(END)</b>
+         $U1 = 1
+         U2 = UNIQUE()
+         IDENT($U2)                                              <b>:F(END)</b>
+         $U2 = 2
+         NE($U1, $U2)                                            <b>:F(END)</b>
+         U3 = &#39;U3_&#39;
+         $U3 = 3
+         UNIQUE(&#39;CLEAR&#39;)
+         IDENT($U1)                                              <b>:F(END)</b>
+         IDENT($U2)                                              <b>:F(END)</b>
+         EQ($U3, 3)                                              <b>:F(END)</b>
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL UNIQUE
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*           #     #  #     #  ###   #####   #     #  #######           *</i></font>
+<font color="#818181"><i>*           #     #  ##    #   #   #     #  #     #  #                 *</i></font>
+<font color="#818181"><i>*           #     #  # #   #   #   #     #  #     #  #                 *</i></font>
+<font color="#818181"><i>*           #     #  #  #  #   #   #     #  #     #  #####             *</i></font>
+<font color="#818181"><i>*           #     #  #   # #   #   #   # #  #     #  #                 *</i></font>
+<font color="#818181"><i>*           #     #  #    ##   #   #    #   #     #  #                 *</i></font>
+<font color="#818181"><i>*            #####   #     #  ###   #### #   #####   #######           *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* UNIQUE                 GENERATE UNIQUE NAME                          *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* UNIQUE.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;UNIQUE&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:39 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

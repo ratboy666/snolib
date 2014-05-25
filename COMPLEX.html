@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>COMPLEX - Complex numbers</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Basic arithmetic on complex numbers. Not complete yet.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;COMPLEX&raquo;&equiv;</b>
+         DATA(&#39;COMPLEX(R,I)&#39;)
+<font color="#818181"><i>*</i></font>
+         DEFINE(&#39;ADD_COMPLEX(X,Y)&#39;)
+         DEFINE(&#39;MUL_COMPLEX(X,Y)A,B,C,D&#39;)
+         DEFINE(&#39;NEG_COMPLEX(X)&#39;)
+         DEFINE(&#39;INV_COMPLEX(X)D&#39;)
+         DEFINE(&#39;PRINT_COMPLEX(X)SIGN&#39;)                   <b>:(COMPLEX_END)</b>
+<font color="#818181"><i>*</i></font>
+ADD_COMPLEX
+         ADD_COMPLEX = COMPLEX(R(X) + R(Y), I(X) + I(Y))       <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+MUL_COMPLEX
+         A = R(X); B = I(X); C = R(Y); D = I(Y)
+         MUL_COMPLEX = COMPLEX(A * C - B * D, B * C + A * D)   <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+NEG_COMPLEX
+         NEG_COMPLEX = COMPLEX(-R(X), -I(X))                   <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+INV_COMPLEX
+         D = (R(X) * R(X)) + (I(X) * I(X))
+         INV_COMPLEX = COMPLEX(1.0 * R(X) / D, 1.0 * -I(X) / D)
++                                                              <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+PRINT_COMPLEX
+         SIGN = GE(I(X)) &#39;+&#39;
+         PRINT_COMPLEX = R(X) SIGN I(X) &#39;i&#39;                    <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+COMPLEX_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;COMPLEX.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+-STITL COMPLEX
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*     #####   #######  #     #  ######   #        #######  #     #     *</i></font>
+<font color="#818181"><i>*    #     #  #     #  ##   ##  #     #  #        #         #   #      *</i></font>
+<font color="#818181"><i>*    #        #     #  # # # #  #     #  #        #          # #       *</i></font>
+<font color="#818181"><i>*    #        #     #  #  #  #  ######   #        #####       #        *</i></font>
+<font color="#818181"><i>*    #        #     #  #     #  #        #        #          # #       *</i></font>
+<font color="#818181"><i>*    #     #  #     #  #     #  #        #        #         #   #      *</i></font>
+<font color="#818181"><i>*     #####   #######  #     #  #        #######  #######  #     #     *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* COMPLEX                   COMPLEX NUMBERS                            *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* COMPLEX.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;COMPLEX&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:48 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>CVAR - C Variable Declaration</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+To interface with other software, <font face="Source Code Pro">CSNOBOL4</font> programs must exchange
+data with this other software. This exchange can use files, pipes,
+or calls. <font face="Source Code Pro">P64</font> provides <font face="Source Code Pro">BASIC</font>-like <font face="Source Code Pro">PEEK()</font> and <font face="Source Code Pro">POKE()</font>
+functions.  <font face="Source Code Pro">CVAR</font> provides a "named variable" access to these
+external variables, layered on the <font face="Source Code Pro">P64</font> facilities.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">CVAR</font> converts declarations into a symbol table. Keeps variable
+names in table <font face="Source Code Pro">VTAB</font>. Each variable is assigned an offset. When
+all declarations are complete, <font face="Source Code Pro">VOFFSET</font> will be the size of the
+data region (possibly for <font face="Source Code Pro">malloc()</font>).
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Contrary to the valid declaration <font face="Source Code Pro">'UNSIGNED LONG'</font>, all 64 bit
+integers are signed (because <font face="Source Code Pro">CSNOBOL4</font> wants it that way). Still,
+63 bits of integer are probably just fine, so we ignore this issue.
+On 32 bit systems, 64 bit variables won't work well. Similarly,
+on 32 bit systems, 32 bit integers are always signed.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Also, <font face="Source Code Pro">LONG DOUBLE</font> is not supported (but will likely <b>never</b>
+be supported by <font face="Source Code Pro">CSNOBOL4</font>). Again, we ignore this.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+All variables are aligned to the correct boundary (1 for <font face="Source Code Pro">CHAR</font>,
+2 for <font face="Source Code Pro">SHORT</font>, 4 for <font face="Source Code Pro">INT/FLOAT</font>, 8 for <font face="Source Code Pro">LONG/DOUBLE</font>). These
+alignments are correct for 64 bit versions; they may require adjustment
+for 32 bit targets.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+A variable name begins with a letter or underscore, followed by
+letters, digits or underscore. variables are case sensitive.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">DECLAREV()</font> will fail if an invalid declaration is passed.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Each variable is described by:
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+|     CV_OFFSET  Offset from base of data
+|     CV_SIZE    Variable size (1, 2, 4, 8) in bytes
+|     CV_DIM     Number of elements (1..N)
+|     CV_SIGN    0 = UNSIGNED, 1 = SIGNED (if integer)
+|     CV_ISINT   0 = FLOAT, 1 = INTEGER
+</font></pre>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Example declarations:
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+|      CHAR S[20]         20 * 8 BIT SIGNED
+|      UNSIGNED CHAR C    UNSIGNED 8 BIT
+|      SHORT SH           SIGNED 16 BIT
+|      UNSIGNED INT U     UNSIGNED 32 BIT
+|      SIGNED I           SIGNED 32 BIT
+|      UNSIGNED U2        UNSIGNED 32 BIT
+|      LONG L             SIGNED 64 BIT
+|      UNSIGNED LONG L2   UNSIGNED 64 BIT
+|      POINTER P          64 BIT POINTER
+|      FLOAT F[10]        10 * 32 BIT FLOATS
+|      DOUBLE D           64 BIT DOUBLE
+</font></pre>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+|      CREATE NEW SYMBOL TABLE: NEWDECLV()
+|      DECLARE NEW VARIABLE:    DECLAREV(S)
+|      LOAD VAR FROM BASE:      LOADV(BASE, 'NAME' [, INDEX])
+|      STORE VAR TO BASE:       STOREV(BASE, 'NAME, [INDEX], VALUE)
+</font></pre>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="P64.html">P64</a><br>
+<a href="CHARS.html">CHARS</a><br>
+<a href="HASH.html">HASH</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;P64.INC&#39;
+-INCLUDE &#39;CHARS.INC&#39;
+-INCLUDE &#39;HASH.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;CVAR&raquo;&equiv;</b>
+%SET (BITS, HOST(HOST_POINTER_BITS))
+         DATA(&#39;CVAR(CV_OFFSET,CV_SIZE,CV_DIM,CV_SIGN,CV_ISINT)&#39;)
+<font color="#818181"><i>*</i></font>
+         DEFINE(&#39;PTRV(B,V,I)&#39;)
+         DEFINE(&#39;LOADV(B,V,I)&#39;)
+         DEFINE(&#39;STOREV(B,V,I,X)&#39;)
+         DEFINE(&#39;NEWDECLV()&#39;)
+         DEFINE(&#39;DECLAREV(L)SIGN,INT,FLOAT,AL,NU,SP,BS,BN,IDENT,DIM,&#39;
++                          &#39;INTDECL,FLOATDECL,DECL,SIZE,ALIGN,ISINT,&#39;
++                          &#39;S,T,I,N,SIGNED&#39;)
+                                                         <b>:(DECLAREV_END)</b>
+<font color="#818181"><i>*</i></font>
+PTRV     V = VTAB&lt;V&gt;
+         IDENT(V)                                            <b>:S(FRETURN)</b>
+         I = IDENT(I) 0
+         PTRV = B + CV_OFFSET(V) + I * CV_SIZE(V)              <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+STOREV   B = PTRV(B, V, I)                                   <b>:F(FRETURN)</b>
+         V = VTAB&lt;V&gt;                          <b>:($(&#39;STOREV_&#39; CV_SIZE(V)))</b>
+STOREV_1 POKE_C(B, X)                                          <b>:(RETURN)</b>
+STOREV_2 POKE_S(B, X)                                          <b>:(RETURN)</b>
+STOREV_4 (EQ(CV_ISINT(V)) POKE_F(B, X))                       <b>:S(RETURN)</b>
+         POKE_I(B, X)                                          <b>:(RETURN)</b>
+STOREV_8 (EQ(CV_ISINT(V)) POKE_D(B, X))                       <b>:S(RETURN)</b>
+         POKE_P(B, X)                                          <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+LOADV    B = PTRV(B, V, I)                                   <b>:F(FRETURN)</b>
+         V = VTAB&lt;V&gt;                           <b>:($(&#39;LOADV_&#39; CV_SIZE(V)))</b>
+LOADV_1  LOADV = PEEK_C(B)
+         NE(CV_SIGN(V))                                       <b>:S(RETURN)</b>
+         LOADV = LT(LOADV) (2 ** 8) + LOADV                    <b>:(RETURN)</b>
+LOADV_2  LOADV = PEEK_S(B)
+                                                               <b>:(RETURN)</b>
+         NE(CV_SIGN(V))                                       <b>:S(RETURN)</b>
+         LOADV = LT(LOADV) (2 ** 16) + LOADV                   <b>:(RETURN)</b>
+LOADV_4  LOADV = EQ(CV_ISINT(V)) PEEK_F(B)                    <b>:S(RETURN)</b>
+         LOADV = PEEK_I(B)
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+The next statement attempts to convert a negative 32 bit integer
+to positive, keeping the same bit pattern. It will not work on a 32
+CSNOBOL4 system. 2**32 will overflow, so only done on 64 bit system.
+On a 32 bit system, all 32 bit integers are signed.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;CVAR&raquo;&equiv;</b>
+%IF (BITS EQ 32)
+                                                               <b>:(RETURN)</b>
+%ELSE
+         NE(CV_SIGN(V))                                       <b>:S(RETURN)</b>
+         LOADV = LT(LOADV) (2 ** 32) + LOADV                   <b>:(RETURN)</b>
+%ENDIF
+LOADV_8  LOADV = EQ(CV_ISINT(V)) PEEK_D(B)                    <b>:S(RETURN)</b>
+         LOADV = PEEK_P(B)                                     <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+NEWDECLV VTAB = TABLE()
+         VOFFSET = 0                                           <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+DECLAREV SIGN = (&#39;signed&#39; | &#39;SIGNED&#39; | &#39;unsigned&#39; | &#39;UNSIGNED&#39;) . S
+         INT =  (&#39;char&#39; | &#39;CHAR&#39; | &#39;short&#39; | &#39;SHORT&#39; | &#39;int&#39; |
++                &#39;INT&#39; | &#39;long&#39; | &#39;LONG&#39; | &#39;pointer&#39; | &#39;POINTER&#39;) . T
+         FLOAT = (&#39;float&#39; | &#39;FLOAT&#39; | &#39;double&#39; | &#39;DOUBLE&#39;) . T
+         AL = &amp;UCASE &amp;LCASE
+         NU = &amp;DIGITS
+         SP = &#39;_&#39;
+         BS = SPAN(&#39; &#39; CHARS_TAB)
+         BN = BS | NULL
+         IDENT = (ANY(AL SP) (SPAN(AL NU SP) | NULL)) . I
+         DIM = &#39;[&#39; BN SPAN(&amp;DIGITS) . N BN &#39;]&#39;
+         INTDECL = (SIGN BS INT) | SIGN | INT
+         FLOATDECL = FLOAT
+         DECL = BN (INTDECL | FLOATDECL) BN IDENT BN (DIM | NULL)
+<font color="#818181"><i>*</i></font>
+         SIZE =
++           #&#39;CHAR=1,SHORT=2,INT=4,LONG=8,POINTER=8,FLOAT=4,DOUBLE=8&#39;
+         ALIGN =
++           #&#39;CHAR=1,SHORT=2,INT=4,LONG=8,POINTER=8,FLOAT=4,DOUBLE=8&#39;
+         ISINT =
++           #&#39;CHAR=1,SHORT=1,INT=1,LONG=1,POINTER=1,FLOAT=,DOUBLE=&#39;
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* ASSIGN PATTERN VARIABLE TO DEFAULTS - SIGNED INT [1]</i></font>
+<font color="#818181"><i>*</i></font>
+         S = &#39;SIGNED&#39;
+         T = &#39;INT&#39;
+         I =
+         N = 1
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* SCAN THE DECLARATION, SETTING PATTERN VARIABLES S, T, I, N</i></font>
+<font color="#818181"><i>*</i></font>
+         L DECL                                              <b>:F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CONVERT T AND S TO UPPERCASE</i></font>
+<font color="#818181"><i>*</i></font>
+         T = REPLACE(T, &amp;LCASE, &amp;UCASE)
+         S = REPLACE(S, &amp;LCASE, &amp;UCASE)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* SIGNED = 1 IF SIGNED, 0 IF UNSIGNED</i></font>
+<font color="#818181"><i>*</i></font>
+         SIGNED = 0
+         S &#39;UNSIGNED&#39;                                         <b>:S(DECLV2)</b>
+         SIGNED = 1
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* ADJUST OFFSET FOR ALIGNMENT</i></font>
+<font color="#818181"><i>*</i></font>
+DECLV2   R = REMDR(VOFFSET, ALIGN&lt;T&gt;)
+         VOFFSET = NE(R) VOFFSET + (ALIGN&lt;T&gt; - R)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* ALREADY DECLARED?</i></font>
+<font color="#818181"><i>*</i></font>
+         V = VTAB&lt;I&gt;
+         IDENT(V)                                            <b>:F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CREATE CVAR() RECORD FOR NEW VARIABLE</i></font>
+<font color="#818181"><i>*</i></font>
+         V = CVAR(VOFFSET, SIZE&lt;T&gt;, N, SIGNED, ISINT&lt;T&gt;)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* PUT VARIABLE INTO SYMBOL TABLE</i></font>
+<font color="#818181"><i>*</i></font>
+         VTAB&lt;I&gt; = V
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* ADJUST OFFSET BY SIZE OF NEW VARIABLE (INCLUDING DIMENSION)</i></font>
+<font color="#818181"><i>*</i></font>
+         VOFFSET = VOFFSET + SIZE&lt;T&gt; * N
+<font color="#818181"><i>*</i></font>
+         DECLAREV = VOFFSET                                    <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+DECLAREV_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;CVAR.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL CVAR
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                   #####   #     #     #     ######                   *</i></font>
+<font color="#818181"><i>*                  #     #  #     #    # #    #     #                  *</i></font>
+<font color="#818181"><i>*                  #        #     #   #   #   #     #                  *</i></font>
+<font color="#818181"><i>*                  #        #     #  #     #  ######                   *</i></font>
+<font color="#818181"><i>*                  #         #   #   #######  #   #                    *</i></font>
+<font color="#818181"><i>*                  #     #    # #    #     #  #    #                   *</i></font>
+<font color="#818181"><i>*                   #####      #     #     #  #     #                  *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* CVAR           C VARIABLE DECLARATIONS, AND LOAD/STORE               *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CVAR.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;CVAR&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:03 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

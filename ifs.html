@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>ifs - IF Statement Processor</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Conditional names begin with a letter, followed by zero or more
+letters, digits, underscore or period.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Operators are <font face="Source Code Pro">OR</font>, <font face="Source Code Pro">AND</font>, <font face="Source Code Pro">NE</font> and <font face="Source Code Pro">EQ</font>.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Conditional names are assigned integer values with the %SET directive:
+<font face="Source Code Pro">%SET(NAME,VALUE)</font>. Note that % can be changed (<font face="Source Code Pro">IFSLC='*'</font>).
+The <font face="Source Code Pro">VALUE</font> may be a number, or a parenthesized SNOBOL4 expression.
+This allows <font face="Source Code Pro">HOST()</font> functions to be used (for example).
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Files may be included with a <font face="Source Code Pro">%INCLUDE(FILE)</font> directive. Included
+files may be nested.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">%*(A COMMENT)</font> is a single line comment. Block comments are
+trivially done with <font face="Source Code Pro">%IF</font>. Line comment usually documents <font face="Source Code Pro">%SET</font>.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Conditionals and directives must begin in column one, or preceeded by
+white space. Expressions must be fully parenthesized.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+|     %* (A SAMPLE COMMENT)
+|     %SET(NAME1,1)
+|     %SET(NAME2,0)
+|     %SET(NAME3,1)
+|     %SET(NAME4,1)
+|     %SET(NAME5,HOST(HOST_POINTER_BITS))
+|     %INCLUDE(FILE)
+|     %IF ((NAME1 OR NAME2) EQ NAME3)
+|       %IF (NAME4)
+|       %ENDIF
+|     %ELSE
+|     %ENDIF
+</font></pre>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Reads from standard input and writes standard output performing the
+conditionals. Conditionals may be nested.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+May be used in batch files - returns <font face="Source Code Pro">&CODE = 1</font> if error (syntax,
+unclosed <font face="Source Code Pro">%IF</font> at EOF). Returns <font face="Source Code Pro">&CODE = 0</font> if ok.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+IFS is useful because it does not strip <font face="Source Code Pro">C</font> or <font face="Source Code Pro">C++</font> comments. It
+can be used for multiple source languages. It only does include and
+conditionals, and no other macro expansion.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Environment Variables</h2>
+<ul>
+<li>IFSDIR=dir/for/includes</li>
+<li>IFSLC=% change lead-in character</li>
+<li>LSS=SNOBOL4|C|ASM generate line directives</li>
+</ul>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="CHARS.html">CHARS</a><br>
+<a href="HOST.html">HOST</a><br>
+<a href="CRACK.html">CRACK</a><br>
+<a href="FASTBAL.html">FASTBAL</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;CHARS.INC&#39;
+-INCLUDE &#39;HOST.INC&#39;
+-INCLUDE &#39;CRACK.INC&#39;
+-INCLUDE &#39;FASTBAL.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;IFS&raquo;&equiv;</b>
+-PLUSOPS 1
+<font color="#818181"><i>*</i></font>
+         TERMINAL = &#39;IFS (WED NOV  6 13:40:26 EST 2013)&#39;
+<font color="#818181"><i>*</i></font>
+         &amp;ANCHOR = 1
+         &amp;CODE = 1
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* USEFUL CONSTANTS</i></font>
+<font color="#818181"><i>*</i></font>
+         LC = &#39;%&#39;
+         LC = HOST(HOST_GETENV, &#39;IFSLC&#39;)
+         WHITE = SPAN(&#39; &#39; CHARS_HT)
+         OPT_WS = WHITE | NULL
+         NAME = ANY(&amp;LCASE &amp;UCASE)
++               (SPAN(&amp;LCASE &amp;UCASE &amp;DIGITS &#39;_.&#39;) | NULL)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* SYMTBL TRACKS DEFINED CONDITIONAL SYMBOLS. (UNDEFINED SYMBOLS ARE</i></font>
+<font color="#818181"><i>* ASSIGNED NULL VALUES IN SYMTBL.)</i></font>
+<font color="#818181"><i>*</i></font>
+         SYMTBL = TABLE(101)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* STATESTK MAINTAINS ALL STATE INFORMATION WHILE PROCESSING CONDITIONAL</i></font>
+<font color="#818181"><i>* STATEMENTS. NESTLEVEL INDEXES THE TOP ENTRY. ANOTHER VARIABLE, TOP,</i></font>
+<font color="#818181"><i>* HAS A COPY OF SAVESTK&lt;NESTLEVEL&gt;.</i></font>
+<font color="#818181"><i>*</i></font>
+         STATESTK = TABLE()
+         INCNAME = TABLE()
+         INCSTACK = TABLE()
+         INCLNNO = TABLE()
+         NESTLEVEL = 0
+         TOP =
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* EACH STATE ENTRY IN STATESTK CONTAINS STATE INFORMATION ABOUT THE</i></font>
+<font color="#818181"><i>* PROCESSING FOR EACH ACTIVE %IF. THE STATE IS MAINTAINED AS 2 FIELDS:</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>*     RESULT  THE RESULT OF THE %IF EXPRESSION EVALUATION-</i></font>
+<font color="#818181"><i>*             TRUE, FALSE, OR BYPASS</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>*     MODE    WHETHER PROCESSING THEN OR ELSE PORTION OF %IF</i></font>
+<font color="#818181"><i>*</i></font>
+         DATA(&#39;STATE(RESULT,MODE)&#39;)
+         FALSE = 0
+         TRUE = 1
+         BYPASS = 2
+         ELSE = 0
+         THEN = 1
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* PROCESSREC IS INDEXED BY THE CURRENT RESULT AND MODE TO DETERMINE</i></font>
+<font color="#818181"><i>* WHETHER OR NOT A STATEMENT SHOULD BE PROCESSED AND WRITTEN TO THE</i></font>
+<font color="#818181"><i>* OUTPUT FILE. DEFAULT VALUE IS 0 -- IGNORE STATEMENT.</i></font>
+<font color="#818181"><i>*</i></font>
+        PROCESSREC = ARRAY(FALSE &#39;:&#39; BYPASS &#39;,&#39; ELSE &#39;:&#39; THEN, 0)
+        PROCESSREC&lt;TRUE, THEN&gt; = 1
+        PROCESSREC&lt;FALSE, ELSE&gt; = 1
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>*  FUNCTIONS</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>*  OUTPUT = PROCESS(INPUT)</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>*  PROCESS LINE IN THE CONTEXT OF CURRENT CONDITIONALS.</i></font>
+<font color="#818181"><i>*  FAILS IF LINE IS TO BE IGNORED. OTHERWISE IT RETURNS THE INPUT.</i></font>
+<font color="#818181"><i>*</i></font>
+        DEFINE(&#39;PROCESS(PROCESS)CONDCMD,CONDEXP&#39;)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>*  P_CONDASM BREAKS UP CONDITIONAL ASSEMBLY DIRECTIVES.</i></font>
+<font color="#818181"><i>*</i></font>
+         P_CONDASM = OPT_WS LC (
++           ((&#39;IF&#39; | &#39;if&#39;) . CONDCMD OPT_WS BAL . CONDEXP
++                            OPT_WS RPOS(0)) |
++           ((&#39;ENDIF&#39; | &#39;endif&#39;) . CONDCMD) |
++           ((&#39;ELSE&#39; | &#39;else&#39;) . CONDCMD) )               <b>:(PROCESS_END)</b>
+<font color="#818181"><i>*</i></font>
+PROCESS PROCESS ? P_CONDASM                                 <b>:S($CONDCMD)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>*  PROCESS STATEMENTS OTHER THAN CONDITIONAL DIRECTIVES.</i></font>
+<font color="#818181"><i>*</i></font>
+         EQ(NESTLEVEL, 0)                                     <b>:S(RETURN)</b>
+         EQ(PROCESSREC&lt;RESULT(TOP), MODE(TOP)&gt;, 0)  <b>:S(FRETURN)F(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>*  PROCESS %IF (EXPRESSION)</i></font>
+<font color="#818181"><i>*</i></font>
+IF       EQ(NESTLEVEL)                                          <b>:S(IFOK)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* HERE FOR NESTED %IF</i></font>
+<font color="#818181"><i>*</i></font>
+         NE(PROCESSREC&lt;RESULT(TOP), MODE(TOP)&gt;)                 <b>:S(IFOK)</b>
+         NESTLEVEL = NESTLEVEL + 1
+         TOP = STATESTK&lt;NESTLEVEL&gt; = STATE(BYPASS, THEN)      <b>:(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* HERE FOR %IF TO BE PROCESSED NORMALLY.</i></font>
+<font color="#818181"><i>*</i></font>
+IFOK     NESTLEVEL = NESTLEVEL + 1
+         TOP = STATESTK&lt;NESTLEVEL&gt; = STATE(
++           (EQ(EVALUATE(CONDEXP), 1) TRUE, FALSE),
++           THEN)                                             <b>:(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* PROCESS %ELSE</i></font>
+<font color="#818181"><i>*</i></font>
+ELSE     MODE(TOP) = NE(NESTLEVEL) ELSE                      <b>:S(FRETURN)</b>
+         TERMINAL = LC &#39;ELSE ENCOUNTERED OUTSIDE OF &#39; LC &#39;IF,&#39; REPORT()
++                                                                 <b>:(END)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* PROCESS %ENDIF</i></font>
+<font color="#818181"><i>*</i></font>
+ENDIF    NESTLEVEL = NE(NESTLEVEL) NESTLEVEL - 1           <b>:F(ENDIF_ERR)</b>
+         TOP = (NE(NESTLEVEL) STATESTK&lt;NESTLEVEL&gt;, &#39;&#39;)        <b>:(FRETURN)</b>
+ENDIF_ERR
+         TERMINAL = LC &#39;ENDIF ENCOUNTERED OUTSIDE OF &#39; LC &#39;IF,&#39;
++           REPORT()                                              <b>:(END)</b>
+<font color="#818181"><i>*</i></font>
+PROCESS_END
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* EVALUATE AN ARGUMENT OF THE FORM &#39;(OPERAND OPR OPERAND)&#39;</i></font>
+<font color="#818181"><i>*</i></font>
+         DEFINE(&#39;EVALUATE(EXP)ARG1,ARG2,OPERATOR&#39;)
+         P_OPERAND = NAME | SPAN(&amp;DIGITS) | BAL
+         P_OPERATOR = &#39;OR&#39; | &#39;or&#39; | &#39;AND&#39; | &#39;and&#39; | &#39;NE&#39; &#39;ne&#39; |
++                     &#39;EQ&#39; | &#39;eq&#39;
+         P_EV1 = P_OPERAND . ARG1 WHITE P_OPERATOR . OPERATOR
++           WHITE P_OPERAND . ARG2
+         P_EV2 = P_OPERAND . ARG1 &#39;&#39; . OPERATOR . ARG2
+         P_EV3 = &#39;(&#39; OPT_WS (P_EV1 | P_EV2) OPT_WS &#39;)&#39; RPOS(0)
+                                                         <b>:(EVALUATE_END)</b>
+EVALUATE EXP ? P_EV3                                         <b>:F(EVAL_ER)</b>
+         EVALUATE = (DIFFER(OPERATOR)
++           APPLY(OPERATOR &#39;.&#39;, OPER(ARG1), OPER(ARG2)),
++           OPER(ARG1))                                        <b>:(RETURN)</b>
+EVAL_ER  TERMINAL = &#39;BAD EXPRESSION: &#39; EXP REPORT()               <b>:(END)</b>
+EVALUATE_END
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* EVALUATE AN OPERAND TO PRODUCE VALUE OF 0 OR 1</i></font>
+<font color="#818181"><i>* IF ARGUMENT IS NAME, GET ITS VALUE FROM THE SYMTABLE. OTHERWISE</i></font>
+<font color="#818181"><i>* IF IT IS A SIMPLE INTEGER, RETURN IT. OTHERWISE IT MUST BE</i></font>
+<font color="#818181"><i>* A PARENTHESIZED EXPRESSION. CALL EVALUATE.</i></font>
+<font color="#818181"><i>*</i></font>
+         DEFINE(&#39;OPER(ARG)&#39;)                                 <b>:(OPER_END)</b>
+OPER     OPER = INTEGER(ARG) ARG                              <b>:S(RETURN)</b>
+         IDENT(SUBSTR(ARG, 1, 1), &#39;(&#39;)                        <b>:S(OPER.1)</b>
+         OPER = SYMTBL&lt;ARG&gt;
+         DIFFER(OPER)                                         <b>:S(RETURN)</b>
+         TERMINAL = &#39;UNDEFINED OPERAND: &#39; ARG REPORT()            <b>:(END)</b>
+OPER.1   OPER = EVALUATE(ARG)                                  <b>:(RETURN)</b>
+OPER_END
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* EQ OPERATOR -- RETURNS 0 OR 1</i></font>
+<font color="#818181"><i>*</i></font>
+         DEFINE(&#39;EQ.(A,B)&#39;)                                    <b>:(EQ.END)</b>
+EQ.      EQ. = (EQ(A, B) 1, 0)                                 <b>:(RETURN)</b>
+EQ.END
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* NE OPERATOR -- RETURNS 0 OR 1</i></font>
+<font color="#818181"><i>*</i></font>
+         DEFINE(&#39;NE.(A,B)&#39;)                                    <b>:(NE.END)</b>
+NE.      NE. = (EQ(A, B) 0, 1)                                 <b>:(RETURN)</b>
+NE.END
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* OR OPERATOR -- RETURNS 0 OR 1</i></font>
+<font color="#818181"><i>*</i></font>
+         DEFINE(&#39;OR.(A,B)&#39;)                                    <b>:(OR.END)</b>
+OR.      OR. = (EQ(A) EQ(B) 0, 1)                              <b>:(RETURN)</b>
+OR.END
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* AND OPERATOR -- RETURNS 0 OR 1</i></font>
+<font color="#818181"><i>*</i></font>
+         DEFINE(&#39;AND.(A,B)&#39;)                                  <b>:(AND.END)</b>
+AND.     AND. = (EQ(A, 1) EQ(B, 1) 1, 0)                       <b>:(RETURN)</b>
+AND.END
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* RETURN CURRENT LINE NUMBER AND FILE NAME.</i></font>
+<font color="#818181"><i>*</i></font>
+         DEFINE(&#39;REPORT()&#39;)                                <b>:(REPORT_END)</b>
+REPORT   REPORT = &#39; IN FILE &#39; INNAME &#39;, LINE &#39; +LINENO         <b>:(RETURN)</b>
+REPORT_END
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* HERE&#39;S THE &#39;MAIN&#39; PROGRAM.</i></font>
+<font color="#818181"><i>*</i></font>
+         P_SET = OPT_WS LC (&#39;SET&#39; | &#39;set&#39;) OPT_WS &#39;(&#39; OPT_WS NAME . ARG1
++           OPT_WS &#39;,&#39;
++           OPT_WS FASTBAL(&#39;(&lt;[]&gt;)&#39;, &quot;&#39;&quot; &#39;&quot;&#39;, &#39;,)&#39;) . ARG2 OPT_WS &#39;)&#39;
+         P_INCLUDE = OPT_WS LC (&#39;INCLUDE&#39; | &#39;include&#39;) OPT_WS
++           &#39;(&#39; BREAK(&#39;)&#39;) . ARG1 &#39;)&#39;
+         P_COMMENT = OPT_WS LC &#39;*&#39; OPT_WS &#39;(&#39; BREAK(&#39;)&#39;) &#39;)&#39;
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* LOOP UNTIL END OF INPUT.</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* READS STANDARD INPUT, WRITES STANDARD OUTPUT.</i></font>
+<font color="#818181"><i>*</i></font>
+         LSSTYPE = HOST(4, &#39;LSS&#39;)
+         FN = HOST(2, HOST(3))
+         INPUT(.INPUT, 10,, FN)                               <b>:F(NONAME)</b>
+NONAME   INVAR  = .INPUT
+         INNAME = &#39;STDIN&#39;
+         FILELEVEL = 0
+<font color="#818181"><i>*</i></font>
+         LINELEAD =
+         LINELEAD = ?(LSSTYPE ? &#39;SNOBOL4&#39;) &#39;-LINE 1&#39;
+         LINELEAD = ?(LSSTYPE ? &#39;C&#39;) &#39;#line 1&#39;
+         LINELEAD = ?(LSSTYPE ? &#39;ASM&#39;) &#39;%LINE 1&#39;
+         OUTPUT = VDIFFER(LINELEAD) &#39; &quot;&#39; VDIFFER(FN) &#39;&quot;&#39;
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* MAIN LOOP READING AND WRITING FILES</i></font>
+<font color="#818181"><i>*</i></font>
+LOOP     LINE = $INVAR                                           <b>:F(EOF)</b>
+         LINENO = LINENO + 1
+         RESULT = PROCESS(LINE)                                 <b>:F(LOOP)</b>
+         RESULT ? P_COMMENT                                     <b>:S(LOOP)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* INPUT LINE TO BE RETAINED. LOOK FOR %SET COMMAND. IF FOUND, DEFINE</i></font>
+<font color="#818181"><i>* THE SYMBOL AND OMIT THE LINE FROM THE OUTPUT FILE.</i></font>
+<font color="#818181"><i>*</i></font>
+         RESULT ? P_SET                                   <b>:F(CK_INCLUDE)</b>
+         V = EVAL(ARG2)
+         SYMTBL&lt;ARG1&gt; = INTEGER(V) +V                           <b>:S(LOOP)</b>
+         TERMINAL = LC &#39;SET NON-NUMERIC VALUE: &#39; ARG2 REPORT()    <b>:(END)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CHECK FOR %INCLUDE COMMAND. STRIP ANY SURROUNDING QUOTE MARKS.</i></font>
+<font color="#818181"><i>*</i></font>
+CK_INCLUDE
+         RESULT ? P_INCLUDE                                   <b>:F(PUTOUT)</b>
+         ARG1 ? &quot;&#39;&quot; BREAK(&quot;&#39;&quot;) . ARG1 &quot;&#39;&quot; RPOS(0)
+         FILELEVEL = FILELEVEL + 1
+         INCSTACK&lt;FILELEVEL&gt; = INVAR
+         INCNAME&lt;FILELEVEL&gt; = INNAME
+         INCLNNO&lt;FILELEVEL&gt; = LINENO
+         INVAR = &#39;INPUT&#39; FILELEVEL
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* TRY THE CURRENT DIRECTORY; IF THE FILE IS NOT THERE, TRY IFSDIR</i></font>
+<font color="#818181"><i>* AND THEN SNOLIB. SHOULD DO PATH SEARCH (SEE LSINC).</i></font>
+<font color="#818181"><i>*</i></font>
+         DS = HOST(HOST_DIR_SEP)
+         INPUT(INVAR, FILELEVEL + 19,, ARG1)                    <b>:S(INC1)</b>
+         X = HOST(HOST_GETENV, &#39;IFSDIR&#39;)                        <b>:F(INC3)</b>
+         INPUT(INVAR, FILELEVEL + 19,, X DS ARG1)               <b>:S(INC1)</b>
+INC3     X = HOST(HOST_GETENV, &#39;SNOLIB&#39;)                        <b>:S(INC2)</b>
+         X = HOST(HOST_SNOLIB_DIR)
+INC2     INPUT(INVAR, FILELEVEL + 19,, X DS ARG1)               <b>:S(INC1)</b>
+         TERMINAL = LC &#39;INCLUDE FILE NOT FOUND: &#39; &quot;&#39;&quot; ARG1 &quot;&#39;&quot; REPORT()
++                                                                 <b>:(END)</b>
+INC1     INNAME = ARG1
+         LINELEAD =
+         LINELEAD = ?(LSSTYPE ? &#39;SNOBOL4&#39;) &#39;-LINE 1 &quot;&#39;
+         LINELEAD = ?(LSSTYPE ? &#39;C&#39;) &#39;#line 1 &quot;&#39;
+         LINELEAD = ?(LSSTYPE ? &#39;ASM&#39;) &#39;%LINE 1 &quot;&#39;
+         OUTPUT = VDIFFER(LINELEAD) INNAME &#39;&quot;&#39;
+INC4     LINENO = 0                                              <b>:(LOOP)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* OUTPUT THE PROCESSED LINE</i></font>
+<font color="#818181"><i>*</i></font>
+PUTOUT   OUTPUT = RESULT                                         <b>:(LOOP)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* HERE ON EOF. CHECK IF INSIDE AN INCLUDE FILE.</i></font>
+<font color="#818181"><i>*</i></font>
+EOF      EQ(FILELEVEL, 0)                                       <b>:S(EOF2)</b>
+         ENDFILE(FILELEVEL + 19)
+         INVAR = INCSTACK&lt;FILELEVEL&gt;
+         INNAME = INCNAME&lt;FILELEVEL&gt;
+         LINENO = INCLNNO&lt;FILELEVEL&gt;
+         LINELEAD =
+         LINELEAD = ?(LSSTYPE ? &#39;SNOBOL4&#39;) &#39;-LINE &#39;
+         LINELEAD = ?(LSSTYPE ? &#39;C&#39;) &#39;#line &#39;
+         LINELEAD = ?(LSSTYPE ? &#39;ASM&#39;) &#39;%LINE &#39;
+         OUTPUT = VDIFFER(LINELEAD) LINENO + 1 &#39; &quot;&#39; INNAME &#39;&quot;&#39;
+         FILELEVEL = FILELEVEL - 1                               <b>:(LOOP)</b>
+<font color="#818181"><i>*</i></font>
+EOF2     TERMINAL = NE(NESTLEVEL) &#39;EOF IN NESTED IF AT LEVEL &#39; NESTLEVEL
++                                                                <b>:S(END)</b>
+         &amp;CODE = 0                                                <b>:(END)</b>
+<font color="#818181"><i>*</i></font>
+END START
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-TITLE IFS
+START
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                         ###  #######   #####                         *</i></font>
+<font color="#818181"><i>*                          #   #        #     #                        *</i></font>
+<font color="#818181"><i>*                          #   #        #                              *</i></font>
+<font color="#818181"><i>*                          #   #####     #####                         *</i></font>
+<font color="#818181"><i>*                          #   #              #                        *</i></font>
+<font color="#818181"><i>*                          #   #        #     #                        *</i></font>
+<font color="#818181"><i>*                         ###  #         #####                         *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* IFS              PREPROCESS FOR %IF CONDITIONALS                     *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* CONVERTED FROM IF.SPT                                                *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* ifs.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;IFS&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:13 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

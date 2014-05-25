@@ -1,0 +1,2374 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>CPMED - A version of CP/M ED for Unix</title>
+  <meta http-equiv="Content-type"
+        content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <font face="Sorts Mill Goudy">
+    <h1>CPMED &ndash; A version of CP/M-80 ED for Unix</h1>
+    <blockquote>
+      “Kickin' it Old-school“ &ndash;or&ndash;<br>
+      “Every True Geek should use his own Editor”
+    </blockquote>
+    <p align="justify">
+      This is an implementation of the CP/M-80 editor
+      <code>ED</code>. All features of <code>ED</code>
+      (with one exception, <code>K</code> is a bit different)
+      are supported. I started my career with CP/M, and still
+      prefer its editor. Actually, I used a line editor called
+      <code>ADE</code> (Assembler/Editor/Debugger for the 6502)
+      before I used <code>ED</code>, but <code>ADE</code> didn't even
+      have string search, and also a system called <code>Software
+      Package One</code> (for the 8080). Both <code>ADE</code>
+      and <code>SP/1</code> were tape based, which was somewhat
+      better than punched cards. I also used <code>WordStar 3</code>
+      on CP/M-80 (in non-document mode) for entering programs. The
+      WordStar interface was carried forward by Borland, but this
+      was still not my personal preference.
+
+    </p>
+    <p align="justify">
+      I actually started with punched cards and tried to use
+      <code>TECO</code> for a while; I just never got good at it.  Just
+      like CP/M-80 <code>ED</code>, this editor can be considered in
+      the <code>TECO</code> family. Actually, CP/M-80 <code>ED</code>
+      is a cross between <code>TECO</code> and TSO <code>EDIT</code>.
+
+    </p>
+    <p align="justify">
+      This implementation is rather crude, but it is only for my
+      personal use. I truly do not expect anyone else to ever use
+      this code. Goals are to bring the size of the editor down, and
+      increase portability. The editor has pretty much no features
+      that “modern” editors have; indeed it can be considered
+      almost user hostile! Help is implemented, via the <code>?</code>
+      command. This implementation uses the simplest possible format
+      for the edit buffer &ndash; just an array of characters. This
+      makes insert and delete character very expensive operations.
+      However, systems are so fast these days that this simple
+      organization is actually sufficient.
+
+    </p>
+    <p align="justify">
+      If you are not comfortable with the CP/M-80 <code>ED</code>
+      commands, you may absolutely hate this editor. If you are
+      old-school enough to have used <code>TECO</code>, you may also
+      hate this editor &ndash; it will be too restrictive. Of course,
+      it really isn't user hostile, because the only user is me, and I
+      am happy with it. I was warped by CP/M-80 <code>ED</code>. The
+      real reason this document exists is to provide amusement to my
+      kids after I am dead!
+
+    </p>
+    <p align="justify">
+      <code>CPMED</code> is an improvement on <code>ED</code>. Not as
+      many spurious newlines are produced; it has many more features,
+      and is comparable on a size basis (10K for <code>ED</code>
+      on an 8-bit system, 40K for <code>CPMED</code> on a 64 bit
+      system). <code>CPMED</code> has over twice the commands
+      <code>ED</code> does, including a full RPN calculator (with
+      decimal, octal and hex input and output), and full looping,
+      nesting and conditional command execution. Four help pages are
+      included, giving an overview of <code>CPMED</code> commands
+      and operation.  This is important, as there are over 50 commands
+      available in <code>CPMED</code>.
+
+    </p>
+    <p align="justify">
+      VEDIT was a commercial implementation of the same idea &ndash;
+      a visual interface to <code>ED</code>. VEDIT's macro language
+      was originally a lot more like <code>TECO</code>, and is now
+      C-like. Arguably, a lot more powerful than <code>CPMED</code>,
+      but, it doesn't come with source, and I didn't write it.
+
+    </p>
+    <p align="justify">
+      The first 8086 implementation of <code>CPMED</code> was on an
+      IBM PC, running PC-DOS in 1984. I wrote it because I preferred
+      the command syntax and features of the CP/M <code>ED</code>
+      editor to Microsofts <code>EDLIN</code>. They were similar, but
+      <code>ED</code> was line <b>and</b> character oriented while
+      <code>EDLIN</code> was only line oriented, and I was familiar
+      with <code>ED</code>. A conversion was done in 1986 moving
+      the editor to X<small>ENIX</small>, and then in 1996 moving
+      the editor to Linux and Solaris. Again, I was comfortable with
+      <code>ED</code> and not with vi or emacs. The source code for
+      <code>CPMED</code> is organized such that it can be edited even
+      on an uppercase only terminal (I used such limited terminals
+      up to 1989).
+
+    </p>
+    <p align="justify">
+      I still actively use <code>CPMED</code>. The current VT100
+      based scope implementation was done in 1996, when the editor was
+      first moved to SUN Solaris. A limited scope implementation
+      was done on the IBM PC, utilizing direct memory-mapped
+      display, but this had to be completely redone for a VT100
+      terminal. COBOL marking on the ruler line was added in 2009,
+      for some maintainance Micro Focus COBOL work. This is the only
+      software that I have used for this long (30 years, so far).
+
+    </p>
+    <p align="justify">
+      By the time this editor was converted to use scope mode for
+      a VT100, minimum processor speeds were already at 200Mhz (to
+      1GHz). As a result, the scope mode was left inefficient. I have
+      never gotten around to optimizing this (beyond simple one line
+      updates). Eventually, the scope mode may be re-written to use
+      screen buffer deltas.
+
+    </p>
+    <p align="justify">
+      As a side note, the core of this editor was initially coded in C!
+      The Whitesmiths compiler was used to produce a simple screen
+      editor on a Z80, under CP/M for customers of a disk conversion
+      system. The Z80 version was simple, relying on arrow keys
+      and other special keyboard keys, with a very limited set of
+      features. The edit buffer was originally represented as a list
+      of fragments. Fragments were of the same size (128 bytes),
+      to avoid allocations from fragmenting memory. That editor
+      would also move fragments to disk, to increase the available
+      memory. Disk address for virtual memory for that editor was 16
+      bits, allowing 8MB maximum file size. This meant a practical
+      maximum of 256,000 bytes per file.  (which was also the limit
+      for SSSD CP/M floppies &ndash; 256,256 bytes, and CP/M-80
+      imposed a limit of 8MB on hard disks).  Since we no longer have
+      that memory restriction, and computers are so much faster,
+      <code>CPMED</code> uses a simple character buffer approach
+      (but does impose an 8 megabyte limit on edit buffer size). I
+      normally set a 2 megabyte edit buffer size.
+
+    </p>
+    <p align="justify">
+      However, even today <code>CPMED</code> is able to run on
+      upper-case only printing terminals! (even though I haven't
+      needed that feature in 30 years).  In the incarnation on
+      X<small>ENIX</small>, a very limited (11 line) preview could
+      be used. Scrolling regions were not needed &ndash; instead 5
+      lines around the current point were displayed, with an optional
+      clear terminal.  This is the major reason that scope mode is
+      still inefficient today.
+
+    </p>
+    <p align="justify">
+      Some features have been added to support my programming style:
+      brace matching for LISP/SCHEME, UNDO, rulers for the languages I
+      use, a vertical bar for alignment, auto indent, re-indent, and
+      more extensive macros, including conditionals and looping. As
+      well, UTF-8 characters can be entered and displayed if using
+      a terminal emulator that is suitably configured. Again, the
+      feature set is exactly what I use, because this editor has an
+      audience of one.
+
+    </p>
+    <p align="justify">
+      <code>CPMED</code> supports printing terminals, with as little
+      as the capability of a TTY33. Scope mode (full screen) is
+      supported, and assumes the terminal respect VT100/VT220 escape
+      sequences. It runs on Linux Console. UTF-8 is also (fairly
+      crudely) supported. Scrolling regions are a requirement for
+      scope mode.
+
+    </p>
+    <h3>TTY33 &ndash; Printing terminal, slow, uppercase only</h3>
+    <p align="justify">
+      These terminals do not support <i>backspace</i>. Erase a
+      character echoes the erased character <code>.3</code> command
+      allows lowercase to be viewed, and <code>U</code> allows forcing
+      everything to uppercase.  <code>^R</code> on entry allows
+      retyping of corrected entry. If <code>.3</code> mode is enabled,
+      lowercase ‘a’ is displayed as <code>[A]</code>. This allows
+      limited lowercase to be edited on such a device (specifically,
+      <code>cpmed.c</code> itself can be edited).
+
+    </p>
+    <h3>Glass TTY &ndash; Possibly uppercase only</h3>
+    <p align="justify">
+	Backspace may work correctly (note that BS/RUBOUT are reversed
+	in scope mode &ndash; for convenience). KEYRUB and KEYBS can
+	be assigned in <code>=</code> commands. <code>0P</code>,
+	<code>P</code> and <code>-P</code> are effective at
+	displaying files. If the “normal” backspace key deletes
+	via “rubout”:
+
+      </p>
+      <pre>
+	ABC[backspace] produces
+	ABCC
+      </pre>
+      <p align="justify">
+	then the input can be “cleaned up” with <code>^R</code>
+
+      </p>
+      <pre>
+	ABCC^R
+	ABC
+      </pre>
+      <p align="justify">
+	The “rubout” code (127, DEL) can be assigned to backspace:
+
+      </p>
+      <pre>
+	=127&gt;[keybs]
+      </pre>
+      <p align="justify">
+	And, now the “normal” backspace should function as
+	expected.  Note that <code>.S</code> (fullscreen) does this:
+
+      </p>
+      <pre>
+	=127&gt;[KEYBS]
+	=8&gt;[KEYRUB]
+      </pre>
+      <p align="justify">
+	because it assumes a VT100 key mapping.
+
+      </p>
+      <h3>VT100/220 &ndash; Upper and lower case, may be 9600 baud
+	  or less</h3>
+      <p align="justify">
+	These terminals allow the use of scope mode
+	(<code>.S</code>). Full screen editing is possible. Assume
+	7 bit ASCII character set. <code>.E</code> provides a
+	S<small>EE</small>A<small>LL</small> mode where all characters
+	are visible.  <code>2.S</code> mode is provided for slow links,
+	or line editing can be utilized.
+
+      </p>
+      <h3>VT100/220 with UTF-8 support (terminal emulator)</h3>
+      <p align="justify">
+	Full screen editing. <code>.F</code> enables UTF-8 editing
+	(and sets 8 bit <code>.D</code> as well). This displays UTF-8
+	symbols (assuming the device can), and utilizes VT100 escape
+	sequences to control the terminal. The <code>C</code> and
+	<code>D</code> commands are UTF-8 aware. Be aware that up to 6
+	bytes may be erased with a <code>D</code> command in this mode.
+
+      </p>
+      <p align="justify">
+	<code>CPMED</code> is probably also full of bugs, although
+	it has been run with several different compilers, and in
+	32 and 64 bit modes, big and little endian (and on multiple
+	OSs). The distribution contains binary (compiled) versions for
+
+      </p>
+      <center>
+	<table border="1">
+	  <tr>
+	    <th>Platform</th>
+	    <th>Bits</th>
+	    <th>OS</th>
+	    <th>Endian</th>
+	  </tr>
+	  <tr>
+	    <td>PA-RISC2.0</td>
+	    <td>32 bit</td>
+	    <td>HP-UX</td>
+	    <td>Big Endian</td>
+	  </tr>
+	  <tr>
+	    <td>Sparc 32</td>
+	    <td>32 bit</td>
+	    <td>Solaris</td>
+	    <td>Big Endian</td>
+	  </tr>
+	    <td>x86_64</td>
+	    <td>64 bit</td>
+	    <td>Linux</td>
+	    <td>Little Endian</td>
+	  </tr>
+	</table>
+      </center>
+      <p align="justify">
+	<code>CPMED</code> “buginess” doesn't matter, because I am
+	the only user, and it works for me.
+
+      </p>
+      <h3>Design of an Editor</h3>
+      <p align="justify">
+	The purpose of a text editor (especially a programming editor)
+	is to enter and revise ASCII (and, these days, UTF-8) text,
+	conveniently and precisely. Text must be entered quickly in
+	the format required by the language processor, and revisions
+	should be fast and accurate.  Any on-screen representation
+	must facilitate these goals, without interfering with the
+	creative process. CP/M-80 <code>ED</code> met most of these
+	requirements, but did not provide a full screen view of
+	the code.
+
+      </p>
+      <p align="justify">
+	The full screen view must represent the printed program text
+	closely, and must provide the detail required to edit and
+	format the program text.
+
+      </p>
+      <p align="justify">
+	A text editor will be used in one of three “modes”. First
+	is to enter text, where the text is known, or being
+	composed. This requires positioning to the entry location
+	(“Find”, line number), a ruler to assist in horizontal
+	formatting (possibly a margin bell or bar(s), and tabulation).
+	The second mode is revising text. Again, location to the
+	position, followed by entry, deletion or replacement. The third
+	mode is simply reading. A clean and uncluttered display is
+	best, perhaps assisted by line numbering or change notification
+	devices. Editing automation is important.
+
+      </p>
+      <p align="justify">
+	To these ends, <code>CPMED</code> supports highlighting a
+	column (for FORTRAN, COBOL or ASSEMBLER). and the ability
+	to view “invisible” characters such as spaces, tabs and
+	other control characters. It edits text and ONLY text. Any
+	formatting function is relegated to external commands. There
+	is one integrated formatting function &ndash; auto indentation
+	on a new line, and the ability to re-indent lines.
+
+      </p>
+      <p align="justify">
+	<code>CPMED</code> supports a margin bell. <code>72.B</code>
+	will sound the bell if text is entered past column 72. This
+	applies only to the <code>I</code> command, and not the
+	command line.
+
+      </p>
+      <p align="justify">
+	<code>CPMED></code> supports variable
+	tabulation. <code>-.H</code> clears all set
+	tabs. <code><i>n</i>.H</code> (<code>7.H</code> for FORTRAN,
+	as an example) sets (or if already set, clears), a horizontal
+	tab. When <code>^W</code> is entered during the <code>I</code>
+	command, spaces are inserted to move to the next tabulation
+	column. Up to 20 tabulation columns can be set. The naked
+	<code>.H</code> command will display the tabulations that
+	are set (all 20, with 0 indicating available tabulations).
+
+      </p>
+      <p align="justify">
+	When a file is read, flags are set according to the files
+	extension (<code>.FTN</code> would be FORTRAN). Also, as
+	lines are read from the file, if a “ce” line is read
+	(space “CE:” followed by commands), the commands are
+	submitted, and this can set the file type. Note that ‘;’
+	character is replaced by <code>^Z</code> in the command,
+	and that first ‘;’ terminates the command, and submits it.
+
+      </p>
+      <p align="justify">
+	For example
+
+      </p>
+      <pre>
+	ce: .f.mhtml;
+      </pre>
+      <p align="justify">
+	sets UTF-8 and the edit mode to text.
+
+      <p align="justify">
+	The ‘;’ handling is to make it easy to enter the
+	<code>.M</code> command without needing to escape a
+	<code>^Z</code>. Using the “ce” lines for other tasks
+	may be more difficult, but still possible.
+
+      </p>
+      <p align="justify">
+	<code>/</code> repeats the last find or substitute
+	command. <code>^A</code> repeats the last command. As well,
+	the <code>*</code> (shelf) command will copy characters to
+	the “shelf” which can be retrieved into the command line
+	using <code>^F</code>. For example, if the point is at the
+	beginning of a C function definition, <code>-*(^Z</code>
+	would store the function name to the shelf. Subsequently,
+	<code>F^F</code> would build the <code>F</code> command to
+	find that function name. <code>0*<i>string</i></code> will
+	store <i>string</i> to the shelf, <code>10*</code> will store
+	the next 10 characters from the edit buffer to the shelf,
+	and <code>-*<i>c</i>^Z</code> will store all characters up
+	to <i>c</i> from the edit buffer.  Note that the argument to
+	<code>-*</code> is a single character, but it must still be
+	terminated by <code>^D</code> or <code>^Z</code>.
+
+      </p>
+      <p align="justify">
+	Macros are supported by the <code>M</code> command, <code>
+	( )</code> looping and conditionals.
+
+      </p>
+      <p align="justify">
+	<code>CPMED</code> is driven purely by keyboard editing
+	commands, with some full-screen immediate commands. There
+	are very few features, and very few extraneous display
+	elements. But, <code>CPMED</code> is driven by my needs
+	and philosophy, and does not reflect any GUI design,
+	discoverability or any other features and designs. This is
+	<b>my</b> editor; not <b>your</b> editor, and, as long as
+	the user base remains 1, will stay that way.
+
+      </p>
+      <p align="justify">
+	In scope mode, there is a region for the file being edited,
+	a separator line that changes according to the language
+	(for editing fixed format FORTRAN and COBOL, which I still
+	do), and a scrollable command entry area. Editors such as
+	<code>vi</code> do not work well for classic FORTRAN, because
+	of the requirement for specific columns. The user would need
+	to be very careful on entering new lines, or enable a column
+	counter (if using, say, vim). Using <code>CPMED</code>,
+	the command <code>7.G</code> would highlight the start of
+	statement column.  <code>72.G</code>H highlights the end
+	of statement column, allowing easy verification of the
+	input program.	<code>72.B</code> would ring a bell on
+	exceeding the statement limit. Setting a tab at column 7
+	using <code>7.H</code> allows <code>^W</code> to tab to the
+	statement part.  <code>U</code> automatically uppercases
+	imput. This makes for easy FORTRAN entry.
+
+      </p>
+      <p align="justify">
+	Many extensions to <code>ED</code> are provided by
+	<code>CPMED</code>.  They include ability to suppress
+	“Y/N” prompts, 8 bit (UTF-8) character support, settable
+	tab expansion and auto indentation, scope mode (full screen
+	support), LF and CR/LF file handling, rubout cancellations,
+	brace matching, simple programming, indent/outdent, marks,
+	binary editing, shell, piping, repeat commands, multiple
+	programming languages, UNDO, vertical marking and sourcing
+	of input are now provided. <code>CPMED</code> tries to not
+	issue as many line-feeds to reduce output.
+
+      </p>
+      <p align="justify">
+	<code>CPMED</code> has the ability to edit binary
+	files. Files may contain any 8-bit character (0 to 255). The
+	<code><i>n</i>.I</code> command inserts the character with
+	value <i>n</i> (eg. <code>0.I</code> will enter a NUL). These
+	characters will be displayed as <code>[<i>hh</i>]</code>
+	in <code>-.D</code> (non-eightbit) mode where <i>hh</i> is
+	a two hexadecimal octet, and will be passed through to the
+	terminal in <code>.D</code> (eightbit). To enter the value
+	in hex, the <code>=</code> command can be used, along with
+	the <code>^</code> command prefix:
+
+      </p>
+      <pre>
+	*= HEF^Z ^.I
+      </pre>
+      <p align="justify">
+	will enter character <code>EF hex</code> into
+	buffer. <code>0.T</code> will display tabs as <code>^I</code>
+	instead of expanding them, which is helpful in editing
+	binary files.  Newlines will still cause line breaks, but
+	no other characters will be interpreted (controls display
+	as <code>^C</code>; <code>[00]</code> is null, and 127-255
+	are displayed as <code>[7F]-[FF]</code>).
+
+      </p>
+      <p align="justify">
+	In <code>.D</code> (eightbit) mode, all output characters are
+	passed through a UTF-8 filter. Column locations are based
+	on the output of that filter, and correctly accomodate
+	UTF-8 sequences. It is presumed that the terminal will
+	interpret UTF-8 sequences and display the correct character.
+	External filters invoked with <code>.!</code> may not interpret
+	UTF-8 correctly.
+
+      </p>
+      <p align="justify">
+	A scope mode that requires a VT100 (or equivalent) with
+	scrolling regions is provided. Scope mode is useful in that it
+	provides visual context for edit commands. A ruler is displayed
+	in scope mode, with FORTRAN, COBOL and other programming
+	language columns marked, a marker every 10 characters, and
+	columns 64 and 72 shown. When in scope mode, 18 lines of the
+	edit buffer are shown, followed by a dividing ruler line, with
+	a 5 line scrolling region at the bottom for commands. Other
+	screen sizes (than 80x24) are supported. The command area
+	is normally 5 lines. If the width is 132 or greater, column
+	132 is marked on the ruler. After changing screen size, use
+	<code>.S,</code> or <code>^V</code> to refresh the editors
+	notion of the screen size.
+
+      </p>
+      <p align="justify">
+	In scope mode, FORTRAN, COBOL, LISP, and SNOBOL bolds
+	comments. ‘#’ or ‘;’ at the beginning of a line bolds
+	the line. ‘*’ at the beginning in SNOBOL bolds the line,
+	and ‘C’, ‘c’, ‘*’ or ‘!’ in FORTRAN bolds. Only
+	single line comments are bolded &ndash; <code>CPMED</code>
+	makes no attempt to actually interpret the syntax of the
+	language. This is simply an assist to reading code.
+
+      </p>
+      <p align="justify">
+	Note that ‘#’ line bolding means AWK, RATFOR, SHELL,
+	and other languages will be comment highlighted. In C mode,
+	‘#’ and ‘;’ lines will not be bolded.
+
+      </p>
+      <p align="justify">
+	A vertical bar can be enabled.	The bar extends down the scope
+	display to the ruler line, allowing for column alignment.
+	The <code>G</code> and <code>.G</code> commands control the
+	vertical bar display.  The bar is not saved in the buffer,
+	but is only a display device.
+
+      </p>
+      <p align="justify">
+	Since scope mode is so useful, I use it most of the
+	time. Indeed, some commands (indent/outdent and brace match)
+	are particularly useful in scope mode, and not as useful
+	in scrolling terminal mode. The scope mode may be improved
+	by double-buffering the screen and using screen deltas to
+	update the display. This will allow scroll up and down to be
+	exploited (of use with slow communications lines). I haven't
+	yet implemented this (the entire screen is refreshed each time,
+	with single-line optimizations). However, <code>2.S</code>
+	enters a scope update mode that is limited to explicit
+	updates. This and limiting the number of scope lines is useful
+	when editing files over a very slow communications link.
+
+      </p>
+      <p align="justify">
+	When in scope mode, <code>-I</code> and cursor
+	motions on the same line are optimized and only cause
+	a single line redraw. Other commands will cause a full
+	refresh. <code>2.S</code> mode (hold mode) is still more
+	efficient.  In scope mode, S<small>EE</small>A<small>LL</small>
+	is available (<code>.E</code>). This shows spaces and line
+	ends as characters (<code>.</code> and <code>&lt;</code>, both
+	dimmed). Tabs will be white space, (unless tab expansion is
+	disabled, in which case a tab is displayed as <code>^I</code>).
+
+      </p>
+      <p align="justify">
+	A brace match feature is implemented. <code>,</code> matches
+	<code>([{&lt;&gt;}])</code> and moves the point to the matching
+	brace. I implemented this to assist in SCHEME programming.
+
+      </p>
+      <p align="justify">
+	<code>^A</code> repeats the last typed command (“again”)
+	and <code>/</code> repeats the last search command
+	(<code>F</code>, <code>S</code>, <code>N</code>, or
+	<code>J</code>).
+
+      </p>
+      <p align="justify">
+	The <code>J</code> (“juxtapose”) command can be very
+	useful. Given:
+
+      </p>
+      <pre>
+	MYVAR = EXPR
+      </pre>
+      <p align="justify">
+	the command <code>JMY^ZNEW^Z ^Z</code> searches for “MY”,
+	replaces with “NEW”, and then deletes until a space,
+	resulting in:
+
+      </p>
+      <pre>
+	NEW = EXPR
+      </pre>
+      <p align="justify">
+	The <code>K</code> command kills lines. <code>0K</code>
+	deletes until the beginning of the line, but does not
+	remove the line-end marker. <code>K</code> deletes to the
+	end of the line, including the line-end marker. However,
+	the command <code>J^Z^Z^P^J^Z</code> will delete from the
+	current point to the line-end, but not include the line
+	end! This is <code>J</code> (“juxtapose”), no search,
+	no replace, and delete until the line-end (<code>^P</code>
+	quotes, and <code>^J</code> is line-end). By default,
+	<code>^L</code> in search strings accomplishes the same
+	thing (see <code>.L</code>), so this can be expressed as
+	<code>J^Z^Z^L^Z</code> as well.
+
+      </p>
+      <p align="justify">
+	The command <code>1::3T</code> is interpreted as
+	<code>1:</code> which is count 1 followed by <code>:</code>
+	as a command, which positions the point to line 1. The
+	second command is <code>:3T</code>. <code>:3</code> computes
+	the repetition to execute the command to line three, and
+	<code>T</code> types lines. So <code>1::3T</code> types lines
+	1 to 3.
+
+      </p>
+      <p align="justify">
+	The # count is not 65535 &ndash; it is the greater of 65535
+	and BSIZE (which is 512K by default). This is the maximum
+	number of characters in the edit buffer, so <code>#C</code>
+	will be <code>-B</code>.  However, the line numbering is
+	1 to 99999 (5 digit). This should be just fine for most
+	source files.  Any line numbers greater than 5 digits will
+	be displayed as #####.	If a line number is greater than
+	5 digits, it can be entered and used.  To display it, use
+	<code>=[LN]P</code>. Note that </code>-#</code> is supported,
+	so <code>-#C</code> is equivalent to <code>B</code> (and,
+	in reality, <code>B</code> is executed as <code>-#C</code>
+	and <code>-B</code> is <code>#C</code>.  This keeps line
+	numbering correct).
+
+      </p>
+      <p align="justify">
+	The startup command is
+
+      </p>
+      <pre>
+	ce infile [outfile] [-e commands]
+      </pre>
+      <p align="justify">
+	If only a single file is given, this will be used as both
+	the input and output files. The original input file will
+	become the backup file (.bak extension). If two names are
+	given, input will be from the first file, and output to the
+	second. No backup file will be generated.  As well, commands to
+	be executed (for example <code>#a100:</code> to go to line 100)
+	can follow <code>-e</code>. The <code>4V</code> command will
+	display all filenames currently assigned (this takes 3 lines
+	of output). If only a single filename is given, the output
+	file will be <code>/tmp/fileCxmnCU</code> (for example). A
+	unique <code>/tmp</code> filename is generated. On completing
+	the edit (<code>E</code>), the output file will be copied to
+	the input file (if no outfile was given).
+
+      </p>
+      <p align="justify">
+	Each -e "command" on the command line has a ^Z appended.
+	Normally, ^Z cannot be entered on the <code>shell</code>
+	command line, and this would prevent S commands from being
+	entered on the command line, however:
+
+      </p>
+      <pre>
+      ED file -e '#a' -e '#sFROM' -e 'TO' -e '.ye'
+      </pre>
+      <p align="justify">
+	will work. A ^Z doesn't do anything as a command. All of
+	the -e commands are concatenated, separated by ^Z. The .y
+	disables any Y/N prompting. So, this command edits the file,
+	replacing all occurences of FROM with TO.
+
+      <p align="justify">
+	If two filenames are given (in and out), the <code>H</code>
+	command will flip them around. This allows editing from the
+	beginning again.
+
+      </p>
+      <p align="justify">
+	The edit buffer size is controlled via REGION. Default is 512K;
+	if a number less than 2048 is given, the size in multiplied
+	by 1024.  The maximum size is 8 megabytes. The default of
+	512K corresponds to 6553 card images (of 80 characters).
+
+      </p>
+      <pre>
+	REGION=64 ce myfile
+      </pre>
+      <p align="justify">
+	Suffixes of “K” and “M” can be used:
+
+      </p>
+      <pre>
+	REGION=2M
+      </pre>
+      <p align="justify">
+	for a 2 megabyte edit buffer. Maximum edit buffer is 8
+	megabytes. This does not limit the size of file that can be
+	edited. The <code>A</code> and <code>W</code> commands can
+	be used to page through the file if needed. Practically,
+	though, 8 MB should be sufficient for any source editing
+	(the largest file I routinely edit is a FORTRAN program 1
+	million bytes in size, or over 32,000 lines).
+
+      </p>
+      <p align="justify">
+	The <code>..</code> command “sources” files. Commands are
+	read from the file. First, the command file is opened in the
+	current directory. If not found, directory specified by CELIB
+	in the environment is tried. Any commands on the command line
+	after <code>..</code> are ignored.
+
+      </p>
+      <pre>
+	CELIB=/usr/share/celib REGION=512 ce file -e "#a.s"
+      </pre>
+      <p align="justify">
+	When the editor is started, file <code>.cpmedrc</code> is
+	sourced from the current directory first, or from CELIB,
+	if it exists in either location. The commands on the command
+	line (if any) are then executed. Putting <code>#a.s</code>
+	into a local <code>.cpmedrc</code> can be used, for example,
+	to convert the editor to full screen.
+
+      </p>
+      <p align="justify">
+	The <code>Y</code> command is an UNDO. All changes made can
+	be reverted using the <code>O</code> command (original). As
+	text is deleted and inserted (or substituted), the changes
+	are recorded in an UNDO buffer. On insert (<code>I</code>
+	commands), a mark is recorded on each newline. A single
+	<code>Y</code> command will undo to the last mark. Multiple
+	marks, character insertions and deletions (up to the UNDO
+	limit) are recorded.  <code>W</code> and <code>A</code>
+	commands clear the UNDO buffer. For example <code>3K</code>
+	will remove 3 lines. <code>Y</code> will undo each of
+	the <code>K</code> operations. A mark is set on entry to
+	the kill. On deletion of a newline, another mark set set.
+	The first undo will undo the final newline delete. The next
+	will restore back to the previous newline. This will appear as
+	if 2 <code>Y</code> commands are needed to restore the final
+	line, and one for each line thereafter.  The UNDO environment
+	variable controls the number of UNDO records retained. The
+	default is 1024.
+
+      </p>
+      <pre>
+	UNDO=2000 ce ...
+      </pre>
+      <p align="justify">
+	Each UNDO record is one character deleted or inserted,
+	or an operation mark. This means that at an (average) of
+	40 characters per line, the last 25 lines of editing can be
+	“undone”, assuming 1024 UNDO records.  The <code>Y</code>
+	command does not repect the numeric count. This is because
+	the UNDO cannot itself be “undone”.
+
+      </p>
+      <p align="justify">
+	CPMED supports an alternate edit buffer. This will be used
+	to hold information needed by macros but at present is not
+	used. The default size is 16K, but this can be adjusted
+	using the REGION2 environment variable. Like REGION, K and M
+	suffixes are supported. The <code>.Z</code> command selects
+	the edit region. <code>.Z</code> selects the primary, and
+	<code>2.Z</code> selects the alternate. The <code>E</code>,
+	<code>A</code>, <code>W</code>, <code>Q</code> and other
+	file commands do not function when the alternate region is
+	selected. Only <code>R</code> and <code>X</code> can transfer
+	from disk.
+
+      </p>
+      <p align="justify">
+	This implementation supports auto-indent. If enabled each line
+	entered in input mode is automatically indented to the same
+	level as the previous line. This is accomplished by inserting
+	tabs and spaces. <code>^T</code> and <code>^G</code> can be
+	used to indent or outdent. To automate this, the <code>%</code>
+	command is bound to indent/outdent. To indent the next 10
+	lines by 2 indents (4 characters per indent in C mode):
+
+      </p>
+      <pre>
+	10M2%L
+      </pre>
+      <p align="justify">
+	An <i>editing mode</i> can be set. Currently, nine are
+	supported: TEXT, FORTRAN, COBOL, PASCAL, SNOBOL4, LISP, C,
+	SHELL and ASSEMBLER. As well, sub-modes are available: YACC,
+	LEX, RATFOR, SCHEME, LITERATE, DC, HTML, SABLE, PERL, SED,
+	TCL, SQL, BASIC, AWK, BC, APL, MAKE and REXX. <code>.M^Z</code>
+	sets TEXT, <code>.MFORTRAN^Z</code> sets FORTRAN.
+
+      </p>
+      <p align="justify">
+	Initially, the mode is set from the file extension (for
+	example: <code>.FTN</code> enables FORTRAN). On <code>A</code>
+	(append) each line is scanned for (space)ce: commands; where
+	commands will be submitted. I insert these CE lines into my
+	source templates.
+
+      </p>
+      <p align="justify">
+	Note that the mode selects tabulation, auto indent, the ruler
+	line, and has an effect on comment bolding. Syntax highlighting
+	and automatic expansion are not done. For example, when FORTRAN
+	is selected, a tabulation is set a column 7. <code>^W</code>
+	will insert spaces to that tabulation point. As well, the
+	margin bell is set to 72.
+
+      </p>
+      <p align="justify">
+	After a series of edits, the <code>H</code> (head) command can
+	be used to commit the changes and rewind the input file. If
+	an edit is done in error, the <code>O</code> command can
+	be used to restore the original input file and rewind (or
+	<code>Q</code> can be used to quit the edit). After rewinding,
+	the source file must be read into the edit buffer again using
+	the <code>A</code> command (<code>0A</code>, <code>#A</code>).
+
+      </p>
+      <h3>Commands not in ED</h3>
+      <pre>
+	.T .Y .8 ? .D .S / , ! .! .A .I @ .@
+	# &lt;tab&gt;text -I G .G .. .M .3 .L .E .F .H .X
+	( ) $ = _ ^ &amp; Y 2V 3V 4V % .Z .V *
+      </pre>
+      <h3>Editing keys</h3>
+      <table>
+	<tr>
+	  <td><code>^C</code></td>
+	  <td>Abend if first character on line</td>
+	</tr>
+	<tr>
+	  <td><code>^Z, ^D</code></td>
+	  <td>End of string, end of insert</td>
+	</tr>
+	<tr>
+	  <td><code>^E</code></td>
+	  <td>Start new physical line</td>
+	</tr>
+	<tr>
+	  <td><code>^M, CR</code></td>
+	  <td>Execute command, if empty command, then advance and
+	      type</td>
+	</tr>
+	<tr>
+	  <td><code>^R</code></td>
+	  <td>Echo #, retype line, tty</td>
+	</tr>
+	<tr>
+	  <td><code>^U</code></td>
+	  <td>Abandon line, tty. Issues newline, and indents to
+	      start.</td>
+	</tr>
+	<tr>
+	  <td><code>^X</code></td>
+	  <td>Abandon line, crt. Backspaces to beginning.</td>
+	</tr>
+	<tr>
+	  <td><code>RUBOUT</code></td>
+	  <td>Erase character, tty. Echoes character erased.</td>
+	</tr>
+	<tr>
+	  <td><code>BACKSP</code></td>
+	  <td>Erase character, crt</td>
+	</tr>
+	<tr>
+	  <td><code>^L</code></td>
+	  <td>Line end in S, F, J (see .L command)</td>
+	</tr>
+      </table>
+      <h3>Editing keys not in ED</h3>
+      <table>
+	<tr>
+	  <td><code>^A</code></td>
+	  <td>Again, repeat last command line</td>
+	</tr>
+	<tr>
+	  <td><code>^P</code></td>
+	  <td>Quote next character</td>
+	</tr>
+	<tr>
+	  <td><code>^T</code></td>
+	  <td>Increase indent</td>
+	</tr>
+	<tr>
+	  <td><code>^G</code></td>
+	  <td>Decrease indent</td>
+	</tr>
+	<tr>
+	  <td><code>^B</code></td>
+	  <td>Brace match</td>
+	</tr>
+	<tr>
+	  <td><code>^F</code></td>
+	  <td>Insert shelf</td>
+	</tr>
+	<tr>
+	  <td><code>^W</code></td>
+	  <td>Space to next tabulation</td>
+	</tr>
+      </table>
+      <p align="justify">
+	Note that <code>^T</code>, <code>^G</code>, and autoindent only
+	work in <code>-I</code> insert in scope mode.  Be careful when
+	using immediate commands. Immediate commands “cancel” the
+	command line entry, and replace it with the immediate command.
+
+      </p>
+      <p align="justify">
+	Note that RUBOUT and BACKSP are reversed if scope mode is
+	enabled (we know we are using a VT100 terminal &ndash; or
+	terminal emulator).
+
+      <p align="justify">
+	The format of numbers is a bit more sophisticated than CP/M-80
+	<code>ED</code>. Number format is:
+
+      </p>
+      <table>
+	<tr>
+	  <td><code>10T</code></td>
+	  <td>Type 10 lines</td>
+	</tr>
+	<tr>
+	  <td><code>-5C</code></td>
+	  <td>Move back 5 characters</td>
+	</tr>
+	<tr>
+	  <td><code>:20T</code></td>
+	  <td>Type through line 20</td>
+	</tr>
+	<tr>
+	  <td><code>10::20T</code></td>
+	  <td>Type lines 10 through 20</td>
+	</tr>
+	<tr>
+	  <td><code>@3T</code></td>
+	  <td>Type through mark 3</td>
+	</tr>
+	<tr>
+	  <td><code>2@@3T</code></td>
+	  <td>Type from mark 2 through mark 3</td>
+	</tr>
+	<tr>
+	  <td><code>#T</code></td>
+	  <td>Type all from current</td>
+	</tr>
+	<tr>
+	  <td><code>10::20-1T</code></td>
+	  <td>Type lines 10 through 19</td>
+	</tr>
+	<tr>
+	  <td><code>10::20+2T</code></td>
+	  <td>Type lines 10 through 22</td>
+	</tr>
+	<tr>
+	  <td><code>^T</code></td>
+	  <td>Transfer expression result to count Note that ^ here
+	      does not represent control, but is the circumflex
+	      character itself</td>
+	</tr>
+	<tr>
+	  <td><code>&amp;</code></td>
+	  <td>Read the next number from the index file (see .N) and
+	      use that for the argument. Normally, the number is
+	      relative number of lines from current line (may be
+	      in character units, or something else entirely, for
+	      = expressions). Fails if non-number in the file, or
+	      end of file.</td>
+	</tr>
+      </table>
+      <p align="justify">
+	Trailing + or - n is really only useful when using @n line
+	marks.
+
+      </p>
+      <h3>Errors and Messages</h3>
+      <table border="1">
+	<tr>
+	    <td><code>NO EDIT BUFFER</code></td>
+	    <td>Cannot allocate edit buffer</td>
+	</tr>
+	<tr>
+	    <td><code>NEW FILE</code></td>
+	    <td>File is new</td>
+	</tr>
+	<tr>
+	    <td><code>NO FILE</code></td>
+	    <td>No file on command line</td>
+	</tr>
+	<tr>
+	    <td><code>BREAK "&gt;" AT <i>c</i></code></td>
+	    <td>Buffer full</td>
+	</tr>
+	<tr>
+	    <td><code>BREAK "?" AT <i>c</i></code></td>
+	    <td>Command error</td>
+	</tr>
+	<tr>
+	    <td><code>BREAK "O" AT <i>c</i></code></td>
+	    <td>No transfer file</td>
+	</tr>
+	<tr>
+	    <td><code>BREAK "#" AT <i>c</i></code></td>
+	    <td>Repetition exhausted</td>
+	</tr>
+	<tr>
+	    <td><code>BREAK "B" AT <i>c</i></code></td>
+	    <td>Rubout canceled macro, or search</td>
+	</tr>
+	<tr>
+	    <td><code>DISK ERROR</code></td>
+	    <td>Problem reading or writing to disk</td>
+	</tr>
+	<tr>
+	    <td><code>PROBLEM WRITING BACKUP</code></td>
+	    <td>Can't write backup file</td>
+	</tr>
+	<tr>
+	    <td><code>CANNOT COPY $ TO TMP<br>
+	    TRY R TO RETRIEVE</code></td>
+	    <td>A problem in .! copying the transfer file to
+	    /TMP/$$. The region is already erased from the
+	    edit buffer, maybe 'r' can read it back.</td>
+	</tr>
+	<tr>
+	    <td><code>PROBLEM WRITING FILE - SEE<br>
+	    /tmp/...<br>
+	    PRESS ANY KEY</code></td>
+	    <td>Problem writing file (may be write protected).
+	    Edit changes are in the file named, and this
+	    can be copied.</td>
+	</tr>
+      </table>
+      <p align="justify">
+	The character <i>c</i> is the command character that caused the
+	error. For example, <code>BREAK "?" AT ~</code> indicates a bad
+	command. If you entered <code>Fxyzzy</code>, a <code>BREAK "#"
+	AT F</code> indicates that the string cannot be found from the
+	current point to the end of the edit buffer. If an error occurs
+	in a ‘.’ command, the command character will be the second
+	character in the sequence (<code>T</code> for <code>.T</code>).
+
+      </p>
+      <h2>Command Details</h2>
+      <p align="justify">
+	<code>CPMED</code> has over 50 commands. It is a context
+	editor that has an edit buffer. Within the buffer there is
+	a “point” (CP) at which inserts and deletions occur. The
+	buffer is a fixed size; the file to be edited may be larger
+	than the buffer, and the file can be paged through the buffer.
+
+      </p>
+      <p align="justify">
+	Each command is a single character, or a dot (.) followed
+	by a character, and may have (1 to 3) string arguments
+	following. The command letter can be preceded by a count. The
+	count is an optional + or -, followed by digits or a #
+	mark. The # means 512K (edit buffer size). A : may follow the
+	number, which computes the difference (in lines) between the
+	current point and the entered line number. Note that the :
+	character serves two purposes &ndash; as a command it goes to
+	a line, and as an numeric it computes the line delta. An @
+	computes the difference in lines between the current point
+	and a line mark.
+
+      </p>
+      <p align="justify">
+	The complete set of CP/M-80 <code>ED</code> commands is
+	supported, along with many added commands.
+
+      </p>
+      <table border="1">
+
+<tr><td><code>A</code></td><td></td>
+  <td>Append lines from input file</td></tr>
+  <tr><td></td><td><code><i>n</i>A</code></td>
+    <td>Append <i>n</i> lines</td></tr>
+  <tr><td></td><td><code>0A</code></td>
+    <td>Append until buffer 1/2 full</td></tr>
+  <tr><td></td><td><code>#A</code></td>
+    <td>Append all lines</td></tr>
+  <tr><td></td><td><code>-<i>n</i>A</code></td>
+    <td>Append <i>n</i> pages
+      (page is text terminated by form-feed)</td></tr>
+
+<tr><td><code>.A</code></td><td></td>
+  <td>Autoindent</td></tr>
+  <tr><td></td><td><code>.A</code></td>
+    <td>Enable autoindent</td></tr>
+  <tr><td></td><td><code>-.A</code></td>
+    <td>Disable autoindent</td></tr>
+  <tr><td></td><td><code><i>n</i>.A</code></td>
+    <td>Set indent amount</td></tr>
+
+<tr><td><code>B</code></td><td></td>
+  <td>Move to Begin/End</td></tr>
+  <tr><td></td><td><code><i>n</i>B</code></td>
+    <td>Move to beginning</td></tr>
+  <tr><td></td><td><code><i>n</i>-B</code></td>
+    <td>Move to end.<br>
+	Equivalent to #C or -#C</td></tr>
+
+<tr><td><code>.B</code></td><td></td>
+  <td>Margin Bell.
+      Alarm on I command after exceeding column.</td></tr>
+  <tr><td></td><td><code><i>n</i>72.B</code></td>
+    <td>Alarm on 72 characters</td></tr>
+  <tr><td></td><td><code>-.B</code></td>
+    <td>Disable alarm</td></tr>
+
+<tr><td><code>C</code></td><td></td>
+  <td>Move by Characters<br>
+      When UTF-8 enabled, move by entire UTF-8 runes (.F)</td></tr>
+  <tr><td></td><td><code>-<i>n</i>C</code></td>
+    <td>Move backwards <i>n</i> characters</td></tr>
+  <tr><td></td><td><code><i>n</i>C</code></td>
+    <td>Move forward <i>n</i> characters</td></tr>
+
+<tr><td><code>.C</i></code></td><td></td>
+  <td>Call macro in buffer 2.</td></tr>
+  <tr><td></td><td><code>.C<i>string</i>^Z</code></td>
+    <td>Search for <i>string</i> in buffer 2 (2.Z). If the string is
+	found, use the characters immediately following as the command.
+	This acts as a “named subroutine”. The current command pointer
+	is stacked before the new commands are interpreted. The
+	sequence should end with command .R (return).  If the end of
+	buffer 2 is seen,the next commands are read from the keyboard
+	(but the stacked command pointers are not removed). <b>This
+	feature is experimental (along with .R)</b>
+    </td></tr>
+
+<tr><td><code>D</code></td><td></td>
+  <td>Delete characters<br>
+      When UTF-8 enabled, delete entire UTF-8 runes (.F)</td></tr>
+  <tr><td></td><td><code>-<i>n</i>D</code></td>
+    <td>Delete backwards <i>n</i> characters</td></tr>
+  <tr><td></td><td><code><i>n</i>D</code></td>
+    <td>Delete forward <i>n</i> characters</td></tr>
+
+<tr><td><code>.D</code></td><td></td>
+  <td>Eightbit<br>
+      If eightbit mode is set, the terminal is presumed to respond
+      to eight bit codes in the buffer. (see .F)</td></tr>
+  <tr><td></td><td><code>.D</code></td>
+    <td>Enable 8-bit display output</td></tr>
+  <tr><td></td><td><code>-.D</code></td>
+    <td>7 bit only</td></tr>
+
+<tr><td><code>E</code></td><td></td>
+  <td>End edit</td></tr>
+  <tr><td></td><td><code>E</code>
+    </td><td>End and accept edits. Must be by itself.</td></tr>
+
+<tr><td><code>.E</code></td><td></td>
+  <td>SEEALL mode. For SCOPE (.S)</td></tr>
+  <tr><td></td><td><code>.E</code></td>
+    <td>Enable SEEALL. Spaces are shown as ‘.’ and line ends as
+        ‘&lt;’.</td></tr>
+  <tr><td></td><td><code>-.E</code></td>
+    <td>Disable SEEALL</td></tr>
+
+<tr><td><code>F</code></td><td></td>
+  <td>Find</td></tr>
+  <tr><td></td><td><code><i>n</i>F<i>string</i>^Z</code></td>
+    <td>Find <i>n<sup><small>th</small></sup></i> occurrence of
+        <i>string</i>.</td></tr>
+
+<tr><td><code>.F</code></td><td></td>
+  <td>UTF-8 Editing</td></tr>
+  <tr><td></td><td><code>.F</code></td>
+    <td>Enable UTF-8 edit (enables .D as well)</td></tr>
+  <tr><td></td><td><code>-.F</code></td>
+    <td>Disable UTF-8 edit.</td></tr>
+
+<tr><td><code>G</code></td><td></td>
+  <td>Increment or Decrement bar</td></tr>
+  <tr><td></td><td><code>+G</code></td>
+    <td>Increment vertical bar column</td></tr>
+  <tr><td></td><td><code>-G</code></td>
+    <td>Decrement vertical bar column</td></tr>
+  <tr><td></td><td><code>2G</code></td>
+    <td>Add 2 to vertical bar column</td></tr>
+
+<tr><td><code>.G</code></td><td></td>
+  <td>Set bar</td></tr>
+  <tr><td></td><td><code>7.G</code></td>
+    <td>Set vertical bar to column 7 (FORTRAN)</td></tr>
+  <tr><td></td><td><code>0.G</code>
+    </td><td>Remove vertical bar</td></tr>
+
+<tr><td><code>H</code></td><td></td>
+  <td>Home</td></tr>
+  <tr><td></td><td><code>H</code></td>
+    <td>Commit edits and rewind. Must be by itself.</td></tr>
+
+<tr><td><code>.H</code></td><td></td>
+  <td>Tabulation. Up to 20 tabs can be set. ^W in I command inserts
+      spaces to next tabulation</td></tr>
+  <tr><td></td><td><code>-.H</code></td>
+    <td>Clear all tabs</td></tr>
+  <tr><td></td><td><code>0.H 1.H .H</code></td>
+    <td>Display tabs</td></tr>
+  <tr><td></td><td><code><i>n</i>.H</code></td>
+    <td>Set tab at column <i>n</i>, or if already set,
+	remove.</td></tr>
+
+<tr><td><code>I</code></td><td></td>
+  <td>Insert</td></tr>
+  <tr><td></td><td><code>I<i>string</i>^Z</code></td>
+    <td>Insert <i>string</i> at current point</td></tr>
+  <tr><td></td><td><code>I</code></td>
+    <td>Bulk input mode (^Z to exit)<br>
+	If the I command is issued in uppercase, the string will be
+	uppercased (even if -U is in effect).</td></tr>
+  <tr><td></td><td><code>-I</code></td>
+    <td>High impact I</td></tr>
+  <tr><td></td><td><code>I<i>string</i>&lt;cr&gt;</code></td>
+    <td>Insert <i>string</i> with newline</td></tr>
+
+<tr><td><code>.I</code></td><td></td>
+  <td>Insert character</td></tr>
+  <tr><td></td><td><code><i>n</i>.I</code></td>
+    <td>Insert character <i>n</i></td></tr>
+  <tr><td></td><td><code>26.I</code></td>
+    <td>Insert ^Z</td></tr>
+  <tr><td></td><td><code>12.I</code></td>
+    <td>Insert form-feed</td></tr>
+  <tr><td></td><td><code>0.I</code></td>
+    <td>Insert NUL</td></tr>
+
+<tr><td><code>J</code></td><td></td>
+  <td>Juxtapose</td></tr>
+  <tr><td></td>
+    <td><code>
+      <i>n</i>J<i>string1</i>^Z<i>string2</i>^Z<i>string3</i>^Z
+    </code></td>
+    <td>Search for <i>string1</i>, replace with <i>string2</i>, and
+	then erase until <i>string3</i>.</td></tr>
+
+<tr><td><code>K</code></td><td></td>
+  <td>Kill lines</td></tr>
+  <tr><td></td><td><code>0K</code></td>
+    <td>Remove characters to front of line</td></tr>
+  <tr><td></td><td><code>-<i>n<i>K</code></td>
+    <td>Remove <i>n</i> previous lines</td></tr>
+  <tr><td></td><td><code><i>n<i>K</code></td>
+    <td>Remove <i>n</i> lines</td></tr>
+  <tr><td></td><td><code>K</code></td>
+    <td>Remove to end of line, including end of line mark</td></tr>
+
+<tr><td><code>L</code></td><td></td>
+  <td>Move by Lines</td></tr>
+  <tr><td></td><td><code>0L</code></td>
+    <td>Move to beginning of line</td></tr>
+  <tr><td></td><td><code><i>n</i>L</code></td>
+    <td>Move forward <i>n</i> lines</td></tr>
+  <tr><td></td><td><code>-<i>n</i>L</code></td>
+    <td>Move backward <i>n</i> lines</td></tr>
+
+<tr><td><code>.L</code></td><td></td>
+  <td>^L in search translated to NL</td></tr>
+  <tr><td></td><td><code>-.L</code></td>
+    <td>Allow searching for ^L</td></tr>
+  <tr><td></td><td><code>.L</code></td>
+    <td>Translate ^L to NL (ED default)</td></tr>
+
+<tr><td><code>M</code></td><td></td>
+  <td>Macro</td></tr>
+  <tr><td></td><td><code><i>nM<i>commands</i>^Z</code></td>
+    <td>Repeat <i>commands</i> <i>n</i> times</td></tr>
+
+<tr><td><code>.M</code></td><td></td>
+  <td>Mode (Edit modes below - there are also display modes: eg.
+      SCHEME)</td></tr>
+  <tr><td></td><td><code>.MTEXT^Z .M^Z</code>
+    </td><td>Set mode TEXT</td></tr>
+  <tr><td></td><td><code>.MFORTRAN^Z</code></td>
+    <td>Set mode FORTRAN</td></tr>
+  <tr><td></td><td><code>.MCOBOL^Z</code></td>
+    <td>Set mode COBOL</td></tr>
+  <tr><td></td><td><code>.MC^Z</code></td>
+    <td>Set mode C</td></tr>
+  <tr><td></td><td><code>.MSNOBOL4^Z</code></td>
+    <td>Set mode SNOBOL4</td></tr>
+  <tr><td></td><td><code>.MLISP^Z</code></td>
+    <td>Set mode LISP</td></tr>
+  <tr><td></td><td><code>.MSHELL^Z</code></td>
+    <td>Set mode SHELL</td></tr>
+  <tr><td></td><td><code>.MPASCAL^Z</code></td>
+    <td>Set mode PASCAL</td></tr>
+  <tr><td></td><td><code>.MASSEMBLER^Z</code></td>
+    <td>Set mode ASSEMBLER</td></tr>
+
+<tr><td><code>N</code></td><td></td>
+  <td>Nfind</td></tr>
+  <tr><td></td><td><code><i>n</i>N<i>string</i>^Z</code></td>
+    <td>Same as F, but if the string is not found, issues #W, 0A and
+	reissues the find, until the end of input file or the string is
+	found.</td></tr>
+
+<tr><td><code>.N</code></td><td></td>
+  <td>Open index file</td></tr>
+  <tr><td></td><td><code>.N<i>file</i>^Z</code></td>
+    <td>Open <i>file</i> which should contain lines with positive or
+	negative integers. These are read in with the & argument, and
+	usually represent relative lines. If the file argument is
+	null, the index file is closed. Used to process lines from
+	external utilities. Note that buffering is not controlled
+	here at all (left to the operator). But, since buffering may
+	be a concern, line numbers (or character positions) read
+	from the index file <i>should</i> be relative and in
+	ascending order.<td></tr>
+
+<tr><td><code>O</code></td><td></td>
+  <td>Original file</td></tr>
+  <tr><td></td><td><code>O</code></td>
+    <td>Cancel all edits and rewind<br>
+	Prompts Y/N, see .Y command. Must be by itself.</td></tr>
+
+<tr><td><code>P</code></td><td></td>
+  <td>Page</td></tr>
+  <tr><td></td><td><code>0P</code></td>
+    <td>Display page (16 lines)</td></tr>
+  <tr><td></td><td><code>-<i>n</i>P</code></td>
+    <td>Move backward <i>n</i> pages, display</td></tr>
+  <tr><td></td><td><code><i>n</i>P</code></td>
+    <td>Move forward <i>n</i> pages, display</td></tr>
+
+<tr><td><code>Q</code></td><td></td>
+  <td>Quit edit</td></tr>
+  <tr><td></td><td><code>Q</code></td>
+    <td>Abandon edits. Prompts Y/N, see .Y command. Must be by
+	itself.</td></tr>
+
+<tr><td><code>R</code></td><td></td>
+  <td>Read</td></tr>
+  <tr><td></td><td><code>R^Z</code></td>
+    <td>Read transfer file</td></tr>
+  <tr><td></td><td><code>R<i>file</i>^Z</code></td>
+    <td>Read named <i>file</i></td></tr>
+
+<tr><td><code>.R</code></td><td></td>
+  <td>Return from macro.</td></tr>
+  <tr><td></td><td><code>.R</code></td>
+    <td>Pop command pointer from call stack (see .C).</td></tr>
+
+<tr><td><code>S</code></td><td></td>
+  <td>Substitute</td></tr>
+  <tr><td></td>
+    <td><code>
+      <i>n</i>S<i>string1</i>^Z<i>string2</i>^Z
+    </code></td>
+    <td>Substitute <i>n</i> occurrences of <i>string1</i> with
+	<i>string2</i>.</td></tr>
+  <tr><td></td>
+    <td><code>
+      <i>n</i>S<i>string1</i>^Z<i>string2</i>&lt;cr&gt
+    </code></td>
+    <td>Substitute <i>n</i> occurrences of <i>string1</i> with
+	<i>string2</i>, adding newline.<br>
+	S, F, N, J commands replace ^L with newline (see .L).</td></tr>
+
+<tr><td><code>.S</code></td><td></td>
+  <td>Scope mode</td></tr>
+  <tr><td></td><td><code>.S</code></td>
+    <td>Enter full screen scope mode, or, if in scope mode, refresh
+	screen</td></tr>
+  <tr><td></td><td><code>-.S</code></td>
+    <td>Leave scope mode</td></tr>
+  <tr><td></td><td><code>2.S</code></td>
+    <td>Enter non-interactive scope mode</td></tr>
+  <tr><td></td><td><code>3..21.S</code></td>
+    <td>Scope mode, with 3 to 21 lines for command area</td></tr>
+  <tr><td></td><td><code>0.S</code></td>
+    <td>From 2.S go back to interactive scope mode (because .S is
+	1.S)</td></tr>
+
+<tr><td><code>T</code></td><td></td>
+  <td>Type</td></tr>
+  <tr><td></td><td><code>0T</code></td>
+    <td>Display line begin to point</td></tr>
+  <tr><td></td><td><code>T</code></td>
+    <td>Display point to line end</td></tr>
+  <tr><td></td><td><code><i>n</i>T</code></td>
+    <td>Display <i>n</i> lines</td></tr>
+  <tr><td></td><td><code>-<i>n</i>T</code></td>
+    <td>Display previous <i>n</i> lines</td></tr>
+
+<tr><td><code>.T</code></td><td></td>
+  <td>Tabs</td></tr>
+  <tr><td></td><td><code><i>n</i>.T</code></td>
+    <td>Set tab expansion to <i>n</i> columns</td></tr>
+  <tr><td></td><td><code>0T</code></td>
+    <td>Disable tab expansion. Tab displayed as ^I</td></tr>
+
+<tr><td><code>U</code></td><td></td>
+  <td>Uppercase</td></tr>
+  <tr><td></td><td><code>U</code></td>
+    <td>Enable uppercasing</td></tr>
+  <tr><td></td><td><code>-U</code></td>
+    <td>Disable uppercasing</td></tr>
+
+<tr><td><code>V</code></td><td></td>
+  <td>Verify</td></tr>
+  <tr><td></td><td><code>V</code></td>
+    <td>Enable line number prompt</td></tr>
+  <tr><td></td><td><code>-V</code></td>
+    <td>Disable line number prompt</td></tr>
+  <tr><td></td><td><code>0V</code></td>
+    <td>Display buffer used, line number</td></tr>
+  <tr><td></td><td><code>2V</code></td>
+    <td>Display flags</td></tr>
+  <tr><td></td><td><code>3V</code></td>
+    <td>Display buffer changed</td></tr>
+  <tr><td></td><td><code>4V</code></td>
+    <td>Display filenames</td></tr>
+
+<tr><td><code>.V</code></td><td></td>
+  <td>Scan/Alter</td></tr>
+  <tr><td></td><td><code><i>n</i>.V<i>expr</i></code></td>
+    <td>
+      Call external <i>scan</i> utility. This allows SNOBOL4
+      patterns to be used for find or replace. For example <code>.V
+      'word'</code> searches for word in the specified lines. Instead
+      of positioning the current point, the line deltas are
+      recorded in the default transfer file <code>$</code>. The
+      <code>.N$</code> command is issued to open the transfer
+      file as the source for <code>&</code> arguments, allowing
+      subsequent <code>&L</code> commands to skip to the next found
+      occurence. If an <code>=</code> sign is in the argument,
+      the operation is a replace. The first occurence matching on
+      each line is replaced. If a /G flag (global) is specified,
+      all occurences on each line are replaced.  Any SNOBOL4 pattern
+      can be used. <b>This feature is still experimental</b>
+
+    </td></tr>
+  
+<tr><td><code>W</code></td><td></td>
+  <td>Write lines to output file</td></tr>
+  <tr><td></td><td><code>0W</code></td>
+    <td>Write lines until buffer is 1/2 empty</td></tr>
+  <tr><td></td><td><code>#W</code></td>
+    <td>Write all lines</td></tr>
+  <tr><td></td><td><code><i>n</i>W</code></td>
+    <td>Write <i>n</i> lines</td></tr>
+  <tr><td></td><td><code>-<i>n</i>W</code></td>
+    <td>Write <i>n</i> pages</td></tr>
+
+<tr><td><code>X</code></td><td></td>
+  <td>Transfer</td></tr>
+  <tr><td></td><td><code>0X</code></td>
+    <td>Empty transfer file</td></tr>
+  <tr><td></td><td><code><i>n</i>X</code></td>
+    <td>Append <i>n</i> lines to transfer file.</td></tr>
+
+<tr><td><code>.X</code></td><td></td>
+  <td>Set transfer file name.</td></tr>
+  <tr><td></td><td><code>.X<i>file</i></code></td>
+    <td>Set transfer (X) file to <i>file</i>. This file will be
+	deleted on 0X. Exiting CPMED via E or Q will not delete
+	this file (but the default transfer file $ is erased).
+	This complements Rfile and allows transfer of data
+	between two files. The file is not immediately used -
+	opening and writing is deferred until the X command
+	is used. This name will also be used as the default
+	name for the R command. Use .X^Z to reset to the
+	default transfer file name.</td></tr>
+
+<tr><td><code>Y</code></td><td></td>
+  <td>UNDO. Fail if stack empty.</td></tr>
+  <tr><td></td><td><code>Y</code></td>
+    <td>Undo last command</td></tr>
+
+<tr><td><code>.Y</code></td><td></td>
+  <td>Yes (prompt control)</td></tr>
+  <tr><td></td><td><code>-.Y</code></td>
+    <td>Enable Y/N prompts</td></tr>
+  <tr><td></td><td><code>.Y</code></td>
+    <td>Disable Y/N prompts, assume Y</td></tr>
+
+<tr><td><code>Z</code></td><td></td>
+  <td>Sleep</td></tr>
+  <tr><td></td><td><code><i>n</i>Z</code></td>
+    <td>Sleep for <i>n</i> seconds</td></tr>
+
+<tr><td><code>.Z</code></td><td></td>
+  <td>Alternate buffer</td></tr>
+  <tr><td></td><td><code><i>n</i>.Z</code></td>
+    <td>Select edit buffer <i>n</i> seconds. Buffer 1 is the primary,
+        and is controlled by REGION. Buffer 2 is the alternate. The
+        alternate buffer is 16K bytes in length (or REGION2). Reading
+        and writing must be done with R and X.</td></tr>
+
+<tr><td><code>!</code></td><td></td>
+  <td>Shell</td></tr>
+  <tr><td></td><td><code>!<i>command</i></code></td>
+    <td>Execute <i>command</i></td></tr>
+
+<tr><td><code>.!</code></td><td></td>
+  <td>Filter lines</td></tr>
+  <tr><td></td><td><code>10.!sort</code></td>
+    <td>Sort the next 10 lines</td></tr>
+  <tr><td></td><td><code>-10.!sort</code></td>
+    <td>Sort the next 10 lines, do not replace. New lines in transfer
+	file (see R)</td></tr>
+
+<tr><td><code>@</code></td><td></td>
+  <td>Goto Mark</td></tr>
+  <tr><td></td><td><code>0@</code></td>
+    <td>Goto Mark 0</td></tr>
+
+<tr><td><code>.@</code></td><td></td>
+  <td>Goto Character Mark</td></tr>
+  <tr><td></td><td><code>1.@</code></td>
+    <td>Goto Character Mark 1<br>
+	Character marks are set by the # command as well. Mark 1 is
+	automatically set by searching commands (F, S and J).</td></tr>
+
+<tr><td><code>#</code></td><td></td>
+  <td>Set Mark</td></tr>
+  <tr><td></td><td><code>0#</code></td>
+    <td>Set Mark 0 (both character and line)</td></tr>
+
+<tr><td><code>$</code></td><td></td>
+  <td>Match string</td></tr>
+
+<tr><td><code>%</code></td><td></td>
+  <td>Indent/Outdent</td></tr>
+  <tr><td></td><td><code>%</code></td>
+    <td>Increase indent</td></tr>
+  <tr><td></td><td><code>-2%</code></td>
+    <td>Outdent two levels</td></tr>
+
+<tr><td><code>^</code></td><td></td>
+  <td>Result to argument</td></tr>
+
+<tr><td><code>&amp;</code></td><td></td>
+  <td>.N next element to argument</td></tr>
+
+<tr><td><code>*</code></td><td></td>
+  <td>Shelf</td></tr>
+  <tr><td></td><td><code>0*<i>string</i></code></td>
+    <td>Store <i>string</i> to shelf</td></tr>
+  <tr><td></td><td><code><i>n</i>*</code></td>
+    <td>Store <i>n</i> characters from buffer to shelf (^F to
+	retrieve). Shelf is maximum 1024 characters.</td></tr>
+  <tr><td></td><td><code>-*<i>string</i>^Z</code></td>
+    <td>Store to shelf, up to first character of
+	<i>string</i></td></tr>
+
+<tr><td><code>(</code></td><td></td>
+  <td>Start Block</td></tr>
+
+<tr><td><code>)</code></td><td></td>
+  <td>End Block</td></tr>
+
+<tr><td><code>_</code></td><td></td>
+  <td>Complement Execution</td></tr>
+
+<tr><td><code>=</code></td><td></td>
+  <td>Evaluate expression</td></tr>
+
+<tr><td><code>?</code></td><td></td>
+  <td>Help</td></tr>
+  <tr><td></td><td><code>?</code></td>
+    <td>Display help page - ED</td></tr>
+  <tr><td></td><td><code>2?</code></td>
+    <td>Second help page - Scripting</td></tr>
+  <tr><td></td><td><code>3?</code></td>
+    <td>Third help page - Extensions</td></tr>
+  <tr><td></td><td><code>4?</code></td>
+    <td>Fourth help page - Startup</td></tr>
+  <tr><td></td><td><code>5?</code></td>
+    <td>Fifth help page - SCAN</td></tr>
+
+<tr><td><code>/</code></td><td></td>
+  <td>Repeat search</td></tr>
+  <tr><td></td><td><code><i>n</i>/</code></td>
+    <td>Repeat last F, S, J, or N command <i>n</i> times</td></tr>
+
+<tr><td><code>;</code></td><td></td>
+  <td>DO NOT ASSIGN<br>
+      This is a ^Z in CE edit commands</td></tr>
+
+<tr><td><code>:</code></td><td></td>
+  <td>Go to line</td></tr>
+  <tr><td></td><td><code><i>n</i>:</code></td>
+    <td>Go to line <i>n</i></td></tr>
+
+<tr><td><code>,</code></td><td></td>
+  <td>Brace match</td></tr>
+  <tr><td></td><td><code>,</code></td>
+    <td>Go to matching brace ([{&lt;&gt;}])</td></tr>
+
+<tr><td><code>..</code></td><td></td>
+  <td>Source file</td></tr>
+  <tr><td></td><td><code>..<i>file</i></code></td>
+    <td>Read editing commands from <i>file</i>. Can be nested up to 20
+	deep</td></tr>
+
+<tr><td><code>.3</code></td><td></td>
+  <td>ASCII-64 mode (TTY ASR 33)</td></tr>
+  <tr><td></td><td><code>.3</code></td>
+    <td>ASCII-64</td></tr>
+  <tr><td></td><td><code>-.3</code></td>
+    <td>ASCII-127 256, or UTF-8</td></tr>
+
+<tr><td><code>.8</code></td><td></td>
+  <td>CP/M-80 Compatibility - Write CR/LF, ^Z</td></tr>
+  <tr><td></td><td><code>.8</code></td>
+    <td>CP/M-80 - Enable CR/LF on writing. In this mode, files are
+	terminated with ^Z, padded to 128 bytes, and line ends are
+	CR/LF. This is OFF normally (enable for CP/M-80 file
+	compatibility).</td></tr>
+  <tr><td></td><td><code>-.8</code></td>
+    <td>Unix - LF only on writing</td></tr>
+
+<tr><td><code>&gt;</code></td><td></td>
+  <td>Result to Execution. After an = expression, the RESULT is set,
+      and this can be transferred to the EXECUTION indicator.</td></tr>
+
+<tr><td><code>&lt;</code></td><td></td>
+  <td>Branch back. Branch to the enclosing (.</td></tr>
+
+      </table>
+      <h3>Notes</h3>
+      <p align="justify">
+	Unlike CP/M-80 <code>ED</code>, line end is a single
+	character. Files can be saved in a CP/M-80 compatible format,
+	by issuing <code>.R</code> prior to writing. Normally,
+	<code>-.R</code> is used, which doesn't pad files, and uses
+	a single LF as a line terminator. If <code>.R</code> is in
+	effect when reading, the first <code>^Z</code> in the file
+	acts as the end of file. CR characters are stripped as well.
+
+      </p>
+      <p align="justify">
+	The bar is a vertical ruler.  It fills space and tab whitespace
+	with a | in one column down the screen, including the ruler.
+	This allows for easy and consistent code alignment.
+
+      </p>
+      <p align="justify">
+	<code>@</code> in addressing means compute delta lines between
+	current point and mark.
+
+      </p>
+      <p align="justify">
+	<code>0V</code> (no line number prompting) may be useful
+	when editing material with line numbers such as BASIC
+	code. <code>V</code> is on by default.
+
+      </p>
+      <p align="justify">
+	Each line is delimited by the end-line character, which
+	is an LF (<code>^J</code>). If in scope mode, and a line
+	fills the horizontal screen exactly, there is still one more
+	character, which is the line end. The point can be positioned
+	at the line-end, and, in the case of a full line, the last
+	character will be replaced in scope mode (visually) with
+	a highlight space.
+
+      </p>
+      <p align="justify">
+	Under CP/M-80, the end of line was indicated by two characters
+	- CR followed by LF.
+
+      <p align="justify">
+	Some useful commands and equivalences:
+
+      <table>
+	<tr><td><code>nMXK</code></td></tr>
+	<tr><td><code>J^Z^Z^P^J^Z == KI^P^J^Z</code>
+	  (except at end of buffer)</td></tr>
+	<tr><td><code>Istring^Z == S^Zstring^Z</code></td></tr>
+	<tr><td><code>0TT</code></td></tr>
+	<tr><td><code>.YQ</code></td></tr>
+	<tr><td><code>0KK == 0LK</code></td></tr>
+	<tr><td><code>-#C == B</code></td></tr>
+	<tr><td><code>#C == -B</code></td></tr>
+	<tr><td><code>0KK == 0LK</code></td></tr>
+      </table>
+      <p align="justify">
+	Some commands (<code>E</code>, <code>Q</code>, <code>O</code>
+	and <code>H</code>) must be entered on a line by themselves,
+	unless the <code>.Y</code> flag is enabled. This also prevents
+	prompting, making it possible to script CPMED sessions.
+
+      </p>
+      <p align="justify">
+	<code>^Z</code> and <code>^D</code> are ignored,
+	but terminate a command string. This is important in
+	conjunction with the <code>M</code> command. For example:
+	<code>4MLT^ZLT</code>. <code>M</code> commands do not nest.
+
+      </p>
+      <p align="justify">
+	<code>2.S</code> non-interactive scope mode is used to
+	compensate for the extreme inefficiency of scope mode. When
+	working over a slow link, normal scope mode may be too slow.
+	<code>2.S</code> mode only updates the visual area on
+	<code>.S</code>, <code>^V</code>, Page Up and Page Down.
+	This means that the editor is still somewhat “visual” but
+	doesn't spend effort updating the screen. It is also possible
+	to shrink the update area. Normally, 6 lines are used for the
+	command area, but this can be increased (or decreased). If
+	increased, less lines are used for the update area, making
+	updates faster:
+
+      </p>
+      <pre>
+	15.S
+      </pre>
+
+      <p align="justify">
+	uses 15 lines for the command area, leaving 9 lines for the
+	update area. A “page” (P command) is still 16 lines.
+
+      </p>
+      <p align="justify">
+	<code>CPMED</code> creates backup files named after the
+	original, with a <code>.bak</code> added to the end. Editing
+	<code>x.c</code> produces <code>x.c.bak</code> for its
+	backup. If two filenames are specified on the command line,
+	the first is the input file and the second is the output
+	file. In this case, no <code>.bak</code> file is produced
+	(<code>4V</code> shows the active filenames). With two files
+	(input and output), the <code>H</code> command (Head, or save
+	and re-edit), performs a flip-flop &ndash; the output file
+	becomes the new input and the old input becomes the output.
+
+      </p>
+      <p align="justify">
+	There are many commands for entering new copy:
+
+      </p>
+      <table>
+	<tr><td><code>&lt;tab&gt;<i>text</i></code>
+	  </td><td>Insert a line</td></tr>
+	<tr><td><code>I<i>text</i></code>
+	  </td><td>Insert text with newline at current point</td></tr>
+	<tr><td><code>I<i>text</i>^Z</code>
+	  </td><td>Insert text at current point</td></tr>
+	<tr><td><code>65.I</code></td>
+	  <td>Insert character by code</td></tr>
+	<tr><td><code>I</code></td>
+	  <td>Bulk insert</td></tr>
+	<tr><td><code>-I</code></td>
+	  <td>Bulk insert, full screen update</td></tr>
+	<tr><td>Insert</td>
+	  <td>Insert key, issues <code>-i</code> command</td></tr>
+      </table>
+      <p align="justify">
+	<code>I</code> and <code>-I</code> are only distinguished in
+	scope mode. The main reason for this is that I simply added
+	entry methods based on my immediate needs.  These commands
+	are probably not optimal. <code>I</code> allows indent but
+	can't backspace over a newline.
+
+      </p>
+      <p align="justify">
+	In scope mode, <code>I</code> clears the characters
+	under the CP, and enters bulk input mode. The screen
+	is not fully updated, but characters are displayed as
+	entered. Interpretation of the normal line input characters
+	is done, but no handling autoindent, indent or outdent is done.
+
+      </p>
+      <p align="justify">
+	<code>-I</code> updates the scope view on each character,
+	fully. This allows all visual editing, along with the ability
+	to backspace over newlines.  Backspacing is limited to the
+	beginning of the <code>-I</code> entry. <code>^T</code> and
+	<code>^G</code> are handled by executing the indent and outdent
+	code. <code>^X</code> and <code>^U</code> erase back to the
+	last newline, allowing easy removal of extra indentation. This
+	insertion mode is very expensive in terms of scope updates,
+	but works well on a local screen. <code>I</code> works without
+	performance problems over slow communications lines.
+
+      </p>
+      <p align="justify">
+	After a <code>F</code> (find) command, the point can be
+	positioned to the start of search string using:
+
+      </p>
+      <pre>
+	F<i>text</i>^Z.@
+      </pre>
+      <p align="justify">
+	Marks 2 through 9 are general purpose. Mark 1 is the start
+	of a <code>F S</code> or <code>J</code> match. Mark 1 will be
+	overwritten by these three commands.  Mark 0 is also available,
+	but is reserved for other editor internal uses.
+
+      </p>
+      <p align="justify">
+	The shelf is a string that can have contents put on via the
+	<code>*</code> command.
+
+      </p>
+      <table>
+	<tr><td>0*string</td><td>Save string to shelf</td></tr>
+	<tr><td>10*</td>
+	  <td>Put next 10 characters from buffer to shelf</td></tr>
+      </table>
+      <p align="justify">
+	The shelf can be retrieved into the current command by using
+	<code>^F</code>. The command to put the contents into the
+	shelf must be executed before the shelf can be retrieved. This
+	is an experimental feature, and is subject to change. The
+	main motivation is to be able to search for UTF-8 sequences,
+	and to be able to manipulate text in the buffer in a more
+	convenient way. The problem with this implementation is that
+	the <code>^F</code> command is only interpreted at command
+	entry, and not execution.  This make it impossible to use
+	in a program block. <code>^F</code> expansion should be
+	delayed! But, this means that <code>^P^F</code> wouldn't
+	work correctly. So, for program use, the shelf has to be
+	“pre-stored” in a separate command line. This is not yet
+	a fully useful feature.
+
+      </p>
+      <h3>Required External Programs</h3>
+
+	<code>sh</code><br>
+	<code>stty</code> (if not LINUX)<br>
+
+      <p align="justify">
+	Terminal handling uses <code>stty</code> to control echo,
+	break, etc. rather than coding directly. <code>stty</code>
+	is also used to determine the actual geometry of the terminal
+	(we still use VT100 style direct terminal codes, but the
+	terminal can be of a different size). The shell must be
+	capable of supporting “()” grouping, “2&gt;”, “|”,
+	“;” and “&amp;&amp;”, and the “/tmp” directory
+	should be writable (<code>sh</code> and <code>bash</code>
+	should be suitable shells).
+
+      </p>
+      <p align="justify">
+	If -DLINUX is specified when building, <code>stty</code>
+	is not used, but <code>termios</code> and <code>ioctl</code>
+	functions are.
+
+      </p>
+      <h3>Function Keys</h3>
+      <p align="justify">
+	Some of the function keys and keypad (PC style) are bound
+	to commands:
+
+      </p>
+      <table>
+	<tr><td>&lt;F1&gt;</td>
+	  <td><code>?</code></td></tr>
+	<tr><td>&lt;Insert&gt;</td>
+	  <td><code>-i</code></td></tr>
+	<tr><td>&lt;Delete&gt;</td>
+	  <td><code>D</code></td></tr>
+	<tr><td>&lt;Home&gt;</td>
+	  <td><code>0L</code></td></tr>
+	<tr><td>&lt;End&gt;</td>
+	  <td><code>L-C</code></td></tr>
+	<tr><td>&lt;Page Up&gt;</td>
+	  <td><code>-P</code></td></tr>
+	<tr><td>&lt;Page Down&gt;</td>
+	  <td><code>P</code></td></tr>
+	<tr><td>←</td>
+	  <td><code>-C</code> (arrow left)</td></tr>
+	<tr><td>→</td>
+	  <td><code>C</code> (arrow right)</td></tr>
+	<tr><td>↑</td>
+	  <td><code>-L</code> (arrow up)</td></tr>
+	<tr><td>↓</td>
+	  <td><code>L</code> (arrow down)</td></tr>
+	<tr><td>ctrl ←</td>
+	  <td>control-left, word left macro</td></tr>
+	<tr><td>ctrl →</td>
+	  <td>control-right, word right macro</td></tr>
+      </table>
+      <p align="justify">
+	Word left and right are implemented via macro. The macro for
+	word right is:
+
+      </p>
+      <pre>
+	($^J^Z$ ^Z$^I^Z=OR OR NOT^Z>C<)
+	($^J^Z$ ^Z$^I^Z=OR OR^Z>C<)
+      </pre>
+      <p align="justify">
+	Test current character for newline, space or tab, if not,
+	move character right and loop.	Then test newline/space/tab,
+	if it is, move right and loop.
+
+      </p>
+      <p align="justify">
+	and the macro for word left is:
+
+      </p>
+      <pre>
+	($^J^Z$ ^Z$^I^Z=OR OR NOT^Z>-C<)
+	($^J^Z$ ^Z$^I^Z=OR OR^Z>-C<)
+	($^J^Z$ ^Z$^I^Z=OR OR NOT^Z>-C<)C
+      </pre>
+      <p align="justify">
+	Test newline/space/tab, if not, move left and loop. Test
+	newline/space/tab, if so, move left and loop.  Test
+	newline/space/tab, if not, move left and loop. Finally,
+	move right one character.  The final move should move to
+	the beginning of the word.  (<code>^I</code> is tab, and
+	<code>^Z</code> is control-z, <code>^J</code> is newline). To
+	enter a <code>^Z</code>, <code>^J</code> or <code>^I</code>,
+	<code>^P</code> can be used as a prefix to suppress the normal
+	meaning of the key. These two macros are built into the editor,
+	though. See macro file nw (next word). When the macro file is
+	read, we can insert a <code>^P</code> to allow <code>^J</code>
+	to be used a a “data character”. Again, this technique
+	is used in nw. Also, nw shows how to save the incoming repeat
+	count and apply it to a <code>M</code> (macro) command.
+
+      </p>
+      <p align="justify">
+	When in <code>-I</code> insert mode, the Insert key leaves
+	the insertion (like <code>^Z</code> or <code>^D</code> keys).
+
+      </p>
+      <p align="justify">
+	Immediate keys cancel the input being done on the command line
+	(and do so without feedback), and immediately execute the
+	function they are bound to. This means that repetition counts
+	do not work for immediate keys. For example <code>5C</code>
+	moves 5 characters forward, but 5 followed by right arrow does
+	not. Word motion is <i>only</i> bound to the control left and
+	right keys, and cannot be repeated. This matches my thought
+	processes &ndash; I am either “ad-hoc” editing, or I am
+	thinking about the efficiency of edits. I don't combine these
+	two thought modes, so this implementation “works for me”.
+
+      </p>
+      <h3>Programming language</h3>
+      <p align="justify">
+	The <code>M</code> command provides basic counted
+	macros. These, however, don't nest, nor provide any
+	conditionals.
+
+      </p>
+      <p align="justify">
+	CPMED provides for a very simple programming language. Programs
+	look like line noise, because the language is designed to be
+	trivial to interpret.
+
+      </p>
+      <pre>
+	( commands )
+      </pre>
+      <p align="justify">
+	The parentheses block commands. These nest, to provide for
+	looping and flow control:
+
+      </p>
+      <pre>
+	( commands ( nested commands ) yet more commands ) ( ... )
+      </pre>
+      <p align="justify">
+	There is an execution flag. When ON, command execution
+	progresses as usual. When OFF, commands are parsed but not
+	executed until the matching ) is seen, at which time execution
+	returns to normal.
+
+      </p>
+      <p align="justify">
+	The editor has a four register stack for evaluation. This
+	allows RPN expressions to be built. Currently, two evaluation
+	commands exist: RPN expression (described below) and the
+	string test operator:
+
+      </p>
+      <pre>
+	$string^Z
+      </pre>
+      <p align="justify">
+	String test puts a 1 into the register stack if the string
+	matches at the current buffer location, otherwise a 0.
+
+      </p>
+      <p align="justify">
+	The &gt; operator transfers the RPN stack X register into the
+	execution flag. This allows for conditional execution. Thus:
+
+      </p>
+      <pre>
+	($ ^Z>D)
+      </pre>
+      <p align="justify">
+	will delete the current character if and only if it is a space.
+
+      </p>
+      <p align="justify">
+	The <code>_</code> operator inverts the execution flag (but
+	is skipped at more deeply nested block levels).
+
+      </p>
+      <pre>
+	( $ ^Z> D _ I*^Z )
+      </pre>
+      <p align="justify">
+	deletes the current character if it is a space, otherwise it
+	inserts an asterisk.
+
+      </p>
+      <p align="justify">
+	The <code>&lt;</code> operator branches back to the matching
+	<code>(</code>, providing basic looping capability.
+
+      </p>
+      <p align="justify">
+	The <code>=</code> operator (RPN expression) provides basic
+	arithmetic. RPN notation is used (and, note that ASCII-64 is
+	the character set, so <code>& | ~</code> are not used):
+
+      </p>
+      <table>
+	<tr><td>number</td>
+	  <td>Numeric constant (255)</td></tr>
+	<tr><td>Hhex</td>
+	  <td>Hex constant (HFF)</td></tr>
+	<tr><td>Ooctal</td>
+	  <td>Octal constant (O377)</td></tr>
+	<tr><td>+ - * /</td>
+	  <td>Basic arithmetic</td></tr>
+	<tr><td>?</td>
+	  <td>Character at current point</td></tr>
+	<tr><td>#</td>
+	  <td>Number at current point</td></tr>
+	<tr><td>AND OR</td>
+	  <td>And, or (binary)</td></tr>
+	<tr><td>NOT</td>
+	  <td>Not, 0→1, non-0→ 0 (NOT NOT→boolean)</td></tr>
+	<tr><td>NEG</td>
+	  <td>Negate X = -X</td></tr>
+	<tr><td>COMP</td>
+	  <td>Complement (binary)</td></tr>
+	<tr><td>SWAP</td>
+	  <td>Swap X, Y</td></tr>
+	<tr><td>DUP</td>
+	  <td>Dup T = Z, Z = Y, Y = X</td></tr>
+	<tr><td>ROLL</td>
+	  <td>Roll X = Y, Y = Z, Z = T, T = X</td></tr>
+	<tr><td>= &lt;</td>
+	  <td>Compare (equal, less)</td></tr>
+	<tr><td>P</td>
+	  <td>Print (decimal, signed)</td></tr>
+	<tr><td>HP</td>
+	  <td>Hex print</td></tr>
+	<tr><td>OP</td>
+	  <td>Octal print</td></tr>
+	<tr><td>$A..Z</td>
+	  <td>Retrieve variable A through Z</td></tr>
+	<tr><td>&gt;A..Z</td>
+	  <td>Store variable A through Z</td></tr>
+	<tr><td>$[internal]</td>
+	  <td>Retrieve internal variable</td></tr>
+	<tr><td>&gt;[internal]</td>
+	  <td>Store internal variable</td></tr>
+      <table>
+      <p align="justify">
+	P assumes the number is a signed number (usually, 32 bit). OP
+	and HP assume the number is unsigned:
+
+      </p>
+      <pre>
+	*=0 1 - HPRINT
+	FFFFFFFF
+	*=PRINT
+	-1
+      </pre>
+      <p align="justify">
+	Internal variables are available as [NAME]. Currently
+	supported are:
+
+      </p>
+      <table>
+	<tr><td>[CP]</td>
+	  <td>Current point</td></tr>
+	<tr><td>[MP]</td>
+	  <td>Max point (end of buffer)</td></tr>
+	<tr><td>[LN]</td>
+	  <td>Line number</td></tr>
+	<tr><td>[TOP]</td>
+	  <td>Top line number</td></tr>
+	<tr><td>[N]</td>
+	  <td>Number prefix</td></tr>
+	<tr><td>[N2] [N3] [N4]</td>
+	  <td>Old number prefix</td></tr>
+	<tr><td>[KEYBS]</td>
+	  <td>Key for backspace (8)</td></tr>
+	<tr><td>[KEYRUB]</td>
+	  <td>Key for rubout (127)</td></tr>
+	<tr><td>[ROWS]</td>
+	  <td>Display rows (24)</td></tr>
+	<tr><td>[COLS]</td>
+	  <td>Display columns (80)</td></tr>
+	<tr><td>[BROWS]</td>
+	  <td>Display bottom rows (6, includes ruler)</td></tr>
+	<tr><td>[CCOL]</td>
+	  <td>Scope cursor column</td></tr>
+	<tr><td>[CROW]</td>
+	  <td>Scope cursor row</td></tr>
+	<tr><td>[SP]</td>
+	  <td>Start of buffer for scope</td></tr>
+	<tr><td>[X] [Y] [Z] [T]</td>
+	  <td>RPN stack</td></tr>
+	<tr><td>[C0]..[C9]</td>
+	  <td>Character marks</td></tr>
+	<tr><td>[L0]..[L9]</td>
+	  <td>Line marks</td></tr>
+      </table>
+      <p align="justify">
+	These can be read with <code>$[CP]</code>, or more simply
+	<code>[CP]</code>. And set with <code>&gt;[CP]</code>.	Careful
+	with modifying CP directly; LN is not adjusted automatically!
+	CP should be modified using <code>C</code>, <code>L</code>,
+	<code>F</code>, or <code>B</code> only.
+
+      </p>
+      <p align="justify">
+	Spaces can be used as separators:
+
+      </p>
+      <pre>
+	*=HFF 12 + P
+	267
+      </pre>
+      <p align="justify">
+	The six numeric comparision operators can be derived as
+	follows:
+
+      </p>
+      <table>
+	<tr><th>Operator</th>
+	  <th>How</th>
+	  <th>Description</th></tr>
+	<tr><td>x == y</td>
+	  <td>x y =</td>
+	  <td>x == y</td></tr>
+	<tr><td>x != y</td>
+	  <td>x y = NOT</td>
+	    <td>!(x == y)</td></tr>
+	<tr><td>x &lt; y</td>
+	  <td>x y <</td>
+	    <td>x &lt; y</td></tr>
+	<tr><td>x &lt;= y</td>
+	  <td>x y SWAP &lt; NOT</td>
+	    <td>!(y &lt; x)</td></tr>
+	<tr><td>x &gt; y</td>
+	  <td>x y SWAP &lt;</td>
+	  <td>y &lt; x</td></tr>
+	<tr><td>x &gt;= y</td>
+	  <td>x y &lt; NOT</td>
+	  <td>!(x &lt; y)</td></tr>
+      </table>
+      <p align="justify">
+	The result register can also be used as a numeric leadin by
+	specifying <code>^</code> as the command count. For example
+
+      </p>
+      <pre>
+	*3T
+	*=3^Z^T		(this is: = 3 control-z ^ T)
+      </pre>
+
+      <p align="justify">
+	both type 3 lines.
+
+      </p>
+      <p align="justify">
+	The following program will uppercase a letter:
+
+      </p>
+      <pre>
+	*= ? 97 - 65 + ^Z D ^.I
+      </pre>
+      <p align="justify">
+	Note that each “program” is limited to a single input
+	string, and that the parenthesis must be matched within
+	a single line.	<code>=</code> begins an expression,
+	<code>?</code> retrieves the character at the CP. 97
+	is the ASCII code for ‘a’. 65 is the ASCII code for
+	‘A’. <code>D</code> removes the character from the
+	buffer. <code>^</code> introduces the result of the expression
+	as the argument to <code>.I</code> which inserts the character
+	represented by its ASCII argument.
+
+      </p>
+      <p align="justify">
+	More programming features will be added, and even parts of
+	the editor itself are coded as macros (word left and right).
+
+      </p>
+      <pre>
+	*( $^P^J^Z >| C < )
+      </pre>
+      <p align="justify">
+	moves to the next end-of-line (<code>L</code> command). With
+	start of buffer and end of buffer in expressions, we may be
+	able to synthesize more editor commands as macros. Note that
+	<code>C</code> and <code>-C</code> fail silently at the bottom
+	and top of the edit buffer.
+
+      </p>
+      <p align="justify">
+	Programs are most useful when entered into SOURCE files
+	(<code>..file</code>) to be called on when needed. These
+	SOURCE files are to be collected into CELIB, or can be in
+	the current directory if only applicable to the local project.
+
+      <p align="justify">
+	Any commands following <code>..</code> are removed. This
+	means that SOURCE is not useful in a macro. The file is not
+	read until the current command is exhausted.
+      </p>
+
+	The CELIB directory contains example of macros. These allow
+	entry of UTF-8 (<code>..copyright</code> for example), and text
+	editing (<code>55..t</code> to position to column 55). and
+	formatting (<code>..f</code> to format a paragraph). See the
+	“readme” file in that directory for more details.
+
+      </p>
+      <h3>UTF-8</h3>
+      <p align="justify">
+	<code>CPMED</code> supports UTF-8 in a limited
+	way. <code>+/-C</code> and <code>+/-D</code> will “skip”
+	10xxxxxx (binary) bytes to ensure that the current position
+	is always on a UTF-8 begin code. <code>D</code> deletes
+	the entire UTF-8 sequence. As well, UTF-8 will be displayed
+	assuming the terminal is capable.
+
+      </p>
+      <h3>Building</h3>
+      <p align="justify">
+	<code>CPMED</code> has recently been built on Linux, Solaris
+	(SPARC32) and HP-UX (PA-RISC2.0)
+
+      </p>
+      <table>
+	<tr><td>Linux</td>
+	  <td><code>gcc -Os -DLINUX -o cpmed cpmed.c</code></td></tr>
+	<tr><td>Solaris</td>
+	  <td><code>gcc -Os -o cpmed cpmed.c</code></td></tr>
+	<tr><td>HP-UX</td>
+	  <td><code>cc -DHP_UX -o cpmed cpmed.c</code></td></tr>
+      </table>
+      <p align="justify">
+	If LINUX is not defined, <code>stty</code> will be used to put
+	the terminal into raw mode, and determine lines/columns. On
+	Linux, <code>termios</code> and <code>ioctl</code> are used.
+	<code>popen()</code> is used if LINUX is not defined
+	to determine terminal size (reading <code>stty</code>
+	output). There is, of course, a better way, but this does work.
+
+      </p>
+      <p align="justify">
+	On HP_UX, the <code>select()</code> prototype is in
+	<code>time.h</code>. This requires <code>-DHP_UX</code>.
+
+      </p>
+      <p align="justify">
+	Other platforms are easily supported, but this is my current
+	“working set” of systems.
+
+      </p>
+      <h3>Piping Examples</h3>
+      <p align="justify">
+	The <code>.!</code> command pipes one or more lines
+	through an external filter, and replaces the lines with
+	the filter results. Some CELIB macros use external filters
+	(<code>..sp</code>, <code>..di</code> and <code>..f</code>
+	for example). Here are some of the programs that can be used
+	(not exhaustive, just examples):
+
+      </p>
+      <center>
+	<table border="1">
+	  <tr><td>banner</td><td>big letters</td></tr>
+	  <tr><td>boxes</td><td>draw boxes</td></tr>
+	  <tr><td>cdecl</td><td>C declarations</td></tr>
+	  <tr><td>diction</td><td>check diction</td></tr>
+	  <tr><td>expand</td><td>tabs to spaces</td></tr>
+	  <tr><td>fmt</td><td>format</td></tr>
+	  <tr><td>indent</td><td>indent c</td></tr>
+	  <tr><td>sort</td><td>sort</td></tr>
+	  <tr><td>spell</td><td>spell check</td></tr>
+	  <tr><td>unexpand</td><td>spaces to tabs</td></tr>
+	</table>
+      </center>
+      <p align="justify">
+	For example, the above list was sorted using the command
+	<code>10.!sort</code>
+
+      </p>
+      <p align="justify">
+	<code>-*^P^J</code> transfers the remainder of the line to
+	the shelf. <code>^F</code> will retrieve the line to the
+	command line, where it can be executed.  For example consider
+	the following. The editor command will select the program,
+	and send it to the <code>bas</code> interpreter. The edit
+	script will then position after the code to the result area,
+	and update the result.
+
+      </p>
+      <pre>
+	 L -6.!bas 6L K r
+	10 sum = 0
+	20 for i = 1 to 10
+	30   sum = sum + i
+	40 next
+	50 print "Sum of 1 through 10 =", sum
+	run
+	Sum of 1 through 10 =        55 
+      </pre>
+      <h3>Informational Commands</h3>
+      <p align="justify">
+	The <code>0V</code> command provides free space and total space
+	in the buffer, and the current line number. <code>2V</code>
+	displays all flags. <code>3V</code> indicates whether the
+	buffer has been changed. <code>4V</code> displays the filenames
+	for current input, output and backup. Output may be a temporary
+	file (if only one filename was specified). <code>.H</code>
+	displays tabulations that have been set.
+
+      </p>
+      <pre>
+	 1257: *0v
+	2047887/2097152 BUF 1  1257:  
+	 1257: *2v
+	 -U+V1.S-.Y-.D-.R-.3+.L-.E-.F8.A-.B8.T
+	 1257: *3v
+	  BUFFER CHANGED
+	 1257: *4v
+	     INPUT: README
+	    OUTPUT: /tmp/filepvD5u2
+	      BACK: README.bak
+	  TRANSFER: $
+	 1257: *.h
+	 TAB:  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+	 1257: *
+      </pre>
+
+      <p align="justify">
+	This indicates that we have almost 2 megabytes free in the
+	buffer, that our current line is 1257. We are editing
+	in the primary buffer. Uppercase is false, verbose
+	prompting (with line numbers) is on, we are in scope
+	mode, command prompting is enabled (for <code>Q</code>,
+	<code>O</code>, etc.), we are not in eight-bit display
+	mode, not in CP/M-80 file mode, not in ASCII-64 mode,
+	<code>^L</code> will be translated to newline in find commands,
+	S<small>EE</small>A<small>LL</small> is off, UTF-8 is off, we
+	have autoindent enabled, and our indent amount is 8. Margin
+	bell is off, and tabs are expanded to 8 columns. The buffer
+	has been changed. The input filename is <code>README</code>,
+	backup to <code>README.bak</code>, and the write file is a
+	temporary file <code>/tmp/filepvD5u2</code>. The transfer
+	file is <code>$</code>. No tabulations have been set.
+
+      </p>
+      <h3>Experimental Features</h3>
+      <p align="justify">
+	The following features are considered experimental. They may
+	be changed. UTF-8 support is not yet complete. The alternate
+	editor buffer (2.Z) has been included to provide storage for
+	named macros.  The SHELF (*) feature (^F retrieval) isn't fully
+	useful. .C/.R (call and return macro) are experimental. .N and
+	& argument introduced to allow external programs to generate
+	an index for processing by the editor.
+
+      </p>
+      <p>
+	These are used by the <a html="scan.html"><code>scan</code></a>
+	utility to find lines by patterns. The lines can be altered,
+	killed, or otherwise manipulated.
+
+      </p>
+    </font>
+  </body>
+</html>
+<!-- ce: .f .mhtml; -->

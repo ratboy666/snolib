@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<!--
+
+utility
+
+ ce: .f.mhtml;
+-->
+<html>
+  <head>
+    <title>SNOLIB Utilities</title>
+    <meta http-equiv="Content-type"
+	  content="text/html; charset=UTF-8">
+    <meta name="description"
+	  content="CSNOBOL4 Utilities">
+    <meta name="author"
+	  content="Fridtjof Weigel">
+    <meta name="keywords"
+	  content="snobol4, csnobol4, snolib, utilities">
+    <link rel="icon"
+	  type="image/jpeg"
+	  href="favicon.jpg">
+  </head>
+<body>
+  <font face="Sorts Mill Goudy">
+      <h1>Utilities and Examples</h1>
+      <ul>
+	<li>
+	  <a href="stangle" type="text/plain">stangle</a>
+	  <p align="justify">
+	    Read a literate programming file (.lss) and tangle togther
+	    the source for the language processor.
+
+	  </p>
+	  <p align="justify">
+	    The source file for stangle (or sweave) consists
+	    of chunks.	Each chunk is either a documentation
+	    chunk or a code chunk.  Code chunks begin with
+	    <code>&lt;&lt;<i>name</i>&gt;&gt;=</code> and end with
+	    a <code>@</code>. Each code chunk is named. If the name
+	    is already associated with a code chunk, it is appended
+	    to. If it doesn't, a new code chunk is created. Within
+	    a code chunk, other code chunks can be referenced by
+	    <code>&lt;&lt;<i>name</i>&gt;&gt;</code>.
+
+	  </p>
+	  <p align="justify">
+	    Some formatting is applied by sweave. Lines beginning
+	    with *!#|; are formatted in grey and italic. The chevron
+	    definition and reference lines, and the terminator @
+	    line are bolded. SNOBOL4 goto fields are bolded.
+
+	  </p>
+	  <p align="justify">
+	    Documentation chunks are not delimited. Anything not in
+	    a code chunk is a documentation chunk. The first blank
+	    line after the start of a documentation chunk terminates
+	    the chunk (but this is changed with <code>[[</code> and
+	    <code>{{</code>). Each of the documentation chunks is
+	    discarded by stangle, and rendered as an html paragraph
+	    by sweave.
+
+	  </p>
+	  <p align="justify">
+	    Within a documentation chunk <code>[[text]]</code> is
+	    rendered in the code font. The entire sequence must be
+	    on the same input line.  A <code>{{text}}</code> sequence
+	    is rendered in the handwriting (annotation) font.
+
+	  </p>
+	  <p align="justify">
+	    If the <code>[[</code> is not balanced on the same line,
+	    lines following are rendered in the code font, with a bar
+	    (|) inserted at the left. Unbalanced <code>[[</code>
+	    (or <code>{{</code> on a line by it) continue until
+	    the terminating <code>]]</code> or <code>}}</code> is
+	    seen. This process does not terminate on a blank line,
+	    and is the exception to the normal rule that documentation
+	    chunks finish on a blank line.
+
+	  </p>
+	  <p align="justify">
+	    A <code>{{</code> sequence on a line by itself begins an
+	    annotation. Either code or documentation chunks can be
+	    annotated. Annotations are rendered as right-side insets
+	    in a handwriting font.
+
+	  </p>
+	  <p align="justify">
+	    Code is rendered with a green-bar background to facilitate
+	    horizontal tracking. Annotations are rendered with a
+	    blue box rule background. Documentation is on the default
+	    browser background.
+
+	  </p>
+	  <p align="justify">
+	    A footer is added indicating that sweave has been used to
+	    render the html file, the date and time of the rendering
+	    and a link to index.html.
+
+	  </p>
+	  <p align="justify">
+	    The default root for producing the tangled output is
+	    the unnamed chunk (<code>&lt;&lt;&gt;&gt;</code>). This
+	    can be changed to produce other possible “tangles”
+	    from the same source. The environment variable
+	    <code>STANGLE_ROOT</code> holds the name of the root chunk
+	    for code generation.  This can be exploited to extract
+	    unit tests from the code, or other such tasks, as needed.
+
+	  </p>
+	  <p align="justify">
+	    stangle is aware of the embed utility syntax. If a
+	    <code>-SNOBOL</code> directive is seen, the directive
+	    (and continuation lines) are copied, and then a line
+	    directive is generated to resynchronize the output with
+	    the source .lss file. This assumes that errors within the
+	    the inline <code>-SNOBOL</code> code are rare, because
+	    this should be more carefully written and tested.
+
+	  </p>
+	</li>
+	<li>
+	  <a href="sweave" type="text/plain">sweave</a>
+	  <p align="justify">
+	    Read a literate programming file (.lss) and weave together
+	    the html document file for code publication. See stangle
+	    for more details.
+
+	  </p>
+	</li>
+	<li>
+	  <a href="bundle.html">bundle</a>
+	  <p align="justify">
+	    Read CSNOBOL4 source and write source to standard out,
+	    expanding all -INCLUDE (-COPY) statements. This produces
+	    a version of the program runnable without the include
+	    files being available.
+
+	  </p>
+	</li>
+	<li>
+	  <a href="code.html">code</a>
+	  <p align="justify">
+	    Used to interactively test SNOBOL4 statements. Allows
+	    entry, editing and running of a retained program. In
+	    “code”, these programs are line numbered (1..9999).
+	    Renumbering, editing lines, calling an external editor
+	    and using DDT on a retained program are supported features.
+
+	  </p>
+	  <p align="justify">
+	    Expressions can be evaluated and the results displayed
+	    with the = command. If an input line is not matched as a
+	    command, it is executed as a statement. Lines beginning
+	    with a number (1 to 9999) are stored. The stored lines
+	    can be saved, loaded, run and edited.
+
+	  </p>
+	  <pre>
+=EXPRESSION    DISPLAY VALUE OF EXPRESSION
+!COMMAND       SHELL OUT TO COMMAND
+?              THIS HELP
+STATEMENT      EXECUTE STATEMENT
+
+N STATEMENT    ENTER/REPLACE/DELETE PROGRAM LINE
+RUN [N]        RUN RETAINED PROGRAM
+DDT            DDT ON RETAINED PROGRAM
+LIST [[N][,M]] LIST RETAINED PROGRAM
+EDIT [N]       EDIT RETAINED PROGRAM
+SAVE ['FILE']  SAVE RETAINED PROGRAM
+LOAD ['FILE']  LOAD RETAINED PROGRAM
+NAME ['FILE']  CHANGE OR DISPLAY NAME
+SCRATCH        CLEAR RETAINED PROGRAM
+RENUM [N]      RENUMBER RETAINED PROGRAM
+QUIT           EXIT CODE
+	  </pre>
+	</li>
+	<li>
+	  <a href="compile.html">compile</a>
+	  <p align="justify">
+	    Combine a SNOBOL4 program with the language processor
+	    itself to produce a “compiled” object program.
+
+	  </p>
+	  <p align="justify">
+	    <b>This is experimental</b>. The CSNOBOL4 is reconfigured
+	    to use memory files. The code is converted into a C string
+	    initializer which is included into the CSNOBOL4 source.
+	    CSNOBOL4 is then recompiled with the new program included
+	    within it. This produces a native executable that should
+	    run the included SNOBOL4 application.
+
+	  <p align="justify">
+	    For example, the following example
+	    compiles the <i>compile</i> utility itself to
+	    <code>compile.exe</code>. We need to collect all of
+	    the includes used by compile first, and then compile
+	    the result.
+
+	  </p>
+	  <pre>
+bundle <compile >compile.sno
+compile compile.sno compile.exe
+	  </pre>
+	  </p>
+	</li>
+	<li>
+	  <a href="deretn.html">deretn</a>
+	  <p align="justify">
+	    Convert a “SAVE” program from <i>code</i> into
+	    a source code file. Used to export programs from
+	    <i>code</i>. Removes the first 5 columns from SAVE files.
+	    To format a SAVE file into something more presentable
+	    (well <i>I</i> like it, anyway), try:
+
+	    <pre>
+	upcase &lt;SAVE | deretn | snofmt &gt;SNOBOL4
+	    </pre>
+
+	  <p>
+	    The name is short for "de-retain". Retained is what
+	    programs SAVEd in code are called. See the <i>code</i>
+	    utility.
+
+	  </p>
+	</li>
+	<li>
+	  <a href="deseql.html">deseql</a>
+	  <p align="justify">
+	    Remove left sequence numbers. These can appear in fixed
+	    format COBOL source, or BASIC source. Replaces columns
+	    1 through 6 with blanks.
+
+	  </p>
+	</li>
+	  <li>
+	  <a href="deseq.html">deseq</a>
+	  <p align="justify">
+	    Remove right sequence numbers. Retains columns 1 through
+	    72, and removes all data from column 73 onward. <i>Do
+	    not use this on UTF-8 source</i>. This desequences
+	    FORTRAN source.
+
+	  </p>
+	</li>
+	<li>
+	  <a href="embed.html">embed</a>
+	  <p align="justify">
+	    Process files with embedded code/data and executable
+	    SNOBOL4 code. Reads its input, looking for control cards
+	    that indicate a file to be produced (the name “embed”
+	    comes from the fact that the file was originally embedded
+	    and is now being reconstituted). Also allows commands to
+	    be run (that can use the reconstituted files as input).
+
+	  <p align="justify">
+	    Control cards interpreted by <i>embed</i> are
+
+	  </p>
+	  <pre>
+-SNOBOL SNOBOL_CODE
+-EMBED C|FORTRAN|COBOL|SCHEME|DATA|FILE 'VNAME'
+-END
+-SNOBOLX SNOBOL_CODE
+-CMNT COMMENT
+	  </pre>
+	  <p align="justify">
+	    Lines between -EMBED and -END are copied to file named by
+	    VNAME. The type is used to determine the extension(.c,
+	    .FTN, .CBL, .SCM and .dat). If type FILE is used, no
+	    extension is added.
+
+	  </p>
+	  <p align="justify">
+	    -SNOBOL and -SNOBOLX lines begin a line of SNOBOL4 code
+	    to be executed. If the line requires contination, a
+	    '+' can be given at the end of the line and the line
+	    continued. -SNOBOL simply executes its code. -SNOBOLX
+	    does the same but also copies its code to the output.
+
+	  </p>
+	    <p align="justify">
+	    -CMNT introduces a comment.
+
+	  </p>
+	</li>
+	<li>
+	  <a href="ifs.html">ifs</a>
+	  <p align="justify">
+	    Process conditionals (%IF) and includes (%INCLUDE). From
+	    IF.SPT.  Converted to run under CSNOBOL4, and to allow the
+	    lead-in character to be changed. The lead-in character is
+	    normally %, but can be set with the environment variable
+	    IFSLC. For example IFSLC=@ would change it to the @ sign.
+
+	  </p>
+	  <p align="justify">
+	    Operators supported are AND, OR, NE and EQ. Expressions
+	    must be fully parenthesized.
+
+	  </p>
+	  <pre>
+%* (A SAMPLE COMMENT)
+%SET(NAME1,1)
+%SET(NAME2,0)
+%SET(NAME3,1)
+%SET(NAME4,1)
+%SET(NAME5,HOST(HOST_POINTER_BITS))
+%INCLUDE(FILE)
+%IF ((NAME1 OR NAME2) EQ NAME3)
+  %IF (NAME4)
+  %ENDIF
+%ELSE
+%ENDIF
+	  </pre>
+	</li>
+	<li>
+	  <a href="illum.html">illum</a>
+	  <p align="justify">
+	    Takes a sentence as input. Illuminate the first character,
+	    and outputs the character (using banner) and the rest of
+	    the sentence boxed with UTF-8 linedraw characters.
+
+	  </p>
+	</li>
+	<li>
+	  <a href="list.html">list</a>
+	  <p align="justify">
+	    list is a simple file viewer. Supports find, line numbering
+	    and UTF-8 encoding.
+
+	  </p>
+	</li>
+	<li>
+	  <a href="snofmt.html">snofmt</a>
+	  <p align="justify">
+	    Primitive SNOBOL4 formatter. Slightly useful - I use
+	    it to re-align right justified comments after editing.
+	    Where <i>snofmt</i> lacks is not assembling continuation
+	    lines, so it will not bring lines together. It makes no
+	    attempt to format comments.
+
+	  </p>
+	</li>
+	<li>
+	  <a href="rseq.html">rseq</a>
+	  <p align="justify">
+	    Generate sequence numbers on the right. Generates sequence
+	    numbers for FORTRAN.
+
+	  </p>
+	</li>
+	<li>
+	  <a href="lseq.html">lseq</a>
+	  <p align="justify">
+	    Generate sequence numbers on the left. Generates sequence
+	    numbers for COBOL.
+
+	  </p>
+	</li>
+	<li>
+	  <a href="lsinc.html">lsinc</a>
+	  <p align="justify">
+	    List INCLUDE files needed. Related to the
+	    <code>bundle</code> utility, which actually “de-includes”
+	    the file.
+
+	  </p>
+	</li>
+	<li>
+	  <a href="uban.html">uban</a>
+	  <p align="justify">
+	    UTF-8 line draw characters used to produce banner. Similar
+	    to <code>banner</code>.
+
+	  </p>
+	</li>
+	<li>
+	  <a href="upcase.html">upcase /l</a>
+	  <p align="justify">
+	    Convert SNOBOL4 program to uppercase. Does not uppercase
+	    quoted strings, or comments. If the /L switch is used,
+	    converts from uppercase to lowercase.
+
+	  </p>
+	</li>
+	<li>
+	  <a href="cgi.html">cgi</a>
+	  <p align="justify">
+	    An example of a CGI script. Tested with the Apache Web
+	    Server. This example will be extended to illustrate CGI,
+	    fast CGI (when implemented), sessions, templates and
+	    Javascript.
+
+	  </p>
+	</li>
+	<li>
+	  <a href="ED4" type="text/plain">ED4</a>
+	  <p align="justify">
+	    From Griswold's String and List Processing in SNOBOL4, we
+	    take the ED4 editor. This is used as a stream editor to
+	    make changes to files driven by command scripts. ED4 is
+	    enhanced to support some additional commands.  Griswold
+	    suggests other features, but since we only use ED4 as a
+	    stream editor, most of these are not implemented. The
+	    interactive features implemented are designed to be
+	    convenient when generating an edit script to be reused.
+
+	  <pre>
+$C		PRINT THE CURRENT LINE
+$D PATTERN	DELETE UP TO A LINE WITH PATTERN
+$E 		COPY TO THE END OF THE INPUT FILE
+$F PATTERN	FIND A LINE WITH A SPECIFIED PATTERN
+$G N		COPY TO LINE
+$H 		HELP
+$J 		JOIN
+$K N		SKIP TO LINE
+$L 		PRINT THE LAST LINE OUTPUT
+$P N		COPY/PRINT TO LINE (OR ALL LINES)
+$Q C		CHANGE COMMAND CHARACTER
+$R NEW = OLD	REPLACE THE STRING MATCHING PATTERN
+$S PATTERN	SPLIT AFTER PATTERN
+$T 		TOP
+$X 		EXIT
+	  </pre>
+	</li>
+	<li>
+	  <a href="scan.html">scan</a>
+	  <p align="justify">
+	    The <i>scan</i> utility provides the interactive editor
+	    <i>cpmed</i> with pattern matching find and substitute
+	    capability.
+	  </p>
+	  <p align="justify">
+	    Scan input for pattern. Outputs relative lines to next
+	    match.  The first argument is an optional flag /G (or /g).
+
+	  </p>
+	  <p align="justify">
+	    The remaining arguments are gathered. If any of these is
+	    simply '=', the action is substitution. If no '=' is seen,
+	    the action is find. A find action scans its input, and
+	    outputs the <i>relative</i> line of a matching line. If
+	    /G is used, all lines are scanned, and relative lines for
+	    each match is output (relative to the previous match). If
+	    the action is substitute, a replacement is made, and the
+	    output is the replaced line. All lines are subjected to
+	    replacement. If /G is given, the substitute is made on
+	    all occurences on the line (if not, only one occurence).
+
+	  <p align="justify">
+	    <code>scan /g %old = %new</code> changes the each occurence
+	    of 'old' to 'new' on each line of input. <code>scan
+	    %target</code> displays the relative line numbers of
+	    each line containing target. The relative line numbers
+	    are designed to be read into <code>cpmed</code> with
+	    the <code>.N</code> command and applied with &amp; line
+	    specifier in that editor. An argument beginning with % has
+	    the % removed and is then quoted with single quotes. This
+	    handles the common case of simple strings. Parentheses (
+	    and ) still need "shell" quoting. Outside of the editor,
+	    useful to perform search and replace on files.
+
+	  </p>
+	  <p align="justify">
+	    <i>scan</i> loads functions from SCAN.INC to aid in useful
+	    pattern construction. Patterns to represent objects to
+	    be searched or replaced are to be put into SCAN.INC,
+	    to be used while editing.
+
+	  </p>
+	</li>
+	<li>
+	  <a href="DDT.html">DDT - An Interactive SNOBOL4 Debugger</a>
+	  <p align="justify">
+	    <i>DDT</i> is a source level debugger for CSNOBOL4.
+
+	  </p>
+	  <p align="justify">
+	    <code>-INCLUDE 'DDT.INC'</code> into the program to be debugged. At
+	    the point that the debugger should be activated, insert the statement
+	    <code>DDT()</code> which will enter the debugger.
+
+	  </p>
+	  <p align="justify">
+	    Source statements can be made available by creating an environment
+	    variable named <code>LIST</code> equated to the name of a listing
+	    file, or
+
+	  </p>
+	  <pre>
+DDT: X snobol4 -n -l SRC.LST SRC.SNO
+DDT: S
+LISTING: SRC.LST
+SOURCE LISTING LOADED
+DDT:
+	  </pre>
+
+	  <p align="justify">
+	    Supplying a <code>LIST=</code> environment automatically
+	    attempts loading the listing at debugger start. This
+	    will give a symbolic line for the first line after the
+	    <code>DDT()</code> invocation.
+
+	  </p>
+	  <p align="justify">
+	    If there is a block of statements that are to be excluded
+	    from tracing (such as initializations), bracket them with
+	    <code>&amp;TRACE = 0 ... &amp;TRACE = 999999999</code>
+
+	  </p>
+	  <p align="justify">
+	    <code>DDT()</code> (also known as
+	    <code>DEBUG()</code>) are the primary calls into the
+	    debugger. <code>DDT_SUSPEND()</code> will suspend
+	    the debugger, and <code>DDT_RESUME()</code> will
+	    resume normal operation.  <code>DDT_ACTIVE</code>
+	    and <code>DDT_LOADED</code> variables can
+	    be examined. <code>DDT_LOADED</code> will be
+	    <code>NULL</code> if <i>DDT</i> has not been loaded. See
+	    <A HREF="BQ.html">BQ</A> for an example of this use.
+
+	  </p>
+	  <p align="justify">
+	    The <code>DDT()</code> function can be invoked to
+	    re-enter the debugger. This is usually used to generate
+	    “complex” breakpoints. <code>DDT()</code> can be
+	    given an argument. This name can be referenced in an I
+	    command: <code>I 'MSG' N</code> which ignores the next
+	    <code>N</code> calls to <code>DDT/DEBUG</code> with
+	    the matching string. After this, the <code>DDT()</code>
+	    or <code>DEBUG()</code> call will enter the debugger.
+
+	  </p>
+	  <p align="justify">
+	    Commands available in <i>DDT</i> are
+
+	  </p>
+	  <pre>
+STNO - STATEMENT NUMBERS SPECIFIED AS INTEGERS, OR LABEL +- N
+          BRACKETED ITEMS ARE OPTIONAL
+H            (OR ?)     HELP (THIS LIST)
+C STATEMENT  (OR TAB)   IMMEDIATE EXECUTION OF STATEMENT
+E EXPRESSION (OR =EXP)  EVALUATE EXPRESSION
+X COMMAND    (OR !)     EXECUTE SHELL COMMAND
+T [N]                   TRACE N STATEMENTS (INTO PROCEDURES)
+P [N]                   TRACE N STATEMENTS (NO PROCEDURES)
+B STNO [,STNO,...]      SET BREAKPOINT(S)
+K BKPT [,BKPT,...]      KILL BREAKPOINT(S)
+R                       REPORT BREAKPOINTS SET
+G [=LABEL,][STNO1,...]  GO (FROM SPECIFIED LABEL),
+                          SETTING TEMPORARY BREAKPOINT(S)
+L [STNO1 [,STNO2]]      LIST STATEMENT OR RANGE
++ [N]  OR  -[N]         LIST NEXT/PREVIOUS N STATEMENTS
+++  OR  --              LIST 12 STATEMENTS FORWARD OR BACK
+Q                       QUIT
+O (OR ^D)               OFF - RESUME PROGRAM, STOP DEBUGGING
+S (FILE)                LOAD SOURCE
+M NAME                  MODIFY VARIABLE
+I 'MSG' N               IGNORE NEXT N CALLS TO DDT(MSG)
+* COMMENT               COMMENT (NO ACTION)
+. FILE                  SOURCE FILE (DO NOT NEST)
+V (FILE)                VIEW FILE (DEFAULT TO LIST FILE)
+	  </pre>
+	</li>
+      </ul>
+      <h2>Memory and Resource Requirements</h2>
+      <p align="justify">
+	<i>cpmed</i> is very lightweight in memory. Typically, virtual
+	memory is 6.4MB, resident size is 2.6MB with 0.5MB shared.
+	This is with 2MB edit region, a 128K auxillay region, and
+	8192 undo steps.
+
+      </p>
+      <p align="justify">
+	Typical SNOBOL4 programs require 8MB for dynamic storage,
+	and around 400K for the interpreter and around 200K for the
+	interpreter stack and pattern stack. Total virtual memory
+	is 35 to 100MB, (and I would like to find out why!) with a
+	resident size of around 10MB and a 1.5MB shared.
+
+      </p>
+      <footer>
+	<hr>
+	<table width="100%" border="0">
+	  <tr>
+	    <td width="33%"><p align="left">
+	      SNOLIB Utilities
+	    </p></td>
+	    <td width="33%"><p align="center">
+Thu Feb  6 12:55:50 EST 2014
+	    </p></td>
+	    <td><p align="right">
+	      Return to <a href="index.html">index</a>
+	    </p></td>
+	  </tr>
+	</table>
+      </footer>
+    </font>
+  </body>
+</html>

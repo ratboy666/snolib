@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>CHARS - Symbolic names for some characters</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Define symbolic names for (normally) unprintable characters. Useful for
+defining whitespace, etc.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>See Also</h2>
+<a href="UTF8.html">UTF8</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;CHARS&raquo;&equiv;</b>
+CHARS    CHARS_NUL = CHAR( 0)
+         CHARS_SOH = CHAR( 1)
+         CHARS_STX = CHAR( 2)
+         CHARS_ETX = CHAR( 3)
+         CHARS_EOT = CHAR( 4)
+         CHARS_ENQ = CHAR( 5)
+         CHARS_ACK = CHAR( 6)
+         CHARS_BEL = CHAR( 7)
+         CHARS_BS  = CHAR( 8)
+         CHARS_HT  = CHAR( 9)
+         CHARS_NL  = CHAR(10)
+         CHARS_VT  = CHAR(11)
+         CHARS_NP  = CHAR(12)
+         CHARS_CR  = CHAR(13)
+         CHARS_SO  = CHAR(14)
+         CHARS_SI  = CHAR(15)
+         CHARS_DLE = CHAR(16)
+         CHARS_DC1 = CHAR(17)
+         CHARS_DC2 = CHAR(18)
+         CHARS_DC3 = CHAR(19)
+         CHARS_DC4 = CHAR(20)
+         CHARS_NAK = CHAR(21)
+         CHARS_SYN = CHAR(22)
+         CHARS_ETB = CHAR(23)
+         CHARS_CAN = CHAR(24)
+         CHARS_EM  = CHAR(25)
+         CHARS_SUB = CHAR(26)
+         CHARS_ESC = CHAR(27)
+         CHARS_FS  = CHAR(28)
+         CHARS_GS  = CHAR(29)
+         CHARS_RS  = CHAR(30)
+         CHARS_US  = CHAR(31)
+         CHARS_SP  = CHAR(32)
+         CHARS_DEL = CHAR(127)
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Don't define <font face="Source Code Pro">CHARS_CR</font> as <font face="Source Code Pro">CHARS_NL</font>, even on a Unix style
+OS. <font face="Source Code Pro">CR</font> and <font face="Source Code Pro">NL</font> have distinctly different meanings in some
+circumstances (for example, on a printer).
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+CHARS_PRINTABLE is set to the printable characters (' '..'~'). UTF-8
+is not included (single byte only). CHARS_CONTROL are the control
+characters, and CHARS_HIGH are 129..255.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;CHARS&raquo;&equiv;</b>
+<font color="#818181"><i>*</i></font>
+         CHARS_TAB   = CHARS_HT
+         CHARS_SPACE = CHARS_SP
+         CHARS_FF    = CHARS_NP
+         CHARS_LF    = CHARS_NL
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Break up &ALPHABET into three classes: control, printable and high.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;CHARS&raquo;&equiv;</b>
+<font color="#818181"><i>*</i></font>
+         &amp;ALPHABET LEN(32) .  CHARS_CONTROL
++                  LEN(95) .  CHARS_PRINTABLE
++                  LEN(129) . CHARS_HIGH
+<font color="#818181"><i>*</i></font>
+         CODE(&#39;CHARS&#39;)
+<font color="#818181"><i>*</i></font>
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;CHARS.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+-STITL CHARS
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*              #####   #     #     #     ######    #####               *</i></font>
+<font color="#818181"><i>*             #     #  #     #    # #    #     #  #     #              *</i></font>
+<font color="#818181"><i>*             #        #     #   #   #   #     #  #                    *</i></font>
+<font color="#818181"><i>*             #        #######  #     #  ######    #####               *</i></font>
+<font color="#818181"><i>*             #        #     #  #######  #   #          #              *</i></font>
+<font color="#818181"><i>*             #     #  #     #  #     #  #    #   #     #              *</i></font>
+<font color="#818181"><i>*              #####   #     #  #     #  #     #   #####               *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* CHARS             SYMBOLIC NAMES FOR CHARACTERS                      *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* PHIL BUDNE &lt;PHIL@ULTIMATE.COM&gt;                                       *</i></font>
+<font color="#818181"><i>* DECEMBER 2001                                                        *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CHARS.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;CHARS&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Tue May 20 15:46:04 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

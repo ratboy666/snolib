@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>RANDOM - Random number functions</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Random number functions. <font face="Source Code Pro">RANDOMI(N)</font> generates random numbers
+from 1 to n. If an empty argument is supplied, 0 to 1 (real).
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;RANDOM&raquo;&equiv;</b>
+         LOAD(&#39;RANDOM()INTEGER&#39;)
+         LOAD(&#39;SRANDOM(INTEGER)STRING&#39;)
+         LOAD(&#39;SRANDOMDEV()STRING&#39;)
+         DEFINE(&#39;RANDOMI(N)&#39;)                              <b>:(RANDOM_END)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* RANDOM() RETURNS INTEGER 0 .. 2 ** 31 - 1</i></font>
+<font color="#818181"><i>* RETURN 1 .. N</i></font>
+<font color="#818181"><i>*</i></font>
+RANDOMI  RANDOMI = RANDOM()
+         RANDOMI = RANDOMI / 2147483647.0
+         RANDOMI = NE(N, 0) CONVERT(RANDOMI * N, &#39;INTEGER&#39;) + 1
+                                                               <b>:(RETURN)</b>
+RANDOM_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;RANDOM.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+-STITL RANDOM
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*         ######      #     #     #  ######   #######  #     #         *</i></font>
+<font color="#818181"><i>*         #     #    # #    ##    #  #     #  #     #  ##   ##         *</i></font>
+<font color="#818181"><i>*         #     #   #   #   # #   #  #     #  #     #  # # # #         *</i></font>
+<font color="#818181"><i>*         ######   #     #  #  #  #  #     #  #     #  #  #  #         *</i></font>
+<font color="#818181"><i>*         #   #    #######  #   # #  #     #  #     #  #     #         *</i></font>
+<font color="#818181"><i>*         #    #   #     #  #    ##  #     #  #     #  #     #         *</i></font>
+<font color="#818181"><i>*         #     #  #     #  #     #  ######   #######  #     #         *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* RANDOM                 RANDOM NUMBER FUNCTIONS                       *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* PHIL BUDNE &lt;PHIL@ULTIMATE.COM&gt;                                       *</i></font>
+<font color="#818181"><i>* JANUARY 4, 2011                                                      *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* RANDOM.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;RANDOM&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:24 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

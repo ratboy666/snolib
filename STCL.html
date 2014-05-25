@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>STCL - TCL interface for CSNOBOL4</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Interface to TCL.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;TCL&raquo;&equiv;</b>
+STCL_LOAD
+<font color="#818181"><i>*</i></font>
+         LOAD(&#39;STCL_CREATEINTERP()INTEGER&#39;)
+         LOAD(&#39;STCL_EVALFILE(INTEGER,STRING)STRING&#39;)
+         LOAD(&#39;STCL_GETVAR(INTEGER,STRING)STRING&#39;)
+         LOAD(&#39;STCL_SETVAR(INTEGER,STRING,STRING)STRING&#39;)
+         LOAD(&#39;STCL_EVAL(INTEGER,STRING)STRING&#39;)
+         LOAD(&#39;STCL_DELETEINTERP(INTEGER)STRING&#39;)
+<font color="#818181"><i>*</i></font>
+         LOAD(&#39;STCL_NEWSTRINGOBJ(STRING)INTEGER&#39;)
+         LOAD(&#39;STCL_GETSTRINGFROMOBJ(INTEGER)STRING&#39;)
+         LOAD(&#39;STCL_APPENDTOOBJ(INTEGER,STRING)STRING&#39;)
+         LOAD(&#39;STCL_EVALOBJEX(INTEGER,INTEGER,INTEGER)STRING&#39;)
+         LOAD(&#39;STCL_GETOBJRESULT(INTEGER)&#39;)
+         LOAD(&#39;STCL_OBJSETVAR2(INTEGER,STRING,STRING,INTEGER,INTEGER)&#39;
++             &#39;STRING&#39;)
+         LOAD(&#39;STCL_OBJGETVAR2(INTEGER,STRING,STRING,INTEGER)STRING&#39;)
+         LOAD(&#39;STCL_RELEASEOBJ(INTEGER)STRING&#39;)
+<font color="#818181"><i>*</i></font>
+         CODE(&#39;STCL_LOAD&#39;)
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+-STITL STCL
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                    #####   #######   #####   #                       *</i></font>
+<font color="#818181"><i>*                   #     #     #     #     #  #                       *</i></font>
+<font color="#818181"><i>*                   #           #     #        #                       *</i></font>
+<font color="#818181"><i>*                    #####      #     #        #                       *</i></font>
+<font color="#818181"><i>*                         #     #     #        #                       *</i></font>
+<font color="#818181"><i>*                   #     #     #     #     #  #                       *</i></font>
+<font color="#818181"><i>*                    #####      #      #####   #######                 *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* STCL                TCL INTERFACE FOR CSNOBOL4                       *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* PHIL BUDNE &lt;PHIL@ULTIMATE.COM&gt;                                       *</i></font>
+<font color="#818181"><i>* DECEMBER 3, 2005                                                     *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* INSPIRED BY ARJEN MARKUS&#39; &#39;FTCL&#39; FORTRAN/TCL INTERFACE               *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* STCL.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;TCL&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-TITLE TCL_TEST
+START
+-INCLUDE &#39;STCL.INC&#39;
+-STITL
+-EJECT
+<font color="#818181"><i>*</i></font>
+         INTERP = STCL_CREATEINTERP()
+         TCL_VERSION = STCL_GETVAR(INTERP, &quot;tcl_version&quot;)
+         OUTPUT = IDENT(TCL_VERSION) &quot;COULD NOT GET TCL_VERSION&quot; <b>:S(END)</b>
+         OUTPUT = &quot;TCL VERSION: &quot; TCL_VERSION
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CHECK TCL VERSION</i></font>
+         NUM = SPAN(&#39;0123456789&#39;)
+         VPAT = NUM &#39;.&#39; NUM
+         TCL_VERSION VPAT . VER                               <b>:S(CHECKV)</b>
+         OUTPUT = &quot;COULD NOT PARSE TCL_VERSION&quot;                   <b>:(END)</b>
+
+CHECKV   LT(VER, 8.4)                                        <b>:S(CHECKTK)</b>
+
+<font color="#818181"><i>* TCL 8.4 AND LATER CAN DYNAMICLY LOAD TK!</i></font>
+         STCL_EVAL(INTERP, &quot;package require Tk&quot;)                 <b>:F(END)</b>
+
+<font color="#818181"><i>* CHECK FOR TK</i></font>
+CHECKTK  TK_VERSION = STCL_GETVAR(INTERP, &quot;tk_version&quot;)         <b>:F(NOTK)</b>
+         DIFFER(TK_VERSION)                                   <b>:S(HAVETK)</b>
+<font color="#818181"><i>*</i></font>
+NOTK     OUTPUT = &quot;COULD NOT FIND TK_VERSION&quot;                     <b>:(END)</b>
+<font color="#818181"><i>*</i></font>
+HAVETK   OUTPUT = &quot;TK VERSION: &quot; TK_VERSION
+<font color="#818181"><i>*</i></font>
+         STCL_EVAL(INTERP,
++           &#39;button .hello -text &quot;Hello, world&quot; &#39;
++           &#39;              -command {set val hello};&#39;
++           &quot;pack .hello;&quot;
++           &#39;button .other -text &quot;Other Choice&quot; &#39;
++           &#39;              -command {set val other};&#39;
++           &quot;pack .other;&quot;
++           &quot;global val;&quot;
++           &quot;vwait val&quot;)
+<font color="#818181"><i>*</i></font>
+         OUTPUT = STCL_GETVAR(INTERP, &quot;val&quot;)
+<font color="#818181"><i>*</i></font>
+END START
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:32 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

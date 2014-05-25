@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>FLOOR - FLOOR and CEIL functions</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">FLOOR(X)</font> will return the largest integer not greater than <font face="Source Code Pro">X</font>.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">CEIL(X)</font> will return the smallest integer not less than <font face="Source Code Pro">X</font>.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="DEXP.html">DEXP</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;DEXP.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;FLOOR&raquo;&equiv;</b>
+         DEFINE(&#39;FLOOR(X)&#39;)
+         DEXP(&#39;CEIL(X) = -FLOOR(-X)&#39;)                       <b>:(FLOOR_END)</b>
+<font color="#818181"><i>*</i></font>
+FLOOR    FLOOR = CONVERT(X, &#39;INTEGER&#39;)
+         GE(X, 0)                                             <b>:S(RETURN)</b>
+         FLOOR = NE(X, FLOOR) FLOOR - 1                        <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+FLOOR_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;FLOOR.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL FLOOR
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*              #######  #        #######  #######  ######              *</i></font>
+<font color="#818181"><i>*              #        #        #     #  #     #  #     #             *</i></font>
+<font color="#818181"><i>*              #        #        #     #  #     #  #     #             *</i></font>
+<font color="#818181"><i>*              #####    #        #     #  #     #  ######              *</i></font>
+<font color="#818181"><i>*              #        #        #     #  #     #  #   #               *</i></font>
+<font color="#818181"><i>*              #        #        #     #  #     #  #    #              *</i></font>
+<font color="#818181"><i>*              #        #######  #######  #######  #     #             *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* FLOOR              FLOOR AND CEIL FUNCTIONS                          *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* FLOOR.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;FLOOR&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:11 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>embed</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+The EMBED utility is used to preprocess snobol code that requires
+inline data, or that contains embedded C or FORTRAN code.  It may
+also have utility as a CGI (WEB) tool.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Adds some control cards to SNOBOL4. These are handled by <font face="Source Code Pro">EMBED</font>,
+and are not passed through. All other control cards are simply
+copied through:
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+| -SNOBOL SNOBOL_CODE
+| -EMBED C|FORTRAN|COBOL|SCHEME|DATA|FILE 'VNAME'
+| -END
+| -SNOBOLX SNOBOL_CODE
+| -CMNT COMMENT
+</font></pre>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">EMBED</font> copies its source file, until it sees one of its controls.
+<font face="Source Code Pro">-SNOBOL</font> immediately executes its code (use <font face="Source Code Pro">+</font> at the end of
+lines to continue them). <font face="Source Code Pro">-SNOBOLX</font> is the same, but also copies
+its code to the output (allowing consistent definitions at both
+times). <font face="Source Code Pro">-EMBED</font> to <font face="Source Code Pro">-END</font> is extracted and copied into a file,
+whose name is made available to the program as <font face="Source Code Pro">VNAME</font>.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+See <font face="Source Code Pro">P64.lss</font> for an example. <font face="Source Code Pro">P64.lss</font> is processed by
+<font face="Source Code Pro">stangle</font> into <font face="Source Code Pro">P64.SNO</font>, which is then processed by <font face="Source Code Pro">EMBED</font>
+to produce <font face="Source Code Pro">p64.so</font>, and <font face="Source Code Pro">P64.INC</font> which is the associated INCLUDE
+file. <font face="Source Code Pro">EMBED</font> extracts the embedded <font face="Source Code Pro">C</font> code, generating wrappers
+using the <font face="Source Code Pro">WRAPPER</font> function. and then runs the <font face="Source Code Pro">C</font> compiler
+using the <font face="Source Code Pro">DYNAMIC</font> function to compile and produce the shared
+object needed when the <font face="Source Code Pro">P64</font> library function is used.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+In effect, the building of the code is controlled by the SNOBOL4 source
+itself, and the entire module is self contained. Neither <font face="Source Code Pro">WRAPPER</font>
+nor <font face="Source Code Pro">DYNAMIC</font> need be present at “run time” but are only used
+when the <font face="Source Code Pro">P64</font> module itself is updated.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+I am sure that other uses for <font face="Source Code Pro">EMBED</font> will occur to the reader.
+Embedding unit test cases; creation of run-time data files;
+implementation of domain specific languages and more. The idea of
+<font face="Source Code Pro">EMBED</font> is to provide an approximate equivalent to LISP macros
+to SNOBOL4.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="CHARS.html">CHARS</a><br>
+<a href="SLOAD.html">SLOAD</a>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>See Also</h2>
+<a href="WRAPPER.html">WRAPPER</a><br>
+<a href="DYNAMIC.html">DYNAMIC</a><br>
+<a href="P64.html">P64</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;CHARS.INC&#39;
+-INCLUDE &#39;SLOAD.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;embed&raquo;&equiv;</b>
+         TERMINAL = &#39;EMBED (SUN DEC  1 16:15:39 EST 2013)&#39;
+<font color="#818181"><i>*</i></font>
+         WHITE_ = SPAN(&#39; &#39; CHARS_TAB) | &#39;&#39;
+         Q_ = &quot;&#39;&quot;
+         QQ_ = &#39;&quot;&#39;
+         LEAD = DUPL(&#39; &#39;, 9)
+<font color="#818181"><i>*</i></font>
+TOP      LINE = INPUT                                            <b>:F(END)</b>
+<font color="#818181"><i>*</i></font>
+         LINE FENCE &#39;-&#39; (&#39;snobol&#39; | &#39;SNOBOL&#39;) (ANY(&#39;xX&#39;) | &#39;&#39;) WHITE_
++            REM . S                                        <b>:F(TRYEMBED)</b>
+TRYX1    REVERSE(TRIM(S)) FENCE &#39;+&#39; REM . X                    <b>:F(TRYX2)</b>
+         S = REVERSE(X) &#39; &#39; INPUT                               <b>:(TRYX1)</b>
+TRYX2    CODE = CODE(&#39; &#39; S &#39; :(TOP)&#39;)                           <b>:S&lt;CODE&gt;</b>
+         TERMINAL = &#39;EMBED: -SNOBOL CODE BAD: &#39; S                 <b>:(END)</b>
+<font color="#818181"><i>*</i></font>
+TRYEMBED LINE FENCE &#39;-&#39; (&#39;embed&#39; | &#39;EMBED&#39;) WHITE_ ARB . TYPE
++            WHITE_ (Q_ | QQ_) $ DELIM ARB . VNAME *DELIM     <b>:S(STARTC)</b>
+         LINE FENCE &#39;-&#39; (&#39;cmnt&#39; | &#39;CMNT&#39;)                        <b>:S(TOP)</b>
+         OUTPUT = LINE                                            <b>:(TOP)</b>
+STARTC   FNAME = VNAME
+         FNAME = ?(TYPE ? &#39;c&#39; | &#39;C&#39;) FNAME &#39;.c&#39;
+         FNAME = ?(TYPE ? &#39;fortran&#39; | &#39;FORTRAN&#39;) FNAME &#39;.FTN&#39;
+         FNAME = ?(TYPE ? &#39;cobol&#39; | &#39;COBOL&#39;) FNAME &#39;.CBL&#39;
+         FNAME = ?(TYPE ? &#39;scheme&#39; | &#39;SCHEME&#39;) FNAME &#39;.SCM&#39;
+         FNAME = ?(TYPE ? &#39;data&#39; | &#39;DATA&#39;) FNAME &#39;.DAT&#39;
+         OUTPUT = LEAD VNAME &#39; = &#39; Q_ FNAME Q_
+         $VNAME = FNAME
+         OUTPUT(.EMBED, 10,, FNAME)
+<font color="#818181"><i>*</i></font>
+COPYL    LINE = INPUT                                            <b>:F(END)</b>
+         OFLAG =
+         LINE FENCE &#39;-&#39; (&#39;cmnt&#39; | &#39;CMNT&#39;)                      <b>:S(COPYL)</b>
+         LINE FENCE &#39;-&#39; (&#39;end&#39; | &#39;END&#39;)                       <b>:S(COPYL3)</b>
+         LINE FENCE &#39;-&#39; (&#39;snobol&#39; | &#39;SNOBOL&#39;)
++            ((ANY(&#39;xX&#39;) *?(OFLAG = 1)) | &#39;&#39;)
++            WHITE_ REM . SNC                                 <b>:F(COPYL2)</b>
+<font color="#818181"><i>*</i></font>
+DOMORE   REVERSE(TRIM(SNC)) FENCE &#39;+&#39; REM . X                <b>:F(EXECSNC)</b>
+         SNC = REVERSE(X) &#39; &#39; INPUT                            <b>:(DOMORE)</b>
+<font color="#818181"><i>*</i></font>
+EXECSNC  OUTPUT = DIFFER(OFLAG) LEAD SNC
+         CODE = CODE(&#39; &#39; SNC &#39; :(COPYL)&#39;)                       <b>:S&lt;CODE&gt;</b>
+         &amp;CODE = 1
+         TERMINAL = &#39;EMBED: -SNOBOL(X) CODE BAD: &#39; SNC            <b>:(END)</b>
+COPYL2   EMBED = LINE                                           <b>:(COPYL)</b>
+COPYL3   DETACH(.EMBED)
+         ENDFILE(10)                                              <b>:(TOP)</b>
+<font color="#818181"><i>*</i></font>
+END START
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+TITLE EMBED
+START
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*             #######  #     #  ######   #######  ######               *</i></font>
+<font color="#818181"><i>*             #        ##   ##  #     #  #        #     #              *</i></font>
+<font color="#818181"><i>*             #        # # # #  #     #  #        #     #              *</i></font>
+<font color="#818181"><i>*             #####    #  #  #  ######   #####    #     #              *</i></font>
+<font color="#818181"><i>*             #        #     #  #     #  #        #     #              *</i></font>
+<font color="#818181"><i>*             #        #     #  #     #  #        #     #              *</i></font>
+<font color="#818181"><i>*             #######  #     #  ######   #######  ######               *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* EMBED                    EMBEDDED SNOBOL CODE                        *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* embed.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;embed&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:08 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

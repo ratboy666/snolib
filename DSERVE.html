@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>DSERVE - DDT Server</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">DSERVE</font> provides a method to allow debugging applications that
+cannot normally be debugged. The application will call <font face="Source Code Pro">DSERVE_INIT()</font>
+to initialize. This creates a listener process that waits for telnet
+connections. When a connection is made, two processes will shuttle
+data between telnet and <font face="Source Code Pro">DDT</font>.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Not very good at cleaning up, but this does work.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="CHARS">CHARS</a><br>
+<a href="REPL">REPL</a><br>
+<a href="CSNOBOL4">CSNOBOL4</a><br>
+<a href="HOST">HOST</a><br>
+<a href="MAX"></a><br>
+<a href="DDT"></a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;CHARS.INC&#39;
+-INCLUDE &#39;REPL.INC&#39;
+-INCLUDE &#39;CSNOBOL4.INC&#39;
+-INCLUDE &#39;HOST.INC&#39;
+-INCLUDE &#39;MAX.INC&#39;
+-INCLUDE &#39;DDT.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;DSERVE&raquo;&equiv;</b>
+         DEFINE(&#39;DSERVE_INIT(APPNAME,PORT,KEY)&#39;)      <b>:(DSERVE_INIT_END)</b>
+<font color="#818181"><i>*</i></font>
+DSERVE_INIT
+         DSERVE_KEY = KEY
+         DSERVE_PORT = PORT
+         DSERVE_APPNAME = APPNAME
+<font color="#818181"><i>*</i></font>
+         LT(CREATEPIPE())                                    <b>:S(DSERVE9)</b>
+         DSERVE_P1_RFD = GETPIPEFD(0)
+         DSERVE_P1_WFD = GETPIPEFD(1)
+         LT(CREATEPIPE())                                    <b>:S(DSERVE9)</b>
+         DSERVE_P2_RFD = GETPIPEFD(0)
+         DSERVE_P2_WFD = GETPIPEFD(1)
+         PID = FORK()                                        <b>:F(DSERVE9)</b>
+         LT(PID)                                             <b>:S(DSERVE9)</b>
+         EQ(PID)                                             <b>:S(DSERVE2)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* PRIMORDIAL PROCESS - POLLS WITH DSERVE() WAITING FOR CONNECTION AND</i></font>
+<font color="#818181"><i>* DEBUGGER ENTRY</i></font>
+<font color="#818181"><i>*</i></font>
+         DSERVE_FDS = MALLOC(SIZEOF_FD_SET())
+         DSERVE_TV = MALLOC(SIZEOF_TIMEVAL())                  <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+DSERVE_INIT_END
+<font color="#818181"><i>*</i></font>
+         DEFINE(&#39;DSERVE()N,S&#39;)                             <b>:(DSERVE_END)</b>
+DSERVE   NE(DDT_ACTIVE)                                        <b>:(RETURN)</b>
+         SET_TIMEVAL(DSERVE_TV, 0, 0)
+         FD_ZERO(DSERVE_FDS)
+         FD_SET(DSERVE_P2_RFD, DSERVE_FDS)
+         N = SELECT(DSERVE_P2_RFD + 1, DSERVE_FDS, 0, 0, DSERVE_TV)
+         EQ(N)                                                <b>:S(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+         OUTPUT(.DDT_T, 10, &#39;W&#39;, &#39;/dev/fd/&#39; DSERVE_P1_WFD)   <b>:F(DSERVE9)</b>
+         INPUT(.DDT_R, 11,, &#39;/dev/fd/&#39; DSERVE_P2_RFD)        <b>:F(DSERVE9)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* WAIT FOR MESSAGE FROM NET PROCESS</i></font>
+<font color="#818181"><i>*</i></font>
+         S = DDT_R
+         IDENT(S, &#39;DDT&#39;)                                     <b>:S(DSERVE7)</b>
+         DDT_T = &#39;OPTION &#39; S &#39; NOT AVAILABLE&#39;                  <b>:(RETURN)</b>
+DSERVE7  DDT_T = NE(DDT_ACTIVE) &#39;APP ALREADY IN DDT&#39;          <b>:S(RETURN)</b>
+         DDT_USE_R = 1
+         DSERVE = &#39;DDT&#39;
+         DDT()
+                                                               <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CONNECTION LISTENER PROCESS</i></font>
+<font color="#818181"><i>*</i></font>
+DSERVE2  INPUT(.FROM_PRIMORDIAL, 12,, &#39;/dev/fd/&#39; DSERVE_P1_RFD)
++                                                            <b>:F(DSERVE9)</b>
+         OUTPUT(.TO_PRIMORDIAL, 13, &#39;W&#39;, &#39;/dev/fd/&#39; DSERVE_P2_WFD)
++                                                            <b>:F(DSERVE9)</b>
+<font color="#818181"><i>*</i></font>
+DSERVE3  FDN = SERV_LISTEN(&#39;inet&#39;, &#39;stream&#39;, DSERVE_PORT)    <b>:F(DSERVE9)</b>
+         INPUT(.NET, 9, &#39;UWT&#39;, &#39;/dev/fd/&#39; FDN)               <b>:F(DSERVE9)</b>
+         OUTPUT(.NET, 9)                                     <b>:F(DSERVE9)</b>
+         CRLF = CHARS_CR CHARS_LF
+<font color="#818181"><i>*</i></font>
+         NET = &#39;DSERVE &#39; DSERVE_APPNAME CRLF
+         NET = CRLF
+         NET = &#39;LOGIN REQUIRED: &#39; CRLF
+         S = NET
+         S = REPL(S, CRLF)
+         S = TRIMB(S)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* LOGIN IS PLAINTEXT. THIS SHOULD ONLY BE USED OVER TELNET RUNNING ON</i></font>
+<font color="#818181"><i>* THE SAME HOST AS THE APPLICATION BEING DEBUGGED. THERE IS NO USER</i></font>
+<font color="#818181"><i>* NAME/PASSWORD -- JUST A SINGLE MAGIC WORD.</i></font>
+<font color="#818181"><i>*</i></font>
+         IDENT(S, DSERVE_KEY)                                <b>:S(DSERVE8)</b>
+         NET = &#39;BAD LOGIN&#39; CRLF                                   <b>:(END)</b>
+DSERVE8  NET = &#39;LOGIN CONFIRM&#39; CRLF
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* SEND MESSAGE TO PRIMORDIAL.</i></font>
+<font color="#818181"><i>*</i></font>
+         TO_PRIMORDIAL = &#39;DDT&#39;
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* FORK TO TWO COPY LOOPS: PRIMORDIAL -&gt; NET AND NET -&gt; PRIMORDIAL</i></font>
+<font color="#818181"><i>*</i></font>
+         PID = FORK()
+         LT(PID)                                             <b>:S(DSERVE9)</b>
+         EQ(PID)                                            <b>:S(DSERVE12)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* PRIMORDIAL -&gt; NET COPY PROCESS</i></font>
+<font color="#818181"><i>*</i></font>
+DSERVE11 S = FROM_PRIMORDIAL                                     <b>:F(END)</b>
+         NET = S CRLF                                        <b>:(DSERVE11)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* NET -&gt; PRIMORDIAL COPY PROCESS</i></font>
+<font color="#818181"><i>*</i></font>
+DSERVE12 S = NET                                                 <b>:F(END)</b>
+         S = REPL(S, CHARS_CR)
+         S = REPL(S, CHARS_LF)
+         TO_PRIMORDIAL = S                                   <b>:(DSERVE12)</b>
+<font color="#818181"><i>*</i></font>
+DSERVE9  TERMINAL = &#39;DSERVE: INTERNAL FAILURE&#39;                    <b>:(END)</b>
+<font color="#818181"><i>*</i></font>
+DSERVE_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;DSERVE.INC&#39;
+         &amp;CODE = 1
+         DSERVE_INIT(&#39;TEST&#39;, 54321, &#39;magic&#39;)
+LUP      DSERVE()
+         MAJOR = MAJOR + 1
+         TERMINAL = &#39;MAJOR = &#39; MAJOR
+         N = 0
+LUP2     N = N + 1
+         LT(N, 10000000)                                  <b>:S(LUP2)F(LUP)</b>
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL DSERVE
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*         ######    #####   #######  ######   #     #  #######         *</i></font>
+<font color="#818181"><i>*         #     #  #     #  #        #     #  #     #  #               *</i></font>
+<font color="#818181"><i>*         #     #  #        #        #     #  #     #  #               *</i></font>
+<font color="#818181"><i>*         #     #   #####   #####    ######   #     #  #####           *</i></font>
+<font color="#818181"><i>*         #     #        #  #        #   #     #   #   #               *</i></font>
+<font color="#818181"><i>*         #     #  #     #  #        #    #     # #    #               *</i></font>
+<font color="#818181"><i>*         ######    #####   #######  #     #     #     #######         *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* DSERVE                     DDT SERVER                                *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* DSERVE.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;DSERVE&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Sat May 24 19:13:05 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>AOPA - Apply Infix Operator to Array</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">AOPA(A1,OP,A2)</font> will apply the infix operator <font face="Source Code Pro">OP</font> to
+corresponding pairs of <font face="Source Code Pro">A1</font> and <font face="Source Code Pro">A2</font>, returning an array unless
+both are scalars.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+For example, <font face="Source Code Pro">AOPA(A,'+',1)</font> will add <font face="Source Code Pro">1</font> to each element of <font face="Source Code Pro">A</font>.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">AOPA()</font> has four cases: array operation array, array operation
+scalar, scalar operation array, and finally scalar operation scalar.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="SEQ.html">SEQ</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;SEQ.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;AOPA&raquo;&equiv;</b>
+         DEFINE(&#39;AOPA(A1,OP,A2)S1,I,S2,S&#39;)                   <b>:(AOPA_END)</b>
+<font color="#818181"><i>*</i></font>
+AOPA     IDENT(DATATYPE(A1), &#39;ARRAY&#39;)                         <b>:S(AOPA_1)</b>
+         IDENT(DATATYPE(A2), &#39;ARRAY&#39;)                         <b>:S(AOPA_2)</b>
+         AOPA = EVAL(&#39;A1 &#39; OP &#39; A2&#39;)                           <b>:(RETURN)</b>
+AOPA_1   S1 = &#39;&lt;I&gt;&#39;
+         S2 = IDENT(DATATYPE(A2), &#39;ARRAY&#39;)  &#39;&lt;I&gt;&#39;
+         AOPA = ARRAY(PROTOTYPE(A1))                      <b>:(AOPA_COMMON)</b>
+AOPA_2   S2 = &#39;&lt;I&gt;&#39;
+         AOPA = ARRAY(PROTOTYPE(A2))
+AOPA_COMMON
+         S = &#39; AOPA&lt;I&gt; = A1&#39; S1 &#39; &#39; OP &#39; A2&#39; S2
+         SEQ(S, .I)                                            <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+AOPA_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;AOPA.INC&#39;
+-INCLUDE &#39;CRACK.INC&#39;
+         &amp;CODE = 1
+         A = %&#39;1,2,3&#39;
+         B = %&#39;10,20,30&#39;
+<font color="#818181"><i>* ARRAY OPERATION ARRAY</i></font>
+         C = AOPA(A, &#39;+&#39;, B)
+         EQ(C&lt;1&gt;, 11)                                            <b>:F(END)</b>
+         EQ(C&lt;2&gt;, 22)                                            <b>:F(END)</b>
+         EQ(C&lt;3&gt;, 33)                                            <b>:F(END)</b>
+<font color="#818181"><i>* ARRAY OPERATION SCALAR</i></font>
+         C = AOPA(A, &#39;-&#39;, 1)
+         EQ(C&lt;1&gt;, 0)                                             <b>:F(END)</b>
+         EQ(C&lt;2&gt;, 1)                                             <b>:F(END)</b>
+         EQ(C&lt;3&gt;, 2)                                             <b>:F(END)</b>
+<font color="#818181"><i>* SCALAR OPERATION SCALAR</i></font>
+         C = AOPA(3, &#39;*&#39;, B)
+         EQ(C&lt;1&gt;, 30)                                            <b>:F(END)</b>
+         EQ(C&lt;2&gt;, 60)                                            <b>:F(END)</b>
+         EQ(C&lt;3&gt;, 90)                                            <b>:F(END)</b>
+<font color="#818181"><i>* SCALAR OPERATION SCALAR</i></font>
+         EQ(AOPA(6, &#39;/&#39;, 3), 2)                                  <b>:F(END)</b>
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL AOPA
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                    #     #######  ######      #                      *</i></font>
+<font color="#818181"><i>*                   # #    #     #  #     #    # #                     *</i></font>
+<font color="#818181"><i>*                  #   #   #     #  #     #   #   #                    *</i></font>
+<font color="#818181"><i>*                 #     #  #     #  ######   #     #                   *</i></font>
+<font color="#818181"><i>*                 #######  #     #  #        #######                   *</i></font>
+<font color="#818181"><i>*                 #     #  #     #  #        #     #                   *</i></font>
+<font color="#818181"><i>*                 #     #  #######  #        #     #                   *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* AOPA                 APPLY OPERATOR TO ARRAY                         *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* AOPA.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;AOPA&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:10:55 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>SYSLOG - Interface to OPENLOG/SYSLOG/CLOSELOG</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Uses FFI rather than LOAD() to access SYSLOG functions
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="P64.html">P64</a><br>
+<a href="FFI.html">FFI</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;P64.INC&#39;
+-INCLUDE &#39;FFI.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;SYSLOG&raquo;&equiv;</b>
+         FFI_OPENLOG = FFI_NEW(&#39;V&#39;, &#39;P,I,I&#39;)
+         FFI_SET_CALLP(FFI_OPENLOG, DLSYM(0, &#39;openlog&#39;))
+         FFI_SYSLOG = FFI_NEW(&#39;V&#39;, &#39;I,P,P&#39;)
+         FFI_SET_CALLP(FFI_SYSLOG, DLSYM(0, &#39;syslog&#39;))
+         FFI_CLOSELOG = FFI_NEW(&#39;V&#39;, &#39;V&#39;)
+         FFI_SET_CALLP(FFI_CLOSELOG, DLSYM(0, &#39;closelog&#39;))
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* PRIORITY</i></font>
+<font color="#818181"><i>*</i></font>
+         LOG_EMERG   = 0
+         LOG_ALERT   = 1
+         LOG_CRIT    = 2
+         LOG_ERR     = 3
+         LOG_WARNING = 4
+         LOG_NOTICE  = 5
+         LOG_INFO    = 6
+         LOG_DEBUG   = 7
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* FACILITY</i></font>
+<font color="#818181"><i>*</i></font>
+         LOG_KERN     =  0 * 8
+         LOG_USER     =  1 * 8
+         LOG_MAIL     =  2 * 8
+         LOG_DAEMON   =  3 * 8
+         LOG_AUTH     =  4 * 8
+         LOG_SYSLOG   =  5 * 8
+         LOG_LPR      =  6 * 8
+         LOG_NEWS     =  7 * 8
+         LOG_UUCP     =  8 * 8
+         LOG_CRON     =  9 * 8
+         LOG_AUTHPRIV = 10 * 8
+         LOG_FTP      = 11 * 8
+         LOG_LOCAL0   = 16 * 8
+         LOG_LOCAL1   = 17 * 8
+         LOG_LOCAL2   = 18 * 8
+         LOG_LOCAL3   = 19 * 8
+         LOG_LOCAL4   = 20 * 8
+         LOG_LOCAL5   = 21 * 8
+         LOG_LOCAL6   = 22 * 8
+         LOG_LOCAL7   = 23 * 8
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* OPTIONS</i></font>
+<font color="#818181"><i>*</i></font>
+         LOG_PID    =  1
+         LOG_CONS   =  2
+         LOG_ODELAY =  4
+         LOG_NDELAY =  8
+         LOG_NOWAIT = 16
+         LOG_PERROR = 32
+<font color="#818181"><i>*</i></font>
+         DEFINE(&#39;OPENLOG(IDENT,OPTION,FACILITY)P&#39;)
+         DEFINE(&#39;SYSLOG(PRIORITY,S)&#39;)
+         DEFINE(&#39;CLOSELOG()&#39;)                           <b>:(SYSLOG_FN_END)</b>
+<font color="#818181"><i>*</i></font>
+OPENLOG  P = STRDUP(IDENT)
+         FFI_PAR_N_PTR(FFI_OPENLOG, 1, P)
+         FFI_PAR_N_INTEGER(FFI_OPENLOG, 2, OPTION)
+         FFI_PAR_N_INTEGER(FFI_OPENLOG, 3, FACILITY)
+         FFI_CALL_VOID(FFI_OPENLOG)                            <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+SYSLOG   FFI_PAR_N_INTEGER(FFI_SYSLOG, 1, PRIORITY)
+         FFI_PAR_N_STRING(FFI_SYSLOG, 2, &#39;%s&#39;)
+         FFI_PAR_N_STRING(FFI_SYSLOG, 3, S)
+         FFI_CALL_VOID(FFI_SYSLOG)                             <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+CLOSELOG FFI_CALL_VOID(FFI_CLOSELOG)                           <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+SYSLOG_FN_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;SYSLOG.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL SYSLOG
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*          #####   #     #   #####   #        #######   #####          *</i></font>
+<font color="#818181"><i>*         #     #   #   #   #     #  #        #     #  #     #         *</i></font>
+<font color="#818181"><i>*         #          # #    #        #        #     #  #               *</i></font>
+<font color="#818181"><i>*          #####      #      #####   #        #     #  #  ####         *</i></font>
+<font color="#818181"><i>*               #     #           #  #        #     #  #     #         *</i></font>
+<font color="#818181"><i>*         #     #     #     #     #  #        #     #  #     #         *</i></font>
+<font color="#818181"><i>*          #####      #      #####   #######  #######   #####          *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* SYSLOG        INTERFACE TO OPENLOG/SYSLOG/CLOSELOG                   *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* SYSLOG.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;SYSLOG&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:34 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

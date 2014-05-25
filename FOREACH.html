@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>FOREACH - Apply procedure to each element</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">foreach(x,proc)</font> applies procedure <font face="Source Code Pro">proc</font> to each element of
+<font face="Source Code Pro">x</font>, where <font face="Source Code Pro">x</font> may be an array, table or expression that
+produces a sequence of values.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;foreach&raquo;&equiv;</b>
+<font color="#818181"><i># Apply procedure proc to each element of x, where x may be an array,</i></font>
+<font color="#818181"><i># table, or expression that produces a sequence of values.</i></font>
+<font color="#818181"><i>#</i></font>
+procedure foreach(x, proc) a, i {
+   i = datatype(x)
+   if (i :: &#39;ARRAY&#39;) {
+      i = 1
+      prototype(x) ? fence &amp;&amp; break(&#39;:&#39;) . i
+      while (a = x[i]) {
+	 if (~apply(proc, a))
+	    freturn
+	 i = i + 1
+      }
+   } else if (i :: &#39;TABLE&#39;) {
+      if (~(x = convert(x, &#39;ARRAY&#39;)))
+	 freturn
+      x = sort(x)
+      i = 1
+      while (a = x[i, 2]) {
+	 if (~apply(proc, a, x[i, 1]))
+	    freturn
+	 i = i + 1
+      }
+   } else if (i :: &#39;EXPRESSION&#39;) {
+      while (a = eval(x)) {
+	 if (~apply(proc, a))
+	    freturn
+      }
+   } else {
+      if (apply(proc, x))
+	 return
+      else
+	 freturn
+   }
+}
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;FOREACH.INC&#39;
+-INCLUDE &#39;DEXP.INC&#39;
+-INCLUDE &#39;CRACK.INC&#39;
+         &amp;CODE = 1
+         X = %&#39;1,2,3&#39;
+         DEXP(&#39;F(X) = (S = S + X)&#39;)
+         S = 0
+         FOREACH(X, .F)
+         EQ(S, 6)                                                <b>:F(END)</b>
+         &amp;CODE = 0                                                <b>:(END)</b>
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+-STITL FOREACH
+-EJECT
+<font color="#818181"><i>#</i></font>
+<font color="#818181"><i>########################################################################</i></font>
+<font color="#818181"><i>#                                                                      #</i></font>
+<font color="#818181"><i>#                                                                      #</i></font>
+<font color="#818181"><i>#    #######  #######  ######   #######     #      #####   #     #     #</i></font>
+<font color="#818181"><i>#    #        #     #  #     #  #          # #    #     #  #     #     #</i></font>
+<font color="#818181"><i>#    #        #     #  #     #  #         #   #   #        #     #     #</i></font>
+<font color="#818181"><i>#    #####    #     #  ######   #####    #     #  #        #######     #</i></font>
+<font color="#818181"><i>#    #        #     #  #   #    #        #######  #        #     #     #</i></font>
+<font color="#818181"><i>#    #        #     #  #    #   #        #     #  #     #  #     #     #</i></font>
+<font color="#818181"><i>#    #        #######  #     #  #######  #     #   #####   #     #     #</i></font>
+<font color="#818181"><i>#                                                                      #</i></font>
+<font color="#818181"><i># FOREACH            APPLY PROC TO EACH ELEMENT                        #</i></font>
+<font color="#818181"><i>#                                                                      #</i></font>
+<font color="#818181"><i>########################################################################</i></font>
+<font color="#818181"><i>#</i></font>
+<font color="#818181"><i># FOREACH.lss</i></font>
+<font color="#818181"><i>#</i></font>
+
+<b>&laquo;foreach&raquo;</b>
+
+<font color="#818181"><i># ce: .msnocone;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:45 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>FENCE - Match pattern once</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Returns a pattern that only matches pattern P in a forward scan (once). This
+means alternatives within P are discarded if P matches.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+In a system implementation of FENCE(), alternatives really are
+discarded. What happens here is that the first match for P sets
+a flag that causes failure of other alternatives. In reality, all
+alternatives in P are tested (possibly causing all kinds of side
+effects). This shortcoming will be most problematic if alternatives
+within P involve ABORT, FENCE, unevaluated expressions or unconditional
+value assignment.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+| 'abbc' ('b' | rem)
+|     abbc
+|     b
+|     bbc
+|     b
+|     bc
+|     c
+| 'abbc' fence('b' | rem)
+|     abbc
+|     b
+|     bbc
+|     bc
+|     c
+</font></pre>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="UNIQUE.html">UNIQUE</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;UNIQUE.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;FENCE&raquo;&equiv;</b>
+        DEFINE(&#39;FENCE(P)N&#39;)                                 <b>:(FENCE_END)</b>
+<font color="#818181"><i>*</i></font>
+FENCE   N = UNIQUE()
+        FENCE = EVAL(&#39;@&#39; N
++                    &#39; P &#39;
++                    &#39; &quot;&quot; $ *$(.&#39; N &#39; DIFFER(&#39; N &#39;))&#39;
++                   )                                          <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+FENCE_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;FENCE.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL FENCE
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*             #######  #######  #     #   #####   #######              *</i></font>
+<font color="#818181"><i>*             #        #        ##    #  #     #  #                    *</i></font>
+<font color="#818181"><i>*             #        #        # #   #  #        #                    *</i></font>
+<font color="#818181"><i>*             #####    #####    #  #  #  #        #####                *</i></font>
+<font color="#818181"><i>*             #        #        #   # #  #        #                    *</i></font>
+<font color="#818181"><i>*             #        #        #    ##  #     #  #                    *</i></font>
+<font color="#818181"><i>*             #        #######  #     #   #####   #######              *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* FENCE.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;FENCE&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:09 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

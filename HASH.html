@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>HASH - Create table from string</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Creates a <font face="Source Code Pro">TABLE</font> from a string. Named after Perl's hash.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Converts string in the form <font face="Source Code Pro">'NAME=VALUE,NAME2=VALUE2...'</font> into a
+<font face="Source Code Pro">TABLE</font> where the <font face="Source Code Pro">NAME</font> is the key and the <font face="Source Code Pro">VALUE</font> is the data.
+Can be passed the name separator (default <font face="Source Code Pro">=</font>) and item separator
+(default <font face="Source Code Pro">,</font>). Names may not contain the name separator, and values
+may not contain the item separator.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">TABLE</font>s are used to represent rows in PSQL. <font face="Source Code Pro">HASH()</font> attempts
+to make it easier to construct simple tables. It is <font face="Source Code Pro">OPSYN</font>'d to
+<font face="Source Code Pro">#</font> to make it's use more convenient.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">COPY_TABLE(T)</font> returns a copy of table <font face="Source Code Pro">T</font>. <font face="Source Code Pro">MERGE_TABLE(T1,T2)</font>
+merges two tables together. Entries in <font face="Source Code Pro">T2</font> override entries in
+<font face="Source Code Pro">T1</font>. The returned table is a new table. Neither <font face="Source Code Pro">T1</font> nor <font face="Source Code Pro">T2</font>
+are changed. <font face="Source Code Pro">KEYS_IN_TABLE(T)</font> returns an array of the keys in
+table <font face="Source Code Pro">T</font>.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+The full call is
+</font></p><pre><font face="Source Code Pro">
+| HASH(S,E,P,TS,TI,FK,FD,SP) where
+| S is the string to break into table entries
+| E is the equals separator (default =)
+| P is the record separator (default ,)
+| TS is the default number of table entries (default 10)
+| TS is the table growth amount (default 10)
+| FK() is applied to each key prior to adding the item to the table
+|      (default HASH_3, which simply returns its argument).
+| FD() is applied to each value before being inserted (default HASH_3).
+| SP is a multi-entry separator. If NULL, new entries overwrite old
+|      ones. Otherwise, the entries are concatenated with the separator.
+</font></pre>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">FK()</font> may be something like <font face="Source Code Pro">TRIMB()</font>, or a function to uppercase
+or lowercase the key. This is supplied because table keys match case
+sensitive, whereas normal variables are insensitive.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">FD()</font> takes one or two arguments <font face="Source Code Pro">FD(V,K)</font>, where <font face="Source Code Pro">V</font> is the
+value and <font face="Source Code Pro">K</font> is the key. <font face="Source Code Pro">FD()</font> can even recursively process
+its value to produce another table!
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Degenerate cases are supported. <font face="Source Code Pro">#'XXX,NAME=YYY'</font> will create a
+table with a <font face="Source Code Pro">NULL</font> key with value <font face="Source Code Pro">'XXX'</font> and key <font face="Source Code Pro">'NAME'</font> with
+a value of <font face="Source Code Pro">'YYY'</font>.  <font face="Source Code Pro">#''</font> is pretty much the same as <font face="Source Code Pro">TABLE()</font>.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="BRKREM.html">BRKREM</a><br>
+<a href="SEQ.html">SEQ</a>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>See Also</h2>
+<a href="PSQL.html">PSQL</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;BRKREM.INC&#39;
+-INCLUDE &#39;SEQ.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;HASH&raquo;&equiv;</b>
+         DEFINE(&#39;HASH(S,E,P,TS,TI,FK,FV,SP)K,V,C&#39;)
+         DEFINE(&#39;HASH_3(S)&#39;)
+         DEFINE(&#39;COPY_TABLE(T)&#39;)
+         DEFINE(&#39;MERGE_TABLE(T1,T2)A,I&#39;)
+         DEFINE(&#39;KEYS_IN_TABLE(T)A,N,I&#39;)
+         OPSYN(&#39;#&#39;, &#39;HASH&#39;, 1)                               <b>:(HASH_END)</b>
+<font color="#818181"><i>*</i></font>
+HASH     HASH = TABLE(TS, TI)
+         E = IDENT(E) &#39;=&#39;
+         P = IDENT(P) &#39;,&#39;
+         FK = IDENT(FK) &#39;HASH_3&#39;
+         FV = IDENT(FV) &#39;HASH_3&#39;
+HASH_2   IDENT(S)                                             <b>:S(RETURN)</b>
+         S POS(0) BREAK(E P) LEN(1) . C                       <b>:F(HASH_5)</b>
+         C E                                                  <b>:F(HASH_5)</b>
+         S POS(0) BREAK(E) . K E =                            <b>:S(HASH_4)</b>
+HASH_5   K =
+HASH_4   S POS(0) BRKREM(P) . V (P | RPOS(0)) =               <b>:F(RETURN)</b>
+         K = APPLY(FK, K)
+         V = APPLY(FV, V)
+         HASH&lt;K&gt; = VDIFFER(HASH&lt;K&gt;) VDIFFER(SP) V             <b>:S(HASH_2)</b>
+         HASH&lt;K&gt; = V                                           <b>:(HASH_2)</b>
+<font color="#818181"><i>*</i></font>
+HASH_3   HASH_3 = S                                            <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+COPY_TABLE
+         COPY_TABLE = CONVERT(CONVERT(T, &#39;ARRAY&#39;), &#39;TABLE&#39;)    <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+MERGE_TABLE
+         MERGE_TABLE = COPY_TABLE(T1)
+         A = CONVERT(T2, &#39;ARRAY&#39;)
+         SEQ(&#39; MERGE_TABLE&lt;A&lt;I, 1&gt;&gt; = A&lt;I, 2&gt; &#39;, .I)           <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+KEYS_IN_TABLE
+         A = CONVERT(T, &#39;ARRAY&#39;)                             <b>:F(FRETURN)</b>
+         PROTOTYPE(A) BREAK(&#39;,&#39;) . N                         <b>:F(FRETURN)</b>
+         KEYS_IN_TABLE = ARRAY(N)
+         SEQ(&#39; KEYS_IN_TABLE&lt;I&gt; = A&lt;I,1&gt; &#39;, .I)                <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+HASH_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;HASH.INC&#39;
+         &amp;CODE = 1
+         H = #&#39;FIRST=BOB,LAST=LOBLAW&#39;
+         IDENT(H&lt;&#39;FIRST&#39;&gt;, &#39;BOB&#39;)                                <b>:F(END)</b>
+         IDENT(H&lt;&#39;LAST&#39;&gt;, &#39;LOBLAW&#39;)                              <b>:F(END)</b>
+         T = COPY_TABLE(H)
+         IDENT(T&lt;&#39;FIRST&#39;&gt;, &#39;BOB&#39;)                                <b>:F(END)</b>
+         T&lt;&#39;FIRST&#39;&gt; = &#39;FRED&#39;
+         IDENT(H&lt;&#39;FIRST&#39;&gt;, &#39;BOB&#39;)                                <b>:F(END)</b>
+         T2 = #&#39;ADDRESS=SOMEWHERE&#39;
+         T3 = MERGE_TABLE(T, T2)
+         IDENT(T3&lt;&#39;FIRST&#39;&gt;, &#39;FRED&#39;)                              <b>:F(END)</b>
+         IDENT(T3&lt;&#39;LAST&#39;&gt;, &#39;LOBLAW&#39;)                             <b>:F(END)</b>
+         IDENT(T3&lt;&#39;ADDRESS&#39;&gt;, &#39;SOMEWHERE&#39;)                       <b>:F(END)</b>
+         H = #&#39;XXX,NAME=VALUE&#39;
+         IDENT(H&lt;NULL&gt;, &#39;XXX&#39;)                                   <b>:F(END)</b>
+         IDENT(H&lt;&#39;NAME&#39;&gt;, &#39;VALUE&#39;)                               <b>:F(END)</b>
+         A = KEYS_IN_TABLE(T3)                                   <b>:F(END)</b>
+         A = SORT(A)                                             <b>:F(END)</b>
+         IDENT(A&lt;1&gt;, &#39;ADDRESS&#39;)                                  <b>:F(END)</b>
+         IDENT(A&lt;2&gt;, &#39;FIRST&#39;)                                    <b>:F(END)</b>
+         IDENT(A&lt;3&gt;, &#39;LAST&#39;)                                     <b>:F(END)</b>
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL PSQL
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                  #     #     #      #####   #     #                  *</i></font>
+<font color="#818181"><i>*                  #     #    # #    #     #  #     #                  *</i></font>
+<font color="#818181"><i>*                  #     #   #   #   #        #     #                  *</i></font>
+<font color="#818181"><i>*                  #######  #     #   #####   #######                  *</i></font>
+<font color="#818181"><i>*                  #     #  #######        #  #     #                  *</i></font>
+<font color="#818181"><i>*                  #     #  #     #  #     #  #     #                  *</i></font>
+<font color="#818181"><i>*                  #     #  #     #   #####   #     #                  *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* HASH                   INITIALIZE A TABLE                            *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* HASH.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;HASH&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:43 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

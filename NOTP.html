@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>NOTP - Invert Pattern</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">NOTP(P)</font> will return a pattern which will match the NULL string if
+<font face="Source Code Pro">P</font> fails and fail if <font face="Source Code Pro">P</font> matches. If <font face="Source Code Pro">P</font> aborts, <font face="Source Code Pro">NOTP(P)</font>
+will also abort.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Used</h2>
+<a href="STACK.html">STACK</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;STACK.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;NOTP&raquo;&equiv;</b>
+         DEFINE(&#39;NOTP(P)&#39;)                                   <b>:(NOTP_END)</b>
+<font color="#818181"><i>*</i></font>
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Gimpel's version uses <font face="Source Code Pro">*PUSH()</font> instead of <font face="Source Code Pro">PUSH()</font>. I think
+that is wrong.  If pattern <font face="Source Code Pro">P</font> fails, backtracking will go further
+"left". That would cause extra <font face="Source Code Pro">NULL</font>s to be pushed which would
+not be <font face="Source Code Pro">POP</font>ed. Using <font face="Source Code Pro">PUSH()</font> instead helps.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;NOTP&raquo;&equiv;</b>
+NOTP     NOTP = PUSH() P *?(POP() PUSH(1)) FAIL |
++               *IDENT(POP())                                  <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+NOTP_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;NOTP.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL NOTP
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                   #     #  #######  #######  ######                  *</i></font>
+<font color="#818181"><i>*                   ##    #  #     #     #     #     #                 *</i></font>
+<font color="#818181"><i>*                   # #   #  #     #     #     #     #                 *</i></font>
+<font color="#818181"><i>*                   #  #  #  #     #     #     ######                  *</i></font>
+<font color="#818181"><i>*                   #   # #  #     #     #     #                       *</i></font>
+<font color="#818181"><i>*                   #    ##  #     #     #     #                       *</i></font>
+<font color="#818181"><i>*                   #     #  #######     #     #                       *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* NOTP                       INVERT PATTERN                            *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* NOTP.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;NOTP&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:21 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

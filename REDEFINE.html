@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>REDEFINE - Redefine operators</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">REDEFINE(OP,DEF,LBL)</font> will redefine the built-in operator <font face="Source Code Pro">OP</font>
+to the name of the function given with prototype <font face="Source Code Pro">DEF</font> and entry
+label <font face="Source Code Pro">LBL</font>.  The old definition of the operator is preserved in
+the function name with appended period.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<aside>
+<b>C<small>AUTION</small></b> - This cannot be used with SPITBOL,
+which does not permit the redefinition of built-in operators.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</aside>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;REDEFINE&raquo;&equiv;</b>
+         DEFINE(&#39;REDEFINE(OP,DEF,LBL)NAME,N,FLAG&#39;)
+         DEFINE(&#39;REDEFINERESTORE(OP,DEF)NAME,N,FLAG&#39;)
+         DEFINE(&#39;REDEFINECOMMON()&#39;)                      <b>:(REDEFINE_END)</b>
+<font color="#818181"><i>*</i></font>
+REDEFINECOMMON
+         DEF BREAK(&#39;(&#39;) . NAME &#39;(&#39; BREAK(&#39;),&#39;) LEN(1) . FLAG
+         N = 1
+         N = IDENT(FLAG, &#39;,&#39;) 2
+         N = IDENT(OP)
+         OP = IDENT(OP) NAME
+                                                               <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+REDEFINE REDEFINECOMMON()
+         OPSYN(NAME &#39;.&#39;, OP, N)
+         DEFINE(DEF, LBL)
+         OPSYN(OP, NAME, N)                                    <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+REDEFINERESTORE
+         REDEFINECOMMON()
+         OPSYN(OP, NAME &#39;.&#39;, N)                                <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+REDEFINE_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;REDEFINE.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+-STITL REDEFINE
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*  ######   #######  ######   #######  #######  ###  #     #  #######  *</i></font>
+<font color="#818181"><i>*  #     #  #        #     #  #        #         #   ##    #  #        *</i></font>
+<font color="#818181"><i>*  #     #  #        #     #  #        #         #   # #   #  #        *</i></font>
+<font color="#818181"><i>*  ######   #####    #     #  #####    #####     #   #  #  #  #####    *</i></font>
+<font color="#818181"><i>*  #   #    #        #     #  #        #         #   #   # #  #        *</i></font>
+<font color="#818181"><i>*  #    #   #        #     #  #        #         #   #    ##  #        *</i></font>
+<font color="#818181"><i>*  #     #  #######  ######   #######  #        ###  #     #  #######  *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* REDEFINE             REDEFINE OPERATORS                              *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* REDEFINE.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* FMGW:</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* - ADD REDEFINERESTORE() TO ALLOW INFINIP.SNO TO ENABLE/DISABLE</i></font>
+<font color="#818181"><i>*   LONG INTEGERS</i></font>
+<font color="#818181"><i>* - FACTOR REDEFINECOMMON() TO ALLOW REDEFINE() AND REDEFINERESTORE()</i></font>
+<font color="#818181"><i>*   TO SHARE CODE</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;REDEFINE&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:25 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

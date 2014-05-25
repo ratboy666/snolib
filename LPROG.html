@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>LPROG - Length of program</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Profiling and other tasks need to know the number of statements in
+the program. The <font face="Source Code Pro">LPROG()</font> function supplies this information.
+Each statement compiled is given a new statement number. This is
+exploited by returning the statement number of a new statement.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">LPROG()</font> will return the length (i.e., the number of statements)
+in the SNOBOL4 program in which it is called. Every use of <font face="Source Code Pro">CODE()</font>
+will increase this number, so call this early during execution.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;LPROG&raquo;&equiv;</b>
+         DEFINE(&#39;LPROG()&#39;)                                  <b>:(LPROG_END)</b>
+<font color="#818181"><i>*</i></font>
+LPROG                                <b>:&lt;CODE(&#39; LPROG = &amp;STNO :(RETURN)&#39;)&gt;</b>
+<font color="#818181"><i>*</i></font>
+LPROG_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;LPROG.INC&#39;
+         &amp;CODE = 1
+         EQ(LPROG(), 9)                                          <b>:F(END)</b>
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+-STITL LPROG
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*               #        ######   ######   #######   #####             *</i></font>
+<font color="#818181"><i>*               #        #     #  #     #  #     #  #     #            *</i></font>
+<font color="#818181"><i>*               #        #     #  #     #  #     #  #                  *</i></font>
+<font color="#818181"><i>*               #        ######   ######   #     #  #  ####            *</i></font>
+<font color="#818181"><i>*               #        #        #   #    #     #  #     #            *</i></font>
+<font color="#818181"><i>*               #        #        #    #   #     #  #     #            *</i></font>
+<font color="#818181"><i>*               #######  #        #     #  #######   #####             *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* LPROG                    LENGTH OF PROGRAM                           *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* LPROG.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;LPROG&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Wed May 21 19:44:24 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

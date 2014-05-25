@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>LAST - Return last list element</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">LAST(L)</font> will return (by name) the name of the last <font face="Source Code Pro">NEXT</font> field
+of a list. Thus, if <font face="Source Code Pro">L1</font> and <font face="Source Code Pro">L2</font> are lists, <font face="Source Code Pro">LAST(L1) = L2</font> will
+concatenate the two lists. <font face="Source Code Pro">LAST(L) = L</font> creates a circular list.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="LINK.html">LINK</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;LINK.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;LAST&raquo;&equiv;</b>
+         DEFINE(&#39;LAST(L)&#39;)                                   <b>:(LAST_END)</b>
+<font color="#818181"><i>*</i></font>
+LAST     IDENT(L)                                            <b>:S(FRETURN)</b>
+LAST_1   L = DIFFER(NEXT(L)) NEXT(L)                          <b>:S(LAST_1)</b>
+         LAST = .NEXT(L)                                      <b>:(NRETURN)</b>
+<font color="#818181"><i>*</i></font>
+LAST_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;LAST.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL LAST
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                  #           #      #####   #######                  *</i></font>
+<font color="#818181"><i>*                  #          # #    #     #     #                     *</i></font>
+<font color="#818181"><i>*                  #         #   #   #           #                     *</i></font>
+<font color="#818181"><i>*                  #        #     #   #####      #                     *</i></font>
+<font color="#818181"><i>*                  #        #######        #     #                     *</i></font>
+<font color="#818181"><i>*                  #        #     #  #     #     #                     *</i></font>
+<font color="#818181"><i>*                  #######  #     #   #####      #                     *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* LAST                 RETURN LAST LIST ELEMENT                        *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* LAST.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;LAST&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:16 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

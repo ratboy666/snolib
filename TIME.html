@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>TIME - Date/time functions</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Date and time functions.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;TIME&raquo;&equiv;</b>
+         DATA(&#39;TIMEVAL(TV_SEC,TV_USEC)&#39;)
+         DATA(&#39;TM(TM_SEC,TM_MIN,TM_HOUR,TM_MDAY,TM_MON,&#39;
++                &#39;TM_YEAR,TM_WDAY,TM_YDAY,TM_ISDST,TM_GMTOFF)&#39;)
+<font color="#818181"><i>*</i></font>
+         LOAD(&#39;GETTIMEOFDAY_(TIMEVAL)&#39;)
+         LOAD(&#39;LOCALTIME_(INTEGER,TM)&#39;)
+         LOAD(&#39;GMTIME_(INTEGER,TM)&#39;)
+         LOAD(&#39;STRFTIME(STRING,TM)STRING&#39;)
+         LOAD(&#39;MKTIME(TM)INTEGER&#39;)
+         LOAD(&#39;SLEEP(REAL)&#39;)
+         LOAD(&#39;STRPTIME_(STRING,STRING,TM)&#39;)
+<font color="#818181"><i>*</i></font>
+         DEFINE(&#39;GETTIMEOFDAY()TIMEVAL&#39;)             <b>:(GETTIMEOFDAY_END)</b>
+<font color="#818181"><i>*</i></font>
+GETTIMEOFDAY
+         GETTIMEOFDAY = TIMEVAL()
+         GETTIMEOFDAY_(GETTIMEOFDAY)                <b>:S(RETURN)F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+GETTIMEOFDAY_END
+<font color="#818181"><i>*</i></font>
+         DEFINE(&#39;LOCALTIME(T)TM&#39;)                       <b>:(LOCALTIME_END)</b>
+<font color="#818181"><i>*</i></font>
+LOCALTIME
+         LOCALTIME = TM()
+         LOCALTIME_(T, LOCALTIME)                   <b>:S(RETURN)F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+LOCALTIME_END
+<font color="#818181"><i>*</i></font>
+         DEFINE(&#39;GMTIME(T)TM&#39;)                             <b>:(GMTIME_END)</b>
+<font color="#818181"><i>*</i></font>
+GMTIME   GMTIME = TM()
+         GMTIME_(T, GMTIME)                         <b>:S(RETURN)F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+GMTIME_END
+<font color="#818181"><i>*</i></font>
+         DEFINE(&#39;STRPTIME(S,F)TM&#39;)                       <b>:(STRPTIME_END)</b>
+<font color="#818181"><i>*</i></font>
+STRPTIME STRPTIME = TM()
+         STRPTIME_(S, F, STRPTIME)                  <b>:S(RETURN)F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+STRPTIME_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;TIME.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+-STITL TIME
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                    #######  ###  #     #  #######                    *</i></font>
+<font color="#818181"><i>*                       #      #   ##   ##  #                          *</i></font>
+<font color="#818181"><i>*                       #      #   # # # #  #                          *</i></font>
+<font color="#818181"><i>*                       #      #   #  #  #  #####                      *</i></font>
+<font color="#818181"><i>*                       #      #   #     #  #                          *</i></font>
+<font color="#818181"><i>*                       #      #   #     #  #                          *</i></font>
+<font color="#818181"><i>*                       #     ###  #     #  #######                    *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* TIME                    DATE/TIME FUNCTIONS                          *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* PHILE BUDNE &lt;PHIL@ULTIMATE.COM&gt;                                      *</i></font>
+<font color="#818181"><i>* DECEMBER 15, 2010                                                    *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* TIME.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;TIME&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri May 16 16:11:36 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>
