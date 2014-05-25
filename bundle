@@ -1,0 +1,80 @@
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-TITLE BUNDLE
+-LINE 70 "bundle.lss"
+START
+-LINE 10 "bundle.lss"
+-INCLUDE 'CRACK.INC'
+-INCLUDE 'TRIMB.INC'
+-STITL
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                                                                      *
+*         ######   #     #  #     #  ######   #        #######         *
+*         #     #  #     #  ##    #  #     #  #        #               *
+*         #     #  #     #  # #   #  #     #  #        #               *
+*         ######   #     #  #  #  #  #     #  #        #####           *
+*         #     #  #     #  #   # #  #     #  #        #               *
+*         #     #  #     #  #    ##  #     #  #        #               *
+*         ######    #####   #     #  ######   #######  #######         *
+*                                                                      *
+* BUNDLE          BUNDLE INCLUDES FOR APPLICATION                      *
+*                                                                      *
+************************************************************************
+*
+* bundle.lss
+*
+-LINE 15 "bundle.lss"
+         TERMINAL = 'BUNDLE (THU DEC  5 12:09:11 EST 2013)'
+*
+         DEFINE('INCLUDE(FILENAME)PATH,POSITION,UNIT,LIB,X')
+         QQ = '"'
+         Q = "'"
+         INPAT = FENCE '-' ((ANY('Ii') ('NCLUDE' | 'nclude')) |
++                           (ANY('Cc') ('OPY' | 'opy')))
++                BREAK(QQ Q) LEN(1) BREAK(QQ Q) . X
+         &TRIM =  1
+         LOADED = TABLE()
+         INCLUDE('/dev/stdin')                                    :(END)
+*
+INCLUDE  PATH = FILENAME
+         LOADED<FILENAME> = 1
+         UNIT = IO_FINDUNIT()
+         INPUT(.LIB, UNIT,, PATH)                                :S(TOP)
+         DS = HOST(HOST_DIR_SEP)
+         PS = HOST(HOST_PATH_SEP)
+         X = HOST(HOST_GETENV, 'SNOPATH')                    :S(DOINC_8)
+         X = HOST(HOST_GETENV, 'SNOLIB')                     :S(DOINC_8)
+         X = HOST(HOST_SNOLIB_DIR)                           :F(FRETURN)
+DOINC_8  A = CRACK(X, PS)
+         I = 1
+DOINC_10 P = TRIMB(A<I>)                                     :F(FRETURN)
+         PATH = P DS FILENAME
+         INPUT(.LIB, UNIT,, PATH)                                :S(TOP)
+         I = I + 1                                           :(DOINC_10)
+*
+TOP      L = LIB                                             :F(DOINC_2)
+         L INPAT                                               :S(DOINC)
+*
+         OUTPUT = L                                               :(TOP)
+*
+DOINC    DIFFER(LOADED<X>)                                       :S(TOP)
+         POSITION = SET(UNIT, 0, 1)
+         ENDFILE(UNIT)
+         DETACH(.LIB)
+*
+         INCLUDE(X)                                          :F(FRETURN)
+*
+         INPUT(.LIB, UNIT,, PATH)                            :F(FRETURN)
+         LOADED<X> = 1
+         FILENAME FENCE '/dev/'                                  :S(TOP)
+         EQ(SET(UNIT, POSITION, 0), POSITION)          :S(TOP)F(FRETURN)
+*
+DOINC_2  ENDFILE(UNIT)
+         DETACH(.LIB)                                          :(RETURN)
+*
+END START
+*
+* CE: .MSNOBOL4;

@@ -1,0 +1,80 @@
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+TITLE EMBED
+-LINE 116 "embed.lss"
+START
+-LINE 55 "embed.lss"
+-INCLUDE 'CHARS.INC'
+-INCLUDE 'SLOAD.INC'
+-STITL
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*             #######  #     #  ######   #######  ######               *
+*             #        ##   ##  #     #  #        #     #              *
+*             #        # # # #  #     #  #        #     #              *
+*             #####    #  #  #  ######   #####    #     #              *
+*             #        #     #  #     #  #        #     #              *
+*             #        #     #  #     #  #        #     #              *
+*             #######  #     #  ######   #######  ######               *
+*                                                                      *
+* EMBED                    EMBEDDED SNOBOL CODE                        *
+*                                                                      *
+************************************************************************
+*
+* embed.lss
+*
+-LINE 60 "embed.lss"
+         TERMINAL = 'EMBED (SUN DEC  1 16:15:39 EST 2013)'
+*
+         WHITE_ = SPAN(' ' CHARS_TAB) | ''
+         Q_ = "'"
+         QQ_ = '"'
+         LEAD = DUPL(' ', 9)
+*
+TOP      LINE = INPUT                                            :F(END)
+*
+         LINE FENCE '-' ('snobol' | 'SNOBOL') (ANY('xX') | '') WHITE_
++            REM . S                                        :F(TRYEMBED)
+TRYX1    REVERSE(TRIM(S)) FENCE '+' REM . X                    :F(TRYX2)
+         S = REVERSE(X) ' ' INPUT                               :(TRYX1)
+TRYX2    CODE = CODE(' ' S ' :(TOP)')                           :S<CODE>
+         TERMINAL = 'EMBED: -SNOBOL CODE BAD: ' S                 :(END)
+*
+TRYEMBED LINE FENCE '-' ('embed' | 'EMBED') WHITE_ ARB . TYPE
++            WHITE_ (Q_ | QQ_) $ DELIM ARB . VNAME *DELIM     :S(STARTC)
+         LINE FENCE '-' ('cmnt' | 'CMNT')                        :S(TOP)
+         OUTPUT = LINE                                            :(TOP)
+STARTC   FNAME = VNAME
+         FNAME = ?(TYPE ? 'c' | 'C') FNAME '.c'
+         FNAME = ?(TYPE ? 'fortran' | 'FORTRAN') FNAME '.FTN'
+         FNAME = ?(TYPE ? 'cobol' | 'COBOL') FNAME '.CBL'
+         FNAME = ?(TYPE ? 'scheme' | 'SCHEME') FNAME '.SCM'
+         FNAME = ?(TYPE ? 'data' | 'DATA') FNAME '.DAT'
+         OUTPUT = LEAD VNAME ' = ' Q_ FNAME Q_
+         $VNAME = FNAME
+         OUTPUT(.EMBED, 10,, FNAME)
+*
+COPYL    LINE = INPUT                                            :F(END)
+         OFLAG =
+         LINE FENCE '-' ('cmnt' | 'CMNT')                      :S(COPYL)
+         LINE FENCE '-' ('end' | 'END')                       :S(COPYL3)
+         LINE FENCE '-' ('snobol' | 'SNOBOL')
++            ((ANY('xX') *?(OFLAG = 1)) | '')
++            WHITE_ REM . SNC                                 :F(COPYL2)
+*
+DOMORE   REVERSE(TRIM(SNC)) FENCE '+' REM . X                :F(EXECSNC)
+         SNC = REVERSE(X) ' ' INPUT                            :(DOMORE)
+*
+EXECSNC  OUTPUT = DIFFER(OFLAG) LEAD SNC
+         CODE = CODE(' ' SNC ' :(COPYL)')                       :S<CODE>
+         &CODE = 1
+         TERMINAL = 'EMBED: -SNOBOL(X) CODE BAD: ' SNC            :(END)
+COPYL2   EMBED = LINE                                           :(COPYL)
+COPYL3   DETACH(.EMBED)
+         ENDFILE(10)                                              :(TOP)
+*
+END START
+*
+* CE: .MSNOBOL4;

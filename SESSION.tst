@@ -1,0 +1,43 @@
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'SESSION.INC'
+-LINE 180 "SESSION.lss"
+         &CODE = 1
+* REMOVE ALL SESSIONS
+         BQ('rm -f ' SESSION_PERSIST_DIR 'session_*.db')
+* EXPIRE, EMPTY SESSIONS
+         SESSION_EXPIRE()
+* CREATE A 'PERMANENT' SESSION (1 YEAR EXPIRY)
+         SESSION = SESSION_CREATE(31536000)
+         UUID1 = SESSION<'UUID'>
+         SESSION<'VAR'> = 'FIRST'
+* PERSIST THE SESSION
+         SESSION_PERSIST(SESSION)                                :F(END)
+* EXPIRE, SHOULDN'T DO ANYTHING
+         SESSION_EXPIRE()
+* CREATE A SHORT-LIVED SESSION, 5 SECONDS. NOTE THAT THE UNIT TEST
+* WILL TAKE AT LEAST THIS TIME TO RUN.
+         SESSION = SESSION_CREATE(5)
+         UUID2 = SESSION<'UUID'>
+         SESSION<'VAR'> = 'SECOND'
+         SESSION_PERSIST(SESSION)                                :F(END)
+* LOAD AND CHECK FIRST SESSION
+         SESS = SESSION_LOAD(UUID1)                              :F(END)
+         IDENT(SESS<'VAR'>, 'FIRST')                             :F(END)
+* LOAD AND CHECK SECOND SESSION
+         SESS = SESSION_LOAD(UUID2)                              :F(END)
+         IDENT(SESS<'VAR'>, 'SECOND')                            :F(END)
+* WAIT LONGER THAN 5 SECONDS (EXPIRY TIME OF SECOND SESSION)
+         SLEEP(6)
+* EXPIRE, SHOULD REMOVE SECOND SESSION
+         SESSION_EXPIRE()
+* TRY LOADING SESSIONS, UUID2 SHOULD BE EXPIRED AND FAIL
+         SESSION = SESSION_LOAD(UUID2)                           :S(END)
+         SESSION = SESSION_LOAD(UUID1)                           :F(END)
+* DELETE SESSION UUID1
+         SESSION_DELETE(SESSION)
+* SESSION UUID1 SHOULD NOW FAIL WHEN LOAD ATTEMPTED
+         SESSION = SESSION_LOAD(UUID1)                           :S(END)
+*
+         &CODE = 0
+END
