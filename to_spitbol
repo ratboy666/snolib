@@ -41,3 +41,7 @@ cat HEX.INC | sed -e "s/\.INC'/.SPT'/" >HEX.SPT
 unix2dos HEX.SPT
 cat CH.INC | sed -e "s/\.INC'/.SPT'/" >CH.SPT
 unix2dos CH.SPT
+cat JSON.INC | sed -e "s/\.INC'/.SPT'/" >JSON.SPT
+unix2dos JSON.SPT
+cat VDIFFER.INC | sed -e "s/\.INC'/.SPT'/" >VDIFFER.SPT
+unix2dos VDIFFER.SPT

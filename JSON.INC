@@ -8,7 +8,7 @@
 -INCLUDE 'SEQ.INC'
 -STITL JSON
 -EJECT
--LINE 373 "JSON.lss"
+-LINE 376 "JSON.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -138,6 +138,9 @@ JSON_ENCODE_VALUE
          JSON_ENCODE_VALUE = IDENT(DATATYPE(X), 'INTEGER') X  :S(RETURN)
          JSON_ENCODE_VALUE = IDENT(DATATYPE(X), 'REAL') X
 +                                                :F(JSON_ENCODE_VALUE_2)
+*
+* THE FOLLOWING CONDITION WILL NOT HAPPEN WITH SPITBOL.EXE
+*
          JSON_ENCODE_VALUE 'nan' | 'inf'         :S(JSON_ENCODE_VALUE_3)
          JSON_ENCODE_VALUE RTAB(1) '.'                        :F(RETURN)
          JSON_ENCODE_VALUE = JSON_ENCODE_VALUE '0'             :(RETURN)

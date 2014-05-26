@@ -34,7 +34,7 @@ T = AGT.tst      AI.tst       AOPA.tst     BALREV.tst   BALX.tst     \
     BRKREM.tst   HASH.tst     READL.tst    FOREACH.tst  SCOOP.tst    \
     CGI.tst      READFILE.tst SESSION.tst  GCD.tst      COMPLEX.tst  \
     COOKIE.tst   HTMLTMPL.tst JSON.tst     FCGI.tst     MAX.tst      \
-    DSERVE.tst
+    DSERVE.tst   VDIFFER.tst
 
 # Library files FIXME: TRIAL should be removed.
 
@@ -116,6 +116,7 @@ FCGI.INC:     FFI.INC      P64.INC      BQ.INC       CSNOBOL4.INC \
               JSON.INC
 DSERVE.INC:   CHARS.INC    REPL.INC     CSNOBOL4.INC HOST.INC     \
               MAX.INC      DDT.INC
+VDIFFER.INC:  SYSTEM.INC
 
 # Bootstrapping. We need embed, ifs, sweave, stangle, snocone and ED4
 # to build the code. We keep embed0, ifs0, sweave0 and stangle0 for
@@ -277,7 +278,7 @@ docs:         AGT.html      AI.html       ALL.html      AOPA.html     \
               COMPLEX.html  COOKIE.html   HTMLTMPL.html JSON.html     \
               stangle       sweave        greenbar.gif  index.html    \
               utility.html  snocone.html  cpmed.html    ED4           \
-              FCGI.html     DSERVE.html
+              FCGI.html     DSERVE.html   VDIFFER.html
 	touch docs
 
 snocone.html: snocone.htm
@@ -395,3 +396,4 @@ SIZEA.INC: SIZEA.SNO
 FCGI.INC: FCGI.SNO
 MAX.INC: MAX.SNO
 DSERVE.INC: DSERVE.SNO
+VDIFFER.INC: VDIFFER.SNO

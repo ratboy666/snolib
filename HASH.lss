@@ -47,7 +47,8 @@ a value of [['YYY']].  [[#'']] is pretty much the same as [[TABLE()]].
 
 <h2>Uses</h2>
 <a href="BRKREM.html">BRKREM</a><br>
-<a href="SEQ.html">SEQ</a>
+<a href="SEQ.html">SEQ</a><br>
+<a href="VDIFFER.html">VDIFFER</a>
 
 <h2>See Also</h2>
 <a href="PSQL.html">PSQL</a>
@@ -55,6 +56,7 @@ a value of [['YYY']].  [[#'']] is pretty much the same as [[TABLE()]].
 <<INCLUDES>>=
 -INCLUDE 'BRKREM.INC'
 -INCLUDE 'SEQ.INC'
+-INCLUDE 'VDIFFER.INC'
 @
 
 <<HASH>>=

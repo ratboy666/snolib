@@ -1,9 +1,10 @@
--LINE 56 "HASH.lss"
+-LINE 57 "HASH.lss"
 -INCLUDE 'BRKREM.SPT'
 -INCLUDE 'SEQ.SPT'
+-INCLUDE 'VDIFFER.SPT'
 -STITL PSQL
 -EJECT
--LINE 136 "HASH.lss"
+-LINE 138 "HASH.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -22,7 +23,7 @@
 *
 * HASH.lss
 *
--LINE 61 "HASH.lss"
+-LINE 63 "HASH.lss"
          DEFINE('HASH(S,E,P,TS,TI,FK,FV,SP)K,V,C')
          DEFINE('HASH_3(S)')
          DEFINE('COPY_TABLE(T)')

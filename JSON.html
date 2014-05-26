@@ -176,6 +176,9 @@ JSON_ENCODE_VALUE
          JSON_ENCODE_VALUE = IDENT(DATATYPE(X), &#39;INTEGER&#39;) X  <b>:S(RETURN)</b>
          JSON_ENCODE_VALUE = IDENT(DATATYPE(X), &#39;REAL&#39;) X
 +                                                <b>:F(JSON_ENCODE_VALUE_2)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* THE FOLLOWING CONDITION WILL NOT HAPPEN WITH SPITBOL.EXE</i></font>
+<font color="#818181"><i>*</i></font>
          JSON_ENCODE_VALUE &#39;nan&#39; | &#39;inf&#39;         <b>:S(JSON_ENCODE_VALUE_3)</b>
          JSON_ENCODE_VALUE RTAB(1) &#39;.&#39;                        <b>:F(RETURN)</b>
          JSON_ENCODE_VALUE = JSON_ENCODE_VALUE &#39;0&#39;             <b>:(RETURN)</b>
@@ -419,7 +422,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu May 22 18:02:09 EDT 2014</p></td><td><p align=right>
+Mon May 26 12:38:38 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>
