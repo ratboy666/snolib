@@ -3,7 +3,8 @@ unix2dos -n SDIFF.INC SDIFF.SPT
 unix2dos -n SWAP.INC SWAP.SPT
 cat BRKREM.INC | sed -e "s/\.INC'/.SPT'/" >BRKREM.SPT
 unix2dos BRKREM.SPT
-unix2dos -n CRACK.INC CRACK.SPT
+cat CRACK.INC | sed -e "s/\.INC'/.SPT'/" >CRACK.SPT
+unix2dos CRACK.INC
 unix2dos -n COUNT.INC COUNT.SPT
 unix2dos -n SEQ.INC SEQ.SPT
 unix2dos -n AGT.INC AGT.SPT
