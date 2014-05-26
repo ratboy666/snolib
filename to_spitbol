@@ -37,3 +37,5 @@ unix2dos -n FOREACH.INC FOREACH.SPT
 unix2dos -n GCD.INC GCD.SPT
 cat HASH.INC | sed -e "s/\.INC'/.SPT'/" >HASH.SPT
 unix2dos HASH.SPT
+cat HEX.INC | sed -e "s/\.INC'/.SPT'/" >HEX.SPT
+unix2dos HEX.SPT
