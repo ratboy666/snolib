@@ -14,7 +14,9 @@ of elements in the first (leftmost) dimension is returned. <font face="Source Co
 is the array with no elements.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
-Warning: this doesn't work with SPITBOL.
+Warning: this doesn't work with SPITBOL. We do accomodate SPITBOL by
+defining a specific legal array as ARRAY0, and checking for that
+object is <font face="Source Code Pro">SIZEA()</font> and <font face="Source Code Pro">LOWA()</font>.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 The null string is assumed to be an array with no elements. Otherwise,
@@ -34,6 +36,7 @@ elements is computed and returned.
 <b>&laquo;INCLUDES&raquo;&equiv;</b>
 -INCLUDE &#39;BRKREM.INC&#39;
 -INCLUDE &#39;SWAP.INC&#39;
+-INCLUDE &#39;SYSTEM.INC&#39;
 <b>@</b>
 </font></pre></div>
 <div style="background-image: url(greenbar.gif)">
@@ -41,9 +44,12 @@ elements is computed and returned.
 <b>&laquo;SIZEA&raquo;&equiv;</b>
          DEFINE(&#39;SIZEA(A)L,U&#39;)
          DEFINE(&#39;LOWA(A)L,U&#39;)
+         ARRAY0 = ?(SYSTEM() ? &#39;SPITBOL&#39;)
++                                   ARRAY(&#39;-10000:-10000&#39;) <b>:S(SIZEA_END)</b>
          ARRAY0 = ARRAY(&#39;0:-1&#39;)                             <b>:(SIZEA_END)</b>
 <font color="#818181"><i>*</i></font>
 LOWA     LOWA = IDENT(A) 0                                    <b>:S(RETURN)</b>
+         LOWA = IDENT(A, ARRAY0) 0                            <b>:S(RETURN)</b>
          IDENT(DATATYPE(A), &#39;ARRAY&#39;)                         <b>:F(FRETURN)</b>
          PROTOTYPE(A) (BRKREM(&#39;:,&#39;) . L) ((&#39;:&#39; BRKREM(&#39;,&#39;) . U) | NULL)
          IDENT(L)                                            <b>:S(FRETURN)</b>
@@ -51,6 +57,7 @@ LOWA     LOWA = IDENT(A) 0                                    <b>:S(RETURN)</b>
          LOWA = IDENT(U) 1                                     <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 SIZEA    SIZEA = IDENT(A) 0                                   <b>:S(RETURN)</b>
+         SIZEA = IDENT(A, ARRAY0) 0                           <b>:S(RETURN)</b>
          IDENT(DATATYPE(A), &#39;ARRAY&#39;)                         <b>:F(FRETURN)</b>
          L =
          U =
@@ -120,7 +127,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Fri May 16 16:11:23 EDT 2014</p></td><td><p align=right>
+Sun May 25 18:56:51 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

@@ -10,9 +10,8 @@
 -INCLUDE 'HTMLTMPL.INC'
 -INCLUDE 'SESSION.INC'
 -INCLUDE 'JSON.INC'
-*-INCLUDE 'DDT.INC'
+-INCLUDE 'DSERVE.INC'
 *
-*        DDT()
          CGI.tmpl = 'CGI.tmpl'
          &CODE = 1
 *
@@ -25,6 +24,7 @@
 * DEPLOYED, IT CAN BE OMMITED IN THAT CASE.
 *
 CGI_TOP  FCGI_ACCEPT()
+         DSERVE()
 *
          BASE_TIME = TIME()
          BASE_ST = &STEXEC

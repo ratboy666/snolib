@@ -13,3 +13,5 @@ cat AI.INC | sed -e "s/\.INC'/.SPT'/" >AI.SPT
 unix2dos AI.SPT
 cat AOPA.INC | sed -e "s/\.INC'/.SPT'/" >AOPA.SPT
 unix2dos AOPA.SPT
+unix2dos -n BALREV.INC BALREV.SPT
+unix2dos -n REPL.INC REPL.SPT

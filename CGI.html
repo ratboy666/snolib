@@ -306,9 +306,8 @@ but predate SCOOP.
 -INCLUDE &#39;HTMLTMPL.INC&#39;
 -INCLUDE &#39;SESSION.INC&#39;
 -INCLUDE &#39;JSON.INC&#39;
-<font color="#818181"><i>*-INCLUDE &#39;DDT.INC&#39;</i></font>
+-INCLUDE &#39;DSERVE.INC&#39;
 <font color="#818181"><i>*</i></font>
-<font color="#818181"><i>*        DDT()</i></font>
 -CMNT EMBED THE TEMPLATES NEEDED. FOR NORMAL USE, THE TEMPLATES WOULD
 -CMNT BE MAINTAINED SEPARATELY, BUT THIS IS THE TEST SAMPLE.
 -EMBED FILE &#39;CGI.tmpl&#39;
@@ -316,7 +315,7 @@ but predate SCOOP.
 &lt;!-- A simple template --&gt;
 &lt;html&gt;
   &lt;head&gt;
-    &lt;meta charset=&quot;utf=8&quot; /&gt;
+    &lt;meta charset=&quot;UTF-8&quot; /&gt;
     &lt;title&gt;CGI test&lt;/title&gt;
     &lt;style&gt;
       a.test {
@@ -399,6 +398,7 @@ but predate SCOOP.
 <font color="#818181"><i>* DEPLOYED, IT CAN BE OMMITED IN THAT CASE.</i></font>
 <font color="#818181"><i>*</i></font>
 CGI_TOP  FCGI_ACCEPT()
+         DSERVE()
 <font color="#818181"><i>*</i></font>
          BASE_TIME = TIME()
          BASE_ST = &amp;STEXEC
@@ -594,7 +594,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu May 22 16:08:48 EDT 2014</p></td><td><p align=right>
+Sun May 25 18:28:50 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

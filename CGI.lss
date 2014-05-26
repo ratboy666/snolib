@@ -277,9 +277,8 @@ but predate SCOOP.
 -INCLUDE 'HTMLTMPL.INC'
 -INCLUDE 'SESSION.INC'
 -INCLUDE 'JSON.INC'
-*-INCLUDE 'DDT.INC'
+-INCLUDE 'DSERVE.INC'
 *
-*        DDT()
 -CMNT EMBED THE TEMPLATES NEEDED. FOR NORMAL USE, THE TEMPLATES WOULD
 -CMNT BE MAINTAINED SEPARATELY, BUT THIS IS THE TEST SAMPLE.
 -EMBED FILE 'CGI.tmpl'
@@ -287,7 +286,7 @@ but predate SCOOP.
 <!-- A simple template -->
 <html>
   <head>
-    <meta charset="utf=8" />
+    <meta charset="UTF-8" />
     <title>CGI test</title>
     <style>
       a.test {
@@ -370,6 +369,7 @@ but predate SCOOP.
 * DEPLOYED, IT CAN BE OMMITED IN THAT CASE.
 *
 CGI_TOP  FCGI_ACCEPT()
+         DSERVE()
 *
          BASE_TIME = TIME()
          BASE_ST = &STEXEC
