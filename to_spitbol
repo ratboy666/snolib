@@ -1,0 +1,11 @@
+unix2dos -n SYSTEM.INC SYSTEM.SPT
+unix2dos -n SDIFF.INC SDIFF.SPT
+unix2dos -n SWAP.INC SWAP.SPT
+cat BRKREM.INC | sed -e "s/\.INC'/.SPT'/" >BRKREM.SPT
+unix2dos BRKREM.SPT
+unix2dos -n CRACK.INC CRACK.SPT
+unix2dos -n COUNT.INC COUNT.SPT
+unix2dos -n SEQ.INC SEQ.SPT
+unix2dos -n AGT.INC AGT.SPT
+cat SIZEA.INC | sed -e "s/\.INC'/.SPT'/" >SIZEA.SPT
+unix2dos SIZEA.SPT
