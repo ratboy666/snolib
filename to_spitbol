@@ -39,3 +39,5 @@ cat HASH.INC | sed -e "s/\.INC'/.SPT'/" >HASH.SPT
 unix2dos HASH.SPT
 cat HEX.INC | sed -e "s/\.INC'/.SPT'/" >HEX.SPT
 unix2dos HEX.SPT
+cat CH.INC | sed -e "s/\.INC'/.SPT'/" >CH.SPT
+unix2dos CH.SPT

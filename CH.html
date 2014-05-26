@@ -9,32 +9,35 @@
 <h1>CH - Hex to String</h1>
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
-CH(HEX) will convert the sequence of hexadecimal digits into the
+CH(H) will convert the sequence of hexadecimal digits into the
 corresponding character string. <font face="Source Code Pro">CH</font> is the inverse of <font face="Source Code Pro">HEX</font>.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 <h2>Uses</h2>
-<a href="LOGIC.html">LOGIC</a>
-</font></p>
-<p align="justify"><font face="Sorts Mill Goudy">
-<h2>See Also</h2>
 <a href="HEX.html">HEX</a>
 </font></p>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;INCLUDES&raquo;&equiv;</b>
--INCLUDE &#39;LOGIC.INC&#39;
+-INCLUDE &#39;HEX.INC&#39;
 <b>@</b>
 </font></pre></div>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;CH&raquo;&equiv;</b>
-         DEFINE(&#39;CH(HEX)T,C,N&#39;)                                <b>:(CH_END)</b>
+         DEFINE(&#39;CH(H)C,P&#39;)
 <font color="#818181"><i>*</i></font>
-CH       HEX LEN(2) . T =                                     <b>:F(RETURN)</b>
-         C = HI(T)
-         &amp;ALPHABET LEN(C) LEN(1) . C
-         CH = CH C                                                 <b>:(CH)</b>
+         CH_H_ = &#39; &#39; HEX(&amp;ALPHABET)
+CH_2     CH_H_ &#39; &#39; LEN(2) . C1
++          (ANY(&#39;0123456789ABCDEF&#39;) LEN(1)) . C2 = &#39; &#39; C1 &#39; &#39; C2
++                                                      <b>:S(CH_2)F(CH_END)</b>
+<font color="#818181"><i>*</i></font>
+CH       H = REPLACE(H, &amp;LCASE, &amp;UCASE)
+CH_3     H LEN(2) . C =                                       <b>:F(RETURN)</b>
+         CH_H_ &#39; &#39; C @P                                      <b>:F(FRETURN)</b>
+         P = (P - 1) / 3
+         &amp;ALPHABET LEN(P) LEN(1) . C
+         CH = CH C                                               <b>:(CH_3)</b>
 <font color="#818181"><i>*</i></font>
 CH_END
 <b>@</b>
@@ -83,7 +86,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Fri May 16 16:10:59 EDT 2014</p></td><td><p align=right>
+Mon May 26 12:04:08 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

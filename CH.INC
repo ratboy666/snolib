@@ -1,8 +1,8 @@
--LINE 13 "CH.lss"
--INCLUDE 'LOGIC.INC'
+-LINE 10 "CH.lss"
+-INCLUDE 'HEX.INC'
 -STITL CH
 -EJECT
--LINE 41 "CH.lss"
+-LINE 45 "CH.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -20,13 +20,20 @@
 *
 * CH.lss
 *
--LINE 17 "CH.lss"
-         DEFINE('CH(HEX)T,C,N')                                :(CH_END)
+-LINE 14 "CH.lss"
+         DEFINE('CH(H)C,P')
 *
-CH       HEX LEN(2) . T =                                     :F(RETURN)
-         C = HI(T)
-         &ALPHABET LEN(C) LEN(1) . C
-         CH = CH C                                                 :(CH)
+         CH_H_ = ' ' HEX(&ALPHABET)
+CH_2     CH_H_ ' ' LEN(2) . C1
++          (ANY('0123456789ABCDEF') LEN(1)) . C2 = ' ' C1 ' ' C2
++                                                      :S(CH_2)F(CH_END)
+*
+CH       H = REPLACE(H, &LCASE, &UCASE)
+CH_3     H LEN(2) . C =                                       :F(RETURN)
+         CH_H_ ' ' C @P                                      :F(FRETURN)
+         P = (P - 1) / 3
+         &ALPHABET LEN(P) LEN(1) . C
+         CH = CH C                                               :(CH_3)
 *
 CH_END
 *
