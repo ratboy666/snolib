@@ -126,7 +126,7 @@ FFI_PAR_N_PTR
 *
 FFI_SET_CALLP
          SET_P(FFI)
-         P_TO_P2
+         P_TO_P2()
          SET_P(PROC)
          SET_CALLP()                                           :(RETURN)
 *

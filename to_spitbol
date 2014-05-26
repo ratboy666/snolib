@@ -20,3 +20,20 @@ unix2dos UNIQUE.SPT
 unix2dos -n LINK.INC LINK.SPT
 cat BALX.INC | sed -e "s/\.INC'/.SPT'/" >BALX.SPT
 unix2dos BALX.SPT
+unix2dos -n BLEND.INC BLEND.SPT
+cat CATA.INC | sed -e "s/\.INC'/.SPT'/" >CATA.SPT
+unix2dos CATA.SPT
+unix2dos -n CHARS.INC CHARS.SPT
+unix2dos -n COMB.INC COMB.SPT
+cat COPYL.INC | sed -e "s/\.INC'/.SPT'/" >COPYL.SPT
+unix2dos COPYL.SPT
+cat FASTBAL.INC | sed -e "s/\.INC'/.SPT'/" >FASTBAL.SPT
+unix2dos FASTBAL.SPT
+unix2dos -n FIND.INC FIND.SPT
+unix2dos -n DEXP.INC DEXP.SPT
+cat FLOOR.INC | sed -e "s/\.INC'/.SPT'/" >FLOOR.SPT
+unix2dos FLOOR.SPT
+unix2dos -n FOREACH.INC FOREACH.SPT
+unix2dos -n GCD.INC GCD.SPT
+cat HASH.INC | sed -e "s/\.INC'/.SPT'/" >HASH.SPT
+unix2dos HASH.SPT
