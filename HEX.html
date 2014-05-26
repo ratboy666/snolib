@@ -29,13 +29,18 @@ the string <font face="Source Code Pro">S</font>.
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;HEX&raquo;&equiv;</b>
-         DEFINE(&#39;HEX(S)&#39;)
+         DEFINE(&#39;HEX(S)S2&#39;)
 <font color="#818181"><i>*</i></font>
          H = &#39;0123456789ABCDEF&#39;
          HEX_2ND = DUPL(H, 16)
 HEX_1    H LEN(1) . T =                                      <b>:F(HEX_END)</b>
          HEX_1ST = HEX_1ST DUPL(T, 16)                          <b>:(HEX_1)</b>
-HEX      HEX = BLEND(REPLACE(S, &amp;ALPHABET, HEX_1ST),
+<font color="#818181"><i>*</i></font>
+HEX      IDENT(S)                                             <b>:S(RETURN)</b>
+         LE(SIZE(S), 128)                                      <b>:S(HEX_2)</b>
+         S LEN(128) . S REM . S2
+         HEX = HEX(S) HEX(S2)                                  <b>:(RETURN)</b>
+HEX_2    HEX = BLEND(REPLACE(S, &amp;ALPHABET, HEX_1ST),
 +           REPLACE(S, &amp;ALPHABET, HEX_2ND))                    <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 HEX_END
@@ -48,6 +53,8 @@ HEX_END
          exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
 -INCLUDE &#39;HEX.INC&#39;
          &amp;CODE = 1
+         OUTPUT = HEX(&#39;0&#39;)
+         OUTPUT = HEX(&amp;ALPHABET)
          &amp;CODE = 0
 END
 <b>@</b>
@@ -84,7 +91,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Fri May 16 16:11:12 EDT 2014</p></td><td><p align=right>
+Mon May 26 11:11:55 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

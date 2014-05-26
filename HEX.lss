@@ -14,13 +14,18 @@ the string [[S]].
 @
 
 <<HEX>>=
-         DEFINE('HEX(S)')
+         DEFINE('HEX(S)S2')
 *
          H = '0123456789ABCDEF'
          HEX_2ND = DUPL(H, 16)
 HEX_1    H LEN(1) . T =                                      :F(HEX_END)
          HEX_1ST = HEX_1ST DUPL(T, 16)                          :(HEX_1)
-HEX      HEX = BLEND(REPLACE(S, &ALPHABET, HEX_1ST),
+*
+HEX      IDENT(S)                                             :S(RETURN)
+         LE(SIZE(S), 128)                                      :S(HEX_2)
+         S LEN(128) . S REM . S2
+         HEX = HEX(S) HEX(S2)                                  :(RETURN)
+HEX_2    HEX = BLEND(REPLACE(S, &ALPHABET, HEX_1ST),
 +           REPLACE(S, &ALPHABET, HEX_2ND))                    :(RETURN)
 *
 HEX_END
@@ -31,6 +36,8 @@ HEX_END
          exec "snobol4" "-b" "$0" "$@"
 -INCLUDE 'HEX.INC'
          &CODE = 1
+         OUTPUT = HEX('0')
+         OUTPUT = HEX(&ALPHABET)
          &CODE = 0
 END
 @
