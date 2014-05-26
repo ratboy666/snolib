@@ -18,3 +18,5 @@ unix2dos -n REPL.INC REPL.SPT
 cat UNIQUE.INC | sed -e "s/\.INC'/.SPT'/" >UNIQUE.SPT
 unix2dos UNIQUE.SPT
 unix2dos -n LINK.INC LINK.SPT
+cat BALX.INC | sed -e "s/\.INC'/.SPT'/" >BALX.SPT
+unix2dos BALX.SPT
