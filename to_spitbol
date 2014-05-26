@@ -9,3 +9,7 @@ unix2dos -n SEQ.INC SEQ.SPT
 unix2dos -n AGT.INC AGT.SPT
 cat SIZEA.INC | sed -e "s/\.INC'/.SPT'/" >SIZEA.SPT
 unix2dos SIZEA.SPT
+cat AI.INC | sed -e "s/\.INC'/.SPT'/" >AI.SPT
+unix2dos AI.SPT
+cat AOPA.INC | sed -e "s/\.INC'/.SPT'/" >AOPA.SPT
+unix2dos AOPA.SPT
