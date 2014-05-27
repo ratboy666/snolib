@@ -1,0 +1,85 @@
+<H1>FOR - Sequence statement</H1>
+
+[[FOR(INIT,TEST,UPDT,STMT)]] is a generalization of [[SEQ()]].
+This implements the [[C]] [[for]] loop [[for(init,test,updt)stmt]].
+[[A1, A2, A3]] are optional variables. If used, these variables will
+be in the scope of the [[FOR()]].
+
+[[SEQ()]] can be expressed in terms of [[FOR()]]. [[SEQ(S,.V,L,H)]]
+is easily translated to
+
+[[
+FOR(' V = L',' LE(V,H)',' V = V + 1',S)
+]]
+
+But, [[FOR]] allows for list traversals, etc. as well as simple
+counted loops. [[SEQ()]] uses a variable reference for it's counting
+variable. This allows the variable to be inspected on termination
+from the loop. We don't know what the variable will be, so $V is
+used. [[FOR()]] doesn't, because it will compile the test and update
+statements as well. As a result, the variable used is under explicit
+control of the caller.
+
+<h2>See Also</h2>
+<a href="SEQ.html">SEQ</a>
+
+<<FOR>>=
+         DEFINE('FOR(INIT_,TEST_,UPDT_,STMT_)')               :(FOR_END)
+*
+FOR      TEST_ = CODE(TEST_ ' :S<STMT_>F(RETURN)')             :F(ERROR)
+         STMT_ = CODE(STMT_ ' :S<UPDT_>F(FRETURN)')            :F(ERROR)
+         UPDT_ = CODE(UPDT_ ' :S<TEST_>F(FRETURN)')            :F(ERROR)
+         INIT_ = CODE(INIT_ ' :S<TEST_>F(FRETURN)')    :S<INIT_>F(ERROR)
+*
+FOR_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'FOR.INC'
+-INCLUDE 'TIMER.INC'
+         &CODE = 1
+*
+* THE INIT CAN BE IN THE FOR(), OR OUTSIDE. THE STATEMENT MAY BE
+* EMPTY, AS MAY BE THE UPDT AND TEST.
+*
+         FOR(' I = 1',
++            ' LT(I, 5)',
++            ' I = I + 1',
++            ' OUTPUT = I')
+*
+         FOR_S = "FOR(' I = 1',' LT(I, 5)',' I = I + 1', ' D = I')"
+         TIMER(' ' FOR_S)
+         FOR_S = "FOR(,' LT(I, 5)',' I = I + 1', ' D = I')"
+         TIMER(' ' FOR_S)
+         FOR_S = "FOR(,' LT(I, 5)',' I = I + 1')"
+         TIMER(' ' FOR_S)
+         &CODE = 0
+END
+@
+
+<<>>=
+-STITL FOR
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                      #######  #######  ######                        *
+*                      #        #     #  #     #                       *
+*                      #        #     #  #     #                       *
+*                      #####    #     #  ######                        *
+*                      #        #     #  #   #                         *
+*                      #        #     #  #    #                        *
+*                      #        #######  #     #                       *
+*                                                                      *
+* FOR                         FOR LOOP                                 *
+*                                                                      *
+************************************************************************
+*
+* FOR.lss
+*
+<<FOR>>
+*
+* CE: .MSNOBOL4;
+@

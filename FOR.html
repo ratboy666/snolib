@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<H1>FOR - Sequence statement</H1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">FOR(INIT,TEST,UPDT,STMT)</font> is a generalization of <font face="Source Code Pro">SEQ()</font>.
+This implements the <font face="Source Code Pro">C</font> <font face="Source Code Pro">for</font> loop <font face="Source Code Pro">for(init,test,updt)stmt</font>.
+<font face="Source Code Pro">A1, A2, A3</font> are optional variables. If used, these variables will
+be in the scope of the <font face="Source Code Pro">FOR()</font>.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">SEQ()</font> can be expressed in terms of <font face="Source Code Pro">FOR()</font>. <font face="Source Code Pro">SEQ(S,.V,L,H)</font>
+is easily translated to
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+| FOR(' V = L',' LE(V,H)',' V = V + 1',S)
+</font></pre>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+But, <font face="Source Code Pro">FOR</font> allows for list traversals, etc. as well as simple
+counted loops. <font face="Source Code Pro">SEQ()</font> uses a variable reference for it's counting
+variable. This allows the variable to be inspected on termination
+from the loop. We don't know what the variable will be, so $V is
+used. <font face="Source Code Pro">FOR()</font> doesn't, because it will compile the test and update
+statements as well. As a result, the variable used is under explicit
+control of the caller.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>See Also</h2>
+<a href="SEQ.html">SEQ</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;FOR&raquo;&equiv;</b>
+         DEFINE(&#39;FOR(INIT_,TEST_,UPDT_,STMT_)&#39;)               <b>:(FOR_END)</b>
+<font color="#818181"><i>*</i></font>
+FOR      TEST_ = CODE(TEST_ &#39; :S&lt;STMT_&gt;F(RETURN)&#39;)             <b>:F(ERROR)</b>
+         STMT_ = CODE(STMT_ &#39; :S&lt;UPDT_&gt;F(FRETURN)&#39;)            <b>:F(ERROR)</b>
+         UPDT_ = CODE(UPDT_ &#39; :S&lt;TEST_&gt;F(FRETURN)&#39;)            <b>:F(ERROR)</b>
+         INIT_ = CODE(INIT_ &#39; :S&lt;TEST_&gt;F(FRETURN)&#39;)    <b>:S&lt;INIT_&gt;F(ERROR)</b>
+<font color="#818181"><i>*</i></font>
+FOR_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;FOR.INC&#39;
+-INCLUDE &#39;TIMER.INC&#39;
+         &amp;CODE = 1
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* THE INIT CAN BE IN THE FOR(), OR OUTSIDE. THE STATEMENT MAY BE</i></font>
+<font color="#818181"><i>* EMPTY, AS MAY BE THE UPDT AND TEST.</i></font>
+<font color="#818181"><i>*</i></font>
+         FOR(&#39; I = 1&#39;,
++            &#39; LT(I, 5)&#39;,
++            &#39; I = I + 1&#39;,
++            &#39; OUTPUT = I&#39;)
+<font color="#818181"><i>*</i></font>
+         FOR_S = &quot;FOR(&#39; I = 1&#39;,&#39; LT(I, 5)&#39;,&#39; I = I + 1&#39;, &#39; D = I&#39;)&quot;
+         TIMER(&#39; &#39; FOR_S)
+         FOR_S = &quot;FOR(,&#39; LT(I, 5)&#39;,&#39; I = I + 1&#39;, &#39; D = I&#39;)&quot;
+         TIMER(&#39; &#39; FOR_S)
+         FOR_S = &quot;FOR(,&#39; LT(I, 5)&#39;,&#39; I = I + 1&#39;)&quot;
+         TIMER(&#39; &#39; FOR_S)
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+-STITL FOR
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                      #######  #######  ######                        *</i></font>
+<font color="#818181"><i>*                      #        #     #  #     #                       *</i></font>
+<font color="#818181"><i>*                      #        #     #  #     #                       *</i></font>
+<font color="#818181"><i>*                      #####    #     #  ######                        *</i></font>
+<font color="#818181"><i>*                      #        #     #  #   #                         *</i></font>
+<font color="#818181"><i>*                      #        #     #  #    #                        *</i></font>
+<font color="#818181"><i>*                      #        #######  #     #                       *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* FOR                         FOR LOOP                                 *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* FOR.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;FOR&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Tue May 27 14:11:04 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

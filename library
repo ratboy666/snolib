@@ -106,6 +106,9 @@
   <li><a href="FLOOR.html">
     FLOOR - FLOOR and CEIL functions
   </a></li>
+  <li><a href="FOR.html">
+    FOR - Generalized SEQ, C for loop
+  </a></li>
   <li><a href="FOREACH.html">
     FOREACH - Apply procedure to each element
   </a></li>
@@ -288,6 +291,9 @@
   </a></li>
   <li><a href="UTF8.html">
     UTF8 - UTF-8 encoded UNICODE handling
+  </a></li>
+  <li><a href="VDIFFER.html">
+    VDIFFER - VDIFFER() for SPITBOL.EXE
   </a></li>
   <li><a href="WRAPPER.html">
     WRAPPER - Create C code to wrap a function for LOAD()ing

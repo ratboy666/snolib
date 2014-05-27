@@ -34,7 +34,7 @@ T = AGT.tst      AI.tst       AOPA.tst     BALREV.tst   BALX.tst     \
     BRKREM.tst   HASH.tst     READL.tst    FOREACH.tst  SCOOP.tst    \
     CGI.tst      READFILE.tst SESSION.tst  GCD.tst      COMPLEX.tst  \
     COOKIE.tst   HTMLTMPL.tst JSON.tst     FCGI.tst     MAX.tst      \
-    DSERVE.tst   VDIFFER.tst
+    DSERVE.tst   VDIFFER.tst  FOR.tst
 
 # Library files FIXME: TRIAL should be removed.
 
@@ -278,7 +278,7 @@ docs:         AGT.html      AI.html       ALL.html      AOPA.html     \
               COMPLEX.html  COOKIE.html   HTMLTMPL.html JSON.html     \
               stangle       sweave        greenbar.gif  index.html    \
               utility.html  snocone.html  cpmed.html    ED4           \
-              FCGI.html     DSERVE.html   VDIFFER.html
+              FCGI.html     DSERVE.html   VDIFFER.html  FOR.html
 	touch docs
 
 snocone.html: snocone.htm
@@ -397,3 +397,4 @@ FCGI.INC: FCGI.SNO
 MAX.INC: MAX.SNO
 DSERVE.INC: DSERVE.SNO
 VDIFFER.INC: VDIFFER.SNO
+FOR.INC: FOR.SNO

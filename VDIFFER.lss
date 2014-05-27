@@ -1,6 +1,7 @@
 <h1>VDIFFER</h1>
 
-[[VDIFFER(P1,P2)]] returns P1 if [[DIFFER(P1,P2)]]
+[[VDIFFER(P1,P2)]] returns P1 if [[DIFFER(P1,P2)]]. Built into
+CSNOBOL4, but not in SPITBOL.EXE.
 
 <<INCLUDES>>= 
 -INCLUDE 'SYSTEM.INC'

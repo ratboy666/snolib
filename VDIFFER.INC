@@ -1,8 +1,8 @@
--LINE 6 "VDIFFER.lss"
+-LINE 7 "VDIFFER.lss"
 -INCLUDE 'SYSTEM.INC'
 -STITL VDIFFER
 -EJECT
--LINE 31 "VDIFFER.lss"
+-LINE 32 "VDIFFER.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -20,7 +20,7 @@
 *
 * VDIFFER.lss
 *
--LINE 10 "VDIFFER.lss"
+-LINE 11 "VDIFFER.lss"
          SYSTEM() 'CSNOBOL4'                             :S(VDIFFER_END)
          DEFINE('VDIFFER(P1,P2)')                         :(VDIFFER_END)
 *
