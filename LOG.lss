@@ -3,7 +3,7 @@
 [[CLOG(X)]] will return the common log (base 10) of [[X]].<br>
 [[LOGB(X,B)]] will return the logarithm of [[X]] to the base [[B]].<br>
 [[LOGB(X)]] will return the natural logarithm of [[X]] (same as
-[[LOG(X)]]). Note that CSNOBOL4 also has [[LN(X)]] for natural log.
+[[LN(X)]]). Note that CSNOBOL4 also has [[LOG(X)]] for natural log.
 
 <h2>Uses</h2>
 <a href="DEXP.html">DEXP</a>
@@ -58,9 +58,9 @@ END
          PI =
 +                   3.14159265358979323846264338327950288419716939937510
 *
-         DEXP('CLOG(X) = LOG(X) / LN_10')
-         DEXP('LOGB(X,B) = NE(B, 0) LOG(X) / LOG(B) ;'
-+             'LOGB      = EQ(B, 0) LOG(X)          ;')
+         DEXP('CLOG(X) = LN(X) / LN_10')
+         DEXP('LOGB(X,B) = NE(B, 0) LN(X) / LN(B) ;'
++             'LOGB      = EQ(B, 0) LN(X)         ;')
 *
 LOG_END
 *

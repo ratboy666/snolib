@@ -73,3 +73,5 @@ cat READFILE.INC | sed -e "s/\.INC'/.SPT'/" >READFILE.SPT
 unix2dos READFILE.SPT
 cat HTMLTMPL.INC | sed -e "s/\.INC'/.SPT'/" >HTMLTMPL.SPT
 unix2dos HTMLTMPL.SPT
+cat LOG.INC | sed -e "s/\.INC'/.SPT'/" >LOG.SPT
+unix2dos LOG.SPT

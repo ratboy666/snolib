@@ -12,7 +12,7 @@
 <font face="Source Code Pro">CLOG(X)</font> will return the common log (base 10) of <font face="Source Code Pro">X</font>.<br>
 <font face="Source Code Pro">LOGB(X,B)</font> will return the logarithm of <font face="Source Code Pro">X</font> to the base <font face="Source Code Pro">B</font>.<br>
 <font face="Source Code Pro">LOGB(X)</font> will return the natural logarithm of <font face="Source Code Pro">X</font> (same as
-<font face="Source Code Pro">LOG(X)</font>). Note that CSNOBOL4 also has <font face="Source Code Pro">LN(X)</font> for natural log.
+<font face="Source Code Pro">LN(X)</font>). Note that CSNOBOL4 also has <font face="Source Code Pro">LOG(X)</font> for natural log.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 <h2>Uses</h2>
@@ -74,9 +74,9 @@ END
          PI =
 +                   3.14159265358979323846264338327950288419716939937510
 <font color="#818181"><i>*</i></font>
-         DEXP(&#39;CLOG(X) = LOG(X) / LN_10&#39;)
-         DEXP(&#39;LOGB(X,B) = NE(B, 0) LOG(X) / LOG(B) ;&#39;
-+             &#39;LOGB      = EQ(B, 0) LOG(X)          ;&#39;)
+         DEXP(&#39;CLOG(X) = LN(X) / LN_10&#39;)
+         DEXP(&#39;LOGB(X,B) = NE(B, 0) LN(X) / LN(B) ;&#39;
++             &#39;LOGB      = EQ(B, 0) LN(X)         ;&#39;)
 <font color="#818181"><i>*</i></font>
 LOG_END
 <font color="#818181"><i>*</i></font>
@@ -87,7 +87,7 @@ LOG_END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Wed May 21 19:01:25 EDT 2014</p></td><td><p align=right>
+Wed May 28 09:49:45 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

@@ -32,9 +32,9 @@
          PI =
 +                   3.14159265358979323846264338327950288419716939937510
 *
-         DEXP('CLOG(X) = LOG(X) / LN_10')
-         DEXP('LOGB(X,B) = NE(B, 0) LOG(X) / LOG(B) ;'
-+             'LOGB      = EQ(B, 0) LOG(X)          ;')
+         DEXP('CLOG(X) = LN(X) / LN_10')
+         DEXP('LOGB(X,B) = NE(B, 0) LN(X) / LN(B) ;'
++             'LOGB      = EQ(B, 0) LN(X)         ;')
 *
 LOG_END
 *
