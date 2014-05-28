@@ -34,6 +34,7 @@ of template caching will be done.
 -INCLUDE &#39;HTMLTMPL.INC&#39;
 -INCLUDE &#39;TIMER.INC&#39;
 -INCLUDE &#39;HASH.INC&#39;
+-INCLUDE &#39;TIMER.INC&#39;
 <font color="#818181"><i>*</i></font>
          &amp;CODE = 1
 <font color="#818181"><i>*        TMPL_INIT()</i></font>
@@ -101,7 +102,7 @@ procedure tmpl_init() {
    # Patterns to parse arguments for template token
 
    tmpl_arg_var = tmpl_ws &amp;&amp; (any(&amp;lcase &amp;&amp; &amp;ucase) &amp;&amp; span(
-      &amp;lcase &amp;&amp; &amp;ucase &amp;&amp; &amp;digits &amp;&amp; &quot;_&quot;)) . n &amp;&amp; tmpl_ws
+      &amp;lcase &amp;&amp; &amp;ucase &amp;&amp; &#39;0123456789&#39; &amp;&amp; &quot;_&quot;)) . n &amp;&amp; tmpl_ws
    tmpl_qval = &#39;&quot;&#39; &amp;&amp; break(&#39;&quot;&#39;) . v &amp;&amp; &#39;&quot;&#39;
    tmpl_sval = break(&quot; &quot; &amp;&amp; chars_tab) . v
    tmpl_arg_p = ((tmpl_arg_var &amp;&amp; &quot;=&quot;) | &quot;&quot;) &amp;&amp; tmpl_ws &amp;&amp;
@@ -304,7 +305,7 @@ procedure tmpl_parse_args(s) n v {
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Fri May 16 16:14:49 EDT 2014</p></td><td><p align=right>
+Wed May 28 06:07:58 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

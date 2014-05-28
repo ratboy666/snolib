@@ -21,6 +21,7 @@ of template caching will be done.
 -INCLUDE 'HTMLTMPL.INC'
 -INCLUDE 'TIMER.INC'
 -INCLUDE 'HASH.INC'
+-INCLUDE 'TIMER.INC'
 *
          &CODE = 1
 *        TMPL_INIT()
@@ -86,7 +87,7 @@ procedure tmpl_init() {
    # Patterns to parse arguments for template token
 
    tmpl_arg_var = tmpl_ws && (any(&lcase && &ucase) && span(
-      &lcase && &ucase && &digits && "_")) . n && tmpl_ws
+      &lcase && &ucase && '0123456789' && "_")) . n && tmpl_ws
    tmpl_qval = '"' && break('"') . v && '"'
    tmpl_sval = break(" " && chars_tab) . v
    tmpl_arg_p = ((tmpl_arg_var && "=") | "") && tmpl_ws &&

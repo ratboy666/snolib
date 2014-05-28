@@ -4,6 +4,7 @@
 -LINE 22 "HTMLTMPL.lss"
 -INCLUDE 'TIMER.INC'
 -INCLUDE 'HASH.INC'
+-INCLUDE 'TIMER.INC'
 *
          &CODE = 1
 *        TMPL_INIT()
