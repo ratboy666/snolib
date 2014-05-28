@@ -20,15 +20,30 @@ or html). This content can then be left in memory if needed.
 <p align="justify"><font face="Sorts Mill Goudy">
 Tested w/ 1024..256K buffer size. Default 64K buffer.
 </font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+If used with SPITBOL, reads a line at a time, adding newlines.
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;CHARS.INC&#39;
+-INCLUDE &#39;SYSTEM.INC&#39;
+<b>@</b>
+</font></pre></div>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;READFILE&raquo;&equiv;</b>
-         DEFINE(&#39;READFILE(FILE)F,U&#39;)                     <b>:(READFILE_END)</b>
+         DEFINE(&#39;READFILE(FILE)F,U,E&#39;)                   <b>:(READFILE_END)</b>
 <font color="#818181"><i>*</i></font>
-READFILE U = IO_FINDUNIT()                                   <b>:F(FRETURN)</b>
+READFILE SYSTEM() &#39;CSNOBOL4&#39;                               <b>:S(READFILE3)</b>
+         U = 20
+         E = CHARS_NL
+         INPUT(.F, U, FILE)                      <b>:S(READFILE2)F(FRETURN)</b>
+READFILE3
+         U = IO_FINDUNIT()                                   <b>:F(FRETURN)</b>
          INPUT(.F, U, &#39;B,65536&#39;, FILE)                       <b>:F(FRETURN)</b>
 READFILE2
-         READFILE = READFILE F                             <b>:S(READFILE2)</b>
+         READFILE = READFILE F E                           <b>:S(READFILE2)</b>
          ENDFILE(U)
          DETACH(.F)                                            <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
@@ -41,8 +56,8 @@ READFILE_END
 <font color="#818181"><i>#!/usr/bin/bash</i></font>
          exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
 -INCLUDE &#39;READFILE.INC&#39;
--INCLUDE &#39;BQ.INC&#39;
          &amp;CODE = 1
+         OUTPUT = READFILE(&#39;sample.tmpl&#39;)                        <b>:F(END)</b>
          &amp;CODE = 0
 END
 <b>@</b>
@@ -50,6 +65,7 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+<b>&laquo;INCLUDES&raquo;</b>
 -STITL READLINE
 -EJECT
 <font color="#818181"><i>*</i></font>
@@ -78,7 +94,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Fri May 16 16:11:46 EDT 2014</p></td><td><p align=right>
+Wed May 28 05:58:30 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

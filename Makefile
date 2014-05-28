@@ -118,6 +118,7 @@ DSERVE.INC:   CHARS.INC    REPL.INC     CSNOBOL4.INC HOST.INC     \
               MAX.INC      DDT.INC
 VDIFFER.INC:  SYSTEM.INC
 FREEZE.INC:   SYSTEM.INC
+READFILE.INC: SYSTEM.INC   CHARS.INC
 
 # Bootstrapping. We need embed, ifs, sweave, stangle, snocone and ED4
 # to build the code. We keep embed0, ifs0, sweave0 and stangle0 for

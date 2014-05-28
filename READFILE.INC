@@ -1,7 +1,10 @@
+-LINE 15 "READFILE.lss"
+-INCLUDE 'CHARS.INC'
+-INCLUDE 'SYSTEM.INC'
 -STITL READLINE
 -EJECT
+-LINE 51 "READFILE.lss"
 *
--LINE 39 "READFILE.lss"
 ************************************************************************
 *                                                                      *
 *  ######   #######     #     ######   #######  ###  #        #######  *
@@ -18,13 +21,18 @@
 *
 * READFILE.lss
 *
--LINE 13 "READFILE.lss"
-         DEFINE('READFILE(FILE)F,U')                     :(READFILE_END)
+-LINE 20 "READFILE.lss"
+         DEFINE('READFILE(FILE)F,U,E')                   :(READFILE_END)
 *
-READFILE U = IO_FINDUNIT()                                   :F(FRETURN)
+READFILE SYSTEM() 'CSNOBOL4'                               :S(READFILE3)
+         U = 20
+         E = CHARS_NL
+         INPUT(.F, U, FILE)                      :S(READFILE2)F(FRETURN)
+READFILE3
+         U = IO_FINDUNIT()                                   :F(FRETURN)
          INPUT(.F, U, 'B,65536', FILE)                       :F(FRETURN)
 READFILE2
-         READFILE = READFILE F                             :S(READFILE2)
+         READFILE = READFILE F E                           :S(READFILE2)
          ENDFILE(U)
          DETACH(.F)                                            :(RETURN)
 *
