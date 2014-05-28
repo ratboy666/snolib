@@ -65,3 +65,7 @@ cat SCOOP.INC | sed -e "s/\.INC'/.SPT'/" >SCOOP.SPT
 unix2dos SCOOP.SPT
 cat FREEZE.INC | sed -e "s/\.INC'/.SPT'/" >FREEZE.SPT
 unix2dos FREEZE.SPT
+cat REVL.INC | sed -e "s/\.INC'/.SPT'/" >REVL.SPT
+unix2dos REVL.SPT
+cat HTMLESC.INC | sed -e "s/\.INC'/.SPT'/" >HTMLESC.SPT
+unix2dos HTMLESC.SPT

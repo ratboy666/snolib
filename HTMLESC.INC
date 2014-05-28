@@ -53,8 +53,8 @@ END_JS_ESCAPE
 -LINE 76 "HTMLESC.lss"
          DEFINE('URL_ESCAPE(S)L,C,R')
          DEFINE('URL_DECODE(S)L,C,R')
-         URL_BAD = SDIFF(&ALPHABET, &UCASE &LCASE &DIGITS '_-~.')
-         URL_HEX = ANY("0123456789abcdefABCDEF")
+         URL_BAD = SDIFF(&ALPHABET, &UCASE &LCASE '0123456789' '_-~.')
+         URL_HEX = ANY('0123456789abcdefABCDEF')
 +                                                      :(END_URL_ESCAPE)
 *
 URL_DECODE_2

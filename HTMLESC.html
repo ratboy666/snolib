@@ -98,8 +98,8 @@ the good character set. This is done at function definition time
 <b>&laquo;URL_ESCAPE&raquo;&equiv;</b>
          DEFINE(&#39;URL_ESCAPE(S)L,C,R&#39;)
          DEFINE(&#39;URL_DECODE(S)L,C,R&#39;)
-         URL_BAD = SDIFF(&amp;ALPHABET, &amp;UCASE &amp;LCASE &amp;DIGITS &#39;_-~.&#39;)
-         URL_HEX = ANY(&quot;0123456789abcdefABCDEF&quot;)
+         URL_BAD = SDIFF(&amp;ALPHABET, &amp;UCASE &amp;LCASE &#39;0123456789&#39; &#39;_-~.&#39;)
+         URL_HEX = ANY(&#39;0123456789abcdefABCDEF&#39;)
 +                                                      <b>:(END_URL_ESCAPE)</b>
 <font color="#818181"><i>*</i></font>
 URL_DECODE_2
@@ -158,7 +158,7 @@ END_URL_ESCAPE
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Fri May 16 16:11:41 EDT 2014</p></td><td><p align=right>
+Wed May 28 05:29:47 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>
