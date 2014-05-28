@@ -1,0 +1,37 @@
+-STITL RESOL
+-EJECT
+*
+-LINE 44 "RESOL.lss"
+************************************************************************
+*                                                                      *
+*                 ######   #######   #####   #######  #                *
+*                 #     #  #        #     #  #     #  #                *
+*                 #     #  #        #        #     #  #                *
+*                 ######   #####     #####   #     #  #                *
+*                 #   #    #              #  #     #  #                *
+*                 #    #   #        #     #  #     #  #                *
+*                 #     #  #######   #####   #######  #######          *
+*                                                                      *
+* RESOL             TIMER RESOLUTION IN MILLISECONDS                   *
+*                                                                      *
+************************************************************************
+*
+* RESOL.lss
+*
+-LINE 7 "RESOL.lss"
+         DEFINE('RESOLUTION()T,N,R,T2')                :(RESOLUTION_END)
+*
+RESOLUTION
+         DIFFER(RESOLUTION_)                                 :S(RESOL_4)
+         R = 0.0
+         T = TIME()
+RESOL_1  EQ(T, TIME())                                       :S(RESOL_1)
+         T = TIME()
+RESOL_2  T2 = TIME()
+RESOL_3  EQ(T2, TIME())                                      :S(RESOL_3)
+         RESOLUTION_ = TIME() - T
+RESOL_4  RESOLUTION = RESOLUTION_                              :(RETURN)
+*
+RESOLUTION_END
+*
+* CE: .MSNOBOL4;

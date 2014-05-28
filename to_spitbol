@@ -58,3 +58,6 @@ unix2dos -n LIKE.INC LIKE.SPT
 cat g360 | sed -e "s/^#!/*#!/" >g360.spt
 unix2dos g360.spt
 spitbol.exe -w -n g360.spt
+##unix2dos -n RESOL.INC RESOL.SPT
+cat TIMER.INC | sed -e "s/\.INC'/.SPT'/" >TIMER.SPT
+unix2dos TIMER.SPT

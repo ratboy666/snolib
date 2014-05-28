@@ -3,7 +3,7 @@
 -INCLUDE 'RESOL.INC'
 -STITL TIMER
 -EJECT
--LINE 67 "TIMER.lss"
+-LINE 76 "TIMER.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -22,14 +22,20 @@
 * TIMER.lss
 *
 -LINE 17 "TIMER.lss"
-         DEFINE('TIMER(S_,N_)C_,T_,I_')                     :(TIMER_END)
+         DEFINE('TIMER(S_,N_)C_,T_,I_,M_')                  :(TIMER_END)
 *
 TIMER    EQ(N_, 0)                                           :F(TIMER_N)
          N_ = 10
 TIMER_1  T_ = TIMER(' ;' S_, N_) - TIMER(, N_)               :F(FRETURN)
 * WAS 20 * RESOLUTION. NOW THAT RESOLUTION IS ON THE ORDER OF 4
 * MICROSECONDS, WE LOOK FOR 2000 * RESOLUTION (8 MILLISECONDS).
-         N_ = LT(T_, 2000 * RESOLUTION()) N_ * 2             :S(TIMER_1)
+*
+* FOR SPITBOL.EXE, RESOLUTION IS 1MS, CSNOBOL4, 4 MICROSECONDS FOR
+* ATOM, 1.5 MICROSECONDS FOR INTEL I3
+*
+         M_ = RESOLUTION()
+         M_ = ((LT(M_, 0.9) 2000), 20)
+         N_ = LT(T_, M_ * RESOLUTION()) N_ * 2               :S(TIMER_1)
          T_ = CONVERT(T_, 'REAL')
          OUTPUT =
          OUTPUT = 'THE STATEMENT'
@@ -43,6 +49,9 @@ TIMER_1  T_ = TIMER(' ;' S_, N_) - TIMER(, N_)               :F(FRETURN)
          T_ = GE(T_, 1000.0) T_ / 1000.0                     :S(TIMER_2)
          T_ = T_ * 1000.0
          C_ = ' MICROSECONDS'
+         (GE(T_, 1.0) LT(T_, 1000.0))                        :S(TIMER_2)
+         T_ = T_ * 1000.0
+         C_ = ' NANOSECONDS'
 TIMER_2  OUTPUT = 'REQUIRED ' T_ C_ ' +/- 10%'
 +           ' TO EXECUTE IN '  SYSTEM()                        :(RETURN)
 *

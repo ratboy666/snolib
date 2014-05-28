@@ -28,14 +28,20 @@ should be separated by semicolons.
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;TIMER&raquo;&equiv;</b>
-         DEFINE(&#39;TIMER(S_,N_)C_,T_,I_&#39;)                     <b>:(TIMER_END)</b>
+         DEFINE(&#39;TIMER(S_,N_)C_,T_,I_,M_&#39;)                  <b>:(TIMER_END)</b>
 <font color="#818181"><i>*</i></font>
 TIMER    EQ(N_, 0)                                           <b>:F(TIMER_N)</b>
          N_ = 10
 TIMER_1  T_ = TIMER(&#39; ;&#39; S_, N_) - TIMER(, N_)               <b>:F(FRETURN)</b>
 <font color="#818181"><i>* WAS 20 * RESOLUTION. NOW THAT RESOLUTION IS ON THE ORDER OF 4</i></font>
 <font color="#818181"><i>* MICROSECONDS, WE LOOK FOR 2000 * RESOLUTION (8 MILLISECONDS).</i></font>
-         N_ = LT(T_, 2000 * RESOLUTION()) N_ * 2             <b>:S(TIMER_1)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* FOR SPITBOL.EXE, RESOLUTION IS 1MS, CSNOBOL4, 4 MICROSECONDS FOR</i></font>
+<font color="#818181"><i>* ATOM, 1.5 MICROSECONDS FOR INTEL I3</i></font>
+<font color="#818181"><i>*</i></font>
+         M_ = RESOLUTION()
+         M_ = ((LT(M_, 0.9) 2000), 20)
+         N_ = LT(T_, M_ * RESOLUTION()) N_ * 2               <b>:S(TIMER_1)</b>
          T_ = CONVERT(T_, &#39;REAL&#39;)
          OUTPUT =
          OUTPUT = &#39;THE STATEMENT&#39;
@@ -49,6 +55,9 @@ TIMER_1  T_ = TIMER(&#39; ;&#39; S_, N_) - TIMER(, N_)               <b>:F(FRETU
          T_ = GE(T_, 1000.0) T_ / 1000.0                     <b>:S(TIMER_2)</b>
          T_ = T_ * 1000.0
          C_ = &#39; MICROSECONDS&#39;
+         (GE(T_, 1.0) LT(T_, 1000.0))                        <b>:S(TIMER_2)</b>
+         T_ = T_ * 1000.0
+         C_ = &#39; NANOSECONDS&#39;
 TIMER_2  OUTPUT = &#39;REQUIRED &#39; T_ C_ &#39; +/- 10%&#39;
 +           &#39; TO EXECUTE IN &#39;  SYSTEM()                        <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
@@ -108,7 +117,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Fri May 16 16:11:37 EDT 2014</p></td><td><p align=right>
+Wed May 28 01:28:30 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

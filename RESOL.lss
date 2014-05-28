@@ -4,18 +4,24 @@
 REAL number of milliseconds.
 
 <<RESOL>>=
-         DEFINE('RESOLUTION()T,N,R')                   :(RESOLUTION_END)
+%SET(CSNOBOL4,(?(SYSTEM ? 'CSNOBOL4') 1))
+         DEFINE('RESOLUTION()T,N,R,T2')                :(RESOLUTION_END)
 *
 RESOLUTION
          DIFFER(RESOLUTION_)                                 :S(RESOL_4)
+         R = 0.0
          T = TIME()
 RESOL_1  EQ(T, TIME())                                       :S(RESOL_1)
-RESOL_2  T = TIME()
-RESOL_3  EQ(T, TIME())                                       :S(RESOL_3)
-         R = R + (TIME() - T)
+         T = TIME()
+RESOL_2  T2 = TIME()
+RESOL_3  EQ(T2, TIME())                                      :S(RESOL_3)
+         RESOLUTION_ = TIME() - T
+%IF(CSNOBOL4)
+         R = R + (TIME() - T2)
          N = N + 1
          LE(N, 100000)                                       :S(RESOL_2)
          RESOLUTION_ = R / 100000
+%ENDIF
 RESOL_4  RESOLUTION = RESOLUTION_                              :(RETURN)
 *
 RESOLUTION_END

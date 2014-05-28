@@ -15,18 +15,24 @@ REAL number of milliseconds.
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;RESOL&raquo;&equiv;</b>
-         DEFINE(&#39;RESOLUTION()T,N,R&#39;)                   <b>:(RESOLUTION_END)</b>
+%SET(CSNOBOL4,(?(SYSTEM ? &#39;CSNOBOL4&#39;) 1))
+         DEFINE(&#39;RESOLUTION()T,N,R,T2&#39;)                <b>:(RESOLUTION_END)</b>
 <font color="#818181"><i>*</i></font>
 RESOLUTION
          DIFFER(RESOLUTION_)                                 <b>:S(RESOL_4)</b>
+         R = 0.0
          T = TIME()
 RESOL_1  EQ(T, TIME())                                       <b>:S(RESOL_1)</b>
-RESOL_2  T = TIME()
-RESOL_3  EQ(T, TIME())                                       <b>:S(RESOL_3)</b>
-         R = R + (TIME() - T)
+         T = TIME()
+RESOL_2  T2 = TIME()
+RESOL_3  EQ(T2, TIME())                                      <b>:S(RESOL_3)</b>
+         RESOLUTION_ = TIME() - T
+%IF(CSNOBOL4)
+         R = R + (TIME() - T2)
          N = N + 1
          LE(N, 100000)                                       <b>:S(RESOL_2)</b>
          RESOLUTION_ = R / 100000
+%ENDIF
 RESOL_4  RESOLUTION = RESOLUTION_                              <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 RESOLUTION_END
@@ -75,7 +81,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Fri May 16 16:11:26 EDT 2014</p></td><td><p align=right>
+Wed May 28 01:09:46 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

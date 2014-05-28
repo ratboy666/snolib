@@ -186,6 +186,13 @@ FOR_END
 +        &quot;FOR(FOR_COMPILE(&#39; I = 1&#39;,&#39; LT(I, 5)&#39;,&#39; I = I + 1&#39;, &#39; D = I&#39;))&quot;
          TIMER(&#39; &#39; FOR_S)
 <font color="#818181"><i>*</i></font>
+         S =
++ &#39; I = 1;&#39;
++ &#39;LUP LT(I, 5) :F(LUP2);&#39;
++ &#39; I = I + 1 :(LUP);&#39;
++ &#39;LUP2&#39;
+         TIMER(S)
+<font color="#818181"><i>*</i></font>
          F = FOR_COMPILE(
 +           &#39; I = 1&#39;,
 +           &#39; LT(I, 5)&#39;,
@@ -287,7 +294,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Tue May 27 20:05:08 EDT 2014</p></td><td><p align=right>
+Wed May 28 00:16:06 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

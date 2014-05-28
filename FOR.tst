@@ -18,6 +18,13 @@
 +        "FOR(FOR_COMPILE(' I = 1',' LT(I, 5)',' I = I + 1', ' D = I'))"
          TIMER(' ' FOR_S)
 *
+         S =
++ ' I = 1;'
++ 'LUP LT(I, 5) :F(LUP2);'
++ ' I = I + 1 :(LUP);'
++ 'LUP2'
+         TIMER(S)
+*
          F = FOR_COMPILE(
 +           ' I = 1',
 +           ' LT(I, 5)',
