@@ -55,3 +55,6 @@ unix2dos -n FOR.INC FOR.SPT
 cat QUOTE.INC | sed -e "s/\.INC'/.SPT'/" >QUOTE.SPT
 unix2dos QUOTE.SPT
 unix2dos -n LIKE.INC LIKE.SPT
+cat g360 | sed -e "s/^#!/*#!/" >g360.spt
+unix2dos g360.spt
+spitbol.exe -w -n g360.spt

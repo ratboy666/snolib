@@ -43,17 +43,22 @@ ISASCII() -- '()' is ordered the same in both of these character sets.
          DEFINE(&#39;SYSTEM()K&#39;)
          DEFINE(&#39;ISSPITBOL()&#39;)
          DEFINE(&#39;ISSNOBOL4()&#39;)
-         DEFINE(&#39;ISASCII()&#39;)
-         DEFINE(&#39;ISEBCDIC()&#39;)
-         DEFINE(&#39;ISCDC_DISPLAY_CODE()&#39;)                    <b>:(SYSTEM_END)</b>
+         DEFINE(&#39;ISASCII()A&#39;)
+         DEFINE(&#39;ISEBCDIC()A&#39;)
+         DEFINE(&#39;ISCDC_DISPLAY_CODE()A&#39;)                   <b>:(SYSTEM_END)</b>
 <font color="#818181"><i>*</i></font>
-ISASCII  &amp;ALPHABET &#39;()&#39;                             <b>:S(RETURN)F(FRETURN)</b>
+ISASCII  &amp;ANCHOR = 0
+         &amp;ALPHABET &#39;()&#39;                          <b>:S(ISASCII1)F(ISASCII2)</b>
+ISASCII1 &amp;ANCHOR = A                                           <b>:(RETURN)</b>
+ISASCII2 &amp;ANCHOR = A                                          <b>:(FRETURN)</b>
 <font color="#818181"><i>*</i></font>
-<font color="#818181"><i>* LLT(&#39;A&#39;,1)</i></font>
-ISEBCDIC &amp;ALPHABET &#39;(+&#39;                             <b>:S(RETURN)F(FRETURN)</b>
+<font color="#818181"><i>* OR, TRY LLT(&#39;A&#39;,1)</i></font>
+ISEBCDIC &amp;ANCHOR = 0
+         &amp;ALPHABET &#39;(+&#39;                          <b>:S(ISASCII1)F(ISASCII2)</b>
 <font color="#818181"><i>*</i></font>
 ISCDC_DISPLAY_CODE
-         &amp;ALPHABET &#39;)*&#39;                             <b>:S(RETURN)F(FRETURN)</b>
+         &amp;ANCHOR = 0
+         &amp;ALPHABET &#39;)*&#39;                          <b>:S(ISASCII1)F(ISASCII2)</b>
 <font color="#818181"><i>*</i></font>
 ISSPITBOL
          DIFFER(.NAME, &#39;NAME&#39;)                      <b>:S(RETURN)F(FRETURN)</b>
@@ -132,7 +137,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Sun May 25 18:28:56 EDT 2014</p></td><td><p align=right>
+Tue May 27 23:35:32 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

@@ -1,13 +1,15 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -TITLE IFS
--LINE 344 "ifs.lss"
+-LINE 352 "ifs.lss"
 START
--LINE 61 "ifs.lss"
+-LINE 63 "ifs.lss"
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'HOST.INC'
 -INCLUDE 'CRACK.INC'
 -INCLUDE 'FASTBAL.INC'
+-INCLUDE 'SYSTEM.INC'
+-INCLUDE 'VDIFFER.INC'
 -STITL
 -EJECT
 *
@@ -29,10 +31,14 @@ START
 *
 * ifs.lss
 *
--LINE 68 "ifs.lss"
+-LINE 72 "ifs.lss"
 -PLUSOPS 1
 *
          TERMINAL = 'IFS (WED NOV  6 13:40:26 EST 2013)'
+*
+* SYSTEM() FAILS IF ANCHORED
+*
+         SYSTEM = SYSTEM()
 *
          &ANCHOR = 1
          &CODE = 1

@@ -76,6 +76,8 @@ conditionals, and no other macro expansion.
 <a href="HOST.html">HOST</a><br>
 <a href="CRACK.html">CRACK</a><br>
 <a href="FASTBAL.html">FASTBAL</a>
+<a href="SYSTEM.html">SYSTEM</a>
+<a href="VDIFFER.html">VDIFFER</a>
 </font></p>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
@@ -84,6 +86,8 @@ conditionals, and no other macro expansion.
 -INCLUDE &#39;HOST.INC&#39;
 -INCLUDE &#39;CRACK.INC&#39;
 -INCLUDE &#39;FASTBAL.INC&#39;
+-INCLUDE &#39;SYSTEM.INC&#39;
+-INCLUDE &#39;VDIFFER.INC&#39;
 <b>@</b>
 </font></pre></div>
 <div style="background-image: url(greenbar.gif)">
@@ -92,6 +96,10 @@ conditionals, and no other macro expansion.
 -PLUSOPS 1
 <font color="#818181"><i>*</i></font>
          TERMINAL = &#39;IFS (WED NOV  6 13:40:26 EST 2013)&#39;
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* SYSTEM() FAILS IF ANCHORED</i></font>
+<font color="#818181"><i>*</i></font>
+         SYSTEM = SYSTEM()
 <font color="#818181"><i>*</i></font>
          &amp;ANCHOR = 1
          &amp;CODE = 1
@@ -399,7 +407,7 @@ START
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Fri May 16 16:11:13 EDT 2014</p></td><td><p align=right>
+Tue May 27 23:27:17 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

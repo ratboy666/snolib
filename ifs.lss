@@ -56,18 +56,26 @@ conditionals, and no other macro expansion.
 <a href="HOST.html">HOST</a><br>
 <a href="CRACK.html">CRACK</a><br>
 <a href="FASTBAL.html">FASTBAL</a>
+<a href="SYSTEM.html">SYSTEM</a>
+<a href="VDIFFER.html">VDIFFER</a>
 
 <<INCLUDES>>=
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'HOST.INC'
 -INCLUDE 'CRACK.INC'
 -INCLUDE 'FASTBAL.INC'
+-INCLUDE 'SYSTEM.INC'
+-INCLUDE 'VDIFFER.INC'
 @
 
 <<IFS>>=
 -PLUSOPS 1
 *
          TERMINAL = 'IFS (WED NOV  6 13:40:26 EST 2013)'
+*
+* SYSTEM() FAILS IF ANCHORED
+*
+         SYSTEM = SYSTEM()
 *
          &ANCHOR = 1
          &CODE = 1

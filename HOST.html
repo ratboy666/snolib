@@ -21,6 +21,7 @@ HOST
 <pre><font face="Source Code Pro">
 <b>&laquo;HOST&raquo;&equiv;</b>
 %SET(NONEED,0)
+%SET(CSNOBOL4,(?(SYSTEM ? &#39;CSNOBOL4&#39;) 1))
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* MACRO SPITBOL</i></font>
 <font color="#818181"><i>*</i></font>
@@ -39,6 +40,7 @@ HOST
          HOST_FIRSTARG = 3
 <font color="#818181"><i>* RETURNS ENVIRONMENT VARIABLE, OR FAILS</i></font>
          HOST_GETENV = 4
+%IF(CSNOBOL4)
 %IF(NONEED)
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* CSNOBOL4</i></font>
@@ -121,6 +123,7 @@ HOST
          HOST_PMSTACK_SIZE = 2401
 <font color="#818181"><i>* SIZE OF INTERPRETER STACK IN DESCRIPTORS</i></font>
          HOST_ISTACK_SIZE = 2402
+%ENDIF
 <font color="#818181"><i>*</i></font>
     CODE(&#39;HOST&#39;)
 <font color="#818181"><i>*</i></font>
@@ -169,7 +172,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Fri May 16 16:11:13 EDT 2014</p></td><td><p align=right>
+Tue May 27 23:17:22 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

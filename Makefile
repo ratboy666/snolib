@@ -169,7 +169,7 @@ deseq:        deseq.SNO
 deseql:       deseql.SNO
 embed:        embed.SNO    CHARS.INC    SLOAD.INC
 ifs:          ifs.SNO      CHARS.INC    CRACK.INC    HOST.INC     \
-                           FASTBAL.INC
+                           FASTBAL.INC  SYSTEM.INC   VDIFFER.INC
 illum:        illum.SNO    BQ.INC       CRACK.INC    SEQ.INC      \
                            TRIMB.INC
 lseq:         lseq.SNO

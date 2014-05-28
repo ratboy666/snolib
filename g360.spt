@@ -1,0 +1,63 @@
+*#!/usr/local/bin/snobol4 -b
+         exec "snobol4" "-b" "$0" "$@"
+*
+-TITLE G360
+START
+*-INCLUDE 'REPL.INC'
+         DEFINE('REPL(S1,S2,S3)C,T,FINDC')                   :(REPL_END)
+*
+REPL     S2 LEN(1) . C =                                     :F(FRETURN)
+         FINDC = BREAK(C) . T LEN(1)
+         S2 = POS(0) S2
+REPL_1   S1 FINDC =                                           :F(REPL_2)
+         S1 S2 =                                              :F(REPL_3)
+         REPL = REPL T S3                                      :(REPL_1)
+REPL_3   REPL = REPL T C                                       :(REPL_1)
+REPL_2   REPL = REPL S1                                        :(RETURN)
+*
+REPL_END
+*
+************************************************************************
+*                                                                      *
+*                     #####    ###    ###    ####                      *
+*                    #     #  #   #  #   #  #   ##                     *
+*                    #            #  #      #  # #                     *
+*                    #  ####   ###   ####   # #  #                     *
+*                    #     #      #  #   #  ##   #                     *
+*                    #     #  #   #  #   #  #    #                     *
+*                     #####    ###    ###    ####                      *
+*                                                                      *
+* G360         ALLOW 360 EXTENDED CHARACTER SET IN SOURCE              *
+*                                                                      *
+************************************************************************
+*
+* G360: IBM 360 EXTENDED GRAPHICS TO ASCII SNOBOL4. THE "GREEN BOOK"
+* PROGRAMS USE THESE EXTENDED SYMBOLS.
+*
+         TERMINAL = 'G360 (SUN FEB  9 18:44:54 EST 2014)'
+         DEFINE('G360(S)')
+         Q = "'"
+         QQ = '"'
+*
+TOP      R = INPUT                                               :F(END)
+*
+         S = ''
+         R FENCE ANY('*#;|!')                                   :S(CMNT)
+LOOP     R ARB . L (Q | QQ) $ DELIM ARB . M *DELIM REM . R      :F(DONE)
+         S = S G360(L) DELIM M DELIM                             :(LOOP)
+DONE     S = S G360(R)
+*
+         OUTPUT = S                                               :(TOP)
+CMNT     OUTPUT = R                                               :(TOP)
+*
+G360     S = REPL(S, '┌', '*')
+         S = REPL(S, '│', '*')
+         S = REPL(S, '└', '*')
+         S = REPL(S, '←', '=')
+         S = REPL(S, '¬', '~')
+         S = REPL(S, '↑', '^')
+         G360 = S                                              :(RETURN)
+*
+END START
+*
+* CE: .F.MSNOBOL4;
