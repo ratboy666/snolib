@@ -75,3 +75,14 @@ cat HTMLTMPL.INC | sed -e "s/\.INC'/.SPT'/" >HTMLTMPL.SPT
 unix2dos HTMLTMPL.SPT
 cat LOG.INC | sed -e "s/\.INC'/.SPT'/" >LOG.SPT
 unix2dos LOG.SPT
+unix2dos -n ORDER.INC ORDER.SPT
+cat READL.INC | sed -e "s/\.INC'/.SPT'/" >READL.SPT
+unix2dos READL.SPT
+unix2dos -n ROMAN.INC ROMAN.SPT
+unix2dos -n ROTATER.INC ROTATER.SPT
+unix2dos -n TRIMB.INC TRIMB.SPT
+unix2dos -n SOUNDEX.INC SOUNDEX.SPT
+cat STACK.INC | sed -e "s/\.INC'/.SPT'/" >STACK.SPT
+unix2dos STACK.SPT
+cat TRUNC.INC | sed -e "s/\.INC'/.SPT'/" >TRUNC.SPT
+unix2dos TRUNC.SPT

@@ -3,5 +3,6 @@
 -INCLUDE 'ORDER.INC'
 -LINE 20 "ORDER.lss"
          &CODE = 1
+         IDENT(ORDER('DCBA'), 'ABCD')                            :F(END)
          &CODE = 0
 END
