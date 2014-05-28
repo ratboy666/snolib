@@ -85,33 +85,33 @@ Still need: Response codes, Headers/Responses
          DEFINE(&#39;CGI_INIT()A,C&#39;)
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;INIT&#39;, &#39;CGI_INIT&#39;)
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;GET_COOKIE_JAR&#39;, CODE(
-+           &#39; SEND = ^.COOKIE_JAR :(RETURN)&#39;))
++           &#39; SEND = |.COOKIE_JAR :(RETURN)&#39;))
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;GET_HEADER&#39;, CODE(
-+           &#39; SEND = ^.HEADER :(RETURN)&#39;))
++           &#39; SEND = |.HEADER :(RETURN)&#39;))
          DEFINE(&#39;CGI_SEND()S&#39;)
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;SEND&#39;, &#39;CGI_SEND&#39;)
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;GET_LOG&#39;, CODE(
-+           &#39; SEND = ^.LOG :(RETURN)&#39;))
++           &#39; SEND = |.LOG :(RETURN)&#39;))
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;GET_CONTENT&#39;, CODE(
-+           &#39; SEND = ^.CONTENT :(RETURN)&#39;))
++           &#39; SEND = |.CONTENT :(RETURN)&#39;))
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;SET_CONTENT&#39;, CODE(
-+           &#39; ^.CONTENT = A1 :(RETURN)&#39;))
++           &#39; |.CONTENT = A1 :(RETURN)&#39;))
          DEFINE(&#39;CGI_CLOSE()A&#39;)
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;CLOSE&#39;, &#39;CGI_CLOSE&#39;)
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;GET_ENV&#39;, CODE(
-+           &#39; SEND = ^.ENV :(RETURN)&#39;))
++           &#39; SEND = |.ENV :(RETURN)&#39;))
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;GET_QUERY&#39;, CODE(
-+           &#39; SEND = ^.QUERY :(RETURN)&#39;))
++           &#39; SEND = |.QUERY :(RETURN)&#39;))
 <font color="#818181"><i>*</i></font>
                                                        <b>:(CGI_OBJECT_END)</b>
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* CLOSE CGI OBJECT</i></font>
 <font color="#818181"><i>*</i></font>
 CGI_CLOSE
-         ENDFILE(^.OUT_UNIT)
-         DETACH(^.OUT)
-         ENDFILE(^.LOG_UNIT)
-         DETACH(^.LOG)                                         <b>:(RETURN)</b>
+         ENDFILE(|.OUT_UNIT)
+         DETACH(|.OUT)
+         ENDFILE(|.LOG_UNIT)
+         DETACH(|.LOG)                                         <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* INITIALIZE CGI OBJECT</i></font>
 <font color="#818181"><i>*</i></font>
@@ -119,8 +119,8 @@ CGI_INIT CGI_INIT = SUPER(&#39;INIT&#39;)
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* CREATE LOG CHANNEL</i></font>
 <font color="#818181"><i>*</i></font>
-         ^.LOG_UNIT = IO_FINDUNIT()                          <b>:F(FRETURN)</b>
-         ^.LOG = UNIQUE()
+         |.LOG_UNIT = IO_FINDUNIT()                          <b>:F(FRETURN)</b>
+         |.LOG = UNIQUE()
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* WITH ALL THE CHANGES GOING TO SYSTEMD, LOGGING APPEARS TO HAVE</i></font>
 <font color="#818181"><i>* SUFFERED. SPECIFICALLY, IF THE LOGGING IS ONLY FORWARDED TO</i></font>
@@ -130,22 +130,22 @@ CGI_INIT CGI_INIT = SUPER(&#39;INIT&#39;)
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* IF USING SYSTEMD LOGGER, DON&#39;T USE -n localhost</i></font>
 <font color="#818181"><i>*</i></font>
-         OUTPUT(^.LOG, ^.LOG_UNIT, &#39;W&#39;,
+         OUTPUT(|.LOG, |.LOG_UNIT, &#39;W&#39;,
 +               &#39;|/usr/bin/logger -n localhost -t CGI&#39;)      <b>:F(FRETURN)</b>
 <font color="#818181"><i>*+              &#39;|/usr/bin/logger -t CGI&#39;)                   <b>:F(FRETURN)</b></i></font>
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* CREATE OUT CHANNEL</i></font>
 <font color="#818181"><i>*</i></font>
-         ^.OUT_UNIT = IO_FINDUNIT()                          <b>:F(FRETURN)</b>
-         ^.OUT = UNIQUE()
-         OUTPUT(^.OUT, ^.OUT_UNIT, &#39;B&#39;, &#39;/dev/stdout&#39;)       <b>:F(FRETURN)</b>
+         |.OUT_UNIT = IO_FINDUNIT()                          <b>:F(FRETURN)</b>
+         |.OUT = UNIQUE()
+         OUTPUT(|.OUT, |.OUT_UNIT, &#39;B&#39;, &#39;/dev/stdout&#39;)       <b>:F(FRETURN)</b>
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* COLLECT ENVIRONMENT VARIABLES INTO INSTANCE VARIABLE ENV. WE ONLY</i></font>
 <font color="#818181"><i>* GATHER UP &quot;KNOWN&quot; ENVIRONMENT VARIABLES.</i></font>
 <font color="#818181"><i>*</i></font>
-         ^.ENV = DIFFER(USE_FCGI) FCGI_ENV                 <b>:S(CGI_ENV_2)</b>
+         |.ENV = DIFFER(USE_FCGI) FCGI_ENV                 <b>:S(CGI_ENV_2)</b>
 <font color="#818181"><i>*</i></font>
-         ^.ENV = TABLE(27)
+         |.ENV = TABLE(27)
          A = %(&#39;CONTEXT_DOCUMENT_ROOT,CONTEXT_PREFIX,DOCUMENT_ROOT,&#39;
 +              &#39;GATEWAY_INTERFACE,HTTP_ACCEPT,HTTP_ACCEPT_ENCODING,&#39;
 +              &#39;HTTP_ACCEPT_LANGUAGE,HTTP_CACHE_CONTROL,&#39;
@@ -154,27 +154,27 @@ CGI_INIT CGI_INIT = SUPER(&#39;INIT&#39;)
 +              &#39;REQUEST_URI,SCRIPT_FILENAME,SCRIPT_NAME,SERVER_ADDR,&#39;
 +              &#39;SERVER_ADMIN,SERVER_NAME,SERVER_PORT,SERVER_PROTOCOL,&#39;
 +              &#39;SERVER_SOFTWARE,CONTENT_LENGTH,HTTP_REFERER&#39;)
-         SEQ(&#39; (^.ENV)&lt;A&lt;I&gt;&gt; = HOST(HOST_GETENV, A&lt;I&gt;); A&lt;I&gt; &#39;, .I)
+         SEQ(&#39; (|.ENV)&lt;A&lt;I&gt;&gt; = HOST(HOST_GETENV, A&lt;I&gt;); A&lt;I&gt; &#39;, .I)
 CGI_ENV_2
-         $^.LOG = &#39;FCGI_ENV IN CGI&#39;
-         $^.LOG = JSON_ENCODE(FCGI_ENV)
-         $^.LOG = &#39;QUERY_STRING: &#39; (^.ENV)&lt;&#39;QUERY_STRING&#39;&gt;
+         $|.LOG = &#39;FCGI_ENV IN CGI&#39;
+         $|.LOG = JSON_ENCODE(FCGI_ENV)
+         $|.LOG = &#39;QUERY_STRING: &#39; (|.ENV)&lt;&#39;QUERY_STRING&#39;&gt;
 <font color="#818181"><i>*</i></font>
-<font color="#818181"><i>* FOR POST METHOD, READ (^.ENV)&lt;&#39;CONTENT_LENGTH&#39;&gt;. READ THAT NUMBER OF</i></font>
+<font color="#818181"><i>* FOR POST METHOD, READ (|.ENV)&lt;&#39;CONTENT_LENGTH&#39;&gt;. READ THAT NUMBER OF</i></font>
 <font color="#818181"><i>* BYTES, AND ONLY THAT NUMBER. NOTE THAT THIS MAY BE VERY LARGE. THIS</i></font>
 <font color="#818181"><i>* MAY FAIL DUE TO MEMORY EXHAUSTION. WE KNOW THAT WE CAN READ A LARGE</i></font>
 <font color="#818181"><i>* NUMBER OF BYTES, BUT I HAVE TO DETERMINE THE LIMIT.</i></font>
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* FOR FCGI, USE FCGI_IN. FIXME: SHOULD TEST CONTENT_LENGTH</i></font>
 <font color="#818181"><i>*</i></font>
-         (^.ENV)&lt;&#39;QUERY_STRING&#39;&gt; = DIFFER(USE_FCGI) VDIFFER(FCGI_IN)
+         (|.ENV)&lt;&#39;QUERY_STRING&#39;&gt; = DIFFER(USE_FCGI) VDIFFER(FCGI_IN)
 +                                                         <b>:S(CGI_INIT_3)</b>
-         T3 = (^.ENV)&lt;&#39;CONTENT_LENGTH&#39;&gt;
+         T3 = (|.ENV)&lt;&#39;CONTENT_LENGTH&#39;&gt;
          IDENT(T3)                                        <b>:S(CGI_INIT_3)</b>
          (INTEGER(T3) GT(T3))                             <b>:F(CGI_INIT_3)</b>
          T1 = IO_FINDUNIT()                                  <b>:F(FRETURN)</b>
          INPUT(&#39;T2&#39;, T1, &#39;B,&#39; T3, &#39;/dev/stdin&#39;)              <b>:F(FRETURN)</b>
-         (^.ENV)&lt;&#39;QUERY_STRING&#39;&gt; = T2
+         (|.ENV)&lt;&#39;QUERY_STRING&#39;&gt; = T2
          ENDFILE(T1)
          DETACH(&#39;T2&#39;)
 CGI_INIT_3
@@ -185,10 +185,10 @@ CGI_INIT_3
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* MULTI-VALUE FIELDS ARE SEPARATED BY 0. USED BY CHECKBOXES</i></font>
 <font color="#818181"><i>*</i></font>
-         ^.QUERY = HASH((^.ENV)&lt;&#39;QUERY_STRING&#39;&gt;, &#39;=&#39;, &#39;&amp;&#39;,,,,
+         |.QUERY = HASH((|.ENV)&lt;&#39;QUERY_STRING&#39;&gt;, &#39;=&#39;, &#39;&amp;&#39;,,,,
 +                        &#39;URL_DECODE&#39;, CHARS_NUL)
-         $^.LOG = &#39;QUERY TABLE&#39;
-         $^.LOG = JSON_ENCODE(^.QUERY)
+         $|.LOG = &#39;QUERY TABLE&#39;
+         $|.LOG = JSON_ENCODE(|.QUERY)
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* PARSE HTTP_COOKIE INTO A COOKIE JAR. THERE MAY NOT BE ANY COOKIES,</i></font>
 <font color="#818181"><i>* IN WHICH CASE WE CREATE AN EMPTY COOKIE JAR. THE VALUES OF THE</i></font>
@@ -196,22 +196,22 @@ CGI_INIT_3
 <font color="#818181"><i>* THE TABLE IS GENERATED, IT IS CONVERTED TO AN ARRAY. SEQ() ADDS</i></font>
 <font color="#818181"><i>* EACH ELEMENT INTO THE COOKIE JAR.</i></font>
 <font color="#818181"><i>*</i></font>
-         ^.COOKIE_JAR = NEW_COOKIE_JAR()
-         A = HASH((^.ENV)&lt;&#39;HTTP_COOKIE&#39;&gt;, &#39;=&#39;, &#39;;&#39;,,,
+         |.COOKIE_JAR = NEW_COOKIE_JAR()
+         A = HASH((|.ENV)&lt;&#39;HTTP_COOKIE&#39;&gt;, &#39;=&#39;, &#39;;&#39;,,,
 +                  &#39;COOKIE_FIX_NAME&#39;, &#39;URL_DECODE&#39;)
          A = CONVERT(A, &#39;ARRAY&#39;)                          <b>:F(CGI_INIT_2)</b>
-         SEQ(&#39; PUT_COOKIE_IN_JAR(^.COOKIE_JAR,&#39;
+         SEQ(&#39; PUT_COOKIE_IN_JAR(|.COOKIE_JAR,&#39;
 +                               &#39;A&lt;I,1&gt;, NEW_COOKIE(A&lt;I,2&gt;)) &#39;, .I)
 CGI_INIT_2
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* INITIALIZE HEADER. THE HEADER IS A TABLE() WITH AT LEAST CONTENT_TYPE</i></font>
 <font color="#818181"><i>* ENTRY.</i></font>
 <font color="#818181"><i>*</i></font>
-         ^.HEADER = #&quot;CONTENT_TYPE=TEXT/HTML,CHARSET=&quot;
+         |.HEADER = #&quot;CONTENT_TYPE=TEXT/HTML,CHARSET=&quot;
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* INITIALIZE CONTENT</i></font>
 <font color="#818181"><i>*</i></font>
-         ^.CONTENT =
+         |.CONTENT =
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* WE NEED ROUTING IMPLEMENTED.</i></font>
 <font color="#818181"><i>*</i></font>
@@ -233,24 +233,24 @@ CGI_SEND
 <font color="#818181"><i>* FIRST, OUTPUT THE CONTENT-TYPE. IF CHARSET HAS BEEN SPECIFIED,</i></font>
 <font color="#818181"><i>* ADD THIS TO THE CONTENT-TYPE.</i></font>
 <font color="#818181"><i>*</i></font>
-         S = &#39;Content-type: &#39; (^.HEADER)&lt;&#39;CONTENT_TYPE&#39;&gt;
-         S = S &#39;; charset=&#39; VDIFFER((^.HEADER)&lt;&#39;CHARSET&#39;&gt;)
+         S = &#39;Content-type: &#39; (|.HEADER)&lt;&#39;CONTENT_TYPE&#39;&gt;
+         S = S &#39;; charset=&#39; VDIFFER((|.HEADER)&lt;&#39;CHARSET&#39;&gt;)
          S = S CHARS_CR CHARS_NL
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* GENERATE THE COOKIE STRING AND OUTPUT IF WE HAVE COOKIES TO SEND.</i></font>
 <font color="#818181"><i>*</i></font>
-         S = S VDIFFER(COOKIE_STRING(^.COOKIE_JAR))
+         S = S VDIFFER(COOKIE_STRING(|.COOKIE_JAR))
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* THE HEADER FINISHES WITH A CR/LF</i></font>
 <font color="#818181"><i>*</i></font>
          S = S CHARS_CR CHARS_NL
-         $^.OUT = IDENT(USE_FCGI) S
+         $|.OUT = IDENT(USE_FCGI) S
          DIFFER(USE_FCGI) FCGI_SEND(S)
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* SEND CONTENT</i></font>
 <font color="#818181"><i>*</i></font>
-         $^.OUT = IDENT(USE_FCGI) ^.CONTENT
-         DIFFER(USE_FCGI) FCGI_SEND(^.CONTENT)
+         $|.OUT = IDENT(USE_FCGI) |.CONTENT
+         DIFFER(USE_FCGI) FCGI_SEND(|.CONTENT)
          DIFFER(USE_FCGI) FCGI_SEND(&#39;&#39;)
          DIFFER(USE_FCGI) FCGI_END(0, FCGI_REQUEST_COMPLETE)
                                                                <b>:(RETURN)</b>
@@ -594,7 +594,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Sun May 25 18:28:50 EDT 2014</p></td><td><p align=right>
+Wed May 28 04:14:06 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

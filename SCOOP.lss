@@ -27,6 +27,13 @@ OPSYN unary operator ^ to simplify this. [[^'var']] refers to instance
 variable [[var]] and can be used on either the left or right side of
 an assignment.
 
+{{
+[[^]] is usable as a unary operator in CSNOBOL4. SPITBOL.EXE does
+not support this. To accomodate, [[|]] is now used as the instance
+variable access operator. This works on both systems. Change the
+[[OPSYN()]] statement as appropriate.
+}}
+
 [[SEND(OBJECT,MESSAGE,ARGS)]] dispatches a message to the receiver,
 with up to eight arguments.
 
@@ -85,8 +92,17 @@ String comparisions in SNOBOL4 are inexpensive. A string compare is
 a pointer compare. This means that representing messages by strings
 is a reasonable choice.
 
+<h2>Uses</h2>
+<a href="VDIFFER.html">VDIFFER</a><br>
+<a href="FREEZE.html">FREEZE</a>
+
 <h2>See Also</h2>
 <a href="STACK.html">STACK</a>
+
+<<INCLUDES>>=
+-INCLUDE 'VDIFFER.INC'
+-INCLUDE 'FREEZE.INC'
+@
 
 <<SCOOP>>=
          DATA('OBJECT(CLASS,IVARS,METHODS)')
@@ -99,7 +115,7 @@ is a reasonable choice.
          DEFINE('IVAR(NAME)')
          DEFINE('CVAR(NAME)')
          DEFINE('CLASS_OF(OBJ)')
-         OPSYN('^', 'IVAR', 1)
+         OPSYN('|', 'IVAR', 1)
 *
 * INITIALIZE OOP SYSTEM, CREATE ROOT CLASS. MAKE SURE ROOT CLASS CAN
 * ANSWER NEW_CLASS, NEW, INIT, DOES_NOT_UNDERSTAND AND ADD_METHOD
@@ -266,6 +282,8 @@ END
 @
 
 <<>>=
+<<INCLUDES>>
+-EJECT
 -STITL SCOOP
 -EJECT
 *

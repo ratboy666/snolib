@@ -34,7 +34,7 @@ T = AGT.tst      AI.tst       AOPA.tst     BALREV.tst   BALX.tst     \
     BRKREM.tst   HASH.tst     READL.tst    FOREACH.tst  SCOOP.tst    \
     CGI.tst      READFILE.tst SESSION.tst  GCD.tst      COMPLEX.tst  \
     COOKIE.tst   HTMLTMPL.tst JSON.tst     FCGI.tst     MAX.tst      \
-    DSERVE.tst   VDIFFER.tst  FOR.tst
+    DSERVE.tst   VDIFFER.tst  FOR.tst      FREEZE.tst
 
 # Library files FIXME: TRIAL should be removed.
 
@@ -98,7 +98,7 @@ PSQL.INC:     REPL.INC     COUNT.INC    CHARS.INC    SEQ.INC      \
               BRKREM.INC   SCOOP.INC
 HASH.INC:     BRKREM.INC
 READL.INC:    LINK.INC
-SCOOP.INC:    HASH.INC
+SCOOP.INC:    VDIFFER.INC  FREEZE.INC
 CGI.INC:      SCOOP.INC    COOKIE.INC   HOST.INC     CRACK.INC    \
               SEQ.INC      HTMLESC.INC  TRIMB.INC    CHARS.INC    \
               HASH.INC     UNIQUE.INC   JSON.INC
@@ -117,6 +117,7 @@ FCGI.INC:     FFI.INC      P64.INC      BQ.INC       CSNOBOL4.INC \
 DSERVE.INC:   CHARS.INC    REPL.INC     CSNOBOL4.INC HOST.INC     \
               MAX.INC      DDT.INC
 VDIFFER.INC:  SYSTEM.INC
+FREEZE.INC:   SYSTEM.INC
 
 # Bootstrapping. We need embed, ifs, sweave, stangle, snocone and ED4
 # to build the code. We keep embed0, ifs0, sweave0 and stangle0 for
@@ -278,7 +279,8 @@ docs:         AGT.html      AI.html       ALL.html      AOPA.html     \
               COMPLEX.html  COOKIE.html   HTMLTMPL.html JSON.html     \
               stangle       sweave        greenbar.gif  index.html    \
               utility.html  snocone.html  cpmed.html    ED4           \
-              FCGI.html     DSERVE.html   VDIFFER.html  FOR.html
+              FCGI.html     DSERVE.html   VDIFFER.html  FOR.html      \
+              FREEZE.html
 	touch docs
 
 snocone.html: snocone.htm
@@ -398,3 +400,4 @@ MAX.INC: MAX.SNO
 DSERVE.INC: DSERVE.SNO
 VDIFFER.INC: VDIFFER.SNO
 FOR.INC: FOR.SNO
+FREEZE.INC: FREEZE.SNO

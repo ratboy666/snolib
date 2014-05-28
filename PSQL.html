@@ -156,7 +156,7 @@ open for a long duration (for the entire application execution).
          DEFINE(&#39;PSQL_CLOSE()PID&#39;)
          SEND(PSQL_CLASS, &#39;ADD_METHOD&#39;, &#39;CLOSE&#39;, &#39;PSQL_CLOSE&#39;)
          SEND(PSQL_CLASS, &#39;ADD_METHOD&#39;, &#39;GET_PIPE&#39;, CODE(
-+           &#39; SEND = ^.PIPE :(RETURN)&#39;))
++           &#39; SEND = |.PIPE :(RETURN)&#39;))
          DEFINE(&#39;PSQL_DISCARD()L&#39;)
          SEND(PSQL_CLASS, &#39;ADD_METHOD&#39;, &#39;DISCARD&#39;, &#39;PSQL_DISCARD&#39;)
          DEFINE(&#39;PSQL_OUTPUT()L&#39;)
@@ -201,11 +201,11 @@ PSQL_ESCAPE
 <font color="#818181"><i>*</i></font>
 PSQL_DISCARD
 %IF (USE_PTY)
-         L = $^.PIPE                                         <b>:F(FRETURN)</b>
+         L = $|.PIPE                                         <b>:F(FRETURN)</b>
          L POS(0) &#39;*&#39; RPOS(0)                  <b>:S(RETURN)F(PSQL_DISCARD)</b>
 %ELSE
-         $^.PIPE = &#39;\echo *&#39;                                 <b>:F(FRETURN)</b>
-PSQL_D2  L = $^.PIPE
+         $|.PIPE = &#39;\echo *&#39;                                 <b>:F(FRETURN)</b>
+PSQL_D2  L = $|.PIPE
          L POS(0) &#39;*&#39; RPOS(0)                       <b>:S(RETURN)F(PSQL_D2)</b>
 %ENDIF
 <font color="#818181"><i>*</i></font>
@@ -214,7 +214,7 @@ PSQL_D2  L = $^.PIPE
 <font color="#818181"><i>*</i></font>
 PSQL_OUTPUT
 %IF (USE_PTY)
-PSQL2    L = $^.PIPE                                         <b>:F(FRETURN)</b>
+PSQL2    L = $|.PIPE                                         <b>:F(FRETURN)</b>
          L POS(0) &#39;*&#39; RPOS(0)                                  <b>:S(PSQL3)</b>
          PSQL_OUTPUT = PSQL_OUTPUT L CHARS_NL                   <b>:(PSQL2)</b>
 PSQL3    PSQL_OUTPUT CHARS_NL CHARS_NL RPOS(0) = CHARS_NL      <b>:S(PSQL3)</b>
@@ -222,8 +222,8 @@ PSQL4    PSQL_OUTPUT BREAK(CHARS_NL) CHARS_NL REM . PSQL_OUTPUT
 +                                                            <b>:F(FRETURN)</b>
          PSQL_OUTPUT POS(0) &#39;# &#39;                      <b>:S(PSQL4)F(RETURN)</b>
 %ELSE
-         $^.PIPE = &#39;\echo *&#39;                                 <b>:F(FRETURN)</b>
-PSQL2    L = $^.PIPE                                         <b>:F(FRETURN)</b>
+         $|.PIPE = &#39;\echo *&#39;                                 <b>:F(FRETURN)</b>
+PSQL2    L = $|.PIPE                                         <b>:F(FRETURN)</b>
          L POS(0) &#39;*&#39; RPOS(0)                                 <b>:S(RETURN)</b>
          PSQL_OUTPUT = PSQL_OUTPUT L CHARS_NL                   <b>:(PSQL2)</b>
 %ENDIF
@@ -232,33 +232,33 @@ PSQL2    L = $^.PIPE                                         <b>:F(FRETURN)</b>
 <font color="#818181"><i>* PSQL_RESULT() FOR PARSING SELECT RESULTS AND BUILDING RESULT ARRAYS.</i></font>
 <font color="#818181"><i>*</i></font>
 PSQL_OPEN
-         ^.UNIT = IO_FINDUNIT()                              <b>:F(FRETURN)</b>
-         ^.PIPE = UNIQUE()
+         |.UNIT = IO_FINDUNIT()                              <b>:F(FRETURN)</b>
+         |.PIPE = UNIQUE()
 %IF (USE_PTY)
-         INPUT(^.PIPE, ^.UNIT, &#39;U&#39;, &#39;||/usr/bin/psql -q&#39;)    <b>:F(FRETURN)</b>
+         INPUT(|.PIPE, |.UNIT, &#39;U&#39;, &#39;||/usr/bin/psql -q&#39;)    <b>:F(FRETURN)</b>
 %ELSE
-         INPUT(^PIPE, ^.UNIT, &#39;U&#39;, &#39;|/usr/bin/psql -q&#39;)      <b>:F(FRETURN)</b>
+         INPUT(|.PIPE, |.UNIT, &#39;U&#39;, &#39;|/usr/bin/psql -q&#39;)     <b>:F(FRETURN)</b>
 %ENDIF
-         OUTPUT(^.PIPE, ^.UNIT)                              <b>:F(FRETURN)</b>
+         OUTPUT(|.PIPE, |.UNIT)                              <b>:F(FRETURN)</b>
 %IF (USE_PTY)
-         $^.PIPE = &quot;\set PROMPT1 &#39;\n*\n&#39;&quot;                    <b>:F(FRETURN)</b>
+         $|.PIPE = &quot;\set PROMPT1 &#39;\n*\n&#39;&quot;                    <b>:F(FRETURN)</b>
          SELF(&#39;DISCARD&#39;)                                     <b>:F(FRETURN)</b>
-         $^.PIPE = &quot;\set PROMPT2 &#39;# &#39;&quot;                       <b>:F(FRETURN)</b>
+         $|.PIPE = &quot;\set PROMPT2 &#39;# &#39;&quot;                       <b>:F(FRETURN)</b>
          SELF(&#39;DISCARD&#39;)                                     <b>:F(FRETURN)</b>
 %ENDIF
-         $^.PIPE = &quot;\pset pager off&quot;                         <b>:F(FRETURN)</b>
+         $|.PIPE = &quot;\pset pager off&quot;                         <b>:F(FRETURN)</b>
          SELF(&#39;DISCARD&#39;)                                     <b>:F(FRETURN)</b>
-         $^.PIPE = &quot;\a&quot;                                      <b>:F(FRETURN)</b>
+         $|.PIPE = &quot;\a&quot;                                      <b>:F(FRETURN)</b>
          SELF(&#39;DISCARD&#39;)                                     <b>:F(FRETURN)</b>
-         $^.PIPE = &quot;\x on&quot;                                   <b>:F(FRETURN)</b>
+         $|.PIPE = &quot;\x on&quot;                                   <b>:F(FRETURN)</b>
          SELF(&#39;DISCARD&#39;)                            <b>:F(FRETURN)S(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* CLOSE PSQL</i></font>
 <font color="#818181"><i>*</i></font>
 PSQL_CLOSE
-         $^.PIPE = &#39;\q&#39;                                      <b>:F(FRETURN)</b>
-         ENDFILE(^.UNIT)                                     <b>:F(FRETURN)</b>
-         DETACH(^.PIPE)                                      <b>:F(FRETURN)</b>
+         $|.PIPE = &#39;\q&#39;                                      <b>:F(FRETURN)</b>
+         ENDFILE(|.UNIT)                                     <b>:F(FRETURN)</b>
+         DETACH(|.PIPE)                                      <b>:F(FRETURN)</b>
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* ENDFILE() CLOSES PSQL. INDEED, WE SEND A QUIT COMMAND (\q) FIRST!</i></font>
 <font color="#818181"><i>* BUT... THE CLOSE CODE IN THE INTERPRETER DOES NOT REAP THE ZOMBIE.</i></font>
@@ -428,7 +428,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Wed May 21 17:58:34 EDT 2014</p></td><td><p align=right>
+Wed May 28 04:08:20 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

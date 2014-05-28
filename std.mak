@@ -235,8 +235,8 @@ P2CC_CC=$(CC)
 # well in a MAKE file, it seems!
 %.html: %.ditaa
 	@if [ ! -d null ]; then mkdir null; fi
-	@if [ ! -d null/images ]; then mkdir null/images; fi
-	@if [ ! -h images ]; then ln -s null/images images; fi
+	@if [ ! -d images ]; then mkdir images; fi
+	@if [ ! -h null/images ]; then ln -s images null/images; fi
 	@rm -f "$@"
 	$(DITAA) "$<" "$@" --html --overwrite >/dev/null
 	@if [ ! -f "$@" ]; then cp "$<" "$@"; fi

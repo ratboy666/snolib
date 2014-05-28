@@ -40,6 +40,13 @@ OPSYN unary operator ^ to simplify this. <font face="Source Code Pro">^'var'</fo
 variable <font face="Source Code Pro">var</font> and can be used on either the left or right side of
 an assignment.
 </font></p>
+<div style="width:15em;margin-left:0.5em;float:right;background-image:url(blutextb.gif)">
+<font face="Dijkstra"><p align="left">
+<font face="Source Code Pro">^</font> is usable as a unary operator in CSNOBOL4. SPITBOL.EXE does
+not support this. To accomodate, <font face="Source Code Pro">|</font> is now used as the instance
+variable access operator. This works on both systems. Change the
+<font face="Source Code Pro">OPSYN()</font> statement as appropriate.
+</p></font></div>
 <p align="justify"><font face="Sorts Mill Goudy">
 <font face="Source Code Pro">SEND(OBJECT,MESSAGE,ARGS)</font> dispatches a message to the receiver,
 with up to eight arguments.
@@ -110,9 +117,21 @@ a pointer compare. This means that representing messages by strings
 is a reasonable choice.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="VDIFFER.html">VDIFFER</a><br>
+<a href="FREEZE.html">FREEZE</a>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
 <h2>See Also</h2>
 <a href="STACK.html">STACK</a>
 </font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;VDIFFER.INC&#39;
+-INCLUDE &#39;FREEZE.INC&#39;
+<b>@</b>
+</font></pre></div>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;SCOOP&raquo;&equiv;</b>
@@ -126,7 +145,7 @@ is a reasonable choice.
          DEFINE(&#39;IVAR(NAME)&#39;)
          DEFINE(&#39;CVAR(NAME)&#39;)
          DEFINE(&#39;CLASS_OF(OBJ)&#39;)
-         OPSYN(&#39;^&#39;, &#39;IVAR&#39;, 1)
+         OPSYN(&#39;|&#39;, &#39;IVAR&#39;, 1)
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* INITIALIZE OOP SYSTEM, CREATE ROOT CLASS. MAKE SURE ROOT CLASS CAN</i></font>
 <font color="#818181"><i>* ANSWER NEW_CLASS, NEW, INIT, DOES_NOT_UNDERSTAND AND ADD_METHOD</i></font>
@@ -297,6 +316,8 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+<b>&laquo;INCLUDES&raquo;</b>
+-EJECT
 -STITL SCOOP
 -EJECT
 <font color="#818181"><i>*</i></font>
@@ -329,7 +350,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Fri May 16 16:11:45 EDT 2014</p></td><td><p align=right>
+Wed May 28 04:36:43 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

@@ -1,7 +1,11 @@
+-LINE 103 "SCOOP.lss"
+-INCLUDE 'VDIFFER.INC'
+-INCLUDE 'FREEZE.INC'
+-EJECT
 -STITL SCOOP
+-LINE 288 "SCOOP.lss"
 -EJECT
 *
--LINE 272 "SCOOP.lss"
 ************************************************************************
 *                                                                      *
 *              #####    #####   #######  #######  ######               *
@@ -21,7 +25,7 @@
 * THE SAFETY FLAG. IF 0, SOME CHECKS ARE NOT COMPILED IN. I RECOMMEND
 * THAT IT ALWAYS BE ENABLED.
 *
--LINE 92 "SCOOP.lss"
+-LINE 108 "SCOOP.lss"
          DATA('OBJECT(CLASS,IVARS,METHODS)')
 *
          DEFINE('SEND(THIS,METHOD,A1,A2,A3,A4,A5,A6,A7,A8)'
@@ -32,7 +36,7 @@
          DEFINE('IVAR(NAME)')
          DEFINE('CVAR(NAME)')
          DEFINE('CLASS_OF(OBJ)')
-         OPSYN('^', 'IVAR', 1)
+         OPSYN('|', 'IVAR', 1)
 *
 * INITIALIZE OOP SYSTEM, CREATE ROOT CLASS. MAKE SURE ROOT CLASS CAN
 * ANSWER NEW_CLASS, NEW, INIT, DOES_NOT_UNDERSTAND AND ADD_METHOD

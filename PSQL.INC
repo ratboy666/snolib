@@ -43,7 +43,7 @@
          DEFINE('PSQL_CLOSE()PID')
          SEND(PSQL_CLASS, 'ADD_METHOD', 'CLOSE', 'PSQL_CLOSE')
          SEND(PSQL_CLASS, 'ADD_METHOD', 'GET_PIPE', CODE(
-+           ' SEND = ^.PIPE :(RETURN)'))
++           ' SEND = |.PIPE :(RETURN)'))
          DEFINE('PSQL_DISCARD()L')
          SEND(PSQL_CLASS, 'ADD_METHOD', 'DISCARD', 'PSQL_DISCARD')
          DEFINE('PSQL_OUTPUT()L')
@@ -87,14 +87,14 @@ PSQL_ESCAPE
 * DISCARD OUTPUT FROM LAST SQL COMMAND.
 *
 PSQL_DISCARD
-         L = $^.PIPE                                         :F(FRETURN)
+         L = $|.PIPE                                         :F(FRETURN)
          L POS(0) '*' RPOS(0)                  :S(RETURN)F(PSQL_DISCARD)
 *
 * GATHER AND RETURN OUTPUT FROM SQL COMMAND. DISCARD COMMAND ECHO,
 * RETURNING ONLY RESULTS.
 *
 PSQL_OUTPUT
-PSQL2    L = $^.PIPE                                         :F(FRETURN)
+PSQL2    L = $|.PIPE                                         :F(FRETURN)
          L POS(0) '*' RPOS(0)                                  :S(PSQL3)
          PSQL_OUTPUT = PSQL_OUTPUT L CHARS_NL                   :(PSQL2)
 PSQL3    PSQL_OUTPUT CHARS_NL CHARS_NL RPOS(0) = CHARS_NL      :S(PSQL3)
@@ -106,27 +106,27 @@ PSQL4    PSQL_OUTPUT BREAK(CHARS_NL) CHARS_NL REM . PSQL_OUTPUT
 * PSQL_RESULT() FOR PARSING SELECT RESULTS AND BUILDING RESULT ARRAYS.
 *
 PSQL_OPEN
-         ^.UNIT = IO_FINDUNIT()                              :F(FRETURN)
-         ^.PIPE = UNIQUE()
-         INPUT(^.PIPE, ^.UNIT, 'U', '||/usr/bin/psql -q')    :F(FRETURN)
-         OUTPUT(^.PIPE, ^.UNIT)                              :F(FRETURN)
-         $^.PIPE = "\set PROMPT1 '\n*\n'"                    :F(FRETURN)
+         |.UNIT = IO_FINDUNIT()                              :F(FRETURN)
+         |.PIPE = UNIQUE()
+         INPUT(|.PIPE, |.UNIT, 'U', '||/usr/bin/psql -q')    :F(FRETURN)
+         OUTPUT(|.PIPE, |.UNIT)                              :F(FRETURN)
+         $|.PIPE = "\set PROMPT1 '\n*\n'"                    :F(FRETURN)
          SELF('DISCARD')                                     :F(FRETURN)
-         $^.PIPE = "\set PROMPT2 '# '"                       :F(FRETURN)
+         $|.PIPE = "\set PROMPT2 '# '"                       :F(FRETURN)
          SELF('DISCARD')                                     :F(FRETURN)
-         $^.PIPE = "\pset pager off"                         :F(FRETURN)
+         $|.PIPE = "\pset pager off"                         :F(FRETURN)
          SELF('DISCARD')                                     :F(FRETURN)
-         $^.PIPE = "\a"                                      :F(FRETURN)
+         $|.PIPE = "\a"                                      :F(FRETURN)
          SELF('DISCARD')                                     :F(FRETURN)
-         $^.PIPE = "\x on"                                   :F(FRETURN)
+         $|.PIPE = "\x on"                                   :F(FRETURN)
          SELF('DISCARD')                            :F(FRETURN)S(RETURN)
 *
 * CLOSE PSQL
 *
 PSQL_CLOSE
-         $^.PIPE = '\q'                                      :F(FRETURN)
-         ENDFILE(^.UNIT)                                     :F(FRETURN)
-         DETACH(^.PIPE)                                      :F(FRETURN)
+         $|.PIPE = '\q'                                      :F(FRETURN)
+         ENDFILE(|.UNIT)                                     :F(FRETURN)
+         DETACH(|.PIPE)                                      :F(FRETURN)
 *
 * ENDFILE() CLOSES PSQL. INDEED, WE SEND A QUIT COMMAND (\q) FIRST!
 * BUT... THE CLOSE CODE IN THE INTERPRETER DOES NOT REAP THE ZOMBIE.

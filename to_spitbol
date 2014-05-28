@@ -61,3 +61,7 @@ spitbol.exe -w -n g360.spt
 ##unix2dos -n RESOL.INC RESOL.SPT
 cat TIMER.INC | sed -e "s/\.INC'/.SPT'/" >TIMER.SPT
 unix2dos TIMER.SPT
+cat SCOOP.INC | sed -e "s/\.INC'/.SPT'/" >SCOOP.SPT
+unix2dos SCOOP.SPT
+cat FREEZE.INC | sed -e "s/\.INC'/.SPT'/" >FREEZE.SPT
+unix2dos FREEZE.SPT
