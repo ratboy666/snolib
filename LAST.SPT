@@ -1,0 +1,32 @@
+-LINE 11 "LAST.lss"
+-INCLUDE 'LINK.SPT'
+-STITL LAST
+-EJECT
+-LINE 37 "LAST.lss"
+*
+************************************************************************
+*                                                                      *
+*                  #           #      #####   #######                  *
+*                  #          # #    #     #     #                     *
+*                  #         #   #   #           #                     *
+*                  #        #     #   #####      #                     *
+*                  #        #######        #     #                     *
+*                  #        #     #  #     #     #                     *
+*                  #######  #     #   #####      #                     *
+*                                                                      *
+* LAST                 RETURN LAST LIST ELEMENT                        *
+*                                                                      *
+************************************************************************
+*
+* LAST.lss
+*
+-LINE 15 "LAST.lss"
+         DEFINE('LAST(L)')                                   :(LAST_END)
+*
+LAST     IDENT(L)                                            :S(FRETURN)
+LAST_1   L = DIFFER(NEXT(L)) NEXT(L)                          :S(LAST_1)
+         LAST = .NEXT(L)                                      :(NRETURN)
+*
+LAST_END
+*
+* CE: .MSNOBOL4;

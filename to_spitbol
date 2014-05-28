@@ -46,3 +46,7 @@ cat JSON.INC | sed -e "s/\.INC'/.SPT'/" >JSON.SPT
 unix2dos JSON.SPT
 cat VDIFFER.INC | sed -e "s/\.INC'/.SPT'/" >VDIFFER.SPT
 unix2dos VDIFFER.SPT
+cat LAST.INC | sed -e "s/\.INC'/.SPT'/" >LAST.SPT
+unix2dos LAST.SPT
+cat LPROG.INC | sed -e "s/\.INC'/.SPT'/" >LPROG.SPT
+unix2dos LPROG.SPT
