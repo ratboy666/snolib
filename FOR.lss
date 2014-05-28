@@ -1,15 +1,14 @@
 <H1>FOR - Sequence statement</H1>
 
-[[FOR(INIT,TEST,UPDT,STMT)]] is a generalization of [[SEQ()]].
-This implements the [[C]] [[for]] loop [[for(init,test,updt)stmt]].
-[[A1, A2, A3]] are optional variables. If used, these variables will
-be in the scope of the [[FOR()]].
+[[F = FOR_COMPILE(INIT,TEST,INCR,STMT); FOR(F)]] is a generalization
+of [[SEQ()]].  This implements the [[C]] [[for]] loop
+[[for(init,test,updt)stmt]].
 
 [[SEQ()]] can be expressed in terms of [[FOR()]]. [[SEQ(S,.V,L,H)]]
 is easily translated to
 
 [[
-FOR(' V = L',' LE(V,H)',' V = V + 1',S)
+FOR(FOR_COMPILE(' V = L',' LE(V,H)',' V = V + 1',S))
 ]]
 
 But, [[FOR]] allows for list traversals, etc. as well as simple
@@ -20,16 +19,126 @@ used. [[FOR()]] doesn't, because it will compile the test and update
 statements as well. As a result, the variable used is under explicit
 control of the caller.
 
+[[FOR]] is divided into two parts: [[FOR_COMPILE()]] and [[FOR()]].
+The idea is to save the compilation time in inner loops. The four
+pieces of the [[FOR]] loop are compiled into a [[CODE_]] [[DATA]]
+record, which is passed to [[FOR(F)]] for actual execution. This
+saves significant time. The [[CODE_]] type can be produced by any
+number of [[COMPILE]] operations. We define [[FOR]], [[WHILE]], [[IF]],
+[[STMT]] primitives. [[STMT]] create a [[CODE_]] consisting of a single
+"statement". [[PROG2]] concatenates two [[CODE_]] structures.
+
+{{
+A similar optimization could be made to [[SEQ()]]. Given that [[SEQ()]]
+is a stable [[API]], this won't be done.
+}}
+
+Usage (for caching compiation) would similar to:
+
+[[
+F = IDENT(F) FOR_COMPILE(...)
+FOR(F)
+]]
+
+Of course, arbitrary combinations and nesting of [[CODE_]] may be done.
+Function calls within these must be made by primitive statements.
+
+INCR and INIT are not allowed to fail. Failure in these code pieces
+will result in a branch to ERROR. Failure of STMT results in FRETURN,
+failure of TEST results in RETURN. Normal FOR() exit should be via
+failure of TEST, resulting in a RETURN.
+
+This component also implements [[WHILE]] and [[IF]].
+
 <h2>See Also</h2>
 <a href="SEQ.html">SEQ</a>
 
 <<FOR>>=
-         DEFINE('FOR(INIT_,TEST_,UPDT_,STMT_)')               :(FOR_END)
+         DATA('CODE_(TYPE,INIT,TEST,INCR,STMT,ELSE,'
++                        'INIT_,TEST_,INCR_,STMT_,ELSE_)')
+         DEFINE('WHILE_COMPILE(TEST_,STMT_)')
+         DEFINE('IF_COMPILE(TEST_,STMT_,ELSE_)')
+         DEFINE('FOR_COMPILE(INIT_,TEST_,INCR_,STMT_)')
+         DEFINE('STMT_COMPILE(STMT_)')
+         DEFINE('PROG2_COMPILE(INIT_,STMT_)')
+         DEFINE('SET_RVAL(R)')
+         DEFINE('EVAL_CODE_(F_)')
 *
-FOR      TEST_ = CODE(TEST_ ' :S<STMT_>F(RETURN)')             :F(ERROR)
-         STMT_ = CODE(STMT_ ' :S<UPDT_>F(FRETURN)')            :F(ERROR)
-         UPDT_ = CODE(UPDT_ ' :S<TEST_>F(FRETURN)')            :F(ERROR)
-         INIT_ = CODE(INIT_ ' :S<TEST_>F(FRETURN)')    :S<INIT_>F(ERROR)
+         OPSYN('FOR', 'EVAL_CODE_')
+         OPSYN('WHILE', 'EVAL_CODE_')                         :(FOR_END)
+*
+SET_RVAL EVAL_CODE_ = R
+         SET_RVAL = R                                          :(RETURN)
+*
+PROG2_COMPILE
+         PROG2_COMPILE = CODE_('PROG2')
+         INIT_(PROG2_COMPILE) = INIT_
+         STMT_(PROG2_COMPILE) = STMT_
+         INIT_ = IDENT(DATATYPE(INIT_), 'CODE_')
++           ' EVAL_CODE_(INIT_(F_))'
+         INIT(PROG2_COMPILE) = 
++           CODE(INIT_ ' :<STMT(F_)>')                         :F(ERROR)
+         STMT_ = IDENT(DATATYPE(STMT_), 'CODE_')
++           ' EVAL_CODE_ = EVAL_CODE_(STMT_(F_))'
+         STMT(PROG2_COMPILE) =
++           CODE(STMT_ ' :S(RETURN)F(FRETURN)')       :S(RETURN)F(ERROR)
+*
+STMT_COMPILE
+         STMT_COMPILE = CODE_('STMT')
+         STMT_(STMT_COMPILE) = STMT_
+         INIT(STMT_COMPILE) = CODE(' :<STMT(F_)>')
+         STMT_ = IDENT(DATATYPE(STMT_), 'CODE_')
++           ' EVAL_CODE_ = EVAL_CODE_(STMT_(F_))'
+         STMT(STMT_COMPILE) =
++           CODE(STMT_ ' :S(RETURN)F(FRETURN)')       :S(RETURN)F(ERROR)
+*
+IF_COMPILE
+         IF_COMPILE = CODE_('IF')
+         TEST_(IF_COMPILE) = TEST_
+         STMT_(IF_COMPILE) = STMT_
+         ELSE_(IF_COMPILE) = ELSE_
+         INIT(IF_COMPILE) = CODE(' :<TEST(F_)>')
+         TEST_ = IDENT(DATATYPE(TEST_), 'CODE_')
++           ' EVAL_CODE_(TEST_(F_))'
+         TEST(IF_COMPILE) =
++           CODE(TEST_ ' :S<STMT(F_)>F<ELSE(F_)>')             :F(ERROR)
+         STMT_ = IDENT(DATATYPE(STMT_), 'CODE_')
++           ' EVAL_CODE_ = EVAL_CODE_(STMT_(F_))'
+         STMT(IF_COMPILE) =
++           CODE(STMT_ ' :S(RETURN)F(FRETURN)')                :F(ERROR)
+         ELSE_ = IDENT(DATATYPE(STMT_), 'CODE_')
++           ' EVAL_CODE_ = EVAL_CODE_(ELSE_(F_))'
+         ELSE(IF_COMPILE) =
++           CODE(ELSE_ ' :S(RETURN)F(FRETURN)')       :S(RETURN)F(ERROR)
+*
+WHILE_COMPILE
+         WHILE_COMPILE = FOR_COMPILE(, TEST_,, STMT_)
+         TYPE(WHILE_COMPILE) = 'WHILE'                         :(RETURN)
+*
+FOR_COMPILE
+         FOR_COMPILE = CODE_('FOR')
+         TEST_(FOR_COMPILE) = TEST_
+         STMT_(FOR_COMPILE) = STMT_
+         INCR_(FOR_COMPILE) = INCR_
+         INIT_(FOR_COMPILE) = INIT_
+         TEST_ = IDENT(DATATYPE(TEST_), 'CODE_')
++           ' EVAL_CODE_(TEST_(F_))'
+         TEST(FOR_COMPILE) =
++           CODE(TEST_ ' :S<STMT(F_)>F(RETURN)')               :F(ERROR)
+         STMT_ = IDENT(DATATYPE(STMT_), 'CODE_')
++           ' EVAL_CODE_(STMT_(F_))'
+         STMT(FOR_COMPILE) =
++           CODE(STMT_ ' :S<INCR(F_)>F(FRETURN)')              :F(ERROR)
+         INCR_ = IDENT(DATATYPE(INCR_), 'CODE_')
++           ' EVAL_CODE_(INCR_(F_))'
+         INCR(FOR_COMPILE) =
++           CODE(INCR_ ' :S<TEST(F_)>F(ERROR)')                :F(ERROR)
+         INIT_ = IDENT(DATATYPE(INIT_), 'CODE_')
++           ' EVAL_CODE_(INIT_(F_))'
+         INIT(FOR_COMPILE) =
++           CODE(INIT_ ' :S<TEST(F_)>F(ERROR)')       :S(RETURN)F(ERROR)
+*
+EVAL_CODE_                                                   :<INIT(F_)>
 *
 FOR_END
 @
@@ -39,22 +148,87 @@ FOR_END
          exec "snobol4" "-b" "$0" "$@"
 -INCLUDE 'FOR.INC'
 -INCLUDE 'TIMER.INC'
+-INCLUDE 'DDT.INC'
          &CODE = 1
 *
 * THE INIT CAN BE IN THE FOR(), OR OUTSIDE. THE STATEMENT MAY BE
 * EMPTY, AS MAY BE THE UPDT AND TEST.
 *
-         FOR(' I = 1',
-+            ' LT(I, 5)',
-+            ' I = I + 1',
-+            ' OUTPUT = I')
+         FOR(FOR_COMPILE(' I = 1',
++                        ' LT(I, 5)',
++                        ' I = I + 1',
++                        ' OUTPUT = I'))
 *
-         FOR_S = "FOR(' I = 1',' LT(I, 5)',' I = I + 1', ' D = I')"
+         FOR_S =
++        "FOR(FOR_COMPILE(' I = 1',' LT(I, 5)',' I = I + 1', ' D = I'))"
          TIMER(' ' FOR_S)
-         FOR_S = "FOR(,' LT(I, 5)',' I = I + 1', ' D = I')"
-         TIMER(' ' FOR_S)
-         FOR_S = "FOR(,' LT(I, 5)',' I = I + 1')"
-         TIMER(' ' FOR_S)
+*
+         F = FOR_COMPILE(
++           ' I = 1',
++           ' LT(I, 5)',
++           ' I = I + 1')
+         TIMER(' FOR(F)')
+*
+         W = WHILE_COMPILE(
++           ' LT(I, 5)',
++           ' OUTPUT = "WHILE: " I; I = I + 1')
+         I = 1
+         WHILE(W)
+*
+* IFS IS THE IF STATEMENT.
+*
+         OUTPUT = '** IF TEST'
+         IFS = IF_COMPILE(
++           ' EQ(REMDR(I, 2))',
++           ' OUTPUT = I " is even"',
++           ' OUTPUT = I " is odd"')
+         I = 1
+         EVAL_CODE_(IFS)
+         I = 2
+         EVAL_CODE_(IFS)
+*
+* EVALUATE THE IF STATEMENT 'IFS' IN THE CONTEXT OF A FOR LOOP
+*
+         OUTPUT = '** IF IN FOR'
+         F = FOR_COMPILE(
++           ' I = 1 ',
++           ' LT(I, 5)',
++           ' I = I + 1',
++           IFS)
+         EVAL_CODE_(F)
+*
+* COMPILE AND EVALUATE TWO SIMPLE STATEMENTS
+*
+         OUTPUT = '** TWO SIMPLE STATEMENTS'
+         S1 = STMT_COMPILE(' OUTPUT = "S1"; I = 3')
+         S2 = STMT_COMPILE(' OUTPUT = "S2"; I = I + 4')
+         EVAL_CODE_(S1)
+         OUTPUT = I
+         EVAL_CODE_(S2)
+         OUTPUT = I
+*
+* COMPILE AND EVALUATE A VALUE RETURN
+*
+         OUTPUT = '** RVAL'
+         R = STMT_COMPILE(' OUTPUT = "SET_RVAL(" I ")"; SET_RVAL(I)')
+         OUTPUT = EVAL_CODE_(R)
+*
+* COMBINE S1 AND S2 AND EVALUATE
+*
+         OUTPUT = '** PROG2'
+         I = -10
+         S3 = PROG2_COMPILE(S1, S2)
+         EVAL_CODE_(S3)
+         OUTPUT = I
+*
+* COMBINE WITH VALUE RETURN
+*
+         OUTPUT = '** PROG2 + RVAL'
+         S4 = PROG2_COMPILE(S3, R)
+         I = -10
+         OUTPUT = EVAL_CODE_(S4)
+         OUTPUT = 'I = ' I
+*
          &CODE = 0
 END
 @

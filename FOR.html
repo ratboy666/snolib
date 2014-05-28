@@ -9,10 +9,9 @@
 <H1>FOR - Sequence statement</H1>
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
-<font face="Source Code Pro">FOR(INIT,TEST,UPDT,STMT)</font> is a generalization of <font face="Source Code Pro">SEQ()</font>.
-This implements the <font face="Source Code Pro">C</font> <font face="Source Code Pro">for</font> loop <font face="Source Code Pro">for(init,test,updt)stmt</font>.
-<font face="Source Code Pro">A1, A2, A3</font> are optional variables. If used, these variables will
-be in the scope of the <font face="Source Code Pro">FOR()</font>.
+<font face="Source Code Pro">F = FOR_COMPILE(INIT,TEST,INCR,STMT); FOR(F)</font> is a generalization
+of <font face="Source Code Pro">SEQ()</font>.  This implements the <font face="Source Code Pro">C</font> <font face="Source Code Pro">for</font> loop
+<font face="Source Code Pro">for(init,test,updt)stmt</font>.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 <font face="Source Code Pro">SEQ()</font> can be expressed in terms of <font face="Source Code Pro">FOR()</font>. <font face="Source Code Pro">SEQ(S,.V,L,H)</font>
@@ -20,7 +19,7 @@ is easily translated to
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 </font></p><pre><font face="Source Code Pro">
-| FOR(' V = L',' LE(V,H)',' V = V + 1',S)
+| FOR(FOR_COMPILE(' V = L',' LE(V,H)',' V = V + 1',S))
 </font></pre>
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
@@ -33,18 +32,134 @@ statements as well. As a result, the variable used is under explicit
 control of the caller.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">FOR</font> is divided into two parts: <font face="Source Code Pro">FOR_COMPILE()</font> and <font face="Source Code Pro">FOR()</font>.
+The idea is to save the compilation time in inner loops. The four
+pieces of the <font face="Source Code Pro">FOR</font> loop are compiled into a <font face="Source Code Pro">CODE_</font> <font face="Source Code Pro">DATA</font>
+record, which is passed to <font face="Source Code Pro">FOR(F)</font> for actual execution. This
+saves significant time. The <font face="Source Code Pro">CODE_</font> type can be produced by any
+number of <font face="Source Code Pro">COMPILE</font> operations. We define <font face="Source Code Pro">FOR</font>, <font face="Source Code Pro">WHILE</font>, <font face="Source Code Pro">IF</font>,
+<font face="Source Code Pro">STMT</font> primitives. <font face="Source Code Pro">STMT</font> create a <font face="Source Code Pro">CODE_</font> consisting of a single
+"statement". <font face="Source Code Pro">PROG2</font> concatenates two <font face="Source Code Pro">CODE_</font> structures.
+</font></p>
+<div style="width:15em;margin-left:0.5em;float:right;background-image:url(blutextb.gif)">
+<font face="Dijkstra"><p align="left">
+A similar optimization could be made to <font face="Source Code Pro">SEQ()</font>. Given that <font face="Source Code Pro">SEQ()</font>
+is a stable <font face="Source Code Pro">API</font>, this won't be done.
+</p></font></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+Usage (for caching compiation) would similar to:
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+| F = IDENT(F) FOR_COMPILE(...)
+| FOR(F)
+</font></pre>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Of course, arbitrary combinations and nesting of <font face="Source Code Pro">CODE_</font> may be done.
+Function calls within these must be made by primitive statements.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+INCR and INIT are not allowed to fail. Failure in these code pieces
+will result in a branch to ERROR. Failure of STMT results in FRETURN,
+failure of TEST results in RETURN. Normal FOR() exit should be via
+failure of TEST, resulting in a RETURN.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+This component also implements <font face="Source Code Pro">WHILE</font> and <font face="Source Code Pro">IF</font>.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
 <h2>See Also</h2>
 <a href="SEQ.html">SEQ</a>
 </font></p>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;FOR&raquo;&equiv;</b>
-         DEFINE(&#39;FOR(INIT_,TEST_,UPDT_,STMT_)&#39;)               <b>:(FOR_END)</b>
+         DATA(&#39;CODE_(TYPE,INIT,TEST,INCR,STMT,ELSE,&#39;
++                        &#39;INIT_,TEST_,INCR_,STMT_,ELSE_)&#39;)
+         DEFINE(&#39;WHILE_COMPILE(TEST_,STMT_)&#39;)
+         DEFINE(&#39;IF_COMPILE(TEST_,STMT_,ELSE_)&#39;)
+         DEFINE(&#39;FOR_COMPILE(INIT_,TEST_,INCR_,STMT_)&#39;)
+         DEFINE(&#39;STMT_COMPILE(STMT_)&#39;)
+         DEFINE(&#39;PROG2_COMPILE(INIT_,STMT_)&#39;)
+         DEFINE(&#39;SET_RVAL(R)&#39;)
+         DEFINE(&#39;EVAL_CODE_(F_)&#39;)
 <font color="#818181"><i>*</i></font>
-FOR      TEST_ = CODE(TEST_ &#39; :S&lt;STMT_&gt;F(RETURN)&#39;)             <b>:F(ERROR)</b>
-         STMT_ = CODE(STMT_ &#39; :S&lt;UPDT_&gt;F(FRETURN)&#39;)            <b>:F(ERROR)</b>
-         UPDT_ = CODE(UPDT_ &#39; :S&lt;TEST_&gt;F(FRETURN)&#39;)            <b>:F(ERROR)</b>
-         INIT_ = CODE(INIT_ &#39; :S&lt;TEST_&gt;F(FRETURN)&#39;)    <b>:S&lt;INIT_&gt;F(ERROR)</b>
+         OPSYN(&#39;FOR&#39;, &#39;EVAL_CODE_&#39;)
+         OPSYN(&#39;WHILE&#39;, &#39;EVAL_CODE_&#39;)                         <b>:(FOR_END)</b>
+<font color="#818181"><i>*</i></font>
+SET_RVAL EVAL_CODE_ = R
+         SET_RVAL = R                                          <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+PROG2_COMPILE
+         PROG2_COMPILE = CODE_(&#39;PROG2&#39;)
+         INIT_(PROG2_COMPILE) = INIT_
+         STMT_(PROG2_COMPILE) = STMT_
+         INIT_ = IDENT(DATATYPE(INIT_), &#39;CODE_&#39;)
++           &#39; EVAL_CODE_(INIT_(F_))&#39;
+         INIT(PROG2_COMPILE) =
++           CODE(INIT_ &#39; :&lt;STMT(F_)&gt;&#39;)                         <b>:F(ERROR)</b>
+         STMT_ = IDENT(DATATYPE(STMT_), &#39;CODE_&#39;)
++           &#39; EVAL_CODE_ = EVAL_CODE_(STMT_(F_))&#39;
+         STMT(PROG2_COMPILE) =
++           CODE(STMT_ &#39; :S(RETURN)F(FRETURN)&#39;)       <b>:S(RETURN)F(ERROR)</b>
+<font color="#818181"><i>*</i></font>
+STMT_COMPILE
+         STMT_COMPILE = CODE_(&#39;STMT&#39;)
+         STMT_(STMT_COMPILE) = STMT_
+         INIT(STMT_COMPILE) = CODE(&#39; :&lt;STMT(F_)&gt;&#39;)
+         STMT_ = IDENT(DATATYPE(STMT_), &#39;CODE_&#39;)
++           &#39; EVAL_CODE_ = EVAL_CODE_(STMT_(F_))&#39;
+         STMT(STMT_COMPILE) =
++           CODE(STMT_ &#39; :S(RETURN)F(FRETURN)&#39;)       <b>:S(RETURN)F(ERROR)</b>
+<font color="#818181"><i>*</i></font>
+IF_COMPILE
+         IF_COMPILE = CODE_(&#39;IF&#39;)
+         TEST_(IF_COMPILE) = TEST_
+         STMT_(IF_COMPILE) = STMT_
+         ELSE_(IF_COMPILE) = ELSE_
+         INIT(IF_COMPILE) = CODE(&#39; :&lt;TEST(F_)&gt;&#39;)
+         TEST_ = IDENT(DATATYPE(TEST_), &#39;CODE_&#39;)
++           &#39; EVAL_CODE_(TEST_(F_))&#39;
+         TEST(IF_COMPILE) =
++           CODE(TEST_ &#39; :S&lt;STMT(F_)&gt;F&lt;ELSE(F_)&gt;&#39;)             <b>:F(ERROR)</b>
+         STMT_ = IDENT(DATATYPE(STMT_), &#39;CODE_&#39;)
++           &#39; EVAL_CODE_ = EVAL_CODE_(STMT_(F_))&#39;
+         STMT(IF_COMPILE) =
++           CODE(STMT_ &#39; :S(RETURN)F(FRETURN)&#39;)                <b>:F(ERROR)</b>
+         ELSE_ = IDENT(DATATYPE(STMT_), &#39;CODE_&#39;)
++           &#39; EVAL_CODE_ = EVAL_CODE_(ELSE_(F_))&#39;
+         ELSE(IF_COMPILE) =
++           CODE(ELSE_ &#39; :S(RETURN)F(FRETURN)&#39;)       <b>:S(RETURN)F(ERROR)</b>
+<font color="#818181"><i>*</i></font>
+WHILE_COMPILE
+         WHILE_COMPILE = FOR_COMPILE(, TEST_,, STMT_)
+         TYPE(WHILE_COMPILE) = &#39;WHILE&#39;                         <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+FOR_COMPILE
+         FOR_COMPILE = CODE_(&#39;FOR&#39;)
+         TEST_(FOR_COMPILE) = TEST_
+         STMT_(FOR_COMPILE) = STMT_
+         INCR_(FOR_COMPILE) = INCR_
+         INIT_(FOR_COMPILE) = INIT_
+         TEST_ = IDENT(DATATYPE(TEST_), &#39;CODE_&#39;)
++           &#39; EVAL_CODE_(TEST_(F_))&#39;
+         TEST(FOR_COMPILE) =
++           CODE(TEST_ &#39; :S&lt;STMT(F_)&gt;F(RETURN)&#39;)               <b>:F(ERROR)</b>
+         STMT_ = IDENT(DATATYPE(STMT_), &#39;CODE_&#39;)
++           &#39; EVAL_CODE_(STMT_(F_))&#39;
+         STMT(FOR_COMPILE) =
++           CODE(STMT_ &#39; :S&lt;INCR(F_)&gt;F(FRETURN)&#39;)              <b>:F(ERROR)</b>
+         INCR_ = IDENT(DATATYPE(INCR_), &#39;CODE_&#39;)
++           &#39; EVAL_CODE_(INCR_(F_))&#39;
+         INCR(FOR_COMPILE) =
++           CODE(INCR_ &#39; :S&lt;TEST(F_)&gt;F(ERROR)&#39;)                <b>:F(ERROR)</b>
+         INIT_ = IDENT(DATATYPE(INIT_), &#39;CODE_&#39;)
++           &#39; EVAL_CODE_(INIT_(F_))&#39;
+         INIT(FOR_COMPILE) =
++           CODE(INIT_ &#39; :S&lt;TEST(F_)&gt;F(ERROR)&#39;)       <b>:S(RETURN)F(ERROR)</b>
+<font color="#818181"><i>*</i></font>
+EVAL_CODE_                                                   <b>:&lt;INIT(F_)&gt;</b>
 <font color="#818181"><i>*</i></font>
 FOR_END
 <b>@</b>
@@ -56,22 +171,87 @@ FOR_END
          exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
 -INCLUDE &#39;FOR.INC&#39;
 -INCLUDE &#39;TIMER.INC&#39;
+-INCLUDE &#39;DDT.INC&#39;
          &amp;CODE = 1
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* THE INIT CAN BE IN THE FOR(), OR OUTSIDE. THE STATEMENT MAY BE</i></font>
 <font color="#818181"><i>* EMPTY, AS MAY BE THE UPDT AND TEST.</i></font>
 <font color="#818181"><i>*</i></font>
-         FOR(&#39; I = 1&#39;,
-+            &#39; LT(I, 5)&#39;,
-+            &#39; I = I + 1&#39;,
-+            &#39; OUTPUT = I&#39;)
+         FOR(FOR_COMPILE(&#39; I = 1&#39;,
++                        &#39; LT(I, 5)&#39;,
++                        &#39; I = I + 1&#39;,
++                        &#39; OUTPUT = I&#39;))
 <font color="#818181"><i>*</i></font>
-         FOR_S = &quot;FOR(&#39; I = 1&#39;,&#39; LT(I, 5)&#39;,&#39; I = I + 1&#39;, &#39; D = I&#39;)&quot;
+         FOR_S =
++        &quot;FOR(FOR_COMPILE(&#39; I = 1&#39;,&#39; LT(I, 5)&#39;,&#39; I = I + 1&#39;, &#39; D = I&#39;))&quot;
          TIMER(&#39; &#39; FOR_S)
-         FOR_S = &quot;FOR(,&#39; LT(I, 5)&#39;,&#39; I = I + 1&#39;, &#39; D = I&#39;)&quot;
-         TIMER(&#39; &#39; FOR_S)
-         FOR_S = &quot;FOR(,&#39; LT(I, 5)&#39;,&#39; I = I + 1&#39;)&quot;
-         TIMER(&#39; &#39; FOR_S)
+<font color="#818181"><i>*</i></font>
+         F = FOR_COMPILE(
++           &#39; I = 1&#39;,
++           &#39; LT(I, 5)&#39;,
++           &#39; I = I + 1&#39;)
+         TIMER(&#39; FOR(F)&#39;)
+<font color="#818181"><i>*</i></font>
+         W = WHILE_COMPILE(
++           &#39; LT(I, 5)&#39;,
++           &#39; OUTPUT = &quot;WHILE: &quot; I; I = I + 1&#39;)
+         I = 1
+         WHILE(W)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* IFS IS THE IF STATEMENT.</i></font>
+<font color="#818181"><i>*</i></font>
+         OUTPUT = &#39;** IF TEST&#39;
+         IFS = IF_COMPILE(
++           &#39; EQ(REMDR(I, 2))&#39;,
++           &#39; OUTPUT = I &quot; is even&quot;&#39;,
++           &#39; OUTPUT = I &quot; is odd&quot;&#39;)
+         I = 1
+         EVAL_CODE_(IFS)
+         I = 2
+         EVAL_CODE_(IFS)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* EVALUATE THE IF STATEMENT &#39;IFS&#39; IN THE CONTEXT OF A FOR LOOP</i></font>
+<font color="#818181"><i>*</i></font>
+         OUTPUT = &#39;** IF IN FOR&#39;
+         F = FOR_COMPILE(
++           &#39; I = 1 &#39;,
++           &#39; LT(I, 5)&#39;,
++           &#39; I = I + 1&#39;,
++           IFS)
+         EVAL_CODE_(F)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* COMPILE AND EVALUATE TWO SIMPLE STATEMENTS</i></font>
+<font color="#818181"><i>*</i></font>
+         OUTPUT = &#39;** TWO SIMPLE STATEMENTS&#39;
+         S1 = STMT_COMPILE(&#39; OUTPUT = &quot;S1&quot;; I = 3&#39;)
+         S2 = STMT_COMPILE(&#39; OUTPUT = &quot;S2&quot;; I = I + 4&#39;)
+         EVAL_CODE_(S1)
+         OUTPUT = I
+         EVAL_CODE_(S2)
+         OUTPUT = I
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* COMPILE AND EVALUATE A VALUE RETURN</i></font>
+<font color="#818181"><i>*</i></font>
+         OUTPUT = &#39;** RVAL&#39;
+         R = STMT_COMPILE(&#39; OUTPUT = &quot;SET_RVAL(&quot; I &quot;)&quot;; SET_RVAL(I)&#39;)
+         OUTPUT = EVAL_CODE_(R)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* COMBINE S1 AND S2 AND EVALUATE</i></font>
+<font color="#818181"><i>*</i></font>
+         OUTPUT = &#39;** PROG2&#39;
+         I = -10
+         S3 = PROG2_COMPILE(S1, S2)
+         EVAL_CODE_(S3)
+         OUTPUT = I
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* COMBINE WITH VALUE RETURN</i></font>
+<font color="#818181"><i>*</i></font>
+         OUTPUT = &#39;** PROG2 + RVAL&#39;
+         S4 = PROG2_COMPILE(S3, R)
+         I = -10
+         OUTPUT = EVAL_CODE_(S4)
+         OUTPUT = &#39;I = &#39; I
+<font color="#818181"><i>*</i></font>
          &amp;CODE = 0
 END
 <b>@</b>
@@ -107,7 +287,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Tue May 27 14:11:04 EDT 2014</p></td><td><p align=right>
+Tue May 27 20:05:08 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>
