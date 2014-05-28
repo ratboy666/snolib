@@ -50,3 +50,8 @@ cat LAST.INC | sed -e "s/\.INC'/.SPT'/" >LAST.SPT
 unix2dos LAST.SPT
 cat LPROG.INC | sed -e "s/\.INC'/.SPT'/" >LPROG.SPT
 unix2dos LPROG.SPT
+unix2dos -n MAX.INC MAX.SPT
+unix2dos -n FOR.INC FOR.SPT
+cat QUOTE.INC | sed -e "s/\.INC'/.SPT'/" >QUOTE.SPT
+unix2dos QUOTE.SPT
+unix2dos -n LIKE.INC LIKE.SPT
