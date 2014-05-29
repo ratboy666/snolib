@@ -61,7 +61,7 @@ struct tmpl_token { token_type, token_end, token_args }
 //-include 'REVL.INC'
 //-include 'SWAP.INC'
 //-include 'READFILE.INC'
-//-include 'SEQ.INC'
+# //-include 'SEQ.INC'
 //-include 'HTMLESC.INC'
 
 # Initialize patterns for HTML template module
@@ -160,7 +160,9 @@ procedure interpret_tmpl(p, a) p1 p2 v n t e i {
 	 n = a[n]
 	 if (datatype(n) :: "ARRAY") {
 	    p1 = value(next(value(p)))
-	    seq(' interpret_tmpl(p1, n[i]) ', .i)
+#	    seq(' interpret_tmpl(p1, n[i]) ', .i)
+            for (i = 1, n[i], i = i + 1)
+               interpret_tmpl(p1, n[i]);
 	 }
       }
       p = next(p)

@@ -1,7 +1,7 @@
 -STITL SYSTEM
 -EJECT
 *
--LINE 97 "SYSTEM.lss"
+-LINE 100 "SYSTEM.lss"
 ************************************************************************
 *                                                                      *
 *          #####   #     #   #####   #######  #######  #     #         *
@@ -19,7 +19,7 @@
 * SYSTEM.lss
 *
 -LINE 29 "SYSTEM.lss"
-         DEFINE('SYSTEM()K')
+         DEFINE('SYSTEM()K,E,T')
          DEFINE('ISSPITBOL()')
          DEFINE('ISSNOBOL4()')
          DEFINE('ISASCII()A')
@@ -55,16 +55,19 @@ SYSTEM   IDENT(DATATYPE(.X), 'STRING')                      :F(SYSTEM_2)
          SYSTEM =           'UNIVAC MAINBOL'                   :(RETURN)
 *
 * DISTINGUISH IBM MAINBOL AND CSNOBOL, ASSUME ASCII FOR CSNOBOL4.
-* NOTE THAT AFTER 1.5, CSNOBOL4 WILL LIKELY SUPPORT BLOCKS AS WELL.
+* IBM MAINBOL RUNS ON SYSTEM/360, WHICH IS EBCDIC.
+*
+* THAT AFTER 1.5 (VERSION 1.5+), CSNOBOL4 SUPPORTS BLOCKS WITH THE
+* -B COMMAND LINE SWITCH AND -BLOCKS/-NOBLOCKS
 *
 SYSTEM_0 ISASCII()                                          :F(SYSTEM_1)
          SYSTEM = 'CSNOBOL4'
 *
-SYSTEM_1 OPSYN('OLD_SHARP', '#', 2)
-         OPSYN('#', '+', 2)
-         T = 1 5 # 5
-         OPSYN('#', 'OLD_SHARP', 2)
-         EQ(T, 110)                                           :S(RETURN)
+SYSTEM_1 E = &ERRLIMIT
+         &ERRLIMIT = 1
+         T = DATATYPE(1 # 1)
+         &ERRLIMIT = E
+         DIFFER(T, 'BLOCK')                                   :S(RETURN)
          SYSTEM = SYSTEM ' WITH BLOCKS'                        :(RETURN)
 *
 SYSTEM_2 SYSTEM = DIFFER(SUBSTR('ABC', 2, 1), 'B') 'FASBOL'   :S(RETURN)

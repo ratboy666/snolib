@@ -40,7 +40,7 @@ ISASCII() -- '()' is ordered the same in both of these character sets.
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;SYSTEM&raquo;&equiv;</b>
-         DEFINE(&#39;SYSTEM()K&#39;)
+         DEFINE(&#39;SYSTEM()K,E,T&#39;)
          DEFINE(&#39;ISSPITBOL()&#39;)
          DEFINE(&#39;ISSNOBOL4()&#39;)
          DEFINE(&#39;ISASCII()A&#39;)
@@ -76,16 +76,19 @@ SYSTEM   IDENT(DATATYPE(.X), &#39;STRING&#39;)                      <b>:F(SYSTEM
          SYSTEM =           &#39;UNIVAC MAINBOL&#39;                   <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* DISTINGUISH IBM MAINBOL AND CSNOBOL, ASSUME ASCII FOR CSNOBOL4.</i></font>
-<font color="#818181"><i>* NOTE THAT AFTER 1.5, CSNOBOL4 WILL LIKELY SUPPORT BLOCKS AS WELL.</i></font>
+<font color="#818181"><i>* IBM MAINBOL RUNS ON SYSTEM/360, WHICH IS EBCDIC.</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* THAT AFTER 1.5 (VERSION 1.5+), CSNOBOL4 SUPPORTS BLOCKS WITH THE</i></font>
+<font color="#818181"><i>* -B COMMAND LINE SWITCH AND -BLOCKS/-NOBLOCKS</i></font>
 <font color="#818181"><i>*</i></font>
 SYSTEM_0 ISASCII()                                          <b>:F(SYSTEM_1)</b>
          SYSTEM = &#39;CSNOBOL4&#39;
 <font color="#818181"><i>*</i></font>
-SYSTEM_1 OPSYN(&#39;OLD_SHARP&#39;, &#39;#&#39;, 2)
-         OPSYN(&#39;#&#39;, &#39;+&#39;, 2)
-         T = 1 5 # 5
-         OPSYN(&#39;#&#39;, &#39;OLD_SHARP&#39;, 2)
-         EQ(T, 110)                                           <b>:S(RETURN)</b>
+SYSTEM_1 E = &amp;ERRLIMIT
+         &amp;ERRLIMIT = 1
+         T = DATATYPE(1 # 1)
+         &amp;ERRLIMIT = E
+         DIFFER(T, &#39;BLOCK&#39;)                                   <b>:S(RETURN)</b>
          SYSTEM = SYSTEM &#39; WITH BLOCKS&#39;                        <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 SYSTEM_2 SYSTEM = DIFFER(SUBSTR(&#39;ABC&#39;, 2, 1), &#39;B&#39;) &#39;FASBOL&#39;   <b>:S(RETURN)</b>
@@ -137,7 +140,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Tue May 27 23:35:32 EDT 2014</p></td><td><p align=right>
+Thu May 29 11:33:32 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

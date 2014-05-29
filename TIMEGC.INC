@@ -4,7 +4,7 @@
 -INCLUDE 'RESOL.INC'
 -STITL TIMEGC
 -EJECT
--LINE 70 "TIMEGC.lss"
+-LINE 68 "TIMEGC.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -41,19 +41,17 @@ TIMEGC_2 $I = ; A<I> = ; L = NEXT(L)
          FREED = FREED + (COLLECT() - STREM)
          TIMEGC = TIMEGC + (TIME() - T)
          K = K + 1
-*        LT(TIMEGC, 50 * RESOLUTION())                        :S(TIMEGC)
-         LT(TIMEGC, 5000 * RESOLUTION())                      :S(TIMEGC)
+         M = 50
+         M = LT(RESOLUTION(), 0.9) 5000
+         LT(TIMEGC, M * RESOLUTION())                         :S(TIMEGC)
          OUTPUT =
          OUTPUT = 'IN ' SYSTEM() ' ' K ' GARBAGE COLLECTS'
 +           ' REQUIRED A TOTAL OF ' TIMEGC ' MILLISECONDS TO FREE '
 +           FREED ' STORAGE UNITS.'
          TIMEGC = CONVERT(TIMEGC, 'REAL')
-*        OUTPUT = 'THIS AVERAGES TO ' (TIMEGC / K) 'MSEC. PER'
-*+          ' GARBAGE COLLECT AND ' (TIMEGC / FREED) ' MSEC.'
-*+          ' PER STORAGE UNIT.'                               :(RETURN)
-         OUTPUT = 'THIS AVERAGES TO ' (TIMEGC / K) 'MSEC. PER'
-+           ' GARBAGE COLLECT AND ' (TIMEGC * 1000 / FREED) ' USEC.'
-+           ' PER STORAGE UNIT.'                               :(RETURN)
+         OUTPUT = 'THIS AVERAGES TO ' (TIMEGC / K) ' MILLISECONDS PER'
++           ' GARBAGE COLLECT AND ' (TIMEGC * 1000000 / FREED)
++           ' NANOSECONDS PER STORAGE UNIT.'                   :(RETURN)
 *
 TIMEGC_END
 *

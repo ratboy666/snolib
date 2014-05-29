@@ -48,19 +48,17 @@ TIMEGC_2 $I = ; A&lt;I&gt; = ; L = NEXT(L)
          FREED = FREED + (COLLECT() - STREM)
          TIMEGC = TIMEGC + (TIME() - T)
          K = K + 1
-<font color="#818181"><i>*        LT(TIMEGC, 50 * RESOLUTION())                        <b>:S(TIMEGC)</b></i></font>
-         LT(TIMEGC, 5000 * RESOLUTION())                      <b>:S(TIMEGC)</b>
+         M = 50
+         M = LT(RESOLUTION(), 0.9) 5000
+         LT(TIMEGC, M * RESOLUTION())                         <b>:S(TIMEGC)</b>
          OUTPUT =
          OUTPUT = &#39;IN &#39; SYSTEM() &#39; &#39; K &#39; GARBAGE COLLECTS&#39;
 +           &#39; REQUIRED A TOTAL OF &#39; TIMEGC &#39; MILLISECONDS TO FREE &#39;
 +           FREED &#39; STORAGE UNITS.&#39;
          TIMEGC = CONVERT(TIMEGC, &#39;REAL&#39;)
-<font color="#818181"><i>*        OUTPUT = &#39;THIS AVERAGES TO &#39; (TIMEGC / K) &#39;MSEC. PER&#39;</i></font>
-<font color="#818181"><i>*+          &#39; GARBAGE COLLECT AND &#39; (TIMEGC / FREED) &#39; MSEC.&#39;</i></font>
-<font color="#818181"><i>*+          &#39; PER STORAGE UNIT.&#39;                               <b>:(RETURN)</b></i></font>
-         OUTPUT = &#39;THIS AVERAGES TO &#39; (TIMEGC / K) &#39;MSEC. PER&#39;
-+           &#39; GARBAGE COLLECT AND &#39; (TIMEGC * 1000 / FREED) &#39; USEC.&#39;
-+           &#39; PER STORAGE UNIT.&#39;                               <b>:(RETURN)</b>
+         OUTPUT = &#39;THIS AVERAGES TO &#39; (TIMEGC / K) &#39; MILLISECONDS PER&#39;
++           &#39; GARBAGE COLLECT AND &#39; (TIMEGC * 1000000 / FREED)
++           &#39; NANOSECONDS PER STORAGE UNIT.&#39;                   <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 TIMEGC_END
 <b>@</b>
@@ -111,7 +109,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Fri May 16 16:11:35 EDT 2014</p></td><td><p align=right>
+Wed May 28 11:30:27 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

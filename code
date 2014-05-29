@@ -1,5 +1,5 @@
 #!/usr/bin/bash
-         exec "snobol4" "-s" "-S 40000" "$0" "$@"
+         exec "snobol4" "-B" "-s" "-S 40000" "$0" "$@"
 *
 -LINE 637 "code.lss"
 -TITLE CODE
@@ -208,7 +208,7 @@ DDT__    TERMINAL = 'STARTING DDT'
          ENDFILE(UNIT)
          DETACH(.F)
          HOST(HOST_SYSCMD, 'snobol4 -n -b -l ' TEMPLST_ ' ' TEMPSRC_)
-         HOST(HOST_SYSCMD, 'LIST=' TEMPLST_ ' snobol4 -b ' TEMPSRC_)
+         HOST(HOST_SYSCMD, 'LIST=' TEMPLST_ ' snobol4 -B -b ' TEMPSRC_)
          TERMINAL = 'DDT COMPLETED'
          DELETE(TEMPSRC_)
          DELETE(TEMPLST_)                                      :(RETURN)
