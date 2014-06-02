@@ -75,6 +75,7 @@ at a future date. (see DDT.E)
 <a href="HOST.html">HOST</a><br>
 <a href="READLINE.html">READLINE</a><br>
 <a href="TRIMB.html">TRIMB</a><br>
+<a href="VDIFFER.html">VDIFFER</a><br>
 <a href="QUOTE.html">QUOTE</a>
 </font></p>
 <div style="background-image: url(greenbar.gif)">
@@ -84,6 +85,7 @@ at a future date. (see DDT.E)
 -INCLUDE &#39;HOST.INC&#39;
 -INCLUDE &#39;READLINE.INC&#39;
 -INCLUDE &#39;TRIMB.INC&#39;
+-INCLUDE &#39;VDIFFER.INC&#39;
 -INCLUDE &#39;QUOTE.INC&#39;
 <b>@</b>
 </font></pre></div>
@@ -235,6 +237,10 @@ DDT_DISPLAY
          DDT_T = VDIFFER(DDT_FNC)
          DDT_T = DIFFER(DDT_FINAL_STMT) DDT_STMTS&lt;DDT_CURR_STMT&gt;
          DDT_T = IDENT(DDT_FINAL_STMT) DDT_CURR_STMT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CALL EXTERNAL ROUTINE IF DEFINED TO REGISTER BREAK</i></font>
+<font color="#818181"><i>*</i></font>
+         DIFFER(DDT_HOOK) APPLY(DDT_HOOK, &#39;DISPLAY&#39;, DDT_CURR_STMT)
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* LISTING BEGINS HERE</i></font>
 <font color="#818181"><i>*</i></font>
@@ -399,7 +405,16 @@ DDT_CMD2 DDT_LL2 = DDT_LL
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* NOTE: THIS IS THE ONLY READ FROM DDT_R.</i></font>
 <font color="#818181"><i>*</i></font>
-         DDT_IN = TRIM(DDT_R)                       <b>:S(DDT_CMD3)F(DDT.O)</b>
+<font color="#818181"><i>* IF DDT_HOOK IS DEFINED, WE WILL CALL WITH THAT WITH &#39;READ&#39;. SEE</i></font>
+<font color="#818181"><i>* DDT_HOOK CALL WITH &#39;DISPLAY&#39; ABOVE. THIS COMMAND WILL RETURN</i></font>
+<font color="#818181"><i>* &#39;&#39; WHICH WILL CAUSE A NORMAL DDT_R TO BE READ, OR RETURN A STRING</i></font>
+<font color="#818181"><i>* WHICH WILL BE EVALUATED WITH CODE AND EXECUTED.</i></font>
+<font color="#818181"><i>*</i></font>
+         IDENT(DDT_HOOK)                                    <b>:S(DDT_CMD7)</b>
+         DDT_RCMD = APPLY(DDT_HOOK, &#39;READ&#39;)                 <b>:F(DDT_CMD7)</b>
+         IDENT(DDT_RCMD)                                    <b>:S(DDT_CMD7)</b>
+         DDT_RCMD = CODE(DDT_RCMD)                <b>:F(DDT_CMD)S&lt;DDT_RCMD&gt;</b>
+DDT_CMD7 DDT_IN = TRIM(DDT_R)                       <b>:S(DDT_CMD3)F(DDT.O)</b>
 DDT_CMD5 DDT_IN = TRIM(HISTORY_EXPAND(READLINE(&#39;DDT: &#39;)))      <b>:F(DDT.O)</b>
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* ONLY ADD NON-NULL COMMANDS THAT DIFFER FROM LAST COMMAND TO HISTORY</i></font>
@@ -758,7 +773,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Sat May 24 19:13:04 EDT 2014</p></td><td><p align=right>
+Sun Jun  1 23:13:15 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

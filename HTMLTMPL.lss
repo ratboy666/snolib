@@ -8,7 +8,7 @@ js or none.
 
 The template is read in (usually with readfile), compiled with
 tmpl_compile, and expanded with tmpl_interpret. The arguments for
-tmpl_interpet are in a table. Array variable is needed for loop. Each
+tmpl_interpret are in a table. Array variable is needed for loop. Each
 array element is a table with the new variables. These typically come
 from a database.
 
@@ -61,7 +61,6 @@ struct tmpl_token { token_type, token_end, token_args }
 //-include 'REVL.INC'
 //-include 'SWAP.INC'
 //-include 'READFILE.INC'
-# //-include 'SEQ.INC'
 //-include 'HTMLESC.INC'
 
 # Initialize patterns for HTML template module
@@ -120,52 +119,42 @@ procedure none_escape(s) {
 # Recursive interpret template
 
 procedure interpret_tmpl(p, a) p1 p2 v n t e i {
-   while (p :!: "") {
+   for (p, p :!: "", p = next(p)) {
       v = value(value(p))
       if (token_type(v) :: "text") {
-	 # text - text from template
+# text - text from template
 	 tmpl_interpret = tmpl_interpret && token_args(v)
-      } else if (token_type(v) :: "var") {
-	 # var (name, default, escape)
+      } else {
 	 t = token_args(v)
-	 n = t["name"]
-	 v = a[n]
-	 if (v :: "")
-	    v = t["default"]
-	 e = t["escape"]
-	 e = ident(e) "none"
-	 e = e && "_escape"
-	 n = &errlimit
-	 &errlimit = 1
-	 v = apply(e, v)
-	 &errlimit = n
-	 tmpl_interpret = tmpl_interpret && v
-      } else if ("if unless" ? token_type(v)) {
-	 # if/unless (name) else
-	 t = token_args(v)
-	 n = t["name"]
-	 n = a[n]
-	 p1 = value(next(value(p)))
-	 p2 = next(next(value(p)))
-	 if (token_type(v) :: "unless")
-	    swap(.p1, .p2)
-	 if ((n :!: "") || ne(+n, 0))
-	    interpret_tmpl(p1, a)
-	 else
-	    interpret_tmpl(p2, a)
-      } else if (token_type(v) :: "loop") {
-	 # loop (name)
-	 t = token_args(v)
-	 n = t["name"]
-	 n = a[n]
-	 if (datatype(n) :: "ARRAY") {
+	 n = a[t["name"]]
+	 if (token_type(v) :: "var") {
+# var - (name, default, escape)
+	    if (n :: "")
+	       n = t["default"]
+	    e = t["escape"]
+	    e = ident(e) "none"
+	    e = e && "_escape"
+	    v = &errlimit; &errlimit = 1; n = apply(e, n); &errlimit = v
+	    tmpl_interpret = tmpl_interpret && n
+	 } else if ("if unless" ? token_type(v)) {
+# if/unless - (name) else
 	    p1 = value(next(value(p)))
-#	    seq(' interpret_tmpl(p1, n[i]) ', .i)
-            for (i = 1, n[i], i = i + 1)
-               interpret_tmpl(p1, n[i]);
+	    p2 = next(next(value(p)))
+	    if (token_type(v) :: "unless")
+	       swap(.p1, .p2)
+	    if ((n :!: "") || ne(+n, 0))
+	       interpret_tmpl(p1, a)
+	    else
+	       interpret_tmpl(p2, a)
+	 } else if (token_type(v) :: "loop") {
+# loop - (name)
+	    if (datatype(n) :: "ARRAY") {
+	       p1 = value(next(value(p)))
+	       for (i = 1, n[i], i = i + 1)
+		  interpret_tmpl(p1, n[i]);
+	    }
 	 }
       }
-      p = next(p)
    }
 }
 

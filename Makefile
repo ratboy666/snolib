@@ -34,7 +34,7 @@ T = AGT.tst      AI.tst       AOPA.tst     BALREV.tst   BALX.tst     \
     BRKREM.tst   HASH.tst     READL.tst    FOREACH.tst  SCOOP.tst    \
     CGI.tst      READFILE.tst SESSION.tst  GCD.tst      COMPLEX.tst  \
     COOKIE.tst   HTMLTMPL.tst JSON.tst     FCGI.tst     MAX.tst      \
-    DSERVE.tst   VDIFFER.tst  FOR.tst      FREEZE.tst
+    DSERVE.tst   VDIFFER.tst  FOR.tst      FREEZE.tst   ROUTING.tst
 
 # Library files FIXME: TRIAL should be removed.
 
@@ -64,7 +64,7 @@ CRACK.INC:    COUNT.INC
 CSNOBOL4.INC: FFI.INC
 CVAR.INC:     P64.INC      CHARS.INC    HASH.INC
 DDT.INC:      CHARS.INC    HOST.INC     READLINE.INC TRIMB.INC    \
-              QUOTE.INC
+              QUOTE.INC    VDIFFER.INC
 DISPLAY.INC:  BQ.INC       CHARS.INC
 DYNAMIC.INC:  BQ.INC       HOST.INC
 FASTBAL.INC:  UNIQUE.INC
@@ -106,7 +106,7 @@ SESSION.INC:  BQ.INC       NDBM.INC     SEQ.INC      CRACK.INC    \
               HASH.INC     TIME.INC
 COOKIE.INC:   HASH.INC     TIME.INC     DEXP.INC     CHARS.INC
 HTMLTMPL.INC: LINK.INC     CHARS.INC    LAST.INC     REVL.INC     \
-              SWAP.INC     READFILE.INC SEQ.INC      HTMLESC.INC
+              SWAP.INC     READFILE.INC HTMLESC.INC
 JSON.INC:     CHARS.INC    HASH.INC     SIZEA.INC    HEX.INC      \
               CH.INC       SEQ.INC
 SIZEA.INC:    BRKREM.INC   SWAP.INC
@@ -118,7 +118,8 @@ DSERVE.INC:   CHARS.INC    REPL.INC     CSNOBOL4.INC HOST.INC     \
               MAX.INC      DDT.INC
 VDIFFER.INC:  SYSTEM.INC
 FREEZE.INC:   SYSTEM.INC
-READFILE.INC: SYSTEM.INC   CHARS.INC
+READFILE.INC: SYSTEM.INC   CHARS.INC    BRKREM.INC
+ROUTING.INC:  SDIFF.INC    UNIQUE.INC   BRKREM.INC
 
 # Bootstrapping. We need embed, ifs, sweave, stangle, snocone and ED4
 # to build the code. We keep embed0, ifs0, sweave0 and stangle0 for
@@ -281,7 +282,7 @@ docs:         AGT.html      AI.html       ALL.html      AOPA.html     \
               stangle       sweave        greenbar.gif  index.html    \
               utility.html  snocone.html  cpmed.html    ED4           \
               FCGI.html     DSERVE.html   VDIFFER.html  FOR.html      \
-              FREEZE.html
+              FREEZE.html   ROUTING.html
 	touch docs
 
 snocone.html: snocone.htm
@@ -402,3 +403,4 @@ DSERVE.INC: DSERVE.SNO
 VDIFFER.INC: VDIFFER.SNO
 FOR.INC: FOR.SNO
 FREEZE.INC: FREEZE.SNO
+ROUTING.INC: ROUTING.SNO

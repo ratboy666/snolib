@@ -1,9 +1,10 @@
--LINE 15 "READFILE.lss"
+-LINE 19 "READFILE.lss"
 -INCLUDE 'CHARS.SPT'
 -INCLUDE 'SYSTEM.SPT'
+-INCLUDE 'BRKREM.SPT'
 -STITL READLINE
 -EJECT
--LINE 51 "READFILE.lss"
+-LINE 78 "READFILE.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -21,8 +22,29 @@
 *
 * READFILE.lss
 *
--LINE 20 "READFILE.lss"
+-LINE 25 "READFILE.lss"
+         DEFINE('WRITEFILE(FILE,S)F,U,E,T')
          DEFINE('READFILE(FILE)F,U,E')                   :(READFILE_END)
+*
+WRITEFILE
+         SYSTEM() 'CSNOBOL4'                              :S(WRITEFILE3)
+         U = 20
+         OUTPUT(.F, U, FILE)                                 :F(FRETURN)
+WRITEFILE2
+         S BRKREM(CHARS_NL) . T (CHARS_NL | NULL) =
+         F = T
+         IDENT(S)                             :S(READFILE4)F(WRITEFILE2)
+WRITEFILE3
+         U = IO_FINDUNIT()
+         OUTPUT(.F, U, 'B,65536', FILE)
+WRITEFILE4
+         T = LT(SIZE(S), 65536) S                         :F(WRITEFILE6)
+         S =
+WRITEFILE5
+         F = T
+         IDENT(S)                             :S(READFILE4)F(WRITEFILE4)
+WRITEFILE6
+         S LEN(65536) . T REM . S                          :(WRITEFILE5)
 *
 READFILE SYSTEM() 'CSNOBOL4'                               :S(READFILE3)
          U = 20
@@ -33,6 +55,7 @@ READFILE3
          INPUT(.F, U, 'B,65536', FILE)                       :F(FRETURN)
 READFILE2
          READFILE = READFILE F E                           :S(READFILE2)
+READFILE4
          ENDFILE(U)
          DETACH(.F)                                            :(RETURN)
 *

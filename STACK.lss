@@ -1,8 +1,8 @@
 <h1>STACK - Create stack functions</h1>
 
 [[STACK(SUF)]] will create unique stack functions with the given
-suffix. [[STACK('A')]] creates functions [[PUSHA(V)]], [[POPA()]],
-and [[TOPA()]].
+suffix. [[STACK('A')]] creates functions [[PUSH_A(V)]], [[POP_A()]],
+and [[TOP_A()]].
 
 <h2>Uses</h2>
 <a href="LINK.html">LINK</a><br>
@@ -15,19 +15,22 @@ and [[TOPA()]].
 
 <<STACK>>=
          DEFINE('STACK(SUF)S')
-         STACK()                                            :(STACK_END)
+         STACK()
+         OPSYN('PUSH', 'PUSH_')
+         OPSYN('POP',  'POP_')
+         OPSYN('TOP',  'TOP_')                              :(STACK_END)
 *
-STACK    S = 'PUSHSUF STACK_SUF = LINK(V, STACK_SUF)        ;'
-+            '        PUSHSUF = .VALUE(STACK_SUF) :(NRETURN);'
-+            'POPSUF  IDENT(STACK_SUF)           :S(FRETURN);'
-+            '        POPSUF = VALUE(STACK_SUF)             ;'
-+            '        STACK_SUF = NEXT(STACK_SUF)  :(RETURN);'
-+            'TOPSUF  IDENT(STACK_SUF)           :S(FRETURN);'
-+            '        TOPSUF = .VALUE(STACK_SUF)  :(NRETURN);'
+STACK    S = 'PUSH_SUF STACK_SUF = LINK(V, STACK_SUF)         ;'
++            '         PUSH_SUF = .VALUE(STACK_SUF) :(NRETURN);'
++            'POP_SUF  IDENT(STACK_SUF)            :S(FRETURN);'
++            '         POP_SUF = VALUE(STACK_SUF)             ;'
++            '         STACK_SUF = NEXT(STACK_SUF)   :(RETURN);'
++            'TOP_SUF  IDENT(STACK_SUF)            :S(FRETURN);'
++            '         TOP_SUF = .VALUE(STACK_SUF)  :(NRETURN);'
          CODE(REPL(S, 'SUF', SUF))
-         DEFINE('PUSH' SUF '(V)')
-         DEFINE('POP'  SUF '()' )
-         DEFINE('TOP'  SUF '()' )                              :(RETURN)
+         DEFINE('PUSH_' SUF '(V)')
+         DEFINE('POP_'  SUF '()' )
+         DEFINE('TOP_'  SUF '()' )                             :(RETURN)
 *
 STACK_END
 @

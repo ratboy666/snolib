@@ -1,3 +1,5 @@
+#!/usr/bin/bash 
+ exec "snobol4" "-b" "$0" "$@" 
 -PLUSOPS 1 
   :(FOREACH.1)
 -STITL FOREACH 

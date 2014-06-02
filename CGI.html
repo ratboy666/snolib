@@ -145,15 +145,18 @@ CGI_INIT CGI_INIT = SUPER(&#39;INIT&#39;)
 <font color="#818181"><i>*</i></font>
          |.ENV = DIFFER(USE_FCGI) FCGI_ENV                 <b>:S(CGI_ENV_2)</b>
 <font color="#818181"><i>*</i></font>
-         |.ENV = TABLE(27)
-         A = %(&#39;CONTEXT_DOCUMENT_ROOT,CONTEXT_PREFIX,DOCUMENT_ROOT,&#39;
-+              &#39;GATEWAY_INTERFACE,HTTP_ACCEPT,HTTP_ACCEPT_ENCODING,&#39;
-+              &#39;HTTP_ACCEPT_LANGUAGE,HTTP_CACHE_CONTROL,&#39;
-+              &#39;HTTP_CONNECTION,HTTP_COOKIE,HTTP_HOST,HTTP_USER_AGENT,&#39;
-+              &#39;QUERY_STRING,REMOTE_ADDR,REQUEST_METHOD,REQUEST_SCHEME,&#39;
-+              &#39;REQUEST_URI,SCRIPT_FILENAME,SCRIPT_NAME,SERVER_ADDR,&#39;
-+              &#39;SERVER_ADMIN,SERVER_NAME,SERVER_PORT,SERVER_PROTOCOL,&#39;
-+              &#39;SERVER_SOFTWARE,CONTENT_LENGTH,HTTP_REFERER&#39;)
+         |.ENV = TABLE(38)
+         A = %(&#39;AUTH_TYPE,CONTENT_LENGTH,CONTENT_TYPE,&#39;
++              &#39;CONTEXT_DOCUMENT_ROOT,CONTEXT_PREFIX,DOCUMENT_ROOT,&#39;
++              &#39;GATEWAY_INTERFACE,HTTP_ACCEPT,HTTP_ACCEPT_CHARSET,&#39;
++              &#39;HTTP_ACCEPT_ENCODING,HTTP_ACCEPT_LANGUAGE,&#39;
++              &#39;HTTP_CACHE_CONTROL,HTTP_CONNECTION,HTTP_COOKIE,&#39;
++              &#39;HTTP_HOST,HTTP_REFERER,HTTP_USER_AGENT,LIB_PATH,PATH,&#39;
++              &#39;PATH_INFO,PATH_TRANSLATED,QUERY_STRING,REMOTE_ADDR,&#39;
++              &#39;REMOTE_HOST,REMOTE_IDENT,REMOTE_PORT,REQUEST_METHOD,&#39;
++              &#39;REQUEST_SCHEME,REQUEST_URI,SCRIPT_FILENAME,SCRIPT_NAME,&#39;
++              &#39;SERVER_ADDR,SERVER_ADMIN,SERVER_NAME,SERVER_PORT,&#39;
++              &#39;SERVER_PROTOCOL,SERVER_SIGNATURE,SERVER_SOFTWARE&#39;)
          SEQ(&#39; (|.ENV)&lt;A&lt;I&gt;&gt; = HOST(HOST_GETENV, A&lt;I&gt;); A&lt;I&gt; &#39;, .I)
 CGI_ENV_2
          $|.LOG = &#39;FCGI_ENV IN CGI&#39;
@@ -307,6 +310,7 @@ but predate SCOOP.
 -INCLUDE &#39;SESSION.INC&#39;
 -INCLUDE &#39;JSON.INC&#39;
 -INCLUDE &#39;DSERVE.INC&#39;
+-INCLUDE &#39;ROUTING.INC&#39;
 <font color="#818181"><i>*</i></font>
 -CMNT EMBED THE TEMPLATES NEEDED. FOR NORMAL USE, THE TEMPLATES WOULD
 -CMNT BE MAINTAINED SEPARATELY, BUT THIS IS THE TEST SAMPLE.
@@ -328,16 +332,16 @@ but predate SCOOP.
     &lt;script src=&quot;/jquery-1.11.1.js&quot;&gt;&lt;/script&gt;
     &lt;script&gt;
       // js code goes here
-      $( document ).ready(function() {
-        // Your code here.
-        $( &quot;a&quot; ).click(function( event ) {
-          alert( &quot;The link will no longer take you to jquery.com&quot; );
-          event.preventDefault();
-          $( this ).hide( &quot;slow&quot; );
-        });
-        $( &quot;a&quot; ).addClass( &quot;test&quot; );
+//      $( document ).ready(function() {
+//        // Your code here.
+//        $( &quot;a&quot; ).click(function( event ) {
+//          alert( &quot;The link will no longer take you to jquery.com&quot; );
+//          event.preventDefault();
+//          $( this ).hide( &quot;slow&quot; );
+//        });
+//        $( &quot;a&quot; ).addClass( &quot;test&quot; );
         //removeClass()
-        });
+//        });
     &lt;/script&gt;
     &lt;!-- Text with some variables to be filled in --&gt;
     &lt;p&gt;
@@ -354,6 +358,12 @@ but predate SCOOP.
       vehicle &lt;tmpl_var VEHICLE&gt;
     &lt;p&gt;
       request uri &lt;tmpl_var REQUEST_URI&gt;
+    &lt;p&gt;
+      path info &lt;tmpl_var PATH_INFO&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;cgi-bin/cgi.fcgi/showname/Adrian&quot;&gt;Hello World&lt;/a&gt;
+      &lt;li&gt;&lt;a href=&quot;cgi-bin/cgi.fcgi/showsum/22/11&quot;&gt;Calculator&lt;/a&gt;
+    &lt;/ul&gt;
     &lt;p&gt;
       &lt;form name=&quot;input&quot; action=&quot;cgi.fcgi&quot; method=&quot;GET&quot;&gt;
         First name<b>: &lt;input type=&quot;text&quot; name=&quot;firstname&quot;&gt;&lt;br&gt;</b>
@@ -514,6 +524,18 @@ NO_T_C
 <font color="#818181"><i>* ON GET, APPENDS &#39;/&#39; ACTION TO THE END BEFORE THE ? PART.</i></font>
 <font color="#818181"><i>*</i></font>
          A&lt;&#39;REQUEST_URI&#39;&gt; = E&lt;&#39;REQUEST_URI&#39;&gt;
+         A&lt;&#39;PATH_INFO&#39;&gt; = E&lt;&#39;PATH_INFO&#39;&gt;
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* TAKE REQUEST_METHOD, PATH_INFO AND MATCH AGAINST ROUTING PATTERN</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* V = TABLE()</i></font>
+<font color="#818181"><i>* R = ROUTING_INIT()</i></font>
+<font color="#818181"><i>* M = ROUTING(METHOD, PATH, .V)</i></font>
+<font color="#818181"><i>* A = ACTION</i></font>
+<font color="#818181"><i>* R = ROUTING_ADD(R, M, A)</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* (METHOD &#39;\&#39; PATH_INFO) R</i></font>
+<font color="#818181"><i>* IF SUCCESS, ACTION IS SET, V&lt;&gt; IS FILLED IN</i></font>
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* FROM THE COOKIE JAR</i></font>
 <font color="#818181"><i>*</i></font>
@@ -594,7 +616,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Wed May 28 04:14:06 EDT 2014</p></td><td><p align=right>
+Sun Jun  1 23:27:59 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

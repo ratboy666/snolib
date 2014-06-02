@@ -26,17 +26,18 @@ modules using [[UNIQUE()]].
 
 <<UNIQUE>>=
          DEFINE('MAKE_UNIQUE(SUF)S')
-         MAKE_UNIQUE()                                     :(UNIQUE_END)
+         MAKE_UNIQUE()
+         OPSYN('UNIQUE', 'UNIQUE_')                        :(UNIQUE_END)
 *
 MAKE_UNIQUE
          S =
-+ 'UNIQUESUF  UNIQUESUF_ = IDENT(I) UNIQUESUF_ + 1 :F(UNIQUECSUF);'
-+ '           UNIQUESUF = "USUF" UNIQUESUF_ "_"         :(RETURN);'
-+ 'UNIQUECSUF $("USUF" UNIQUESUF_ "_") = '
-+ '           ?(UNIQUESUF_ = GT(UNIQUESUF_,0) UNIQUESUF_ - 1)'
-+ '                                       :S(UNIQUECSUF)F(RETURN);'
++ 'UNIQUE_SUF  UNIQUE_SUF_ = IDENT(I) UNIQUE_SUF_ + 1  :F(UNIQUECSUF);'
++ '            UNIQUE_SUF = "USUF" UNIQUE_SUF_ "_"          :(RETURN);'
++ 'UNIQUECSUF $("USUF" UNIQUE_SUF_ "_") = '
++ '           ?(UNIQUE_SUF_ = GT(UNIQUE_SUF_,0) UNIQUE_SUF_ - 1)'
++ '                                           :S(UNIQUECSUF)F(RETURN);'
          CODE(REPL(S, 'SUF', SUF))
-         DEFINE('UNIQUE' SUF '(I)')                            :(RETURN)
+         DEFINE('UNIQUE_' SUF '(I)')                           :(RETURN)
 *
 UNIQUE_END
 @

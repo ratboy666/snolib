@@ -18,7 +18,7 @@ js or none.
 <p align="justify"><font face="Sorts Mill Goudy">
 The template is read in (usually with readfile), compiled with
 tmpl_compile, and expanded with tmpl_interpret. The arguments for
-tmpl_interpet are in a table. Array variable is needed for loop. Each
+tmpl_interpret are in a table. Array variable is needed for loop. Each
 array element is a table with the new variables. These typically come
 from a database.
 </font></p>
@@ -76,7 +76,6 @@ struct tmpl_token { token_type, token_end, token_args }
 //-include &#39;REVL.INC&#39;
 //-include &#39;SWAP.INC&#39;
 //-include &#39;READFILE.INC&#39;
-<font color="#818181"><i># //-include &#39;SEQ.INC&#39;</i></font>
 //-include &#39;HTMLESC.INC&#39;
 
 <font color="#818181"><i># Initialize patterns for HTML template module</i></font>
@@ -135,52 +134,42 @@ procedure none_escape(s) {
 <font color="#818181"><i># Recursive interpret template</i></font>
 
 procedure interpret_tmpl(p, a) p1 p2 v n t e i {
-   while (p :!: &quot;&quot;) {
+   for (p, p :!: &quot;&quot;, p = next(p)) {
       v = value(value(p))
       if (token_type(v) :: &quot;text&quot;) {
-	 # text - text from template
+<font color="#818181"><i># text - text from template</i></font>
 	 tmpl_interpret = tmpl_interpret &amp;&amp; token_args(v)
-      } else if (token_type(v) :: &quot;var&quot;) {
-	 # var (name, default, escape)
+      } else {
 	 t = token_args(v)
-	 n = t[&quot;name&quot;]
-	 v = a[n]
-	 if (v :: &quot;&quot;)
-	    v = t[&quot;default&quot;]
-	 e = t[&quot;escape&quot;]
-	 e = ident(e) &quot;none&quot;
-	 e = e &amp;&amp; &quot;_escape&quot;
-	 n = &amp;errlimit
-	 &amp;errlimit = 1
-	 v = apply(e, v)
-	 &amp;errlimit = n
-	 tmpl_interpret = tmpl_interpret &amp;&amp; v
-      } else if (&quot;if unless&quot; ? token_type(v)) {
-	 # if/unless (name) else
-	 t = token_args(v)
-	 n = t[&quot;name&quot;]
-	 n = a[n]
-	 p1 = value(next(value(p)))
-	 p2 = next(next(value(p)))
-	 if (token_type(v) :: &quot;unless&quot;)
-	    swap(.p1, .p2)
-	 if ((n :!: &quot;&quot;) || ne(+n, 0))
-	    interpret_tmpl(p1, a)
-	 else
-	    interpret_tmpl(p2, a)
-      } else if (token_type(v) :: &quot;loop&quot;) {
-	 # loop (name)
-	 t = token_args(v)
-	 n = t[&quot;name&quot;]
-	 n = a[n]
-	 if (datatype(n) :: &quot;ARRAY&quot;) {
+	 n = a[t[&quot;name&quot;]]
+	 if (token_type(v) :: &quot;var&quot;) {
+<font color="#818181"><i># var - (name, default, escape)</i></font>
+	    if (n :: &quot;&quot;)
+	       n = t[&quot;default&quot;]
+	    e = t[&quot;escape&quot;]
+	    e = ident(e) &quot;none&quot;
+	    e = e &amp;&amp; &quot;_escape&quot;
+	    v = &amp;errlimit; &amp;errlimit = 1; n = apply(e, n); &amp;errlimit = v
+	    tmpl_interpret = tmpl_interpret &amp;&amp; n
+	 } else if (&quot;if unless&quot; ? token_type(v)) {
+<font color="#818181"><i># if/unless - (name) else</i></font>
 	    p1 = value(next(value(p)))
-<font color="#818181"><i>#	    seq(&#39; interpret_tmpl(p1, n[i]) &#39;, .i)</i></font>
-            for (i = 1, n[i], i = i + 1)
-               interpret_tmpl(p1, n[i]);
+	    p2 = next(next(value(p)))
+	    if (token_type(v) :: &quot;unless&quot;)
+	       swap(.p1, .p2)
+	    if ((n :!: &quot;&quot;) || ne(+n, 0))
+	       interpret_tmpl(p1, a)
+	    else
+	       interpret_tmpl(p2, a)
+	 } else if (token_type(v) :: &quot;loop&quot;) {
+<font color="#818181"><i># loop - (name)</i></font>
+	    if (datatype(n) :: &quot;ARRAY&quot;) {
+	       p1 = value(next(value(p)))
+	       for (i = 1, n[i], i = i + 1)
+		  interpret_tmpl(p1, n[i]);
+	    }
 	 }
       }
-      p = next(p)
    }
 }
 
@@ -307,7 +296,7 @@ procedure tmpl_parse_args(s) n v {
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Wed May 28 12:33:02 EDT 2014</p></td><td><p align=right>
+Sun Jun  1 23:14:21 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

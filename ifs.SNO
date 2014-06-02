@@ -1,0 +1,310 @@
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-TITLE IFS
+-LINE 352 "ifs.lss"
+START
+-LINE 63 "ifs.lss"
+-INCLUDE 'CHARS.INC'
+-INCLUDE 'HOST.INC'
+-INCLUDE 'CRACK.INC'
+-INCLUDE 'FASTBAL.INC'
+-INCLUDE 'SYSTEM.INC'
+-INCLUDE 'VDIFFER.INC'
+-STITL
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                         ###  #######   #####                         *
+*                          #   #        #     #                        *
+*                          #   #        #                              *
+*                          #   #####     #####                         *
+*                          #   #              #                        *
+*                          #   #        #     #                        *
+*                         ###  #         #####                         *
+*                                                                      *
+* IFS              PREPROCESS FOR %IF CONDITIONALS                     *
+*                                                                      *
+* CONVERTED FROM IF.SPT                                                *
+*                                                                      *
+************************************************************************
+*
+* ifs.lss
+*
+-LINE 72 "ifs.lss"
+-PLUSOPS 1
+*
+         TERMINAL = 'IFS (WED NOV  6 13:40:26 EST 2013)'
+*
+* SYSTEM() FAILS IF ANCHORED
+*
+         SYSTEM = SYSTEM()
+*
+         &ANCHOR = 1
+         &CODE = 1
+*
+* USEFUL CONSTANTS
+*
+         LC = '%'
+         LC = HOST(HOST_GETENV, 'IFSLC')
+         WHITE = SPAN(' ' CHARS_HT)
+         OPT_WS = WHITE | NULL
+         NAME = ANY(&LCASE &UCASE)
++               (SPAN(&LCASE &UCASE &DIGITS '_.') | NULL)
+*
+* SYMTBL TRACKS DEFINED CONDITIONAL SYMBOLS. (UNDEFINED SYMBOLS ARE
+* ASSIGNED NULL VALUES IN SYMTBL.)
+*
+         SYMTBL = TABLE(101)
+*
+* STATESTK MAINTAINS ALL STATE INFORMATION WHILE PROCESSING CONDITIONAL
+* STATEMENTS. NESTLEVEL INDEXES THE TOP ENTRY. ANOTHER VARIABLE, TOP,
+* HAS A COPY OF SAVESTK<NESTLEVEL>.
+*
+         STATESTK = TABLE()
+         INCNAME = TABLE()
+         INCSTACK = TABLE()
+         INCLNNO = TABLE()
+         NESTLEVEL = 0
+         TOP =
+*
+* EACH STATE ENTRY IN STATESTK CONTAINS STATE INFORMATION ABOUT THE
+* PROCESSING FOR EACH ACTIVE %IF. THE STATE IS MAINTAINED AS 2 FIELDS:
+*
+*     RESULT  THE RESULT OF THE %IF EXPRESSION EVALUATION-
+*             TRUE, FALSE, OR BYPASS
+*
+*     MODE    WHETHER PROCESSING THEN OR ELSE PORTION OF %IF
+*
+         DATA('STATE(RESULT,MODE)')
+         FALSE = 0
+         TRUE = 1
+         BYPASS = 2
+         ELSE = 0
+         THEN = 1
+*
+* PROCESSREC IS INDEXED BY THE CURRENT RESULT AND MODE TO DETERMINE
+* WHETHER OR NOT A STATEMENT SHOULD BE PROCESSED AND WRITTEN TO THE
+* OUTPUT FILE. DEFAULT VALUE IS 0 -- IGNORE STATEMENT.
+*
+        PROCESSREC = ARRAY(FALSE ':' BYPASS ',' ELSE ':' THEN, 0)
+        PROCESSREC<TRUE, THEN> = 1
+        PROCESSREC<FALSE, ELSE> = 1
+*
+*  FUNCTIONS
+*
+*
+*  OUTPUT = PROCESS(INPUT)
+*
+*  PROCESS LINE IN THE CONTEXT OF CURRENT CONDITIONALS.
+*  FAILS IF LINE IS TO BE IGNORED. OTHERWISE IT RETURNS THE INPUT.
+*
+        DEFINE('PROCESS(PROCESS)CONDCMD,CONDEXP')
+*
+*  P_CONDASM BREAKS UP CONDITIONAL ASSEMBLY DIRECTIVES.
+*
+         P_CONDASM = OPT_WS LC (
++           (('IF' | 'if') . CONDCMD OPT_WS BAL . CONDEXP
++                            OPT_WS RPOS(0)) |
++           (('ENDIF' | 'endif') . CONDCMD) |
++           (('ELSE' | 'else') . CONDCMD) )               :(PROCESS_END)
+*
+PROCESS PROCESS ? P_CONDASM                                 :S($CONDCMD)
+*
+*  PROCESS STATEMENTS OTHER THAN CONDITIONAL DIRECTIVES.
+*
+         EQ(NESTLEVEL, 0)                                     :S(RETURN)
+         EQ(PROCESSREC<RESULT(TOP), MODE(TOP)>, 0)  :S(FRETURN)F(RETURN)
+*
+*  PROCESS %IF (EXPRESSION)
+*
+IF       EQ(NESTLEVEL)                                          :S(IFOK)
+*
+* HERE FOR NESTED %IF
+*
+         NE(PROCESSREC<RESULT(TOP), MODE(TOP)>)                 :S(IFOK)
+         NESTLEVEL = NESTLEVEL + 1
+         TOP = STATESTK<NESTLEVEL> = STATE(BYPASS, THEN)      :(FRETURN)
+*
+* HERE FOR %IF TO BE PROCESSED NORMALLY.
+*
+IFOK     NESTLEVEL = NESTLEVEL + 1
+         TOP = STATESTK<NESTLEVEL> = STATE(
++           (EQ(EVALUATE(CONDEXP), 1) TRUE, FALSE),
++           THEN)                                             :(FRETURN)
+*
+* PROCESS %ELSE
+*
+ELSE     MODE(TOP) = NE(NESTLEVEL) ELSE                      :S(FRETURN)
+         TERMINAL = LC 'ELSE ENCOUNTERED OUTSIDE OF ' LC 'IF,' REPORT()
++                                                                 :(END)
+*
+* PROCESS %ENDIF
+*
+ENDIF    NESTLEVEL = NE(NESTLEVEL) NESTLEVEL - 1           :F(ENDIF_ERR)
+         TOP = (NE(NESTLEVEL) STATESTK<NESTLEVEL>, '')        :(FRETURN)
+ENDIF_ERR
+         TERMINAL = LC 'ENDIF ENCOUNTERED OUTSIDE OF ' LC 'IF,'
++           REPORT()                                              :(END)
+*
+PROCESS_END
+*
+* EVALUATE AN ARGUMENT OF THE FORM '(OPERAND OPR OPERAND)'
+*
+         DEFINE('EVALUATE(EXP)ARG1,ARG2,OPERATOR')
+         P_OPERAND = NAME | SPAN(&DIGITS) | BAL
+         P_OPERATOR = 'OR' | 'or' | 'AND' | 'and' | 'NE' 'ne' |
++                     'EQ' | 'eq'
+         P_EV1 = P_OPERAND . ARG1 WHITE P_OPERATOR . OPERATOR
++           WHITE P_OPERAND . ARG2
+         P_EV2 = P_OPERAND . ARG1 '' . OPERATOR . ARG2
+         P_EV3 = '(' OPT_WS (P_EV1 | P_EV2) OPT_WS ')' RPOS(0)
+                                                         :(EVALUATE_END)
+EVALUATE EXP ? P_EV3                                         :F(EVAL_ER)
+         EVALUATE = (DIFFER(OPERATOR)
++           APPLY(OPERATOR '.', OPER(ARG1), OPER(ARG2)),
++           OPER(ARG1))                                        :(RETURN)
+EVAL_ER  TERMINAL = 'BAD EXPRESSION: ' EXP REPORT()               :(END)
+EVALUATE_END
+*
+* EVALUATE AN OPERAND TO PRODUCE VALUE OF 0 OR 1
+* IF ARGUMENT IS NAME, GET ITS VALUE FROM THE SYMTABLE. OTHERWISE
+* IF IT IS A SIMPLE INTEGER, RETURN IT. OTHERWISE IT MUST BE
+* A PARENTHESIZED EXPRESSION. CALL EVALUATE.
+*
+         DEFINE('OPER(ARG)')                                 :(OPER_END)
+OPER     OPER = INTEGER(ARG) ARG                              :S(RETURN)
+         IDENT(SUBSTR(ARG, 1, 1), '(')                        :S(OPER.1)
+         OPER = SYMTBL<ARG>
+         DIFFER(OPER)                                         :S(RETURN)
+         TERMINAL = 'UNDEFINED OPERAND: ' ARG REPORT()            :(END)
+OPER.1   OPER = EVALUATE(ARG)                                  :(RETURN)
+OPER_END
+*
+* EQ OPERATOR -- RETURNS 0 OR 1
+*
+         DEFINE('EQ.(A,B)')                                    :(EQ.END)
+EQ.      EQ. = (EQ(A, B) 1, 0)                                 :(RETURN)
+EQ.END
+*
+* NE OPERATOR -- RETURNS 0 OR 1
+*
+         DEFINE('NE.(A,B)')                                    :(NE.END)
+NE.      NE. = (EQ(A, B) 0, 1)                                 :(RETURN)
+NE.END
+*
+* OR OPERATOR -- RETURNS 0 OR 1
+*
+         DEFINE('OR.(A,B)')                                    :(OR.END)
+OR.      OR. = (EQ(A) EQ(B) 0, 1)                              :(RETURN)
+OR.END
+*
+* AND OPERATOR -- RETURNS 0 OR 1
+*
+         DEFINE('AND.(A,B)')                                  :(AND.END)
+AND.     AND. = (EQ(A, 1) EQ(B, 1) 1, 0)                       :(RETURN)
+AND.END
+*
+* RETURN CURRENT LINE NUMBER AND FILE NAME.
+*
+         DEFINE('REPORT()')                                :(REPORT_END)
+REPORT   REPORT = ' IN FILE ' INNAME ', LINE ' +LINENO         :(RETURN)
+REPORT_END
+*
+* HERE'S THE 'MAIN' PROGRAM.
+*
+         P_SET = OPT_WS LC ('SET' | 'set') OPT_WS '(' OPT_WS NAME . ARG1
++           OPT_WS ','
++           OPT_WS FASTBAL('(<[]>)', "'" '"', ',)') . ARG2 OPT_WS ')'
+         P_INCLUDE = OPT_WS LC ('INCLUDE' | 'include') OPT_WS
++           '(' BREAK(')') . ARG1 ')'
+         P_COMMENT = OPT_WS LC '*' OPT_WS '(' BREAK(')') ')'
+*
+* LOOP UNTIL END OF INPUT.
+*
+* READS STANDARD INPUT, WRITES STANDARD OUTPUT.
+*
+         LSSTYPE = HOST(4, 'LSS')
+         FN = HOST(2, HOST(3))
+         INPUT(.INPUT, 10,, FN)                               :F(NONAME)
+NONAME   INVAR  = .INPUT
+         INNAME = 'STDIN'
+         FILELEVEL = 0
+*
+         LINELEAD =
+         LINELEAD = ?(LSSTYPE ? 'SNOBOL4') '-LINE 1'
+         LINELEAD = ?(LSSTYPE ? 'C') '#line 1'
+         LINELEAD = ?(LSSTYPE ? 'ASM') '%LINE 1'
+         OUTPUT = VDIFFER(LINELEAD) ' "' VDIFFER(FN) '"'
+*
+* MAIN LOOP READING AND WRITING FILES
+*
+LOOP     LINE = $INVAR                                           :F(EOF)
+         LINENO = LINENO + 1
+         RESULT = PROCESS(LINE)                                 :F(LOOP)
+         RESULT ? P_COMMENT                                     :S(LOOP)
+*
+* INPUT LINE TO BE RETAINED. LOOK FOR %SET COMMAND. IF FOUND, DEFINE
+* THE SYMBOL AND OMIT THE LINE FROM THE OUTPUT FILE.
+*
+         RESULT ? P_SET                                   :F(CK_INCLUDE)
+         V = EVAL(ARG2)
+         SYMTBL<ARG1> = INTEGER(V) +V                           :S(LOOP)
+         TERMINAL = LC 'SET NON-NUMERIC VALUE: ' ARG2 REPORT()    :(END)
+*
+* CHECK FOR %INCLUDE COMMAND. STRIP ANY SURROUNDING QUOTE MARKS.
+*
+CK_INCLUDE
+         RESULT ? P_INCLUDE                                   :F(PUTOUT)
+         ARG1 ? "'" BREAK("'") . ARG1 "'" RPOS(0)
+         FILELEVEL = FILELEVEL + 1
+         INCSTACK<FILELEVEL> = INVAR
+         INCNAME<FILELEVEL> = INNAME
+         INCLNNO<FILELEVEL> = LINENO
+         INVAR = 'INPUT' FILELEVEL
+*
+* TRY THE CURRENT DIRECTORY; IF THE FILE IS NOT THERE, TRY IFSDIR
+* AND THEN SNOLIB. SHOULD DO PATH SEARCH (SEE LSINC).
+*
+         DS = HOST(HOST_DIR_SEP)
+         INPUT(INVAR, FILELEVEL + 19,, ARG1)                    :S(INC1)
+         X = HOST(HOST_GETENV, 'IFSDIR')                        :F(INC3)
+         INPUT(INVAR, FILELEVEL + 19,, X DS ARG1)               :S(INC1)
+INC3     X = HOST(HOST_GETENV, 'SNOLIB')                        :S(INC2)
+         X = HOST(HOST_SNOLIB_DIR)
+INC2     INPUT(INVAR, FILELEVEL + 19,, X DS ARG1)               :S(INC1)
+         TERMINAL = LC 'INCLUDE FILE NOT FOUND: ' "'" ARG1 "'" REPORT()
++                                                                 :(END)
+INC1     INNAME = ARG1
+         LINELEAD =
+         LINELEAD = ?(LSSTYPE ? 'SNOBOL4') '-LINE 1 "'
+         LINELEAD = ?(LSSTYPE ? 'C') '#line 1 "'
+         LINELEAD = ?(LSSTYPE ? 'ASM') '%LINE 1 "'
+         OUTPUT = VDIFFER(LINELEAD) INNAME '"'
+INC4     LINENO = 0                                              :(LOOP)
+*
+* OUTPUT THE PROCESSED LINE
+*
+PUTOUT   OUTPUT = RESULT                                         :(LOOP)
+*
+* HERE ON EOF. CHECK IF INSIDE AN INCLUDE FILE.
+*
+EOF      EQ(FILELEVEL, 0)                                       :S(EOF2)
+         ENDFILE(FILELEVEL + 19)
+         INVAR = INCSTACK<FILELEVEL>
+         INNAME = INCNAME<FILELEVEL>
+         LINENO = INCLNNO<FILELEVEL>
+         LINELEAD =
+         LINELEAD = ?(LSSTYPE ? 'SNOBOL4') '-LINE '
+         LINELEAD = ?(LSSTYPE ? 'C') '#line '
+         LINELEAD = ?(LSSTYPE ? 'ASM') '%LINE '
+         OUTPUT = VDIFFER(LINELEAD) LINENO + 1 ' "' INNAME '"'
+         FILELEVEL = FILELEVEL - 1                               :(LOOP)
+*
+EOF2     TERMINAL = NE(NESTLEVEL) 'EOF IN NESTED IF AT LEVEL ' NESTLEVEL
++                                                                :S(END)
+         &CODE = 0                                                :(END)
+*
+END START
+*
+* CE: .MSNOBOL4;

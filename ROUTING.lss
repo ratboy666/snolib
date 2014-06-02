@@ -1,0 +1,142 @@
+<h1>ROUTING - Routing support for CGI</h1>
+
+[[ROUTING]] implements routing for HTTP requests. The route table is
+a pattern that matches the method and path_info. It sets variables
+in the table passed in to ROUTING(), and sets ACTION.
+
+<h2>See Also</h2>
+<a href="CGI.html">CGI</a>
+
+<h2>Uses</h2>
+<a href="SDIFF.html">SDIFF<a><br>
+<a href="UNIQUE.html">UNIQUE<a><br>
+<a href="BRKREM.html">BRKREM<a>
+
+<<INCLUDES>>=
+-INCLUDE 'SDIFF.INC'
+-INCLUDE 'UNIQUE.INC'
+-INCLUDE 'BRKREM.INC'
+@
+
+<<ROUTING>>=
+         DEFINE('ROUTING_INIT()')
+         DEFINE('ROUTING_ADD(ROUTE,PATTERN,ACTION_)NAME,P')
+         DEFINE('ROUTING(METHOD,ROUTE,VARS_)P,S')
+*
+         ROUTING_VAR = ':'
+         ROUTING_NAME_C = &UCASE &LCASE '0123456789' '._'
+         ROUTING_NAME = SDIFF(&ALPHABET, &UCASE &LCASE '0123456789._')
+         MAKE_UNIQUE('ROUTING')
+*
+                                                          :(ROUTING_END)
+*
+* INITIALIZE ROUTE. THE INITIAL ROUTE ALWAYS FAILS.
+*
+ROUTING_INIT
+         UNIQUE_ROUTING('CLEAR')
+         ROUTING_INIT = ABORT                                  :(RETURN)
+*
+* ADD PATTERN TO ROUTE, WITH ACTION. ON MATCH, YIELDS ACTION, AND
+* SUCCESS.
+*
+ROUTING_ADD
+         NAME = UNIQUE_ROUTING()
+         $NAME = ACTION_
+         P = EVAL('PATTERN *?(ACTION = ' NAME ')')
+         ROUTING_ADD = P | ROUTE                               :(RETURN)
+*
+* MAKE A ROUTING PATTERN. METHOD WILL BE SOMETHING LIKE 'GET', 'POST',
+* '', ('GET' | 'POST'). ROUTE WILL BE '/A/B/C', '/A/:VAR/C'
+*
+ROUTING  METHOD = IDENT(METHOD) BREAK('\')
+ROUTE_3  ROUTE POS(0) BRKREM(ROUTING_VAR) . S =
+         P = DIFFER(S) P S
+         IDENT(ROUTE)                                        :S(ROUTE_9)
+         ROUTE POS(0) LEN(1) BRKREM(ROUTING_NAME) . S =
+         IDENT(S)                                            :S(ROUTE_3)
+         ROUTE LEN(1) . B =                                  :F(ROUTE_4)
+         P = P BREAK(B) . ($VARS_)<S> B                       :(ROUTE_3)
+ROUTE_4  P = P REM . ($VARS_)<S>
+ROUTE_9  ROUTING = METHOD '\' P                                :(RETURN)
+*         
+ROUTING_END
+*
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "/usr/local/bin/snobol4" "-b" "$0" "$@"
+-INCLUDE 'ROUTING.INC'
+-INCLUDE 'DDT.INC'
+*
+         &CODE = 1
+         ROUTING = ROUTING_INIT()
+         ROUTING = ROUTING_ADD(ROUTING, 'A', 'ACTION 1')
+         ROUTING = ROUTING_ADD(ROUTING, 'B', 'ACTION 2')
+         &FULLSCAN = 1
+         ACTION =
+         'A' ROUTING
+         OUTPUT = ACTION
+         ACTION =
+         'B' ROUTING
+         OUTPUT = ACTION
+*
+* TEST COMPILING ROUTES
+*
+* V IS A TABLE THAT WILL STORE THE VARIABLES. METHOD WILL BE SEPARATED
+* FROM PATH_INFO WITH A '\'.
+*
+***         DDT()
+         V = TABLE()
+         P = ROUTING('', '/A/B', .V)
+         V = TABLE()
+         '\/A/B' P :F(NOTOK)
+         'POST\/A/B' P :F(NOTOK)
+*
+         P = ROUTING('', ':VAR', .V)
+         '\/A/B' P :F(NOTOK)
+         OUTPUT = V<'VAR'>
+*
+         P = ROUTING('', '/:VAR', .V)
+         'POST\/A/B' P :F(NOTOK)
+         OUTPUT = V<'VAR'>
+*
+         P = ROUTING('', '/:VARA/B', .V)
+         '\/A/B' P :F(NOTOK)
+         OUTPUT = V<'VARA'>
+*
+         P = ROUTING(('GET' | 'POST'), '/:VARA/:VARB', .V)
+         'GET\/A/B' P :F(NOTOK)
+         OUTPUT = V<'VARA'> ' ' V<'VARB'>
+*
+         &CODE = 0 :(END)
+NOTOK    OUTPUT = 'NOT OK'
+*
+END
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL ROUTING
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*      ######   #######  #     #  #######  ###  #     #   #####        *
+*      #     #  #     #  #     #     #      #   ##    #  #     #       *
+*      #     #  #     #  #     #     #      #   # #   #  #             *
+*      ######   #     #  #     #     #      #   #  #  #  #  ####       *
+*      #   #    #     #  #     #     #      #   #   # #  #     #       *
+*      #    #   #     #  #     #     #      #   #    ##  #     #       *
+*      #     #  #######   #####      #     ###  #     #   #####        *
+*                                                                      *
+* ROUTING                   ROUTING FOR CGI                            *
+*                                                                      *
+************************************************************************
+*
+* ROUTING.lss
+*
+<<ROUTING>>
+*
+* CE: .F.MSNOBOL4;
+@

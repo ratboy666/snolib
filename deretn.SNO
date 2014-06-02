@@ -1,0 +1,34 @@
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-TITLE DERETN
+-LINE 20 "deretn.lss"
+START
+*
+************************************************************************
+*                                                                      *
+*                                                                      *
+*         ######   #######  ######   #######  #######  #     #         *
+*         #     #  #        #     #  #           #     ##    #         *
+*         #     #  #        #     #  #           #     # #   #         *
+*         #     #  #####    ######   #####       #     #  #  #         *
+*         #     #  #        #   #    #           #     #   # #         *
+*         #     #  #        #    #   #           #     #    ##         *
+*         ######   #######  #     #  #######     #     #     #         *
+*                                                                      *
+* DERETN         REMOVE LINE NUMBERS FROM CODE SAVE FILE               *
+*                                                                      *
+************************************************************************
+*
+* deretn.lss
+*
+-LINE 6 "deretn.lss"
+         TERMINAL = 'DERETN (FRI NOV 22 00:38:55 EST 2013)'
+*
+         S = DUPL(' ', 5)
+*
+TOP      (INPUT S) LEN(5) REM . L                                :F(END)
+         OUTPUT = TRIM(L)                                         :(TOP)
+*
+END START
+*
+* CE: .MSNOBOL4;

@@ -23,15 +23,15 @@ IVARS(THIS)<'VARIABLE NAME'>
 ]]
 
 accesses instance variable [[VARIABLE NAME]] in the receiver. We
-OPSYN unary operator ^ to simplify this. [[^'var']] refers to instance
-variable [[var]] and can be used on either the left or right side of
-an assignment.
+OPSYN unary operator | to simplify this. [[|'var']] or [[|.var]]
+refers to instance variable [[var]] and can be used on either the
+left or right side of an assignment.
 
 {{
 [[^]] is usable as a unary operator in CSNOBOL4. SPITBOL.EXE does
 not support this. To accomodate, [[|]] is now used as the instance
 variable access operator. This works on both systems. Change the
-[[OPSYN()]] statement as appropriate.
+[[OPSYN()]] statement as appropriate if you want another operator.
 }}
 
 [[SEND(OBJECT,MESSAGE,ARGS)]] dispatches a message to the receiver,
@@ -83,10 +83,11 @@ again, and returning the result). The [[CLASS]] class implementation
 for [[DOES_NOT_UNDERSTAND]] displays an error and terminates the
 program.
 
-We don't expect the class tree to be very deep. SCOOP is designed as
-a light OOP tool to aid in variable management. Some subclassing is
-expected, but very deep class trees are not well supported. There is
-no method caching, so every method dispatch will do a tree search.
+We don't expect the class tree to be very deep. SCOOP is designed
+as a light OOP tool to aid in variable management. Some subclassing
+is expected, but very deep class trees are not well (effiently)
+supported. There is no method caching, so every method dispatch will
+do a tree search.
 
 String comparisions in SNOBOL4 are inexpensive. A string compare is
 a pointer compare. This means that representing messages by strings

@@ -1,281 +1,265 @@
 -PLUSOPS 1 
   :(HTMLTMPL.1)
 -LINE 53 "HTMLTMPL.lss" 
--LINE 70 "HTMLTMPL.lss"
+-LINE 69 "HTMLTMPL.lss"
   :(tmpl_init.END)
--LINE 74
+-LINE 73
 tmpl_init tmpl_dir = "./"
--LINE 78
+-LINE 77
  tmpl_ws = span(" " chars_tab) | ""
--LINE 79
+-LINE 78
  tmpl = ("/" | "") . h any("Tt") any("Mm") any("Pp") any("Ll") "_"
--LINE 81
+-LINE 80
  tmpl_tag = tmpl span(&ucase &lcase) . tag
--LINE 82
+-LINE 81
  tmpl_c = "<!-- " tmpl_ws tmpl_tag arb . arg " -->"
--LINE 83
+-LINE 82
  tmpl_t = "<" tmpl_tag break(">") . arg ">"
--LINE 84
+-LINE 83
  tmpl_piece = pos(0) breakx("<") . l (tmpl_t | tmpl_c) . p rem . r
--LINE 86
+-LINE 85
  tmpl_keys = "var if unless else loop include "
--LINE 90
+-LINE 89
  tmpl_arg_var = tmpl_ws (any(&lcase &ucase) span(&lcase 
 +&ucase '0123456789' "_")) . n tmpl_ws
--LINE 92
+-LINE 91
  tmpl_qval = '"' break('"') . v '"'
--LINE 93
+-LINE 92
  tmpl_sval = break(" " chars_tab) . v
--LINE 94
+-LINE 93
  tmpl_arg_p = (tmpl_arg_var "=" | "") tmpl_ws (tmpl_qval 
 +| tmpl_sval | rem . v) :(RETURN)
--LINE 100
+-LINE 99
 tmpl_init.END  :(tmpl_compile.END)
--LINE 101
+-LINE 100
 tmpl_compile l = tmpl_tokenize(s) :S(HTMLTMPL.2)F(FRETURN)
--LINE 103
+-LINE 102
 HTMLTMPL.2 l = tmpl_parse(l) :S(HTMLTMPL.3)F(FRETURN)
--LINE 105
+-LINE 104
 HTMLTMPL.3 tmpl_compile = l :(RETURN)
--LINE 111
+-LINE 110
 tmpl_compile.END  :(tmpl_interpret.END)
--LINE 112
+-LINE 111
 tmpl_interpret interpret_tmpl(p,a) :(RETURN)
--LINE 117
+-LINE 116
 tmpl_interpret.END  :(none_escape.END)
--LINE 118
+-LINE 117
 none_escape none_escape = s :(RETURN)
--LINE 123
+-LINE 122
 none_escape.END  :(interpret_tmpl.END)
+-LINE 123
+interpret_tmpl p
+HTMLTMPL.4 DIFFER(p,"") :F(HTMLTMPL.5)
 -LINE 124
-interpret_tmpl DIFFER(p,"") :F(HTMLTMPL.4)
--LINE 125
  v = value(value(p))
--LINE 126
- IDENT(token_type(v),"text") :F(HTMLTMPL.5)
--LINE 128
- tmpl_interpret = tmpl_interpret token_args(v) :(HTMLTMPL.6)
+-LINE 125
+ IDENT(token_type(v),"text") :F(HTMLTMPL.6)
+-LINE 127
+ tmpl_interpret = tmpl_interpret token_args(v) :(HTMLTMPL.7)
 -LINE 129
-HTMLTMPL.5 IDENT(token_type(v),"var") :F(HTMLTMPL.7)
+HTMLTMPL.6 t = token_args(v)
+-LINE 130
+ n = a<t<"name">>
 -LINE 131
- t = token_args(v)
--LINE 132
- n = t<"name">
+ IDENT(token_type(v),"var") :F(HTMLTMPL.8)
 -LINE 133
- v = a<n>
+ IDENT(n,"") :F(HTMLTMPL.9)
 -LINE 134
- IDENT(v,"") :F(HTMLTMPL.8)
+ n = t<"default">
 -LINE 135
- v = t<"default">
--LINE 136
-HTMLTMPL.8 e = t<"escape">
--LINE 138
+HTMLTMPL.9 e = t<"escape">
+-LINE 137
  e = e "_escape"
--LINE 139
- n = &errlimit
--LINE 140
+-LINE 138
+ v = &errlimit
  &errlimit = 1
--LINE 141
- v = apply(e,v)
+ n = apply(e,n)
+ &errlimit = v
+-LINE 139
+ tmpl_interpret = tmpl_interpret n :(HTMLTMPL.10)
+-LINE 140
+HTMLTMPL.8 "if unless" ? token_type(v) :F(HTMLTMPL.11)
 -LINE 142
- &errlimit = n
+ p1 = value(next(value(p)))
 -LINE 143
- tmpl_interpret = tmpl_interpret v :(HTMLTMPL.9)
--LINE 144
-HTMLTMPL.7 "if unless" ? token_type(v) :F(HTMLTMPL.10)
--LINE 146
- t = token_args(v)
--LINE 147
- n = t<"name">
--LINE 148
- n = a<n>
--LINE 149
- p1 = value(next(value(p)))
--LINE 150
  p2 = next(next(value(p)))
--LINE 151
- IDENT(token_type(v),"unless") :F(HTMLTMPL.11)
--LINE 152
+-LINE 144
+ IDENT(token_type(v),"unless") :F(HTMLTMPL.12)
+-LINE 145
  swap(.p1,.p2)
+-LINE 146
+HTMLTMPL.12 (DIFFER(n,""),ne(+n,0)) :F(HTMLTMPL.13)
+-LINE 147
+ interpret_tmpl(p1,a) :(HTMLTMPL.14)
+-LINE 149
+HTMLTMPL.13 interpret_tmpl(p2,a)
+-LINE 150
+HTMLTMPL.14  :(HTMLTMPL.15)
+HTMLTMPL.11 IDENT(token_type(v),"loop") :F(HTMLTMPL.16)
+-LINE 152
+ IDENT(datatype(n),"ARRAY") :F(HTMLTMPL.17)
 -LINE 153
-HTMLTMPL.11 (DIFFER(n,""),ne(+n,0)) :F(HTMLTMPL.12)
--LINE 154
- interpret_tmpl(p1,a) :(HTMLTMPL.13)
--LINE 156
-HTMLTMPL.12 interpret_tmpl(p2,a)
--LINE 157
-HTMLTMPL.13  :(HTMLTMPL.14)
-HTMLTMPL.10 IDENT(token_type(v),"loop") :F(HTMLTMPL.15)
--LINE 159
- t = token_args(v)
--LINE 160
- n = t<"name">
--LINE 161
- n = a<n>
--LINE 162
- IDENT(datatype(n),"ARRAY") :F(HTMLTMPL.16)
--LINE 163
  p1 = value(next(value(p)))
--LINE 165
+-LINE 154
  i = 1
-HTMLTMPL.17 n<i> :F(HTMLTMPL.18)
--LINE 166
+HTMLTMPL.18 n<i> :F(HTMLTMPL.19)
+-LINE 155
  interpret_tmpl(p1,n<i>)
- i = i + 1 :(HTMLTMPL.17)
-HTMLTMPL.18 
+ i = i + 1 :(HTMLTMPL.18)
+HTMLTMPL.19 
+HTMLTMPL.17 
 HTMLTMPL.16 
 HTMLTMPL.15 
-HTMLTMPL.14 
-HTMLTMPL.9 
--LINE 169
-HTMLTMPL.6 p = next(p) :(interpret_tmpl)
--LINE 171
-HTMLTMPL.4  :(RETURN)
--LINE 176
+HTMLTMPL.10 
+-LINE 159
+HTMLTMPL.7 p = next(p) :(HTMLTMPL.4)
+-LINE 160
+HTMLTMPL.5  :(RETURN)
+-LINE 165
 interpret_tmpl.END  :(tmpl_parse.END)
--LINE 177
-tmpl_parse IDENT(l,"") :S(RETURN)F(HTMLTMPL.19)
--LINE 179
-HTMLTMPL.19 r = tmpl_seq() :S(HTMLTMPL.20)F(FRETURN)
--LINE 181
-HTMLTMPL.20 DIFFER(l,"") :S(FRETURN)F(HTMLTMPL.21)
--LINE 183
-HTMLTMPL.21 tmpl_parse = r :(RETURN)
--LINE 189
+-LINE 166
+tmpl_parse IDENT(l,"") :S(RETURN)F(HTMLTMPL.20)
+-LINE 168
+HTMLTMPL.20 r = tmpl_seq() :S(HTMLTMPL.21)F(FRETURN)
+-LINE 170
+HTMLTMPL.21 DIFFER(l,"") :S(FRETURN)F(HTMLTMPL.22)
+-LINE 172
+HTMLTMPL.22 tmpl_parse = r :(RETURN)
+-LINE 178
 tmpl_parse.END  :(tmpl_seq.END)
--LINE 190
-tmpl_seq DIFFER(l,"") :F(HTMLTMPL.22)
--LINE 191
+-LINE 179
+tmpl_seq DIFFER(l,"") :F(HTMLTMPL.23)
+-LINE 180
  v = value(l)
--LINE 192
- "text var" ? token_type(v) :F(HTMLTMPL.23)
--LINE 193
+-LINE 181
+ "text var" ? token_type(v) :F(HTMLTMPL.24)
+-LINE 182
  r = link(link(v),r)
--LINE 194
- l = next(l) :(HTMLTMPL.24)
--LINE 195
-HTMLTMPL.23 "if unless loop" ? token_type(v) :F(HTMLTMPL.25)
--LINE 196
- DIFFER(token_end(v),"") :F(HTMLTMPL.26)
--LINE 197
+-LINE 183
+ l = next(l) :(HTMLTMPL.25)
+-LINE 184
+HTMLTMPL.24 "if unless loop" ? token_type(v) :F(HTMLTMPL.26)
+-LINE 185
+ DIFFER(token_end(v),"") :F(HTMLTMPL.27)
+-LINE 186
  tmpl_seq = revl(r) :(RETURN)
--LINE 198
-HTMLTMPL.26 l = next(l)
--LINE 199
- p1 = tmpl_seq() :S(HTMLTMPL.27)F(FRETURN)
--LINE 201
-HTMLTMPL.27 IDENT(l,"") :S(FRETURN)F(HTMLTMPL.28)
--LINE 203
-HTMLTMPL.28 p2 = ""
--LINE 204
+-LINE 187
+HTMLTMPL.27 l = next(l)
+-LINE 188
+ p1 = tmpl_seq() :S(HTMLTMPL.28)F(FRETURN)
+-LINE 190
+HTMLTMPL.28 IDENT(l,"") :S(FRETURN)F(HTMLTMPL.29)
+-LINE 192
+HTMLTMPL.29 p2 = ""
+-LINE 193
  v2 = value(l)
--LINE 205
- "if unless loop" ? token_type(v2) :F(HTMLTMPL.29)
--LINE 206
- l = next(l) :(HTMLTMPL.30)
--LINE 207
-HTMLTMPL.29 IDENT(token_type(v2),"else") :F(HTMLTMPL.31)
--LINE 208
+-LINE 194
+ "if unless loop" ? token_type(v2) :F(HTMLTMPL.30)
+-LINE 195
+ l = next(l) :(HTMLTMPL.31)
+-LINE 196
+HTMLTMPL.30 IDENT(token_type(v2),"else") :F(HTMLTMPL.32)
+-LINE 197
  l = next(l)
--LINE 209
- p2 = tmpl_seq() :S(HTMLTMPL.32)F(FRETURN)
--LINE 211
-HTMLTMPL.32 IDENT(l,"") :S(FRETURN)F(HTMLTMPL.33)
--LINE 213
-HTMLTMPL.33 l = next(l) :(HTMLTMPL.34)
--LINE 215
-HTMLTMPL.31  :(FRETURN)
-HTMLTMPL.34 
--LINE 216
-HTMLTMPL.30 r = link(link(v,link(p1,p2)),r) :(HTMLTMPL.35)
--LINE 217
-HTMLTMPL.25 IDENT(token_type(v),"else") :F(HTMLTMPL.36)
--LINE 218
- tmpl_seq = revl(r) :(RETURN)
--LINE 220
-HTMLTMPL.36  :(FRETURN)
-HTMLTMPL.37 
+-LINE 198
+ p2 = tmpl_seq() :S(HTMLTMPL.33)F(FRETURN)
+-LINE 200
+HTMLTMPL.33 IDENT(l,"") :S(FRETURN)F(HTMLTMPL.34)
+-LINE 202
+HTMLTMPL.34 l = next(l) :(HTMLTMPL.35)
+-LINE 204
+HTMLTMPL.32  :(FRETURN)
 HTMLTMPL.35 
--LINE 221
-HTMLTMPL.24  :(tmpl_seq)
--LINE 222
-HTMLTMPL.22 tmpl_seq = revl(r) :(RETURN)
--LINE 227
+-LINE 205
+HTMLTMPL.31 r = link(link(v,link(p1,p2)),r) :(HTMLTMPL.36)
+-LINE 206
+HTMLTMPL.26 IDENT(token_type(v),"else") :F(HTMLTMPL.37)
+-LINE 207
+ tmpl_seq = revl(r) :(RETURN)
+-LINE 209
+HTMLTMPL.37  :(FRETURN)
+HTMLTMPL.38 
+HTMLTMPL.36 
+-LINE 210
+HTMLTMPL.25  :(tmpl_seq)
+-LINE 211
+HTMLTMPL.23 tmpl_seq = revl(r) :(RETURN)
+-LINE 216
 tmpl_seq.END  :(tmpl_tokenize.END)
--LINE 228
+-LINE 217
 tmpl_tokenize n = .tmpl_tokenize
--LINE 229
-HTMLTMPL.38 DIFFER(s,"") :F(HTMLTMPL.39)
--LINE 230
- s ? tmpl_piece :F(HTMLTMPL.40)
--LINE 231
+-LINE 218
+HTMLTMPL.39 DIFFER(s,"") :F(HTMLTMPL.40)
+-LINE 219
+ s ? tmpl_piece :F(HTMLTMPL.41)
+-LINE 220
  tag = replace(tag,&ucase,&lcase)
--LINE 232
- tmpl_keys ? tag " " :F(HTMLTMPL.41)
--LINE 233
- DIFFER(l,"") :F(HTMLTMPL.42)
--LINE 234
+-LINE 221
+ tmpl_keys ? tag " " :F(HTMLTMPL.42)
+-LINE 222
+ DIFFER(l,"") :F(HTMLTMPL.43)
+-LINE 223
  $n = link(tmpl_token("text","",l))
  n = .next($n)
--LINE 236
-HTMLTMPL.42 IDENT(tag,"include") :F(HTMLTMPL.43)
--LINE 241
- t = tmpl_parse_args(arg) :S(HTMLTMPL.44)F(FRETURN)
--LINE 243
-HTMLTMPL.44 s = readfile(tmpl_dir t<'name'>) :F(HTMLTMPL.45)
--LINE 244
- $n = tmpl_tokenize(s) :S(HTMLTMPL.46)F(FRETURN)
--LINE 246
-HTMLTMPL.46 n = .last(tmpl_tokenize)
--LINE 248
-HTMLTMPL.45  :(HTMLTMPL.47)
--LINE 249
-HTMLTMPL.43 t = tmpl_token(tag,h,tmpl_parse_args(arg))
--LINE 250
+-LINE 225
+HTMLTMPL.43 IDENT(tag,"include") :F(HTMLTMPL.44)
+-LINE 230
+ t = tmpl_parse_args(arg) :S(HTMLTMPL.45)F(FRETURN)
+-LINE 232
+HTMLTMPL.45 s = readfile(tmpl_dir t<'name'>) :F(HTMLTMPL.46)
+-LINE 233
+ $n = tmpl_tokenize(s) :S(HTMLTMPL.47)F(FRETURN)
+-LINE 235
+HTMLTMPL.47 n = .last(tmpl_tokenize)
+-LINE 237
+HTMLTMPL.46  :(HTMLTMPL.48)
+-LINE 238
+HTMLTMPL.44 t = tmpl_token(tag,h,tmpl_parse_args(arg))
+-LINE 239
  $n = link(t)
  n = .next($n)
--LINE 252
-HTMLTMPL.47  :(HTMLTMPL.48)
--LINE 253
-HTMLTMPL.41 $n = link(tmpl_token("text","",l p))
+-LINE 241
+HTMLTMPL.48  :(HTMLTMPL.49)
+-LINE 242
+HTMLTMPL.42 $n = link(tmpl_token("text","",l p))
  n = .next($n)
--LINE 255
-HTMLTMPL.48 s = r :(HTMLTMPL.49)
--LINE 257
-HTMLTMPL.40 $n = link(tmpl_token("text","",s))
+-LINE 244
+HTMLTMPL.49 s = r :(HTMLTMPL.50)
+-LINE 246
+HTMLTMPL.41 $n = link(tmpl_token("text","",s))
  n = .next($n)
--LINE 258
+-LINE 247
  s = ""
--LINE 260
-HTMLTMPL.49  :(HTMLTMPL.38)
--LINE 261
-HTMLTMPL.39  :(RETURN)
--LINE 266
+-LINE 249
+HTMLTMPL.50  :(HTMLTMPL.39)
+-LINE 250
+HTMLTMPL.40  :(RETURN)
+-LINE 255
 tmpl_tokenize.END  :(tmpl_parse_args.END)
--LINE 267
+-LINE 256
 tmpl_parse_args tmpl_parse_args = table()
--LINE 268
-HTMLTMPL.50 DIFFER(s,"") :F(HTMLTMPL.51)
--LINE 269
+-LINE 257
+HTMLTMPL.51 DIFFER(s,"") :F(HTMLTMPL.52)
+-LINE 258
  n = ""
--LINE 270
+-LINE 259
  v = ""
--LINE 271
- s ? tmpl_arg_p = "" :F(HTMLTMPL.52)
--LINE 272
+-LINE 260
+ s ? tmpl_arg_p = "" :F(HTMLTMPL.53)
+-LINE 261
  n = replace(n,&ucase,&lcase)
--LINE 273
+-LINE 262
  n = ident(n) "name"
--LINE 274
- tmpl_parse_args<n> = v :(HTMLTMPL.53)
--LINE 276
-HTMLTMPL.52  :(FRETURN)
--LINE 277
-HTMLTMPL.53  :(HTMLTMPL.50)
--LINE 278
-HTMLTMPL.51  :(RETURN)
+-LINE 263
+ tmpl_parse_args<n> = v :(HTMLTMPL.54)
+-LINE 265
+HTMLTMPL.53  :(FRETURN)
+-LINE 266
+HTMLTMPL.54  :(HTMLTMPL.51)
+-LINE 267
+HTMLTMPL.52  :(RETURN)
 tmpl_parse_args.END 
--LINE 287 "HTMLTMPL.lss" 
+-LINE 276 "HTMLTMPL.lss" 
 HTMLTMPL.1 
  DATA('tmpl_token(token_type,token_end,token_args)')
 -include 'LINK.INC' 

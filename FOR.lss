@@ -2,7 +2,7 @@
 
 [[F = FOR_COMPILE(INIT,TEST,INCR,STMT); FOR(F)]] is a generalization
 of [[SEQ()]].  This implements the [[C]] [[for]] loop
-[[for(init,test,updt)stmt]].
+[[for(init;test;updt)stmt]].
 
 [[SEQ()]] can be expressed in terms of [[FOR()]]. [[SEQ(S,.V,L,H)]]
 is easily translated to
@@ -33,7 +33,7 @@ A similar optimization could be made to [[SEQ()]]. Given that [[SEQ()]]
 is a stable [[API]], this won't be done.
 }}
 
-Usage (for caching compiation) would similar to:
+Usage (for caching compilation) would similar to:
 
 [[
 F = IDENT(F) FOR_COMPILE(...)
@@ -126,7 +126,7 @@ FOR_COMPILE
          TEST(FOR_COMPILE) =
 +           CODE(TEST_ ' :S<STMT(F_)>F(RETURN)')               :F(ERROR)
          STMT_ = IDENT(DATATYPE(STMT_), 'CODE_')
-+           ' EVAL_CODE_(STMT_(F_))'
++           ' EVAL_CODE_ = EVAL_CODE_(STMT_(F_))'
          STMT(FOR_COMPILE) =
 +           CODE(STMT_ ' :S<INCR(F_)>F(FRETURN)')              :F(ERROR)
          INCR_ = IDENT(DATATYPE(INCR_), 'CODE_')

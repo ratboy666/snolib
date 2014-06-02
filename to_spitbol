@@ -91,3 +91,4 @@ cat SKIM.INC | sed -e "s/\.INC'/.SPT'/" >SKIM.SPT
 unix2dos SKIM.SPT
 cat TIMEGC.INC | sed -e "s/\.INC'/.SPT'/" >TIMEGC.SPT
 unix2dos TIMEGC.SPT
+unix2dos -n SPELL.INC SPELL.SPT

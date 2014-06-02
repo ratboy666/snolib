@@ -35,6 +35,8 @@ SNOBOL4 statistics summary-
 [fred@dejah snolib]$ 
 ]]
 
+It taskes 36 milliseconds to compile ALL.INC on my Intel i3 (1.4Ghz).
+
 <i>Building</i> the library from lss source takes a long time.
 
 [[
@@ -47,6 +49,8 @@ real    3m15.685s
 user    2m53.908s
 sys     0m50.229s
 [fred@dejah snolib]$ 
+
+1m52s to build on the i3.
 
 The majority of the time in generating the library is spent generating
 the html documentation (mostly in the <i>ditaa</i> utility.
@@ -88,6 +92,7 @@ the html documentation (mostly in the <i>ditaa</i> utility.
 -INCLUDE 'FLOOR.INC'
 -INCLUDE 'FOR.INC'
 -INCLUDE 'FOREACH.INC'
+-INCLUDE 'FREEZE.INC'
 -INCLUDE 'GCD.INC'
 -INCLUDE 'GETKEY.INC'
 *-INCLUDE 'GOTOS.INC'
@@ -124,6 +129,7 @@ the html documentation (mostly in the <i>ditaa</i> utility.
 -INCLUDE 'REVL.INC'
 -INCLUDE 'ROMAN.INC'
 -INCLUDE 'ROTATER.INC'
+-INCLUDE 'ROUTING.INC'
 -INCLUDE 'SCOOP.INC'
 -INCLUDE 'SDIFF.INC'
 -INCLUDE 'SEQ.INC'

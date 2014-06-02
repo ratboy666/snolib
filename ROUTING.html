@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>ROUTING - Routing support for CGI</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">ROUTING</font> implements routing for HTTP requests. The route table is
+a pattern that matches the method and path_info. It sets variables
+in the table passed in to ROUTING(), and sets ACTION.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>See Also</h2>
+<a href="CGI.html">CGI</a>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="SDIFF.html">SDIFF<a><br>
+<a href="UNIQUE.html">UNIQUE<a><br>
+<a href="BRKREM.html">BRKREM<a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;SDIFF.INC&#39;
+-INCLUDE &#39;UNIQUE.INC&#39;
+-INCLUDE &#39;BRKREM.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;ROUTING&raquo;&equiv;</b>
+         DEFINE(&#39;ROUTING_INIT()&#39;)
+         DEFINE(&#39;ROUTING_ADD(ROUTE,PATTERN,ACTION_)NAME,P&#39;)
+         DEFINE(&#39;ROUTING(METHOD,ROUTE,VARS_)P,S&#39;)
+<font color="#818181"><i>*</i></font>
+         ROUTING_VAR = &#39;:&#39;
+         ROUTING_NAME_C = &amp;UCASE &amp;LCASE &#39;0123456789&#39; &#39;._&#39;
+         ROUTING_NAME = SDIFF(&amp;ALPHABET, &amp;UCASE &amp;LCASE &#39;0123456789._&#39;)
+         MAKE_UNIQUE(&#39;ROUTING&#39;)
+<font color="#818181"><i>*</i></font>
+                                                          <b>:(ROUTING_END)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* INITIALIZE ROUTE. THE INITIAL ROUTE ALWAYS FAILS.</i></font>
+<font color="#818181"><i>*</i></font>
+ROUTING_INIT
+         UNIQUE_ROUTING(&#39;CLEAR&#39;)
+         ROUTING_INIT = ABORT                                  <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* ADD PATTERN TO ROUTE, WITH ACTION. ON MATCH, YIELDS ACTION, AND</i></font>
+<font color="#818181"><i>* SUCCESS.</i></font>
+<font color="#818181"><i>*</i></font>
+ROUTING_ADD
+         NAME = UNIQUE_ROUTING()
+         $NAME = ACTION_
+         P = EVAL(&#39;PATTERN *?(ACTION = &#39; NAME &#39;)&#39;)
+         ROUTING_ADD = P | ROUTE                               <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* MAKE A ROUTING PATTERN. METHOD WILL BE SOMETHING LIKE &#39;GET&#39;, &#39;POST&#39;,</i></font>
+<font color="#818181"><i>* &#39;&#39;, (&#39;GET&#39; | &#39;POST&#39;). ROUTE WILL BE &#39;/A/B/C&#39;, &#39;/A/:VAR/C&#39;</i></font>
+<font color="#818181"><i>*</i></font>
+ROUTING  METHOD = IDENT(METHOD) BREAK(&#39;\&#39;)
+ROUTE_3  ROUTE POS(0) BRKREM(ROUTING_VAR) . S =
+         P = DIFFER(S) P S
+         IDENT(ROUTE)                                        <b>:S(ROUTE_9)</b>
+         ROUTE POS(0) LEN(1) BRKREM(ROUTING_NAME) . S =
+         IDENT(S)                                            <b>:S(ROUTE_3)</b>
+         ROUTE LEN(1) . B =                                  <b>:F(ROUTE_4)</b>
+         P = P BREAK(B) . ($VARS_)&lt;S&gt; B                       <b>:(ROUTE_3)</b>
+ROUTE_4  P = P REM . ($VARS_)&lt;S&gt;
+ROUTE_9  ROUTING = METHOD &#39;\&#39; P                                <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+ROUTING_END
+<font color="#818181"><i>*</i></font>
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;/usr/local/bin/snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;ROUTING.INC&#39;
+-INCLUDE &#39;DDT.INC&#39;
+<font color="#818181"><i>*</i></font>
+         &amp;CODE = 1
+         ROUTING = ROUTING_INIT()
+         ROUTING = ROUTING_ADD(ROUTING, &#39;A&#39;, &#39;ACTION 1&#39;)
+         ROUTING = ROUTING_ADD(ROUTING, &#39;B&#39;, &#39;ACTION 2&#39;)
+         &amp;FULLSCAN = 1
+         ACTION =
+         &#39;A&#39; ROUTING
+         OUTPUT = ACTION
+         ACTION =
+         &#39;B&#39; ROUTING
+         OUTPUT = ACTION
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* TEST COMPILING ROUTES</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* V IS A TABLE THAT WILL STORE THE VARIABLES. METHOD WILL BE SEPARATED</i></font>
+<font color="#818181"><i>* FROM PATH_INFO WITH A &#39;\&#39;.</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>***         DDT()</i></font>
+         V = TABLE()
+         P = ROUTING(&#39;&#39;, &#39;/A/B&#39;, .V)
+         V = TABLE()
+         &#39;\/A/B&#39; P <b>:F(NOTOK)</b>
+         &#39;POST\/A/B&#39; P <b>:F(NOTOK)</b>
+<font color="#818181"><i>*</i></font>
+         P = ROUTING(&#39;&#39;, &#39;:VAR&#39;, .V)
+         &#39;\/A/B&#39; P <b>:F(NOTOK)</b>
+         OUTPUT = V&lt;&#39;VAR&#39;&gt;
+<font color="#818181"><i>*</i></font>
+         P = ROUTING(&#39;&#39;, &#39;/:VAR&#39;, .V)
+         &#39;POST\/A/B&#39; P <b>:F(NOTOK)</b>
+         OUTPUT = V&lt;&#39;VAR&#39;&gt;
+<font color="#818181"><i>*</i></font>
+         P = ROUTING(&#39;&#39;, &#39;/:VARA/B&#39;, .V)
+         &#39;\/A/B&#39; P <b>:F(NOTOK)</b>
+         OUTPUT = V&lt;&#39;VARA&#39;&gt;
+<font color="#818181"><i>*</i></font>
+         P = ROUTING((&#39;GET&#39; | &#39;POST&#39;), &#39;/:VARA/:VARB&#39;, .V)
+         &#39;GET\/A/B&#39; P <b>:F(NOTOK)</b>
+         OUTPUT = V&lt;&#39;VARA&#39;&gt; &#39; &#39; V&lt;&#39;VARB&#39;&gt;
+<font color="#818181"><i>*</i></font>
+         &amp;CODE = 0 <b>:(END)</b>
+NOTOK    OUTPUT = &#39;NOT OK&#39;
+<font color="#818181"><i>*</i></font>
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL ROUTING
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*      ######   #######  #     #  #######  ###  #     #   #####        *</i></font>
+<font color="#818181"><i>*      #     #  #     #  #     #     #      #   ##    #  #     #       *</i></font>
+<font color="#818181"><i>*      #     #  #     #  #     #     #      #   # #   #  #             *</i></font>
+<font color="#818181"><i>*      ######   #     #  #     #     #      #   #  #  #  #  ####       *</i></font>
+<font color="#818181"><i>*      #   #    #     #  #     #     #      #   #   # #  #     #       *</i></font>
+<font color="#818181"><i>*      #    #   #     #  #     #     #      #   #    ##  #     #       *</i></font>
+<font color="#818181"><i>*      #     #  #######   #####      #     ###  #     #   #####        *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* ROUTING                   ROUTING FOR CGI                            *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* ROUTING.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;ROUTING&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .F.MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Sun Jun  1 23:14:27 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

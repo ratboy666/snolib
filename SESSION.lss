@@ -60,23 +60,29 @@ across client machines, for example). That data should probably be
 stored as cookies only, or be accessed from a more permanent database
 store (and then put into a session).
 
-<h2>See Also</h2>
-<a href="JSON.html">JSON</a>
+The format of the SESSION file may be NDBM or JSON. JSON is preferred,
+because it is human readable.
+
+[[uuid]] is presumed to provide unique ids, even if running in
+multiple processes on the same machine. -v1 or -v4 are (presumed)
+useful, and -v1 is the default in this code.
 
 <h2>Uses</h2>
 <a href="BQ.html">BQ</a><br>
-<a href="NDBM.html">NDBM</a><br>
+<!-- <a href="NDBM.html">NDBM</a><br> -->
 <a href="SEQ.html">SEQ</a><br>
 <a href="CRACK.html">CRACK</a><br>
 <a href="HASH.html">HASH</a><br>
 <a href="TIME.html">TIME</a><br>
 <a href="CHARS.html">CHARS</a><br>
-<a href="REPL.html">REPL</a>
-<a href="CSNOBOL4.html">CSNOBOL4</a>
+<a href="REPL.html">REPL</a><br>
+<a href="CSNOBOL4.html">CSNOBOL4</a><br>
+<a href="READFILE.html">READFILE</a><br>
+<a href="JSON.html">JSON</a>
 
 <<INCLUDES>>=
 -INCLUDE 'BQ.INC'
--INCLUDE 'NDBM.INC'
+*-INCLUDE 'NDBM.INC'
 -INCLUDE 'SEQ.INC'
 -INCLUDE 'CRACK.INC'
 -INCLUDE 'HASH.INC'
@@ -84,6 +90,8 @@ store (and then put into a session).
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'REPL.INC'
 -INCLUDE 'CSNOBOL4.INC'
+-INCLUDE 'READFILE.INC'
+-INCLUDE 'JSON.INC'
 @
 
 <<SESSION>>=
@@ -94,8 +102,7 @@ store (and then put into a session).
          DEFINE('SESSION_LOAD(UUID)FILE,HANDLE,KEY,DATA,I')
          DEFINE('SESSION_EXPIRE()SESSION,TIME,UUID,L,I,S,P')
 *
-         SESSION_PERSIST_DIR = '/var/lib/SESSION/'
-                                                          :(SESSION_END)
+         SESSION_PERSIST_DIR = '/var/lib/SESSION/'        :(SESSION_END)
 *
 * CREATE NEW SESSION. GENERATE UUID FOR SESSION. DEFAULT SESSION
 * EXPIRATION TO 10 MINUTES (UNLESS SPECIFIED).
@@ -120,12 +127,14 @@ SESSION_PERSIST
          FILE = SESSION_PERSIST_DIR 'session_' SESSION<'UUID'>
          SESSION_DELETE(SESSION)
          SESSION_TOUCH(SESSION)                              :F(FRETURN)
-         A = CONVERT(SESSION, 'ARRAY')                       :F(FRETURN)
-         HANDLE = DBM_OPEN(FILE, 'CW', '0660')               :F(FRETURN)
-         SEQ(' DBM_STORE('
-+                 'HANDLE, A<I, 1>, VDIFFER(A<I, 2>), DBM_INSERT) ', .I)
-         A<I>                                                :S(FRETURN)
-         DBM_CLOSE(HANDLE)                          :S(RETURN)F(FRETURN)
+*        A = CONVERT(SESSION, 'ARRAY')                       :F(FRETURN)
+*        HANDLE = DBM_OPEN(FILE, 'CW', '0660')               :F(FRETURN)
+*        SEQ(' DBM_STORE('
+*+                'HANDLE, A<I, 1>, VDIFFER(A<I, 2>), DBM_INSERT) ', .I)
+*        A<I>                                                :S(FRETURN)
+*        DBM_CLOSE(HANDLE)                          :S(RETURN)F(FRETURN)
+         WRITEFILE(FILE '.db', JSON_ENCODE(SESSION))
++                                                   :S(RETURN)F(FRETURN)
 *
 * DELETE SESSION
 *
@@ -141,15 +150,15 @@ SESSION_LOAD
          UUID = REPLACE(UUID, &UCASE, &LCASE)
          UUID POS(0) ANY('"' "'") REM . UUID
          UUID POS(0) SPAN(&DIGITS 'abcdef-') . UUID
-*
-         SESSION_LOAD = TABLE()
+*        SESSION_LOAD = TABLE()
          FILE = SESSION_PERSIST_DIR 'session_' UUID
-         HANDLE = DBM_OPEN(FILE, 'R')                        :F(FRETURN)
-         KEY = DBM_FIRSTKEY(HANDLE)                    :F(SESSION_LOAD2)
-         SEQ(' DATA = DBM_FETCH(HANDLE, KEY);'
-+            ' SESSION_LOAD<KEY> = DATA;'
-+            ' KEY = DBM_NEXTKEY(HANDLE) ', .I)
-         DBM_CLOSE(HANDLE)                                   :F(FRETURN)
+*        HANDLE = DBM_OPEN(FILE, 'R')                        :F(FRETURN)
+*        KEY = DBM_FIRSTKEY(HANDLE)                    :F(SESSION_LOAD2)
+*        SEQ(' DATA = DBM_FETCH(HANDLE, KEY);'
+*+           ' SESSION_LOAD<KEY> = DATA;'
+*+           ' KEY = DBM_NEXTKEY(HANDLE) ', .I)
+*        DBM_CLOSE(HANDLE)                                   :F(FRETURN)
+         SESSION_LOAD = JSON_DECODE(READFILE(FILE '.db'))    :F(FRETURN)
          IDENT(UUID, SESSION_LOAD<'UUID'>)          :S(RETURN)F(FRETURN)
 SESSION_LOAD2
          DBM_CLOSE(HANDLE)                                    :(FRETURN)

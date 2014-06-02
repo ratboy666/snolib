@@ -1,0 +1,585 @@
+-STITL P64
+-EJECT
+*
+-LINE 606 "P64.lss"
+************************************************************************
+*                                                                      *
+*                       ######    ###   #   #                          *
+*                       #     #  #   #  #   #                          *
+*                       #     #  #      #   #                          *
+*                       ######   ####   #####                          *
+*                       #        #   #      #                          *
+*                       #        #   #      #                          *
+*                       #         ###       #                          *
+*                                                                      *
+* P64                64 BIT PARAMETER HANDLING                         *
+*                                                                      *
+************************************************************************
+*
+* P64.lss
+*
+-LINE 54 "P64.lss"
+-CASE 1
+-LINE 63 "P64.lss"
+%SET (BITS, HOST(HOST_POINTER_BITS))
+-SNOBOL TERMINAL = 'P64 (SUN NOV 10 03:57:08 EST 2013)'
+-LINE 65 "P64.lss"
+-SNOBOL SLOAD('CRACK.INC')
+-LINE 66 "P64.lss"
+-SNOBOL SLOAD('DYNAMIC.INC')
+-LINE 67 "P64.lss"
+-SNOBOL SLOAD('SEQ.INC')
+-LINE 68 "P64.lss"
+-SNOBOL SLOAD('WRAPPER.INC')
+-LINE 69 "P64.lss"
+-LINE 76 "P64.lss"
+-EMBED FILE 'p64.h'
+#line 80 "P64.lss"
+
+extern void *p;
+extern void *p2;
+extern void *p3;
+extern void *p4;
+extern float f;
+extern double d;
+extern long double ld;
+
+-END
+-LINE 95 "P64.lss"
+-EMBED C 'p64'
+#line 99 "P64.lss"
+-SNOBOL WRAPPER_STARTFILE(.EMBED)
+#line 100 "P64.lss"
+
+#include <stdlib.h>
+#include <string.h>
+
+void *p;
+void *p2;
+void *p3;
+void *p4;
+float f;
+double d;
+long double ld;
+
+%IF (BITS EQ 64)
+
+static int get_phi(void)
+{
+    long n = (long)p;
+    return (int)(n >> 32);
+}
+
+-SNOBOL C_WRAPPER_PROTO('GET_PHI()INTEGER', .EMBED)
+#line 121 "P64.lss"
+
+static int get_plo(void)
+{
+    long n = (long)p;
+    return (int)(n & 0xffffffff);
+}
+
+-SNOBOL C_WRAPPER_PROTO('GET_PLO()INTEGER', .EMBED)
+#line 129 "P64.lss"
+
+static void set_phi(int h)
+{
+    long n = (long)p;
+    n &= 0xffffffff;
+    p = (void *)(((long)h << 32) | n);
+}
+
+-SNOBOL C_WRAPPER_PROTO('SET_PHI(INTEGER)', .EMBED)
+#line 138 "P64.lss"
+
+static void set_plo(int l)
+{
+    long n = (long)p;
+    n &= 0xffffffff00000000L;
+    p = (void *)(n | (unsigned)l);
+}
+
+-SNOBOL C_WRAPPER_PROTO('SET_PLO(INTEGER)', .EMBED)
+#line 147 "P64.lss"
+
+%ENDIF
+
+%IF (BITS EQ 32)
+
+static int get_p(void) { return (int)p; }
+
+-SNOBOL C_WRAPPER_PROTO('GET_P()INTEGER', .EMBED)
+#line 155 "P64.lss"
+
+static int set_p(int v) { p = (void *)v; }
+
+-SNOBOL C_WRAPPER_PROTO('SET_P()INTEGER', .EMBED)
+#line 159 "P64.lss"
+
+%ENDIF
+
+static void p_to_p2(void) { p2 = p; }
+
+-SNOBOL C_WRAPPER_PROTO('P_TO_P2()', .EMBED)
+#line 165 "P64.lss"
+
+static void p_to_p3(void) { p3 = p; }
+
+-SNOBOL C_WRAPPER_PROTO('P_TO_P3()', .EMBED)
+#line 169 "P64.lss"
+
+static void p_to_p4(void) { p4 = p; }
+
+-SNOBOL C_WRAPPER_PROTO('P_TO_P4()', .EMBED)
+#line 173 "P64.lss"
+
+static void p2_to_p(void) { p = p2; }
+
+-SNOBOL C_WRAPPER_PROTO('P2_TO_P()', .EMBED)
+#line 177 "P64.lss"
+
+static void p3_to_p(void) { p = p3; }
+
+-SNOBOL C_WRAPPER_PROTO('P3_TO_P()', .EMBED)
+#line 181 "P64.lss"
+
+static void p4_to_p(void) { p = p4; }
+
+-SNOBOL C_WRAPPER_PROTO('P4_TO_P()', .EMBED)
+#line 185 "P64.lss"
+
+static void set_f(double v) { f = v; }
+
+-SNOBOL C_WRAPPER_PROTO('SET_F(REAL)', .EMBED)
+#line 189 "P64.lss"
+
+static void set_d(double v) { d = v; }
+
+-SNOBOL C_WRAPPER_PROTO('SET_D(REAL)', .EMBED)
+#line 193 "P64.lss"
+
+static void set_ld(double v) { ld = v; }
+
+-SNOBOL C_WRAPPER_PROTO('SET_LD(REAL)', .EMBED)
+#line 197 "P64.lss"
+
+static float get_f(void) { return f; }
+
+-SNOBOL C_WRAPPER_PROTO('GET_F()REAL', .EMBED)
+#line 201 "P64.lss"
+
+static double get_d(void) { return d; }
+
+-SNOBOL C_WRAPPER_PROTO('GET_D()REAL', .EMBED)
+#line 205 "P64.lss"
+
+static double get_ld(void) { return ld; }
+
+-SNOBOL C_WRAPPER_PROTO('GET_LD()REAL', .EMBED)
+#line 209 "P64.lss"
+
+static char *get_s(void) { return (char *)p; }
+
+-SNOBOL C_WRAPPER_PROTO('GET_S()STRING', .EMBED)
+#line 213 "P64.lss"
+
+static void swap_p(void)
+{
+    void *t = p2;
+    p2 = p;
+    p = t;
+}
+
+-SNOBOL C_WRAPPER_PROTO('SWAP_P()', .EMBED)
+#line 222 "P64.lss"
+
+%IF (BITS EQ 64)
+
+static void peek_p_(void) { p = *(void **)p; }
+
+-SNOBOL C_WRAPPER_PROTO('PEEK_P_()', .EMBED)
+#line 228 "P64.lss"
+
+static int peek_c_(void) { return *(char *)p; }
+
+-SNOBOL C_WRAPPER_PROTO('PEEK_C_()INTEGER', .EMBED)
+#line 232 "P64.lss"
+
+static int peek_s_(void) { return *(short *)p; }
+
+-SNOBOL C_WRAPPER_PROTO('PEEK_S_()INTEGER', .EMBED)
+#line 236 "P64.lss"
+
+static int peek_i_(void) { return *(int *)p; }
+
+-SNOBOL C_WRAPPER_PROTO('PEEK_I_()INTEGER', .EMBED)
+#line 240 "P64.lss"
+
+static void peek_d_(void) { d =  *(double *)p; }
+
+-SNOBOL C_WRAPPER_PROTO('PEEK_D_()', .EMBED)
+#line 244 "P64.lss"
+
+static void peek_f_(void) { f = *(float *)p; }
+
+-SNOBOL C_WRAPPER_PROTO('PEEK_F_()', .EMBED)
+#line 248 "P64.lss"
+
+static void peek_ld_(void) { ld = *(long double *)p; }
+
+-SNOBOL C_WRAPPER_PROTO('PEEK_LD_()', .EMBED)
+#line 252 "P64.lss"
+
+static void poke_p_(void) { *(void **)p = p2; }
+
+-SNOBOL C_WRAPPER_PROTO('POKE_P_()', .EMBED)
+#line 256 "P64.lss"
+
+static void poke_c_(int c) { *(char *)p = (char)c; }
+
+-SNOBOL C_WRAPPER_PROTO('POKE_C_(INTEGER)', .EMBED)
+#line 260 "P64.lss"
+
+static void poke_s_(int s) { *(short *)p = (short)s; }
+
+-SNOBOL C_WRAPPER_PROTO('POKE_S_(INTEGER)', .EMBED)
+#line 264 "P64.lss"
+
+static void poke_i_(int i) { *(int *)p = (int)i; }
+
+-SNOBOL C_WRAPPER_PROTO('POKE_I_(INTEGER)', .EMBED)
+#line 268 "P64.lss"
+
+static void poke_d_(void) { *(double *)p = d; }
+
+-SNOBOL C_WRAPPER_PROTO('POKE_D_()', .EMBED)
+#line 272 "P64.lss"
+
+static void poke_f_(void) { *(float *)p = f; }
+
+-SNOBOL C_WRAPPER_PROTO('POKE_F_()', .EMBED)
+#line 276 "P64.lss"
+
+static void poke_ld_(void) { *(long double *)p = ld; }
+
+-SNOBOL C_WRAPPER_PROTO('POKE_LD_()', .EMBED)
+#line 280 "P64.lss"
+
+static void malloc_(int n) { p = malloc(n); }
+
+-SNOBOL C_WRAPPER_PROTO('MALLOC_(INTEGER)', .EMBED)
+#line 284 "P64.lss"
+
+static void free_(void) { free(p); }
+
+-SNOBOL C_WRAPPER_PROTO('FREE_()', .EMBED)
+#line 288 "P64.lss"
+
+static int strdup_(char *s) { p = strdup(s); }
+
+-SNOBOL C_WRAPPER_PROTO('STRDUP_(STRING)', .EMBED)
+#line 292 "P64.lss"
+
+static int strlen_(void) { return strlen((char *)p); }
+
+-SNOBOL C_WRAPPER_PROTO('STRLEN_()INTEGER', .EMBED)
+#line 296 "P64.lss"
+
+%ENDIF
+
+%IF (BITS EQ 32)
+
+static int peek_p(int p) { return (int)*(void **)p; }
+
+-SNOBOL C_WRAPPER_PROTO('PEEK_P(INTEGER)INTEGER', .EMBED)
+#line 304 "P64.lss"
+
+static int peek_c(int p) { return *(char *)p; }
+
+-SNOBOL C_WRAPPER_PROTO('PEEK_C(INTEGER)INTEGER', .EMBED)
+#line 308 "P64.lss"
+
+static int peek_s(int p) { return *(short *)p; }
+
+-SNOBOL C_WRAPPER_PROTO('PEEK_S(INTEGER)INTEGER', .EMBED)
+#line 312 "P64.lss"
+
+static int peek_i(int p) { return *(int *)p; }
+
+-SNOBOL C_WRAPPER_PROTO('PEEK_I(INTEGER)INTEGER', .EMBED)
+#line 316 "P64.lss"
+
+static double peek_d(int p) { return *(double *)p; }
+
+-SNOBOL C_WRAPPER_PROTO('PEEK_D(INTEGER)REAL', .EMBED)
+#line 320 "P64.lss"
+
+static double peek_f(int p) { return *(float *)p; }
+
+-SNOBOL C_WRAPPER_PROTO('PEEK_F(INTEGER)REAL', .EMBED)
+#line 324 "P64.lss"
+
+static double peek_ld(int p) { return *(long double *)p; }
+
+-SNOBOL C_WRAPPER_PROTO('PEEK_LD(INTEGER)REAL', .EMBED)
+#line 328 "P64.lss"
+
+static void poke_p(int p, int v) { *(void **)p = (void *)v; }
+
+-SNOBOL C_WRAPPER_PROTO('POKE_P(INTEGER,INTEGER)', .EMBED)
+#line 332 "P64.lss"
+
+static void poke_c(int p, int c) { *(char *)p = (char)c; }
+
+-SNOBOL C_WRAPPER_PROTO('POKE_C(INTEGER,INTEGER)', .EMBED)
+#line 336 "P64.lss"
+
+static void poke_s(int p, int s) { *(short *)p = (short)s; }
+
+-SNOBOL C_WRAPPER_PROTO('POKE_S(INTEGER,INTEGER)', .EMBED)
+#line 340 "P64.lss"
+
+static void poke_i_(int p, int i) { *(int *)p = (int)i; }
+
+-SNOBOL C_WRAPPER_PROTO('POKE_I(INTEGER,INTEGER)', .EMBED)
+#line 344 "P64.lss"
+
+static void poke_d_(int p, double v) { *(double *)p = v; }
+
+-SNOBOL C_WRAPPER_PROTO('POKE_D_(INTEGER,REAL)', .EMBED)
+#line 348 "P64.lss"
+
+static void poke_f_(int p, double v) { *(float *)p = v; }
+
+-SNOBOL C_WRAPPER_PROTO('POKE_F_(INTEGER,REAL)', .EMBED)
+#line 352 "P64.lss"
+
+static void poke_ld_(int p, double v) { *(long double *)p = v; }
+
+-SNOBOL C_WRAPPER_PROTO('POKE_LD_(INTEGER,REAL)', .EMBED)
+#line 356 "P64.lss"
+
+static int malloc_(int n) { return (int)malloc(n); }
+
+-SNOBOL C_WRAPPER_PROTO('MALLOC_(INTEGER)INTEGER', .EMBED)
+#line 360 "P64.lss"
+
+static void free_(int p) { free((void *)p); }
+
+-SNOBOL C_WRAPPER_PROTO('FREE_(INTEGER)', .EMBED)
+#line 364 "P64.lss"
+
+static int strdup_(char *s) { return (int)strdup(s); }
+
+-SNOBOL C_WRAPPER_PROTO('STRDUP_(STRING)INTEGER', .EMBED)
+#line 368 "P64.lss"
+
+static int strlen_(int p) { return strlen((char *)p); }
+
+-SNOBOL C_WRAPPER_PROTO('STRLEN_(INTEGER)INTEGER', .EMBED)
+#line 372 "P64.lss"
+
+%ENDIF
+
+-END
+-LINE 381 "P64.lss"
+-SNOBOL DYNAMIC_DEBUG = 1
+-LINE 382 "P64.lss"
+-SNOBOL COMPILE_DYNAMIC(p64) :F(ERROR) ;
+-LINE 383 "P64.lss"
+-SNOBOL OBJECTS = p64; OBJECTS '.c' = '.o'
+-LINE 384 "P64.lss"
+-SNOBOL LINK_DYNAMIC('./p64', OBJECTS) :F(ERROR) ;
+-LINE 385 "P64.lss"
+-CMNT ERASE TEMPORARY FILES
+-CMNT     WE DON'T NEED THE C BITS, OR THE OBJECT FILES ANYMORE.
+-CMNT     ALL WE REQUIRE IS P64.SO
+-SNOBOL A = CRACK(p64 ' ' OBJECTS, ' ')
+-LINE 389 "P64.lss"
+-SNOBOL SEQ(' DELETE(A<K>) ', .K)
+-LINE 390 "P64.lss"
+-LINE 396 "P64.lss"
+%IF (BITS EQ 64)
+         LOAD('GET_PHI()INTEGER', 'p64.so')
+         LOAD('GET_PLO()INTEGER', 'p64.so')
+         LOAD('SET_PHI(INTEGER)', 'p64.so')
+         LOAD('SET_PLO(INTEGER)', 'p64.so')
+%ENDIF
+%IF (BITS EQ 32)
+         LOAD('GET_P()INTEGER', 'p64.so')
+         LOAD('SET_P(INTEGER)', 'p64.so')
+%ENDIF
+         LOAD('P_TO_P2()', 'p64.so')
+         LOAD('P_TO_P3()', 'p64.so')
+         LOAD('P_TO_P4()', 'p64.so')
+         LOAD('P2_TO_P()', 'p64.so')
+         LOAD('P3_TO_P()', 'p64.so')
+         LOAD('P4_TO_P()', 'p64.so')
+         LOAD('SET_F(REAL)', 'p64.so')
+         LOAD('SET_D(REAL)', 'p64.so')
+         LOAD('SET_LD(REAL)', 'p64.so')
+         LOAD('GET_F()REAL', 'p64.so')
+         LOAD('GET_D()REAL', 'p64.so')
+         LOAD('GET_LD()REAL', 'p64.so')
+         LOAD('GET_S()STRING', 'p64.so')
+         LOAD('SWAP_P()', 'p64.so')
+%IF (BITS EQ 64)
+         LOAD('PEEK_P_()', 'p64.so')
+         LOAD('PEEK_C_()INTEGER', 'p64.so')
+         LOAD('PEEK_S_()INTEGER', 'p64.so')
+         LOAD('PEEK_I_()INTEGER', 'p64.so')
+         LOAD('PEEK_D_()', 'p64.so')
+         LOAD('PEEK_F_()', 'p64.so')
+         LOAD('PEEK_LD_()', 'p64.so')
+         LOAD('POKE_P_()', 'p64.so')
+         LOAD('POKE_C_(INTEGER)', 'p64.so')
+         LOAD('POKE_S_(INTEGER)', 'p64.so')
+         LOAD('POKE_I_(INTEGER)', 'p64.so')
+         LOAD('POKE_D_()', 'p64.so')
+         LOAD('POKE_F_()', 'p64.so')
+         LOAD('POKE_LD_()', 'p64.so')
+         LOAD('MALLOC_(INTEGER)', 'p64.so')
+         LOAD('FREE_()', 'p64.so')
+         LOAD('STRDUP_(STRING)', 'p64.so')
+         LOAD('STRLEN_()INTEGER', 'p64.so')
+%ENDIF
+%IF (BITS EQ 32)
+         LOAD('PEEK_P(INTEGER)INTEGER', 'p64.so')
+         LOAD('PEEK_C(INTEGER)INTEGER', 'p64.so')
+         LOAD('PEEK_S(INTEGER)INTEGER', 'p64.so')
+         LOAD('PEEK_I(INTEGER)INTEGER', 'p64.so')
+         LOAD('PEEK_D(INTEGER)REAL', 'p64.so')
+         LOAD('PEEK_F(INTEGER)REAL', 'p64.so')
+         LOAD('PEEK_LD(INTEGER)REAL', 'p64.so')
+         LOAD('POKE_P(INTEGER,INTEGER)', 'p64.so')
+         LOAD('POKE_C(INTEGER,INTEGER)', 'p64.so')
+         LOAD('POKE_S(INTEGER,INTEGER)', 'p64.so')
+         LOAD('POKE_I(INTEGER,INTEGER)', 'p64.so')
+         LOAD('POKE_D(INTEGER,REAL)', 'p64.so')
+         LOAD('POKE_F(INTEGER,REAL)', 'p64.so')
+         LOAD('POKE_LD(INTEGER,REAL)', 'p64.so')
+         LOAD('MALLOC_(INTEGER)INTEGER', 'p64.so')
+         LOAD('FREE_(INTEGER)', 'p64.so')
+         LOAD('STRDUP_(STRING)INTEGER', 'p64.so')
+         LOAD('STRLEN_(INTEGER)INTEGER', 'p64.so')
+%ENDIF
+*
+-LINE 475 "P64.lss"
+%IF (BITS EQ 64)
+         DEFINE('GET_P()LO,HI')
+         DEFINE('SET_P(P)LO,HI')
+         DEFINE('PEEK_P(P)')
+         DEFINE('PEEK_C(P)')
+         DEFINE('PEEK_S(P)')
+         DEFINE('PEEK_I(P)')
+         DEFINE('PEEK_D(P)')
+         DEFINE('PEEK_F(P)')
+         DEFINE('PEEK_LD(P)')
+         DEFINE('POKE_P(P,P2)')
+         DEFINE('POKE_C(P,C)')
+         DEFINE('POKE_S(P,S)')
+         DEFINE('POKE_I(P,I)')
+         DEFINE('POKE_D(P,D)')
+         DEFINE('POKE_F(P,F)')
+         DEFINE('POKE_LD(P,LD)')
+         DEFINE('MALLOC(N)')
+         DEFINE('FREE(P)')
+         DEFINE('STRDUP(S)')
+         DEFINE('STRLEN(P)')
+%ENDIF
+%IF (BITS EQ 32)
+         DEFINE('MALLOC(N)')
+         DEFINE('FREE(P)')
+         DEFINE('STRDUP(S)')
+         DEFINE('STRLEN(P)')
+%ENDIF
+                                                              :(P64_END)
+*
+%IF (BITS EQ 64)
+GET_P    HI = GET_PHI()
+         HI = HI * (2 ** 32)
+         LO = GET_PLO()
+         LO = LT(LO, 0) LO + (2 ** 32)
+         GET_P = HI + LO                                       :(RETURN)
+*
+SET_P    HI = P / (2 ** 32)
+         LO = REMDR(P, 2 ** 32)
+         SET_PHI(HI)
+         SET_PLO(LO)                                           :(RETURN)
+*
+PEEK_P   SET_P(P)
+         PEEK_P_()
+         PEEK_P = GET_P()                                      :(RETURN)
+*
+PEEK_C   SET_P(P)
+         PEEK_C = PEEK_C_()                                    :(RETURN)
+*
+PEEK_S   SET_P(P)
+         PEEK_S = PEEK_S_()                                    :(RETURN)
+*
+PEEK_I   SET_P(P)
+         PEEK_I = PEEK_I_()                                    :(RETURN)
+*
+PEEK_D   SET_P(P)
+         PEEK_D_()
+         PEEK_D = GET_D()                                      :(RETURN)
+*
+PEEK_F   SET_P(P)
+         PEEK_F_()
+         PEEK_F = GET_F()                                      :(RETURN)
+*
+PEEK_LD  SET_P(P)
+         PEEK_LD_()
+         PEEK_LD = GET_LD()                                    :(RETURN)
+*
+POKE_P   SET_P(P2)
+         P_TO_P2()
+         SET_P(P)
+         POKE_P_()                                             :(RETURN)
+*
+POKE_C   SET_P(P)
+         POKE_C_(C)                                            :(RETURN)
+*
+POKE_S   SET_P(P)
+         POKE_S_(S)                                            :(RETURN)
+*
+POKE_I   SET_P(P)
+         POKE_I_(I)                                            :(RETURN)
+*
+POKE_D   SET_P(P)
+         SET_D(D)
+         POKE_D_()                                             :(RETURN)
+*
+POKE_F   SET_P(P)
+         SET_F(F)
+         POKE_F_()                                             :(RETURN)
+*
+POKE_LD  SET_P(P)
+         SET_LD(LD)
+         POKE_LD_()                                            :(RETURN)
+*
+MALLOC   MALLOC_(N)
+         MALLOC = GET_P()                                      :(RETURN)
+*
+FREE     SET_P(P)
+         FREE_()                                               :(RETURN)
+*
+STRDUP   STRDUP_(S)
+         STRDUP = GET_P()                                      :(RETURN)
+*
+STRLEN   SET_P(P)
+         STRLEN = STRLEN_()                                    :(RETURN)
+%ENDIF
+%IF (BITS EQ 32)
+MALLOC   MALLOC = MALLOC_(N)                                   :(RETURN)
+*
+FREE     FREE_(P)                                              :(RETURN)
+*
+STRDUP   STRDUP = STRDUP_(S)                                   :(RETURN)
+*
+STRLEN   STRLEN = STRLEN_(P)                                   :(RETURN)
+%ENDIF
+*
+P64_END
+*
+* CE: .F.MSNOBOL4;

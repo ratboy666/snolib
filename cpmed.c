@@ -310,8 +310,9 @@ STATIC INT	ISNEWFILE;		/* EDITING A NEW FILE */
 STATIC BOOL	UTF8;			/* UTF8 EDITING */
 IF_LINUX(STATIC STRUCT TERMIOS TERM;)
 STATIC INT	MBELL;			/* MARGIN BELL */
-STATIC INT      HTABS[MAXT] = { 0, };	/* HTAB FOR ^W */
+STATIC INT	HTABS[MAXT] = { 0, };	/* HTAB FOR ^W */
 STATIC INT	SUBLVL;			/* SUBMIT LEVEL */
+STATIC INT	PL;			/* PAGE LENGTH */
 
 /* FORWARD DECLARATIONS */
 
@@ -1554,7 +1555,7 @@ STATIC CHAR *HELP2[] = BEGIN
 "  12 O377 H0F  # (BUF NUM)  ? (BUF CHAR)  DUP  SWAP  ROLL",
 "  P  HP  OP  $V (A..Z)  >V",
 "  [V] INTERNAL VARS [CP MP TOP LN SP KEYBS KEYRUB ROWS COLS]",
-"    [BROWS CCOL CROW N N2 N3 N4 X Y Z T L0..L9 C0..C9]",
+"    [BROWS CCOL CROW N N2 N3 N4 X Y Z T L0..L9 C0..C9 PL]",
 NULL
 END;
 STATIC CHAR *HELP3[] = BEGIN
@@ -1581,7 +1582,7 @@ STATIC CHAR *HELP4[] = BEGIN
 /*
  ---------------------------------------------------------------- */
 "                         STARTING",
-"CPMED                                               MAY 11, 2014",
+"CPMED                                               MAY 29, 2014",
 "COPYRIGHT (C) 1982-2014 FRIDTJOF WEIGEL      ALL RIGHTS RESERVED",
 "",
 "[UNDO=U] [REGION=M] [REGION2=M] [CELIB=D]",
@@ -2131,6 +2132,7 @@ BEGIN
 	LINEST[I] = 0XFFFFFFFF;
     CBUF = 1;
     SEEALL = NO;
+    PL = 16;
     MBELL = 0;
     UTF8 = NO;
     CHANGE = 0;
@@ -3825,15 +3827,19 @@ END
 /* PAGE UP OR DOWN */
 STATIC VOID PAGE()
 BEGIN
+    CHAR BUF[20];
     IF (!EXEC) RETURN;
+    STRCPY(BUF, (NUM < 0) ? "-" : "");
+    STRCAT(BUF, FMTN(PL));
+    STRADD(BUF, 'L');
     IF (NUM < 0) BEGIN
 	WHILE (!ATBEG() AND (NUM < 0)) BEGIN
-	    SUBMIT("-16L");
+	    SUBMIT(BUF);
 	    ++NUM;
 	END
     END ELSE IF (NUM > 0) BEGIN
 	WHILE (!ATEND() AND (NUM > 0)) BEGIN
-	    SUBMIT("16L");
+	    SUBMIT(BUF);
 	    --NUM;
 	END
     END
@@ -3843,7 +3849,9 @@ BEGIN
     END
     IF (FSCOPE)
 	RETURN;
-    SUBMIT("16T");
+    STRCPY(BUF, FMTN(PL));
+    STRADD(BUF, 'T');
+    SUBMIT(BUF);
 END
 
 /* QUIT EDIT, NO SAVE */
@@ -3940,7 +3948,7 @@ BEGIN
 	 *	.S	SCOPE MODE
 	 *	.Y	"YES"
 	 *	.D	EIGHT BIT OUTPUT
-	 *	.8	CR/LF INSTEAD OF JUST LF
+	 *	.8	CR/LF INSTEAD OF JUST LF, ^Z PAD
 	 *	.3	ASCII-64 OUTPUT
 	 *	.L	TRANSLATE ^L TO NEWLINE
 	 *	.E	SEEALL MODE
@@ -4499,12 +4507,15 @@ BEGIN
 	FASTUP = NO;
 	IF (FSCOPE == 2)
 	    UPDATE();
+	PL = ROWS - BROWS;
     END ELSE BEGIN
 	SIZEC();
 	CLS();
 	RGNALL();
 	KEYBS = CHBS;
 	KEYRUB = RUBOUT;
+	PL = 16;
+	BROWS = 6;
     END
 END
 
@@ -4645,6 +4656,7 @@ BEGIN
 	BEGIN "C7",	ADDR(CREF[7])	END,
 	BEGIN "C8",	ADDR(CREF[8])	END,
 	BEGIN "C9",	ADDR(CREF[9])	END,
+	BEGIN "PL",	ADDR(PL)	END,
 	BEGIN NULL,	NULL		END
     END;
 
@@ -5061,7 +5073,7 @@ BEGIN
     S[0] = 0;
     CINSRC = STDIN;
     PREPC();
-    LOUT("CPMED (SUN MAY 11 00:57:24 EDT 2014)");
+    LOUT("CPMED (THU MAY 29 19:09:06 EDT 2014)");
     IF ((AC < 2) || (STRICM(AV[1], "-E") == 0)) BEGIN
     	/* NO ARGS, OR JUST -E ... */
 	LOUT("NO FILE");

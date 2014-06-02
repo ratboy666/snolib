@@ -44,17 +44,18 @@ modules using <font face="Source Code Pro">UNIQUE()</font>.
 <pre><font face="Source Code Pro">
 <b>&laquo;UNIQUE&raquo;&equiv;</b>
          DEFINE(&#39;MAKE_UNIQUE(SUF)S&#39;)
-         MAKE_UNIQUE()                                     <b>:(UNIQUE_END)</b>
+         MAKE_UNIQUE()
+         OPSYN(&#39;UNIQUE&#39;, &#39;UNIQUE_&#39;)                        <b>:(UNIQUE_END)</b>
 <font color="#818181"><i>*</i></font>
 MAKE_UNIQUE
          S =
-+ &#39;UNIQUESUF  UNIQUESUF_ = IDENT(I) UNIQUESUF_ + 1 :F(UNIQUECSUF);&#39;
-+ &#39;           UNIQUESUF = &quot;USUF&quot; UNIQUESUF_ &quot;_&quot;         :(RETURN);&#39;
-+ &#39;UNIQUECSUF $(&quot;USUF&quot; UNIQUESUF_ &quot;_&quot;) = &#39;
-+ &#39;           ?(UNIQUESUF_ = GT(UNIQUESUF_,0) UNIQUESUF_ - 1)&#39;
-+ &#39;                                       :S(UNIQUECSUF)F(RETURN);&#39;
++ &#39;UNIQUE_SUF  UNIQUE_SUF_ = IDENT(I) UNIQUE_SUF_ + 1  :F(UNIQUECSUF);&#39;
++ &#39;            UNIQUE_SUF = &quot;USUF&quot; UNIQUE_SUF_ &quot;_&quot;          :(RETURN);&#39;
++ &#39;UNIQUECSUF $(&quot;USUF&quot; UNIQUE_SUF_ &quot;_&quot;) = &#39;
++ &#39;           ?(UNIQUE_SUF_ = GT(UNIQUE_SUF_,0) UNIQUE_SUF_ - 1)&#39;
++ &#39;                                           :S(UNIQUECSUF)F(RETURN);&#39;
          CODE(REPL(S, &#39;SUF&#39;, SUF))
-         DEFINE(&#39;UNIQUE&#39; SUF &#39;(I)&#39;)                            <b>:(RETURN)</b>
+         DEFINE(&#39;UNIQUE_&#39; SUF &#39;(I)&#39;)                           <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 UNIQUE_END
 <b>@</b>
@@ -115,7 +116,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Fri May 16 16:11:39 EDT 2014</p></td><td><p align=right>
+Sun Jun  1 23:14:06 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

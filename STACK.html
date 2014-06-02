@@ -10,8 +10,8 @@
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 <font face="Source Code Pro">STACK(SUF)</font> will create unique stack functions with the given
-suffix. <font face="Source Code Pro">STACK('A')</font> creates functions <font face="Source Code Pro">PUSHA(V)</font>, <font face="Source Code Pro">POPA()</font>,
-and <font face="Source Code Pro">TOPA()</font>.
+suffix. <font face="Source Code Pro">STACK('A')</font> creates functions <font face="Source Code Pro">PUSH_A(V)</font>, <font face="Source Code Pro">POP_A()</font>,
+and <font face="Source Code Pro">TOP_A()</font>.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 <h2>Uses</h2>
@@ -29,19 +29,22 @@ and <font face="Source Code Pro">TOPA()</font>.
 <pre><font face="Source Code Pro">
 <b>&laquo;STACK&raquo;&equiv;</b>
          DEFINE(&#39;STACK(SUF)S&#39;)
-         STACK()                                            <b>:(STACK_END)</b>
+         STACK()
+         OPSYN(&#39;PUSH&#39;, &#39;PUSH_&#39;)
+         OPSYN(&#39;POP&#39;,  &#39;POP_&#39;)
+         OPSYN(&#39;TOP&#39;,  &#39;TOP_&#39;)                              <b>:(STACK_END)</b>
 <font color="#818181"><i>*</i></font>
-STACK    S = &#39;PUSHSUF STACK_SUF = LINK(V, STACK_SUF)        ;&#39;
-+            &#39;        PUSHSUF = .VALUE(STACK_SUF) :(NRETURN);&#39;
-+            &#39;POPSUF  IDENT(STACK_SUF)           :S(FRETURN);&#39;
-+            &#39;        POPSUF = VALUE(STACK_SUF)             ;&#39;
-+            &#39;        STACK_SUF = NEXT(STACK_SUF)  :(RETURN);&#39;
-+            &#39;TOPSUF  IDENT(STACK_SUF)           :S(FRETURN);&#39;
-+            &#39;        TOPSUF = .VALUE(STACK_SUF)  :(NRETURN);&#39;
+STACK    S = &#39;PUSH_SUF STACK_SUF = LINK(V, STACK_SUF)         ;&#39;
++            &#39;         PUSH_SUF = .VALUE(STACK_SUF) :(NRETURN);&#39;
++            &#39;POP_SUF  IDENT(STACK_SUF)            :S(FRETURN);&#39;
++            &#39;         POP_SUF = VALUE(STACK_SUF)             ;&#39;
++            &#39;         STACK_SUF = NEXT(STACK_SUF)   :(RETURN);&#39;
++            &#39;TOP_SUF  IDENT(STACK_SUF)            :S(FRETURN);&#39;
++            &#39;         TOP_SUF = .VALUE(STACK_SUF)  :(NRETURN);&#39;
          CODE(REPL(S, &#39;SUF&#39;, SUF))
-         DEFINE(&#39;PUSH&#39; SUF &#39;(V)&#39;)
-         DEFINE(&#39;POP&#39;  SUF &#39;()&#39; )
-         DEFINE(&#39;TOP&#39;  SUF &#39;()&#39; )                              <b>:(RETURN)</b>
+         DEFINE(&#39;PUSH_&#39; SUF &#39;(V)&#39;)
+         DEFINE(&#39;POP_&#39;  SUF &#39;()&#39; )
+         DEFINE(&#39;TOP_&#39;  SUF &#39;()&#39; )                             <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 STACK_END
 <b>@</b>
@@ -89,7 +92,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Fri May 16 16:11:32 EDT 2014</p></td><td><p align=right>
+Sun Jun  1 23:13:56 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

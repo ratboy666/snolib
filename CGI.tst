@@ -1,7 +1,7 @@
 #!/usr/bin/bash
          export "SNOLIB=/home/fred/snolib"; export "SNOPATH=/home/fred/snolib"
          exec "/usr/local/bin/snobol4" "-b" "$0" "$@"
--LINE 272 "CGI.lss"
+-LINE 275 "CGI.lss"
 -INCLUDE 'FCGI.INC'
 -INCLUDE 'CGI.INC'
 -INCLUDE 'READFILE.INC'
@@ -11,6 +11,7 @@
 -INCLUDE 'SESSION.INC'
 -INCLUDE 'JSON.INC'
 -INCLUDE 'DSERVE.INC'
+-INCLUDE 'ROUTING.INC'
 *
          CGI.tmpl = 'CGI.tmpl'
          &CODE = 1
@@ -140,6 +141,18 @@ NO_T_C
 * ON GET, APPENDS '/' ACTION TO THE END BEFORE THE ? PART.
 *
          A<'REQUEST_URI'> = E<'REQUEST_URI'>
+         A<'PATH_INFO'> = E<'PATH_INFO'>
+*
+* TAKE REQUEST_METHOD, PATH_INFO AND MATCH AGAINST ROUTING PATTERN
+*
+* V = TABLE()
+* R = ROUTING_INIT()
+* M = ROUTING(METHOD, PATH, .V)
+* A = ACTION
+* R = ROUTING_ADD(R, M, A)
+*
+* (METHOD '\' PATH_INFO) R
+* IF SUCCESS, ACTION IS SET, V<> IS FILLED IN
 *
 * FROM THE COOKIE JAR
 *

@@ -11,7 +11,7 @@
 <p align="justify"><font face="Sorts Mill Goudy">
 <font face="Source Code Pro">F = FOR_COMPILE(INIT,TEST,INCR,STMT); FOR(F)</font> is a generalization
 of <font face="Source Code Pro">SEQ()</font>.  This implements the <font face="Source Code Pro">C</font> <font face="Source Code Pro">for</font> loop
-<font face="Source Code Pro">for(init,test,updt)stmt</font>.
+<font face="Source Code Pro">for(init;test;updt)stmt</font>.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 <font face="Source Code Pro">SEQ()</font> can be expressed in terms of <font face="Source Code Pro">FOR()</font>. <font face="Source Code Pro">SEQ(S,.V,L,H)</font>
@@ -47,7 +47,7 @@ A similar optimization could be made to <font face="Source Code Pro">SEQ()</font
 is a stable <font face="Source Code Pro">API</font>, this won't be done.
 </p></font></div>
 <p align="justify"><font face="Sorts Mill Goudy">
-Usage (for caching compiation) would similar to:
+Usage (for caching compilation) would similar to:
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 </font></p><pre><font face="Source Code Pro">
@@ -147,7 +147,7 @@ FOR_COMPILE
          TEST(FOR_COMPILE) =
 +           CODE(TEST_ &#39; :S&lt;STMT(F_)&gt;F(RETURN)&#39;)               <b>:F(ERROR)</b>
          STMT_ = IDENT(DATATYPE(STMT_), &#39;CODE_&#39;)
-+           &#39; EVAL_CODE_(STMT_(F_))&#39;
++           &#39; EVAL_CODE_ = EVAL_CODE_(STMT_(F_))&#39;
          STMT(FOR_COMPILE) =
 +           CODE(STMT_ &#39; :S&lt;INCR(F_)&gt;F(FRETURN)&#39;)              <b>:F(ERROR)</b>
          INCR_ = IDENT(DATATYPE(INCR_), &#39;CODE_&#39;)
@@ -294,7 +294,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Wed May 28 00:16:06 EDT 2014</p></td><td><p align=right>
+Sun Jun  1 23:14:25 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

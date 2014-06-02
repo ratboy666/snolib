@@ -1,0 +1,51 @@
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-TITLE ILLUM
+-LINE 46 "illum.lss"
+START
+-LINE 14 "illum.lss"
+-INCLUDE 'BQ.INC'
+-INCLUDE 'CRACK.INC'
+-INCLUDE 'SEQ.INC'
+-INCLUDE 'TRIMB.INC'
+-STITL
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*               ###  #        #        #     #  #     #                *
+*                #   #        #        #     #  ##   ##                *
+*                #   #        #        #     #  # # # #                *
+*                #   #        #        #     #  #  #  #                *
+*                #   #        #        #     #  #     #                *
+*                #   #        #        #     #  #     #                *
+*               ###  #######  #######   #####   #     #                *
+*                                                                      *
+* ILLUM           PRODUCE ILLUMINATED FIRST CHARACTER                  *
+*                                                                      *
+************************************************************************
+*
+* illum.lss
+*
+-LINE 21 "illum.lss"
+         TERMINAL = 'ILLUM (SUN NOV 24 01:32:15 EST 2013)'
+*
+         S = TRIMB(INPUT)                                        :F(END)
+         S LEN(1) . C REM . S                                    :F(END)
+         S = ' ' VDIFFER(S)
+         F = BQ('banner ' C, '/')
+         F = CRACK(F '/', '/')
+         SEQ(' F<I> = SUBSTR(F<I>, 1, SIZE(F<I>) - 2)', .I, 2)
+         W = SIZE(F<2>)
+         G = I - 1
+         F<1> = '┌' DUPL('─', SIZE(F<2>) + SIZE(S)) '┐'
+         F<2> = '│' F<2> S '│'
+         F<3> = '│' F<3> '│' EQ(SIZE(S))                       :S(ILLU0)
+         F<3> = '│' F<3> '┌' DUPL('─', SIZE(S) - 1) '┘'
+ILLU0    SEQ(' F<I> = "│" F<I> "│"', .I, 4, G)
+         F<I + 1> = '└' DUPL('─', W) '┘'
+         SEQ(' OUTPUT = F<I>', .I)
+*
+END START
+*
+* CE: .F.MSNOBOL4;

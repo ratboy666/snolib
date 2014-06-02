@@ -330,7 +330,7 @@ DDT__    TERMINAL = &#39;STARTING DDT&#39;
          ENDFILE(UNIT)
          DETACH(.F)
          HOST(HOST_SYSCMD, &#39;snobol4 -n -b -l &#39; TEMPLST_ &#39; &#39; TEMPSRC_)
-         HOST(HOST_SYSCMD, &#39;LIST=&#39; TEMPLST_ &#39; snobol4 -b &#39; TEMPSRC_)
+         HOST(HOST_SYSCMD, &#39;LIST=&#39; TEMPLST_ &#39; snobol4 -B -b &#39; TEMPSRC_)
          TERMINAL = &#39;DDT COMPLETED&#39;
          DELETE(TEMPSRC_)
          DELETE(TEMPLST_)                                      <b>:(RETURN)</b>
@@ -759,7 +759,7 @@ A stack size <font face="Source Code Pro">-S</font> of 40000 seems to be fine.
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
 <font color="#818181"><i>#!/usr/bin/bash</i></font>
-         exec &quot;snobol4&quot; &quot;-s&quot; &quot;-S 40000&quot; &quot;$0&quot; &quot;$@&quot;
+         exec &quot;snobol4&quot; &quot;-B&quot; &quot;-s&quot; &quot;-S 40000&quot; &quot;$0&quot; &quot;$@&quot;
 <font color="#818181"><i>*</i></font>
 -TITLE CODE
 START_
@@ -801,7 +801,7 @@ END START_
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Wed May 21 14:21:48 EDT 2014</p></td><td><p align=right>
+Sun Jun  1 23:13:07 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

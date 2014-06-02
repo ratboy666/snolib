@@ -1,0 +1,79 @@
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-TITLE SCAN
+-LINE 61 "scan.lss"
+START
+-LINE 53 "scan.lss"
+-INCLUDE 'SLOAD.INC'
+-INCLUDE 'HOST.INC'
+-STITL
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                                                                      *
+*                   #####    #####      #     #     #                  *
+*                  #     #  #     #    # #    ##    #                  *
+*                  #        #         #   #   # #   #                  *
+*                   #####   #        #     #  #  #  #                  *
+*                        #  #        #######  #   # #                  *
+*                  #     #  #     #  #     #  #    ##                  *
+*                   #####    #####   #     #  #     #                  *
+*                                                                      *
+* SCAN                  SCAN LINES FOR PATTERN                         *
+*                                                                      *
+************************************************************************
+*
+* scan.lss
+*
+         TERMINAL = 'SCAN (MON JAN 27 14:19:34 EST 2014)'
+*
+         &CODE = 1
+         SLOAD('SCAN.INC')
+         LINE_NUMBER =
+         LAST_LINE = 1
+         N = HOST(HOST_FIRSTARG)
+* POSSIBLE /G ARGUMENT
+         O = HOST(HOST_ARGN, N)                                  :F(END)
+         O POS(0) '/'                                            :F(CLL)
+         N = N + 1
+         G = ?(O ? ANY('Gg')) 1
+                                                                 :(CLL2)
+* COLLECT FIND OR SUBSTITUTE STATEMENT. IF '=' IS ARGUMENT THEN
+* COMMAND IS SUBSTITUTE
+CLL      SUB = ?(O ? (POS(0) '=' RPOS(0))) 1                    :S(ADDS)
+         O POS(0) '%'                                           :F(ADDS)
+         O POS(0) LEN(1) REM . O
+         O = "'" O "'"
+ADDS     S = S ' ' O
+         N = N + 1
+CLL2     O = HOST(HOST_ARGN, N)                                  :S(CLL)
+*
+TOPAT    TERMINAL = IDENT(SUB) 'FIND: ' S
+         TERMINAL = DIFFER(SUB) IDENT(G) 'SUBSTITUTE: ' S
+         TERMINAL = DIFFER(SUB) DIFFER(G) 'SUBSTITUTE GLOBAL: ' S
+* EMPTY STATEMENT IS NO OPERATION
+         S = TRIM(S)
+         IDENT(S)                                                :S(END)
+* COMPILE STATEMENT AS A NON-G COMMAND FIRST. ADDS LABELS
+         LB = DIFFER(SUB) ' :(BTM)'
+         LB = IDENT(SUB) ' :S(BTM)F(TOP)'
+         C = CODE(' LINE ' S LB)                              :F(SYNTAX)
+         IDENT(SUB)                                              :S(TOP)
+         IDENT(G)                                                :S(TOP)
+* IF S AND G, ADD LOCAL LOOP.
+         C = CODE('LUP LINE ' S ' :S(LUP)F(BTM)')             :F(SYNTAX)
+*
+TOP      LINE = INPUT                                            :F(END)
+         LINE_NUMBER = LINE_NUMBER + 1                              :<C>
+*
+BTM      &CODE = 0
+         OUTPUT = DIFFER(SUB) LINE                              :S(BTM2)
+         OUTPUT = LINE_NUMBER - LAST_LINE
+         LAST_LINE = LINE_NUMBER
+BTM2     DIFFER(SUB)                                             :S(TOP)
+         IDENT(G)                                          :S(END)F(TOP)
+SYNTAX   TERMINAL = 'SYNTAX ERROR IN ' S
+END
+*
+* CE: .MSNOBOL4;
