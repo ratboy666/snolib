@@ -662,11 +662,16 @@ parameters after an FFI call.
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;FFI&raquo;&equiv;</b>
+-PUBLIC DLOPEN(), DLERROR(), DLSYM(), DLCLOSE()
          DEFINE(&#39;DLOPEN(S,I)&#39;)
          DEFINE(&#39;DLERROR()&#39;)
          DEFINE(&#39;DLSYM(H,S)&#39;)
          DEFINE(&#39;DLCLOSE(H)&#39;)
 <font color="#818181"><i>*</i></font>
+-PUBLIC FFI_NEW(), FFI_FREE(), FFI_PAR_N_INTEGER(), FFI_PAR_N_REAL()
+-PUBLIC FFI_PAR_N_STRING(), FFI_PAR_N_PTR, FFI_SET_CALLP()
+-PUBLIC FFI_CALL_VOID(), FFI_CALL_INTEGER(), FFI_CALL_REAL()
+-PUBLIC FFI_CALL_STRING(), FFI_CALL_PTR()
          DEFINE(&#39;FFI_NEW(RS,PS)&#39;)
          DEFINE(&#39;FFI_FREE(FFI)&#39;)
          DEFINE(&#39;FFI_PAR_N_INTEGER(FFI,N,I)&#39;)
@@ -795,7 +800,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Sun Jun  1 23:13:23 EDT 2014</p></td><td><p align=right>
+Mon Jun  2 11:39:46 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

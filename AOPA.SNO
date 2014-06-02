@@ -2,7 +2,7 @@
 -INCLUDE 'SEQ.INC'
 -STITL AOPA
 -EJECT
--LINE 70 "AOPA.lss"
+-LINE 71 "AOPA.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -21,6 +21,7 @@
 * AOPA.lss
 *
 -LINE 20 "AOPA.lss"
+-PUBLIC AOPA()
          DEFINE('AOPA(A1,OP,A2)S1,I,S2,S')                   :(AOPA_END)
 *
 AOPA     IDENT(DATATYPE(A1), 'ARRAY')                         :S(AOPA_1)

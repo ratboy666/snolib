@@ -1,7 +1,7 @@
 -STITL AGT
 -EJECT
 *
--LINE 35 "AGT.lss"
+-LINE 36 "AGT.lss"
 ************************************************************************
 *                                                                      *
 *                         #      #####   #######                       *
@@ -19,6 +19,7 @@
 * AGT.lss
 *
 -LINE 11 "AGT.lss"
+-PUBLIC AGT()
          DEFINE('AGT(S1,S2)')
          AGT_TT = REPLACE(&ALPHABET, &UCASE, &LCASE)          :(AGT_END)
 *

@@ -430,6 +430,7 @@ identifier) of the new process. In the child, it returns 0.
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;CSNOBOL4&raquo;&equiv;</b>
+-PUBLIC FORK()
          LOAD(&#39;FORK()INTEGER&#39;)
 <b>@</b>
 </font></pre></div>
@@ -440,6 +441,7 @@ pid of the child process that has terminated, or negative on error.
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;CSNOBOL4&raquo;&equiv;</b>
+-PUBLIC WAIT()
          LOAD(&#39;WAIT()INTEGER&#39;)
 <b>@</b>
 </font></pre></div>
@@ -466,6 +468,7 @@ the <font face="Source Code Pro">C</font> format <font face="Source Code Pro">F<
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;CSNOBOL4&raquo;&equiv;</b>
+-PUBLIC SPRINTF()
          LOAD(&#39;SPRINTF(STRING,)STRING&#39;)
 <b>@</b>
 </font></pre></div>
@@ -539,6 +542,10 @@ MAINBOL default formats
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;CSNOBOL4&raquo;&equiv;</b>
+-PUBLIC FTN_FORMAT(), CREATEPIPE(), GETPIPEFD(), GET_ERRNO()
+-PUBLIC CLEAR_ERRNO(), WAITPID(), GET_STATUS(), SIZEOF_TIMEVAL()
+-PUBLIC SET_TIMEVAL(), SIZEOF_FD_SET, FD_ZERO(), FD_CLR(), FD_SET()
+-PUBLIC FD_ISSET()
          LOAD(&#39;FTN_FORMAT(STRING,STRING)STRING&#39;, &#39;format.so&#39;)
          LOAD(&#39;CREATEPIPE()INTEGER&#39;, &#39;format.so&#39;)
          LOAD(&#39;GETPIPEFD(INTEGER)INTEGER&#39;, &#39;format.so&#39;)
@@ -574,6 +581,7 @@ involved.
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;CSNOBOL4&raquo;&equiv;</b>
+-PUBLIC CLOSE(), SELECT(), IO_GETFP(), FILENO()
          CLOSE_FFI = FFI_NEW(&#39;I&#39;, &#39;I&#39;)
          FFI_SET_CALLP(CLOSE_FFI, DLSYM(0, &#39;close&#39;))
          DEFINE(&#39;CLOSE(FD)&#39;)
@@ -678,7 +686,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Sun Jun  1 23:13:12 EDT 2014</p></td><td><p align=right>
+Mon Jun  2 00:43:04 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

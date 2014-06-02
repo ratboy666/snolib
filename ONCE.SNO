@@ -2,7 +2,7 @@
 -INCLUDE 'UNIQUE.INC'
 -STITL ONCE
 -EJECT
--LINE 40 "ONCE.lss"
+-LINE 41 "ONCE.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -21,6 +21,7 @@
 * ONCE.lss
 *
 -LINE 17 "ONCE.lss"
+-PUBLIC ONCE()
          DEFINE('ONCE(ID)NAME')                              :(ONCE_END)
 ONCE     ONCE = IDENT(ID, NULL)
 +               CONVERT('ONCE(' 1 ')', 'EXPRESSION')          :S(RETURN)

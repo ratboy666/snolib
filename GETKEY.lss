@@ -45,10 +45,13 @@ applications.
 @
 
 <<GETKEY>>=
+-PUBLIC GETKEY()
          DEFINE('GETKEY(IN)KEY,M')
 *
 GETKEY_INIT
 *
+-PUBLIC KEY_ESC, KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN, KEY_PAGEDN
+-PUBLIC KEY_PAGEUP, KEY_HOME, KEY_END, KEY_INS
          KEY_ESC    = CHARS_ESC CHARS_ESC
          KEY_LEFT   = BQ('tput kcub1')
          KEY_RIGHT  = BQ('tput kcuf1')

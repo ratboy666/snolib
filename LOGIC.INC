@@ -1,7 +1,7 @@
 -STITL LOGIC
 -EJECT
 *
--LINE 74 "LOGIC.lss"
+-LINE 78 "LOGIC.lss"
 ************************************************************************
 *                                                                      *
 *             #        #######   #####   ###   #####                   *
@@ -27,8 +27,12 @@
 *
 * INTEGER/INTEGER, STRING/INTEGER, STRING/STRING
 *
+-PUBLIC LOGIC()
          LOAD('LOGIC(INTEGER,,)')
 *
+-PUBLIC NOT(), AND(), OR(), XOR(), NAND(), NOR(), UPLUS(), UMINUS()
+-PUBLIC  UMUL(), UDIV(), SHL(), SHR(), SAR(), ROL(), ROR()
+-PUBLIC HI(), IH(), DIB(), IDB()
          DEFINE('NOT(ARG)')
          DEFINE('AND(ARG1,ARG2)')
          DEFINE('OR(ARG1,ARG2)')

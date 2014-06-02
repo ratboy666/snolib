@@ -16,6 +16,7 @@ Infinite precision integer math.
          LDG_ZEROS = BREAK('123456789') | RTAB(1)
          NO_DIGITS = 4
 *
+-PUBLIC INFINP_START(), INFINP_STOP()
          DEFINE('XYZERO()')
          DEFINE('INFFLOAT()')
          DEFINE('SMALL()')

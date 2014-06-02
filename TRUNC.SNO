@@ -2,7 +2,7 @@
 -INCLUDE 'SEQ.INC'
 -STITL TRUNC
 -EJECT
--LINE 38 "TRUNC.lss"
+-LINE 39 "TRUNC.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -21,6 +21,7 @@
 * TRUNC.lss
 *
 -LINE 16 "TRUNC.lss"
+-PUBLIC TRUNC()
          DEFINE('TRUNC(A,L,H)')                             :(TRUNC_END)
 *
 TRUNC    TRUNC = ARRAY(H - L + 1)

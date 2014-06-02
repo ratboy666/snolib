@@ -12,7 +12,7 @@
 -INCLUDE 'JSON.INC'
 -STITL SESSION
 -EJECT
--LINE 234 "SESSION.lss"
+-LINE 237 "SESSION.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -31,6 +31,9 @@
 * SESSION.lss
 *
 -LINE 98 "SESSION.lss"
+-PUBLIC SESSION_CREATE(), SESSION_DELETE(), SESSION_TOUCH()
+-PUBLIC SESSION_PERSIST(), SESSION_LOAD(), SESSION_EXPIRE()
+-PUBLIC SESSION_PERSIST_DIR
          DEFINE('SESSION_CREATE(EXPIRE_TIME)')
          DEFINE('SESSION_DELETE(SESSION)')
          DEFINE('SESSION_TOUCH(SESSION)')

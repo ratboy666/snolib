@@ -4,7 +4,7 @@
 -INCLUDE 'BRKREM.INC'
 -STITL ROUTING
 -EJECT
--LINE 122 "ROUTING.lss"
+-LINE 123 "ROUTING.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -23,6 +23,7 @@
 * ROUTING.lss
 *
 -LINE 22 "ROUTING.lss"
+-PUBLIC ROUTING_INIT(), ROUTING_ADD(), ROUTING()
          DEFINE('ROUTING_INIT()')
          DEFINE('ROUTING_ADD(ROUTE,PATTERN,ACTION_)NAME,P')
          DEFINE('ROUTING(METHOD,ROUTE,VARS_)P,S')

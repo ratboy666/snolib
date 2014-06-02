@@ -1,7 +1,7 @@
 -STITL GOTOS
 -EJECT
 *
--LINE 58 "GOTOS.lss"
+-LINE 59 "GOTOS.lss"
 ************************************************************************
 *                                                                      *
 *              #####   #######  #######  #######   #####               *
@@ -19,6 +19,7 @@
 * GOTOS.lss
 *
 -LINE 28 "GOTOS.lss"
+-PUBLIC GOTOS_()
          DEFINE('GOTOS_()')
          GOTOS_LENGTH = 119
          GOTOS_QUEUE = DUPL('.', GOTOS_LENGTH)

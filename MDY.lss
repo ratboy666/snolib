@@ -5,6 +5,7 @@ For example [[MDY(71,83)]] will return '3/24/71'. The global variables
 M and D are set to equal to the month and day respectively.
 
 <<MDY>>=
+-PUBLIC MDY()
          DEFINE('MDY(Y,DY)X,T')
          DAY_MONTH = '(334,12)(304,11)(273,10)(243,9)'
 +           '(212,8)(181,7)(151,6)(120,5)(90,4)(59,3)(31,2)(0,1)'

@@ -437,16 +437,19 @@ actual functions differ if we are on a 64 bit or 32 bit processor.
          LOAD(&#39;SET_PHI(INTEGER)&#39;, &#39;p64.so&#39;)
          LOAD(&#39;SET_PLO(INTEGER)&#39;, &#39;p64.so&#39;)
 %ENDIF
+-PUBLIC GET_P(), SET_P()
 %IF (BITS EQ 32)
          LOAD(&#39;GET_P()INTEGER&#39;, &#39;p64.so&#39;)
          LOAD(&#39;SET_P(INTEGER)&#39;, &#39;p64.so&#39;)
 %ENDIF
+-PUBLIC P_TO_P2(), P_TO_P3(), P_TO_P4(), P2_TO_P(), P3_TO_P(), P4_TO_P()
          LOAD(&#39;P_TO_P2()&#39;, &#39;p64.so&#39;)
          LOAD(&#39;P_TO_P3()&#39;, &#39;p64.so&#39;)
          LOAD(&#39;P_TO_P4()&#39;, &#39;p64.so&#39;)
          LOAD(&#39;P2_TO_P()&#39;, &#39;p64.so&#39;)
          LOAD(&#39;P3_TO_P()&#39;, &#39;p64.so&#39;)
          LOAD(&#39;P4_TO_P()&#39;, &#39;p64.so&#39;)
+-PUBLIC SET_F(), SET_D(), SET_LD(), GET_F(), GET_D(), GET_LD(), GET_S()
          LOAD(&#39;SET_F(REAL)&#39;, &#39;p64.so&#39;)
          LOAD(&#39;SET_D(REAL)&#39;, &#39;p64.so&#39;)
          LOAD(&#39;SET_LD(REAL)&#39;, &#39;p64.so&#39;)
@@ -454,6 +457,7 @@ actual functions differ if we are on a 64 bit or 32 bit processor.
          LOAD(&#39;GET_D()REAL&#39;, &#39;p64.so&#39;)
          LOAD(&#39;GET_LD()REAL&#39;, &#39;p64.so&#39;)
          LOAD(&#39;GET_S()STRING&#39;, &#39;p64.so&#39;)
+-PUBLIC SWAP_P()
          LOAD(&#39;SWAP_P()&#39;, &#39;p64.so&#39;)
 %IF (BITS EQ 64)
          LOAD(&#39;PEEK_P_()&#39;, &#39;p64.so&#39;)
@@ -475,6 +479,10 @@ actual functions differ if we are on a 64 bit or 32 bit processor.
          LOAD(&#39;STRDUP_(STRING)&#39;, &#39;p64.so&#39;)
          LOAD(&#39;STRLEN_()INTEGER&#39;, &#39;p64.so&#39;)
 %ENDIF
+-PUBLIC PEEK_P(), PEEK_C(), PEEK_S(), PEEK_I(), PEEK_D(), PEEK_F()
+-PUBLIC PEEK_LD()
+-PUBLIC POKE_P(), POKE_C(), POKE_S(), POKE_I(), POKE_D(), POKE_F()
+-PUBLIC POKE_LD()
 %IF (BITS EQ 32)
          LOAD(&#39;PEEK_P(INTEGER)INTEGER&#39;, &#39;p64.so&#39;)
          LOAD(&#39;PEEK_C(INTEGER)INTEGER&#39;, &#39;p64.so&#39;)
@@ -535,6 +543,7 @@ defined here then just calls <font face="Source Code Pro">MALLOC_()</font>.
          DEFINE(&#39;STRDUP(S)&#39;)
          DEFINE(&#39;STRLEN(P)&#39;)
 %ENDIF
+-PUBLIC MALLOC(), FREE(), STRDUP(), STRLEN()
 %IF (BITS EQ 32)
          DEFINE(&#39;MALLOC(N)&#39;)
          DEFINE(&#39;FREE(P)&#39;)
@@ -673,7 +682,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Sun Jun  1 23:13:42 EDT 2014</p></td><td><p align=right>
+Mon Jun  2 12:43:25 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

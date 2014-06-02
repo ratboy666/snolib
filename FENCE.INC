@@ -2,7 +2,7 @@
 -INCLUDE 'UNIQUE.INC'
 -STITL FENCE
 -EJECT
--LINE 62 "FENCE.lss"
+-LINE 63 "FENCE.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -19,6 +19,7 @@
 * FENCE.lss
 *
 -LINE 38 "FENCE.lss"
+-PUBLIC FENCE()
         DEFINE('FENCE(P)N')                                 :(FENCE_END)
 *
 FENCE   N = UNIQUE()

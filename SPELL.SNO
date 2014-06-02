@@ -1,7 +1,7 @@
 -STITL SPELL
 -EJECT
 *
--LINE 51 "SPELL.lss"
+-LINE 52 "SPELL.lss"
 ************************************************************************
 *                                                                      *
 *                 #####   ######   #######  #        #                 *
@@ -19,6 +19,7 @@
 * SPELL.lss
 *
 -LINE 7 "SPELL.lss"
+-PUBLIC SPELL()
          DEFINE('SPELL(N)M')                                :(SPELL_END)
 *
 SPELL    GE(N, 1000)                                      :S(SPELL_1000)

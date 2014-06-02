@@ -11,6 +11,7 @@ have loops.
 @
 
 <<COPYL>>=
+-PUBLIC COPYL()
          DEFINE('COPYL(L)T')                                :(COPYL_END)
 *
 COPYL    DEFINE('COPYL(L)', 'COPYL_1')

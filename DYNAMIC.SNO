@@ -4,7 +4,7 @@
 -INCLUDE 'REPL.INC'
 -STITL DYNAMIC
 -EJECT
--LINE 193 "DYNAMIC.lss"
+-LINE 197 "DYNAMIC.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -25,6 +25,8 @@
 * DYNAMIC.lss
 *
 -LINE 17 "DYNAMIC.lss"
+-PUBLIC COMPILE_COBOL(), COMPILE_FORTRAN(), COMPILE_SCHEME()
+-PUBLIC COMPILE_DYNAMIC(), LIBS_FORTRAN(), LIBS_COBOL(), LIBS_SCHEME()
 DYNAMIC  DEFINE('COMPILE_COBOL(SRC)CMD,COBC')
          DEFINE('COMPILE_FORTRAN(SRC)CMD')
          DEFINE('COMPILE_SCHEME(SRC)CMD,CC,DL_CFLAGS,COPT')
@@ -33,18 +35,18 @@ DYNAMIC  DEFINE('COMPILE_COBOL(SRC)CMD,COBC')
          DEFINE('LIBS_COBOL()')
          DEFINE('LIBS_SCHEME()')                  :(COMPILE_DYNAMIC_END)
 *
--LINE 30 "DYNAMIC.lss"
+-LINE 32 "DYNAMIC.lss"
 LIBS_FORTRAN
          LIBS_FORTRAN = '-lgfortran'                           :(RETURN)
 *
--LINE 39 "DYNAMIC.lss"
+-LINE 41 "DYNAMIC.lss"
 LIBS_COBOL
          LIBS_COBOL = BQ('cob-config --libs')                  :(RETURN)
 *
--LINE 47 "DYNAMIC.lss"
+-LINE 49 "DYNAMIC.lss"
 LIBS_SCHEME
          LIBS_SCHEME = 'prog_.o -lgambc -ldl -lm -lutil'       :(RETURN)
--LINE 56 "DYNAMIC.lss"
+-LINE 58 "DYNAMIC.lss"
 *
 * DYNAMIC COMPILE COBOL SOURCE
 *
@@ -67,7 +69,7 @@ COMPILE_COBOL
          DELETE(SRC '.c')
          DELETE(SRC '.c.h')
          DELETE(SRC '.c.l.h')                                  :(RETURN)
--LINE 87 "DYNAMIC.lss"
+-LINE 89 "DYNAMIC.lss"
 *
 * DYNAMIC COMPILE FORTRAN SOURCE
 *
@@ -76,7 +78,7 @@ COMPILE_FORTRAN
          TERMINAL = DIFFER(DYNAMIC_DEBUG) CMD
          HOST(HOST_SYSCMD, CMD)                     :F(FRETURN)S(RETURN)
 *
--LINE 102 "DYNAMIC.lss"
+-LINE 104 "DYNAMIC.lss"
 COMPILE_SCHEME
          CMD = 'gsc -c ' SRC
          TERMINAL = DIFFER(DYNAMIC_DEBUG) CMD
@@ -97,7 +99,7 @@ COMPILE_SCHEME
 *
          DELETE(SRC)
          DELETE('prog_.c')                                     :(RETURN)
--LINE 128 "DYNAMIC.lss"
+-LINE 130 "DYNAMIC.lss"
 *
 * DYNAMIC COMPILE C SOURCE
 *
@@ -114,6 +116,7 @@ COMPILE_DYNAMIC
 *
 COMPILE_DYNAMIC_END
 *
+-PUBLIC LINK_DYNAMIC()
          DEFINE('LINK_DYNAMIC(OUT,OBJ,LIBS)'
 +               'CMD,DL_LD,DL_EXT,DL_LDFLAGS,DSEP')  :(LINK_DYNAMIC_END)
 *
@@ -136,6 +139,7 @@ LINK_DYNAMIC_END
 * MAKE A DYNAMIC MODULE, GIVEN C SOURCES
 * LIBS MAY CONTAIN BOTH OBJECTS AND LIBRARIES
 *
+-PUBLIC MAKE_DYNAMIC_MODULE()
          DEFINE('MAKE_DYNAMIC_MODULE(OUT,SRC,LIBS)OBJ')
                                               :(MAKE_DYNAMIC_MODULE_END)
 MAKE_DYNAMIC_MODULE

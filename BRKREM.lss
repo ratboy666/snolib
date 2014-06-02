@@ -12,6 +12,7 @@ subject otherwise.
 @
 
 <<BRKREM>>=
+-PUBLIC BRKREM()
          DEFINE('BRKREM(S)CS')                             :(BRKREM_END)
 *
 BRKREM   BRKREM = IDENT(S) REM                                :S(RETURN)

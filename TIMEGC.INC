@@ -4,7 +4,7 @@
 -INCLUDE 'RESOL.INC'
 -STITL TIMEGC
 -EJECT
--LINE 68 "TIMEGC.lss"
+-LINE 69 "TIMEGC.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -23,6 +23,7 @@
 * TIMEGC.lss
 *
 -LINE 19 "TIMEGC.lss"
+-PUBLIC TIMEGC()
          DEFINE('TIMEGC(N)I,S,A,L,T,K,FREED')              :(TIMEGC_END)
 *
 TIMEGC   I = ; S = ; A = ; L =

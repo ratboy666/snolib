@@ -65,6 +65,7 @@ struct tmpl_token { token_type, token_end, token_args }
 
 # Initialize patterns for HTML template module
 
+//-PUBLIC TMPL_INIT()
 procedure tmpl_init() {
 
    # Directory for template includes
@@ -95,6 +96,7 @@ procedure tmpl_init() {
 
 # Compile template
 
+//-PUBLIC TMPL_COMPILE()
 procedure tmpl_compile(s) l {
    if (~(l = tmpl_tokenize(s)))
       freturn
@@ -106,6 +108,7 @@ procedure tmpl_compile(s) l {
 # Interpret template p with arguments a. interpret_tmpl() is
 # recursive, so the results are collected into tmpl_interpret.
 
+//-PUBLIC TMPL_INTERPRET()
 procedure tmpl_interpret(p, a) {
    interpret_tmpl(p, a)
 }

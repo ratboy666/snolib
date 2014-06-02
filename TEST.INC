@@ -2,7 +2,7 @@
 -INCLUDE 'UNIQUE.INC'
 -STITL TEST
 -EJECT
--LINE 46 "TEST.lss"
+-LINE 47 "TEST.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -22,6 +22,7 @@
 * TEST.lss
 *
 -LINE 22 "TEST.lss"
+-PUBLIC TEST()
          DEFINE('TEST(ARG)NAME')                             :(TEST_END)
 *
 TEST     IDENT(DATATYPE(ARG), 'EXPRESSION')                   :F(TEST_1)

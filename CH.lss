@@ -11,6 +11,7 @@ corresponding character string. [[CH]] is the inverse of [[HEX]].
 @
 
 <<CH>>=
+-PUBLIC CH()
          DEFINE('CH(H)C,P')
 *
          CH_H_ = ' ' HEX(&ALPHABET)

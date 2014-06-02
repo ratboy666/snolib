@@ -1,7 +1,7 @@
 -STITL REPL
 -EJECT
 *
--LINE 38 "REPL.lss"
+-LINE 39 "REPL.lss"
 ************************************************************************
 *                                                                      *
 *                   ######   #######  ######   #                       *
@@ -19,6 +19,7 @@
 * REPL.lss
 *
 -LINE 11 "REPL.lss"
+-PUBLIC REPL()
          DEFINE('REPL(S1,S2,S3)C,T,FINDC')                   :(REPL_END)
 *
 REPL     S2 LEN(1) . C =                                     :F(FRETURN)

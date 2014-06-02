@@ -35,6 +35,7 @@ value assignment.
 @
 
 <<FENCE>>=
+-PUBLIC FENCE()
         DEFINE('FENCE(P)N')                                 :(FENCE_END)
 *
 FENCE   N = UNIQUE()

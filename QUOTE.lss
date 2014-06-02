@@ -12,6 +12,7 @@ string [[S]].
 @
 
 <<QUOTE>>=
+-PUBLIC QUOTE()
          DEFINE('QUOTE(S)Q,QQ')                             :(QUOTE_END)
 *
 QUOTE    Q = "'"; QQ = '"'

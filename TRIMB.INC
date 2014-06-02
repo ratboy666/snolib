@@ -1,7 +1,7 @@
 -STITL TRIMB
 -EJECT
 *
--LINE 28 "TRIMB.lss"
+-LINE 29 "TRIMB.lss"
 ************************************************************************
 *                                                                      *
 *               #######  ######   ###  #     #  ######                 *
@@ -19,6 +19,7 @@
 * TRIMB.lss
 *
 -LINE 6 "TRIMB.lss"
+-PUBLIC TRIMB()
          DEFINE('TRIMB(S)')                                 :(TRIMB_END)
 *
 TRIMB    TRIMB = REVERSE(TRIM(REVERSE(TRIM(S))))               :(RETURN)

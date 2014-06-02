@@ -36,6 +36,7 @@ an external function to be used with <font face="Source Code Pro">LOAD()</font>.
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* OUTPUT_NAME: THE NAME (STRING) OF OUTPUT VAR FOR C FILE</i></font>
 <font color="#818181"><i>*</i></font>
+-PUBLIC WRAPPER_STARTFILE()
          DEFINE(&#39;WRAPPER_STARTFILE(FN)&#39;)        <b>:(WRAPPER_STARTFILE_END)</b>
 <font color="#818181"><i>*</i></font>
 WRAPPER_STARTFILE
@@ -52,6 +53,7 @@ WRAPPER_STARTFILE
 <font color="#818181"><i>*</i></font>
 WRAPPER_STARTFILE_END
 <font color="#818181"><i>*</i></font>
+-PUBLIC WRAPPER_COBOL()
          DEFINE(&#39;WRAPPER_COBOL(FN)&#39;)                <b>:(WRAPPER_COBOL_END)</b>
 <font color="#818181"><i>*</i></font>
 WRAPPER_COBOL
@@ -66,6 +68,8 @@ WRAPPER_COBOL_END
 <font color="#818181"><i>*              OF THE FUNCTION NAME.</i></font>
 <font color="#818181"><i>* OUTPUT_NAME: THE NAME (STRING) OF OUTPUT VARIABLE FOR C FILE</i></font>
 <font color="#818181"><i>*</i></font>
+-PUBLIC WRAPPER_PROTO(), C_WRAPPER_PROTO(), COBOL_WRAPPER_PROTO()
+-PUBLIC SCHEME_WRAPPER_PROTO()
          DEFINE(&#39;WRAPPER_PROTO(PROTO,FN,LEN)TYPES,I,N,C,CALL&#39;)
          DEFINE(&#39;C_WRAPPER_PROTO(PROTO,FN,LEN)TYPES,I,N,C,CALL&#39;,
 +           &#39;WRAPPER_PROTO&#39;)
@@ -169,6 +173,7 @@ WRAPPER_PROTO_END
 <font color="#818181"><i>*          OF THE FUNCTION NAME WITH _ APPENDED.</i></font>
 <font color="#818181"><i>* FN:      THE NAME (STRING) OF OUTPUT VARIABLE FOR C FILE</i></font>
 <font color="#818181"><i>*</i></font>
+-PUBLIC FWRAPPER_PROTO(), FORTRAN_WRAPPER_PROTO()
          DEFINE(&#39;FWRAPPER_PROTO(PROTO,FN,LEN)TYPES,I,N,C,CALL&#39;)
          DEFINE(&#39;FORTRAN_WRAPPER_PROTO(PROTO,FN,LEN)TYPES,I,N,C,CALL&#39;,
 +           &#39;FWRAPPER_PROTO&#39;)                      <b>:(FWRAPPER_PROTO_END)</b>
@@ -312,7 +317,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Sun Jun  1 23:14:08 EDT 2014</p></td><td><p align=right>
+Mon Jun  2 12:43:29 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

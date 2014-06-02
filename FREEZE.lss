@@ -6,6 +6,7 @@
 
 <<FREEZE>>=
          SYSTEM() 'CSNOBOL4'                              :S(FREEZE_END)
+-PUBLIC FREEZE(), THAW()
          DEFINE('FREEZE(X)')
          DEFINE('THAW(X)')                                 :(FREEZE_END)
 *

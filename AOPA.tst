@@ -1,7 +1,7 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -INCLUDE 'AOPA.INC'
--LINE 41 "AOPA.lss"
+-LINE 42 "AOPA.lss"
 -INCLUDE 'CRACK.INC'
          &CODE = 1
          A = %'1,2,3'

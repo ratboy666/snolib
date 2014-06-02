@@ -8,6 +8,7 @@ produces a sequence of values.
 # Apply procedure proc to each element of x, where x may be an array,
 # table, or expression that produces a sequence of values.
 #
+//-PUBLIC FOREACH()
 procedure foreach(x, proc) a, i {
    i = datatype(x)
    if (i :: 'ARRAY') {

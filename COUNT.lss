@@ -3,6 +3,7 @@
 [[COUNT(S1,S2)]] counts the number of times [[S2]] occurs in [[S1]].
 
 <<COUNT>>=
+-PUBLIC COUNT()
          DEFINE('COUNT(S1,S2)FIRST,REST,P')                 :(COUNT_END)
 *
 COUNT    COUNT = 0

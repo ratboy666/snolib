@@ -54,6 +54,7 @@ Others claim that / should be escaped. Note 39 is decimal!
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;HTML_ESCAPE&raquo;&equiv;</b>
+-PUBLIC HTML_ESCAPE()
          DEFINE(&#39;HTML_ESCAPE(S)&#39;)                     <b>:(END_HTML_ESCAPE)</b>
 <font color="#818181"><i>*</i></font>
 HTML_ESCAPE
@@ -73,6 +74,7 @@ Escape JS characters.
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;JS_ESCAPE&raquo;&equiv;</b>
+-PUBLIC JS_ESCAPE()
          DEFINE(&#39;JS_ESCAPE(S)&#39;)                         <b>:(END_JS_ESCAPE)</b>
 <font color="#818181"><i>*</i></font>
 JS_ESCAPE
@@ -96,6 +98,7 @@ the good character set. This is done at function definition time
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;URL_ESCAPE&raquo;&equiv;</b>
+-PUBLIC URL_ESCAPE(), URL_DECODE()
          DEFINE(&#39;URL_ESCAPE(S)L,C,R&#39;)
          DEFINE(&#39;URL_DECODE(S)L,C,R&#39;)
          URL_BAD = SDIFF(&amp;ALPHABET, &amp;UCASE &amp;LCASE &#39;0123456789&#39; &#39;_-~.&#39;)
@@ -158,7 +161,7 @@ END_URL_ESCAPE
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Sun Jun  1 23:14:09 EDT 2014</p></td><td><p align=right>
+Mon Jun  2 11:39:51 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

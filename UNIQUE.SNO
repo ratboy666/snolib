@@ -2,7 +2,7 @@
 -INCLUDE 'REPL.INC'
 -STITL UNIQUE
 -EJECT
--LINE 71 "UNIQUE.lss"
+-LINE 72 "UNIQUE.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -21,6 +21,7 @@
 * UNIQUE.lss
 *
 -LINE 28 "UNIQUE.lss"
+-PUBLIC MAKE_UNIQUE(), UNIQUE()
          DEFINE('MAKE_UNIQUE(SUF)S')
          MAKE_UNIQUE()
          OPSYN('UNIQUE', 'UNIQUE_')                        :(UNIQUE_END)

@@ -4,6 +4,7 @@
 [[N]].  Thus [[SPELL(13)]] will return [['THIRTEEN']].
 
 <<SPELL>>=
+-PUBLIC SPELL()
          DEFINE('SPELL(N)M')                                :(SPELL_END)
 *
 SPELL    GE(N, 1000)                                      :S(SPELL_1000)

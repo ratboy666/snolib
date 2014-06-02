@@ -5,6 +5,7 @@ of [[S]] are reversed and parentheses are interchanged. [[BALREV('F(X)')]]
 returns [['(X)F']] instead of [[')X(F']] like a simple reversal.
 
 <<BALREV>>=
+-PUBLIC BALREV()
          DEFINE('BALREV(S)')                               :(BALREV_END)
 *
 BALREV   BALREV = REPLACE(REVERSE(S), ')(', '()')              :(RETURN)

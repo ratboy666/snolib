@@ -12,6 +12,7 @@ which does not permit the redefinition of built-in operators.
 </aside>
 
 <<REDEFINE>>=
+-PUBLIC REDEFINE(), REDEFINERESTORE()
          DEFINE('REDEFINE(OP,DEF,LBL)NAME,N,FLAG')
          DEFINE('REDEFINERESTORE(OP,DEF)NAME,N,FLAG')
          DEFINE('REDEFINECOMMON()')                      :(REDEFINE_END)

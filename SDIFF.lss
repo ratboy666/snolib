@@ -5,6 +5,7 @@ is a string containing all those characters that are in [[S1]] and not
 [[S2]].
 
 <<SDIFF>>=
+-PUBLIC SDIFF()
          DEFINE('SDIFF(S1,S2)')                             :(SDIFF_END)
 *
 SDIFF    SDIFF = S1

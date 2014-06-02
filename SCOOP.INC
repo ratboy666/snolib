@@ -3,7 +3,7 @@
 -INCLUDE 'FREEZE.INC'
 -EJECT
 -STITL SCOOP
--LINE 289 "SCOOP.lss"
+-LINE 298 "SCOOP.lss"
 -EJECT
 *
 ************************************************************************
@@ -26,8 +26,10 @@
 * THAT IT ALWAYS BE ENABLED.
 *
 -LINE 109 "SCOOP.lss"
+-PUBLIC OBJECT()
          DATA('OBJECT(CLASS,IVARS,METHODS)')
 *
+-PUBLIC SEND(), SUPER(), SELF(), IVAR(), CVAR(), CLASS_OF(), |1
          DEFINE('SEND(THIS,METHOD,A1,A2,A3,A4,A5,A6,A7,A8)'
 +               'C,M,M_CLASS,T1,T2,T3')
          DEFINE('SUPER(METHOD,A1,A2,A3,A4,A5,A6,A7,A8)T1,T2,T3')
@@ -42,8 +44,10 @@
 * ANSWER NEW_CLASS, NEW, INIT, DOES_NOT_UNDERSTAND AND ADD_METHOD
 * MESSAGES. ALSO, ANSWER THE IS_A MESSAGE.
 *
+-PUBLIC CLASS:CLASS
          CLASS = OBJECT(, TABLE(), TABLE())
          IVARS(CLASS)<'CLASS'> = 'CLASS'
+-PUBLIC CLASS:'ADD_METHOD'
          METHODS(CLASS)<'ADD_METHOD'> =
 +           CODE(
 +              ' METHODS(THIS) = IDENT(METHODS(THIS)) TABLE();'
@@ -51,22 +55,27 @@
 +              ' METHODS(THIS)<A1> = A2;'
 +              ' FREEZE(METHODS(THIS)) :(RETURN)')
 *
+-PUBLIC CLASS:'NEW_CLASS'
          SEND(CLASS, 'ADD_METHOD', 'NEW_CLASS',
 +           CODE(
 +              ' THIS = OBJECT(THIS);'
 +              ' IVAR("CLASS") = A1;'
 +              ' SEND = THIS :(RETURN)'))
+-PUBLIC CLASS:'INIT'
          SEND(CLASS, 'ADD_METHOD', 'INIT',
 +           CODE(' :(RETURN)'))
+-PUBLIC CLASS:'NEW'
          SEND(CLASS, 'ADD_METHOD', 'NEW',
 +           CODE(
 +              ' THIS = OBJECT(THIS);'
 +              ' SELF("INIT", A1, A2, A3, A4, A5, A6, A7, A8);'
 +              ' SEND = THIS :(RETURN)'))
+-PUBLIC CLASS:'DOES_NOT_UNDERSTAND'
          SEND(CLASS, 'ADD_METHOD', 'DOES_NOT_UNDERSTAND',
 +           CODE(
 +            " TERMINAL = 'SCOOP: DOES NOT UNDERSTAND ' METHOD :(END)"))
          DEFINE('IS_A(ACLASS)')
+-PUBLIC CLASS:'IS_A'
          SEND(CLASS, 'ADD_METHOD', 'IS_A', 'IS_A')
                                                               :(OOP_END)
 *

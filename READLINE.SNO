@@ -1,7 +1,7 @@
 -STITL READLINE
 -EJECT
 *
--LINE 158 "READLINE.lss"
+-LINE 161 "READLINE.lss"
 ************************************************************************
 *                                                                      *
 *  ######   #######     #     ######   #        ###  #     #  #######  *
@@ -150,10 +150,13 @@ WRITE_HISTORY( LA_ALIST ) LA_DCL
 -SNOBOL SEQ(' DELETE(A<K>) ', .K)
 -LINE 127 "READLINE.lss"
 -LINE 131 "READLINE.lss"
+-PUBLIC READLINE(), ADD_HISTORY(), HISTORY_EXPAND()
 READLINE LOAD('READLINE(STRING)STRING')
          LOAD('ADD_HISTORY(STRING)STRING')
          LOAD('HISTORY_EXPAND(STRING)STRING')
 *
+-PUBLIC EDITLINE(), RLAPPNAME(), CLEAR_HISTORY(), STIFLE_HISTORY()
+-PUBLIC READ_HISTORY(), WRITE_HISTORY()
          LOAD('EDITLINE(STRING,STRING)STRING', 'editline.so')
          LOAD('RLAPPNAME(STRING)', 'editline.so')
          LOAD('CLEAR_HISTORY()', 'editline.so')

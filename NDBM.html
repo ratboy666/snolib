@@ -18,19 +18,24 @@ on disk.  Hashed, so performance may be better than TABLE usage
 <b>&laquo;NDBM&raquo;&equiv;</b>
 NDBM_LOAD
 <font color="#818181"><i>*</i></font>
+-PUBLIC DBM_INSERT, DBM_REPLACE
          DBM_INSERT = 0
          DBM_REPLACE = 1
 <font color="#818181"><i>*</i></font>
+-PUBLIC DBM_OPEN(), DBM_CLOSE()
          LOAD(&#39;DBM_OPEN(STRING,STRING,STRING)INTEGER&#39;)
          LOAD(&#39;DBM_CLOSE(INTEGER)STRING&#39;)
 <font color="#818181"><i>*</i></font>
+-PUBLIC DBM_STORE(), DBM_FETCH(), DBM_DELETE()
          LOAD(&#39;DBM_STORE(INTEGER,STRING,STRING,INTEGER)INTEGER&#39;)
          LOAD(&#39;DBM_FETCH(INTEGER,STRING)STRING&#39;)
          LOAD(&#39;DBM_DELETE(INTEGER,STRING)INTEGER&#39;)
 <font color="#818181"><i>*</i></font>
+-PUBLIC DBM_FIRSTKEY(), DBM_NEXTKEY()
          LOAD(&#39;DBM_FIRSTKEY(INTEGER)STRING&#39;)
          LOAD(&#39;DBM_NEXTKEY(INTEGER)STRING&#39;)
 <font color="#818181"><i>*</i></font>
+-PUBLIC DBM_ERROR(), DBM_CLEARERR()
          LOAD(&#39;DBM_ERROR(INTEGER)STRING&#39;)
          LOAD(&#39;DBM_CLEARERR(INTEGER)STRING&#39;)
 <font color="#818181"><i>*</i></font>
@@ -95,7 +100,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Sun Jun  1 23:13:39 EDT 2014</p></td><td><p align=right>
+Mon Jun  2 12:43:23 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

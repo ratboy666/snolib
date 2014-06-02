@@ -6,7 +6,7 @@
 -INCLUDE 'CHARS.INC'
 -STITL HTMLESC
 -EJECT
--LINE 107 "HTMLESC.lss"
+-LINE 110 "HTMLESC.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -25,6 +25,7 @@
 * HTMLESC.lss
 *
 -LINE 40 "HTMLESC.lss"
+-PUBLIC HTML_ESCAPE()
          DEFINE('HTML_ESCAPE(S)')                     :(END_HTML_ESCAPE)
 *
 HTML_ESCAPE
@@ -37,7 +38,8 @@ HTML_ESCAPE
 *
 END_HTML_ESCAPE
 *
--LINE 56 "HTMLESC.lss"
+-LINE 57 "HTMLESC.lss"
+-PUBLIC JS_ESCAPE()
          DEFINE('JS_ESCAPE(S)')                         :(END_JS_ESCAPE)
 *
 JS_ESCAPE
@@ -50,7 +52,8 @@ JS_ESCAPE
 *
 END_JS_ESCAPE
 *
--LINE 76 "HTMLESC.lss"
+-LINE 78 "HTMLESC.lss"
+-PUBLIC URL_ESCAPE(), URL_DECODE()
          DEFINE('URL_ESCAPE(S)L,C,R')
          DEFINE('URL_DECODE(S)L,C,R')
          URL_BAD = SDIFF(&ALPHABET, &UCASE &LCASE '0123456789' '_-~.')

@@ -1,7 +1,7 @@
 -STITL LIKE
 -EJECT
 *
--LINE 44 "LIKE.lss"
+-LINE 45 "LIKE.lss"
 ************************************************************************
 *                                                                      *
 *                     #        ###  #    #  #######                    *
@@ -19,6 +19,7 @@
 * LIKE.lss
 *
 -LINE 14 "LIKE.lss"
+-PUBLIC LIKE()
          DEFINE('LIKE(S)C,T1,T2,N')                          :(LIKE_END)
 *
 LIKE     LIKE = S

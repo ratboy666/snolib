@@ -8,6 +8,7 @@ scanned and the replaced string are not reexamined for instances of
 [[S2]].
 
 <<REPL>>=
+-PUBLIC REPL()
          DEFINE('REPL(S1,S2,S3)C,T,FINDC')                   :(REPL_END)
 *
 REPL     S2 LEN(1) . C =                                     :F(FRETURN)

@@ -1,0 +1,83 @@
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+
+* uses
+*
+* what apis does this code use? what includes are needed?
+* doesn't yet handle classes/methods/operators.
+
+-INCLUDE 'HASH.INC'
+-INCLUDE 'JSON.INC'
+-INCLUDE 'READFILE.INC'
+-INCLUDE 'SDIFF.INC'
+
+* ce: .msnobol4;
+
+         fc = &ucase
+         ss = sdiff(&alphabet, &ucase '0123456789._')
+         define('process(s)')
+         functions = table()
+         variables = table()
+         classes = table()
+         methods = table()
+         operators = table()
+         f = readfile('IDX');
+nxttbl   t = json_decode(f) :f(pats)
+         f = json_rest
+         functions = ident(t<'#'>, 'FUNCTIONS') t :s(nxttbl)
+         variables = ident(t<'#'>, 'VARIABLES') t :s(nxttbl)
+         classes = ident(t<'#'>, 'CLASSES') t :s(nxttbl)
+         methods = ident(t<'#'>, 'METHODS') t :s(nxttbl)
+         operators = ident(t<'#'>, 'OPERATORS') t :(nxttbl)
+pats     functions<'#'> =
+         variables<'#'> =
+         classes<'#'> =
+         methods<'#'> =
+         operators<'#'> =
+
+* build variable pattern
+         k = keys_in_table(variables) :f(end)
+         i = 1
+nxtv     k<i> :f(endv)
+         s = 'k<i> *?(f = "' variables<k<i>> '")'
+         vp = (differ(vp) (eval(s) | vp), eval(s))
+         i = i + 1 :(nxtv)
+endv     vp = (pos(0) | any(ss)) vp (any(ss) | rpos(0))
+
+* build function pattern
+         k = keys_in_table(functions) : f(end)
+         i = 1
+nxtf     k<i> :f(endf)
+         m = k<i>
+         m ')' =
+         s = 'm *?(f = "' functions<k<i>> '")'
+         fp = (differ(fp) (eval(s) | fp), eval(s))
+         i = i + 1 :(nxtf)
+endf     fp = (pos(0) | any(ss)) fp
+
+         incs = table()
+
+         q = "'"
+         qq = '"'
+
+top      r = input :f(incout)
+         r fence (any('*#;|!-') | '//') :s(top)
+loop     r arb . l (q | qq) $ delim arb *delim rem . r :f(done)
+         process(l) :(loop)
+done     process(r) :(top)
+
+incout   a = sort(incs)
+         i = 1
+inco2    a<i,1> :f(end)
+         output = '-INCLUDE ' q a<i,1> q
+         i = i + 1 :(inco2)
+
+* process string s looking for functions/variables
+process
+         &fullscan = 1
+         s = replace(s, &lcase, &ucase)
+proc_1   s vp = :f(proc_2)
+         incs<f> = 1 :(proc_1)
+proc_2   s fp = :f(return)
+         incs<f> = 1 :(proc_2)
+end

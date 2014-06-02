@@ -7,7 +7,7 @@
 -INCLUDE 'CSNOBOL4.INC'
 -STITL COOKIE
 -EJECT
--LINE 206 "COOKIE.lss"
+-LINE 210 "COOKIE.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -26,6 +26,10 @@
 * COOKIE.lss
 *
 -LINE 58 "COOKIE.lss"
+-PUBLIC NEW_COOKIE_JAR(), NEW_COOKIE(), COOKIE_SET_VALUE()
+-PUBLIC COOKIE_VALUE(), COOKIE_SET_CRUMB(), COOKIE_GET_CRUMB()
+-PUBLIC PUT_COOKIE_IN_JAR(), GET_COOKIE_FROM_JAR(), COOKIES_IN_JAR()
+-PUBLIC CRUMBS_IN_COOKIE(), COOKIE_EXPIRY(), COOKIE_STRING()
          DEFINE('NEW_COOKIE_JAR()')
          DEFINE('NEW_COOKIE(VALUE)')
          DEFINE('COOKIE_SET_VALUE(COOKIE,VALUE)')

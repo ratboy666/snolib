@@ -1,7 +1,7 @@
 #!/usr/bin/bash
          exec "/usr/local/bin/snobol4" "-b" "$0" "$@"
 -INCLUDE 'ROUTING.INC'
--LINE 70 "ROUTING.lss"
+-LINE 71 "ROUTING.lss"
 -INCLUDE 'DDT.INC'
 *
          &CODE = 1

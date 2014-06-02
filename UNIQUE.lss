@@ -25,6 +25,7 @@ modules using [[UNIQUE()]].
 @
 
 <<UNIQUE>>=
+-PUBLIC MAKE_UNIQUE(), UNIQUE()
          DEFINE('MAKE_UNIQUE(SUF)S')
          MAKE_UNIQUE()
          OPSYN('UNIQUE', 'UNIQUE_')                        :(UNIQUE_END)

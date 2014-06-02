@@ -14,18 +14,25 @@ Date and time functions.
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;TIME&raquo;&equiv;</b>
+-PUBLIC TIMEVAL(), TV_SEC(), TV_USEC()
          DATA(&#39;TIMEVAL(TV_SEC,TV_USEC)&#39;)
+-PUBLIC TM(), TM_SEC(), TM_MIN(), TM_HOUR(), TM_MDAY(), TM_MON()
+-PUBLIC TM_YEAR(), TM_WDAY(), TM_YDAY(), TM_ISDST(), TM_GMTOFF()
          DATA(&#39;TM(TM_SEC,TM_MIN,TM_HOUR,TM_MDAY,TM_MON,&#39;
 +                &#39;TM_YEAR,TM_WDAY,TM_YDAY,TM_ISDST,TM_GMTOFF)&#39;)
 <font color="#818181"><i>*</i></font>
          LOAD(&#39;GETTIMEOFDAY_(TIMEVAL)&#39;)
          LOAD(&#39;LOCALTIME_(INTEGER,TM)&#39;)
          LOAD(&#39;GMTIME_(INTEGER,TM)&#39;)
+-PUBLIC STRFTIME()
          LOAD(&#39;STRFTIME(STRING,TM)STRING&#39;)
+-PUBLIC MKTIME()
          LOAD(&#39;MKTIME(TM)INTEGER&#39;)
+-PUBLIC SLEEP()
          LOAD(&#39;SLEEP(REAL)&#39;)
          LOAD(&#39;STRPTIME_(STRING,STRING,TM)&#39;)
 <font color="#818181"><i>*</i></font>
+-PUBLIC GETTIMEOFDAY()
          DEFINE(&#39;GETTIMEOFDAY()TIMEVAL&#39;)             <b>:(GETTIMEOFDAY_END)</b>
 <font color="#818181"><i>*</i></font>
 GETTIMEOFDAY
@@ -34,6 +41,7 @@ GETTIMEOFDAY
 <font color="#818181"><i>*</i></font>
 GETTIMEOFDAY_END
 <font color="#818181"><i>*</i></font>
+-PUBLIC LOCALTIME()
          DEFINE(&#39;LOCALTIME(T)TM&#39;)                       <b>:(LOCALTIME_END)</b>
 <font color="#818181"><i>*</i></font>
 LOCALTIME
@@ -42,6 +50,7 @@ LOCALTIME
 <font color="#818181"><i>*</i></font>
 LOCALTIME_END
 <font color="#818181"><i>*</i></font>
+-PUBLIC GMTIME()
          DEFINE(&#39;GMTIME(T)TM&#39;)                             <b>:(GMTIME_END)</b>
 <font color="#818181"><i>*</i></font>
 GMTIME   GMTIME = TM()
@@ -49,6 +58,7 @@ GMTIME   GMTIME = TM()
 <font color="#818181"><i>*</i></font>
 GMTIME_END
 <font color="#818181"><i>*</i></font>
+-PUBLIC STRPTIME()
          DEFINE(&#39;STRPTIME(S,F)TM&#39;)                       <b>:(STRPTIME_END)</b>
 <font color="#818181"><i>*</i></font>
 STRPTIME STRPTIME = TM()
@@ -102,7 +112,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Sun Jun  1 23:14:02 EDT 2014</p></td><td><p align=right>
+Mon Jun  2 13:36:34 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

@@ -1,7 +1,7 @@
 -STITL RESOL
 -EJECT
 *
--LINE 44 "RESOL.lss"
+-LINE 45 "RESOL.lss"
 ************************************************************************
 *                                                                      *
 *                 ######   #######   #####   #######  #                *
@@ -19,6 +19,7 @@
 * RESOL.lss
 *
 -LINE 7 "RESOL.lss"
+-PUBLIC RESOLUTION()
          DEFINE('RESOLUTION()T,N,R,T2')                :(RESOLUTION_END)
 *
 RESOLUTION

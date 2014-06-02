@@ -4,7 +4,7 @@
 -INCLUDE 'HASH.INC'
 -STITL CVAR
 -EJECT
--LINE 219 "CVAR.lss"
+-LINE 221 "CVAR.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -24,8 +24,10 @@
 * CVAR.lss
 *
 -LINE 78 "CVAR.lss"
+-PUBLIC CVAR(), CV_OFFSET(), CV_SIZE(), CV_DIM(), CV_SIGN(), CV_ISINT()
          DATA('CVAR(CV_OFFSET,CV_SIZE,CV_DIM,CV_SIGN,CV_ISINT)')
 *
+-PUBLIC PTRV(), LOADV(), STOREV(), NEWDECLV(), DECLAREV()
          DEFINE('PTRV(B,V,I)')
          DEFINE('LOADV(B,V,I)')
          DEFINE('STOREV(B,V,I,X)')
@@ -60,7 +62,7 @@ LOADV_2  LOADV = PEEK_S(B)
          LOADV = LT(LOADV) (2 ** 16) + LOADV                   :(RETURN)
 LOADV_4  LOADV = EQ(CV_ISINT(V)) PEEK_F(B)                    :S(RETURN)
          LOADV = PEEK_I(B)
--LINE 123 "CVAR.lss"
+-LINE 125 "CVAR.lss"
          NE(CV_SIGN(V))                                       :S(RETURN)
          LOADV = LT(LOADV) (2 ** 32) + LOADV                   :(RETURN)
 LOADV_8  LOADV = EQ(CV_ISINT(V)) PEEK_D(B)                    :S(RETURN)

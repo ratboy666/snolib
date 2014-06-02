@@ -3,6 +3,7 @@
 [[TRIMB(S)]] applies [[TRIMB()]] to both the left and right of [[S]].
 
 <<TRIMB>>=
+-PUBLIC TRIMB()
          DEFINE('TRIMB(S)')                                 :(TRIMB_END)
 *
 TRIMB    TRIMB = REVERSE(TRIM(REVERSE(TRIM(S))))               :(RETURN)

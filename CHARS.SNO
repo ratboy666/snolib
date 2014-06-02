@@ -1,7 +1,7 @@
 -STITL CHARS
 -EJECT
 *
--LINE 87 "CHARS.lss"
+-LINE 95 "CHARS.lss"
 ************************************************************************
 *                                                                      *
 *              #####   #     #     #     ######    #####               *
@@ -22,6 +22,14 @@
 * CHARS.lss
 *
 -LINE 10 "CHARS.lss"
+-PUBLIC CHARS_NUL, CHARS_SOH, CHARS_STX, CHARS_ETX, CHARS_EOT, CHARS_ENQ
+-PUBLIC CHARS_ACK, CHARS_BEL, CHARS_HT, CHARS_BS, CHARS_NL, CHARS_VT
+-PUBLIC CHARS_NP, CHARS_CR, CHARS_SO, CHARS_SI, CHARS_DLE, CHARS_DC1
+-PUBLIC CHARS_DC2, CHARS_DC3, CHARS_DC4, CHARS_NAK, CHARS_SYN, CHARS_ETB
+-PUBLIC CHARS_CAN, CHARS_EM, CHARS_SUB, CHARS_ESC, CHARS_FS, CHARS_GS
+-PUBLIC CHARS_RS, CHARS_US, CHARS_SP, CHARS_DEL, CHARS_TAB, CHARS_SPACE
+-PUBLIC CHARS_FF, CHARS_LF, CHARS_CONTROL, CHARS_PRINTABLE, CHARS_HIGH
+*
 CHARS    CHARS_NUL = CHAR( 0)
          CHARS_SOH = CHAR( 1)
          CHARS_STX = CHAR( 2)
@@ -56,13 +64,13 @@ CHARS    CHARS_NUL = CHAR( 0)
          CHARS_US  = CHAR(31)
          CHARS_SP  = CHAR(32)
          CHARS_DEL = CHAR(127)
--LINE 55 "CHARS.lss"
+-LINE 63 "CHARS.lss"
 *
          CHARS_TAB   = CHARS_HT
          CHARS_SPACE = CHARS_SP
          CHARS_FF    = CHARS_NP
          CHARS_LF    = CHARS_NL
--LINE 65 "CHARS.lss"
+-LINE 73 "CHARS.lss"
 *
          &ALPHABET LEN(32) .  CHARS_CONTROL
 +                  LEN(95) .  CHARS_PRINTABLE

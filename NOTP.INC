@@ -2,7 +2,7 @@
 -INCLUDE 'STACK.INC'
 -STITL NOTP
 -EJECT
--LINE 44 "NOTP.lss"
+-LINE 45 "NOTP.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -21,9 +21,10 @@
 * NOTP.lss
 *
 -LINE 15 "NOTP.lss"
+-PUBLIC NOTP()
          DEFINE('NOTP(P)')                                   :(NOTP_END)
 *
--LINE 25 "NOTP.lss"
+-LINE 26 "NOTP.lss"
 NOTP     NOTP = PUSH() P *?(POP() PUSH(1)) FAIL |
 +               *IDENT(POP())                                  :(RETURN)
 *

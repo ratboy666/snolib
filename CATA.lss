@@ -12,6 +12,7 @@
 @
 
 <<CATA>>=
+-PUBLIC CATA()
          DEFINE('CATA(A1,A2)I,N1')                           :(CATA_END)
 *
 CATA     N1 = PROTOTYPE(A1)

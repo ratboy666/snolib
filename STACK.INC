@@ -3,7 +3,7 @@
 -INCLUDE 'REPL.INC'
 -STITL STACK
 -EJECT
--LINE 51 "STACK.lss"
+-LINE 53 "STACK.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -22,8 +22,10 @@
 * STACK.lss
 *
 -LINE 17 "STACK.lss"
+-PUBLIC STACK()
          DEFINE('STACK(SUF)S')
          STACK()
+-PUBLIC PUSH(), POP(), TOP()
          OPSYN('PUSH', 'PUSH_')
          OPSYN('POP',  'POP_')
          OPSYN('TOP',  'TOP_')                              :(STACK_END)

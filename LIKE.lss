@@ -11,6 +11,7 @@ the argument by
 </ol>
 
 <<LIKE>>=
+-PUBLIC LIKE()
          DEFINE('LIKE(S)C,T1,T2,N')                          :(LIKE_END)
 *
 LIKE     LIKE = S

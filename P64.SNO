@@ -1,7 +1,7 @@
 -STITL P64
 -EJECT
 *
--LINE 606 "P64.lss"
+-LINE 615 "P64.lss"
 ************************************************************************
 *                                                                      *
 *                       ######    ###   #   #                          *
@@ -405,16 +405,19 @@ static int strlen_(int p) { return strlen((char *)p); }
          LOAD('SET_PHI(INTEGER)', 'p64.so')
          LOAD('SET_PLO(INTEGER)', 'p64.so')
 %ENDIF
+-PUBLIC GET_P(), SET_P()
 %IF (BITS EQ 32)
          LOAD('GET_P()INTEGER', 'p64.so')
          LOAD('SET_P(INTEGER)', 'p64.so')
 %ENDIF
+-PUBLIC P_TO_P2(), P_TO_P3(), P_TO_P4(), P2_TO_P(), P3_TO_P(), P4_TO_P()
          LOAD('P_TO_P2()', 'p64.so')
          LOAD('P_TO_P3()', 'p64.so')
          LOAD('P_TO_P4()', 'p64.so')
          LOAD('P2_TO_P()', 'p64.so')
          LOAD('P3_TO_P()', 'p64.so')
          LOAD('P4_TO_P()', 'p64.so')
+-PUBLIC SET_F(), SET_D(), SET_LD(), GET_F(), GET_D(), GET_LD(), GET_S()
          LOAD('SET_F(REAL)', 'p64.so')
          LOAD('SET_D(REAL)', 'p64.so')
          LOAD('SET_LD(REAL)', 'p64.so')
@@ -422,6 +425,7 @@ static int strlen_(int p) { return strlen((char *)p); }
          LOAD('GET_D()REAL', 'p64.so')
          LOAD('GET_LD()REAL', 'p64.so')
          LOAD('GET_S()STRING', 'p64.so')
+-PUBLIC SWAP_P()
          LOAD('SWAP_P()', 'p64.so')
 %IF (BITS EQ 64)
          LOAD('PEEK_P_()', 'p64.so')
@@ -443,6 +447,10 @@ static int strlen_(int p) { return strlen((char *)p); }
          LOAD('STRDUP_(STRING)', 'p64.so')
          LOAD('STRLEN_()INTEGER', 'p64.so')
 %ENDIF
+-PUBLIC PEEK_P(), PEEK_C(), PEEK_S(), PEEK_I(), PEEK_D(), PEEK_F()
+-PUBLIC PEEK_LD()
+-PUBLIC POKE_P(), POKE_C(), POKE_S(), POKE_I(), POKE_D(), POKE_F()
+-PUBLIC POKE_LD()
 %IF (BITS EQ 32)
          LOAD('PEEK_P(INTEGER)INTEGER', 'p64.so')
          LOAD('PEEK_C(INTEGER)INTEGER', 'p64.so')
@@ -464,7 +472,7 @@ static int strlen_(int p) { return strlen((char *)p); }
          LOAD('STRLEN_(INTEGER)INTEGER', 'p64.so')
 %ENDIF
 *
--LINE 475 "P64.lss"
+-LINE 483 "P64.lss"
 %IF (BITS EQ 64)
          DEFINE('GET_P()LO,HI')
          DEFINE('SET_P(P)LO,HI')
@@ -487,6 +495,7 @@ static int strlen_(int p) { return strlen((char *)p); }
          DEFINE('STRDUP(S)')
          DEFINE('STRLEN(P)')
 %ENDIF
+-PUBLIC MALLOC(), FREE(), STRDUP(), STRLEN()
 %IF (BITS EQ 32)
          DEFINE('MALLOC(N)')
          DEFINE('FREE(P)')

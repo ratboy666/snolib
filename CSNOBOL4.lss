@@ -405,6 +405,7 @@ FTN_FORMAT( LA_ALIST ) LA_DCL
 identifier) of the new process. In the child, it returns 0.
 
 <<CSNOBOL4>>=
+-PUBLIC FORK()
          LOAD('FORK()INTEGER')
 @
 
@@ -412,6 +413,7 @@ identifier) of the new process. In the child, it returns 0.
 pid of the child process that has terminated, or negative on error.
 
 <<CSNOBOL4>>=
+-PUBLIC WAIT()
          LOAD('WAIT()INTEGER')
 @
 
@@ -432,6 +434,7 @@ the [[C]] format [[F]] and returns the result as a string. For example:
 ]]
 
 <<CSNOBOL4>>=
+-PUBLIC SPRINTF()
          LOAD('SPRINTF(STRING,)STRING')
 @
 
@@ -493,6 +496,10 @@ MAINBOL default formats
 ]]
 
 <<CSNOBOL4>>=
+-PUBLIC FTN_FORMAT(), CREATEPIPE(), GETPIPEFD(), GET_ERRNO()
+-PUBLIC CLEAR_ERRNO(), WAITPID(), GET_STATUS(), SIZEOF_TIMEVAL()
+-PUBLIC SET_TIMEVAL(), SIZEOF_FD_SET, FD_ZERO(), FD_CLR(), FD_SET()
+-PUBLIC FD_ISSET()
          LOAD('FTN_FORMAT(STRING,STRING)STRING', 'format.so')
          LOAD('CREATEPIPE()INTEGER', 'format.so')
          LOAD('GETPIPEFD(INTEGER)INTEGER', 'format.so')
@@ -525,6 +532,7 @@ there may be a timing issue because there are two separate processes
 involved.
 
 <<CSNOBOL4>>=
+-PUBLIC CLOSE(), SELECT(), IO_GETFP(), FILENO()
          CLOSE_FFI = FFI_NEW('I', 'I')
          FFI_SET_CALLP(CLOSE_FFI, DLSYM(0, 'close'))
          DEFINE('CLOSE(FD)')

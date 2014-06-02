@@ -2,7 +2,7 @@
 -INCLUDE 'SDIFF.INC'
 -STITL SKIM
 -EJECT
--LINE 38 "SKIM.lss"
+-LINE 39 "SKIM.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -22,6 +22,7 @@
 * SKIM.lss
 *
 -LINE 15 "SKIM.lss"
+-PUBLIC SKIM()
          DEFINE('SKIM(S)C')                                  :(SKIM_END)
 *
 SKIM     S LEN(1) . C =                                       :F(RETURN)

@@ -14,6 +14,7 @@ should be separated by semicolons.
 @
 
 <<TIMER>>=
+-PUBLIC TIMER()
          DEFINE('TIMER(S_,N_)C_,T_,I_,M_')                  :(TIMER_END)
 *
 TIMER    EQ(N_, 0)                                           :F(TIMER_N)

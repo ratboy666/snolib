@@ -21,6 +21,7 @@ function call in SNOBOL4 source.
 @
 
 <<FASTBAL>>=
+-PUBLIC FASTBAL()
          DEFINE('FASTBAL(PARENS,QTS,S)NAME,IBAL,SPCHARS,ELEM'
 +               ',LPS,Q,LP,RP')                           :(FASTBAL_END)
 *

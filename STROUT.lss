@@ -8,6 +8,7 @@ strings of the array [[A]].
 <a href="CRACK.html">CRACK</a>
 
 <<STROUT>>=
+-PUBLIC STRINGOUT()
          DEFINE('STRINGOUT(A,SEP)I')                    :(STRINGOUT_END)
 *
 STRINGOUT

@@ -3,7 +3,7 @@
 -INCLUDE 'FFI.INC'
 -STITL SYSLOG
 -EJECT
--LINE 98 "SYSLOG.lss"
+-LINE 107 "SYSLOG.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -32,6 +32,8 @@
 *
 * PRIORITY
 *
+-PUBLIC LOG_EMERG, LOG_ALERT, LOG_CRIT, LOG_ERR, LOG_WARNING
+-PUBLIC LOG_NOTICE, LOG_INFO, LOG_DEBUG
          LOG_EMERG   = 0
          LOG_ALERT   = 1
          LOG_CRIT    = 2
@@ -43,6 +45,10 @@
 *
 * FACILITY
 *
+-PUBLIC LOG_KERN, LOG_USER, LOG_MAIL, LOG_DAEMON, LOG_AUTH, LOG_SYSLOG
+-PUBLIC LOG_LPR, LOG_NEWS, LOG_UUCP, LOG_CRON, LOG_AUTHPRIV, LOG_FTP
+-PUBLIC LOG_LOCAL0, LOG_LOCAL1, LOG_LOCAL2, LOG_LOCAL3, LOG_LOCAL4
+-PUBLIC LOG_LOCAL5, LOG_LOCAL6, LOG_LOCAL7
          LOG_KERN     =  0 * 8
          LOG_USER     =  1 * 8
          LOG_MAIL     =  2 * 8
@@ -66,6 +72,8 @@
 *
 * OPTIONS
 *
+-PUBLIC LOG_PID, LOG_CONS, LOG_ODELAY, LOG_NDELAY, LOG_NOWAIT
+-PUBLIC LOG_PERROR
          LOG_PID    =  1
          LOG_CONS   =  2
          LOG_ODELAY =  4
@@ -73,6 +81,7 @@
          LOG_NOWAIT = 16
          LOG_PERROR = 32
 *
+-PUBLIC OPENLOG(), SYSLOG() CLOSELOG()
          DEFINE('OPENLOG(IDENT,OPTION,FACILITY)P')
          DEFINE('SYSLOG(PRIORITY,S)')
          DEFINE('CLOSELOG()')                           :(SYSLOG_FN_END)

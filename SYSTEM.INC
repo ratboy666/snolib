@@ -1,7 +1,7 @@
 -STITL SYSTEM
 -EJECT
 *
--LINE 100 "SYSTEM.lss"
+-LINE 105 "SYSTEM.lss"
 ************************************************************************
 *                                                                      *
 *          #####   #     #   #####   #######  #######  #     #         *
@@ -19,6 +19,8 @@
 * SYSTEM.lss
 *
 -LINE 29 "SYSTEM.lss"
+-PUBLIC SYSTEM(), ISSPITBOL(), ISSNOBOL4()
+-PUBLIC ISASCII(), ISEBCDIC(), ISCDC_DISPLAY_CODE()
          DEFINE('SYSTEM()K,E,T')
          DEFINE('ISSPITBOL()')
          DEFINE('ISSNOBOL4()')
@@ -26,16 +28,19 @@
          DEFINE('ISEBCDIC()A')
          DEFINE('ISCDC_DISPLAY_CODE()A')                   :(SYSTEM_END)
 *
-ISASCII  &ANCHOR = 0
+ISASCII  A = &ANCHOR
+         &ANCHOR = 0
          &ALPHABET '()'                          :S(ISASCII1)F(ISASCII2)
 ISASCII1 &ANCHOR = A                                           :(RETURN)
 ISASCII2 &ANCHOR = A                                          :(FRETURN)
 *
 * OR, TRY LLT('A',1)
-ISEBCDIC &ANCHOR = 0
+ISEBCDIC A = &ANCHOR
+         &ANCHOR = 0
          &ALPHABET '(+'                          :S(ISASCII1)F(ISASCII2)
 *
 ISCDC_DISPLAY_CODE
+         A = &ANCHOR
          &ANCHOR = 0
          &ALPHABET ')*'                          :S(ISASCII1)F(ISASCII2)
 *

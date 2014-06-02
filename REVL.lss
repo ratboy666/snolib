@@ -12,6 +12,7 @@ a list that needs reversing.
 @
 
 <<REVL>>=
+-PUBLIC REVL()
          DEFINE('REVL(L)T')                                  :(REVL_END)
 *
 REVL     REVL = L

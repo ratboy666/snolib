@@ -2,59 +2,60 @@
   :(FOREACH.1)
 -STITL FOREACH 
 -EJECT 
--LINE 65 "FOREACH.lss" 
+-LINE 66 "FOREACH.lss" 
 -LINE 8 "FOREACH.lss" 
--LINE 12 "FOREACH.lss"
+-LINE 13 "FOREACH.lss"
   :(foreach.END)
--LINE 13
-foreach i = datatype(x)
 -LINE 14
- IDENT(i,'ARRAY') :F(FOREACH.2)
+foreach i = datatype(x)
 -LINE 15
- i = 1
+ IDENT(i,'ARRAY') :F(FOREACH.2)
 -LINE 16
- prototype(x) ? fence break(':') . i
+ i = 1
 -LINE 17
-FOREACH.3 a = x<i> :F(FOREACH.4)
+ prototype(x) ? fence break(':') . i
 -LINE 18
+FOREACH.3 a = x<i> :F(FOREACH.4)
+-LINE 19
  apply(proc,a) :S(FOREACH.5)F(FRETURN)
--LINE 20
+-LINE 21
 FOREACH.5 i = i + 1 :(FOREACH.3)
--LINE 22
+-LINE 23
 FOREACH.4  :(FOREACH.6)
 FOREACH.2 IDENT(i,'TABLE') :F(FOREACH.7)
--LINE 23
+-LINE 24
  x = convert(x,'ARRAY') :S(FOREACH.8)F(FRETURN)
--LINE 25
-FOREACH.8 x = sort(x)
 -LINE 26
- i = 1
+FOREACH.8 x = sort(x)
 -LINE 27
-FOREACH.9 a = x<i,2> :F(FOREACH.10)
+ i = 1
 -LINE 28
+FOREACH.9 a = x<i,2> :F(FOREACH.10)
+-LINE 29
  apply(proc,a,x<i,1>) :S(FOREACH.11)F(FRETURN)
--LINE 30
+-LINE 31
 FOREACH.11 i = i + 1 :(FOREACH.9)
--LINE 32
+-LINE 33
 FOREACH.10  :(FOREACH.12)
 FOREACH.7 IDENT(i,'EXPRESSION') :F(FOREACH.13)
--LINE 33
-FOREACH.14 a = eval(x) :F(FOREACH.15)
 -LINE 34
+FOREACH.14 a = eval(x) :F(FOREACH.15)
+-LINE 35
  apply(proc,a) :S(FOREACH.16)F(FRETURN)
--LINE 36
-FOREACH.16  :(FOREACH.14)
 -LINE 37
-FOREACH.15  :(FOREACH.17)
+FOREACH.16  :(FOREACH.14)
 -LINE 38
+FOREACH.15  :(FOREACH.17)
+-LINE 39
 FOREACH.13 apply(proc,x) :S(RETURN)F(FOREACH.18)
--LINE 41
+-LINE 42
 FOREACH.18  :(FRETURN)
 FOREACH.19 
 FOREACH.17 
 FOREACH.12 
--LINE 43
+-LINE 44
 FOREACH.6  :(RETURN)
 foreach.END 
 FOREACH.1 
+-PUBLIC FOREACH() 
  DEFINE('foreach(x,proc)a,i')

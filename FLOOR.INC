@@ -2,7 +2,7 @@
 -INCLUDE 'DEXP.INC'
 -STITL FLOOR
 -EJECT
--LINE 38 "FLOOR.lss"
+-LINE 39 "FLOOR.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -21,6 +21,7 @@
 * FLOOR.lss
 *
 -LINE 15 "FLOOR.lss"
+-PUBLIC FLOOR(), CEIL()
          DEFINE('FLOOR(X)')
          DEXP('CEIL(X) = -FLOOR(-X)')                       :(FLOOR_END)
 *

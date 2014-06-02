@@ -1,7 +1,7 @@
 -STITL BALREV
 -EJECT
 *
--LINE 29 "BALREV.lss"
+-LINE 30 "BALREV.lss"
 ************************************************************************
 *                                                                      *
 *           ######      #     #        ######   #######  #     #       *
@@ -19,6 +19,7 @@
 * BALREV.lss
 *
 -LINE 8 "BALREV.lss"
+-PUBLIC BALREV()
          DEFINE('BALREV(S)')                               :(BALREV_END)
 *
 BALREV   BALREV = REPLACE(REVERSE(S), ')(', '()')              :(RETURN)

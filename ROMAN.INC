@@ -1,7 +1,7 @@
 -STITL ROMAN
 -EJECT
 *
--LINE 49 "ROMAN.lss"
+-LINE 51 "ROMAN.lss"
 ************************************************************************
 *                                                                      *
 *             ######   #######  #     #     #     #     #              *
@@ -19,6 +19,7 @@
 * ROMAN.lss
 *
 -LINE 10 "ROMAN.lss"
+-PUBLIC ROMAN()
          DEFINE('ROMAN(N)T')                                :(ROMAN_END)
 *
 ROMAN    N RPOS(1) LEN(1) . T =                               :F(RETURN)
@@ -29,6 +30,7 @@ ROMAN    N RPOS(1) LEN(1) . T =                               :F(RETURN)
 *
 ROMAN_END
 *
+-PUBLIC ARABIC()
          DEFINE('ARABIC(R)T,X')                            :(ARABIC_END)
 *
 ARABIC   R RPOS(1) LEN(1) . T =                               :F(RETURN)

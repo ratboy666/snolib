@@ -4,7 +4,7 @@
 -INCLUDE 'TRIMB.INC'
 -STITL SLOAD
 -EJECT
--LINE 110 "SLOAD.lss"
+-LINE 111 "SLOAD.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -27,6 +27,7 @@
 * SLOAD.lss
 *
 -LINE 18 "SLOAD.lss"
+-PUBLIC SLOAD()
          DEFINE('SLOAD(FILENAME)'
 +               'LIB,CODE,PATH,X,A,I,P,PS,DS,TRIM_SAV,POSITION,UNIT')
          Q_ = "'"

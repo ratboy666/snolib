@@ -37,6 +37,7 @@ Escape HTML characters. Some claim that > never has to be escaped.
 Others claim that / should be escaped. Note 39 is decimal!
 
 <<HTML_ESCAPE>>=
+-PUBLIC HTML_ESCAPE()
          DEFINE('HTML_ESCAPE(S)')                     :(END_HTML_ESCAPE)
 *
 HTML_ESCAPE
@@ -53,6 +54,7 @@ END_HTML_ESCAPE
 Escape JS characters.
 
 <<JS_ESCAPE>>=
+-PUBLIC JS_ESCAPE()
          DEFINE('JS_ESCAPE(S)')                         :(END_JS_ESCAPE)
 *
 JS_ESCAPE
@@ -73,6 +75,7 @@ the good character set. This is done at function definition time
 (into global [[URL_BAD]]).
 
 <<URL_ESCAPE>>=
+-PUBLIC URL_ESCAPE(), URL_DECODE()
          DEFINE('URL_ESCAPE(S)L,C,R')
          DEFINE('URL_DECODE(S)L,C,R')
          URL_BAD = SDIFF(&ALPHABET, &UCASE &LCASE '0123456789' '_-~.')

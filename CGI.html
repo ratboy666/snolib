@@ -81,25 +81,36 @@ Still need: Response codes, Headers/Responses
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;CGI&raquo;&equiv;</b>
+-PUBLIC CLASS:CGI_CLASS
          CGI_CLASS = SEND(CLASS, &#39;NEW_CLASS&#39;, &#39;CGI_CLASS&#39;)
          DEFINE(&#39;CGI_INIT()A,C&#39;)
+-PUBLIC CGI_CLASS:&#39;INIT&#39;
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;INIT&#39;, &#39;CGI_INIT&#39;)
+-PUBLIC CGI_CLASS:&#39;GET_COOKIE_JAR&#39;
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;GET_COOKIE_JAR&#39;, CODE(
 +           &#39; SEND = |.COOKIE_JAR :(RETURN)&#39;))
+-PUBLIC CGI_CLASS:&#39;GET_HEADER&#39;
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;GET_HEADER&#39;, CODE(
 +           &#39; SEND = |.HEADER :(RETURN)&#39;))
          DEFINE(&#39;CGI_SEND()S&#39;)
+-PUBLIC CGI_CLASS:&#39;SEND&#39;
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;SEND&#39;, &#39;CGI_SEND&#39;)
+-PUBLIC CGI_CLASS:&#39;GET_LOG&#39;
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;GET_LOG&#39;, CODE(
 +           &#39; SEND = |.LOG :(RETURN)&#39;))
+-PUBLIC CGI_CLASS:&#39;GET_CONTENT&#39;
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;GET_CONTENT&#39;, CODE(
 +           &#39; SEND = |.CONTENT :(RETURN)&#39;))
+-PUBLIC CGI_CLASS:&#39;SET_CONTENT&#39;
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;SET_CONTENT&#39;, CODE(
 +           &#39; |.CONTENT = A1 :(RETURN)&#39;))
          DEFINE(&#39;CGI_CLOSE()A&#39;)
+-PUBLIC CGI_CLASS:&#39;CLOSE&#39;
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;CLOSE&#39;, &#39;CGI_CLOSE&#39;)
+-PUBLIC CGI_CLASS:&#39;GET_ENV&#39;
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;GET_ENV&#39;, CODE(
 +           &#39; SEND = |.ENV :(RETURN)&#39;))
+-PUBLIC CGI_CLASS:&#39;GET_QUERY&#39;
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;GET_QUERY&#39;, CODE(
 +           &#39; SEND = |.QUERY :(RETURN)&#39;))
 <font color="#818181"><i>*</i></font>
@@ -284,12 +295,11 @@ connections, fastcgi would all help. This code can be 50% faster with
 these techniques.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
-Then request routing and simple JS. Session verification.
+Then Session verification.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
-No request routing or javascript as yet. No css as yet. No caching
-or database access as yet. Pick a simple application, write and
-deploy: fog the mirror would be fine. Signon, message board.
+Pick a simple application, write and deploy: fog the mirror would be
+fine. Signon, message board.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 CGI and PSQL use SCOOP. HTMLTMPL, SESSION and COOKIE could as well,
@@ -616,7 +626,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Sun Jun  1 23:27:59 EDT 2014</p></td><td><p align=right>
+Mon Jun  2 10:37:09 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

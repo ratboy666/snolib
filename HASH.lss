@@ -60,6 +60,7 @@ a value of [['YYY']].  [[#'']] is pretty much the same as [[TABLE()]].
 @
 
 <<HASH>>=
+-PUBLIC HASH(), COPY_TABLE(), MERGE_TABLE(), KEYS_IN_TABLE(), #1
          DEFINE('HASH(S,E,P,TS,TI,FK,FV,SP)K,V,C')
          DEFINE('HASH_3(S)')
          DEFINE('COPY_TABLE(T)')

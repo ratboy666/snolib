@@ -79,6 +79,8 @@ When this is functional, we will work on performance.
          FCGI_AUTHORIZER = 2
          FCGI_FILTER     = 3
 <font color="#818181"><i>*</i></font>
+-PUBLIC FCGI_REQUEST_COMPLETE, FCGI_CANT_MPX_CONN, FCGI_OVERLOADED
+-PUBLIC FCGI_UNKNOWN_ROLE
          FCGI_REQUEST_COMPLETE = 0
          FCGI_CANT_MPX_CONN    = 1
          FCGI_OVERLOADED       = 2
@@ -100,6 +102,8 @@ When this is functional, we will work on performance.
 NOT_FCGI FCGI_LOG = IDENT(USER_FCGI) &#39;NORMAL CGI&#39;
          FFI_ACCEPT = FFI_NEW(&#39;I&#39;, &#39;I,P,P&#39;)
          FFI_SET_CALLP(FFI_ACCEPT, DLSYM(0, &#39;accept&#39;))
+-PUBLIC FCGI_ACCEPT(), ACCEPT(), FCGI_SEND(), FCGI_SEND_ERR(),
+-PUBLIC FCGI_END()
          DEFINE(&#39;FCGI_ACCEPT()&#39;)
          DEFINE(&#39;ACCEPT(SOCKET,P1,P2)&#39;)
          DEFINE(&#39;FCGI_NAMES(T,A)&#39;)
@@ -351,7 +355,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Sun Jun  1 23:14:23 EDT 2014</p></td><td><p align=right>
+Mon Jun  2 11:39:53 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

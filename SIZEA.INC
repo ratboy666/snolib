@@ -4,7 +4,7 @@
 -INCLUDE 'SYSTEM.INC'
 -STITL SIZEA
 -EJECT
--LINE 83 "SIZEA.lss"
+-LINE 84 "SIZEA.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -23,6 +23,7 @@
 * SIZEA.lss
 *
 -LINE 28 "SIZEA.lss"
+-PUBLIC SIZEA(), LOWA(), ARRAY0
          DEFINE('SIZEA(A)L,U')
          DEFINE('LOWA(A)L,U')
          ARRAY0 = ?(SYSTEM() ? 'SPITBOL')

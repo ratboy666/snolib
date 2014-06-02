@@ -4,6 +4,7 @@
 characters. If [[N]] is negative, rotation is to the left.
 
 <<ROTATER>>=
+-PUBLIC ROTATER()
          DEFINE('ROTATER(S,N)S1')                         :(ROTATER_END)
 *
 ROTATER  IDENT(S)                                             :S(RETURN)

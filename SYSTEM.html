@@ -40,6 +40,8 @@ ISASCII() -- '()' is ordered the same in both of these character sets.
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;SYSTEM&raquo;&equiv;</b>
+-PUBLIC SYSTEM(), ISSPITBOL(), ISSNOBOL4()
+-PUBLIC ISASCII(), ISEBCDIC(), ISCDC_DISPLAY_CODE()
          DEFINE(&#39;SYSTEM()K,E,T&#39;)
          DEFINE(&#39;ISSPITBOL()&#39;)
          DEFINE(&#39;ISSNOBOL4()&#39;)
@@ -47,16 +49,19 @@ ISASCII() -- '()' is ordered the same in both of these character sets.
          DEFINE(&#39;ISEBCDIC()A&#39;)
          DEFINE(&#39;ISCDC_DISPLAY_CODE()A&#39;)                   <b>:(SYSTEM_END)</b>
 <font color="#818181"><i>*</i></font>
-ISASCII  &amp;ANCHOR = 0
+ISASCII  A = &amp;ANCHOR
+         &amp;ANCHOR = 0
          &amp;ALPHABET &#39;()&#39;                          <b>:S(ISASCII1)F(ISASCII2)</b>
 ISASCII1 &amp;ANCHOR = A                                           <b>:(RETURN)</b>
 ISASCII2 &amp;ANCHOR = A                                          <b>:(FRETURN)</b>
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* OR, TRY LLT(&#39;A&#39;,1)</i></font>
-ISEBCDIC &amp;ANCHOR = 0
+ISEBCDIC A = &amp;ANCHOR
+         &amp;ANCHOR = 0
          &amp;ALPHABET &#39;(+&#39;                          <b>:S(ISASCII1)F(ISASCII2)</b>
 <font color="#818181"><i>*</i></font>
 ISCDC_DISPLAY_CODE
+         A = &amp;ANCHOR
          &amp;ANCHOR = 0
          &amp;ALPHABET &#39;)*&#39;                          <b>:S(ISASCII1)F(ISASCII2)</b>
 <font color="#818181"><i>*</i></font>
@@ -140,7 +145,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Sun Jun  1 23:14:00 EDT 2014</p></td><td><p align=right>
+Mon Jun  2 13:05:01 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

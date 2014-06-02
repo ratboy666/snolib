@@ -16,6 +16,7 @@ garbage collection. [[N]] determines the amount and type of litter.
 @
 
 <<TIMEGC>>=
+-PUBLIC TIMEGC()
          DEFINE('TIMEGC(N)I,S,A,L,T,K,FREED')              :(TIMEGC_END)
 *
 TIMEGC   I = ; S = ; A = ; L =

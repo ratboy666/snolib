@@ -12,6 +12,7 @@ will also abort.
 @
 
 <<NOTP>>=
+-PUBLIC NOTP()
          DEFINE('NOTP(P)')                                   :(NOTP_END)
 *
 @

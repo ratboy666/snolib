@@ -4,6 +4,7 @@
 order. [[ORDER('DCBA')]] returns [['ABCD']].
 
 <<ORDER>>=
+-PUBLIC ORDER()
          DEFINE('ORDER(S)T,HIGHS,S1')                       :(ORDER_END)
 *
 ORDER    S LEN(1) . T =                                       :F(RETURN)

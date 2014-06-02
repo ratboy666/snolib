@@ -1,7 +1,7 @@
 -STITL COMPLEX
 -EJECT
 *
--LINE 49 "COMPLEX.lss"
+-LINE 52 "COMPLEX.lss"
 ************************************************************************
 *                                                                      *
 *                                                                      *
@@ -21,8 +21,11 @@
 * COMPLEX.lss
 *
 -LINE 6 "COMPLEX.lss"
+-PUBLIC COMPLEX(), R(), I()
          DATA('COMPLEX(R,I)')
 *
+-PUBLIC ADD_COMPLEX(), MUL_COMPLEX(), NEG_COMPLEX(), INV_COMPLEX()
+-PUBLIC PRINT_COMPLEX()
          DEFINE('ADD_COMPLEX(X,Y)')
          DEFINE('MUL_COMPLEX(X,Y)A,B,C,D')
          DEFINE('NEG_COMPLEX(X)')

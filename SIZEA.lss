@@ -25,6 +25,7 @@ elements is computed and returned.
 @
 
 <<SIZEA>>=
+-PUBLIC SIZEA(), LOWA(), ARRAY0
          DEFINE('SIZEA(A)L,U')
          DEFINE('LOWA(A)L,U')
          ARRAY0 = ?(SYSTEM() ? 'SPITBOL')

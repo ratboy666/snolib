@@ -7,6 +7,7 @@ roman numeral [[R]].
 <b>N<small>OTE</small></b> - [[0 < N < 4000]].
 
 <<ROMAN>>=
+-PUBLIC ROMAN()
          DEFINE('ROMAN(N)T')                                :(ROMAN_END)
 *
 ROMAN    N RPOS(1) LEN(1) . T =                               :F(RETURN)
@@ -17,6 +18,7 @@ ROMAN    N RPOS(1) LEN(1) . T =                               :F(RETURN)
 *
 ROMAN_END
 *
+-PUBLIC ARABIC()
          DEFINE('ARABIC(R)T,X')                            :(ARABIC_END)
 *
 ARABIC   R RPOS(1) LEN(1) . T =                               :F(RETURN)

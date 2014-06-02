@@ -4,7 +4,7 @@
 -INCLUDE 'BRKREM.INC'
 -STITL READLINE
 -EJECT
--LINE 78 "READFILE.lss"
+-LINE 79 "READFILE.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -23,6 +23,7 @@
 * READFILE.lss
 *
 -LINE 25 "READFILE.lss"
+-PUBLIC WRITEFILE(), READFILE()
          DEFINE('WRITEFILE(FILE,S)F,U,E,T')
          DEFINE('READFILE(FILE)F,U,E')                   :(READFILE_END)
 *

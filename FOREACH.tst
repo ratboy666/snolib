@@ -1,7 +1,7 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -INCLUDE 'FOREACH.INC'
--LINE 49 "FOREACH.lss"
+-LINE 50 "FOREACH.lss"
 -INCLUDE 'DEXP.INC'
 -INCLUDE 'CRACK.INC'
          &CODE = 1

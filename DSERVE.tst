@@ -1,7 +1,7 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -INCLUDE 'DSERVE.INC'
--LINE 134 "DSERVE.lss"
+-LINE 135 "DSERVE.lss"
          &CODE = 1
          DSERVE_INIT('TEST', 54321, 'magic')
 LUP      DSERVE()

@@ -14,8 +14,10 @@ and [[TOP_A()]].
 @
 
 <<STACK>>=
+-PUBLIC STACK()
          DEFINE('STACK(SUF)S')
          STACK()
+-PUBLIC PUSH(), POP(), TOP()
          OPSYN('PUSH', 'PUSH_')
          OPSYN('POP',  'POP_')
          OPSYN('TOP',  'TOP_')                              :(STACK_END)

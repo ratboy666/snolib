@@ -1,7 +1,7 @@
 -STITL P64
 -EJECT
 *
--LINE 606 "P64.lss"
+-LINE 615 "P64.lss"
 ************************************************************************
 *                                                                      *
 *                       ######    ###   #   #                          *
@@ -42,12 +42,15 @@
          LOAD('GET_PLO()INTEGER', 'p64.so')
          LOAD('SET_PHI(INTEGER)', 'p64.so')
          LOAD('SET_PLO(INTEGER)', 'p64.so')
+-PUBLIC GET_P(), SET_P()
+-PUBLIC P_TO_P2(), P_TO_P3(), P_TO_P4(), P2_TO_P(), P3_TO_P(), P4_TO_P()
          LOAD('P_TO_P2()', 'p64.so')
          LOAD('P_TO_P3()', 'p64.so')
          LOAD('P_TO_P4()', 'p64.so')
          LOAD('P2_TO_P()', 'p64.so')
          LOAD('P3_TO_P()', 'p64.so')
          LOAD('P4_TO_P()', 'p64.so')
+-PUBLIC SET_F(), SET_D(), SET_LD(), GET_F(), GET_D(), GET_LD(), GET_S()
          LOAD('SET_F(REAL)', 'p64.so')
          LOAD('SET_D(REAL)', 'p64.so')
          LOAD('SET_LD(REAL)', 'p64.so')
@@ -55,6 +58,7 @@
          LOAD('GET_D()REAL', 'p64.so')
          LOAD('GET_LD()REAL', 'p64.so')
          LOAD('GET_S()STRING', 'p64.so')
+-PUBLIC SWAP_P()
          LOAD('SWAP_P()', 'p64.so')
          LOAD('PEEK_P_()', 'p64.so')
          LOAD('PEEK_C_()INTEGER', 'p64.so')
@@ -74,8 +78,12 @@
          LOAD('FREE_()', 'p64.so')
          LOAD('STRDUP_(STRING)', 'p64.so')
          LOAD('STRLEN_()INTEGER', 'p64.so')
+-PUBLIC PEEK_P(), PEEK_C(), PEEK_S(), PEEK_I(), PEEK_D(), PEEK_F()
+-PUBLIC PEEK_LD()
+-PUBLIC POKE_P(), POKE_C(), POKE_S(), POKE_I(), POKE_D(), POKE_F()
+-PUBLIC POKE_LD()
 *
--LINE 475 "P64.lss"
+-LINE 483 "P64.lss"
          DEFINE('GET_P()LO,HI')
          DEFINE('SET_P(P)LO,HI')
          DEFINE('PEEK_P(P)')
@@ -96,6 +104,7 @@
          DEFINE('FREE(P)')
          DEFINE('STRDUP(S)')
          DEFINE('STRLEN(P)')
+-PUBLIC MALLOC(), FREE(), STRDUP(), STRLEN()
                                                               :(P64_END)
 *
 GET_P    HI = GET_PHI()

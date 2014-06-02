@@ -1,7 +1,7 @@
 -STITL AGT
 -EJECT
 *
--LINE 32 "GCD.lss"
+-LINE 33 "GCD.lss"
 ************************************************************************
 *                                                                      *
 *                       #####    #####   ######                        *
@@ -19,6 +19,7 @@
 * GCD.lss
 *
 -LINE 6 "GCD.lss"
+-PUBLIC GCD()
          DEFINE('GCD(I,J)')                                   :(GCD_END)
 *
 GCD      EQ(I)                                               :S(FRETURN)

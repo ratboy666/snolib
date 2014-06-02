@@ -1,0 +1,81 @@
+<!doctype html>
+<!-- A simple template -->
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>CGI test</title>
+    <style>
+      a.test {
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="http://jquery.com/">jQuery</a>
+    <script src="/jquery-1.11.1.js"></script>
+    <script>
+      // js code goes here
+//      $( document ).ready(function() {
+//        // Your code here.
+//        $( "a" ).click(function( event ) {
+//          alert( "The link will no longer take you to jquery.com" );
+//          event.preventDefault();
+//          $( this ).hide( "slow" );
+//        });
+//        $( "a" ).addClass( "test" );
+        //removeClass()
+//        });
+    </script>
+    <!-- Text with some variables to be filled in -->
+    <p>
+      HTML OUTPUT
+    <p>
+      cookie counter <tmpl_var COOKIE_COUNTER>
+    <p>
+      session counter <tmpl_var SESSION_COUNTER>
+    <p>
+      request method <tmpl_var REQUEST_METHOD>
+    <p>
+      first name <tmpl_var FIRST_NAME>
+    <p>
+      vehicle <tmpl_var VEHICLE>
+    <p>
+      request uri <tmpl_var REQUEST_URI>
+    <p>
+      path info <tmpl_var PATH_INFO>
+    <ul>
+      <li><a href="cgi-bin/cgi.fcgi/showname/Adrian">Hello World</a>
+      <li><a href="cgi-bin/cgi.fcgi/showsum/22/11">Calculator</a>
+    </ul>
+    <p>
+      <form name="input" action="cgi.fcgi" method="GET">
+        First name: <input type="text" name="firstname"><br>
+        Last name: <input type="text" name="lastname"><br>
+        Password: <input type="password" name="pwd"><br>
+        <input type="radio" name="sex" value="male">Male<br>
+        <input type="radio" name="sex" value="female">Female<br>
+        <input type="checkbox" name="vehicle" value="car">
+          I have a car<br>
+        <input type="checkbox" name="vehicle" value="bike">
+          I have a bike<br>
+        <input type="submit" value="submit get"><br>
+        <input type="reset" value="reset"><br>
+        <input type="hidden" name="key" value="whatiwant">
+      </form>
+    <p>
+      <form name="input" action="cgi.fcgi" method="POST">
+        First name: <input type="text" name="firstname"><br>
+        Last name: <input type="text" name="lastname"><br>
+        Password: <input type="password" name="pwd"><br>
+        <input type="radio" name="sex" value="male">Male<br>
+        <input type="radio" name="sex" value="female">Female<br>
+        <input type="checkbox" name="vehicle" value="car">
+          I have a car<br>
+        <input type="checkbox" name="vehicle" value="bike">
+          I have a bike<br>
+        <input type="submit" value="submit post"><br>
+        <input type="reset" value="reset"><br>
+        <input type="hidden" name="key" value="whatiwant">
+      </form>
+  </body>
+</html>

@@ -1,7 +1,7 @@
 -STITL BQ
 -EJECT
 *
--LINE 67 "BQ.lss"
+-LINE 68 "BQ.lss"
 ************************************************************************
 *                                                                      *
 *                          ######    #####                             *
@@ -21,16 +21,17 @@
 * BQ.lss
 *
 -LINE 15 "BQ.lss"
+-PUBLIC BQ()
          DEFINE('BQ(COMMAND,OFS)DDTF')
          DEFINE('BQ2(COMMAND,OFS)X,UNIT')                      :(BQ_END)
 *
--LINE 29 "BQ.lss"
+-LINE 30 "BQ.lss"
 BQ       DDTF = DDT_ACTIVE
          NE(DDTF) DDT_SUSPEND()
          BQ = BQ2(COMMAND, OFS)                                  :F(BQ3)
          NE(DDTF) DDT_RESUME()                                 :(RETURN)
 BQ3      NE(DDTF) DDT_RESUME()                                :(FRETURN)
--LINE 41 "BQ.lss"
+-LINE 42 "BQ.lss"
 BQ2      UNIT = IO_FINDUNIT()                                :F(FRETURN)
          INPUT(.X, UNIT,, '|' COMMAND)                       :F(FRETURN)
          OFS = IDENT(OFS) ' '

@@ -8,7 +8,7 @@
 -INCLUDE 'SEQ.INC'
 -STITL JSON
 -EJECT
--LINE 376 "JSON.lss"
+-LINE 380 "JSON.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -27,6 +27,7 @@
 * JSON.lss
 *
 -LINE 49 "JSON.lss"
+-PUBLIC JSON_ENCODE(), JSON_DECODE()
          DEFINE('JSON_ENCODE(X)L')
          DEFINE('JSON_DECODE(X)')
 *
@@ -71,6 +72,7 @@
 * JSON CONSTANTS. THESE ARE NOT IN THE SNOBOL4 LEXICON, SO WE
 * CREATE A TYPE THAT REPRESENT THESE VALUES UNIQUELY.
 *
+-PUBLIC JSON_NULL, JSON_TRUE, JSON_FALSE
          DATA('JSON_CONSTANT(VALUE)')
          JSON_NULL = JSON_CONSTANT('null')
          JSON_TRUE = JSON_CONSTANT('true')
@@ -80,6 +82,7 @@
 * DEFAULT IS A NEWLINE AND TWO SPACES. TO PRODUCE COMPACT JSON, REPLACE
 * WITH NULL.
 *
+-PUBLIC JSON_NL, JSON_IN
          JSON_NL = CHARS_NL
          JSON_IN = '  '
 *
@@ -87,6 +90,7 @@
 * FROM THE FRONT. THIS IS MEANT TO ALLOW CONCATENATION OF JSON
 * DOCUMENTS.
 *
+-PUBLIC JSON_REST
          JSON_REST =
 *
 * JSON_HEX IS A HEX DIGIT USED BY THE \u CHARACTER IS A JSON STRING.

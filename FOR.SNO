@@ -1,7 +1,7 @@
 -STITL FOR
 -EJECT
 *
--LINE 247 "FOR.lss"
+-LINE 250 "FOR.lss"
 ************************************************************************
 *                                                                      *
 *                      #######  #######  ######                        *
@@ -19,6 +19,9 @@
 * FOR.lss
 *
 -LINE 57 "FOR.lss"
+-PUBLIC CODE_(), WHILE_COMPILE(), IF_COMPILE(), FOR_COMPILE()
+-PUBLIC STMT_COMPILE(), PROG2_COMPILE(), SET_RVAL(), EVAL_CODE_()
+-PUBLIC FOR(), WHILE()
          DATA('CODE_(TYPE,INIT,TEST,INCR,STMT,ELSE,'
 +                        'INIT_,TEST_,INCR_,STMT_,ELSE_)')
          DEFINE('WHILE_COMPILE(TEST_,STMT_)')

@@ -1,13 +1,14 @@
--LINE 60 "DDT.lss"
+-LINE 61 "DDT.lss"
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'HOST.INC'
 -INCLUDE 'READLINE.INC'
 -INCLUDE 'TRIMB.INC'
 -INCLUDE 'VDIFFER.INC'
 -INCLUDE 'QUOTE.INC'
+-INCLUDE 'FREEZE.INC'
 -STITL DDT
 -EJECT
--LINE 687 "DDT.lss"
+-LINE 693 "DDT.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -25,7 +26,8 @@
 *
 * DDT.lss
 *
--LINE 69 "DDT.lss"
+-LINE 71 "DDT.lss"
+-PUBLIC DDT(), DEBUG(), DDT_LOADED, DDT_ACTIVE
          DEFINE('DDT(S)')
          DEFINE('DEBUG(S)', 'DDT')
 *
@@ -37,6 +39,7 @@
 * IS NULL, READLINE() WILL BE USED. IF IT IS NOT NULL, DDT_R WILL
 * BE USED FOR COMMANDS AND INPUT.
 *
+-PUBLIC DDT_T, DDT_USE_R, DDT_R
          DDT_T_UNIT = IO_FINDUNIT()
          OUTPUT(.DDT_T, DDT_T_UNIT, 'W', '/dev/stderr')
          DDT_USE_R =
@@ -54,7 +57,8 @@ DDT      DDT_ACTIVE = 1
          DEFINE('DDT(S)', 'DDT_')
          DEFINE('DEBUG(S)', 'DDT_')
          DEFINE('DDT_SOURCE()')
--LINE 107 "DDT.lss"
+-LINE 111 "DDT.lss"
+-PUBLIC DDT_SUSPEND(), DDT_RESUME()
          DEFINE('DDT_SUSPEND()', 'DDT.O')
          DEFINE('DDT_RESUME()')
 *
@@ -101,10 +105,10 @@ DDT      DDT_ACTIVE = 1
          FREEZE(DDT_LBLS)
          FREEZE(DDT_BREAK_TAB)
          FREEZE(DDT_BREAK_TEMP)
-         HOST(HOST_GETENV, 'LIST')                               :F(DDT_)
+         HOST(HOST_GETENV, 'LIST')                              :F(DDT_)
          DDT_SOURCE()
 *
--LINE 166 "DDT.lss"
+-LINE 171 "DDT.lss"
 DDT_     S DDT_IGNORE                                          :F(DDT2_)
          DDT_COUNT = GT(DDT_COUNT) DDT_COUNT - 1              :S(RETURN)
 DDT2_    DDT_STEP_COUNT = 1
@@ -150,6 +154,7 @@ DDT_DISPLAY
 *
 * CALL EXTERNAL ROUTINE IF DEFINED TO REGISTER BREAK
 *
+-PUBLIC DDT_HOOK
          DIFFER(DDT_HOOK) APPLY(DDT_HOOK, 'DISPLAY', DDT_CURR_STMT)
 *
 * LISTING BEGINS HERE
@@ -161,7 +166,7 @@ DDT_DISPLAY
 *
          GT(DDT_STEP_COUNT)                                   :S(RETURN)
 *
--LINE 232 "DDT.lss"
+-LINE 238 "DDT.lss"
          THAW(DDT_BREAK_TAB)
          THAW(DDT_BREAK_TEMP)
          DDT_BREAK_TEMP = TABLE()
@@ -177,7 +182,7 @@ DDT_DISPLAY
 DDT_CASE DDT_CASE = NE(&CASE)
 +           REPLACE(DDT_CASE, &LCASE, &UCASE)                  :(RETURN)
 *
--LINE 254 "DDT.lss"
+-LINE 260 "DDT.lss"
 DDT_LABEL
          IDENT(DDT_FINAL_STMT)                                :S(RETURN)
 DDT_LAB2 DDT_STMTS<STNO> DDT_DL_PAT                         :S(DDT_LAB1)
@@ -186,7 +191,7 @@ DDT_LAB2 DDT_STMTS<STNO> DDT_DL_PAT                         :S(DDT_LAB1)
 DDT_LAB1 DDT_LABEL = IDENT(OFFSET) '(' DDT_LABEL ')'          :S(RETURN)
          DDT_LABEL = '(' DDT_LABEL ' + ' OFFSET ')'            :(RETURN)
 *
--LINE 274 "DDT.lss"
+-LINE 280 "DDT.lss"
 DDT_GET_STMT
          IDENT($S)                                            :S(RETURN)
 * CHECK FOR SIMPLE NUMBER
@@ -203,7 +208,7 @@ DDT_GET_STMT
 +           + OFFSET                                          :S(RETURN)
 DDT_GET1 DDT_T = 'BAD LABEL OR STATEMENT NUMBER'              :(FRETURN)
 *
--LINE 299 "DDT.lss"
+-LINE 305 "DDT.lss"
 DDT_READLIST
          PAT1 = FENCE (LEN(4) | SPAN(&DIGITS)) . STNO
 +           (LEN(4) | '') REM . STMT
@@ -238,7 +243,7 @@ DDT_RL3  DDT_READLIST<$LAST> = DDT_READLIST<$LAST> LINE
 DDT_RL4  DDT_T = 'INCORRECT PROGRAM LIST FILE, LINE IN ERROR:'
          DDT_T = LINE                                         :(FRETURN)
 *
--LINE 344 "DDT.lss"
+-LINE 350 "DDT.lss"
 DDT_CMD  IDENT(DDT_UNIT2)                                   :S(DDT_CMD2)
          DDT_IN = DDT_INPUT                                 :F(DDT_CMD4)
          DDT_T = 'DDT: ' DDT_IN                              :(DDT_CMD3)
@@ -331,7 +336,7 @@ DDT.*                                                         :(DDT_CMD)
 *
 *** H OR ? - HELP
 *
--LINE 592 "DDT.lss"
+-LINE 598 "DDT.lss"
 DDT.H
  DDT_T = 'STNO - STATEMENT NUMBERS SPECIFIED AS INTEGERS, OR LABEL +- N'
  DDT_T = '          BRACKETED ITEMS ARE OPTIONAL'
@@ -475,7 +480,7 @@ DDT_G1   DIFFER(DDT_IN)                                       :F(DDT_G2)
 DDT_G2   FREEZE(DDT_BREAK_TEMP)
          FREEZE(DDT_BREAK_TAB)
          DIFFER(DDT_CMD)                            :S(RETURN)F(FRETURN)
--LINE 629 "DDT.lss"
+-LINE 635 "DDT.lss"
 *
 *** L - LIST STATEMENT(S)
 *

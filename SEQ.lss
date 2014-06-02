@@ -29,6 +29,7 @@ Sample usage:
 <a href="SIZEA.html">SIZEA</a>
 
 <<SEQ>>=
+-PUBLIC SEQ()
          DEFINE('SEQ(ARG_S,ARG_NAME,START,END)')              :(SEQ_END)
 *
 SEQ      START = IDENT(START) 1

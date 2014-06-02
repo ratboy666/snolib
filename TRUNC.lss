@@ -13,6 +13,7 @@ consisting of the elements
 @
 
 <<TRUNC>>=
+-PUBLIC TRUNC()
          DEFINE('TRUNC(A,L,H)')                             :(TRUNC_END)
 *
 TRUNC    TRUNC = ARRAY(H - L + 1)

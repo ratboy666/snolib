@@ -3,6 +3,7 @@
 [[GCD(I,J)]] returns the GCD of [[I]] and [[J]].
 
 <<GCD>>=
+-PUBLIC GCD()
          DEFINE('GCD(I,J)')                                   :(GCD_END)
 *
 GCD      EQ(I)                                               :S(FRETURN)

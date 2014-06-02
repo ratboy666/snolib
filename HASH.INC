@@ -4,7 +4,7 @@
 -INCLUDE 'VDIFFER.INC'
 -STITL PSQL
 -EJECT
--LINE 138 "HASH.lss"
+-LINE 139 "HASH.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -24,6 +24,7 @@
 * HASH.lss
 *
 -LINE 63 "HASH.lss"
+-PUBLIC HASH(), COPY_TABLE(), MERGE_TABLE(), KEYS_IN_TABLE(), #1
          DEFINE('HASH(S,E,P,TS,TI,FK,FV,SP)K,V,C')
          DEFINE('HASH_3(S)')
          DEFINE('COPY_TABLE(T)')

@@ -12,6 +12,7 @@
 @
 
 <<FLOOR>>=
+-PUBLIC FLOOR(), CEIL()
          DEFINE('FLOOR(X)')
          DEXP('CEIL(X) = -FLOOR(-X)')                       :(FLOOR_END)
 *

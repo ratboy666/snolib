@@ -18,6 +18,7 @@
 *
 * MAX.lss
 *
+-PUBLIC MAX(), MIN()
          DEFINE('MAX(X,Y)')
          DEFINE('MIN(X,Y)')                                   :(MAX_END)
 *

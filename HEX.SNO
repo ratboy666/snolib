@@ -2,7 +2,7 @@
 -INCLUDE 'BLEND.INC'
 -STITL HEX
 -EJECT
--LINE 49 "HEX.lss"
+-LINE 50 "HEX.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -21,6 +21,7 @@
 * HEX.lss
 *
 -LINE 17 "HEX.lss"
+-PUBLIC HEX()
          DEFINE('HEX(S)S2')
 *
          H = '0123456789ABCDEF'

@@ -55,6 +55,7 @@ at a future date. (see DDT.E)
 <a href="TRIMB.html">TRIMB</a><br>
 <a href="VDIFFER.html">VDIFFER</a><br>
 <a href="QUOTE.html">QUOTE</a>
+<a href="FREEZE.html">FREEZE</a>
 
 <<INCLUDES>>=
 -INCLUDE 'CHARS.INC'
@@ -63,9 +64,11 @@ at a future date. (see DDT.E)
 -INCLUDE 'TRIMB.INC'
 -INCLUDE 'VDIFFER.INC'
 -INCLUDE 'QUOTE.INC'
+-INCLUDE 'FREEZE.INC'
 @
 
 <<DDT>>=
+-PUBLIC DDT(), DEBUG(), DDT_LOADED, DDT_ACTIVE
          DEFINE('DDT(S)')
          DEFINE('DEBUG(S)', 'DDT')
 *
@@ -77,6 +80,7 @@ at a future date. (see DDT.E)
 * IS NULL, READLINE() WILL BE USED. IF IT IS NOT NULL, DDT_R WILL
 * BE USED FOR COMMANDS AND INPUT.
 *
+-PUBLIC DDT_T, DDT_USE_R, DDT_R
          DDT_T_UNIT = IO_FINDUNIT()
          OUTPUT(.DDT_T, DDT_T_UNIT, 'W', '/dev/stderr')
          DDT_USE_R =
@@ -104,6 +108,7 @@ debugger. [[DDT_SUSPEND()]] will suspend the debugger, and
 for an example of this use.
 
 <<DDT>>=
+-PUBLIC DDT_SUSPEND(), DDT_RESUME()
          DEFINE('DDT_SUSPEND()', 'DDT.O')
          DEFINE('DDT_RESUME()')
 *
@@ -150,7 +155,7 @@ for an example of this use.
          FREEZE(DDT_LBLS)
          FREEZE(DDT_BREAK_TAB)
          FREEZE(DDT_BREAK_TEMP)
-         HOST(HOST_GETENV, 'LIST')                               :F(DDT_)
+         HOST(HOST_GETENV, 'LIST')                              :F(DDT_)
          DDT_SOURCE()
 *
 @
@@ -208,6 +213,7 @@ DDT_DISPLAY
 *
 * CALL EXTERNAL ROUTINE IF DEFINED TO REGISTER BREAK
 *
+-PUBLIC DDT_HOOK
          DIFFER(DDT_HOOK) APPLY(DDT_HOOK, 'DISPLAY', DDT_CURR_STMT)
 *
 * LISTING BEGINS HERE

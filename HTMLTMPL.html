@@ -80,6 +80,7 @@ struct tmpl_token { token_type, token_end, token_args }
 
 <font color="#818181"><i># Initialize patterns for HTML template module</i></font>
 
+//-PUBLIC TMPL_INIT()
 procedure tmpl_init() {
 
    # Directory for template includes
@@ -110,6 +111,7 @@ procedure tmpl_init() {
 
 <font color="#818181"><i># Compile template</i></font>
 
+//-PUBLIC TMPL_COMPILE()
 procedure tmpl_compile(s) l {
    if (~(l = tmpl_tokenize(s)))
       freturn
@@ -121,6 +123,7 @@ procedure tmpl_compile(s) l {
 <font color="#818181"><i># Interpret template p with arguments a. interpret_tmpl() is</i></font>
 <font color="#818181"><i># recursive, so the results are collected into tmpl_interpret.</i></font>
 
+//-PUBLIC TMPL_INTERPRET()
 procedure tmpl_interpret(p, a) {
    interpret_tmpl(p, a)
 }
@@ -296,7 +299,7 @@ procedure tmpl_parse_args(s) n v {
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Sun Jun  1 23:14:21 EDT 2014</p></td><td><p align=right>
+Mon Jun  2 11:39:52 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

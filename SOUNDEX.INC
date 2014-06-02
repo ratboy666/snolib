@@ -1,7 +1,7 @@
 -STITL SOUNDEX
 -EJECT
 *
--LINE 39 "SOUNDEX.lss"
+-LINE 40 "SOUNDEX.lss"
 ************************************************************************
 *                                                                      *
 *     #####   #######  #     #  #     #  ######   #######  #     #     *
@@ -19,6 +19,7 @@
 * SOUNDEX.lss
 *
 -LINE 6 "SOUNDEX.lss"
+-PUBLIC SOUNDEX()
          DEFINE('SOUNDEX(STR)SDXMAP,INIT,CH')             :(SOUNDEX_END)
 *
 SOUNDEX  SDXMAP = '01230127022455012623017202'

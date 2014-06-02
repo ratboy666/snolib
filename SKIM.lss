@@ -12,6 +12,7 @@ returns [['MISP']].
 @
 
 <<SKIM>>=
+-PUBLIC SKIM()
          DEFINE('SKIM(S)C')                                  :(SKIM_END)
 *
 SKIM     S LEN(1) . C =                                       :F(RETURN)

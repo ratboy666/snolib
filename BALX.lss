@@ -20,6 +20,7 @@ source.
 @
 
 <<BALX>>=
+-PUBLIC BALX()
          DEFINE('BALX(PARENS,QTS)Q,GBAL,NAME,STAR,LP,RP')    :(BALX_END)
 *
 BALX     NAME = UNIQUE()

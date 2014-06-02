@@ -15,6 +15,7 @@ files needed.
 @
 
 <<SLOAD>>=
+-PUBLIC SLOAD()
          DEFINE('SLOAD(FILENAME)'
 +               'LIB,CODE,PATH,X,A,I,P,PS,DS,TRIM_SAV,POSITION,UNIT')
          Q_ = "'"

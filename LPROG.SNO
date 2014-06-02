@@ -1,7 +1,7 @@
 -STITL LPROG
 -EJECT
 *
--LINE 34 "LPROG.lss"
+-LINE 35 "LPROG.lss"
 ************************************************************************
 *                                                                      *
 *               #        ######   ######   #######   #####             *
@@ -19,6 +19,7 @@
 * LPROG.lss
 *
 -LINE 13 "LPROG.lss"
+-PUBLIC LPROG()
          DEFINE('LPROG()')                                  :(LPROG_END)
 *
 LPROG                                :<CODE(' LPROG = &STNO :(RETURN)')>

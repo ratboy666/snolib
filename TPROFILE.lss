@@ -13,6 +13,7 @@ SNOBOL4 statement.
 @
 
 <<TPROFILE>>=
+-PUBLIC TPROFILE(), TPROFILE_DUMP()
          DEFINE('TPROFILE()S,T')
          DEFINE('TPROFILE_DUMP()I')
          TP_ARY = ARRAY(LPROG())

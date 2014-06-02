@@ -144,22 +144,29 @@ open for a long duration (for the entire application execution).
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* THESE THREE ARE FUNCTIONS -- SIMPLY EASIER THAT WAY.</i></font>
 <font color="#818181"><i>*</i></font>
+-PUBLIC PSQL_INSERT(), PSQL_RESULT(), PSQL_ESCAPE()
          DEFINE(&#39;PSQL_INSERT(T)N,V,I&#39;)
          DEFINE(&#39;PSQL_RESULT(S)I,N,R,T,KEY,DAT&#39;)
          DEFINE(&#39;PSQL_ESCAPE(S)&#39;)
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* CREATE CLASS PSQL_CLASS AND POPULATE ITS METHODS</i></font>
 <font color="#818181"><i>*</i></font>
+-PUBLIC CLASS:PSQL_CLASS
          PSQL_CLASS = SEND(CLASS, &#39;NEW_CLASS&#39;, &#39;PSQL_CLASS&#39;)
          DEFINE(&#39;PSQL_OPEN()L&#39;)
+-PUBLIC PSQL_CLASS:&#39;OPEN&#39;
          SEND(PSQL_CLASS, &#39;ADD_METHOD&#39;, &#39;OPEN&#39;, &#39;PSQL_OPEN&#39;)
          DEFINE(&#39;PSQL_CLOSE()PID&#39;)
+-PUBLIC PSQL_CLASS:&#39;CLOSE&#39;
          SEND(PSQL_CLASS, &#39;ADD_METHOD&#39;, &#39;CLOSE&#39;, &#39;PSQL_CLOSE&#39;)
+-PUBLIC PSQL_CLASS:&#39;GET_PIPE&#39;
          SEND(PSQL_CLASS, &#39;ADD_METHOD&#39;, &#39;GET_PIPE&#39;, CODE(
 +           &#39; SEND = |.PIPE :(RETURN)&#39;))
          DEFINE(&#39;PSQL_DISCARD()L&#39;)
+-PUBLIC PSQL_CLASS:&#39;DISCARD&#39;
          SEND(PSQL_CLASS, &#39;ADD_METHOD&#39;, &#39;DISCARD&#39;, &#39;PSQL_DISCARD&#39;)
          DEFINE(&#39;PSQL_OUTPUT()L&#39;)
+-PUBLIC PSQL_CLASS:&#39;OUTPUT&#39;
          SEND(PSQL_CLASS, &#39;ADD_METHOD&#39;, &#39;OUTPUT&#39;, &#39;PSQL_OUTPUT&#39;)
 <font color="#818181"><i>*</i></font>
                                                              <b>:(PSQL_END)</b>
@@ -428,7 +435,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Sun Jun  1 23:14:11 EDT 2014</p></td><td><p align=right>
+Mon Jun  2 12:43:30 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

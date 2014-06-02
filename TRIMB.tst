@@ -1,7 +1,7 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -INCLUDE 'TRIMB.INC'
--LINE 17 "TRIMB.lss"
+-LINE 18 "TRIMB.lss"
          &CODE = 1
          IDENT(TRIMB(' ABC '), 'ABC')                            :F(END)
          &CODE = 0

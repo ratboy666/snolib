@@ -3,7 +3,7 @@
 -INCLUDE 'RESOL.INC'
 -STITL TIMER
 -EJECT
--LINE 76 "TIMER.lss"
+-LINE 77 "TIMER.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -22,6 +22,7 @@
 * TIMER.lss
 *
 -LINE 17 "TIMER.lss"
+-PUBLIC TIMER()
          DEFINE('TIMER(S_,N_)C_,T_,I_,M_')                  :(TIMER_END)
 *
 TIMER    EQ(N_, 0)                                           :F(TIMER_N)

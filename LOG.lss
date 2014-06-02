@@ -51,6 +51,7 @@ END
 * SEE
 * http://numbers.computation.free.fr/Constants/Miscellaneous/digits.html
 *
+-PUBLIC LN_10, EULERS_NUMBER, PI
          LN_10    =
 +                   2.30258509299404568401799145468436420760110148862877
          EULERS_NUMBER =
@@ -58,6 +59,7 @@ END
          PI =
 +                   3.14159265358979323846264338327950288419716939937510
 *
+-PUBLIC CLOG(), LOGB()
          DEXP('CLOG(X) = LN(X) / LN_10')
          DEXP('LOGB(X,B) = NE(B, 0) LN(X) / LN(B) ;'
 +             'LOGB      = EQ(B, 0) LN(X)         ;')

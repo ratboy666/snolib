@@ -2,7 +2,7 @@
 -INCLUDE 'SEQ.INC'
 -STITL AI
 -EJECT
--LINE 54 "AI.lss"
+-LINE 55 "AI.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -21,6 +21,7 @@
 * AI.lss
 *
 -LINE 22 "AI.lss"
+-PUBLIC AI()
          DEFINE('AI(A,I)J')                                    :(AI_END)
 *
 AI       IDENT(DATATYPE(I), 'ARRAY')                            :F(AI_1)

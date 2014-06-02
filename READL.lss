@@ -15,7 +15,9 @@ to but not including the first string having 'STOP' in column 1.
 @
 
 <<READL>>=
+-PUBLIC READL()
          DEFINE('READL(P,IN)N,S')                           :(READL_END)
+*
 READL    P = IDENT(P) ABORT
          IN = IDENT(IN) .INPUT
          N = .READL
@@ -23,6 +25,7 @@ READL_1  S = $IN                                              :F(RETURN)
          S P                                                  :S(RETURN)
          $N = LINK(S)
          N = .NEXT($N)                                        :(READL_1)
+*
 READL_END
 @
 

@@ -1,7 +1,7 @@
 -STITL TIME
 -EJECT
 *
--LINE 62 "TIME.lss"
+-LINE 72 "TIME.lss"
 ************************************************************************
 *                                                                      *
 *                    #######  ###  #     #  #######                    *
@@ -22,18 +22,25 @@
 * TIME.lss
 *
 -LINE 6 "TIME.lss"
+-PUBLIC TIMEVAL(), TV_SEC(), TV_USEC()
          DATA('TIMEVAL(TV_SEC,TV_USEC)')
+-PUBLIC TM(), TM_SEC(), TM_MIN(), TM_HOUR(), TM_MDAY(), TM_MON()
+-PUBLIC TM_YEAR(), TM_WDAY(), TM_YDAY(), TM_ISDST(), TM_GMTOFF()
          DATA('TM(TM_SEC,TM_MIN,TM_HOUR,TM_MDAY,TM_MON,'
 +                'TM_YEAR,TM_WDAY,TM_YDAY,TM_ISDST,TM_GMTOFF)')
 *
          LOAD('GETTIMEOFDAY_(TIMEVAL)')
          LOAD('LOCALTIME_(INTEGER,TM)')
          LOAD('GMTIME_(INTEGER,TM)')
+-PUBLIC STRFTIME()
          LOAD('STRFTIME(STRING,TM)STRING')
+-PUBLIC MKTIME()
          LOAD('MKTIME(TM)INTEGER')
+-PUBLIC SLEEP()
          LOAD('SLEEP(REAL)')
          LOAD('STRPTIME_(STRING,STRING,TM)')
 *
+-PUBLIC GETTIMEOFDAY()
          DEFINE('GETTIMEOFDAY()TIMEVAL')             :(GETTIMEOFDAY_END)
 *
 GETTIMEOFDAY
@@ -42,6 +49,7 @@ GETTIMEOFDAY
 *
 GETTIMEOFDAY_END
 *
+-PUBLIC LOCALTIME()
          DEFINE('LOCALTIME(T)TM')                       :(LOCALTIME_END)
 *
 LOCALTIME
@@ -50,6 +58,7 @@ LOCALTIME
 *
 LOCALTIME_END
 *
+-PUBLIC GMTIME()
          DEFINE('GMTIME(T)TM')                             :(GMTIME_END)
 *
 GMTIME   GMTIME = TM()
@@ -57,6 +66,7 @@ GMTIME   GMTIME = TM()
 *
 GMTIME_END
 *
+-PUBLIC STRPTIME()
          DEFINE('STRPTIME(S,F)TM')                       :(STRPTIME_END)
 *
 STRPTIME STRPTIME = TM()

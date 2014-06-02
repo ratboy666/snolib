@@ -136,8 +136,10 @@ is a reasonable choice.
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;SCOOP&raquo;&equiv;</b>
+-PUBLIC OBJECT()
          DATA(&#39;OBJECT(CLASS,IVARS,METHODS)&#39;)
 <font color="#818181"><i>*</i></font>
+-PUBLIC SEND(), SUPER(), SELF(), IVAR(), CVAR(), CLASS_OF(), |1
          DEFINE(&#39;SEND(THIS,METHOD,A1,A2,A3,A4,A5,A6,A7,A8)&#39;
 +               &#39;C,M,M_CLASS,T1,T2,T3&#39;)
          DEFINE(&#39;SUPER(METHOD,A1,A2,A3,A4,A5,A6,A7,A8)T1,T2,T3&#39;)
@@ -152,8 +154,10 @@ is a reasonable choice.
 <font color="#818181"><i>* ANSWER NEW_CLASS, NEW, INIT, DOES_NOT_UNDERSTAND AND ADD_METHOD</i></font>
 <font color="#818181"><i>* MESSAGES. ALSO, ANSWER THE IS_A MESSAGE.</i></font>
 <font color="#818181"><i>*</i></font>
+-PUBLIC CLASS:CLASS
          CLASS = OBJECT(, TABLE(), TABLE())
          IVARS(CLASS)&lt;&#39;CLASS&#39;&gt; = &#39;CLASS&#39;
+-PUBLIC CLASS:&#39;ADD_METHOD&#39;
          METHODS(CLASS)&lt;&#39;ADD_METHOD&#39;&gt; =
 +           CODE(
 +              &#39; METHODS(THIS) = IDENT(METHODS(THIS)) TABLE();&#39;
@@ -161,22 +165,27 @@ is a reasonable choice.
 +              &#39; METHODS(THIS)&lt;A1&gt; = A2;&#39;
 +              &#39; FREEZE(METHODS(THIS)) :(RETURN)&#39;)
 <font color="#818181"><i>*</i></font>
+-PUBLIC CLASS:&#39;NEW_CLASS&#39;
          SEND(CLASS, &#39;ADD_METHOD&#39;, &#39;NEW_CLASS&#39;,
 +           CODE(
 +              &#39; THIS = OBJECT(THIS);&#39;
 +              &#39; IVAR(&quot;CLASS&quot;) = A1;&#39;
 +              &#39; SEND = THIS :(RETURN)&#39;))
+-PUBLIC CLASS:&#39;INIT&#39;
          SEND(CLASS, &#39;ADD_METHOD&#39;, &#39;INIT&#39;,
 +           CODE(&#39; :(RETURN)&#39;))
+-PUBLIC CLASS:&#39;NEW&#39;
          SEND(CLASS, &#39;ADD_METHOD&#39;, &#39;NEW&#39;,
 +           CODE(
 +              &#39; THIS = OBJECT(THIS);&#39;
 +              &#39; SELF(&quot;INIT&quot;, A1, A2, A3, A4, A5, A6, A7, A8);&#39;
 +              &#39; SEND = THIS :(RETURN)&#39;))
+-PUBLIC CLASS:&#39;DOES_NOT_UNDERSTAND&#39;
          SEND(CLASS, &#39;ADD_METHOD&#39;, &#39;DOES_NOT_UNDERSTAND&#39;,
 +           CODE(
 +            &quot; TERMINAL = &#39;SCOOP: DOES NOT UNDERSTAND &#39; METHOD :(END)&quot;))
          DEFINE(&#39;IS_A(ACLASS)&#39;)
+-PUBLIC CLASS:&#39;IS_A&#39;
          SEND(CLASS, &#39;ADD_METHOD&#39;, &#39;IS_A&#39;, &#39;IS_A&#39;)
                                                               <b>:(OOP_END)</b>
 <font color="#818181"><i>*</i></font>
@@ -351,7 +360,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Sun Jun  1 23:14:16 EDT 2014</p></td><td><p align=right>
+Mon Jun  2 13:05:04 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

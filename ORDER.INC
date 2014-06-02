@@ -1,7 +1,7 @@
 -STITL ORDER
 -EJECT
 *
--LINE 30 "ORDER.lss"
+-LINE 31 "ORDER.lss"
 ************************************************************************
 *                                                                      *
 *                #######  ######   ######   #######  ######            *
@@ -19,6 +19,7 @@
 * ORDER.lss
 *
 -LINE 7 "ORDER.lss"
+-PUBLIC ORDER()
          DEFINE('ORDER(S)T,HIGHS,S1')                       :(ORDER_END)
 *
 ORDER    S LEN(1) . T =                                       :F(RETURN)

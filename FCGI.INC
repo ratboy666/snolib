@@ -10,7 +10,7 @@
 -INCLUDE 'JSON.INC'
 -STITL FCGI
 -EJECT
--LINE 307 "FCGI.lss"
+-LINE 311 "FCGI.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -51,6 +51,8 @@
          FCGI_AUTHORIZER = 2
          FCGI_FILTER     = 3
 *
+-PUBLIC FCGI_REQUEST_COMPLETE, FCGI_CANT_MPX_CONN, FCGI_OVERLOADED
+-PUBLIC FCGI_UNKNOWN_ROLE
          FCGI_REQUEST_COMPLETE = 0
          FCGI_CANT_MPX_CONN    = 1
          FCGI_OVERLOADED       = 2
@@ -72,6 +74,8 @@
 NOT_FCGI FCGI_LOG = IDENT(USER_FCGI) 'NORMAL CGI'
          FFI_ACCEPT = FFI_NEW('I', 'I,P,P')
          FFI_SET_CALLP(FFI_ACCEPT, DLSYM(0, 'accept'))
+-PUBLIC FCGI_ACCEPT(), ACCEPT(), FCGI_SEND(), FCGI_SEND_ERR(),
+-PUBLIC FCGI_END()
          DEFINE('FCGI_ACCEPT()')
          DEFINE('ACCEPT(SOCKET,P1,P2)')
          DEFINE('FCGI_NAMES(T,A)')
