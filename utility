@@ -425,6 +425,12 @@ $X 		EXIT
 	  </pre>
 	</li>
 	<li>
+	bldidx
+	</li>
+	<li>
+	uses
+	</li>
+	<li>
 	  <a href="scan.html">scan</a>
 	  <p align="justify">
 	    The <i>scan</i> utility provides the interactive editor
