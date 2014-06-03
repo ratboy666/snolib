@@ -35,8 +35,6 @@
 -LINE 383 "P64.lss"
 -LINE 384 "P64.lss"
 -LINE 385 "P64.lss"
--LINE 389 "P64.lss"
--LINE 390 "P64.lss"
 -LINE 396 "P64.lss"
          LOAD('GET_PHI()INTEGER', 'p64.so')
          LOAD('GET_PLO()INTEGER', 'p64.so')

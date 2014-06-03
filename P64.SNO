@@ -394,10 +394,8 @@ static int strlen_(int p) { return strlen((char *)p); }
 -CMNT ERASE TEMPORARY FILES
 -CMNT     WE DON'T NEED THE C BITS, OR THE OBJECT FILES ANYMORE.
 -CMNT     ALL WE REQUIRE IS P64.SO
--SNOBOL A = CRACK(p64 ' ' OBJECTS, ' ')
--LINE 389 "P64.lss"
--SNOBOL SEQ(' DELETE(A<K>) ', .K)
--LINE 390 "P64.lss"
+-CMNT -SNOBOL A = CRACK(p64 ' ' OBJECTS, ' ')
+-CMNT -SNOBOL SEQ(' DELETE(A<K>) ', .K)
 -LINE 396 "P64.lss"
 %IF (BITS EQ 64)
          LOAD('GET_PHI()INTEGER', 'p64.so')

@@ -385,8 +385,8 @@ Build [[p64.so]] shared library.
 -CMNT ERASE TEMPORARY FILES
 -CMNT     WE DON'T NEED THE C BITS, OR THE OBJECT FILES ANYMORE.
 -CMNT     ALL WE REQUIRE IS P64.SO
--SNOBOL A = CRACK(p64 ' ' OBJECTS, ' ')
--SNOBOL SEQ(' DELETE(A<K>) ', .K)
+-CMNT -SNOBOL A = CRACK(p64 ' ' OBJECTS, ' ')
+-CMNT -SNOBOL SEQ(' DELETE(A<K>) ', .K)
 @
 
 [[LOAD()]] functions from [[p64.so]] into CSNOBOL4. Note that the

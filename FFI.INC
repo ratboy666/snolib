@@ -39,8 +39,6 @@
 -LINE 534 "FFI.lss"
 -LINE 535 "FFI.lss"
 -LINE 536 "FFI.lss"
--LINE 540 "FFI.lss"
--LINE 541 "FFI.lss"
 -LINE 546 "FFI.lss"
          LOAD('FREE_FFI()', 'ffi.so')
          LOAD('CLEAR_FFI()', 'ffi.so')
