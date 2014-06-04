@@ -61,6 +61,7 @@ endf     fp = (pos(0) | any(ss)) fp
          qq = '"'
 
 top      r = input :f(incout)
+         r fenc '-' ('uses' | 'USES') rem . r :s(loop)
          r fence (any('*#;|!-') | '//') :s(top)
 loop     r arb . l (q | qq) $ delim arb *delim rem . r :f(done)
          process(l) :(loop)
@@ -73,8 +74,7 @@ inco2    a<i,1> :f(end)
          i = i + 1 :(inco2)
 
 * process string s looking for functions/variables
-process
-         &fullscan = 1
+process  &fullscan = 1
          s = replace(s, &lcase, &ucase)
 proc_1   s vp = :f(proc_2)
          incs<f> = 1 :(proc_1)
