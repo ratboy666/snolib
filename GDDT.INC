@@ -24,11 +24,13 @@ DDT_HOOK_FUNC
          F 'DISPLAY'                                      :F(DDT_HOOK_2)
 DDT_HOOK_6
          ARG = REPL(ARG, '\', '\\')
+         ARG = REPL(ARG, '$', '\$')
          ARG = REPL(ARG, '"', '\"') '\n'
          STCL_EVAL(TCL, '.f2.log configure -state normal')
          STCL_EVAL(TCL, '.f2.log insert end "' ARG '"')
-         STCL_EVAL(TCL, '.f2.log see end')                 :(DDT_HOOK_9)
+         STCL_EVAL(TCL, '.f2.log see end')
          STCL_EVAL(TCL, '.f2.log configure -state disabled')
+                                                           :(DDT_HOOK_9)
 *
 * BREAK REMOVES ANY HIGHLIGHT, HIGHLIGHTS THE NEW LINE AND REPOSITIONS
 * THE SOURCE WINDOW
@@ -53,8 +55,6 @@ DDT_HOOK_5
 * RETURN COMMAND. DDT_USE_R MUST BE NON-NULL (= 2). WE SHOULD HAVE
 * AN "UNLOCK" ICON TO INDICATE READY FOR COMMAND.
 * SEE LINE 370 IN DDT.lss FOR THE GORY DETAILS.
-*
-* NEED TO BIND RETURN KEY TO BUTTON.
 *
 DDT_HOOK_4
          F 'READ'                                         :F(DDT_HOOK_9)
@@ -159,6 +159,7 @@ LSTNXT   S = TRIM(IN)                                         :F(LSTEND)
          S FENCE SPAN(&DIGITS) . STNO
          S = REPL(S, CHARS_FF)
          S = REPL(S, '\', '\\')
+         S = REPL(S, '$', '\$')
          S = REPL(S, '"', '\"')
          STCL_EVAL(TCL, 'set p [.f1.src index end]')
          P = STCL_GETVAR(TCL, 'p')
