@@ -8,7 +8,7 @@
 -TITLE GDDT TEST
 -INCLUDE 'GDDT.INC'
 *
-*         GDDT('GDDT.lst')
+         GDDT('GDDT.lst')
          DDT()
          TERMINAL = 'GUI DEBUG'
          I = 0

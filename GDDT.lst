@@ -1,0 +1,20 @@
+        #!/usr/bin/bash
+1                EXEC "snobol4" "-b" "$0" "$@"
+        *
+        * CE: .MSNOBOL4;
+        *
+        * GDDT.tst - test GUI debugger
+        *
+        -TITLE GDDT TEST
+        -INCLUDE 'GDDT.INC'
+        -LIST
+        *
+2                GDDT('GDDT.lst')
+3                DDT()
+4                TERMINAL = 'GUI DEBUG'
+5                I = 0
+6       LUP      I = I + 1
+7                LT(I, 10)                                               :S(LUP)
+8                TERMINAL = 'LUP DONE'
+        *
+9       END
