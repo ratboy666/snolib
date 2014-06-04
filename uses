@@ -3,14 +3,16 @@
 
 * uses
 *
-* what apis does this code use? what includes are needed?
-* doesn't yet handle classes/methods/operators.
+* build includes necessary
 
 -INCLUDE 'HASH.INC'
 -INCLUDE 'JSON.INC'
 -INCLUDE 'SDIFF.INC'
 -INCLUDE 'READFILE.INC'
+*-include 'DDT.INC'
 
+*  ddt()
+*  input(.input, 20,, 'READFILE.INC')
 * ce: .msnobol4;
 
          fc = &ucase
@@ -42,7 +44,7 @@ nxtv     k<i> :f(endv)
          s = '"' k<i> '"' ' . e *?(f = "' variables<k<i>> '")'
          vp = (differ(vp) (eval(s) | vp), eval(s))
          i = i + 1 :(nxtv)
-endv     vp = (pos(0) | any(ss)) vp (any(ss) | rpos(0))
+endv     vp = (pos(0) | any(ss)) @bp vp @ep (any(ss) | rpos(0))
 
 * build function pattern
          k = keys_in_table(functions) : f(end)
@@ -53,7 +55,7 @@ nxtf     k<i> :f(endf)
          s = '"' m '"' ' . e *?(f = "' functions<k<i>> '")'
          fp = (differ(fp) (eval(s) | fp), eval(s))
          i = i + 1 :(nxtf)
-endf     fp = (pos(0) | any(ss)) fp
+endf     fp = (pos(0) | any(ss)) @bp fp @ep
 
          incs = table()
          weak = table()
@@ -62,6 +64,10 @@ endf     fp = (pos(0) | any(ss)) fp
          qq = '"'
 
 top      r = input :f(incout)
+*
+* If its a -WEAK declaration, add the functions and variables to
+* the weak() table. This table is used to filter potential include
+* additions
          r fence '-' ('weak' | 'WEAK') rem . r :f(uses)
          fc = &ucase &lcase
          sc = fc '0123456789_.'
@@ -73,13 +79,23 @@ top      r = input :f(incout)
 weak2    r element = :f(top)
          e ')' =
          weak<e> = 1 :(weak2)
+
+* -USES control cards are just analyzed as a statement. Note that
+* this is wrong for operators (FIXME), classes and methods. But
+* it works for functions and variables
 uses     r fence '-' ('uses' | 'USES') rem . r :s(loop)
+
+* if the line is a comment or control card, skip it
          r fence (any('*#;|!-') | '//') :s(top)
+
+* loop skipping quoted strings, pass the remaining fragments to
+* process
 loop     r arb . l (q | qq) $ delim arb *delim rem . r :f(done)
          process(l) :(loop)
 done     process(r) :(top)
 
-incout   a = sort(incs)
+* output the includes
+incout   a = sort(incs) :f(end)
          i = 1
 inco2    a<i,1> :f(end)
          output = '-INCLUDE ' q a<i,1> q
@@ -88,12 +104,21 @@ inco2    a<i,1> :f(end)
 * process string s looking for functions/variables
 process  &fullscan = 1
          s = replace(s, &lcase, &ucase)
-proc_1   s vp = :f(proc_2)
-*        output = 'f = ' f  ' e = ' e
+* the match will be from a separator or pos(0) and includes the
+* terminating separator or rpos(0). we don't want to remove braces
+* and such, but just the actual variable. so, be and ep (begin and
+* end position) are captured in the vp pattern. this is not a
+* concern for functions -- there 'name(' is taken out, will a possible
+* character in the lead. since we have removed the variables, it
+* is impossible that the edit will leave a matching signature.
+* 'xxx)' won't match anything in fp.
+proc_1   s vp :f(proc_2)
+         s pos(bp) len(ep - bp) =
+*        output = 'vp: f = ' f  ' e = ' e
          differ(weak<e>) :s(proc_1)
          incs<f> = 1 :(proc_1)
 proc_2   s fp = :f(return)
-*        output = 'f = ' f  ' e = ' e
+*        output = 'fp f = ' f  ' e = ' e
          differ(weak<e>) :s(proc_1)
          incs<f> = 1 :(proc_2)
 end

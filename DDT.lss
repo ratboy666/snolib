@@ -62,6 +62,7 @@ additional tools to be incorporated while debugging.
 <a href="SLOAD.html">SLOAD</a>
 
 <<INCLUDES>>=
+-WEAK DSERVE_APPNAME
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'HOST.INC'
 -INCLUDE 'READLINE.INC'

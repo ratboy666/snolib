@@ -27,6 +27,7 @@ Not very good at cleaning up, but this does work.
 
 <<DSERVE>>=
 -PUBLIC DSERVE_INIT(), DSERVE()
+-PUBLIC DSERVE_PORT, DSERVE_APPNAME
          DEFINE('DSERVE_INIT(APPNAME,PORT,KEY)')      :(DSERVE_INIT_END)
 *
 DSERVE_INIT
