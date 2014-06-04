@@ -4,7 +4,7 @@
 -INCLUDE 'P64.INC'
 -STITL JIT
 -EJECT
--LINE 2200 "JIT.lss"
+-LINE 2202 "JIT.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -34,14 +34,13 @@
 -LINE 29 "JIT.lss"
 -LINE 32 "JIT.lss"
          jit = 'jit.c'
--LINE 465 "JIT.lss"
--LINE 466 "JIT.lss"
--LINE 467 "JIT.lss"
 -LINE 468 "JIT.lss"
 -LINE 469 "JIT.lss"
 -LINE 470 "JIT.lss"
 -LINE 471 "JIT.lss"
--LINE 479 "JIT.lss"
+-LINE 472 "JIT.lss"
+-LINE 473 "JIT.lss"
+-LINE 481 "JIT.lss"
          LOAD('INIT_JIT(STRING)', 'jit.so')
          LOAD('R_NUM_JIT()INTEGER', 'jit.so')
          LOAD('V_NUM_JIT()INTEGER', 'jit.so')

@@ -3,7 +3,7 @@
 -INCLUDE 'FFI.INC'
 -STITL CSNOBOL4
 -EJECT
--LINE 609 "CSNOBOL4.lss"
+-LINE 608 "CSNOBOL4.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -98,7 +98,7 @@ static int sizeof_timeval(void)
 
 static int set_timeval_(int sec, int usec)
 {
-    struct timeval *tv = p;
+    struct timeval *tv = get_p_();
     tv->tv_sec = sec;
     tv->tv_usec = usec;
 }
@@ -116,7 +116,7 @@ static int sizeof_fd_set(void)
 
 static int fd_isset_(int fd)
 {
-    return FD_ISSET(fd, (fd_set *)p);
+    return FD_ISSET(fd, (fd_set *)get_p_());
 }
 
 -SNOBOL C_WRAPPER_PROTO('FD_ISSET_(INTEGER)INTEGER', .EMBED)
@@ -124,7 +124,7 @@ static int fd_isset_(int fd)
 
 static void fd_zero_(void)
 {
-    FD_ZERO((fd_set *)p);
+    FD_ZERO((fd_set *)get_p_());
 }
 
 -SNOBOL C_WRAPPER_PROTO('FD_ZERO_()', .EMBED)
@@ -132,7 +132,7 @@ static void fd_zero_(void)
 
 static void fd_clr(int fd)
 {
-    FD_ClR(fd, (fd_set *)p);
+    FD_ClR(fd, (fd_set *)get_p_());
 }
 
 -SNOBOL C_WRAPPER_PROTO('FD_CLR_(INTEGER)', .EMBED)
@@ -140,7 +140,7 @@ static void fd_clr(int fd)
 
 static void fd_set_(int fd)
 {
-    FD_SET(fd, (fd_set *)p);
+    FD_SET(fd, (fd_set *)get_p_());
 }
 
 -SNOBOL C_WRAPPER_PROTO('FD_SET_(INTEGER)', .EMBED)
@@ -407,29 +407,27 @@ FTN_FORMAT( LA_ALIST ) LA_DCL
 -LINE 392 "CSNOBOL4.lss"
 -SNOBOL COMPILE_DYNAMIC(format) :F(ERROR) ;
 -LINE 393 "CSNOBOL4.lss"
--SNOBOL P64 = BQ('pwd') '/p64.so'
+-SNOBOL LIBS = '-L. -lp64'
 -LINE 394 "CSNOBOL4.lss"
--SNOBOL LIBS = P64
--LINE 395 "CSNOBOL4.lss"
 -SNOBOL OBJECTS = format ; OBJECTS '.c' = '.o'
--LINE 396 "CSNOBOL4.lss"
+-LINE 395 "CSNOBOL4.lss"
 -SNOBOL LINK_DYNAMIC('./format', OBJECTS, LIBS) :F(ERROR) ;
--LINE 397 "CSNOBOL4.lss"
+-LINE 396 "CSNOBOL4.lss"
 -CMNT ERASE TEMPORARY FILES
 -CMNT     WE DON'T NEED THE C BITS, OR THE OBJECT FILES ANYMORE.
--CMNT     ALL WE REQUIRE IS FORMAT.SO
+-CMNT     ALL WE REQUIRE IS format.so
 -CMNT -SNOBOL A = CRACK(format ' ' OBJECTS, ' ')
 -CMNT -SNOBOL SEQ(' DELETE(A<K>) ', .K)
--LINE 408 "CSNOBOL4.lss"
+-LINE 407 "CSNOBOL4.lss"
 -PUBLIC FORK()
          LOAD('FORK()INTEGER')
--LINE 416 "CSNOBOL4.lss"
+-LINE 415 "CSNOBOL4.lss"
 -PUBLIC WAIT()
          LOAD('WAIT()INTEGER')
--LINE 437 "CSNOBOL4.lss"
+-LINE 436 "CSNOBOL4.lss"
 -PUBLIC SPRINTF()
          LOAD('SPRINTF(STRING,)STRING')
--LINE 499 "CSNOBOL4.lss"
+-LINE 498 "CSNOBOL4.lss"
 -PUBLIC FTN_FORMAT(), CREATEPIPE(), GETPIPEFD(), GET_ERRNO()
 -PUBLIC CLEAR_ERRNO(), WAITPID(), GET_STATUS(), SIZEOF_TIMEVAL()
 -PUBLIC SET_TIMEVAL(), SIZEOF_FD_SET, FD_ZERO(), FD_CLR(), FD_SET()
@@ -453,7 +451,7 @@ FTN_FORMAT( LA_ALIST ) LA_DCL
          DEFINE('FD_ISSET(FD,FD_SET)')
          DEFINE('FD_SET(FD,FD_SET)')
          DEFINE('SET_TIMEVAL(TV,SEC,USEC)')
--LINE 535 "CSNOBOL4.lss"
+-LINE 534 "CSNOBOL4.lss"
 -PUBLIC CLOSE(), SELECT(), IO_GETFP(), FILENO()
          CLOSE_FFI = FFI_NEW('I', 'I')
          FFI_SET_CALLP(CLOSE_FFI, DLSYM(0, 'close'))

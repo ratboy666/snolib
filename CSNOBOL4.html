@@ -110,7 +110,7 @@ static int sizeof_timeval(void)
 
 static int set_timeval_(int sec, int usec)
 {
-    struct timeval *tv = p;
+    struct timeval *tv = get_p_();
     tv-&gt;tv_sec = sec;
     tv-&gt;tv_usec = usec;
 }
@@ -126,28 +126,28 @@ static int sizeof_fd_set(void)
 
 static int fd_isset_(int fd)
 {
-    return FD_ISSET(fd, (fd_set *)p);
+    return FD_ISSET(fd, (fd_set *)get_p_());
 }
 
 -SNOBOL C_WRAPPER_PROTO(&#39;FD_ISSET_(INTEGER)INTEGER&#39;, .EMBED)
 
 static void fd_zero_(void)
 {
-    FD_ZERO((fd_set *)p);
+    FD_ZERO((fd_set *)get_p_());
 }
 
 -SNOBOL C_WRAPPER_PROTO(&#39;FD_ZERO_()&#39;, .EMBED)
 
 static void fd_clr(int fd)
 {
-    FD_ClR(fd, (fd_set *)p);
+    FD_ClR(fd, (fd_set *)get_p_());
 }
 
 -SNOBOL C_WRAPPER_PROTO(&#39;FD_CLR_(INTEGER)&#39;, .EMBED)
 
 static void fd_set_(int fd)
 {
-    FD_SET(fd, (fd_set *)p);
+    FD_SET(fd, (fd_set *)get_p_());
 }
 
 -SNOBOL C_WRAPPER_PROTO(&#39;FD_SET_(INTEGER)&#39;, .EMBED)
@@ -412,13 +412,12 @@ FTN_FORMAT( LA_ALIST ) LA_DCL
 <b>&laquo;CSNOBOL4&raquo;&equiv;</b>
 -SNOBOL DYNAMIC_DEBUG = 1
 -SNOBOL COMPILE_DYNAMIC(format) :F(ERROR) ;
--SNOBOL P64 = BQ(&#39;pwd&#39;) &#39;/p64.so&#39;
--SNOBOL LIBS = P64
+-SNOBOL LIBS = &#39;-L. -lp64&#39;
 -SNOBOL OBJECTS = format ; OBJECTS &#39;.c&#39; = &#39;.o&#39;
 -SNOBOL LINK_DYNAMIC(&#39;./format&#39;, OBJECTS, LIBS) :F(ERROR) ;
 -CMNT ERASE TEMPORARY FILES
 -CMNT     WE DON&#39;T NEED THE C BITS, OR THE OBJECT FILES ANYMORE.
--CMNT     ALL WE REQUIRE IS FORMAT.SO
+-CMNT     ALL WE REQUIRE IS format.so
 -CMNT -SNOBOL A = CRACK(format &#39; &#39; OBJECTS, &#39; &#39;)
 -CMNT -SNOBOL SEQ(&#39; DELETE(A&lt;K&gt;) &#39;, .K)
 <b>@</b>
@@ -686,7 +685,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Mon Jun  2 16:58:55 EDT 2014</p></td><td><p align=right>
+Wed Jun  4 04:34:36 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

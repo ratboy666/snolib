@@ -1,7 +1,7 @@
 -STITL P64
 -EJECT
 *
--LINE 615 "P64.lss"
+-LINE 629 "P64.lss"
 ************************************************************************
 *                                                                      *
 *                       ######    ###   #   #                          *
@@ -28,14 +28,14 @@
 -LINE 69 "P64.lss"
 -LINE 76 "P64.lss"
          p64.h = 'p64.h'
--LINE 95 "P64.lss"
+-LINE 98 "P64.lss"
          p64 = 'p64.c'
--LINE 381 "P64.lss"
--LINE 382 "P64.lss"
--LINE 383 "P64.lss"
--LINE 384 "P64.lss"
--LINE 385 "P64.lss"
+-LINE 395 "P64.lss"
 -LINE 396 "P64.lss"
+-LINE 397 "P64.lss"
+-LINE 398 "P64.lss"
+-LINE 399 "P64.lss"
+-LINE 410 "P64.lss"
          LOAD('GET_PHI()INTEGER', 'p64.so')
          LOAD('GET_PLO()INTEGER', 'p64.so')
          LOAD('SET_PHI(INTEGER)', 'p64.so')
@@ -81,7 +81,7 @@
 -PUBLIC POKE_P(), POKE_C(), POKE_S(), POKE_I(), POKE_D(), POKE_F()
 -PUBLIC POKE_LD()
 *
--LINE 483 "P64.lss"
+-LINE 497 "P64.lss"
          DEFINE('GET_P()LO,HI')
          DEFINE('SET_P(P)LO,HI')
          DEFINE('PEEK_P(P)')

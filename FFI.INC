@@ -2,7 +2,7 @@
 -INCLUDE 'P64.INC'
 -STITL FFI
 -EJECT
--LINE 689 "FFI.lss"
+-LINE 688 "FFI.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -38,8 +38,7 @@
 -LINE 533 "FFI.lss"
 -LINE 534 "FFI.lss"
 -LINE 535 "FFI.lss"
--LINE 536 "FFI.lss"
--LINE 546 "FFI.lss"
+-LINE 545 "FFI.lss"
          LOAD('FREE_FFI()', 'ffi.so')
          LOAD('CLEAR_FFI()', 'ffi.so')
          LOAD('NEW_FFI(STRING,STRING)', 'ffi.so')
@@ -67,7 +66,7 @@
          LOAD('DLSYM_FFI(STRING)', 'ffi.so')
          LOAD('DLCLOSE_FFI()INTEGER', 'ffi.so')
 *
--LINE 581 "FFI.lss"
+-LINE 580 "FFI.lss"
 -PUBLIC DLOPEN(), DLERROR(), DLSYM(), DLCLOSE()
          DEFINE('DLOPEN(S,I)')
          DEFINE('DLERROR()')

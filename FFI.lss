@@ -176,8 +176,8 @@ static int new_ffi(char *r, char *s)
     if (ffip == NULL) {
 	return 0;
     }
-    p = ffip;
-    p2 = p;
+    set_p_(ffip);
+    set_p2_(get_p_());
     ffip->result_type = interpret_ptype(&r);
     if (ffip->result_type == NULL) {
 	return 0;
@@ -230,7 +230,7 @@ Clear FFI descriptor after a call has been made. Deallocates
 
 static void clear_ffi(void)
 {
-    ffi_t *ffip = p;
+    ffi_t *ffip = get_p_();
     int i;
     for (i = 0; i < ffip->nargs; ++i) {
 	if (ffip->arg_needfree[i]) {
@@ -250,7 +250,7 @@ Destroy FFI descriptor.
 
 static void free_ffi(void)
 {
-    ffi_t *ffip = p;
+    ffi_t *ffip = get_p_();
     free(ffip->arg_values);
     free(ffip->arg_types);
     free(ffip->arg_needfree);
@@ -269,7 +269,7 @@ Indicate that parameter [[n]] (counting from 1) requires deallocation
 
 static int par_n_needfree(int n)
 {
-    ffi_t *ffip = p;
+    ffi_t *ffip = get_p_();
     if ((n < 1) || (n > ffip->nargs))
 	return 0;
     ffip->arg_needfree[n - 1] = 1;
@@ -286,7 +286,7 @@ Set value of parameter [[n]] to integer [[v]] (32 bit).
 
 static int set_par_n_integer(int n, int v)
 {
-    ffi_t *ffip = p;
+    ffi_t *ffip = get_p_();
     if ((n < 1) || (n > ffip->nargs))
 	return 0;
     ffip->arg_values[n - 1] = v;
@@ -305,7 +305,7 @@ but this should be useable to get a REAL parameter into a double.
 
 static int set_par_n_real(int n, double v)
 {
-    ffi_t *ffip = p;
+    ffi_t *ffip = get_p_();
     if ((n < 1) || (n > ffip->nargs))
 	return 0;
     ffip->arg_values[n - 1] = v;
@@ -323,10 +323,10 @@ FFI descriptor and [[p]] the 64 bit long or pointer argument.
 
 static int set_par_n_p(int n)
 {
-    ffi_t *ffip = p2;
+    ffi_t *ffip = get_p2_();
     if ((n < 1) || (n > ffip->nargs))
 	return 0;
-    ffip->arg_values[n - 1] = (long)p;
+    ffip->arg_values[n - 1] = (long)get_p_();
     return 1;
 }
 
@@ -340,10 +340,10 @@ Set value of parameter [[n]] to float [[f]].
 
 static int set_par_n_f(int n)
 {
-    ffi_t *ffip = p;
+    ffi_t *ffip = get_p_();
     if ((n < 1) || (n > ffip->nargs))
 	return 0;
-    ffip->arg_values[n - 1] = f;
+    ffip->arg_values[n - 1] = get_f_();
     return 1;
 }
 
@@ -357,10 +357,10 @@ Set value of parameter [[n]] to double [[d]].
 
 static int set_par_n_d(int n)
 {
-    ffi_t *ffip = p;
+    ffi_t *ffip = get_p_();
     if ((n < 1) || (n > ffip->nargs))
 	return 0;
-    ffip->arg_values[n - 1] = d;
+    ffip->arg_values[n - 1] = get_d_();
     return 1;
 }
 
@@ -374,10 +374,10 @@ Set value of parameter [[n]] to long double [[ld]].
 
 static int set_par_n_ld(int n)
 {
-    ffi_t *ffip = p;
+    ffi_t *ffip = get_p_();
     if ((n < 1) || (n > ffip->nargs))
 	return 0;
-    ffip->arg_values[n - 1] = ld;
+    ffip->arg_values[n - 1] = get_ld_();
     return 1;
 }
 
@@ -392,7 +392,7 @@ a copy of the string, and marks it for [[free()]] after call returns.
 
 static int set_par_n_string(int n, char *s)
 {
-    ffi_t *ffip = p;
+    ffi_t *ffip = get_p_();
     if ((n < 1) || (n > ffip->nargs))
         return 0;
     ffip->arg_values[n - 1] = (long)strdup(s);
@@ -414,8 +414,8 @@ Set pointer to function in FFI descriptor.
 /* CIF in P2, FN in P */
 static void set_callp(void)
 {
-    ffi_t *ffip = p2;
-    ffip->callp = p;
+    ffi_t *ffip = get_p2_();
+    ffip->callp = get_p_();
 }
 
 -SNOBOL C_WRAPPER_PROTO('SET_CALLP()', .EMBED)
@@ -428,7 +428,7 @@ Call FFI function.
 
 static void call_ffi(void)
 {
-    ffi_t *ffip = p;
+    ffi_t *ffip = get_p_();
     ffi_call(ffip->cif, FFI_FN(ffip->callp),
 	     &ffip->result, ffip->arg_ptrs);
     if (ffip->result_type == &ffi_type_void) /* */ ;
@@ -441,13 +441,13 @@ static void call_ffi(void)
 	     (ffip->result_type == &ffi_type_uint64) ||
 	     (ffip->result_type == &ffi_type_sint64) ||
 	     (ffip->result_type == &ffi_type_pointer))
-	p = (void *)(long)ffip->result;
+	set_p_((void *)(long)ffip->result);
     else if (ffip->result_type == &ffi_type_float)
-	f = ffip->result;
+	set_f_(ffip->result);
     else if (ffip->result_type == &ffi_type_double)
-	d = ffip->result;
+	set_d_(ffip->result);
     else if (ffip->result_type == &ffi_type_longdouble)
-	ld = ffip->result;
+	set_ld_(ffip->result);
 }
 
 -SNOBOL C_WRAPPER_PROTO('CALL_FFI()', .EMBED)
@@ -461,7 +461,7 @@ it in P64 global variables).
 
 static int call_integer_ffi(void)
 {
-    ffi_t *ffip = p;
+    ffi_t *ffip = get_p_();
     ffi_call(ffip->cif, FFI_FN(ffip->callp),
 	     &ffip->result, ffip->arg_ptrs);
     return ffip->result;
@@ -471,7 +471,7 @@ static int call_integer_ffi(void)
 
 static double call_real_ffi(void)
 {
-    ffi_t *ffip = p;
+    ffi_t *ffip = get_p_();
     ffi_call(ffip->cif, FFI_FN(ffip->callp),
 	     &ffip->result, ffip->arg_ptrs);
     return ffip->result;
@@ -481,7 +481,7 @@ static double call_real_ffi(void)
 
 static char *call_string_ffi(void)
 {
-    ffi_t *ffip = p;
+    ffi_t *ffip = get_p_();
     ffi_call(ffip->cif, FFI_FN(ffip->callp),
 	     &ffip->result, ffip->arg_ptrs);
     return (char *)ffip->result;
@@ -499,7 +499,7 @@ if a handle of NULL is used).
 
 /* DL functions
  */
-static void dlopen_ffi(char *s, int n) { p = dlopen(s, n); }
+static void dlopen_ffi(char *s, int n) { set_p_(dlopen(s, n)); }
 
 -SNOBOL C_WRAPPER_PROTO('DLOPEN_FFI(STRING,INTEGER)', .EMBED)
 
@@ -512,11 +512,11 @@ static char *dlerror_ffi(void)
 
 -SNOBOL C_WRAPPER_PROTO('DLERROR_FFI()STRING', .EMBED)
 
-static void dlsym_ffi(char *s) { p = dlsym(p, s); }
+static void dlsym_ffi(char *s) { set_p_(dlsym(get_p_(), s)); }
 
 -SNOBOL C_WRAPPER_PROTO('DLSYM_FFI(STRING)', .EMBED)
 
-static int dlclose_ffi(void) { return dlclose(p); }
+static int dlclose_ffi(void) { return dlclose(get_p_()); }
 
 -SNOBOL C_WRAPPER_PROTO('DLCLOSE_FFI()INTEGER', .EMBED)
 
@@ -529,8 +529,7 @@ search start with actual library directory.
 <<FFI>>=
 -SNOBOL DYNAMIC_DEBUG = 1
 -SNOBOL COMPILE_DYNAMIC(ffi) :F(ERROR) ;
--SNOBOL P64 = BQ('pwd') '/p64.so'
--SNOBOL LIBS = P64 ' -L/usr/local/lib -lffi -ldl'
+-SNOBOL LIBS = ' -L. -lp64 -lffi -ldl'
 -SNOBOL OBJECTS = ffi ; OBJECTS '.c' = '.o'
 -SNOBOL LINK_DYNAMIC('./ffi', OBJECTS, LIBS) :F(ERROR) ;
 -CMNT ERASE TEMPORARY FILES

@@ -90,7 +90,7 @@ static int sizeof_timeval(void)
 
 static int set_timeval_(int sec, int usec)
 {
-    struct timeval *tv = p;
+    struct timeval *tv = get_p_();
     tv->tv_sec = sec;
     tv->tv_usec = usec;
 }
@@ -106,28 +106,28 @@ static int sizeof_fd_set(void)
 
 static int fd_isset_(int fd)
 {
-    return FD_ISSET(fd, (fd_set *)p);
+    return FD_ISSET(fd, (fd_set *)get_p_());
 }
 
 -SNOBOL C_WRAPPER_PROTO('FD_ISSET_(INTEGER)INTEGER', .EMBED)
 
 static void fd_zero_(void)
 {
-    FD_ZERO((fd_set *)p);
+    FD_ZERO((fd_set *)get_p_());
 }
 
 -SNOBOL C_WRAPPER_PROTO('FD_ZERO_()', .EMBED)
 
 static void fd_clr(int fd)
 {
-    FD_ClR(fd, (fd_set *)p);
+    FD_ClR(fd, (fd_set *)get_p_());
 }
 
 -SNOBOL C_WRAPPER_PROTO('FD_CLR_(INTEGER)', .EMBED)
 
 static void fd_set_(int fd)
 {
-    FD_SET(fd, (fd_set *)p);
+    FD_SET(fd, (fd_set *)get_p_());
 }
 
 -SNOBOL C_WRAPPER_PROTO('FD_SET_(INTEGER)', .EMBED)
@@ -390,13 +390,12 @@ FTN_FORMAT( LA_ALIST ) LA_DCL
 <<CSNOBOL4>>=
 -SNOBOL DYNAMIC_DEBUG = 1
 -SNOBOL COMPILE_DYNAMIC(format) :F(ERROR) ;
--SNOBOL P64 = BQ('pwd') '/p64.so'
--SNOBOL LIBS = P64
+-SNOBOL LIBS = '-L. -lp64'
 -SNOBOL OBJECTS = format ; OBJECTS '.c' = '.o'
 -SNOBOL LINK_DYNAMIC('./format', OBJECTS, LIBS) :F(ERROR) ;
 -CMNT ERASE TEMPORARY FILES
 -CMNT     WE DON'T NEED THE C BITS, OR THE OBJECT FILES ANYMORE.
--CMNT     ALL WE REQUIRE IS FORMAT.SO
+-CMNT     ALL WE REQUIRE IS format.so
 -CMNT -SNOBOL A = CRACK(format ' ' OBJECTS, ' ')
 -CMNT -SNOBOL SEQ(' DELETE(A<K>) ', .K)
 @

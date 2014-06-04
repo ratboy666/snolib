@@ -78,13 +78,16 @@ variables.
 
 <<P64,TYPE=C>>=
 
-extern void *p;
-extern void *p2;
-extern void *p3;
-extern void *p4;
-extern float f;
-extern double d;
-extern long double ld;
+void *get_p_(void);
+void *get_p2_(void);
+float get_f_(void);
+double get_d_(void);
+long double get_ld_(void);
+void set_p_(void *v);
+void set_p2_(void *v);
+void set_f_(float v);
+void set_d_(double v);
+void set_ld_(long double v);
 
 -END
 @
@@ -101,13 +104,24 @@ Build [[p64.c]] so we can produce our shared library.
 #include <stdlib.h>
 #include <string.h>
 
-void *p;
-void *p2;
-void *p3;
-void *p4;
-float f;
-double d;
-long double ld;
+static void *p;
+static void *p2;
+static void *p3;
+static void *p4;
+static float f;
+static double d;
+static long double ld;
+
+void *get_p_(void) { return p; }
+void *get_p2_(void) { return p2; }
+float get_f_(void) { return f; }
+double get_d_(void) { return d; }
+long double get_ld_(void) { return ld; }
+void set_p_(void *v) { p = v; }
+void set_p2_(void *v) { p2 = v; }
+void set_f_(float v) { f = v; }
+void set_d_(double v) { d = v; }
+void set_ld_(long double v) { ld = v; }
 
 %IF (BITS EQ 64)
 
@@ -384,7 +398,7 @@ Build [[p64.so]] shared library.
 -SNOBOL LINK_DYNAMIC('./p64', OBJECTS) :F(ERROR) ;
 -CMNT ERASE TEMPORARY FILES
 -CMNT     WE DON'T NEED THE C BITS, OR THE OBJECT FILES ANYMORE.
--CMNT     ALL WE REQUIRE IS P64.SO
+-CMNT     ALL WE REQUIRE IS p64.so
 -CMNT -SNOBOL A = CRACK(p64 ' ' OBJECTS, ' ')
 -CMNT -SNOBOL SEQ(' DELETE(A<K>) ', .K)
 @

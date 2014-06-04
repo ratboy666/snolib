@@ -105,13 +105,16 @@ variables.
 <pre><font face="Source Code Pro">
 <b>&laquo;P64,TYPE=C&raquo;&equiv;</b>
 
-extern void *p;
-extern void *p2;
-extern void *p3;
-extern void *p4;
-extern float f;
-extern double d;
-extern long double ld;
+void *get_p_(void);
+void *get_p2_(void);
+float get_f_(void);
+double get_d_(void);
+long double get_ld_(void);
+void set_p_(void *v);
+void set_p2_(void *v);
+void set_f_(float v);
+void set_d_(double v);
+void set_ld_(long double v);
 
 -END
 <b>@</b>
@@ -133,13 +136,24 @@ Build <font face="Source Code Pro">p64.c</font> so we can produce our shared lib
 <font color="#818181"><i>#include &lt;stdlib.h&gt;</i></font>
 <font color="#818181"><i>#include &lt;string.h&gt;</i></font>
 
-void *p;
-void *p2;
-void *p3;
-void *p4;
-float f;
-double d;
-long double ld;
+static void *p;
+static void *p2;
+static void *p3;
+static void *p4;
+static float f;
+static double d;
+static long double ld;
+
+void *get_p_(void) { return p; }
+void *get_p2_(void) { return p2; }
+float get_f_(void) { return f; }
+double get_d_(void) { return d; }
+long double get_ld_(void) { return ld; }
+void set_p_(void *v) { p = v; }
+void set_p2_(void *v) { p2 = v; }
+void set_f_(float v) { f = v; }
+void set_d_(double v) { d = v; }
+void set_ld_(long double v) { ld = v; }
 
 %IF (BITS EQ 64)
 
@@ -419,7 +433,7 @@ Build <font face="Source Code Pro">p64.so</font> shared library.
 -SNOBOL LINK_DYNAMIC(&#39;./p64&#39;, OBJECTS) :F(ERROR) ;
 -CMNT ERASE TEMPORARY FILES
 -CMNT     WE DON&#39;T NEED THE C BITS, OR THE OBJECT FILES ANYMORE.
--CMNT     ALL WE REQUIRE IS P64.SO
+-CMNT     ALL WE REQUIRE IS p64.so
 -CMNT -SNOBOL A = CRACK(p64 &#39; &#39; OBJECTS, &#39; &#39;)
 -CMNT -SNOBOL SEQ(&#39; DELETE(A&lt;K&gt;) &#39;, .K)
 <b>@</b>
@@ -682,7 +696,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Mon Jun  2 16:58:57 EDT 2014</p></td><td><p align=right>
+Wed Jun  4 07:18:07 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

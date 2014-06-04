@@ -47,15 +47,19 @@ retrieval of command lines.
 <i>DDT</i> will display user datatypes with the = command. More
 sophisticated behavious will be introduced with the INSPECT module
 at a future date. (see DDT.E)
- 
+
+[[SLOAD]] is not actually needed for [[DDT]]. It is included to allow
+additional tools to be incorporated while debugging.
+
 <h2>Uses</h2>
 <a href="CHARS.html">CHARS</a><br>
 <a href="HOST.html">HOST</a><br>
 <a href="READLINE.html">READLINE</a><br>
 <a href="TRIMB.html">TRIMB</a><br>
 <a href="VDIFFER.html">VDIFFER</a><br>
-<a href="QUOTE.html">QUOTE</a>
-<a href="FREEZE.html">FREEZE</a>
+<a href="QUOTE.html">QUOTE</a><br>
+<a href="FREEZE.html">FREEZE</a><br>
+<a href="SLOAD.html">SLOAD</a>
 
 <<INCLUDES>>=
 -INCLUDE 'CHARS.INC'
@@ -65,6 +69,7 @@ at a future date. (see DDT.E)
 -INCLUDE 'VDIFFER.INC'
 -INCLUDE 'QUOTE.INC'
 -INCLUDE 'FREEZE.INC'
+-INCLUDE 'SLOAD.INC'
 @
 
 <<DDT>>=

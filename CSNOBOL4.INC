@@ -3,7 +3,7 @@
 -INCLUDE 'FFI.INC'
 -STITL CSNOBOL4
 -EJECT
--LINE 609 "CSNOBOL4.lss"
+-LINE 608 "CSNOBOL4.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -36,17 +36,16 @@
 -LINE 394 "CSNOBOL4.lss"
 -LINE 395 "CSNOBOL4.lss"
 -LINE 396 "CSNOBOL4.lss"
--LINE 397 "CSNOBOL4.lss"
--LINE 408 "CSNOBOL4.lss"
+-LINE 407 "CSNOBOL4.lss"
 -PUBLIC FORK()
          LOAD('FORK()INTEGER')
--LINE 416 "CSNOBOL4.lss"
+-LINE 415 "CSNOBOL4.lss"
 -PUBLIC WAIT()
          LOAD('WAIT()INTEGER')
--LINE 437 "CSNOBOL4.lss"
+-LINE 436 "CSNOBOL4.lss"
 -PUBLIC SPRINTF()
          LOAD('SPRINTF(STRING,)STRING')
--LINE 499 "CSNOBOL4.lss"
+-LINE 498 "CSNOBOL4.lss"
 -PUBLIC FTN_FORMAT(), CREATEPIPE(), GETPIPEFD(), GET_ERRNO()
 -PUBLIC CLEAR_ERRNO(), WAITPID(), GET_STATUS(), SIZEOF_TIMEVAL()
 -PUBLIC SET_TIMEVAL(), SIZEOF_FD_SET, FD_ZERO(), FD_CLR(), FD_SET()
@@ -70,7 +69,7 @@
          DEFINE('FD_ISSET(FD,FD_SET)')
          DEFINE('FD_SET(FD,FD_SET)')
          DEFINE('SET_TIMEVAL(TV,SEC,USEC)')
--LINE 535 "CSNOBOL4.lss"
+-LINE 534 "CSNOBOL4.lss"
 -PUBLIC CLOSE(), SELECT(), IO_GETFP(), FILENO()
          CLOSE_FFI = FFI_NEW('I', 'I')
          FFI_SET_CALLP(CLOSE_FFI, DLSYM(0, 'close'))

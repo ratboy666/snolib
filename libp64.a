@@ -1,0 +1,7 @@
+/* libp64.a
+ *
+ * ld script to link p64.so. We do this to avoid the lib prefix on
+ * p64.so Also, we link with the p64.so in the build directory, but
+ * allow the file to be moved (eg. with LD_LIBRARY_PATH).
+ */
+INPUT ( p64.so )

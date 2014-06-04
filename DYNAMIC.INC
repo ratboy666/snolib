@@ -4,7 +4,7 @@
 -INCLUDE 'REPL.INC'
 -STITL DYNAMIC
 -EJECT
--LINE 197 "DYNAMIC.lss"
+-LINE 196 "DYNAMIC.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -126,8 +126,7 @@ LINK_DYNAMIC
          DL_EXT = HOST(HOST_DL_EXT)
          OUT = DIFFER(DL_EXT) OUT DL_EXT
          DL_LDFLAGS = HOST(HOST_DL_LDFLAGS) ' '
-         CMD = DL_LD ' ' DL_LDFLAGS '-o ' OUT ' ' OBJ
-+                    ' -L/usr/local/lib ' LIBS
+         CMD = DL_LD ' ' DL_LDFLAGS '-o ' OUT ' ' OBJ ' ' LIBS
          TERMINAL = DIFFER(DYNAMIC_DEBUG) CMD
          HOST(HOST_SYSCMD, CMD)                              :F(FRETURN)
          LINK_DYNAMIC = OUT

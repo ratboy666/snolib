@@ -188,8 +188,7 @@ LINK_DYNAMIC
          DL_EXT = HOST(HOST_DL_EXT)
          OUT = DIFFER(DL_EXT) OUT DL_EXT
          DL_LDFLAGS = HOST(HOST_DL_LDFLAGS) &#39; &#39;
-         CMD = DL_LD &#39; &#39; DL_LDFLAGS &#39;-o &#39; OUT &#39; &#39; OBJ
-+                    &#39; -L/usr/local/lib &#39; LIBS
+         CMD = DL_LD &#39; &#39; DL_LDFLAGS &#39;-o &#39; OUT &#39; &#39; OBJ &#39; &#39; LIBS
          TERMINAL = DIFFER(DYNAMIC_DEBUG) CMD
          HOST(HOST_SYSCMD, CMD)                              <b>:F(FRETURN)</b>
          LINK_DYNAMIC = OUT
@@ -261,7 +260,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Mon Jun  2 02:23:48 EDT 2014</p></td><td><p align=right>
+Wed Jun  4 03:34:29 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

@@ -1,5 +1,5 @@
 #!/usr/bin/bash
-         export "SNOLIB=/home/fred/snolib"; export "SNOPATH=/home/fred/snolib"
+         export "SNOLIB=/home/fred/snolib"; export "SNOPATH=/home/fred/snolib"; export "LD_LIBRARY_PATH=/home/fred/snolib"
          exec "/usr/local/bin/snobol4" "-b" "$0" "$@"
 -LINE 285 "CGI.lss"
 -INCLUDE 'FCGI.INC'

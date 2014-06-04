@@ -8,7 +8,7 @@ BINDIR=/usr/local/bin
 LIBDIR=/usr/local/snolib
 CGIDIR=/var/www/cgi-bin
 HTMLDIR=/var/www/html
-SODIR=/usr/local/lib
+#SODIR=/usr/local/lib
 
 # Unit tests
 #
@@ -206,7 +206,7 @@ clean:
 
 deliver: $(P)
 	sudo cp $(P) $(BINDIR)/
-	sudo cp *.so $(SODIR)/
+	#sudo cp *.so $(SODIR)/
 	sudo cp *.so $(LIBDIR)/
 	sudo rm -f $(BINDIR)/ED $(BINDIR)/EDIT
 	sudo rm -f $(BINDIR)/LIST
