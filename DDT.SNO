@@ -8,7 +8,7 @@
 -INCLUDE 'FREEZE.INC'
 -STITL DDT
 -EJECT
--LINE 693 "DDT.lss"
+-LINE 698 "DDT.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -34,7 +34,8 @@
          DDT_LOADED = 1
          DDT_ACTIVE = 0
 *
-* REMOTE DEBUG, DDT_USE_R IS FLAG TO GET INPUT FROM REMOTE.
+* REMOTE DEBUG, DDT_USE_R IS FLAG TO GET INPUT FROM REMOTE (= 1).
+* IF 2, WE ARE IN GUI.
 * DDT_T IS OUTPUT (ALWAYS) AND DDT_R IN READ CHANNEL. IF DDT_USE_R
 * IS NULL, READLINE() WILL BE USED. IF IT IS NOT NULL, DDT_R WILL
 * BE USED FOR COMMANDS AND INPUT.
@@ -57,13 +58,14 @@ DDT      DDT_ACTIVE = 1
          DEFINE('DDT(S)', 'DDT_')
          DEFINE('DEBUG(S)', 'DDT_')
          DEFINE('DDT_SOURCE()')
--LINE 111 "DDT.lss"
--PUBLIC DDT_SUSPEND(), DDT_RESUME()
+-LINE 112 "DDT.lss"
+-PUBLIC DDT_SUSPEND(), DDT_RESUME(), DDT_TOUT()
          DEFINE('DDT_SUSPEND()', 'DDT.O')
          DEFINE('DDT_RESUME()')
+         DEFINE('DDT_TOUT(S)')
 *
-         DDT_T = 'DDT (FRI MAY 23 15:30:53 EDT 2014)'
-         DDT_T = 'TRY H FOR HELP'
+         DDT_TOUT('DDT (FRI MAY 23 15:30:53 EDT 2014)')
+         DDT_TOUT('TRY H FOR HELP')
          DDT_SOURCE =
          DDT_LIST_F =
          DDT_LIST_L =
@@ -108,12 +110,12 @@ DDT      DDT_ACTIVE = 1
          HOST(HOST_GETENV, 'LIST')                              :F(DDT_)
          DDT_SOURCE()
 *
--LINE 171 "DDT.lss"
+-LINE 173 "DDT.lss"
 DDT_     S DDT_IGNORE                                          :F(DDT2_)
          DDT_COUNT = GT(DDT_COUNT) DDT_COUNT - 1              :S(RETURN)
 DDT2_    DDT_STEP_COUNT = 1
          DDT_FNCLEVEL = 50000
-         DDT_T = 'DDT(' S ')'
+         DDT_TOUT('DDT(' S ')')
 DDT_RESUME
          &STLIMIT = 999999999
          &TRACE = 999999999
@@ -147,15 +149,18 @@ DDT_FNC  DDT_CURR_STMT = &LASTNO
 * DISPLAY CURRENT STATEMENT.
 *
 DDT_DISPLAY
+         DIFFER(DDT_HOOK)                              :S(DDT_DISPLAY_2)
          DDT_FNC = DDT_LABEL(DDT_CURR_STMT)
-         DDT_T = VDIFFER(DDT_FNC)
-         DDT_T = DIFFER(DDT_FINAL_STMT) DDT_STMTS<DDT_CURR_STMT>
-         DDT_T = IDENT(DDT_FINAL_STMT) DDT_CURR_STMT
+         DDT_TOUT(VDIFFER(DDT_FNC))
+         DDT_TOUT(DIFFER(DDT_FINAL_STMT) DDT_STMTS<DDT_CURR_STMT>)
+         DDT_TOUT(IDENT(DDT_FINAL_STMT) DDT_CURR_STMT)
 *
-* CALL EXTERNAL ROUTINE IF DEFINED TO REGISTER BREAK
+* CALL EXTERNAL ROUTINE IF DEFINED TO REGISTER BREAK. THIS CAN
+* REPLICATE SOME OF THE ABOVE IF NEEDED.
 *
 -PUBLIC DDT_HOOK
-         DIFFER(DDT_HOOK) APPLY(DDT_HOOK, 'DISPLAY', DDT_CURR_STMT)
+DDT_DISPLAY_2
+         DIFFER(DDT_HOOK) APPLY(DDT_HOOK, 'BREAK', DDT_CURR_STMT)
 *
 * LISTING BEGINS HERE
 *
@@ -166,7 +171,7 @@ DDT_DISPLAY
 *
          GT(DDT_STEP_COUNT)                                   :S(RETURN)
 *
--LINE 238 "DDT.lss"
+-LINE 243 "DDT.lss"
          THAW(DDT_BREAK_TAB)
          THAW(DDT_BREAK_TEMP)
          DDT_BREAK_TEMP = TABLE()
@@ -182,16 +187,16 @@ DDT_DISPLAY
 DDT_CASE DDT_CASE = NE(&CASE)
 +           REPLACE(DDT_CASE, &LCASE, &UCASE)                  :(RETURN)
 *
--LINE 260 "DDT.lss"
+-LINE 265 "DDT.lss"
 DDT_LABEL
          IDENT(DDT_FINAL_STMT)                                :S(RETURN)
 DDT_LAB2 DDT_STMTS<STNO> DDT_DL_PAT                         :S(DDT_LAB1)
-         STNO = GT(STNO, 1) STNO - 1                           :F(ERROR)
+         STNO = GT(STNO, 1) STNO - 1                        :F(DDT_LAB1)
          OFFSET = OFFSET + 1                                 :(DDT_LAB2)
 DDT_LAB1 DDT_LABEL = IDENT(OFFSET) '(' DDT_LABEL ')'          :S(RETURN)
          DDT_LABEL = '(' DDT_LABEL ' + ' OFFSET ')'            :(RETURN)
 *
--LINE 280 "DDT.lss"
+-LINE 285 "DDT.lss"
 DDT_GET_STMT
          IDENT($S)                                            :S(RETURN)
 * CHECK FOR SIMPLE NUMBER
@@ -206,9 +211,9 @@ DDT_GET_STMT
 * CHECK IF LABEL UNKNOWN TO US, AND ADD OFFSET.
          DDT_GET_STMT = VDIFFER(DDT_GET_STMT)
 +           + OFFSET                                          :S(RETURN)
-DDT_GET1 DDT_T = 'BAD LABEL OR STATEMENT NUMBER'              :(FRETURN)
+DDT_GET1 DDT_TOUT('BAD LABEL OR STATEMENT NUMBER')            :(FRETURN)
 *
--LINE 305 "DDT.lss"
+-LINE 310 "DDT.lss"
 DDT_READLIST
          PAT1 = FENCE (LEN(4) | SPAN(&DIGITS)) . STNO
 +           (LEN(4) | '') REM . STMT
@@ -240,31 +245,29 @@ DDT_RL3  DDT_READLIST<$LAST> = DDT_READLIST<$LAST> LINE
          (STMT ' ') PAT2                                     :F(DDT_RL1)
 * RECORD CASE-CONVERTED LABEL TO STATEMENT NUMBER MAPPING
          ITEM(LABTAB, DDT_CASE(LABEL)) = $LAST                :(DDT_RL1)
-DDT_RL4  DDT_T = 'INCORRECT PROGRAM LIST FILE, LINE IN ERROR:'
-         DDT_T = LINE                                         :(FRETURN)
+DDT_RL4  DDT_TOUT('INCORRECT PROGRAM LIST FILE, LINE IN ERROR:')
+         DDT_TOUT(LINE)                                       :(FRETURN)
 *
--LINE 350 "DDT.lss"
+-LINE 355 "DDT.lss"
 DDT_CMD  IDENT(DDT_UNIT2)                                   :S(DDT_CMD2)
          DDT_IN = DDT_INPUT                                 :F(DDT_CMD4)
-         DDT_T = 'DDT: ' DDT_IN                              :(DDT_CMD3)
+         DDT_TOUT('DDT: ' DDT_IN)                            :(DDT_CMD3)
 DDT_CMD4 ENDFILE(DDT_UNIT2)
          DETACH(.DDT_INPUT)
          DDT_UNIT2 =
 DDT_CMD2 DDT_LL2 = DDT_LL
          IDENT(DDT_USE_R)                                   :S(DDT_CMD5)
-         DDT_T = 'DDT REMOTE (' DSERVE_APPNAME ')'
+         DDT_TOUT(EQ(DDT_USE_R, 1) 'DDT REMOTE (' DSERVE_APPNAME ')')
 *
 * NOTE: THIS IS THE ONLY READ FROM DDT_R.
 *
 * IF DDT_HOOK IS DEFINED, WE WILL CALL WITH THAT WITH 'READ'. SEE
-* DDT_HOOK CALL WITH 'DISPLAY' ABOVE. THIS COMMAND WILL RETURN
-* '' WHICH WILL CAUSE A NORMAL DDT_R TO BE READ, OR RETURN A STRING
-* WHICH WILL BE EVALUATED WITH CODE AND EXECUTED.
+* DDT_HOOK CALL WITH 'DISPLAY' ABOVE. IF THIS FAILS, WE ASSUME NORMAL
+* READ IS NEEDED. IF USE_DDT_R, AND DDT_HOOK IS NOT SET, WE READ
+* FROM DDT_R.
 *
          IDENT(DDT_HOOK)                                    :S(DDT_CMD7)
-         DDT_RCMD = APPLY(DDT_HOOK, 'READ')                 :F(DDT_CMD7)
-         IDENT(DDT_RCMD)                                    :S(DDT_CMD7)
-         DDT_RCMD = CODE(DDT_RCMD)                :F(DDT_CMD)S<DDT_RCMD>
+         DDT_IN = TRIM(APPLY(DDT_HOOK, 'READ'))  :F(DDT_CMD5)S(DDT_CMD3)
 DDT_CMD7 DDT_IN = TRIM(DDT_R)                       :S(DDT_CMD3)F(DDT.O)
 DDT_CMD5 DDT_IN = TRIM(HISTORY_EXPAND(READLINE('DDT: ')))      :F(DDT.O)
 *
@@ -286,7 +289,7 @@ DDT_CMD3 IDENT(DDT_IN)                                       :S(DDT_CMD)
 *** INVALID COMMAND
 *
 DDT_CMD_ERR
-         DDT_T = '?'                                          :(DDT_CMD)
+         DDT_TOUT('?')                                        :(DDT_CMD)
 *
 *** TURN OFF DEBUGGER
 *
@@ -306,26 +309,26 @@ DDT.V    DDT_IN = IDENT(DDT_IN) DDT_FNAME
 * REMOTE.
 *
          HOST(HOST_SYSCMD, 'LIST ' DDT_IN)                    :(DDT_CMD)
-DDT.V2   DDT_T = 'USE V FILENAME'                             :(DDT_CMD)
+DDT.V2   DDT_TOUT('USE V FILENAME')                           :(DDT_CMD)
 *
 *** M - MODIFY VARIABLE
 *
 DDT.M    IDENT(DDT_IN)                                       :S(DDT_CMD)
-         DDT_T = DIFFER(DDT_USE_R) 'SORRY, NEED EDITLINE'    :S(DDT_CMD)
+         DDT_TOUT(DIFFER(DDT_USE_R) 'SORRY, NEED EDITLINE')  :S(DDT_CMD)
          DATATYPE($DDT_IN) 'STRING' | 'NAME' | 'INTEGER' | 'REAL'
 +                                                             :S(DDT.M2)
-         DDT_T = "SORRY, CAN'T MODIFY " DATATYPE($DDT_IN)     :(DDT_CMD)
+         DDT_TOUT("SORRY, CAN'T MODIFY " DATATYPE($DDT_IN))   :(DDT_CMD)
 DDT.M2   $DDT_IN = EDITLINE('EDIT<' DDT_IN '>: ', $DDT_IN)    :(DDT_CMD)
 *
 *** . - SOURCE FILE
 *
 DDT..    IDENT(DDT_UNIT2)                                     :S(DDT..1)
-         DDT_T = '. COMMANDS CANNOT BE NESTED'                 :(DDT..2)
+         DDT_TOUT('. COMMANDS CANNOT BE NESTED')               :(DDT..2)
 DDT..1   IDENT(DDT_IN)                                       :S(DDT_CMD)
-         DDT_T = 'SOURCING ' DDT_IN
+         DDT_TOUT('SOURCING ' DDT_IN)
          DDT_UNIT2 = IO_FINDUNIT()
          INPUT(.DDT_INPUT, DDT_UNIT2,, DDT_IN)               :S(DDT_CMD)
-         DDT_T = 'CANNOT OPEN ' DDT_IN
+         DDT_TOUT('CANNOT OPEN ' DDT_IN)
 DDT..2   ENDFILE(DDT_UNIT2)
          DETACH(.DDT_INPUT)
          DDT_UNIT2 =                                          :(DDT_CMD)
@@ -336,32 +339,32 @@ DDT.*                                                         :(DDT_CMD)
 *
 *** H OR ? - HELP
 *
--LINE 598 "DDT.lss"
+-LINE 603 "DDT.lss"
 DDT.H
- DDT_T = 'STNO - STATEMENT NUMBERS SPECIFIED AS INTEGERS, OR LABEL +- N'
- DDT_T = '          BRACKETED ITEMS ARE OPTIONAL'
- DDT_T = 'H            (OR ?)     HELP (THIS LIST)'
- DDT_T = 'C STATEMENT  (OR TAB)   IMMEDIATE EXECUTION OF STATEMENT'
- DDT_T = 'E EXPRESSION (OR =EXP)  EVALUATE EXPRESSION'
- DDT_T = 'X COMMAND    (OR !)     EXECUTE SHELL COMMAND'
- DDT_T = 'T [N]                   TRACE N STATEMENTS (INTO PROCEDURES)'
- DDT_T = 'P [N]                   TRACE N STATEMENTS (NO PROCEDURES)'
- DDT_T = 'B STNO [,STNO,...]      SET BREAKPOINT(S)'
- DDT_T = 'K BKPT [,BKPT,...]      KILL BREAKPOINT(S)'
- DDT_T = 'R                       REPORT BREAKPOINTS SET'
- DDT_T = 'G [=LABEL,](STNO1,...]  GO (FROM SPECIFIED LABEL),'
- DDT_T = '                          SET TEMPORARY BREAKPOINT(S)'
- DDT_T = 'L [STNO1 [,STNO2]]      LIST STATEMENT OR RANGE'
- DDT_T = '+ [N]  OR  -[N]         LIST NEXT/PREVIOUS N STATEMENTS'
- DDT_T = '++ OR --                LIST 12 STATEMENTS FORWARD OR BACK'
- DDT_T = 'Q                       QUIT'
- DDT_T = 'O (OR ^D)               OFF - RESUME PROGRAM, STOP DEBUGGING'
- DDT_T = 'S [FILE]                LOAD SOURCE'
- DDT_T = 'M NAME                  MODIFY VARIABLE'
- DDT_T = "I 'MSG' N               IGNORE NEXT N CALLS TO DDT(MSG)"
- DDT_T = '* COMMENT               COMMENT (NO ACTION)'
- DDT_T = '. FILE                  SOURCE FILE (DO NOT NEST)'
- DDT_T = 'V (FILE)                VIEW FILE (DEFAULT TO LIST FILE)'
+ DDT_TOUT('STNO - STATEMENT NUMBERS SPECIFIED AS INTEGERS, OR LABEL+-N')
+ DDT_TOUT('          BRACKETED ITEMS ARE OPTIONAL')
+ DDT_TOUT('H            (OR ?)     HELP (THIS LIST)')
+ DDT_TOUT('C STATEMENT  (OR TAB)   IMMEDIATE EXECUTION OF STATEMENT')
+ DDT_TOUT('E EXPRESSION (OR =EXP)  EVALUATE EXPRESSION')
+ DDT_TOUT('X COMMAND    (OR !)     EXECUTE SHELL COMMAND')
+ DDT_TOUT('T [N]                   TRACE N STATEMENTS (INTO PROCS)')
+ DDT_TOUT('P [N]                   TRACE N STATEMENTS (NO PROCEDURES)')
+ DDT_TOUT('B STNO [,STNO,...]      SET BREAKPOINT(S)')
+ DDT_TOUT('K BKPT [,BKPT,...]      KILL BREAKPOINT(S)')
+ DDT_TOUT('R                       REPORT BREAKPOINTS SET')
+ DDT_TOUT('G [=LABEL,](STNO1,...]  GO (FROM SPECIFIED LABEL),')
+ DDT_TOUT('                          SET TEMPORARY BREAKPOINT(S)')
+ DDT_TOUT('L [STNO1 [,STNO2]]      LIST STATEMENT OR RANGE')
+ DDT_TOUT('+ [N]  OR  -[N]         LIST NEXT/PREVIOUS N STATEMENTS')
+ DDT_TOUT('++ OR --                LIST 12 STATEMENTS FORWARD OR BACK')
+ DDT_TOUT('Q                       QUIT')
+ DDT_TOUT('O (OR ^D)               OFF - RESUME PROGRAM, STOP DEBUG')
+ DDT_TOUT('S [FILE]                LOAD SOURCE')
+ DDT_TOUT('M NAME                  MODIFY VARIABLE')
+ DDT_TOUT("I 'MSG' N               IGNORE NEXT N CALLS TO DDT(MSG)")
+ DDT_TOUT('* COMMENT               COMMENT (NO ACTION)')
+ DDT_TOUT('. FILE                  SOURCE FILE (DO NOT NEST)')
+ DDT_TOUT('V (FILE)                VIEW FILE (DEFAULT TO LIST FILE)')
                                                               :(DDT_CMD)
 *
 *** I - IGNORE
@@ -373,7 +376,7 @@ DDT.H
 DDT.I    DDT_IGNORE =
          DDT_IN (("'" ARB . DDT_IGNORE "'") | '') SPAN(DDT_WHITE ',')
 +           SPAN(&DIGITS) . DDT_COUNT RPOS(0)                :S(DDT_CMD)
-         DDT_T = 'BAD I SYNTAX'                               :(DDT_CMD)
+         DDT_TOUT('BAD I SYNTAX')                             :(DDT_CMD)
 *
 *** Q - QUIT
 *
@@ -382,15 +385,15 @@ DDT.Q    WRITE_HISTORY('.DDT')                                    :(END)
 *** X - EXECUTE SHELL COMMAND
 *
 DDT.X    HOST(HOST_SYSCMD, DDT_IN)
-         DDT_T =                                              :(DDT_CMD)
+         DDT_TOUT()                                           :(DDT_CMD)
 *
 *** C - IMMEDIATE EXECUTION OF AN UNLABELED CODE STATEMENT.
 *       APPEND OUR OWN GOTOS TO REGAIN CONTROL AFTER EXECUTION.
 *
 DDT.C    DDT_C = CODE(' ' DDT_IN ' :S(DDT_SS)F(DDT_FF)')       :S<DDT_C>
-         DDT_T = 'COMPILATION ERROR: ' &ERRTEXT               :(DDT_CMD)
-DDT_SS   DDT_T = 'SUCCESS'                                    :(DDT_CMD)
-DDT_FF   DDT_T = 'FAILURE'                                    :(DDT_CMD)
+         DDT_TOUT('COMPILATION ERROR: ' &ERRTEXT)             :(DDT_CMD)
+DDT_SS   DDT_TOUT('SUCCESS')                                  :(DDT_CMD)
+DDT_FF   DDT_TOUT('FAILURE')                                  :(DDT_CMD)
 *
 *** E - EXAMINE VARIABLE OR EVALUATE EXPRESSION. WE DISPLAY STRINGS,
 *       NUMBERS AS SCALARS, ARRAYS AND TABLES AS PROTOTYPES, CODE,
@@ -411,7 +414,7 @@ DDT.E    DDT_RESULT = EVAL(DDT_IN)                            :F(DDT.E2)
 *
 * USER DEFINED DATATYPE - FIELD('TYPE',1..N)
 *
-         DDT_T = DATATYPE(DDT_RESULT)
+         DDT_TOUT(DATATYPE(DDT_RESULT))
          DDT_I =
 DDT.E4   DDT_I = DDT_I + 1
          DDT_FIELD = FIELD(DATATYPE(DDT_RESULT), DDT_I)      :F(DDT_CMD)
@@ -422,9 +425,9 @@ DDT.E4   DDT_I = DDT_I + 1
          DDT_V = ?(DDT_V ? 'INTEGER' | 'REAL')
 +           APPLY(DDT_FIELD, DDT_RESULT)                      :S(DDT.E5)
          DDT_V = CONVERT(APPLY(DDT_FIELD, DDT_RESULT), 'STRING')
-DDT.E5   DDT_T = '    ' RPAD(DDT_FIELD, 10) ': ' DDT_V         :(DDT.E4)
-DDT.E3   DDT_T = DDT_RESULT                                   :(DDT_CMD)
-DDT.E2   DDT_T = 'EVALUATION ERROR: ' &ERRTEXT                :(DDT_CMD)
+DDT.E5   DDT_TOUT('    ' RPAD(DDT_FIELD, 10) ': ' DDT_V)       :(DDT.E4)
+DDT.E3   DDT_TOUT(DDT_RESULT)                                 :(DDT_CMD)
+DDT.E2   DDT_TOUT('EVALUATION ERROR: ' &ERRTEXT)              :(DDT_CMD)
 *
 *** T - STEP N STATEMENTS, DESCENDING INTO PROCEDURES
 *
@@ -447,9 +450,9 @@ DDT.P    DDT_STEP_COUNT = INTEGER(DDT_IN) +DDT_IN        :F(DDT_CMD_ERR)
 DDT.R    DDT_A = SORT(DDT_BREAK_TAB)                          :F(DDT_R2)
          DDT_C = 0
 DDT_R1   DDT_C = DDT_C + 1
-         DDT_T = DDT_A<DDT_C, 1> ' '
-+           DDT_LABEL(DDT_A<DDT_C, 1>)              :S(DDT_R1)F(DDT_CMD)
-DDT_R2   DDT_T = 'NONE'                                       :(DDT_CMD)
+         DDT_TOUT(DDT_A<DDT_C, 1> ' '
++           DDT_LABEL(DDT_A<DDT_C, 1>))             :S(DDT_R1)F(DDT_CMD)
+DDT_R2   DDT_TOUT('NONE')                                     :(DDT_CMD)
 *
 *** K - KILL BREAKPOINT(S)
 *
@@ -470,8 +473,8 @@ DDT.G    DDT_STEP_COUNT = 0
          DDT_IN DDT_G_PAT =                                   :F(DDT_G1)
          DDT_CMD = DDT_CASE(DDT_CMD)
 * ERROR IF LABEL UNKNOWN
-         DDT_T = IDENT(DDT_LBLS<DDT_CMD>) 'UNKNOWN LABEL ='
-+           DDT_CMD                                          :S(DDT_CMD)
+         DDT_TOUT(IDENT(DDT_LBLS<DDT_CMD>) 'UNKNOWN LABEL ='
++           DDT_CMD)                                         :S(DDT_CMD)
 * PROCESS ANY BREAKPOINTS
 DDT_G1   DIFFER(DDT_IN)                                       :F(DDT_G2)
          DDT_BREAK_TEMP<+DDT_GET_STMT(.DDT_IN)> = 1 :S(DDT_G1)F(DDT_CMD)
@@ -480,7 +483,7 @@ DDT_G1   DIFFER(DDT_IN)                                       :F(DDT_G2)
 DDT_G2   FREEZE(DDT_BREAK_TEMP)
          FREEZE(DDT_BREAK_TAB)
          DIFFER(DDT_CMD)                            :S(RETURN)F(FRETURN)
--LINE 635 "DDT.lss"
+-LINE 640 "DDT.lss"
 *
 *** L - LIST STATEMENT(S)
 *
@@ -505,7 +508,7 @@ DDT_L2   DDT_B = .DDT_C
          DDT_LIST_F = DDT_A
          DDT_LIST_L = DDT_C
 * DISPLAY LOOP
-DDT_L3   DDT_T = VDIFFER(DDT_STMTS<DDT_A>)
+DDT_L3   DDT_TOUT(VDIFFER(DDT_STMTS<DDT_A>))
          DDT_A = LT(DDT_A, DDT_C) DDT_A + 1         :S(DDT_L3)F(DDT_CMD)
 *
 *** +<N> - LIST NEXT STATEMENT(S), ++ LISTS THE NEXT 12 LINES.
@@ -524,6 +527,8 @@ DDT.-    DDT_B = DDT_LIST_F - 1
          DDT_C = LE(DDT_C) 1
 DDT_L5   DDT_A = DDT_B - DDT_C + 1
          DDT_C = DDT_B                                         :(DDT_L2)
+DDT_TOUT DIFFER(DDT_HOOK) APPLY(DDT_HOOK, 'DISPLAY', S)
+         DDT_T = S                                             :(RETURN)
 *
 *** S(FILE) - LOAD SOURCE LISTING
 *
@@ -537,17 +542,17 @@ DDT_SOURCE
          DDT_UNIT = IO_FINDUNIT()
          DDT_FNAME = TRIMB(DDT_IN)
          DIFFER(DDT_FNAME)                                    :S(DDT_S3)
-         DDT_T = DIFFER(DDT_USE_R) 'USE S FILE'               :S(DDT_S2)
          INPUT('DDT_SOURCE', DDT_UNIT,,
 +              DDT_FNAME = HOST(HOST_GETENV, 'LIST'))         :S(DDT_S1)
+         DDT_TOUT(DIFFER(DDT_USE_R) 'USE S FILE')             :S(DDT_S2)
          DDT_FNAME = TRIM(HISTORY_EXPAND(READLINE('LISTING: ')))
 DDT_S3   INPUT('DDT_SOURCE', DDT_UNIT,, DDT_FNAME)            :S(DDT_S1)
          DDT_FNAME =
-         DDT_T = 'NO LISTING FILE PROVIDED'                    :(DDT_S2)
+         DDT_TOUT('NO LISTING FILE PROVIDED')                  :(DDT_S2)
 DDT_S1   DDT_STMTS = DDT_READLIST(DDT_LBLS, .DDT_FINAL_STMT)
          ENDFILE(DDT_UNIT)
          DETACH(.DDT_SOURCE)
-         DDT_T = DIFFER(DDT_FINAL_STMT) 'SOURCE LISTING LOADED'
+         DDT_TOUT(DIFFER(DDT_FINAL_STMT) 'SOURCE LISTING LOADED')
 DDT_S2   FREEZE(DDT_STMTS)
          FREEZE(DDT_LBLS)                                      :(RETURN)
 *

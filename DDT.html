@@ -101,7 +101,8 @@ at a future date. (see DDT.E)
          DDT_LOADED = 1
          DDT_ACTIVE = 0
 <font color="#818181"><i>*</i></font>
-<font color="#818181"><i>* REMOTE DEBUG, DDT_USE_R IS FLAG TO GET INPUT FROM REMOTE.</i></font>
+<font color="#818181"><i>* REMOTE DEBUG, DDT_USE_R IS FLAG TO GET INPUT FROM REMOTE (= 1).</i></font>
+<font color="#818181"><i>* IF 2, WE ARE IN GUI.</i></font>
 <font color="#818181"><i>* DDT_T IS OUTPUT (ALWAYS) AND DDT_R IN READ CHANNEL. IF DDT_USE_R</i></font>
 <font color="#818181"><i>* IS NULL, READLINE() WILL BE USED. IF IT IS NOT NULL, DDT_R WILL</i></font>
 <font color="#818181"><i>* BE USED FOR COMMANDS AND INPUT.</i></font>
@@ -137,12 +138,13 @@ for an example of this use.
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;DDT&raquo;&equiv;</b>
--PUBLIC DDT_SUSPEND(), DDT_RESUME()
+-PUBLIC DDT_SUSPEND(), DDT_RESUME(), DDT_TOUT()
          DEFINE(&#39;DDT_SUSPEND()&#39;, &#39;DDT.O&#39;)
          DEFINE(&#39;DDT_RESUME()&#39;)
+         DEFINE(&#39;DDT_TOUT(S)&#39;)
 <font color="#818181"><i>*</i></font>
-         DDT_T = &#39;DDT (FRI MAY 23 15:30:53 EDT 2014)&#39;
-         DDT_T = &#39;TRY H FOR HELP&#39;
+         DDT_TOUT(&#39;DDT (FRI MAY 23 15:30:53 EDT 2014)&#39;)
+         DDT_TOUT(&#39;TRY H FOR HELP&#39;)
          DDT_SOURCE =
          DDT_LIST_F =
          DDT_LIST_L =
@@ -204,7 +206,7 @@ DDT_     S DDT_IGNORE                                          <b>:F(DDT2_)</b>
          DDT_COUNT = GT(DDT_COUNT) DDT_COUNT - 1              <b>:S(RETURN)</b>
 DDT2_    DDT_STEP_COUNT = 1
          DDT_FNCLEVEL = 50000
-         DDT_T = &#39;DDT(&#39; S &#39;)&#39;
+         DDT_TOUT(&#39;DDT(&#39; S &#39;)&#39;)
 DDT_RESUME
          &amp;STLIMIT = 999999999
          &amp;TRACE = 999999999
@@ -238,15 +240,18 @@ DDT_FNC  DDT_CURR_STMT = &amp;LASTNO
 <font color="#818181"><i>* DISPLAY CURRENT STATEMENT.</i></font>
 <font color="#818181"><i>*</i></font>
 DDT_DISPLAY
+         DIFFER(DDT_HOOK)                              <b>:S(DDT_DISPLAY_2)</b>
          DDT_FNC = DDT_LABEL(DDT_CURR_STMT)
-         DDT_T = VDIFFER(DDT_FNC)
-         DDT_T = DIFFER(DDT_FINAL_STMT) DDT_STMTS&lt;DDT_CURR_STMT&gt;
-         DDT_T = IDENT(DDT_FINAL_STMT) DDT_CURR_STMT
+         DDT_TOUT(VDIFFER(DDT_FNC))
+         DDT_TOUT(DIFFER(DDT_FINAL_STMT) DDT_STMTS&lt;DDT_CURR_STMT&gt;)
+         DDT_TOUT(IDENT(DDT_FINAL_STMT) DDT_CURR_STMT)
 <font color="#818181"><i>*</i></font>
-<font color="#818181"><i>* CALL EXTERNAL ROUTINE IF DEFINED TO REGISTER BREAK</i></font>
+<font color="#818181"><i>* CALL EXTERNAL ROUTINE IF DEFINED TO REGISTER BREAK. THIS CAN</i></font>
+<font color="#818181"><i>* REPLICATE SOME OF THE ABOVE IF NEEDED.</i></font>
 <font color="#818181"><i>*</i></font>
 -PUBLIC DDT_HOOK
-         DIFFER(DDT_HOOK) APPLY(DDT_HOOK, &#39;DISPLAY&#39;, DDT_CURR_STMT)
+DDT_DISPLAY_2
+         DIFFER(DDT_HOOK) APPLY(DDT_HOOK, &#39;BREAK&#39;, DDT_CURR_STMT)
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* LISTING BEGINS HERE</i></font>
 <font color="#818181"><i>*</i></font>
@@ -298,7 +303,7 @@ is no listing available, and we just return a <font face="Source Code Pro">NULL<
 DDT_LABEL
          IDENT(DDT_FINAL_STMT)                                <b>:S(RETURN)</b>
 DDT_LAB2 DDT_STMTS&lt;STNO&gt; DDT_DL_PAT                         <b>:S(DDT_LAB1)</b>
-         STNO = GT(STNO, 1) STNO - 1                           <b>:F(ERROR)</b>
+         STNO = GT(STNO, 1) STNO - 1                        <b>:F(DDT_LAB1)</b>
          OFFSET = OFFSET + 1                                 <b>:(DDT_LAB2)</b>
 DDT_LAB1 DDT_LABEL = IDENT(OFFSET) &#39;(&#39; DDT_LABEL &#39;)&#39;          <b>:S(RETURN)</b>
          DDT_LABEL = &#39;(&#39; DDT_LABEL &#39; + &#39; OFFSET &#39;)&#39;            <b>:(RETURN)</b>
@@ -334,7 +339,7 @@ DDT_GET_STMT
 <font color="#818181"><i>* CHECK IF LABEL UNKNOWN TO US, AND ADD OFFSET.</i></font>
          DDT_GET_STMT = VDIFFER(DDT_GET_STMT)
 +           + OFFSET                                          <b>:S(RETURN)</b>
-DDT_GET1 DDT_T = &#39;BAD LABEL OR STATEMENT NUMBER&#39;              <b>:(FRETURN)</b>
+DDT_GET1 DDT_TOUT(&#39;BAD LABEL OR STATEMENT NUMBER&#39;)            <b>:(FRETURN)</b>
 <font color="#818181"><i>*</i></font>
 <b>@</b>
 </font></pre></div>
@@ -380,8 +385,8 @@ DDT_RL3  DDT_READLIST&lt;$LAST&gt; = DDT_READLIST&lt;$LAST&gt; LINE
          (STMT &#39; &#39;) PAT2                                     <b>:F(DDT_RL1)</b>
 <font color="#818181"><i>* RECORD CASE-CONVERTED LABEL TO STATEMENT NUMBER MAPPING</i></font>
          ITEM(LABTAB, DDT_CASE(LABEL)) = $LAST                <b>:(DDT_RL1)</b>
-DDT_RL4  DDT_T = &#39;INCORRECT PROGRAM LIST FILE, LINE IN ERROR:&#39;
-         DDT_T = LINE                                         <b>:(FRETURN)</b>
+DDT_RL4  DDT_TOUT(&#39;INCORRECT PROGRAM LIST FILE, LINE IN ERROR:&#39;)
+         DDT_TOUT(LINE)                                       <b>:(FRETURN)</b>
 <font color="#818181"><i>*</i></font>
 <b>@</b>
 </font></pre></div>
@@ -401,25 +406,23 @@ If <font face="Source Code Pro">EOF</font> is read from keyboard, debugger shuts
 <b>&laquo;DDT&raquo;&equiv;</b>
 DDT_CMD  IDENT(DDT_UNIT2)                                   <b>:S(DDT_CMD2)</b>
          DDT_IN = DDT_INPUT                                 <b>:F(DDT_CMD4)</b>
-         DDT_T = &#39;DDT: &#39; DDT_IN                              <b>:(DDT_CMD3)</b>
+         DDT_TOUT(&#39;DDT: &#39; DDT_IN)                            <b>:(DDT_CMD3)</b>
 DDT_CMD4 ENDFILE(DDT_UNIT2)
          DETACH(.DDT_INPUT)
          DDT_UNIT2 =
 DDT_CMD2 DDT_LL2 = DDT_LL
          IDENT(DDT_USE_R)                                   <b>:S(DDT_CMD5)</b>
-         DDT_T = &#39;DDT REMOTE (&#39; DSERVE_APPNAME &#39;)&#39;
+         DDT_TOUT(EQ(DDT_USE_R, 1) &#39;DDT REMOTE (&#39; DSERVE_APPNAME &#39;)&#39;)
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* NOTE: THIS IS THE ONLY READ FROM DDT_R.</i></font>
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* IF DDT_HOOK IS DEFINED, WE WILL CALL WITH THAT WITH &#39;READ&#39;. SEE</i></font>
-<font color="#818181"><i>* DDT_HOOK CALL WITH &#39;DISPLAY&#39; ABOVE. THIS COMMAND WILL RETURN</i></font>
-<font color="#818181"><i>* &#39;&#39; WHICH WILL CAUSE A NORMAL DDT_R TO BE READ, OR RETURN A STRING</i></font>
-<font color="#818181"><i>* WHICH WILL BE EVALUATED WITH CODE AND EXECUTED.</i></font>
+<font color="#818181"><i>* DDT_HOOK CALL WITH &#39;DISPLAY&#39; ABOVE. IF THIS FAILS, WE ASSUME NORMAL</i></font>
+<font color="#818181"><i>* READ IS NEEDED. IF USE_DDT_R, AND DDT_HOOK IS NOT SET, WE READ</i></font>
+<font color="#818181"><i>* FROM DDT_R.</i></font>
 <font color="#818181"><i>*</i></font>
          IDENT(DDT_HOOK)                                    <b>:S(DDT_CMD7)</b>
-         DDT_RCMD = APPLY(DDT_HOOK, &#39;READ&#39;)                 <b>:F(DDT_CMD7)</b>
-         IDENT(DDT_RCMD)                                    <b>:S(DDT_CMD7)</b>
-         DDT_RCMD = CODE(DDT_RCMD)                <b>:F(DDT_CMD)S&lt;DDT_RCMD&gt;</b>
+         DDT_IN = TRIM(APPLY(DDT_HOOK, &#39;READ&#39;))  <b>:F(DDT_CMD5)S(DDT_CMD3)</b>
 DDT_CMD7 DDT_IN = TRIM(DDT_R)                       <b>:S(DDT_CMD3)F(DDT.O)</b>
 DDT_CMD5 DDT_IN = TRIM(HISTORY_EXPAND(READLINE(&#39;DDT: &#39;)))      <b>:F(DDT.O)</b>
 <font color="#818181"><i>*</i></font>
@@ -441,7 +444,7 @@ DDT_CMD3 IDENT(DDT_IN)                                       <b>:S(DDT_CMD)</b>
 <font color="#818181"><i>*** INVALID COMMAND</i></font>
 <font color="#818181"><i>*</i></font>
 DDT_CMD_ERR
-         DDT_T = &#39;?&#39;                                          <b>:(DDT_CMD)</b>
+         DDT_TOUT(&#39;?&#39;)                                        <b>:(DDT_CMD)</b>
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>*** TURN OFF DEBUGGER</i></font>
 <font color="#818181"><i>*</i></font>
@@ -461,26 +464,26 @@ DDT.V    DDT_IN = IDENT(DDT_IN) DDT_FNAME
 <font color="#818181"><i>* REMOTE.</i></font>
 <font color="#818181"><i>*</i></font>
          HOST(HOST_SYSCMD, &#39;LIST &#39; DDT_IN)                    <b>:(DDT_CMD)</b>
-DDT.V2   DDT_T = &#39;USE V FILENAME&#39;                             <b>:(DDT_CMD)</b>
+DDT.V2   DDT_TOUT(&#39;USE V FILENAME&#39;)                           <b>:(DDT_CMD)</b>
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>*** M - MODIFY VARIABLE</i></font>
 <font color="#818181"><i>*</i></font>
 DDT.M    IDENT(DDT_IN)                                       <b>:S(DDT_CMD)</b>
-         DDT_T = DIFFER(DDT_USE_R) &#39;SORRY, NEED EDITLINE&#39;    <b>:S(DDT_CMD)</b>
+         DDT_TOUT(DIFFER(DDT_USE_R) &#39;SORRY, NEED EDITLINE&#39;)  <b>:S(DDT_CMD)</b>
          DATATYPE($DDT_IN) &#39;STRING&#39; | &#39;NAME&#39; | &#39;INTEGER&#39; | &#39;REAL&#39;
 +                                                             <b>:S(DDT.M2)</b>
-         DDT_T = &quot;SORRY, CAN&#39;T MODIFY &quot; DATATYPE($DDT_IN)     <b>:(DDT_CMD)</b>
+         DDT_TOUT(&quot;SORRY, CAN&#39;T MODIFY &quot; DATATYPE($DDT_IN))   <b>:(DDT_CMD)</b>
 DDT.M2   $DDT_IN = EDITLINE(&#39;EDIT&lt;&#39; DDT_IN &#39;&gt;: &#39;, $DDT_IN)    <b>:(DDT_CMD)</b>
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>*** . - SOURCE FILE</i></font>
 <font color="#818181"><i>*</i></font>
 DDT..    IDENT(DDT_UNIT2)                                     <b>:S(DDT..1)</b>
-         DDT_T = &#39;. COMMANDS CANNOT BE NESTED&#39;                 <b>:(DDT..2)</b>
+         DDT_TOUT(&#39;. COMMANDS CANNOT BE NESTED&#39;)               <b>:(DDT..2)</b>
 DDT..1   IDENT(DDT_IN)                                       <b>:S(DDT_CMD)</b>
-         DDT_T = &#39;SOURCING &#39; DDT_IN
+         DDT_TOUT(&#39;SOURCING &#39; DDT_IN)
          DDT_UNIT2 = IO_FINDUNIT()
          INPUT(.DDT_INPUT, DDT_UNIT2,, DDT_IN)               <b>:S(DDT_CMD)</b>
-         DDT_T = &#39;CANNOT OPEN &#39; DDT_IN
+         DDT_TOUT(&#39;CANNOT OPEN &#39; DDT_IN)
 DDT..2   ENDFILE(DDT_UNIT2)
          DETACH(.DDT_INPUT)
          DDT_UNIT2 =                                          <b>:(DDT_CMD)</b>
@@ -503,7 +506,7 @@ DDT.*                                                         <b>:(DDT_CMD)</b>
 DDT.I    DDT_IGNORE =
          DDT_IN ((&quot;&#39;&quot; ARB . DDT_IGNORE &quot;&#39;&quot;) | &#39;&#39;) SPAN(DDT_WHITE &#39;,&#39;)
 +           SPAN(&amp;DIGITS) . DDT_COUNT RPOS(0)                <b>:S(DDT_CMD)</b>
-         DDT_T = &#39;BAD I SYNTAX&#39;                               <b>:(DDT_CMD)</b>
+         DDT_TOUT(&#39;BAD I SYNTAX&#39;)                             <b>:(DDT_CMD)</b>
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>*** Q - QUIT</i></font>
 <font color="#818181"><i>*</i></font>
@@ -512,15 +515,15 @@ DDT.Q    WRITE_HISTORY(&#39;.DDT&#39;)                                    <b>:(E
 <font color="#818181"><i>*** X - EXECUTE SHELL COMMAND</i></font>
 <font color="#818181"><i>*</i></font>
 DDT.X    HOST(HOST_SYSCMD, DDT_IN)
-         DDT_T =                                              <b>:(DDT_CMD)</b>
+         DDT_TOUT()                                           <b>:(DDT_CMD)</b>
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>*** C - IMMEDIATE EXECUTION OF AN UNLABELED CODE STATEMENT.</i></font>
 <font color="#818181"><i>*       APPEND OUR OWN GOTOS TO REGAIN CONTROL AFTER EXECUTION.</i></font>
 <font color="#818181"><i>*</i></font>
 DDT.C    DDT_C = CODE(&#39; &#39; DDT_IN &#39; :S(DDT_SS)F(DDT_FF)&#39;)       <b>:S&lt;DDT_C&gt;</b>
-         DDT_T = &#39;COMPILATION ERROR: &#39; &amp;ERRTEXT               <b>:(DDT_CMD)</b>
-DDT_SS   DDT_T = &#39;SUCCESS&#39;                                    <b>:(DDT_CMD)</b>
-DDT_FF   DDT_T = &#39;FAILURE&#39;                                    <b>:(DDT_CMD)</b>
+         DDT_TOUT(&#39;COMPILATION ERROR: &#39; &amp;ERRTEXT)             <b>:(DDT_CMD)</b>
+DDT_SS   DDT_TOUT(&#39;SUCCESS&#39;)                                  <b>:(DDT_CMD)</b>
+DDT_FF   DDT_TOUT(&#39;FAILURE&#39;)                                  <b>:(DDT_CMD)</b>
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>*** E - EXAMINE VARIABLE OR EVALUATE EXPRESSION. WE DISPLAY STRINGS,</i></font>
 <font color="#818181"><i>*       NUMBERS AS SCALARS, ARRAYS AND TABLES AS PROTOTYPES, CODE,</i></font>
@@ -541,7 +544,7 @@ DDT.E    DDT_RESULT = EVAL(DDT_IN)                            <b>:F(DDT.E2)</b>
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* USER DEFINED DATATYPE - FIELD(&#39;TYPE&#39;,1..N)</i></font>
 <font color="#818181"><i>*</i></font>
-         DDT_T = DATATYPE(DDT_RESULT)
+         DDT_TOUT(DATATYPE(DDT_RESULT))
          DDT_I =
 DDT.E4   DDT_I = DDT_I + 1
          DDT_FIELD = FIELD(DATATYPE(DDT_RESULT), DDT_I)      <b>:F(DDT_CMD)</b>
@@ -552,9 +555,9 @@ DDT.E4   DDT_I = DDT_I + 1
          DDT_V = ?(DDT_V ? &#39;INTEGER&#39; | &#39;REAL&#39;)
 +           APPLY(DDT_FIELD, DDT_RESULT)                      <b>:S(DDT.E5)</b>
          DDT_V = CONVERT(APPLY(DDT_FIELD, DDT_RESULT), &#39;STRING&#39;)
-DDT.E5   DDT_T = &#39;    &#39; RPAD(DDT_FIELD, 10) &#39;: &#39; DDT_V         <b>:(DDT.E4)</b>
-DDT.E3   DDT_T = DDT_RESULT                                   <b>:(DDT_CMD)</b>
-DDT.E2   DDT_T = &#39;EVALUATION ERROR: &#39; &amp;ERRTEXT                <b>:(DDT_CMD)</b>
+DDT.E5   DDT_TOUT(&#39;    &#39; RPAD(DDT_FIELD, 10) &#39;: &#39; DDT_V)       <b>:(DDT.E4)</b>
+DDT.E3   DDT_TOUT(DDT_RESULT)                                 <b>:(DDT_CMD)</b>
+DDT.E2   DDT_TOUT(&#39;EVALUATION ERROR: &#39; &amp;ERRTEXT)              <b>:(DDT_CMD)</b>
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>*** T - STEP N STATEMENTS, DESCENDING INTO PROCEDURES</i></font>
 <font color="#818181"><i>*</i></font>
@@ -577,9 +580,9 @@ DDT.P    DDT_STEP_COUNT = INTEGER(DDT_IN) +DDT_IN        <b>:F(DDT_CMD_ERR)</b>
 DDT.R    DDT_A = SORT(DDT_BREAK_TAB)                          <b>:F(DDT_R2)</b>
          DDT_C = 0
 DDT_R1   DDT_C = DDT_C + 1
-         DDT_T = DDT_A&lt;DDT_C, 1&gt; &#39; &#39;
-+           DDT_LABEL(DDT_A&lt;DDT_C, 1&gt;)              <b>:S(DDT_R1)F(DDT_CMD)</b>
-DDT_R2   DDT_T = &#39;NONE&#39;                                       <b>:(DDT_CMD)</b>
+         DDT_TOUT(DDT_A&lt;DDT_C, 1&gt; &#39; &#39;
++           DDT_LABEL(DDT_A&lt;DDT_C, 1&gt;))             <b>:S(DDT_R1)F(DDT_CMD)</b>
+DDT_R2   DDT_TOUT(&#39;NONE&#39;)                                     <b>:(DDT_CMD)</b>
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>*** K - KILL BREAKPOINT(S)</i></font>
 <font color="#818181"><i>*</i></font>
@@ -600,8 +603,8 @@ DDT.G    DDT_STEP_COUNT = 0
          DDT_IN DDT_G_PAT =                                   <b>:F(DDT_G1)</b>
          DDT_CMD = DDT_CASE(DDT_CMD)
 <font color="#818181"><i>* ERROR IF LABEL UNKNOWN</i></font>
-         DDT_T = IDENT(DDT_LBLS&lt;DDT_CMD&gt;) &#39;UNKNOWN LABEL =&#39;
-+           DDT_CMD                                          <b>:S(DDT_CMD)</b>
+         DDT_TOUT(IDENT(DDT_LBLS&lt;DDT_CMD&gt;) &#39;UNKNOWN LABEL =&#39;
++           DDT_CMD)                                         <b>:S(DDT_CMD)</b>
 <font color="#818181"><i>* PROCESS ANY BREAKPOINTS</i></font>
 DDT_G1   DIFFER(DDT_IN)                                       <b>:F(DDT_G2)</b>
          DDT_BREAK_TEMP&lt;+DDT_GET_STMT(.DDT_IN)&gt; = 1 <b>:S(DDT_G1)F(DDT_CMD)</b>
@@ -611,6 +614,8 @@ DDT_G2   FREEZE(DDT_BREAK_TEMP)
          FREEZE(DDT_BREAK_TAB)
          DIFFER(DDT_CMD)                            <b>:S(RETURN)F(FRETURN)</b>
 <b>&laquo;LIST&raquo;</b>
+DDT_TOUT DIFFER(DDT_HOOK) APPLY(DDT_HOOK, &#39;DISPLAY&#39;, S)
+         DDT_T = S                                             <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>*** S(FILE) - LOAD SOURCE LISTING</i></font>
 <font color="#818181"><i>*</i></font>
@@ -624,17 +629,17 @@ DDT_SOURCE
          DDT_UNIT = IO_FINDUNIT()
          DDT_FNAME = TRIMB(DDT_IN)
          DIFFER(DDT_FNAME)                                    <b>:S(DDT_S3)</b>
-         DDT_T = DIFFER(DDT_USE_R) &#39;USE S FILE&#39;               <b>:S(DDT_S2)</b>
          INPUT(&#39;DDT_SOURCE&#39;, DDT_UNIT,,
 +              DDT_FNAME = HOST(HOST_GETENV, &#39;LIST&#39;))         <b>:S(DDT_S1)</b>
+         DDT_TOUT(DIFFER(DDT_USE_R) &#39;USE S FILE&#39;)             <b>:S(DDT_S2)</b>
          DDT_FNAME = TRIM(HISTORY_EXPAND(READLINE(&#39;LISTING: &#39;)))
 DDT_S3   INPUT(&#39;DDT_SOURCE&#39;, DDT_UNIT,, DDT_FNAME)            <b>:S(DDT_S1)</b>
          DDT_FNAME =
-         DDT_T = &#39;NO LISTING FILE PROVIDED&#39;                    <b>:(DDT_S2)</b>
+         DDT_TOUT(&#39;NO LISTING FILE PROVIDED&#39;)                  <b>:(DDT_S2)</b>
 DDT_S1   DDT_STMTS = DDT_READLIST(DDT_LBLS, .DDT_FINAL_STMT)
          ENDFILE(DDT_UNIT)
          DETACH(.DDT_SOURCE)
-         DDT_T = DIFFER(DDT_FINAL_STMT) &#39;SOURCE LISTING LOADED&#39;
+         DDT_TOUT(DIFFER(DDT_FINAL_STMT) &#39;SOURCE LISTING LOADED&#39;)
 DDT_S2   FREEZE(DDT_STMTS)
          FREEZE(DDT_LBLS)                                      <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
@@ -651,30 +656,30 @@ and what they do.
 <pre><font face="Source Code Pro">
 <b>&laquo;HELP&raquo;&equiv;</b>
 DDT.H
- DDT_T = &#39;STNO - STATEMENT NUMBERS SPECIFIED AS INTEGERS, OR LABEL +- N&#39;
- DDT_T = &#39;          BRACKETED ITEMS ARE OPTIONAL&#39;
- DDT_T = &#39;H            (OR ?)     HELP (THIS LIST)&#39;
- DDT_T = &#39;C STATEMENT  (OR TAB)   IMMEDIATE EXECUTION OF STATEMENT&#39;
- DDT_T = &#39;E EXPRESSION (OR =EXP)  EVALUATE EXPRESSION&#39;
- DDT_T = &#39;X COMMAND    (OR !)     EXECUTE SHELL COMMAND&#39;
- DDT_T = &#39;T [N]                   TRACE N STATEMENTS (INTO PROCEDURES)&#39;
- DDT_T = &#39;P [N]                   TRACE N STATEMENTS (NO PROCEDURES)&#39;
- DDT_T = &#39;B STNO [,STNO,...]      SET BREAKPOINT(S)&#39;
- DDT_T = &#39;K BKPT [,BKPT,...]      KILL BREAKPOINT(S)&#39;
- DDT_T = &#39;R                       REPORT BREAKPOINTS SET&#39;
- DDT_T = &#39;G [=LABEL,](STNO1,...]  GO (FROM SPECIFIED LABEL),&#39;
- DDT_T = &#39;                          SET TEMPORARY BREAKPOINT(S)&#39;
- DDT_T = &#39;L [STNO1 [,STNO2]]      LIST STATEMENT OR RANGE&#39;
- DDT_T = &#39;+ [N]  OR  -[N]         LIST NEXT/PREVIOUS N STATEMENTS&#39;
- DDT_T = &#39;++ OR --                LIST 12 STATEMENTS FORWARD OR BACK&#39;
- DDT_T = &#39;Q                       QUIT&#39;
- DDT_T = &#39;O (OR ^D)               OFF - RESUME PROGRAM, STOP DEBUGGING&#39;
- DDT_T = &#39;S [FILE]                LOAD SOURCE&#39;
- DDT_T = &#39;M NAME                  MODIFY VARIABLE&#39;
- DDT_T = &quot;I &#39;MSG&#39; N               IGNORE NEXT N CALLS TO DDT(MSG)&quot;
- DDT_T = &#39;* COMMENT               COMMENT (NO ACTION)&#39;
- DDT_T = &#39;. FILE                  SOURCE FILE (DO NOT NEST)&#39;
- DDT_T = &#39;V (FILE)                VIEW FILE (DEFAULT TO LIST FILE)&#39;
+ DDT_TOUT(&#39;STNO - STATEMENT NUMBERS SPECIFIED AS INTEGERS, OR LABEL+-N&#39;)
+ DDT_TOUT(&#39;          BRACKETED ITEMS ARE OPTIONAL&#39;)
+ DDT_TOUT(&#39;H            (OR ?)     HELP (THIS LIST)&#39;)
+ DDT_TOUT(&#39;C STATEMENT  (OR TAB)   IMMEDIATE EXECUTION OF STATEMENT&#39;)
+ DDT_TOUT(&#39;E EXPRESSION (OR =EXP)  EVALUATE EXPRESSION&#39;)
+ DDT_TOUT(&#39;X COMMAND    (OR !)     EXECUTE SHELL COMMAND&#39;)
+ DDT_TOUT(&#39;T [N]                   TRACE N STATEMENTS (INTO PROCS)&#39;)
+ DDT_TOUT(&#39;P [N]                   TRACE N STATEMENTS (NO PROCEDURES)&#39;)
+ DDT_TOUT(&#39;B STNO [,STNO,...]      SET BREAKPOINT(S)&#39;)
+ DDT_TOUT(&#39;K BKPT [,BKPT,...]      KILL BREAKPOINT(S)&#39;)
+ DDT_TOUT(&#39;R                       REPORT BREAKPOINTS SET&#39;)
+ DDT_TOUT(&#39;G [=LABEL,](STNO1,...]  GO (FROM SPECIFIED LABEL),&#39;)
+ DDT_TOUT(&#39;                          SET TEMPORARY BREAKPOINT(S)&#39;)
+ DDT_TOUT(&#39;L [STNO1 [,STNO2]]      LIST STATEMENT OR RANGE&#39;)
+ DDT_TOUT(&#39;+ [N]  OR  -[N]         LIST NEXT/PREVIOUS N STATEMENTS&#39;)
+ DDT_TOUT(&#39;++ OR --                LIST 12 STATEMENTS FORWARD OR BACK&#39;)
+ DDT_TOUT(&#39;Q                       QUIT&#39;)
+ DDT_TOUT(&#39;O (OR ^D)               OFF - RESUME PROGRAM, STOP DEBUG&#39;)
+ DDT_TOUT(&#39;S [FILE]                LOAD SOURCE&#39;)
+ DDT_TOUT(&#39;M NAME                  MODIFY VARIABLE&#39;)
+ DDT_TOUT(&quot;I &#39;MSG&#39; N               IGNORE NEXT N CALLS TO DDT(MSG)&quot;)
+ DDT_TOUT(&#39;* COMMENT               COMMENT (NO ACTION)&#39;)
+ DDT_TOUT(&#39;. FILE                  SOURCE FILE (DO NOT NEST)&#39;)
+ DDT_TOUT(&#39;V (FILE)                VIEW FILE (DEFAULT TO LIST FILE)&#39;)
 <b>@</b>
 </font></pre></div>
 <p align="justify"><font face="Sorts Mill Goudy">
@@ -715,7 +720,7 @@ DDT_L2   DDT_B = .DDT_C
          DDT_LIST_F = DDT_A
          DDT_LIST_L = DDT_C
 <font color="#818181"><i>* DISPLAY LOOP</i></font>
-DDT_L3   DDT_T = VDIFFER(DDT_STMTS&lt;DDT_A&gt;)
+DDT_L3   DDT_TOUT(VDIFFER(DDT_STMTS&lt;DDT_A&gt;))
          DDT_A = LT(DDT_A, DDT_C) DDT_A + 1         <b>:S(DDT_L3)F(DDT_CMD)</b>
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>*** +&lt;N&gt; - LIST NEXT STATEMENT(S), ++ LISTS THE NEXT 12 LINES.</i></font>
@@ -779,7 +784,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Mon Jun  2 16:24:33 EDT 2014</p></td><td><p align=right>
+Tue Jun  3 20:11:08 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>
