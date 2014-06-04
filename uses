@@ -8,8 +8,8 @@
 
 -INCLUDE 'HASH.INC'
 -INCLUDE 'JSON.INC'
--INCLUDE 'READFILE.INC'
 -INCLUDE 'SDIFF.INC'
+-INCLUDE 'READFILE.INC'
 
 * ce: .msnobol4;
 
@@ -39,7 +39,7 @@ pats     functions<'#'> =
          k = keys_in_table(variables) :f(end)
          i = 1
 nxtv     k<i> :f(endv)
-         s = 'k<i> *?(f = "' variables<k<i>> '")'
+         s = '"' k<i> '"' ' . e *?(f = "' variables<k<i>> '")'
          vp = (differ(vp) (eval(s) | vp), eval(s))
          i = i + 1 :(nxtv)
 endv     vp = (pos(0) | any(ss)) vp (any(ss) | rpos(0))
@@ -50,18 +50,30 @@ endv     vp = (pos(0) | any(ss)) vp (any(ss) | rpos(0))
 nxtf     k<i> :f(endf)
          m = k<i>
          m ')' =
-         s = 'm *?(f = "' functions<k<i>> '")'
+         s = '"' m '"' ' . e *?(f = "' functions<k<i>> '")'
          fp = (differ(fp) (eval(s) | fp), eval(s))
          i = i + 1 :(nxtf)
 endf     fp = (pos(0) | any(ss)) fp
 
          incs = table()
+         weak = table()
 
          q = "'"
          qq = '"'
 
 top      r = input :f(incout)
-         r fenc '-' ('uses' | 'USES') rem . r :s(loop)
+         r fence '-' ('weak' | 'WEAK') rem . r :f(uses)
+         fc = &ucase &lcase
+         sc = fc '0123456789_.'
+         symbol = any(fc) (span(sc) | null)
+         function = symbol '()'
+         variable = symbol
+         ws = span(' ' char(9)) | null
+         element = ws (function | variable) . e ws (',' | rpos(0))
+weak2    r element = :f(top)
+         e ')' =
+         weak<e> = 1 :(weak2)
+uses     r fence '-' ('uses' | 'USES') rem . r :s(loop)
          r fence (any('*#;|!-') | '//') :s(top)
 loop     r arb . l (q | qq) $ delim arb *delim rem . r :f(done)
          process(l) :(loop)
@@ -77,7 +89,11 @@ inco2    a<i,1> :f(end)
 process  &fullscan = 1
          s = replace(s, &lcase, &ucase)
 proc_1   s vp = :f(proc_2)
+*        output = 'f = ' f  ' e = ' e
+         differ(weak<e>) :s(proc_1)
          incs<f> = 1 :(proc_1)
 proc_2   s fp = :f(return)
+*        output = 'f = ' f  ' e = ' e
+         differ(weak<e>) :s(proc_1)
          incs<f> = 1 :(proc_2)
 end

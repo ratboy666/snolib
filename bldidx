@@ -49,7 +49,7 @@
          CLASS = SYMBOL ':' SYMBOL
          METHOD = SYMBOL ':' "'" SYMBOL "'"
          OP = ANY('^|#%') '1'
-         WS = SPAN(' ' CHAR_TAB) | NULL
+         WS = SPAN(' ' CHARS_TAB) | NULL
          ELEMENT = WS (OP | METHOD | CLASS | FUNCTION | VARIABLE) . E
 +                  WS (',' | RPOS(0))
          PUBLIC = POS(0) '-' ('PUBLIC' | 'public') REM . S

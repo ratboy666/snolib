@@ -1,4 +1,7 @@
 -LINE 52 "CGI.lss"
+-USES CRACK()
+-WEAK USE_FCGI, FCGI_ENV, FCGI_IN, FCGI_REQUEST_COMPLETE
+-WEAK FCGI_SEND(), FCGI_END()
 -INCLUDE 'SCOOP.INC'
 -INCLUDE 'COOKIE.INC'
 -INCLUDE 'HOST.INC'
@@ -11,7 +14,7 @@
 -INCLUDE 'JSON.INC'
 -STITL CGI
 -EJECT
--LINE 571 "CGI.lss"
+-LINE 574 "CGI.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -30,7 +33,7 @@
 *
 * CGI.lss
 *
--LINE 65 "CGI.lss"
+-LINE 68 "CGI.lss"
 -PUBLIC CLASS:CGI_CLASS
          CGI_CLASS = SEND(CLASS, 'NEW_CLASS', 'CGI_CLASS')
          DEFINE('CGI_INIT()A,C')
@@ -171,7 +174,7 @@ CGI_INIT_2
 * INITIALIZE HEADER. THE HEADER IS A TABLE() WITH AT LEAST CONTENT_TYPE
 * ENTRY.
 *
-         |.HEADER = #"CONTENT_TYPE=TEXT/HTML,CHARSET="
+         |.HEADER = #'CONTENT_TYPE=TEXT/HTML,CHARSET='
 *
 * INITIALIZE CONTENT
 *
