@@ -3,12 +3,32 @@ snolib
 
 SNOBOL4 Library
 
+NOTE on .so location:
+
+If a LOAD() is done from CSNOBOL4, the search for the object begins
+with SNOPATH. If the .so is found, it is loaded. On the other hand,
+if a .so uses ANOTHER .so, it uses LD_LIBRARY_PATH. If there is an
+.so that can be LOAD()ed *and* is called from another .so that is
+LOAD()ed, there may be two copies of the object in memory. This
+happens with p64.so. If you are running code that uses (for example)
+jit.so (JIT.INC), jit.so calls on p64.so. JIT.INC also calls on
+functions directly in p64.so. To allow this to work, you must ensure
+that the SAME p64.so is loaded. Note that the current directory is
+searched for SNOPATH.
+
+export LD_LIBRARY_PATH=.:/path/to/snolib_so
+export SNOPATH=.:/path/to/snolib_incs
+
+will work for deliver.
+
+--- end note
+
 This is Fred Weigel's SNOBOL4 library. The SNOBOL4 community is very
 small these days, but, heck, I still like the language, and I am sure
 that others will too.
 
 You will require Phil's CSNOBOL4 1.5. Preferably build from source!
-(with NDBM)
+(with NDBM, STCL)
 
 I configure it as:
 ./configure --with-tcl=/usr/lib64/tclConfig.sh
