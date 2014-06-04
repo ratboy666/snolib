@@ -36,6 +36,7 @@
 -INCLUDE 'FOREACH.INC'
 -INCLUDE 'FREEZE.INC'
 -INCLUDE 'GCD.INC'
+-INCLUDE 'GDDT.INC'
 -INCLUDE 'GETKEY.INC'
 *-INCLUDE 'GOTOS.INC'
 -INCLUDE 'HASH.INC'
@@ -100,7 +101,7 @@
 -INCLUDE 'WRAPPER.INC'
 -STITL ALL
 -EJECT
--LINE 165 "ALL.lss"
+-LINE 166 "ALL.lss"
 *
 ************************************************************************
 *                                                                      *

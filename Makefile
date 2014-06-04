@@ -34,7 +34,8 @@ T = AGT.tst      AI.tst       AOPA.tst     BALREV.tst   BALX.tst     \
     BRKREM.tst   HASH.tst     READL.tst    FOREACH.tst  SCOOP.tst    \
     CGI.tst      READFILE.tst SESSION.tst  GCD.tst      COMPLEX.tst  \
     COOKIE.tst   HTMLTMPL.tst JSON.tst     FCGI.tst     MAX.tst      \
-    DSERVE.tst   VDIFFER.tst  FOR.tst      FREEZE.tst   ROUTING.tst
+    DSERVE.tst   VDIFFER.tst  FOR.tst      FREEZE.tst   ROUTING.tst  \
+    GDDT.tst
 
 # Library files FIXME: TRIAL should be removed.
 
@@ -120,6 +121,7 @@ VDIFFER.INC:  SYSTEM.INC
 FREEZE.INC:   SYSTEM.INC
 READFILE.INC: SYSTEM.INC   CHARS.INC    BRKREM.INC
 ROUTING.INC:  SDIFF.INC    UNIQUE.INC   BRKREM.INC
+GDDT.INC:     STCL.INC     REPL.INC     CHARS.INC    DDT.INC
 
 # Bootstrapping. We need embed, ifs, sweave, stangle, snocone and ED4
 # to build the code. We keep embed0, ifs0, sweave0 and stangle0 for
