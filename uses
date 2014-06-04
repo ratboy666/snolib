@@ -9,11 +9,14 @@
 -INCLUDE 'JSON.INC'
 -INCLUDE 'SDIFF.INC'
 -INCLUDE 'READFILE.INC'
-*-include 'DDT.INC'
+-INCLUDE 'HOST.INC'
 
-*  ddt()
-*  input(.input, 20,, 'READFILE.INC')
 * ce: .msnobol4;
+
+         fn = host(HOST_ARGN, HOST(HOST_FIRSTARG)) :f(stdin)
+         ident(fn) :s(stdin)
+         input(.input, 20,, fn) :f(end)
+stdin
 
          fc = &ucase
          ss = sdiff(&alphabet, &ucase '0123456789._')
@@ -116,9 +119,11 @@ proc_1   s vp :f(proc_2)
          s pos(bp) len(ep - bp) =
 *        output = 'vp: f = ' f  ' e = ' e
          differ(weak<e>) :s(proc_1)
+         ident(f, fn) :s(proc_1)
          incs<f> = 1 :(proc_1)
 proc_2   s fp = :f(return)
 *        output = 'fp f = ' f  ' e = ' e
-         differ(weak<e>) :s(proc_1)
+         differ(weak<e>) :s(proc_2)
+         ident(f, fn) :s(proc_2)
          incs<f> = 1 :(proc_2)
 end
