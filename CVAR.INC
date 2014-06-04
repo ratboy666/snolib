@@ -1,10 +1,11 @@
 -LINE 72 "CVAR.lss"
+-USES HASH()
 -INCLUDE 'P64.INC'
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'HASH.INC'
 -STITL CVAR
 -EJECT
--LINE 221 "CVAR.lss"
+-LINE 222 "CVAR.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -23,9 +24,9 @@
 *
 * CVAR.lss
 *
--LINE 78 "CVAR.lss"
--PUBLIC CVAR(), CV_OFFSET(), CV_SIZE(), CV_DIM(), CV_SIGN(), CV_ISINT()
-         DATA('CVAR(CV_OFFSET,CV_SIZE,CV_DIM,CV_SIGN,CV_ISINT)')
+-LINE 79 "CVAR.lss"
+-PUBLIC CVART(), CV_OFFSET(), CV_SIZE(), CV_DIM(), CV_SIGN(), CV_ISINT()
+         DATA('CVART(CV_OFFSET,CV_SIZE,CV_DIM,CV_SIGN,CV_ISINT)')
 *
 -PUBLIC PTRV(), LOADV(), STOREV(), NEWDECLV(), DECLAREV()
          DEFINE('PTRV(B,V,I)')
@@ -62,7 +63,7 @@ LOADV_2  LOADV = PEEK_S(B)
          LOADV = LT(LOADV) (2 ** 16) + LOADV                   :(RETURN)
 LOADV_4  LOADV = EQ(CV_ISINT(V)) PEEK_F(B)                    :S(RETURN)
          LOADV = PEEK_I(B)
--LINE 125 "CVAR.lss"
+-LINE 126 "CVAR.lss"
          NE(CV_SIGN(V))                                       :S(RETURN)
          LOADV = LT(LOADV) (2 ** 32) + LOADV                   :(RETURN)
 LOADV_8  LOADV = EQ(CV_ISINT(V)) PEEK_D(B)                    :S(RETURN)
@@ -125,9 +126,9 @@ DECLV2   R = REMDR(VOFFSET, ALIGN<T>)
          V = VTAB<I>
          IDENT(V)                                            :F(FRETURN)
 *
-* CREATE CVAR() RECORD FOR NEW VARIABLE
+* CREATE CVART() RECORD FOR NEW VARIABLE
 *
-         V = CVAR(VOFFSET, SIZE<T>, N, SIGNED, ISINT<T>)
+         V = CVART(VOFFSET, SIZE<T>, N, SIGNED, ISINT<T>)
 *
 * PUT VARIABLE INTO SYMBOL TABLE
 *

@@ -69,6 +69,7 @@ Example declarations:
 <a href="HASH.html">HASH</a>
 
 <<INCLUDES>>=
+-USES HASH()
 -INCLUDE 'P64.INC'
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'HASH.INC'
