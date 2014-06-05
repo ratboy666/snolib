@@ -102,8 +102,8 @@ Example declarations:
 <pre><font face="Source Code Pro">
 <b>&laquo;CVAR&raquo;&equiv;</b>
 %SET (BITS, HOST(HOST_POINTER_BITS))
--PUBLIC CVAR(), CV_OFFSET(), CV_SIZE(), CV_DIM(), CV_SIGN(), CV_ISINT()
-         DATA(&#39;CVAR(CV_OFFSET,CV_SIZE,CV_DIM,CV_SIGN,CV_ISINT)&#39;)
+-PUBLIC CVART(), CV_OFFSET(), CV_SIZE(), CV_DIM(), CV_SIGN(), CV_ISINT()
+         DATA(&#39;CVART(CV_OFFSET,CV_SIZE,CV_DIM,CV_SIGN,CV_ISINT)&#39;)
 <font color="#818181"><i>*</i></font>
 -PUBLIC PTRV(), LOADV(), STOREV(), NEWDECLV(), DECLAREV()
          DEFINE(&#39;PTRV(B,V,I)&#39;)
@@ -217,9 +217,9 @@ DECLV2   R = REMDR(VOFFSET, ALIGN&lt;T&gt;)
          V = VTAB&lt;I&gt;
          IDENT(V)                                            <b>:F(FRETURN)</b>
 <font color="#818181"><i>*</i></font>
-<font color="#818181"><i>* CREATE CVAR() RECORD FOR NEW VARIABLE</i></font>
+<font color="#818181"><i>* CREATE CVART() RECORD FOR NEW VARIABLE</i></font>
 <font color="#818181"><i>*</i></font>
-         V = CVAR(VOFFSET, SIZE&lt;T&gt;, N, SIGNED, ISINT&lt;T&gt;)
+         V = CVART(VOFFSET, SIZE&lt;T&gt;, N, SIGNED, ISINT&lt;T&gt;)
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* PUT VARIABLE INTO SYMBOL TABLE</i></font>
 <font color="#818181"><i>*</i></font>
@@ -278,7 +278,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Wed Jun  4 13:56:48 EDT 2014</p></td><td><p align=right>
+Wed Jun  4 18:55:36 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

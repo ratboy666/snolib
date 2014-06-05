@@ -12,6 +12,7 @@ disables [[DDT()]] and then calls the 'real' function [[BQ2()]].
 <a href="DDT.html">DDT</a>
 
 <<BQ>>=
+-WEAK DDT_ACTIVE, DDT_SUSPEND(), DDT_RESUME()
 -PUBLIC BQ()
          DEFINE('BQ(COMMAND,OFS)DDTF')
          DEFINE('BQ2(COMMAND,OFS)X,UNIT')                      :(BQ_END)

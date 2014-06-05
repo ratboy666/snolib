@@ -12,6 +12,8 @@ struct tmpl_token { token_type, token_end, token_args }
 //-include 'READFILE.INC'
 //-include 'HTMLESC.INC'
 
+//-USES HTML_ESCAPE(), JS_ESCAPE(), URL_ESCAPE()
+
 # Initialize patterns for HTML template module
 
 //-PUBLIC TMPL_INIT()
@@ -221,4 +223,4 @@ procedure tmpl_parse_args(s) n v {
 // tmpl_init()
 
 # ce: .f.msnocone;
--LINE 279 "HTMLTMPL.lss"
+-LINE 281 "HTMLTMPL.lss"

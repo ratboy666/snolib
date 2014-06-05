@@ -4,10 +4,10 @@
 -INCLUDE 'DEXP.INC'
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'TRIMB.INC'
--INCLUDE 'CSNOBOL4.INC'
+-INCLUDE 'VDIFFER.INC'
 -STITL COOKIE
 -EJECT
--LINE 210 "COOKIE.lss"
+-LINE 211 "COOKIE.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -30,6 +30,7 @@
 -PUBLIC COOKIE_VALUE(), COOKIE_SET_CRUMB(), COOKIE_GET_CRUMB()
 -PUBLIC PUT_COOKIE_IN_JAR(), GET_COOKIE_FROM_JAR(), COOKIES_IN_JAR()
 -PUBLIC CRUMBS_IN_COOKIE(), COOKIE_EXPIRY(), COOKIE_STRING()
+-PuBLIC COOKIE_FIX_NAME()
          DEFINE('NEW_COOKIE_JAR()')
          DEFINE('NEW_COOKIE(VALUE)')
          DEFINE('COOKIE_SET_VALUE(COOKIE,VALUE)')

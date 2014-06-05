@@ -1,9 +1,10 @@
--LINE 13 "DISPLAY.lss"
+-LINE 14 "DISPLAY.lss"
 -INCLUDE 'CHARS.INC'
+-INCLUDE 'VDIFFER.INC'
 -INCLUDE 'BQ.INC'
 -STITL DISPLAY
 -EJECT
--LINE 144 "DISPLAY.lss"
+-LINE 146 "DISPLAY.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -21,7 +22,7 @@
 *
 * DISPLAY.lss
 *
--LINE 18 "DISPLAY.lss"
+-LINE 20 "DISPLAY.lss"
 -PUBLIC DS_SMSO, DS_RMSO, DS_SMUL, DS_RMUL, DS_BLINK
 -PUBLIC DS_BOLD, DS_DIM, DS_REV, DS_SGR0, DS_CIVIS, DS_CNORM, DS_CVVIS
 -PUBLIC DS_GOTO(), DS_FOREGROUND_COLOR(), DS_BACKGROUND_COLOR()
@@ -90,7 +91,7 @@ DISPLAY
          DS_CYAN   = 6
          DS_WHITE  = 7                                    :(DS_GOTO_END)
 *
--LINE 93 "DISPLAY.lss"
+-LINE 95 "DISPLAY.lss"
 *
 * SET FOREGROUND COLOR.
 *
@@ -108,7 +109,7 @@ DS_BACKGROUND_COLOR
 *
 DS_GOTO  DS_GOTO = VDIFFER(DS_<ROW ' ' COL>)                  :S(RETURN)
 *
--LINE 116 "DISPLAY.lss"
+-LINE 118 "DISPLAY.lss"
          DS_<ROW ' ' COL> = BQ('tput cup ' ROW ' ' COL)       :(DS_GOTO)
 *
 DS_GOTO_END

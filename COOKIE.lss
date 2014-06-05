@@ -43,7 +43,7 @@ be returned (probably as a session cookie).
 <a href="DEXP.html">DEXP</a><br>
 <a href="CHARS.html">CHARS</a><br>
 <a href="TRIMB.html">TRIMB</a><br>
-<a href="CSNOBOL4.html">CSNOBOL4</a>
+<a href="VDIFFER.html">VDIFFER</a>
 
 <<INCLUDES>>=
 -INCLUDE 'HASH.INC'
@@ -51,7 +51,7 @@ be returned (probably as a session cookie).
 -INCLUDE 'DEXP.INC'
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'TRIMB.INC'
--INCLUDE 'CSNOBOL4.INC'
+-INCLUDE 'VDIFFER.INC'
 @
 
 <<COOKIE>>=
@@ -59,6 +59,7 @@ be returned (probably as a session cookie).
 -PUBLIC COOKIE_VALUE(), COOKIE_SET_CRUMB(), COOKIE_GET_CRUMB()
 -PUBLIC PUT_COOKIE_IN_JAR(), GET_COOKIE_FROM_JAR(), COOKIES_IN_JAR()
 -PUBLIC CRUMBS_IN_COOKIE(), COOKIE_EXPIRY(), COOKIE_STRING()
+-PuBLIC COOKIE_FIX_NAME()
          DEFINE('NEW_COOKIE_JAR()')
          DEFINE('NEW_COOKIE(VALUE)')
          DEFINE('COOKIE_SET_VALUE(COOKIE,VALUE)')

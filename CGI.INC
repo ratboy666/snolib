@@ -1,5 +1,5 @@
--LINE 52 "CGI.lss"
--USES CRACK()
+-LINE 53 "CGI.lss"
+-USES CRACK(), HOST(), URL_DECODE(), COOKIE_FIX_NAME()
 -WEAK USE_FCGI, FCGI_ENV, FCGI_IN, FCGI_REQUEST_COMPLETE
 -WEAK FCGI_SEND(), FCGI_END()
 -INCLUDE 'SCOOP.INC'
@@ -12,9 +12,10 @@
 -INCLUDE 'HASH.INC'
 -INCLUDE 'UNIQUE.INC'
 -INCLUDE 'JSON.INC'
+-INCLUDE 'VDIFFER.INC'
 -STITL CGI
 -EJECT
--LINE 574 "CGI.lss"
+-LINE 576 "CGI.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -33,7 +34,7 @@
 *
 * CGI.lss
 *
--LINE 68 "CGI.lss"
+-LINE 70 "CGI.lss"
 -PUBLIC CLASS:CGI_CLASS
          CGI_CLASS = SEND(CLASS, 'NEW_CLASS', 'CGI_CLASS')
          DEFINE('CGI_INIT()A,C')

@@ -22,10 +22,10 @@
 * TEST.lss
 *
 -LINE 22 "TEST.lss"
--PUBLIC TEST()
-         DEFINE('TEST(ARG)NAME')                             :(TEST_END)
+-PUBLIC TESTP()
+         DEFINE('TESTP(ARG)NAME')                            :(TEST_END)
 *
-TEST     IDENT(DATATYPE(ARG), 'EXPRESSION')                   :F(TEST_1)
+TESTP    IDENT(DATATYPE(ARG), 'EXPRESSION')                   :F(TEST_1)
          NAME = UNIQUE()
          $NAME = ARG
          TEST = EVAL("NULL $ *TEST('" NAME "')")               :(RETURN)

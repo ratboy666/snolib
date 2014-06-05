@@ -1,14 +1,13 @@
--LINE 29 "FCGI.lss"
+-LINE 28 "FCGI.lss"
 -INCLUDE 'FFI.INC'
 -INCLUDE 'BQ.INC'
 -INCLUDE 'CSNOBOL4.INC'
 -INCLUDE 'LOGIC.INC'
--INCLUDE 'HASH.INC'
 -INCLUDE 'TIME.INC'
 -INCLUDE 'JSON.INC'
 -STITL FCGI
 -EJECT
--LINE 307 "FCGI.lss"
+-LINE 305 "FCGI.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -26,7 +25,7 @@
 *
 * FCGI.lss
 *
--LINE 39 "FCGI.lss"
+-LINE 37 "FCGI.lss"
          FCGI_LOGUNIT = IO_FINDUNIT()
          OUTPUT(.FCGI_LOG, FCGI_LOGUNIT, 'W',
 +               '|/usr/bin/logger -n localhost -t FCGI')

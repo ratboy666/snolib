@@ -7,10 +7,12 @@ are needed.
 
 <h2>Uses</h2>
 <a href="CHARS.html">CHARS</a><br>
+<a href="VDIFFER.html">VDIFFER</a><br>
 <a href="BQ.html">BQ</a>
 
 <<INCLUDES>>=
 -INCLUDE 'CHARS.INC'
+-INCLUDE 'VDIFFER.INC'
 -INCLUDE 'BQ.INC'
 @
 

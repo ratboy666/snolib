@@ -9,14 +9,14 @@
 <h1>TEST - Bypass one character assumption</h1>
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
-<font face="Source Code Pro">TEST(ARG)</font> accepts an unevaluated expression as argument, and
+<font face="Source Code Pro">TESTP(ARG)</font> accepts an unevaluated expression as argument, and
 returns a pattern bypasses SNOBOL4's one-character length assumption
 (quickscan heuristics).
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 <aside>
 <p>
-It is never necessary to use <font face="Source Code Pro">TEST(ARG)</font> with SPITBOL, because
+It is never necessary to use <font face="Source Code Pro">TESTP(ARG)</font> with SPITBOL, because
 SPITBOL does not have a one-character assumption.
 </p>
 </aside>
@@ -34,10 +34,10 @@ SPITBOL does not have a one-character assumption.
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;TEST&raquo;&equiv;</b>
--PUBLIC TEST()
-         DEFINE(&#39;TEST(ARG)NAME&#39;)                             <b>:(TEST_END)</b>
+-PUBLIC TESTP()
+         DEFINE(&#39;TESTP(ARG)NAME&#39;)                            <b>:(TEST_END)</b>
 <font color="#818181"><i>*</i></font>
-TEST     IDENT(DATATYPE(ARG), &#39;EXPRESSION&#39;)                   <b>:F(TEST_1)</b>
+TESTP    IDENT(DATATYPE(ARG), &#39;EXPRESSION&#39;)                   <b>:F(TEST_1)</b>
          NAME = UNIQUE()
          $NAME = ARG
          TEST = EVAL(&quot;NULL $ *TEST(&#39;&quot; NAME &quot;&#39;)&quot;)               <b>:(RETURN)</b>
@@ -90,7 +90,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Mon Jun  2 13:05:02 EDT 2014</p></td><td><p align=right>
+Wed Jun  4 19:19:33 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

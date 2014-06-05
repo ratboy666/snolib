@@ -74,6 +74,7 @@ additional tools to be incorporated while debugging.
 @
 
 <<DDT>>=
+-USES SLOAD()
 -PUBLIC DDT(), DEBUG(), DDT_LOADED, DDT_ACTIVE
          DEFINE('DDT(S)')
          DEFINE('DEBUG(S)', 'DDT')

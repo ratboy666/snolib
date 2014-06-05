@@ -21,7 +21,6 @@ When this is functional, we will work on performance.
 <a href="BQ.html">BQ</a><br>
 <a href="CSNOBOL4.html">CSNOBOL4</a><br>
 <a href="LOGIC.html">LOGIC</a><br>
-<a href="HASH.html">HASH</a><br>
 <a href="TIME.html">TIME</a><br>
 <a href="JSON.html">JSON</a>
 
@@ -30,7 +29,6 @@ When this is functional, we will work on performance.
 -INCLUDE 'BQ.INC'
 -INCLUDE 'CSNOBOL4.INC'
 -INCLUDE 'LOGIC.INC'
--INCLUDE 'HASH.INC'
 -INCLUDE 'TIME.INC'
 -INCLUDE 'JSON.INC'
 @

@@ -1,12 +1,12 @@
 <h1>TEST - Bypass one character assumption</h1>
 
-[[TEST(ARG)]] accepts an unevaluated expression as argument, and
+[[TESTP(ARG)]] accepts an unevaluated expression as argument, and
 returns a pattern bypasses SNOBOL4's one-character length assumption
 (quickscan heuristics).
 
 <aside>
 <p>
-It is never necessary to use [[TEST(ARG)]] with SPITBOL, because
+It is never necessary to use [[TESTP(ARG)]] with SPITBOL, because
 SPITBOL does not have a one-character assumption.
 </p>
 </aside>
@@ -19,10 +19,10 @@ SPITBOL does not have a one-character assumption.
 @
 
 <<TEST>>=
--PUBLIC TEST()
-         DEFINE('TEST(ARG)NAME')                             :(TEST_END)
+-PUBLIC TESTP()
+         DEFINE('TESTP(ARG)NAME')                            :(TEST_END)
 *
-TEST     IDENT(DATATYPE(ARG), 'EXPRESSION')                   :F(TEST_1)
+TESTP    IDENT(DATATYPE(ARG), 'EXPRESSION')                   :F(TEST_1)
          NAME = UNIQUE()
          $NAME = ARG
          TEST = EVAL("NULL $ *TEST('" NAME "')")               :(RETURN)

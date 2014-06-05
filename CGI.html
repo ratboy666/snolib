@@ -61,12 +61,13 @@ Still need: Response codes, Headers/Responses
 <a href="CHARS.html">CHARS</a><br>
 <a href="HASH.html">HASH</a><br>
 <a href="UNIQUE.html">UNIQUE</a><br>
-<a href="JSON.html">JSON</a>
+<a href="JSON.html">JSON</a><br>
+<a href="VDIFFER.html">VDIFFER</a>
 </font></p>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;INCLUDES&raquo;&equiv;</b>
--USES CRACK()
+-USES CRACK(), HOST(), URL_DECODE(), COOKIE_FIX_NAME()
 -WEAK USE_FCGI, FCGI_ENV, FCGI_IN, FCGI_REQUEST_COMPLETE
 -WEAK FCGI_SEND(), FCGI_END()
 -INCLUDE &#39;SCOOP.INC&#39;
@@ -79,6 +80,7 @@ Still need: Response codes, Headers/Responses
 -INCLUDE &#39;HASH.INC&#39;
 -INCLUDE &#39;UNIQUE.INC&#39;
 -INCLUDE &#39;JSON.INC&#39;
+-INCLUDE &#39;VDIFFER.INC&#39;
 <b>@</b>
 </font></pre></div>
 <div style="background-image: url(greenbar.gif)">
@@ -629,7 +631,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Wed Jun  4 15:42:10 EDT 2014</p></td><td><p align=right>
+Wed Jun  4 18:43:40 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

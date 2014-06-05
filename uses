@@ -19,7 +19,7 @@
 stdin
 
          fc = &ucase
-         ss = sdiff(&alphabet, &ucase '0123456789._')
+         ss = sdiff(&alphabet, &ucase '0123456789_')
          define('process(s)')
          functions = table()
          variables = table()

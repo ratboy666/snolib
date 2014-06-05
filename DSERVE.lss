@@ -12,16 +12,16 @@ Not very good at cleaning up, but this does work.
 <a href="CHARS">CHARS</a><br>
 <a href="REPL">REPL</a><br>
 <a href="CSNOBOL4">CSNOBOL4</a><br>
-<a href="HOST">HOST</a><br>
-<a href="MAX"></a><br>
+<a href="TRIMB">TRIMB</a><br>
+<a href="P64">P64</a><br>
 <a href="DDT"></a>
 
 <<INCLUDES>>= 
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'REPL.INC'
 -INCLUDE 'CSNOBOL4.INC'
--INCLUDE 'HOST.INC'
--INCLUDE 'MAX.INC'
+-INCLUDE 'TRIMB.INC'
+-INCLUDE 'P64.INC'
 -INCLUDE 'DDT.INC'
 @
 
