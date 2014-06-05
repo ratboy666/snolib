@@ -50,7 +50,13 @@ is approximately an order of magnitude more efficient at this task.
 <a href="SEQ.html">SEQ</a><br>
 <a href="WRAPPER.html">WRAPPER</a>
 
+<h2>Uses</h2>
+
+<<INCLUDES>>=
+@
+
 <<P64>>=
+-MODULE P64
 -CASE 1
 @
 

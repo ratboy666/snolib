@@ -1,7 +1,7 @@
 -STITL REPL
 -EJECT
 *
--LINE 39 "REPL.lss"
+-LINE 45 "REPL.lss"
 ************************************************************************
 *                                                                      *
 *                   ######   #######  ######   #                       *
@@ -18,7 +18,8 @@
 *
 * REPL.lss
 *
--LINE 11 "REPL.lss"
+-LINE 16 "REPL.lss"
+-MODULE REPL
 -PUBLIC REPL()
          DEFINE('REPL(S1,S2,S3)C,T,FINDC')                   :(REPL_END)
 *

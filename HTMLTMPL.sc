@@ -1,16 +1,11 @@
--LINE 53 "HTMLTMPL.lss"
+-MODULE HTMLTMPL
+-SNOCONE
+-LINE 72 "HTMLTMPL.lss"
 
 # A compiled template is a list of template tokens
 
 struct tmpl_token { token_type, token_end, token_args }
 
-//-include 'LINK.INC'
-//-include 'CHARS.INC'
-//-include 'LAST.INC'
-//-include 'REVL.INC'
-//-include 'SWAP.INC'
-//-include 'READFILE.INC'
-//-include 'HTMLESC.INC'
 
 //-USES HTML_ESCAPE(), JS_ESCAPE(), URL_ESCAPE()
 
@@ -221,6 +216,6 @@ procedure tmpl_parse_args(s) n v {
 }
 
 // tmpl_init()
+-LINE 293 "HTMLTMPL.lss"
 
 # ce: .f.msnocone;
--LINE 281 "HTMLTMPL.lss"

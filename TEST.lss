@@ -4,21 +4,20 @@
 returns a pattern bypasses SNOBOL4's one-character length assumption
 (quickscan heuristics).
 
-<aside>
-<p>
+{{
 It is never necessary to use [[TESTP(ARG)]] with SPITBOL, because
 SPITBOL does not have a one-character assumption.
-</p>
-</aside>
+}}
 
-<H2>Uses</H2>
-<A HREF="UNIQUE.html">UNIQUE</A>
+<h2>Uses</h2>
+<a href="UNIQUE">UNIQUE</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'UNIQUE.INC'
 @
 
 <<TEST>>=
+-MODULE TEST
 -PUBLIC TESTP()
          DEFINE('TESTP(ARG)NAME')                            :(TEST_END)
 *

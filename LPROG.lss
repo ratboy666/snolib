@@ -9,7 +9,13 @@ exploited by returning the statement number of a new statement.
 in the SNOBOL4 program in which it is called. Every use of [[CODE()]]
 will increase this number, so call this early during execution.
 
+<h2>Uses</h2>
+
+<<INCLUDES>>=
+@
+
 <<LPROG>>=
+-MODULE LPROG
 -PUBLIC LPROG()
          DEFINE('LPROG()')                                  :(LPROG_END)
 *

@@ -4,17 +4,18 @@ Find and load a SNOBOL4 source file. Recursively load any INCLUDE
 files needed.
 
 <h2>Uses</h2>
-<a href="HOST.html">HOST</a><br>
-<a href="CRACK.html">CRACK</a><br>
-<a href="TRIMB.html">TRIMB</a>
+<a href="CRACK">CRACK</a><br>
+<a href="HOST">HOST</a><br>
+<a href="TRIMB">TRIMB</a><br>
 
 <<INCLUDES>>=
--INCLUDE 'HOST.INC'
 -INCLUDE 'CRACK.INC'
+-INCLUDE 'HOST.INC'
 -INCLUDE 'TRIMB.INC'
 @
 
 <<SLOAD>>=
+-MODULE SLOAD
 -PUBLIC SLOAD()
          DEFINE('SLOAD(FILENAME)'
 +               'LIB,CODE,PATH,X,A,I,P,PS,DS,TRIM_SAV,POSITION,UNIT')

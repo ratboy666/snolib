@@ -5,15 +5,16 @@ argument. Example: [[TIMER(' A = B + C ')]]. Multiple statements
 should be separated by semicolons.
 
 <h2>Uses</h2>
-<a href="SYSTEM.html">SYSTEM</a><br>
-<a href="RESOL.html">RESOL</a>
+<a href="RESOL">RESOL</a><br>
+<a href="SYSTEM">SYSTEM</a><br>
 
 <<INCLUDES>>=
--INCLUDE 'SYSTEM.INC'
 -INCLUDE 'RESOL.INC'
+-INCLUDE 'SYSTEM.INC'
 @
 
 <<TIMER>>=
+-MODULE TIMER
 -PUBLIC TIMER()
          DEFINE('TIMER(S_,N_)C_,T_,I_,M_')                  :(TIMER_END)
 *

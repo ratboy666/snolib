@@ -1,9 +1,9 @@
 -LINE 12 "TIMER.lss"
--INCLUDE 'SYSTEM.INC'
 -INCLUDE 'RESOL.INC'
+-INCLUDE 'SYSTEM.INC'
 -STITL TIMER
 -EJECT
--LINE 77 "TIMER.lss"
+-LINE 78 "TIMER.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -22,6 +22,7 @@
 * TIMER.lss
 *
 -LINE 17 "TIMER.lss"
+-MODULE TIMER
 -PUBLIC TIMER()
          DEFINE('TIMER(S_,N_)C_,T_,I_,M_')                  :(TIMER_END)
 *

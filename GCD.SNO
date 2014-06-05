@@ -1,7 +1,7 @@
 -STITL AGT
 -EJECT
 *
--LINE 33 "GCD.lss"
+-LINE 39 "GCD.lss"
 ************************************************************************
 *                                                                      *
 *                       #####    #####   ######                        *
@@ -18,7 +18,8 @@
 *
 * GCD.lss
 *
--LINE 6 "GCD.lss"
+-LINE 11 "GCD.lss"
+-MODULE GCD
 -PUBLIC GCD()
          DEFINE('GCD(I,J)')                                   :(GCD_END)
 *

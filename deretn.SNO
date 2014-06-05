@@ -1,7 +1,8 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
+-PROGRAM DERETN
+-LINE 25 "deretn.lss"
 -TITLE DERETN
--LINE 20 "deretn.lss"
 START
 *
 ************************************************************************
@@ -21,7 +22,7 @@ START
 *
 * deretn.lss
 *
--LINE 6 "deretn.lss"
+-LINE 11 "deretn.lss"
          TERMINAL = 'DERETN (FRI NOV 22 00:38:55 EST 2013)'
 *
          S = DUPL(' ', 5)

@@ -8,10 +8,16 @@ when traced.  Previously, it failed when garbage collect occurred,
 but that has been fixed. To fix this, [[BQ()]] is a wrapper which
 disables [[DDT()]] and then calls the 'real' function [[BQ2()]].
 
+<h2>Uses</h2>
+
 <h2>See Also</h2>
 <a href="DDT.html">DDT</a>
 
+<<INCLUDES>>=
+@
+
 <<BQ>>=
+-MODULE BQ
 -WEAK DDT_ACTIVE, DDT_SUSPEND(), DDT_RESUME()
 -PUBLIC BQ()
          DEFINE('BQ(COMMAND,OFS)DDTF')

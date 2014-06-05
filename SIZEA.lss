@@ -15,8 +15,10 @@ elements is computed and returned.
 
 [[LOWA(A)]] returns the index of the first element of array [[A]].
 
-<a href="BRKREM.html">BRKREM</a><br>
-<a href="SWAP.html">SWAP</a>
+<h2>Uses</h2>
+<a href="BRKREM">BRKREM</a><br>
+<a href="SWAP">SWAP</a><br>
+<a href="SYSTEM">SYSTEM</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'BRKREM.INC'
@@ -25,6 +27,7 @@ elements is computed and returned.
 @
 
 <<SIZEA>>=
+-MODULE SIZEA
 -PUBLIC SIZEA(), LOWA(), ARRAY0
          DEFINE('SIZEA(A)L,U')
          DEFINE('LOWA(A)L,U')

@@ -75,32 +75,32 @@ additional tools to be incorporated while debugging.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 <h2>Uses</h2>
-<a href="CHARS.html">CHARS</a><br>
-<a href="HOST.html">HOST</a><br>
-<a href="READLINE.html">READLINE</a><br>
-<a href="TRIMB.html">TRIMB</a><br>
-<a href="VDIFFER.html">VDIFFER</a><br>
-<a href="QUOTE.html">QUOTE</a><br>
-<a href="FREEZE.html">FREEZE</a><br>
-<a href="SLOAD.html">SLOAD</a>
+<a href="CHARS">CHARS</a><br>
+<a href="FREEZE">FREEZE</a><br>
+<a href="HOST">HOST</a><br>
+<a href="QUOTE">QUOTE</a><br>
+<a href="READLINE">READLINE</a><br>
+<a href="SLOAD">SLOAD</a><br>
+<a href="TRIMB">TRIMB</a><br>
+<a href="VDIFFER">VDIFFER</a><br>
 </font></p>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;INCLUDES&raquo;&equiv;</b>
--WEAK DSERVE_APPNAME
 -INCLUDE &#39;CHARS.INC&#39;
+-INCLUDE &#39;FREEZE.INC&#39;
 -INCLUDE &#39;HOST.INC&#39;
+-INCLUDE &#39;QUOTE.INC&#39;
 -INCLUDE &#39;READLINE.INC&#39;
+-INCLUDE &#39;SLOAD.INC&#39;
 -INCLUDE &#39;TRIMB.INC&#39;
 -INCLUDE &#39;VDIFFER.INC&#39;
--INCLUDE &#39;QUOTE.INC&#39;
--INCLUDE &#39;FREEZE.INC&#39;
--INCLUDE &#39;SLOAD.INC&#39;
 <b>@</b>
 </font></pre></div>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;DDT&raquo;&equiv;</b>
+-WEAK DSERVE_APPNAME
 -USES SLOAD()
 -PUBLIC DDT(), DEBUG(), DDT_LOADED, DDT_ACTIVE
          DEFINE(&#39;DDT(S)&#39;)
@@ -763,6 +763,7 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+-MODULE DDT
 <b>&laquo;INCLUDES&raquo;</b>
 -STITL DDT
 -EJECT
@@ -792,7 +793,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Wed Jun  4 19:00:58 EDT 2014</p></td><td><p align=right>
+Thu Jun  5 13:34:21 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

@@ -4,7 +4,13 @@
 is a string containing all those characters that are in [[S1]] and not
 [[S2]].
 
+<h2>Uses</h2>
+
+<<INCLUDES>>=
+@
+
 <<SDIFF>>=
+-MODULE SDIFF
 -PUBLIC SDIFF()
          DEFINE('SDIFF(S1,S2)')                             :(SDIFF_END)
 *

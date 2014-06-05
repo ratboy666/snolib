@@ -1,7 +1,7 @@
 -STITL ROTATER
 -EJECT
 *
--LINE 32 "ROTATER.lss"
+-LINE 38 "ROTATER.lss"
 ************************************************************************
 *                                                                      *
 *    ######   #######  #######     #     #######  #######  ######      *
@@ -18,7 +18,8 @@
 *
 * ROTATER.lss
 *
--LINE 7 "ROTATER.lss"
+-LINE 12 "ROTATER.lss"
+-MODULE ROTATER
 -PUBLIC ROTATER()
          DEFINE('ROTATER(S,N)S1')                         :(ROTATER_END)
 *

@@ -3,15 +3,18 @@
 Bundle application with its includes.
 
 <h2>Uses</h2>
-<a href="CRACK.html">CRACK</a><br>
-<a href="TRIMB.html">TRIMB</a>
+<a href="CRACK">CRACK</a><br>
+<a href="HOST">HOST</a><br>
+<a href="TRIMB">TRIMB</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'CRACK.INC'
+-INCLUDE 'HOST.INC'
 -INCLUDE 'TRIMB.INC'
 @
 
 <<bundle>>=
+-PROGRAM BUNDLE
          TERMINAL = 'BUNDLE (THU DEC  5 12:09:11 EST 2013)'
 *
          DEFINE('INCLUDE(FILENAME)PATH,POSITION,UNIT,LIB,X')

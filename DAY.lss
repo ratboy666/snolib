@@ -4,7 +4,13 @@ Returns current day of the week (SUNDAY..SATURDAY). If no argument
 is supplied, use today. Date is specified as M/D/Y. If year is not
 specified, this year is used. If year is two digits, interpret as 20XX.
 
+<h2>Uses</h2>
+
+<<INCLUDES>>=
+@
+
 <<DAY>>=
+-MODULE DAY
 -PUBLIC DAY()
          DEFINE('DAY(DATE)M,Y,CD')
          YEAR_ = 365

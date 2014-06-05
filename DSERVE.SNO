@@ -7,7 +7,7 @@
 -INCLUDE 'DDT.INC'
 -STITL DSERVE
 -EJECT
--LINE 152 "DSERVE.lss"
+-LINE 153 "DSERVE.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -26,6 +26,7 @@
 * DSERVE.lss
 *
 -LINE 29 "DSERVE.lss"
+-MODULE DSERVE
 -PUBLIC DSERVE_INIT(), DSERVE()
 -PUBLIC DSERVE_PORT, DSERVE_APPNAME
          DEFINE('DSERVE_INIT(APPNAME,PORT,KEY)')      :(DSERVE_INIT_END)

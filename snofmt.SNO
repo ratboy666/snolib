@@ -1,11 +1,13 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
+-PROGRAM SNOFMT
+-LINE 22 "snofmt.lss"
 -TITLE SNOFMT
--LINE 20 "snofmt.lss"
 START
--LINE 12 "snofmt.lss"
--INCLUDE 'CHARS.INC'
+-LINE 13 "snofmt.lss"
 -INCLUDE 'BALX.INC'
+-INCLUDE 'CHARS.INC'
+-INCLUDE 'VDIFFER.INC'
 -STITL
 -EJECT
 ************************************************************************

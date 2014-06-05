@@ -2,7 +2,13 @@
 
 Interface to TCL.
 
+<h2>Uses</h2>
+
+<<INCLUDES>>=
+@
+
 <<TCL>>=
+-MODULE TCL
 STCL_LOAD
 *
 -PUBLIC STCL_CREATEINTERP(), STCL_EVALFILE(), STCL_GETVAR()

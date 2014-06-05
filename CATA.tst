@@ -1,7 +1,7 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -INCLUDE 'CATA.INC'
--LINE 30 "CATA.lss"
+-LINE 31 "CATA.lss"
 -INCLUDE 'CRACK.INC'
          &CODE = 1
          A = %'5,6,7'

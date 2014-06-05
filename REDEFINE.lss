@@ -5,13 +5,18 @@ to the name of the function given with prototype [[DEF]] and entry
 label [[LBL]].  The old definition of the operator is preserved in
 the function name with appended period.
 
-<aside>
+{{
 <b>C<small>AUTION</small></b> - This cannot be used with SPITBOL,
 which does not permit the redefinition of built-in operators.
+}}
 
-</aside>
+<h2>Uses</h2>
+
+<<INCLUDES>>=
+@
 
 <<REDEFINE>>=
+-MODULE REDEFINE
 -PUBLIC REDEFINE(), REDEFINERESTORE()
          DEFINE('REDEFINE(OP,DEF,LBL)NAME,N,FLAG')
          DEFINE('REDEFINERESTORE(OP,DEF)NAME,N,FLAG')

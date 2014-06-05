@@ -1,7 +1,7 @@
 -STITL HOST
 -EJECT
 *
--LINE 147 "HOST.lss"
+-LINE 153 "HOST.lss"
 ************************************************************************
 *                                                                      *
 *                 #     #  #######   #####   #######                   *
@@ -18,9 +18,10 @@
 *
 * HOST.lss
 *
--LINE 6 "HOST.lss"
+-LINE 11 "HOST.lss"
+-MODULE HOST
 HOST
--LINE 10 "HOST.lss"
+-LINE 16 "HOST.lss"
 *
 * MACRO SPITBOL
 *

@@ -10,7 +10,7 @@ balancing purposes.
 source.
 
 <h2>Uses</h2>
-<a href="UNIQUE.html">UNIQUE</a>
+<a href="UNIQUE">UNIQUE</a><br>
 
 <h2>See Also</h2>
 <a href="FASTBAL.html">FASTBAL</a>
@@ -20,6 +20,7 @@ source.
 @
 
 <<BALX>>=
+-MODULE BALX
 -PUBLIC BALX()
          DEFINE('BALX(PARENS,QTS)Q,GBAL,NAME,STAR,LP,RP')    :(BALX_END)
 *

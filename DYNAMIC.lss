@@ -3,9 +3,9 @@
 Create dynamic modules for [[CSNOBOL4]].
 
 <h2>Uses</h2>
-<a href="BQ.html">BQ</a><br>
-<a href="HOST.html">HOST</a><br>
-<a href="REPL.html">HOST</a>
+<a href="BQ">BQ</a><br>
+<a href="HOST">HOST</a><br>
+<a href="REPL">REPL</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'BQ.INC'
@@ -14,6 +14,7 @@ Create dynamic modules for [[CSNOBOL4]].
 @
 
 <<DYNAMIC>>=
+-MODULE DYNAMIC
 -PUBLIC COMPILE_COBOL(), COMPILE_FORTRAN(), COMPILE_SCHEME()
 -PUBLIC COMPILE_DYNAMIC(), LIBS_FORTRAN(), LIBS_COBOL(), LIBS_SCHEME()
 DYNAMIC  DEFINE('COMPILE_COBOL(SRC)CMD,COBC')

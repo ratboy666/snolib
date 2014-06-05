@@ -1,12 +1,12 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
+-PROGRAM COMPILE
+-LINE 152 "compile.lss"
 -TITLE COMPILE
--LINE 154 "compile.lss"
 START
--LINE 29 "compile.lss"
--INCLUDE 'CRACK.INC'
+-LINE 28 "compile.lss"
+-INCLUDE 'CHARS.INC'
 -INCLUDE 'HOST.INC'
--INCLUDE 'TRIMB.INC'
 -INCLUDE 'REPL.INC'
 -STITL
 -EJECT
@@ -27,7 +27,7 @@ START
 *
 * compile.lss
 *
--LINE 36 "compile.lss"
+-LINE 34 "compile.lss"
          TERMINAL = 'COMPILE (THU DEC  5 12:10:58 EST 2013)'
 *
          DEFINE('SQUISH(S)')

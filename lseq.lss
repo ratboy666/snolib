@@ -1,8 +1,14 @@
 <H1>lseq</H1>
 
+<h2>Uses</h2>
+
+<<INCLUDES>>=
+@
+
 <<>>=
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
+-PROGRAM LSEQ
 -TITLE LSEQ
 START
 *

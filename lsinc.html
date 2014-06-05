@@ -13,15 +13,17 @@ List includes.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 <h2>Uses</h2>
-<a href="SEQ.html">SEQ</a><br>
-<a href="CRACK.html">CRACK</a><br>
-<a href="TRIMB.html">TRIMB</a>
+<a href="CRACK">CRACK</a><br>
+<a href="HOST">HOST</a><br>
+<a href="SEQ">SEQ</a><br>
+<a href="TRIMB">TRIMB</a><br>
 </font></p>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;INCLUDES&raquo;&equiv;</b>
--INCLUDE &#39;SEQ.INC&#39;
 -INCLUDE &#39;CRACK.INC&#39;
+-INCLUDE &#39;HOST.INC&#39;
+-INCLUDE &#39;SEQ.INC&#39;
 -INCLUDE &#39;TRIMB.INC&#39;
 <b>@</b>
 </font></pre></div>
@@ -30,6 +32,7 @@ List includes.
 <b>&laquo;&raquo;&equiv;</b>
 <font color="#818181"><i>#!/usr/bin/bash</i></font>
          exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-PROGRAM LSINC
 -TITLE LSINC
 START
 <b>&laquo;INCLUDES&raquo;</b>
@@ -110,7 +113,7 @@ END START
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Sun Jun  1 23:13:38 EDT 2014</p></td><td><p align=right>
+Thu Jun  5 13:34:37 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

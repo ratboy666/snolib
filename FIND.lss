@@ -8,7 +8,13 @@ type of extreme element will be determined by the predicate [[PRED]].
               FIND(A,'~LGT')
 ]]
 
+<h2>Uses</h2>
+
+<<INCLUDES>>=
+@
+
 <<FIND>>=
+-MODULE FIND
 -PUBLIC FIND()
          DEFINE('FIND(A,PRED)EX,I,MAX,TEST')                 :(FIND_END)
 *

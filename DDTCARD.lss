@@ -3,6 +3,13 @@
 Provide a card containing [[DDT()]]. For use with [[-L]] or [[-M]]
 CSNOBOL4 options.
 
+<h2>Uses</h2>
+<a href="DDT">DDT</a><br>
+
+<<INCLUDES>>=
+-INCLUDE 'DDT.INC'
+@
+
 <<DDTCARD>>=
          DDT()
 @
@@ -17,6 +24,7 @@ END START
 @
 
 <<>>=
+-MODULE DDTCARD
 -STITL DDTCARD
 -EJECT
 *

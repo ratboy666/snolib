@@ -2,7 +2,7 @@
 -INCLUDE 'REPL.INC'
 -STITL QUOTE
 -EJECT
--LINE 37 "QUOTE.lss"
+-LINE 38 "QUOTE.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -21,6 +21,7 @@
 * QUOTE.lss
 *
 -LINE 15 "QUOTE.lss"
+-MODULE QUOTE
 -PUBLIC QUOTE()
          DEFINE('QUOTE(S)Q,QQ')                             :(QUOTE_END)
 *

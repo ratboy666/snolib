@@ -17,23 +17,24 @@ transmissions.
 When this is functional, we will work on performance.
 
 <h2>Uses</h2>
-<a href="FFI.html">FFI</a><br>
-<a href="BQ.html">BQ</a><br>
-<a href="CSNOBOL4.html">CSNOBOL4</a><br>
-<a href="LOGIC.html">LOGIC</a><br>
-<a href="TIME.html">TIME</a><br>
-<a href="JSON.html">JSON</a>
+<a href="BQ">BQ</a><br>
+<a href="CSNOBOL4">CSNOBOL4</a><br>
+<a href="FFI">FFI</a><br>
+<a href="JSON">JSON</a><br>
+<a href="LOGIC">LOGIC</a><br>
+<a href="TIME">TIME</a><br>
 
 <<INCLUDES>>=
--INCLUDE 'FFI.INC'
 -INCLUDE 'BQ.INC'
 -INCLUDE 'CSNOBOL4.INC'
+-INCLUDE 'FFI.INC'
+-INCLUDE 'JSON.INC'
 -INCLUDE 'LOGIC.INC'
 -INCLUDE 'TIME.INC'
--INCLUDE 'JSON.INC'
 @
 
 <<FCGI>>=
+-MODULE FCGI
          FCGI_LOGUNIT = IO_FINDUNIT()
          OUTPUT(.FCGI_LOG, FCGI_LOGUNIT, 'W', 
 +               '|/usr/bin/logger -n localhost -t FCGI')

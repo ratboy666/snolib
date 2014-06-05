@@ -1,7 +1,7 @@
 -STITL RANDOM
 -EJECT
 *
--LINE 36 "RANDOM.lss"
+-LINE 42 "RANDOM.lss"
 ************************************************************************
 *                                                                      *
 *         ######      #     #     #  ######   #######  #     #         *
@@ -21,7 +21,8 @@
 *
 * RANDOM.lss
 *
--LINE 7 "RANDOM.lss"
+-LINE 12 "RANDOM.lss"
+-MODULE RANDOM
 -PUBLIC RANDOM(), SRANDOM(), SRANDOMDEV() RANDOMI()
          LOAD('RANDOM()INTEGER')
          LOAD('SRANDOM(INTEGER)STRING')

@@ -1,10 +1,17 @@
 <h1>BALREV - Balanced Reverse</h1>
 
-[[BALREV(S)]] returns the balanced reversal of the string [[S]]: characters
-of [[S]] are reversed and parentheses are interchanged. [[BALREV('F(X)')]]
-returns [['(X)F']] instead of [[')X(F']] like a simple reversal.
+[[BALREV(S)]] returns the balanced reversal of the string
+[[S]]: characters of [[S]] are reversed and parentheses are
+interchanged. [[BALREV('F(X)')]] returns [['(X)F']] instead of
+[[')X(F']] like a simple reversal.
+
+<h2>Uses</h2>
+
+<<INCLUDES>>=
+@
 
 <<BALREV>>=
+-MODULE BALREV
 -PUBLIC BALREV()
          DEFINE('BALREV(S)')                               :(BALREV_END)
 *

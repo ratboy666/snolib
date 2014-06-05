@@ -2,6 +2,10 @@
 
 [[MAX(X,Y)]] will return the maximum of [[X]] and [[Y]]. [[MIN(X,Y)]]
 returns the minimum of [[X]] and [[Y]].
+
+<h2>Uses</h2>
+
+<<INCLUDES>>=
 @
 
 <<unit_test>>=
@@ -14,6 +18,7 @@ END
 @
 
 <<>>=
+-MODULE MAX
 <<INCLUDES>>
 -STITL MAX
 -EJECT

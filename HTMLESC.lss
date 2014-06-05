@@ -4,18 +4,18 @@ HTML (web) escaping. Provides three functions to escape a string in
 HTML, JS and URL encodings.
 
 <h2>Uses</h2>
-<a href="REPL.html">REPL</a><br>
-<a href="SDIFF.html">SDIFF</a><br>
-<a href="HEX.html">HEX</a><br>
-<a href="CH.html">CH</a><br>
-<a href="CHARS.html">HEX</a>
+<a href="CH">CH</a><br>
+<a href="CHARS">CHARS</a><br>
+<a href="HEX">HEX</a><br>
+<a href="REPL">REPL</a><br>
+<a href="SDIFF">SDIFF</a><br>
 
 <<INCLUDES>>=
--INCLUDE 'REPL.INC'
--INCLUDE 'SDIFF.INC'
--INCLUDE 'HEX.INC'
 -INCLUDE 'CH.INC'
 -INCLUDE 'CHARS.INC'
+-INCLUDE 'HEX.INC'
+-INCLUDE 'REPL.INC'
+-INCLUDE 'SDIFF.INC'
 @
 
 <<unit_test>>=
@@ -104,6 +104,7 @@ END_URL_ESCAPE
 @
 
 <<>>=
+-MODULE HTMLESC
 <<INCLUDES>>
 -STITL HTMLESC
 -EJECT

@@ -2,7 +2,7 @@
 -INCLUDE 'HEX.INC'
 -STITL CH
 -EJECT
--LINE 46 "CH.lss"
+-LINE 47 "CH.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -21,6 +21,7 @@
 * CH.lss
 *
 -LINE 14 "CH.lss"
+-MODULE CH
 -PUBLIC CH()
          DEFINE('CH(H)C,P')
 *

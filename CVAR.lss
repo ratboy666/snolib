@@ -64,18 +64,19 @@ Example declarations:
 ]]
 
 <h2>Uses</h2>
-<a href="P64.html">P64</a><br>
-<a href="CHARS.html">CHARS</a><br>
-<a href="HASH.html">HASH</a>
+<a href="CHARS">CHARS</a><br>
+<a href="HASH">HASH</a><br>
+<a href="P64">P64</a><br>
 
 <<INCLUDES>>=
--USES HASH()
--INCLUDE 'P64.INC'
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'HASH.INC'
+-INCLUDE 'P64.INC'
 @
 
 <<CVAR>>=
+-MODULE CVAR
+-USES HASH()
 %SET (BITS, HOST(HOST_POINTER_BITS))
 -PUBLIC CVART(), CV_OFFSET(), CV_SIZE(), CV_DIM(), CV_SIGN(), CV_ISINT()
          DATA('CVART(CV_OFFSET,CV_SIZE,CV_DIM,CV_SIGN,CV_ISINT)')

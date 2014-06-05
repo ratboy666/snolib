@@ -1,8 +1,9 @@
+-MODULE LOG
 -LINE 12 "LOG.lss"
 -INCLUDE 'DEXP.INC'
 -STITL LOG
--EJECT
 -LINE 32 "LOG.lss"
+-EJECT
 *
 ************************************************************************
 *                                                                      *

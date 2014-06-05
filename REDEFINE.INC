@@ -1,7 +1,7 @@
 -STITL REDEFINE
 -EJECT
 *
--LINE 53 "REDEFINE.lss"
+-LINE 58 "REDEFINE.lss"
 ************************************************************************
 *                                                                      *
 *  ######   #######  ######   #######  #######  ###  #     #  #######  *
@@ -25,7 +25,8 @@
 * - FACTOR REDEFINECOMMON() TO ALLOW REDEFINE() AND REDEFINERESTORE()
 *   TO SHARE CODE
 *
--LINE 15 "REDEFINE.lss"
+-LINE 19 "REDEFINE.lss"
+-MODULE REDEFINE
 -PUBLIC REDEFINE(), REDEFINERESTORE()
          DEFINE('REDEFINE(OP,DEF,LBL)NAME,N,FLAG')
          DEFINE('REDEFINERESTORE(OP,DEF)NAME,N,FLAG')

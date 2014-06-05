@@ -1,7 +1,7 @@
 -STITL SWAP
 -EJECT
 *
--LINE 31 "SWAP.lss"
+-LINE 37 "SWAP.lss"
 ************************************************************************
 *                                                                      *
 *                   #####   #     #     #     ######                   *
@@ -18,7 +18,8 @@
 *
 * SWAP.lss
 *
--LINE 7 "SWAP.lss"
+-LINE 12 "SWAP.lss"
+-MODULE SWAP
 -PUBLIC SWAP()
          DEFINE('SWAP(SWAP_ARG1,SWAP_ARG2)')                 :(SWAP_END)
 *

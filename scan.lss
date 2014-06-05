@@ -46,17 +46,18 @@ line. Not using G only substitutes the first occurence on each of the
 lines.
 
 <h2>Uses</h2>
-<a href="SLOAD.html">SLOAD</a><br>
-<a href="HOST.html">HOST</a>
+<a href="HOST">HOST</a><br>
+<a href="SLOAD">SLOAD</a><br>
 
 <<INCLUDES>>=
--INCLUDE 'SLOAD.INC'
 -INCLUDE 'HOST.INC'
+-INCLUDE 'SLOAD.INC'
 @
 
 <<>>=
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
+-PROGRAM SCAN
 -TITLE SCAN
 START
 <<INCLUDES>>

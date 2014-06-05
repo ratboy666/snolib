@@ -85,22 +85,23 @@ Example declarations:
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 <h2>Uses</h2>
-<a href="P64.html">P64</a><br>
-<a href="CHARS.html">CHARS</a><br>
-<a href="HASH.html">HASH</a>
+<a href="CHARS">CHARS</a><br>
+<a href="HASH">HASH</a><br>
+<a href="P64">P64</a><br>
 </font></p>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;INCLUDES&raquo;&equiv;</b>
--USES HASH()
--INCLUDE &#39;P64.INC&#39;
 -INCLUDE &#39;CHARS.INC&#39;
 -INCLUDE &#39;HASH.INC&#39;
+-INCLUDE &#39;P64.INC&#39;
 <b>@</b>
 </font></pre></div>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;CVAR&raquo;&equiv;</b>
+-MODULE CVAR
+-USES HASH()
 %SET (BITS, HOST(HOST_POINTER_BITS))
 -PUBLIC CVART(), CV_OFFSET(), CV_SIZE(), CV_DIM(), CV_SIGN(), CV_ISINT()
          DATA(&#39;CVART(CV_OFFSET,CV_SIZE,CV_DIM,CV_SIGN,CV_ISINT)&#39;)
@@ -278,7 +279,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Wed Jun  4 18:55:36 EDT 2014</p></td><td><p align=right>
+Thu Jun  5 13:34:19 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

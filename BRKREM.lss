@@ -5,13 +5,14 @@ if that pattern would succeed and will match the remainder of the
 subject otherwise.
 
 <h2>Uses</h2>
-<a href="SDIFF.html">SDIFF</a>
+<a href="SDIFF">SDIFF</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'SDIFF.INC'
 @
 
 <<BRKREM>>=
+-MODULE BRKREM
 -PUBLIC BRKREM()
          DEFINE('BRKREM(S)CS')                             :(BRKREM_END)
 *

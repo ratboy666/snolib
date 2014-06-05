@@ -1,7 +1,7 @@
 -STITL BLEND
 -EJECT
 *
--LINE 44 "BLEND.lss"
+-LINE 50 "BLEND.lss"
 ************************************************************************
 *                                                                      *
 *              ######   #        #######  #     #  ######              *
@@ -18,7 +18,8 @@
 *
 * BLEND.lss
 *
--LINE 8 "BLEND.lss"
+-LINE 13 "BLEND.lss"
+-MODULE BLEND
 -PUBLIC BLEND()
          DEFINE('BLEND(S1,S2)T1,T2,ABC,XYZ,L1,L2')
          &ALPHABET LEN(128) . ABC LEN(128) . XYZ

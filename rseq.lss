@@ -2,6 +2,11 @@
 
 Add sequence numbers on right for FORTRAN.
 
+<h2>Uses</h2>
+
+<<INCLUDES>>=
+@
+
 <<rseq>>=
          TERMINAL = 'RSEQ (SUN JUN 16 14:13:20 EDT 2013)'
 *
@@ -20,6 +25,7 @@ END START
 <<>>=
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
+-PROGRAM RSEQ
 -TITLE RSEQ
 START
 *

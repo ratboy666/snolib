@@ -1,7 +1,7 @@
 -STITL DAY
 -EJECT
 *
--LINE 53 "DAY.lss"
+-LINE 59 "DAY.lss"
 ************************************************************************
 *                                                                      *
 *                      ######      #     #     #                       *
@@ -18,7 +18,8 @@
 *
 * DAY.lss
 *
--LINE 8 "DAY.lss"
+-LINE 13 "DAY.lss"
+-MODULE DAY
 -PUBLIC DAY()
          DEFINE('DAY(DATE)M,Y,CD')
          YEAR_ = 365

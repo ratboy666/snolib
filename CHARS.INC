@@ -1,7 +1,7 @@
 -STITL CHARS
 -EJECT
 *
--LINE 95 "CHARS.lss"
+-LINE 101 "CHARS.lss"
 ************************************************************************
 *                                                                      *
 *              #####   #     #     #     ######    #####               *
@@ -21,7 +21,8 @@
 *
 * CHARS.lss
 *
--LINE 10 "CHARS.lss"
+-LINE 15 "CHARS.lss"
+-MODULE CHARS
 -PUBLIC CHARS_NUL, CHARS_SOH, CHARS_STX, CHARS_ETX, CHARS_EOT, CHARS_ENQ
 -PUBLIC CHARS_ACK, CHARS_BEL, CHARS_HT, CHARS_BS, CHARS_NL, CHARS_VT
 -PUBLIC CHARS_NP, CHARS_CR, CHARS_SO, CHARS_SI, CHARS_DLE, CHARS_DC1
@@ -64,13 +65,13 @@ CHARS    CHARS_NUL = CHAR( 0)
          CHARS_US  = CHAR(31)
          CHARS_SP  = CHAR(32)
          CHARS_DEL = CHAR(127)
--LINE 63 "CHARS.lss"
+-LINE 69 "CHARS.lss"
 *
          CHARS_TAB   = CHARS_HT
          CHARS_SPACE = CHARS_SP
          CHARS_FF    = CHARS_NP
          CHARS_LF    = CHARS_NL
--LINE 73 "CHARS.lss"
+-LINE 79 "CHARS.lss"
 *
          &ALPHABET LEN(32) .  CHARS_CONTROL
 +                  LEN(95) .  CHARS_PRINTABLE

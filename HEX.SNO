@@ -2,7 +2,7 @@
 -INCLUDE 'BLEND.INC'
 -STITL HEX
 -EJECT
--LINE 50 "HEX.lss"
+-LINE 51 "HEX.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -21,6 +21,7 @@
 * HEX.lss
 *
 -LINE 17 "HEX.lss"
+-MODULE HEX
 -PUBLIC HEX()
          DEFINE('HEX(S)S2')
 *

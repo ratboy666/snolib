@@ -1,10 +1,11 @@
+-MODULE JIT
 -LINE 16 "JIT.lss"
 -INCLUDE 'CRACK.INC'
--INCLUDE 'SEQ.INC'
 -INCLUDE 'P64.INC'
+-INCLUDE 'SEQ.INC'
 -STITL JIT
--EJECT
 -LINE 2202 "JIT.lss"
+-EJECT
 *
 ************************************************************************
 *                                                                      *

@@ -10,6 +10,7 @@
 -INCLUDE 'SDIFF.INC'
 -INCLUDE 'READFILE.INC'
 -INCLUDE 'HOST.INC'
+-INCLUDE 'SIZEA.INC'
 
 * ce: .msnobol4;
 
@@ -98,11 +99,13 @@ loop     r arb . l (q | qq) $ delim arb *delim rem . r :f(done)
 done     process(r) :(top)
 
 * output the includes
-incout   a = sort(incs) :f(end)
-         i = 1
-inco2    a<i,1> :f(end)
-         output = '-INCLUDE ' q a<i,1> q
-         i = i + 1 :(inco2)
+incout   output =
++           json_encode((sort(keys_in_table(incs)), array0)) :s(end)
+*        a = sort(incs) :f(end)
+*        i = 1
+*inco2   a<i,1> :f(end)
+*        output = '-INCLUDE ' q a<i,1> q
+*        i = i + 1 :(inco2)
 
 * process string s looking for functions/variables
 process  &fullscan = 1

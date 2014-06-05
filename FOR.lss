@@ -50,10 +50,16 @@ failure of TEST, resulting in a RETURN.
 
 This component also implements [[WHILE]] and [[IF]].
 
+<h2>Uses</h2>
+
 <h2>See Also</h2>
 <a href="SEQ.html">SEQ</a>
 
+<<INCLUDES>>=
+@
+
 <<FOR>>=
+-MODULE FOR
 -PUBLIC CODE_(), WHILE_COMPILE(), IF_COMPILE(), FOR_COMPILE()
 -PUBLIC STMT_COMPILE(), PROG2_COMPILE(), SET_RVAL(), EVAL_CODE_()
 -PUBLIC FOR(), WHILE()

@@ -1,7 +1,8 @@
+-MODULE ENDCARD
 -STITL ENDCARD
 -EJECT
+-LINE 26 "ENDCARD.lss"
 ************************************************************************
--LINE 21 "ENDCARD.lss"
 *                                                                      *
 *    #######  #     #  ######    #####      #     ######   ######      *
 *    #        ##    #  #     #  #     #    # #    #     #  #     #     *
@@ -19,5 +20,5 @@
 *
 * CE: .MSNOBOL4;
 *
--LINE 6 "ENDCARD.lss"
+-LINE 11 "ENDCARD.lss"
 END

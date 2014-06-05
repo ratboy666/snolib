@@ -50,29 +50,29 @@ psql process is no longer running. Setting [[&ERRLIMIT]] converts
 the error into a failure, which is propagated back to [[PSQL_OPEN()]]
 and the calling program.
 
+<h2>Uses</h2>
+<a href="BRKREM">BRKREM</a><br>
+<a href="CHARS">CHARS</a><br>
+<a href="COUNT">COUNT</a><br>
+<a href="CSNOBOL4">CSNOBOL4</a><br>
+<a href="REPL">REPL</a><br>
+<a href="SCOOP">SCOOP</a><br>
+<a href="SEQ">SEQ</a><br>
+<a href="UNIQUE">UNIQUE</a><br>
+
 <h2>See Also</h2>
 <a href="HASH.html">HASH</a><br>
 <a href="CSNOBOL4.html">CSNOBOL4</a><br>
 <a href="BQ.html">BQ</a>
 
-<h2>Uses</h2>
-<a href="SCOOP.html">SCOOP</a><br>
-<a href="REPL.html">REPL</a><br>
-<a href="COUNT.html">COUNT</a><br>
-<a href="CHARS.html">CHARS</a><br>
-<a href="SEQ.html">SEQ</a><br>
-<a href="CSNOBOL4.html">CSNOBOL4</a><br>
-<a href="BRKREM.html">BRKREM</a><br>
-<a href="UNIQUE.html">UNIQUE</a>
-
 <<INCLUDES>>=
--INCLUDE 'SCOOP.INC'
--INCLUDE 'REPL.INC'
--INCLUDE 'COUNT.INC'
--INCLUDE 'CHARS.INC'
--INCLUDE 'SEQ.INC'
--INCLUDE 'CSNOBOL4.INC'
 -INCLUDE 'BRKREM.INC'
+-INCLUDE 'CHARS.INC'
+-INCLUDE 'COUNT.INC'
+-INCLUDE 'CSNOBOL4.INC'
+-INCLUDE 'REPL.INC'
+-INCLUDE 'SCOOP.INC'
+-INCLUDE 'SEQ.INC'
 -INCLUDE 'UNIQUE.INC'
 @
 
@@ -113,6 +113,7 @@ for the near term. The <i>psql</i> process is started and can be left
 open for a long duration (for the entire application execution).
 
 <<PSQL>>=
+-MODULE PSQL
 %SET (USE_PTY,1)
 *
 * THESE THREE ARE FUNCTIONS -- SIMPLY EASIER THAT WAY.

@@ -1,7 +1,7 @@
 -STITL LINK
 -EJECT
 *
--LINE 61 "LINK.lss"
+-LINE 67 "LINK.lss"
 ************************************************************************
 *                                                                      *
 *                    #        ###  #     #  #    #                     *
@@ -18,7 +18,8 @@
 *
 * LINK.lss
 *
--LINE 8 "LINK.lss"
+-LINE 13 "LINK.lss"
+-MODULE LINK
 -PUBLIC LINK(), NEXT()
          DATA('LINK(VALUE,NEXT)')
 -PUBLIC CONS(), CAR(), CDR()

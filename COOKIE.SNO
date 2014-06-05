@@ -1,13 +1,13 @@
 -LINE 49 "COOKIE.lss"
+-INCLUDE 'CHARS.INC'
+-INCLUDE 'DEXP.INC'
 -INCLUDE 'HASH.INC'
 -INCLUDE 'TIME.INC'
--INCLUDE 'DEXP.INC'
--INCLUDE 'CHARS.INC'
 -INCLUDE 'TRIMB.INC'
 -INCLUDE 'VDIFFER.INC'
 -STITL COOKIE
 -EJECT
--LINE 211 "COOKIE.lss"
+-LINE 212 "COOKIE.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -26,6 +26,7 @@
 * COOKIE.lss
 *
 -LINE 58 "COOKIE.lss"
+-MODULE COOKIE
 -PUBLIC NEW_COOKIE_JAR(), NEW_COOKIE(), COOKIE_SET_VALUE()
 -PUBLIC COOKIE_VALUE(), COOKIE_SET_CRUMB(), COOKIE_GET_CRUMB()
 -PUBLIC PUT_COOKIE_IN_JAR(), GET_COOKIE_FROM_JAR(), COOKIES_IN_JAR()

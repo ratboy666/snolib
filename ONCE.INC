@@ -2,7 +2,7 @@
 -INCLUDE 'UNIQUE.INC'
 -STITL ONCE
 -EJECT
--LINE 41 "ONCE.lss"
+-LINE 42 "ONCE.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -21,6 +21,7 @@
 * ONCE.lss
 *
 -LINE 17 "ONCE.lss"
+-MODULE ONCE
 -PUBLIC ONCE()
          DEFINE('ONCE(ID)NAME')                              :(ONCE_END)
 ONCE     ONCE = IDENT(ID, NULL)

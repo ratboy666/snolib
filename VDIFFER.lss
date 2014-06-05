@@ -3,11 +3,15 @@
 [[VDIFFER(P1,P2)]] returns P1 if [[DIFFER(P1,P2)]]. Built into
 CSNOBOL4, but not in SPITBOL.EXE.
 
+<h2>Uses</h2>
+<a href="SYSTEM">SYSTEM</a><br>
+
 <<INCLUDES>>= 
 -INCLUDE 'SYSTEM.INC'
 @
 
 <<VDIFFER>>=
+-MODULE VDIFFER
          SYSTEM() 'CSNOBOL4'                             :S(VDIFFER_END)
 -PUBLIC VDIFFER()
          DEFINE('VDIFFER(P1,P2)')                         :(VDIFFER_END)

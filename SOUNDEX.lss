@@ -2,7 +2,13 @@
 
 Return NARA SOUNDEX code.
 
+<h2>Uses</h2>
+
+<<INCLUDES>>=
+@
+
 <<SOUNDEX>>=
+-MODULE SOUNDEX
 -PUBLIC SOUNDEX()
          DEFINE('SOUNDEX(STR)SDXMAP,INIT,CH')             :(SOUNDEX_END)
 *

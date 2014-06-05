@@ -7,7 +7,7 @@ As well, unary operator <code>%</code> is defined to produce arrays
 from strings: <code>%'A,B,C'</code> creates a three-element array.
 
 <h2>Uses</h2>
-<a href="COUNT.html">COUNT</a>
+<a href="COUNT">COUNT</a><br>
 
 <h2>See Also</h2>
 <a href="STROUT.html">STROUT</a>
@@ -17,6 +17,7 @@ from strings: <code>%'A,B,C'</code> creates a three-element array.
 @
 
 <<CRACK>>=
+-MODULE CRACK
 -PUBLIC CRACK(), %1
          DEFINE('CRACK_1(S)P')
          DEFINE('CRACK(S,B,F)I,PAT,N')

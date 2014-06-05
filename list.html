@@ -16,15 +16,14 @@ list knows to use terminal hardware scrolling if available.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 <h2>Uses</h2>
-<a href="CHARS.html">CHARS</a><br>
-<a href="DISPLAY.html">DISPLAY</a><br>
-<a href="GETKEY.html">GETKEY</a><br>
-<a href="HOST.html">HOST</a><br>
-<a href="LOGIC.html">LOGIC</a><br>
-<a href="BQ.html">BQ</a><br>
-<a href="REPL.html">REPL</a><br>
-<a href="READLINE.html">READLINE</a><br>
-<a href="SEQ.html">SEQ</a>
+<a href="CHARS">CHARS</a><br>
+<a href="DISPLAY">DISPLAY</a><br>
+<a href="GETKEY">GETKEY</a><br>
+<a href="HOST">HOST</a><br>
+<a href="LOGIC">LOGIC</a><br>
+<a href="READLINE">READLINE</a><br>
+<a href="REPL">REPL</a><br>
+<a href="SEQ">SEQ</a><br>
 </font></p>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
@@ -34,9 +33,8 @@ list knows to use terminal hardware scrolling if available.
 -INCLUDE &#39;GETKEY.INC&#39;
 -INCLUDE &#39;HOST.INC&#39;
 -INCLUDE &#39;LOGIC.INC&#39;
--INCLUDE &#39;BQ.INC&#39;
--INCLUDE &#39;REPL.INC&#39;
 -INCLUDE &#39;READLINE.INC&#39;
+-INCLUDE &#39;REPL.INC&#39;
 -INCLUDE &#39;SEQ.INC&#39;
 <b>@</b>
 </font></pre></div>
@@ -216,6 +214,7 @@ END START
 <b>&laquo;&raquo;&equiv;</b>
 <font color="#818181"><i>#!/usr/bin/bash</i></font>
          exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-PROGRAM LIST
 -TITLE LIST
 START
 <b>&laquo;INCLUDES&raquo;</b>
@@ -247,7 +246,7 @@ START
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Sun Jun  1 23:13:37 EDT 2014</p></td><td><p align=right>
+Thu Jun  5 13:34:37 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

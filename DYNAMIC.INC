@@ -4,7 +4,7 @@
 -INCLUDE 'REPL.INC'
 -STITL DYNAMIC
 -EJECT
--LINE 196 "DYNAMIC.lss"
+-LINE 197 "DYNAMIC.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -25,6 +25,7 @@
 * DYNAMIC.lss
 *
 -LINE 17 "DYNAMIC.lss"
+-MODULE DYNAMIC
 -PUBLIC COMPILE_COBOL(), COMPILE_FORTRAN(), COMPILE_SCHEME()
 -PUBLIC COMPILE_DYNAMIC(), LIBS_FORTRAN(), LIBS_COBOL(), LIBS_SCHEME()
 DYNAMIC  DEFINE('COMPILE_COBOL(SRC)CMD,COBC')
@@ -35,18 +36,18 @@ DYNAMIC  DEFINE('COMPILE_COBOL(SRC)CMD,COBC')
          DEFINE('LIBS_COBOL()')
          DEFINE('LIBS_SCHEME()')                  :(COMPILE_DYNAMIC_END)
 *
--LINE 32 "DYNAMIC.lss"
+-LINE 33 "DYNAMIC.lss"
 LIBS_FORTRAN
          LIBS_FORTRAN = '-lgfortran'                           :(RETURN)
 *
--LINE 41 "DYNAMIC.lss"
+-LINE 42 "DYNAMIC.lss"
 LIBS_COBOL
          LIBS_COBOL = BQ('cob-config --libs')                  :(RETURN)
 *
--LINE 49 "DYNAMIC.lss"
+-LINE 50 "DYNAMIC.lss"
 LIBS_SCHEME
          LIBS_SCHEME = 'prog_.o -lgambc -ldl -lm -lutil'       :(RETURN)
--LINE 58 "DYNAMIC.lss"
+-LINE 59 "DYNAMIC.lss"
 *
 * DYNAMIC COMPILE COBOL SOURCE
 *
@@ -69,7 +70,7 @@ COMPILE_COBOL
          DELETE(SRC '.c')
          DELETE(SRC '.c.h')
          DELETE(SRC '.c.l.h')                                  :(RETURN)
--LINE 89 "DYNAMIC.lss"
+-LINE 90 "DYNAMIC.lss"
 *
 * DYNAMIC COMPILE FORTRAN SOURCE
 *
@@ -78,7 +79,7 @@ COMPILE_FORTRAN
          TERMINAL = DIFFER(DYNAMIC_DEBUG) CMD
          HOST(HOST_SYSCMD, CMD)                     :F(FRETURN)S(RETURN)
 *
--LINE 104 "DYNAMIC.lss"
+-LINE 105 "DYNAMIC.lss"
 COMPILE_SCHEME
          CMD = 'gsc -c ' SRC
          TERMINAL = DIFFER(DYNAMIC_DEBUG) CMD
@@ -99,7 +100,7 @@ COMPILE_SCHEME
 *
          DELETE(SRC)
          DELETE('prog_.c')                                     :(RETURN)
--LINE 130 "DYNAMIC.lss"
+-LINE 131 "DYNAMIC.lss"
 *
 * DYNAMIC COMPILE C SOURCE
 *

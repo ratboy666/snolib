@@ -2,6 +2,11 @@
 
 Remove line numbers (de-retain) from [[code]] SAVE file.
 
+<h2>Uses</h2>
+
+<<INCLUDES>>=
+@
+
 <<deretn>>=
          TERMINAL = 'DERETN (FRI NOV 22 00:38:55 EST 2013)'
 *
@@ -16,6 +21,7 @@ END START
 <<>>=
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
+-PROGRAM DERETN
 -TITLE DERETN
 START
 *

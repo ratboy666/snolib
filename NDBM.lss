@@ -4,7 +4,13 @@ Interface to NDBM from CSNOBOL4. Allows permanent keyed storage
 on disk.  Hashed, so performance may be better than TABLE usage
 (for very large TABLEs).
 
+<h2>Uses</h2>
+
+<<INCLUDES>>=
+@
+
 <<NDBM>>=
+-MODULE NDBM
 NDBM_LOAD
 *
 -PUBLIC DBM_INSERT, DBM_REPLACE

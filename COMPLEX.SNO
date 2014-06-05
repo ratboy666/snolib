@@ -1,7 +1,7 @@
 -STITL COMPLEX
 -EJECT
 *
--LINE 52 "COMPLEX.lss"
+-LINE 58 "COMPLEX.lss"
 ************************************************************************
 *                                                                      *
 *                                                                      *
@@ -20,7 +20,8 @@
 *
 * COMPLEX.lss
 *
--LINE 6 "COMPLEX.lss"
+-LINE 11 "COMPLEX.lss"
+-MODULE COMPLEX
 -PUBLIC COMPLEX(), R(), I()
          DATA('COMPLEX(R,I)')
 *

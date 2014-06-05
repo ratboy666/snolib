@@ -52,28 +52,28 @@ at a future date. (see DDT.E)
 additional tools to be incorporated while debugging.
 
 <h2>Uses</h2>
-<a href="CHARS.html">CHARS</a><br>
-<a href="HOST.html">HOST</a><br>
-<a href="READLINE.html">READLINE</a><br>
-<a href="TRIMB.html">TRIMB</a><br>
-<a href="VDIFFER.html">VDIFFER</a><br>
-<a href="QUOTE.html">QUOTE</a><br>
-<a href="FREEZE.html">FREEZE</a><br>
-<a href="SLOAD.html">SLOAD</a>
+<a href="CHARS">CHARS</a><br>
+<a href="FREEZE">FREEZE</a><br>
+<a href="HOST">HOST</a><br>
+<a href="QUOTE">QUOTE</a><br>
+<a href="READLINE">READLINE</a><br>
+<a href="SLOAD">SLOAD</a><br>
+<a href="TRIMB">TRIMB</a><br>
+<a href="VDIFFER">VDIFFER</a><br>
 
 <<INCLUDES>>=
--WEAK DSERVE_APPNAME
 -INCLUDE 'CHARS.INC'
+-INCLUDE 'FREEZE.INC'
 -INCLUDE 'HOST.INC'
+-INCLUDE 'QUOTE.INC'
 -INCLUDE 'READLINE.INC'
+-INCLUDE 'SLOAD.INC'
 -INCLUDE 'TRIMB.INC'
 -INCLUDE 'VDIFFER.INC'
--INCLUDE 'QUOTE.INC'
--INCLUDE 'FREEZE.INC'
--INCLUDE 'SLOAD.INC'
 @
 
 <<DDT>>=
+-WEAK DSERVE_APPNAME
 -USES SLOAD()
 -PUBLIC DDT(), DEBUG(), DDT_LOADED, DDT_ACTIVE
          DEFINE('DDT(S)')
@@ -699,6 +699,7 @@ END
 @
 
 <<>>=
+-MODULE DDT
 <<INCLUDES>>
 -STITL DDT
 -EJECT

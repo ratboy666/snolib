@@ -5,15 +5,14 @@ suffix. [[STACK('A')]] creates functions [[PUSH_A(V)]], [[POP_A()]],
 and [[TOP_A()]].
 
 <h2>Uses</h2>
-<a href="LINK.html">LINK</a><br>
-<a href="REPL.html">REPL</a>
+<a href="REPL">REPL</a><br>
 
 <<INCLUDES>>=
--INCLUDE 'LINK.INC'
 -INCLUDE 'REPL.INC'
 @
 
 <<STACK>>=
+-MODULE STACK
 -PUBLIC STACK()
          DEFINE('STACK(SUF)S')
          STACK()

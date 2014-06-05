@@ -7,7 +7,13 @@ to a character-by-character replacement ala [[REPLACE]]) on the string
 scanned and the replaced string are not reexamined for instances of
 [[S2]].
 
+<h2>Uses</h2>
+
+<<INCLUDES>>=
+@
+
 <<REPL>>=
+-MODULE REPL
 -PUBLIC REPL()
          DEFINE('REPL(S1,S2,S3)C,T,FINDC')                   :(REPL_END)
 *

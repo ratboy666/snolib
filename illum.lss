@@ -5,16 +5,18 @@ character, and outputs the character (from [[banner]]) and the rest
 of the sentence boxed with UTF-8 linedraw characters.
 
 <h2>Uses</h2>
-<a href="BQ.html">BQ</a><br>
-<a href="CRACK.html">CRACK</a><br>
-<a href="SEQ.html">SEQ</a><br>
-<a href="TRIMB.html">TRIMB</a>
+<a href="BQ">BQ</a><br>
+<a href="CRACK">CRACK</a><br>
+<a href="SEQ">SEQ</a><br>
+<a href="TRIMB">TRIMB</a><br>
+<a href="VDIFFER">VDIFFER</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'BQ.INC'
 -INCLUDE 'CRACK.INC'
 -INCLUDE 'SEQ.INC'
 -INCLUDE 'TRIMB.INC'
+-INCLUDE 'VDIFFER.INC'
 @
 
 <<ILLUM>>=
@@ -42,6 +44,7 @@ END START
 <<>>=
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
+-PROGRAM ILLUM
 -TITLE ILLUM
 START
 <<INCLUDES>>

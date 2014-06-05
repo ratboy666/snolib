@@ -2,7 +2,13 @@
 
 [[GCD(I,J)]] returns the GCD of [[I]] and [[J]].
 
+<h2>Uses</h2>
+
+<<INCLUDES>>=
+@
+
 <<GCD>>=
+-MODULE GCD
 -PUBLIC GCD()
          DEFINE('GCD(I,J)')                                   :(GCD_END)
 *

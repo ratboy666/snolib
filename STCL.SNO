@@ -1,7 +1,7 @@
 -STITL STCL
 -EJECT
 *
--LINE 37 "STCL.lss"
+-LINE 43 "STCL.lss"
 ************************************************************************
 *                                                                      *
 *                    #####   #######   #####   #                       *
@@ -23,7 +23,8 @@
 *
 * STCL.lss
 *
--LINE 6 "STCL.lss"
+-LINE 11 "STCL.lss"
+-MODULE TCL
 STCL_LOAD
 *
 -PUBLIC STCL_CREATEINTERP(), STCL_EVALFILE(), STCL_GETVAR()

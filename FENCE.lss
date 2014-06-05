@@ -28,13 +28,14 @@ value assignment.
 ]]
 
 <h2>Uses</h2>
-<a href="UNIQUE.html">UNIQUE</a>
+<a href="UNIQUE">UNIQUE</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'UNIQUE.INC'
 @
 
 <<FENCE>>=
+-MODULE FENCE
 -PUBLIC FENCE()
         DEFINE('FENCE(P)N')                                 :(FENCE_END)
 *

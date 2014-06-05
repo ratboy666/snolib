@@ -2,7 +2,7 @@
 -INCLUDE 'LINK.INC'
 -STITL COPYL
 -EJECT
--LINE 46 "COPYL.lss"
+-LINE 47 "COPYL.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -21,6 +21,7 @@
 * COPYL.lss
 *
 -LINE 14 "COPYL.lss"
+-MODULE COPYL
 -PUBLIC COPYL()
          DEFINE('COPYL(L)T')                                :(COPYL_END)
 *

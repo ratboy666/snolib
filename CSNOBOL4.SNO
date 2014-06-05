@@ -1,9 +1,10 @@
--LINE 19 "CSNOBOL4.lss"
--INCLUDE 'P64.INC'
+-MODULE CSNOBOL4
+-LINE 23 "CSNOBOL4.lss"
 -INCLUDE 'FFI.INC'
+-INCLUDE 'P64.INC'
 -STITL CSNOBOL4
+-LINE 612 "CSNOBOL4.lss"
 -EJECT
--LINE 608 "CSNOBOL4.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -21,24 +22,24 @@
 *
 * CSNOBOL4.lss
 *
--LINE 24 "CSNOBOL4.lss"
--SNOBOL SLOAD('BQ.INC')
--LINE 25 "CSNOBOL4.lss"
--SNOBOL SLOAD('DYNAMIC.INC')
--LINE 26 "CSNOBOL4.lss"
--SNOBOL SLOAD('WRAPPER.INC')
--LINE 27 "CSNOBOL4.lss"
--SNOBOL SLOAD('CRACK.INC')
 -LINE 28 "CSNOBOL4.lss"
--SNOBOL SLOAD('SEQ.INC')
+-SNOBOL SLOAD('BQ.INC')
 -LINE 29 "CSNOBOL4.lss"
--SNOBOL TERMINAL = 'CSNOBOL4 (MON NOV 11 12:50:40 EST 2013)'
+-SNOBOL SLOAD('DYNAMIC.INC')
 -LINE 30 "CSNOBOL4.lss"
+-SNOBOL SLOAD('WRAPPER.INC')
+-LINE 31 "CSNOBOL4.lss"
+-SNOBOL SLOAD('CRACK.INC')
+-LINE 32 "CSNOBOL4.lss"
+-SNOBOL SLOAD('SEQ.INC')
 -LINE 33 "CSNOBOL4.lss"
+-SNOBOL TERMINAL = 'CSNOBOL4 (MON NOV 11 12:50:40 EST 2013)'
+-LINE 34 "CSNOBOL4.lss"
+-LINE 37 "CSNOBOL4.lss"
 -EMBED C 'format'
-#line 37 "CSNOBOL4.lss"
+#line 41 "CSNOBOL4.lss"
 -SNOBOL WRAPPER_STARTFILE(.EMBED)
-#line 38 "CSNOBOL4.lss"
+#line 42 "CSNOBOL4.lss"
 
 /* Adds FORTRAN IV FORMAT to CSNOBOL4 */
 
@@ -63,7 +64,7 @@ static int createpipe(void)
 }
 
 -SNOBOL C_WRAPPER_PROTO('CREATEPIPE()INTEGER', .EMBED)
-#line 62 "CSNOBOL4.lss"
+#line 66 "CSNOBOL4.lss"
 
 static int getpipefd(int n)
 {
@@ -73,7 +74,7 @@ static int getpipefd(int n)
 }
 
 -SNOBOL C_WRAPPER_PROTO('GETPIPEFD(INTEGER)INTEGER', .EMBED)
-#line 71 "CSNOBOL4.lss"
+#line 75 "CSNOBOL4.lss"
 
 static int get_errno(void)
 {
@@ -81,7 +82,7 @@ static int get_errno(void)
 }
 
 -SNOBOL C_WRAPPER_PROTO('GET_ERRNO()INTEGER', .EMBED)
-#line 78 "CSNOBOL4.lss"
+#line 82 "CSNOBOL4.lss"
 
 /* fd_set holds a set of file descriptors. On 64 bit Linux, this is
  * a 128 byte object. This may be as little as 4 bytes on some systems
@@ -94,7 +95,7 @@ static int sizeof_timeval(void)
 }
 
 -SNOBOL C_WRAPPER_PROTO('SIZEOF_TIMEVAL()INTEGER', .EMBED)
-#line 90 "CSNOBOL4.lss"
+#line 94 "CSNOBOL4.lss"
 
 static int set_timeval_(int sec, int usec)
 {
@@ -104,7 +105,7 @@ static int set_timeval_(int sec, int usec)
 }
 
 -SNOBOL C_WRAPPER_PROTO('SET_TIMEVAL_(INTEGER,INTEGER)', .EMBED)
-#line 99 "CSNOBOL4.lss"
+#line 103 "CSNOBOL4.lss"
 
 static int sizeof_fd_set(void)
 {
@@ -112,7 +113,7 @@ static int sizeof_fd_set(void)
 }
 
 -SNOBOL C_WRAPPER_PROTO('SIZEOF_FD_SET()INTEGER', .EMBED)
-#line 106 "CSNOBOL4.lss"
+#line 110 "CSNOBOL4.lss"
 
 static int fd_isset_(int fd)
 {
@@ -120,7 +121,7 @@ static int fd_isset_(int fd)
 }
 
 -SNOBOL C_WRAPPER_PROTO('FD_ISSET_(INTEGER)INTEGER', .EMBED)
-#line 113 "CSNOBOL4.lss"
+#line 117 "CSNOBOL4.lss"
 
 static void fd_zero_(void)
 {
@@ -128,7 +129,7 @@ static void fd_zero_(void)
 }
 
 -SNOBOL C_WRAPPER_PROTO('FD_ZERO_()', .EMBED)
-#line 120 "CSNOBOL4.lss"
+#line 124 "CSNOBOL4.lss"
 
 static void fd_clr(int fd)
 {
@@ -136,7 +137,7 @@ static void fd_clr(int fd)
 }
 
 -SNOBOL C_WRAPPER_PROTO('FD_CLR_(INTEGER)', .EMBED)
-#line 127 "CSNOBOL4.lss"
+#line 131 "CSNOBOL4.lss"
 
 static void fd_set_(int fd)
 {
@@ -144,7 +145,7 @@ static void fd_set_(int fd)
 }
 
 -SNOBOL C_WRAPPER_PROTO('FD_SET_(INTEGER)', .EMBED)
-#line 134 "CSNOBOL4.lss"
+#line 138 "CSNOBOL4.lss"
 
 static int clear_errno(void)
 {
@@ -152,7 +153,7 @@ static int clear_errno(void)
 }
 
 -SNOBOL C_WRAPPER_PROTO('CLEAR_ERRNO()', .EMBED)
-#line 141 "CSNOBOL4.lss"
+#line 145 "CSNOBOL4.lss"
 
 static int waitpid_(int pid, int options)
 {
@@ -160,7 +161,7 @@ static int waitpid_(int pid, int options)
 }
 
 -SNOBOL C_WRAPPER_PROTO('WAITPID_(INTEGER,INTEGER)INTEGER', .EMBED)
-#line 148 "CSNOBOL4.lss"
+#line 152 "CSNOBOL4.lss"
 
 static int get_status(void)
 {
@@ -168,7 +169,7 @@ static int get_status(void)
 }
 
 -SNOBOL C_WRAPPER_PROTO('GET_STATUS()INTEGER', .EMBED)
-#line 155 "CSNOBOL4.lss"
+#line 159 "CSNOBOL4.lss"
 
 static int format(char **in_s, char **fmt, char **buf, char **limit,
            char **base, int reps, int level)
@@ -402,32 +403,32 @@ FTN_FORMAT( LA_ALIST ) LA_DCL
     RETSTR_FREE(result);
 }
 -END
--LINE 391 "CSNOBOL4.lss"
--SNOBOL DYNAMIC_DEBUG = 1
--LINE 392 "CSNOBOL4.lss"
--SNOBOL COMPILE_DYNAMIC(format) :F(ERROR) ;
--LINE 393 "CSNOBOL4.lss"
--SNOBOL LIBS = '-L. -lp64'
--LINE 394 "CSNOBOL4.lss"
--SNOBOL OBJECTS = format ; OBJECTS '.c' = '.o'
 -LINE 395 "CSNOBOL4.lss"
--SNOBOL LINK_DYNAMIC('./format', OBJECTS, LIBS) :F(ERROR) ;
+-SNOBOL DYNAMIC_DEBUG = 1
 -LINE 396 "CSNOBOL4.lss"
+-SNOBOL COMPILE_DYNAMIC(format) :F(ERROR) ;
+-LINE 397 "CSNOBOL4.lss"
+-SNOBOL LIBS = '-L. -lp64'
+-LINE 398 "CSNOBOL4.lss"
+-SNOBOL OBJECTS = format ; OBJECTS '.c' = '.o'
+-LINE 399 "CSNOBOL4.lss"
+-SNOBOL LINK_DYNAMIC('./format', OBJECTS, LIBS) :F(ERROR) ;
+-LINE 400 "CSNOBOL4.lss"
 -CMNT ERASE TEMPORARY FILES
 -CMNT     WE DON'T NEED THE C BITS, OR THE OBJECT FILES ANYMORE.
 -CMNT     ALL WE REQUIRE IS format.so
 -CMNT -SNOBOL A = CRACK(format ' ' OBJECTS, ' ')
 -CMNT -SNOBOL SEQ(' DELETE(A<K>) ', .K)
--LINE 407 "CSNOBOL4.lss"
+-LINE 411 "CSNOBOL4.lss"
 -PUBLIC FORK()
          LOAD('FORK()INTEGER')
--LINE 415 "CSNOBOL4.lss"
+-LINE 419 "CSNOBOL4.lss"
 -PUBLIC WAIT()
          LOAD('WAIT()INTEGER')
--LINE 436 "CSNOBOL4.lss"
+-LINE 440 "CSNOBOL4.lss"
 -PUBLIC SPRINTF()
          LOAD('SPRINTF(STRING,)STRING')
--LINE 498 "CSNOBOL4.lss"
+-LINE 502 "CSNOBOL4.lss"
 -PUBLIC FTN_FORMAT(), CREATEPIPE(), GETPIPEFD(), GET_ERRNO()
 -PUBLIC CLEAR_ERRNO(), WAITPID(), GET_STATUS(), SIZEOF_TIMEVAL()
 -PUBLIC SET_TIMEVAL(), SIZEOF_FD_SET, FD_ZERO(), FD_CLR(), FD_SET()
@@ -451,7 +452,7 @@ FTN_FORMAT( LA_ALIST ) LA_DCL
          DEFINE('FD_ISSET(FD,FD_SET)')
          DEFINE('FD_SET(FD,FD_SET)')
          DEFINE('SET_TIMEVAL(TV,SEC,USEC)')
--LINE 534 "CSNOBOL4.lss"
+-LINE 538 "CSNOBOL4.lss"
 -PUBLIC CLOSE(), SELECT(), IO_GETFP(), FILENO()
          CLOSE_FFI = FFI_NEW('I', 'I')
          FFI_SET_CALLP(CLOSE_FFI, DLSYM(0, 'close'))

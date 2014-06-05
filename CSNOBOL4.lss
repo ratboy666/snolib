@@ -15,9 +15,13 @@ Added more functions here to create pipes, close file handles,
 handle fd sets -- these should be in a [[UNIX]] component. fileno()
 actually belongs there as well, as does fork() and wait().
 
+<h2>Uses</h2>
+<a href="FFI">FFI</a><br>
+<a href="P64">P64</a><br>
+
 <<INCLUDES>>=
--INCLUDE 'P64.INC'
 -INCLUDE 'FFI.INC'
+-INCLUDE 'P64.INC'
 @
 
 <<CSNOBOL4>>=
@@ -602,6 +606,7 @@ END
 @
 
 <<>>=
+-MODULE CSNOBOL4
 <<INCLUDES>>
 -STITL CSNOBOL4
 -EJECT

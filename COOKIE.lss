@@ -38,23 +38,24 @@ If a cookie with a bad name is crafted by the browser, it will simply
 be returned (probably as a session cookie).
 
 <h2>Uses</h2>
-<a href="HASH.html">HASH</a><br>
-<a href="TIME.html">TIME</a><br>
-<a href="DEXP.html">DEXP</a><br>
-<a href="CHARS.html">CHARS</a><br>
-<a href="TRIMB.html">TRIMB</a><br>
-<a href="VDIFFER.html">VDIFFER</a>
+<a href="CHARS">CHARS</a><br>
+<a href="DEXP">DEXP</a><br>
+<a href="HASH">HASH</a><br>
+<a href="TIME">TIME</a><br>
+<a href="TRIMB">TRIMB</a><br>
+<a href="VDIFFER">VDIFFER</a><br>
 
 <<INCLUDES>>=
+-INCLUDE 'CHARS.INC'
+-INCLUDE 'DEXP.INC'
 -INCLUDE 'HASH.INC'
 -INCLUDE 'TIME.INC'
--INCLUDE 'DEXP.INC'
--INCLUDE 'CHARS.INC'
 -INCLUDE 'TRIMB.INC'
 -INCLUDE 'VDIFFER.INC'
 @
 
 <<COOKIE>>=
+-MODULE COOKIE
 -PUBLIC NEW_COOKIE_JAR(), NEW_COOKIE(), COOKIE_SET_VALUE()
 -PUBLIC COOKIE_VALUE(), COOKIE_SET_CRUMB(), COOKIE_GET_CRUMB()
 -PUBLIC PUT_COOKIE_IN_JAR(), GET_COOKIE_FROM_JAR(), COOKIES_IN_JAR()

@@ -1,10 +1,11 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -TITLE BUNDLE
--LINE 70 "bundle.lss"
+-LINE 73 "bundle.lss"
 START
--LINE 10 "bundle.lss"
+-LINE 11 "bundle.lss"
 -INCLUDE 'CRACK.INC'
+-INCLUDE 'HOST.INC'
 -INCLUDE 'TRIMB.INC'
 -STITL
 -EJECT
@@ -26,7 +27,8 @@ START
 *
 * bundle.lss
 *
--LINE 15 "bundle.lss"
+-LINE 17 "bundle.lss"
+-PROGRAM BUNDLE
          TERMINAL = 'BUNDLE (THU DEC  5 12:09:11 EST 2013)'
 *
          DEFINE('INCLUDE(FILENAME)PATH,POSITION,UNIT,LIB,X')

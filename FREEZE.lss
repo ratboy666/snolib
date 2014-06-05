@@ -1,10 +1,14 @@
 <h1>FREEZE - FREEZE and THAW for SPITBOL</h1>
 
+<h2>Uses</h2>
+<a href="SYSTEM">SYSTEM</a><br>
+
 <<INCLUDES>>= 
 -INCLUDE 'SYSTEM.INC'
 @
 
 <<FREEZE>>=
+-MODULE FREEZE
          SYSTEM() 'CSNOBOL4'                              :S(FREEZE_END)
 -PUBLIC FREEZE(), THAW()
          DEFINE('FREEZE(X)')

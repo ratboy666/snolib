@@ -3,7 +3,13 @@
 Swap values of two variables passed by name.  [[SWAP(.N,.M)]] will
 swap the contents of the two named variables.
 
+<h2>Uses</h2>
+
+<<INCLUDES>>=
+@
+
 <<SWAP>>=
+-MODULE SWAP
 -PUBLIC SWAP()
          DEFINE('SWAP(SWAP_ARG1,SWAP_ARG2)')                 :(SWAP_END)
 *

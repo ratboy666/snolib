@@ -5,13 +5,14 @@ a SNOBOL4 expression which, when evaluated, will yield the original
 string [[S]].
 
 <h2>Uses</h2>
-<a href="REPL.html">REPL</a>
+<a href="REPL">REPL</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'REPL.INC'
 @
 
 <<QUOTE>>=
+-MODULE QUOTE
 -PUBLIC QUOTE()
          DEFINE('QUOTE(S)Q,QQ')                             :(QUOTE_END)
 *

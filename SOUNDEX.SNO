@@ -1,7 +1,7 @@
 -STITL SOUNDEX
 -EJECT
 *
--LINE 40 "SOUNDEX.lss"
+-LINE 46 "SOUNDEX.lss"
 ************************************************************************
 *                                                                      *
 *     #####   #######  #     #  #     #  ######   #######  #     #     *
@@ -18,7 +18,8 @@
 *
 * SOUNDEX.lss
 *
--LINE 6 "SOUNDEX.lss"
+-LINE 11 "SOUNDEX.lss"
+-MODULE SOUNDEX
 -PUBLIC SOUNDEX()
          DEFINE('SOUNDEX(STR)SDXMAP,INIT,CH')             :(SOUNDEX_END)
 *

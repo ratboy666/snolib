@@ -6,17 +6,18 @@ applications. We add to this file as additional display controls
 are needed.
 
 <h2>Uses</h2>
-<a href="CHARS.html">CHARS</a><br>
-<a href="VDIFFER.html">VDIFFER</a><br>
-<a href="BQ.html">BQ</a>
+<a href="BQ">BQ</a><br>
+<a href="CHARS">CHARS</a><br>
+<a href="VDIFFER">VDIFFER</a><br>
 
 <<INCLUDES>>=
+-INCLUDE 'BQ.INC'
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'VDIFFER.INC'
--INCLUDE 'BQ.INC'
 @
 
 <<DISPLAY>>=
+-MODULE DISPLAY
 -PUBLIC DS_SMSO, DS_RMSO, DS_SMUL, DS_RMUL, DS_BLINK
 -PUBLIC DS_BOLD, DS_DIM, DS_REV, DS_SGR0, DS_CIVIS, DS_CNORM, DS_CVVIS
 -PUBLIC DS_GOTO(), DS_FOREGROUND_COLOR(), DS_BACKGROUND_COLOR()

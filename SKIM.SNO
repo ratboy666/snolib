@@ -2,7 +2,7 @@
 -INCLUDE 'SDIFF.INC'
 -STITL SKIM
 -EJECT
--LINE 39 "SKIM.lss"
+-LINE 40 "SKIM.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -22,6 +22,7 @@
 * SKIM.lss
 *
 -LINE 15 "SKIM.lss"
+-MODULE SKIM
 -PUBLIC SKIM()
          DEFINE('SKIM(S)C')                                  :(SKIM_END)
 *

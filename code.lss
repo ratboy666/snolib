@@ -4,12 +4,13 @@ Enter SNOBOL4 statements for immediate execution. Also supports a
 primitive programming environment with line numbered statements.
 
 <h2>Uses</h2>
-<a href="BQ.html">BQ</a><br>
-<a href="CHARS.html">CHARS</a><br>
-<a href="HOST.html">HOST</a><br>
-<a href="READLINE.html">READLINE</a><br>
-<a href="SEQ.html">SEQ</a><br>
-<a href="SLOAD.html">SLOAD</a>
+<a href="BQ">BQ</a><br>
+<a href="CHARS">CHARS</a><br>
+<a href="HOST">HOST</a><br>
+<a href="READLINE">READLINE</a><br>
+<a href="SEQ">SEQ</a><br>
+<a href="SLOAD">SLOAD</a><br>
+<a href="VDIFFER">VDIFFER</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'BQ.INC'
@@ -18,6 +19,7 @@ primitive programming environment with line numbered statements.
 -INCLUDE 'READLINE.INC'
 -INCLUDE 'SEQ.INC'
 -INCLUDE 'SLOAD.INC'
+-INCLUDE 'VDIFFER.INC'
 @
 
 <<code>>=
@@ -634,6 +636,7 @@ A stack size [[-S]] of 40000 seems to be fine.
 #!/usr/bin/bash
          exec "snobol4" "-B" "-s" "-S 40000" "$0" "$@"
 *
+-PROGRAM CODE
 -TITLE CODE
 START_
 <<INCLUDES>>

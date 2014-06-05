@@ -4,13 +4,14 @@ CH(H) will convert the sequence of hexadecimal digits into the
 corresponding character string. [[CH]] is the inverse of [[HEX]].
 
 <h2>Uses</h2>
-<a href="HEX.html">HEX</a>
+<a href="HEX">HEX</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'HEX.INC'
 @
 
 <<CH>>=
+-MODULE CH
 -PUBLIC CH()
          DEFINE('CH(H)C,P')
 *

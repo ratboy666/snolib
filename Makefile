@@ -47,7 +47,8 @@ P = bundle       code         compile      deretn       deseq        \
     deseql       embed        ifs          illum        list         \
     lseq         lsinc        rseq         snofmt       stangle      \
     sweave       uban         upcase       g360         scan         \
-    snocone      cpmed        ED4          bldidx       uses
+    snocone      cpmed        ED4          bldidx       uses         \
+    upinc
 
 all: $(L) $(T) ALL.INC $(P) docs
 
@@ -195,6 +196,8 @@ scan:         scan.SNO     HOST.INC
 bldidx:       CHARS.INC    BQ.INC       CRACK.INC    JSON.INC     \
               SEQ.INC      VDIFFER.INC
 uses:         HASH.INC     JSON.INC     READFILE.INC SDIFF.INC
+upinc:        HOST.INC     READFILE.INC BQ.INC       JSON.INC     \
+              CHARS.INC    SEQ.INC      REPL.INC
 
 
 # Doesn't clean *.so for now

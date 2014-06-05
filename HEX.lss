@@ -4,7 +4,7 @@
 the string [[S]].
 
 <h2>Uses</h2>
-<a href="BLEND.html">BLEND</a>
+<a href="BLEND">BLEND</a><br>
 
 <h2>See Also</h2>
 <a href="CH.html">CH</a>
@@ -14,6 +14,7 @@ the string [[S]].
 @
 
 <<HEX>>=
+-MODULE HEX
 -PUBLIC HEX()
          DEFINE('HEX(S)S2')
 *

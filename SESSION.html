@@ -89,37 +89,32 @@ useful, and -v1 is the default in this code.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 <h2>Uses</h2>
-<a href="BQ.html">BQ</a><br>
-<!-- <a href="NDBM.html">NDBM</a><br> -->
-<a href="SEQ.html">SEQ</a><br>
-<a href="CRACK.html">CRACK</a><br>
-<a href="HASH.html">HASH</a><br>
-<a href="TIME.html">TIME</a><br>
-<a href="CHARS.html">CHARS</a><br>
-<a href="REPL.html">REPL</a><br>
-<a href="CSNOBOL4.html">CSNOBOL4</a><br>
-<a href="READFILE.html">READFILE</a><br>
-<a href="JSON.html">JSON</a>
+<a href="BQ">BQ</a><br>
+<a href="CHARS">CHARS</a><br>
+<a href="CRACK">CRACK</a><br>
+<a href="JSON">JSON</a><br>
+<a href="NDBM">NDBM</a><br>
+<a href="READFILE">READFILE</a><br>
+<a href="REPL">REPL</a><br>
+<a href="TIME">TIME</a><br>
 </font></p>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;INCLUDES&raquo;&equiv;</b>
 -INCLUDE &#39;BQ.INC&#39;
-<font color="#818181"><i>*-INCLUDE &#39;NDBM.INC&#39;</i></font>
--INCLUDE &#39;SEQ.INC&#39;
--INCLUDE &#39;CRACK.INC&#39;
--INCLUDE &#39;HASH.INC&#39;
--INCLUDE &#39;TIME.INC&#39;
 -INCLUDE &#39;CHARS.INC&#39;
--INCLUDE &#39;REPL.INC&#39;
--INCLUDE &#39;CSNOBOL4.INC&#39;
--INCLUDE &#39;READFILE.INC&#39;
+-INCLUDE &#39;CRACK.INC&#39;
 -INCLUDE &#39;JSON.INC&#39;
+-INCLUDE &#39;NDBM.INC&#39;
+-INCLUDE &#39;READFILE.INC&#39;
+-INCLUDE &#39;REPL.INC&#39;
+-INCLUDE &#39;TIME.INC&#39;
 <b>@</b>
 </font></pre></div>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;SESSION&raquo;&equiv;</b>
+-MODULE SESSION
 -PUBLIC SESSION_CREATE(), SESSION_DELETE(), SESSION_TOUCH()
 -PUBLIC SESSION_PERSIST(), SESSION_LOAD(), SESSION_EXPIRE()
 -PUBLIC SESSION_PERSIST_DIR
@@ -289,7 +284,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Mon Jun  2 13:05:05 EDT 2014</p></td><td><p align=right>
+Thu Jun  5 13:35:06 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

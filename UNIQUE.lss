@@ -18,13 +18,14 @@ the generated variables are cleared. This minimizes impact to other
 modules using [[UNIQUE()]].
 
 <h2>Uses</h2>
-<a href="REPL.html">REPL</a>
+<a href="REPL">REPL</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'REPL.INC'
 @
 
 <<UNIQUE>>=
+-MODULE UNIQUE
 -PUBLIC MAKE_UNIQUE(), UNIQUE()
          DEFINE('MAKE_UNIQUE(SUF)S')
          MAKE_UNIQUE()

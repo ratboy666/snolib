@@ -25,7 +25,13 @@ SPITBOL
 If source could be in CDC display code, test that first, before
 ISASCII() -- '()' is ordered the same in both of these character sets.
 
+<h2>Uses</h2>
+
+<<INCLUDES>>=
+@
+
 <<SYSTEM>>=
+-MODULE SYSTEM
 -PUBLIC SYSTEM(), ISSPITBOL(), ISSNOBOL4()
 -PUBLIC ISASCII(), ISEBCDIC(), ISCDC_DISPLAY_CODE()
          DEFINE('SYSTEM()K,E,T')

@@ -4,14 +4,15 @@
 [[P]] fails and fail if [[P]] matches. If [[P]] aborts, [[NOTP(P)]]
 will also abort.
 
-<h2>Used</h2>
-<a href="STACK.html">STACK</a>
+<h2>Uses</h2>
+<a href="STACK">STACK</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'STACK.INC'
 @
 
 <<NOTP>>=
+-MODULE NOTP
 -PUBLIC NOTP()
          DEFINE('NOTP(P)')                                   :(NOTP_END)
 *

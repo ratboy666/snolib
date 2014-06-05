@@ -1,7 +1,7 @@
 -STITL COMB
 -EJECT
 *
--LINE 29 "COMB.lss"
+-LINE 35 "COMB.lss"
 ************************************************************************
 *                                                                      *
 *                     #####   #######  #     #  ######                 *
@@ -18,7 +18,8 @@
 *
 * COMB.lss
 *
--LINE 7 "COMB.lss"
+-LINE 12 "COMB.lss"
+-MODULE COMB
 -PUBLIC COMB()
          DEFINE('COMB(N,M)')                                 :(COMB_END)
 *

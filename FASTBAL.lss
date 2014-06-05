@@ -11,7 +11,7 @@ BREAK should stop at.
 function call in SNOBOL4 source.
 
 <h2>Uses</h2>
-<a href="UNIQUE.html">UNIQUE</a>
+<a href="UNIQUE">UNIQUE</a><br>
 
 <h2>See Also</h2>
 <a href="BALX.html">BALX</a>
@@ -21,6 +21,7 @@ function call in SNOBOL4 source.
 @
 
 <<FASTBAL>>=
+-MODULE FASTBAL
 -PUBLIC FASTBAL()
          DEFINE('FASTBAL(PARENS,QTS,S)NAME,IBAL,SPCHARS,ELEM'
 +               ',LPS,Q,LP,RP')                           :(FASTBAL_END)

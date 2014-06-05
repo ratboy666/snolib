@@ -3,15 +3,16 @@
 Uses FFI rather than LOAD() to access SYSLOG functions
 
 <h2>Uses</h2>
-<a href="P64.html">P64</a><br>
-<a href="FFI.html">FFI</a>
+<a href="FFI">FFI</a><br>
+<a href="P64">P64</a><br>
 
 <<INCLUDES>>=
--INCLUDE 'P64.INC'
 -INCLUDE 'FFI.INC'
+-INCLUDE 'P64.INC'
 @
 
 <<SYSLOG>>=
+-MODULE SYSLOG
          FFI_OPENLOG = FFI_NEW('V', 'P,I,I')
          FFI_SET_CALLP(FFI_OPENLOG, DLSYM(0, 'openlog'))
          FFI_SYSLOG = FFI_NEW('V', 'I,P,P')

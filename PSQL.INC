@@ -1,15 +1,15 @@
 -LINE 69 "PSQL.lss"
--INCLUDE 'SCOOP.INC'
--INCLUDE 'REPL.INC'
--INCLUDE 'COUNT.INC'
--INCLUDE 'CHARS.INC'
--INCLUDE 'SEQ.INC'
--INCLUDE 'CSNOBOL4.INC'
 -INCLUDE 'BRKREM.INC'
+-INCLUDE 'CHARS.INC'
+-INCLUDE 'COUNT.INC'
+-INCLUDE 'CSNOBOL4.INC'
+-INCLUDE 'REPL.INC'
+-INCLUDE 'SCOOP.INC'
+-INCLUDE 'SEQ.INC'
 -INCLUDE 'UNIQUE.INC'
 -STITL PSQL
 -EJECT
--LINE 381 "PSQL.lss"
+-LINE 382 "PSQL.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -28,6 +28,7 @@
 * PSQL.lss
 *
 -LINE 116 "PSQL.lss"
+-MODULE PSQL
 *
 * THESE THREE ARE FUNCTIONS -- SIMPLY EASIER THAT WAY.
 *

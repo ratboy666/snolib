@@ -1,16 +1,16 @@
+-MODULE DDT
 -LINE 65 "DDT.lss"
--WEAK DSERVE_APPNAME
 -INCLUDE 'CHARS.INC'
+-INCLUDE 'FREEZE.INC'
 -INCLUDE 'HOST.INC'
+-INCLUDE 'QUOTE.INC'
 -INCLUDE 'READLINE.INC'
+-INCLUDE 'SLOAD.INC'
 -INCLUDE 'TRIMB.INC'
 -INCLUDE 'VDIFFER.INC'
--INCLUDE 'QUOTE.INC'
--INCLUDE 'FREEZE.INC'
--INCLUDE 'SLOAD.INC'
 -STITL DDT
--EJECT
 -LINE 705 "DDT.lss"
+-EJECT
 *
 ************************************************************************
 *                                                                      *
@@ -28,7 +28,8 @@
 *
 * DDT.lss
 *
--LINE 77 "DDT.lss"
+-LINE 76 "DDT.lss"
+-WEAK DSERVE_APPNAME
 -USES SLOAD()
 -PUBLIC DDT(), DEBUG(), DDT_LOADED, DDT_ACTIVE
          DEFINE('DDT(S)')

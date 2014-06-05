@@ -1,7 +1,7 @@
 -STITL FOR
 -EJECT
 *
--LINE 250 "FOR.lss"
+-LINE 256 "FOR.lss"
 ************************************************************************
 *                                                                      *
 *                      #######  #######  ######                        *
@@ -18,7 +18,8 @@
 *
 * FOR.lss
 *
--LINE 57 "FOR.lss"
+-LINE 62 "FOR.lss"
+-MODULE FOR
 -PUBLIC CODE_(), WHILE_COMPILE(), IF_COMPILE(), FOR_COMPILE()
 -PUBLIC STMT_COMPILE(), PROG2_COMPILE(), SET_RVAL(), EVAL_CODE_()
 -PUBLIC FOR(), WHILE()

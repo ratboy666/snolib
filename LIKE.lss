@@ -10,7 +10,13 @@ the argument by
 <li>the insertion of a character.</li>
 </ol>
 
+<h2>Uses</h2>
+
+<<INCLUDES>>=
+@
+
 <<LIKE>>=
+-MODULE LIKE
 -PUBLIC LIKE()
          DEFINE('LIKE(S)C,T1,T2,N')                          :(LIKE_END)
 *

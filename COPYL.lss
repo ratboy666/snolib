@@ -4,13 +4,14 @@
 have loops.
 
 <h2>Uses</h2>
-<a href="LINK.html">LINK</a>
+<a href="LINK">LINK</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'LINK.INC'
 @
 
 <<COPYL>>=
+-MODULE COPYL
 -PUBLIC COPYL()
          DEFINE('COPYL(L)T')                                :(COPYL_END)
 *

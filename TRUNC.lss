@@ -13,6 +13,7 @@ consisting of the elements
 @
 
 <<TRUNC>>=
+-MODULE TRUNC
 -PUBLIC TRUNC()
          DEFINE('TRUNC(A,L,H)')                             :(TRUNC_END)
 *

@@ -4,7 +4,13 @@
 [[S2]] such that every other character is taken from each string. Thus,
 [[BLEND('ABC','123')]] will return [['A1B2C3']].
 
+<h2>Uses</h2>
+
+<<INCLUDES>>=
+@
+
 <<BLEND>>=
+-MODULE BLEND
 -PUBLIC BLEND()
          DEFINE('BLEND(S1,S2)T1,T2,ABC,XYZ,L1,L2')
          &ALPHABET LEN(128) . ABC LEN(128) . XYZ

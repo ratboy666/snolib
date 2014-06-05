@@ -1,7 +1,7 @@
 -STITL SPELL
 -EJECT
 *
--LINE 52 "SPELL.lss"
+-LINE 58 "SPELL.lss"
 ************************************************************************
 *                                                                      *
 *                 #####   ######   #######  #        #                 *
@@ -18,7 +18,8 @@
 *
 * SPELL.lss
 *
--LINE 7 "SPELL.lss"
+-LINE 12 "SPELL.lss"
+-MODULE SPELL
 -PUBLIC SPELL()
          DEFINE('SPELL(N)M')                                :(SPELL_END)
 *

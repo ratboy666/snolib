@@ -3,7 +3,13 @@
 Random number functions. [[RANDOMI(N)]] generates random numbers
 from 1 to n. If an empty argument is supplied, 0 to 1 (real).
 
+<h2>Uses</h2>
+
+<<INCLUDES>>=
+@
+
 <<RANDOM>>=
+-MODULE RANDOM
 -PUBLIC RANDOM(), SRANDOM(), SRANDOMDEV() RANDOMI()
          LOAD('RANDOM()INTEGER')
          LOAD('SRANDOM(INTEGER)STRING')

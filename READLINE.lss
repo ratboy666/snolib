@@ -4,6 +4,11 @@ The [[READLINE]] library offers convenient command editing and history
 retrieval features. This is provided both internally in CSNOBOL4 and
 with the [[editline.so]] loadable library.
 
+<h2>Uses</h2>
+
+<<INCLUDES>>=
+@
+
 <<READLINE>>=
 -SNOBOL SLOAD('BQ.INC')
 -SNOBOL SLOAD('DYNAMIC.INC')
@@ -155,6 +160,7 @@ END
 @
 
 <<>>=
+-MODULE READLINE
 -STITL READLINE
 -EJECT
 *

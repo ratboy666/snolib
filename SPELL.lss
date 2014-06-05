@@ -3,7 +3,13 @@
 [[SPELL(N)]] will return an english phrase designating the integer
 [[N]].  Thus [[SPELL(13)]] will return [['THIRTEEN']].
 
+<h2>Uses</h2>
+
+<<INCLUDES>>=
+@
+
 <<SPELL>>=
+-MODULE SPELL
 -PUBLIC SPELL()
          DEFINE('SPELL(N)M')                                :(SPELL_END)
 *

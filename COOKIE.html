@@ -57,20 +57,20 @@ be returned (probably as a session cookie).
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 <h2>Uses</h2>
-<a href="HASH.html">HASH</a><br>
-<a href="TIME.html">TIME</a><br>
-<a href="DEXP.html">DEXP</a><br>
-<a href="CHARS.html">CHARS</a><br>
-<a href="TRIMB.html">TRIMB</a><br>
-<a href="VDIFFER.html">VDIFFER</a>
+<a href="CHARS">CHARS</a><br>
+<a href="DEXP">DEXP</a><br>
+<a href="HASH">HASH</a><br>
+<a href="TIME">TIME</a><br>
+<a href="TRIMB">TRIMB</a><br>
+<a href="VDIFFER">VDIFFER</a><br>
 </font></p>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;CHARS.INC&#39;
+-INCLUDE &#39;DEXP.INC&#39;
 -INCLUDE &#39;HASH.INC&#39;
 -INCLUDE &#39;TIME.INC&#39;
--INCLUDE &#39;DEXP.INC&#39;
--INCLUDE &#39;CHARS.INC&#39;
 -INCLUDE &#39;TRIMB.INC&#39;
 -INCLUDE &#39;VDIFFER.INC&#39;
 <b>@</b>
@@ -78,6 +78,7 @@ be returned (probably as a session cookie).
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;COOKIE&raquo;&equiv;</b>
+-MODULE COOKIE
 -PUBLIC NEW_COOKIE_JAR(), NEW_COOKIE(), COOKIE_SET_VALUE()
 -PUBLIC COOKIE_VALUE(), COOKIE_SET_CRUMB(), COOKIE_GET_CRUMB()
 -PUBLIC PUT_COOKIE_IN_JAR(), GET_COOKIE_FROM_JAR(), COOKIES_IN_JAR()
@@ -261,7 +262,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Wed Jun  4 18:50:21 EDT 2014</p></td><td><p align=right>
+Thu Jun  5 13:35:08 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

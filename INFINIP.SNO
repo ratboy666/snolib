@@ -3,7 +3,7 @@
 -INCLUDE 'SWAP.INC'
 -STITL INFINIP
 -EJECT
--LINE 190 "INFINIP.lss"
+-LINE 191 "INFINIP.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -22,6 +22,7 @@
 * INFINIP.lss
 *
 -LINE 15 "INFINIP.lss"
+-MODULE INFINIP
          SIGN_OFF  = POS(0) '-'
          LDG_ZEROS = BREAK('123456789') | RTAB(1)
          NO_DIGITS = 4

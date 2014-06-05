@@ -2,7 +2,13 @@
 
 Symbolic defines for [[HOST]] functions.
 
+<h2>Uses</h2>
+
+<<INCLUDES>>=
+@
+
 <<HOST>>=
+-MODULE HOST
 HOST
 @
 

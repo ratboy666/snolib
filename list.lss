@@ -6,15 +6,14 @@ be numbered. list is UTF-8 aware. Scrolling is reasonably efficient -
 list knows to use terminal hardware scrolling if available.
 
 <h2>Uses</h2>
-<a href="CHARS.html">CHARS</a><br>
-<a href="DISPLAY.html">DISPLAY</a><br>
-<a href="GETKEY.html">GETKEY</a><br>
-<a href="HOST.html">HOST</a><br>
-<a href="LOGIC.html">LOGIC</a><br>
-<a href="BQ.html">BQ</a><br>
-<a href="REPL.html">REPL</a><br>
-<a href="READLINE.html">READLINE</a><br>
-<a href="SEQ.html">SEQ</a>
+<a href="CHARS">CHARS</a><br>
+<a href="DISPLAY">DISPLAY</a><br>
+<a href="GETKEY">GETKEY</a><br>
+<a href="HOST">HOST</a><br>
+<a href="LOGIC">LOGIC</a><br>
+<a href="READLINE">READLINE</a><br>
+<a href="REPL">REPL</a><br>
+<a href="SEQ">SEQ</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'CHARS.INC'
@@ -22,9 +21,8 @@ list knows to use terminal hardware scrolling if available.
 -INCLUDE 'GETKEY.INC'
 -INCLUDE 'HOST.INC'
 -INCLUDE 'LOGIC.INC'
--INCLUDE 'BQ.INC'
--INCLUDE 'REPL.INC'
 -INCLUDE 'READLINE.INC'
+-INCLUDE 'REPL.INC'
 -INCLUDE 'SEQ.INC'
 @
 
@@ -200,6 +198,7 @@ END START
 <<>>=
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
+-PROGRAM LIST
 -TITLE LIST
 START
 <<INCLUDES>>

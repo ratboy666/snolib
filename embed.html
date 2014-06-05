@@ -63,8 +63,8 @@ driven by its using programs.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 <h2>Uses</h2>
-<a href="CHARS.html">CHARS</a><br>
-<a href="SLOAD.html">SLOAD</a>
+<a href="CHARS">CHARS</a><br>
+<a href="SLOAD">SLOAD</a><br>
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 <h2>See Also</h2>
@@ -75,7 +75,6 @@ driven by its using programs.
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;INCLUDES&raquo;&equiv;</b>
--USES SLOAD()
 -INCLUDE &#39;CHARS.INC&#39;
 -INCLUDE &#39;SLOAD.INC&#39;
 <b>@</b>
@@ -83,6 +82,7 @@ driven by its using programs.
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;embed&raquo;&equiv;</b>
+-USES SLOAD()
          TERMINAL = &#39;EMBED (SUN DEC  1 16:15:39 EST 2013)&#39;
 <font color="#818181"><i>*</i></font>
          WHITE_ = SPAN(&#39; &#39; CHARS_TAB) | &#39;&#39;
@@ -140,7 +140,8 @@ END START
 <b>&laquo;&raquo;&equiv;</b>
 <font color="#818181"><i>#!/usr/bin/bash</i></font>
          exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
-TITLE EMBED
+-PROGRAM EMBED
+-TITLE EMBED
 START
 <b>&laquo;INCLUDES&raquo;</b>
 -STITL
@@ -171,7 +172,7 @@ START
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Wed Jun  4 16:50:29 EDT 2014</p></td><td><p align=right>
+Thu Jun  5 13:34:25 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

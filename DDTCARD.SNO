@@ -1,7 +1,8 @@
+-MODULE DDTCARD
 -STITL DDTCARD
 -EJECT
+-LINE 30 "DDTCARD.lss"
 *
--LINE 23 "DDTCARD.lss"
 ************************************************************************
 *                                                                      *
 *    ######   ######   #######   #####      #     ######   ######      *
@@ -18,7 +19,7 @@
 *
 * DDTCARD.lss
 *
--LINE 7 "DDTCARD.lss"
+-LINE 14 "DDTCARD.lss"
          DDT()
 *
 * CE: .MSNOBOL4;

@@ -4,10 +4,16 @@
 string. [[SEP]] contains a separation string to be inserted between
 strings of the array [[A]].
 
+<h2>Uses</h2>
+
 <h2>See Also</h2>
 <a href="CRACK.html">CRACK</a>
 
+<<INCLUDES>>=
+@
+
 <<STROUT>>=
+-MODULE STROUT
 -PUBLIC STRINGOUT()
          DEFINE('STRINGOUT(A,SEP)I')                    :(STRINGOUT_END)
 *

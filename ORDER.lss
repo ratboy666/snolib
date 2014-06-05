@@ -3,7 +3,13 @@
 [[ORDER(S)]] will put the characters of its argument into alphabetic
 order. [[ORDER('DCBA')]] returns [['ABCD']].
 
+<h2>Uses</h2>
+
+<<INCLUDES>>=
+@
+
 <<ORDER>>=
+-MODULE ORDER
 -PUBLIC ORDER()
          DEFINE('ORDER(S)T,HIGHS,S1')                       :(ORDER_END)
 *

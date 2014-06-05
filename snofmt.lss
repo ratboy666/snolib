@@ -5,17 +5,20 @@ A simple and stupid SNOBOL4 formatter. Uses simple patterns. Does
 and to tidy up lines after editing.
 
 <h2>Uses</h2>
-<a href="CHARS.html">CHARS</a><br>
-<a href="BALX.html">BALX</a>
+<a href="BALX">BALX</a><br>
+<a href="CHARS">CHARS</a><br>
+<a href="VDIFFER">VDIFFER</a><br>
 
 <<INCLUDES>>=
--INCLUDE 'CHARS.INC'
 -INCLUDE 'BALX.INC'
+-INCLUDE 'CHARS.INC'
+-INCLUDE 'VDIFFER.INC'
 @
 
 <<>>=
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
+-PROGRAM SNOFMT
 -TITLE SNOFMT
 START
 <<INCLUDES>>

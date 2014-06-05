@@ -5,13 +5,14 @@ list algorithms “cons” the results and thus return the answer as
 a list that needs reversing.
 
 <h2>Uses</h2>
-<a href="LINK.html">LINK</a>
+<a href="LINK">LINK</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'LINK.INC'
 @
 
 <<REVL>>=
+-MODULE REVL
 -PUBLIC REVL()
          DEFINE('REVL(L)T')                                  :(REVL_END)
 *

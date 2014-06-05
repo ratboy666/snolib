@@ -10,11 +10,11 @@ Not very good at cleaning up, but this does work.
 
 <h2>Uses</h2>
 <a href="CHARS">CHARS</a><br>
-<a href="REPL">REPL</a><br>
 <a href="CSNOBOL4">CSNOBOL4</a><br>
-<a href="TRIMB">TRIMB</a><br>
+<a href="DDT">DDT</a><br>
 <a href="P64">P64</a><br>
-<a href="DDT"></a>
+<a href="REPL">REPL</a><br>
+<a href="TRIMB">TRIMB</a><br>
 
 <<INCLUDES>>= 
 -INCLUDE 'CHARS.INC'
@@ -26,6 +26,7 @@ Not very good at cleaning up, but this does work.
 @
 
 <<DSERVE>>=
+-MODULE DSERVE
 -PUBLIC DSERVE_INIT(), DSERVE()
 -PUBLIC DSERVE_PORT, DSERVE_APPNAME
          DEFINE('DSERVE_INIT(APPNAME,PORT,KEY)')      :(DSERVE_INIT_END)

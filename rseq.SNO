@@ -1,7 +1,8 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
+-PROGRAM RSEQ
+-LINE 29 "rseq.lss"
 -TITLE RSEQ
--LINE 24 "rseq.lss"
 START
 *
 ************************************************************************
@@ -20,7 +21,7 @@ START
 *
 * rseq.lss
 *
--LINE 6 "rseq.lss"
+-LINE 11 "rseq.lss"
          TERMINAL = 'RSEQ (SUN JUN 16 14:13:20 EDT 2013)'
 *
          S = DUPL(' ', 72)

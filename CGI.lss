@@ -31,42 +31,41 @@ absolute URI redirect same
 with doc, respond 302 Location and doc returned
 ]]
 
+<h2>Uses</h2>
+<a href="CHARS">CHARS</a><br>
+<a href="COOKIE">COOKIE</a><br>
+<a href="CRACK">CRACK</a><br>
+<a href="HASH">HASH</a><br>
+<a href="HTMLESC">HTMLESC</a><br>
+<a href="JSON">JSON</a><br>
+<a href="SCOOP">SCOOP</a><br>
+<a href="SEQ">SEQ</a><br>
+<a href="UNIQUE">UNIQUE</a><br>
+<a href="VDIFFER">VDIFFER</a><br>
+
 <h2>See Also</h2>
 <a href="SESSION.html">SESSION</a><br>
 <a href="HTMLTMPL.html">HTMLTMPL</a><br>
 <a href="PSQL.html">PSQL</a>
 
-<h2>Uses</h2>
-<a href="SCOOP.html">SCOOP</a><br>
-<a href="COOKIE.html">SESSION</a><br>
-<a href="HOST.html">HOST</a><br>
-<a href="CRACK.html">CRACK</a><br>
-<a href="SEQ.html">SEQ</a><br>
-<a href="HTMLESC.html">HTMLESC</a><br>
-<a href="CHARS.html">CHARS</a><br>
-<a href="HASH.html">HASH</a><br>
-<a href="UNIQUE.html">UNIQUE</a><br>
-<a href="JSON.html">JSON</a><br>
-<a href="VDIFFER.html">VDIFFER</a>
-
 <<INCLUDES>>=
--USES CRACK(), HOST(), URL_DECODE(), COOKIE_FIX_NAME()
--WEAK USE_FCGI, FCGI_ENV, FCGI_IN, FCGI_REQUEST_COMPLETE
--WEAK FCGI_SEND(), FCGI_END()
--INCLUDE 'SCOOP.INC'
--INCLUDE 'COOKIE.INC'
--INCLUDE 'HOST.INC'
--INCLUDE 'CRACK.INC'
--INCLUDE 'SEQ.INC'
--INCLUDE 'HTMLESC.INC'
 -INCLUDE 'CHARS.INC'
+-INCLUDE 'COOKIE.INC'
+-INCLUDE 'CRACK.INC'
 -INCLUDE 'HASH.INC'
--INCLUDE 'UNIQUE.INC'
+-INCLUDE 'HTMLESC.INC'
 -INCLUDE 'JSON.INC'
+-INCLUDE 'SCOOP.INC'
+-INCLUDE 'SEQ.INC'
+-INCLUDE 'UNIQUE.INC'
 -INCLUDE 'VDIFFER.INC'
 @
 
 <<CGI>>=
+-MODULE CGI
+-USES CRACK(), HOST(), URL_DECODE(), COOKIE_FIX_NAME()
+-WEAK USE_FCGI, FCGI_ENV, FCGI_IN, FCGI_REQUEST_COMPLETE
+-WEAK FCGI_SEND(), FCGI_END()
 -PUBLIC CLASS:CGI_CLASS
          CGI_CLASS = SEND(CLASS, 'NEW_CLASS', 'CGI_CLASS')
          DEFINE('CGI_INIT()A,C')

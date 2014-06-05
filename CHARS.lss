@@ -3,10 +3,16 @@
 Define symbolic names for (normally) unprintable characters. Useful for
 defining whitespace, etc.
 
+<h2>Uses</h2>
+
 <h2>See Also</h2>
 <a href="UTF8.html">UTF8</a>
 
+<<INCLUDES>>=
+@
+
 <<CHARS>>=
+-MODULE CHARS
 -PUBLIC CHARS_NUL, CHARS_SOH, CHARS_STX, CHARS_ETX, CHARS_EOT, CHARS_ENQ
 -PUBLIC CHARS_ACK, CHARS_BEL, CHARS_HT, CHARS_BS, CHARS_NL, CHARS_VT
 -PUBLIC CHARS_NP, CHARS_CR, CHARS_SO, CHARS_SI, CHARS_DLE, CHARS_DC1

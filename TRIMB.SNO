@@ -1,7 +1,7 @@
 -STITL TRIMB
 -EJECT
 *
--LINE 29 "TRIMB.lss"
+-LINE 35 "TRIMB.lss"
 ************************************************************************
 *                                                                      *
 *               #######  ######   ###  #     #  ######                 *
@@ -18,7 +18,8 @@
 *
 * TRIMB.lss
 *
--LINE 6 "TRIMB.lss"
+-LINE 11 "TRIMB.lss"
+-MODULE TRIMB
 -PUBLIC TRIMB()
          DEFINE('TRIMB(S)')                                 :(TRIMB_END)
 *

@@ -24,7 +24,13 @@ Computer Science Dept., Hebrew University, Jerusalem, Israel.
 
 © Copyright 1985 - Catspaw, Incorporated
 
+<h2>Uses</h2>
+
+<<INCLUDES>>=
+@
+
 <<GOTOS>>=
+-MODULE GOTOS
 -PUBLIC GOTOS_()
          DEFINE('GOTOS_()')
          GOTOS_LENGTH = 119

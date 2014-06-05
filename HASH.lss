@@ -46,9 +46,9 @@ table with a [[NULL]] key with value [['XXX']] and key [['NAME']] with
 a value of [['YYY']].  [[#'']] is pretty much the same as [[TABLE()]].
 
 <h2>Uses</h2>
-<a href="BRKREM.html">BRKREM</a><br>
-<a href="SEQ.html">SEQ</a><br>
-<a href="VDIFFER.html">VDIFFER</a>
+<a href="BRKREM">BRKREM</a><br>
+<a href="SEQ">SEQ</a><br>
+<a href="VDIFFER">VDIFFER</a><br>
 
 <h2>See Also</h2>
 <a href="PSQL.html">PSQL</a>
@@ -60,6 +60,7 @@ a value of [['YYY']].  [[#'']] is pretty much the same as [[TABLE()]].
 @
 
 <<HASH>>=
+-MODULE HASH
 -PUBLIC HASH(), COPY_TABLE(), MERGE_TABLE(), KEYS_IN_TABLE(), #1
          DEFINE('HASH(S,E,P,TS,TI,FK,FV,SP)K,V,C')
          DEFINE('HASH_3(S)')

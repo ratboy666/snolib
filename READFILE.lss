@@ -15,13 +15,19 @@ Also implements WRITEFILE(). Note that SPITBOL will form lines and
 thus can only read or write text. CSNOBOL4 will read and write an
 arbitrary binary string.
 
+<h2>Uses</h2>
+<a href="BRKREM">BRKREM</a><br>
+<a href="CHARS">CHARS</a><br>
+<a href="SYSTEM">SYSTEM</a><br>
+
 <<INCLUDES>>=
+-INCLUDE 'BRKREM.INC'
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'SYSTEM.INC'
--INCLUDE 'BRKREM.INC'
 @
 
 <<READFILE>>=
+-MODULE READFILE
 -PUBLIC WRITEFILE(), READFILE()
          DEFINE('WRITEFILE(FILE,S)F,U,E,T')
          DEFINE('READFILE(FILE)F,U,E')                   :(READFILE_END)

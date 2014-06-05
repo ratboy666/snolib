@@ -5,13 +5,14 @@
 [['low:high']] or this routine will not work.
 
 <h2>Uses</h2>
-<a href="SEQ.html">SEQ</a>
+<a href="SEQ">SEQ</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'SEQ.INC'
 @
 
 <<CATA>>=
+-MODULE CATA
 -PUBLIC CATA()
          DEFINE('CATA(A1,A2)I,N1')                           :(CATA_END)
 *

@@ -2,7 +2,7 @@
 -INCLUDE 'SDIFF.INC'
 -STITL BRKREM
 -EJECT
--LINE 40 "BRKREM.lss"
+-LINE 41 "BRKREM.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -22,6 +22,7 @@
 * BRKREM.lss
 *
 -LINE 15 "BRKREM.lss"
+-MODULE BRKREM
 -PUBLIC BRKREM()
          DEFINE('BRKREM(S)CS')                             :(BRKREM_END)
 *

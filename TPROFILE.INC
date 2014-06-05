@@ -3,7 +3,7 @@
 -INCLUDE 'SEQ.INC'
 -STITL TPROFILE
 -EJECT
--LINE 54 "TPROFILE.lss"
+-LINE 55 "TPROFILE.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -22,6 +22,7 @@
 * TPROFILE.lss
 *
 -LINE 16 "TPROFILE.lss"
+-MODULE TPROFILE
 -PUBLIC TPROFILE(), TPROFILE_DUMP()
          DEFINE('TPROFILE()S,T')
          DEFINE('TPROFILE_DUMP()I')

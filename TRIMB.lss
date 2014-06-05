@@ -2,7 +2,13 @@
 
 [[TRIMB(S)]] applies [[TRIMB()]] to both the left and right of [[S]].
 
+<h2>Uses</h2>
+
+<<INCLUDES>>=
+@
+
 <<TRIMB>>=
+-MODULE TRIMB
 -PUBLIC TRIMB()
          DEFINE('TRIMB(S)')                                 :(TRIMB_END)
 *

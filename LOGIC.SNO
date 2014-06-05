@@ -1,7 +1,7 @@
 -STITL LOGIC
 -EJECT
 *
--LINE 78 "LOGIC.lss"
+-LINE 84 "LOGIC.lss"
 ************************************************************************
 *                                                                      *
 *             #        #######   #####   ###   #####                   *
@@ -21,7 +21,8 @@
 *
 * LOGIC.lss
 *
--LINE 6 "LOGIC.lss"
+-LINE 11 "LOGIC.lss"
+-MODULE LOGIC
 *
 * NOTE! BASE ARGUMENT MUST BE PASSED A EXPLICIT NULL STRING FOR DEFAULT
 *

@@ -1,7 +1,7 @@
 -STITL NDBM
 -EJECT
 *
--LINE 60 "NDBM.lss"
+-LINE 66 "NDBM.lss"
 ************************************************************************
 *                                                                      *
 *                 #     #  ######   ######   #     #                   *
@@ -21,7 +21,8 @@
 *
 * NDBM.lss
 *
--LINE 8 "NDBM.lss"
+-LINE 13 "NDBM.lss"
+-MODULE NDBM
 NDBM_LOAD
 *
 -PUBLIC DBM_INSERT, DBM_REPLACE

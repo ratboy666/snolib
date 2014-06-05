@@ -2,6 +2,11 @@
 
 An [[END]] card for use with [[-M]] (multi-file).
 
+<h2>Uses</h2>
+
+<<INCLUDES>>=
+@
+
 <<ENDCARD>>=
 END
 @
@@ -15,6 +20,7 @@ END
 @
 
 <<>>=
+-MODULE ENDCARD
 -STITL ENDCARD
 -EJECT
 ************************************************************************

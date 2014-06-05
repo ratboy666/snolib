@@ -1,12 +1,13 @@
+-MODULE HTMLESC
 -LINE 14 "HTMLESC.lss"
--INCLUDE 'REPL.INC'
--INCLUDE 'SDIFF.INC'
--INCLUDE 'HEX.INC'
 -INCLUDE 'CH.INC'
 -INCLUDE 'CHARS.INC'
+-INCLUDE 'HEX.INC'
+-INCLUDE 'REPL.INC'
+-INCLUDE 'SDIFF.INC'
 -STITL HTMLESC
--EJECT
 -LINE 110 "HTMLESC.lss"
+-EJECT
 *
 ************************************************************************
 *                                                                      *

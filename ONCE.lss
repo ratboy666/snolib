@@ -7,13 +7,14 @@ however, failure in subsequent tries is like [[FAIL]], (as opposed to
 [[ABORT]]) which permits other alternates to be taken.
 
 <h2>Uses</h2>
-<a href="UNIQUE.html">UNIQUE</a>
+<a href="UNIQUE">UNIQUE</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'UNIQUE.INC'
 @
 
 <<ONCE>>=
+-MODULE ONCE
 -PUBLIC ONCE()
          DEFINE('ONCE(ID)NAME')                              :(ONCE_END)
 ONCE     ONCE = IDENT(ID, NULL)

@@ -2,7 +2,13 @@
 
 [[LOGIC()]] works on integers or buffers (strings).
 
+<h2>Uses</h2>
+
+<<INCLUDES>>=
+@
+
 <<LOGIC>>=
+-MODULE LOGIC
 *
 * NOTE! BASE ARGUMENT MUST BE PASSED A EXPLICIT NULL STRING FOR DEFAULT
 *

@@ -3,7 +3,13 @@
 [[COMB(N,M)]] returns the number of combinations of [[N]] things,
 taken [[M]] at a time.
 
+<h2>Uses</h2>
+
+<<INCLUDES>>=
+@
+
 <<COMB>>=
+-MODULE COMB
 -PUBLIC COMB()
          DEFINE('COMB(N,M)')                                 :(COMB_END)
 *

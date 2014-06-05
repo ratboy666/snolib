@@ -7,15 +7,13 @@ on a 6X6 grid. Each of the characters used is actually a 3 byte UTF-8
 code.
 
 <h2>Uses</h2>
-<a href="CRACK.html">CRACK</a><br>
-<a href="SEQ.html">SEQ</a><br>
-<a href="STROUT.html">STROUT</a><br>
-<a href="TRIMB.html">TRIMB</a>
+<a href="CRACK">CRACK</a><br>
+<a href="SEQ">SEQ</a><br>
+<a href="TRIMB">TRIMB</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'CRACK.INC'
 -INCLUDE 'SEQ.INC'
--INCLUDE 'STROUT.INC'
 -INCLUDE 'TRIMB.INC'
 @
 
@@ -84,6 +82,7 @@ END START
 <<>>=
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
+-PROGRAM UBAN
 -TITLE UBAN
 START
 <<INCLUDES>>

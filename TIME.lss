@@ -2,7 +2,13 @@
 
 Date and time functions.
 
+<h2>Uses</h2>
+
+<<INCLUDES>>=
+@
+
 <<TIME>>=
+-MODULE TIME
 -PUBLIC TIMEVAL(), TV_SEC(), TV_USEC()
          DATA('TIMEVAL(TV_SEC,TV_USEC)')
 -PUBLIC TM(), TM_SEC(), TM_MIN(), TM_HOUR(), TM_MDAY(), TM_MON()

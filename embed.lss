@@ -46,8 +46,8 @@ Note that [[SLOAD]] is included to allow the extension of [[embed]]
 driven by its using programs.
 
 <h2>Uses</h2>
-<a href="CHARS.html">CHARS</a><br>
-<a href="SLOAD.html">SLOAD</a>
+<a href="CHARS">CHARS</a><br>
+<a href="SLOAD">SLOAD</a><br>
 
 <h2>See Also</h2>
 <a href="WRAPPER.html">WRAPPER</a><br>
@@ -55,12 +55,12 @@ driven by its using programs.
 <a href="P64.html">P64</a>
 
 <<INCLUDES>>=
--USES SLOAD()
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'SLOAD.INC'
 @
 
 <<embed>>=
+-USES SLOAD()
          TERMINAL = 'EMBED (SUN DEC  1 16:15:39 EST 2013)'
 *
          WHITE_ = SPAN(' ' CHARS_TAB) | ''
@@ -116,7 +116,8 @@ END START
 <<>>=
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
-TITLE EMBED
+-PROGRAM EMBED
+-TITLE EMBED
 START
 <<INCLUDES>>
 -STITL

@@ -2,7 +2,13 @@
 
 Basic arithmetic on complex numbers. Not complete yet.
 
+<h2>Uses</h2>
+
+<<INCLUDES>>=
+@
+
 <<COMPLEX>>=
+-MODULE COMPLEX
 -PUBLIC COMPLEX(), R(), I()
          DATA('COMPLEX(R,I)')
 *

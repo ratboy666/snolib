@@ -7,7 +7,13 @@ terms of a simple, one-line expression, such as
     DEXP('AVE(X,Y) = (X + Y) / 2.0')
 ]]
 
+<h2>Uses</h2>
+
+<<INCLUDES>>=
+@
+
 <<DEXP>>=
+-MODULE DEXP
 -PUBLIC DEXP()
          DEFINE('DEXP(PROTO)NAME,ARGS')                      :(DEXP_END)
 *

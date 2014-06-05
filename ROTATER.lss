@@ -3,7 +3,13 @@
 [[ROTATER(S,N)]] will rotate the string [[S]] right by [[N]]
 characters. If [[N]] is negative, rotation is to the left.
 
+<h2>Uses</h2>
+
+<<INCLUDES>>=
+@
+
 <<ROTATER>>=
+-MODULE ROTATER
 -PUBLIC ROTATER()
          DEFINE('ROTATER(S,N)S1')                         :(ROTATER_END)
 *

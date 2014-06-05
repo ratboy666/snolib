@@ -1,11 +1,13 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
+-PROGRAM LSINC
+-LINE 22 "lsinc.lss"
 -TITLE LSINC
--LINE 20 "lsinc.lss"
 START
--LINE 11 "lsinc.lss"
--INCLUDE 'SEQ.INC'
+-LINE 12 "lsinc.lss"
 -INCLUDE 'CRACK.INC'
+-INCLUDE 'HOST.INC'
+-INCLUDE 'SEQ.INC'
 -INCLUDE 'TRIMB.INC'
 -STITL
 -EJECT

@@ -1,7 +1,7 @@
 -STITL MDY
 -EJECT
 *
--LINE 42 "MDY.lss"
+-LINE 48 "MDY.lss"
 ************************************************************************
 *                                                                      *
 *                      #     #  ######   #     #                       *
@@ -18,7 +18,8 @@
 *
 * MDY.lss
 *
--LINE 8 "MDY.lss"
+-LINE 13 "MDY.lss"
+-MODULE MDY
 -PUBLIC MDY()
          DEFINE('MDY(Y,DY)X,T')
          DAY_MONTH = '(334,12)(304,11)(273,10)(243,9)'

@@ -14,26 +14,27 @@ a pattern that matches the method and path_info. It sets variables
 in the table passed in to ROUTING(), and sets ACTION.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
-<h2>See Also</h2>
-<a href="CGI.html">CGI</a>
+<h2>Uses</h2>
+<a href="BRKREM">BRKREM</a><br>
+<a href="SDIFF">SDIFF</a><br>
+<a href="UNIQUE">UNIQUE</a><br>
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
-<h2>Uses</h2>
-<a href="SDIFF.html">SDIFF<a><br>
-<a href="UNIQUE.html">UNIQUE<a><br>
-<a href="BRKREM.html">BRKREM<a>
+<h2>See Also</h2>
+<a href="CGI.html">CGI</a>
 </font></p>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;BRKREM.INC&#39;
 -INCLUDE &#39;SDIFF.INC&#39;
 -INCLUDE &#39;UNIQUE.INC&#39;
--INCLUDE &#39;BRKREM.INC&#39;
 <b>@</b>
 </font></pre></div>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;ROUTING&raquo;&equiv;</b>
+-MODULE ROUTING
 -PUBLIC ROUTING_INIT(), ROUTING_ADD(), ROUTING()
          DEFINE(&#39;ROUTING_INIT()&#39;)
          DEFINE(&#39;ROUTING_ADD(ROUTE,PATTERN,ACTION_)NAME,P&#39;)
@@ -165,7 +166,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Mon Jun  2 13:05:05 EDT 2014</p></td><td><p align=right>
+Thu Jun  5 13:35:12 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

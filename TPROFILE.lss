@@ -4,8 +4,8 @@
 SNOBOL4 statement.
 
 <h2>Uses</h2>
-<a href="LPROG.html">LPROG</a><br>
-<a href="SEQ.html">SEQ</a>
+<a href="LPROG">LPROG</a><br>
+<a href="SEQ">SEQ</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'LPROG.INC'
@@ -13,6 +13,7 @@ SNOBOL4 statement.
 @
 
 <<TPROFILE>>=
+-MODULE TPROFILE
 -PUBLIC TPROFILE(), TPROFILE_DUMP()
          DEFINE('TPROFILE()S,T')
          DEFINE('TPROFILE_DUMP()I')

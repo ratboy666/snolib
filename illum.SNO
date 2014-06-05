@@ -1,13 +1,15 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
+-PROGRAM ILLUM
+-LINE 48 "illum.lss"
 -TITLE ILLUM
--LINE 46 "illum.lss"
 START
--LINE 14 "illum.lss"
+-LINE 15 "illum.lss"
 -INCLUDE 'BQ.INC'
 -INCLUDE 'CRACK.INC'
 -INCLUDE 'SEQ.INC'
 -INCLUDE 'TRIMB.INC'
+-INCLUDE 'VDIFFER.INC'
 -STITL
 -EJECT
 *
@@ -27,7 +29,7 @@ START
 *
 * illum.lss
 *
--LINE 21 "illum.lss"
+-LINE 23 "illum.lss"
          TERMINAL = 'ILLUM (SUN NOV 24 01:32:15 EST 2013)'
 *
          S = TRIMB(INPUT)                                        :F(END)

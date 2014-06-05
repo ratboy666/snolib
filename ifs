@@ -1,13 +1,13 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
+-PROGRAM IFS
+-LINE 350 "ifs.lss"
 -TITLE IFS
--LINE 352 "ifs.lss"
 START
--LINE 63 "ifs.lss"
+-LINE 62 "ifs.lss"
 -INCLUDE 'CHARS.INC'
--INCLUDE 'HOST.INC'
--INCLUDE 'CRACK.INC'
 -INCLUDE 'FASTBAL.INC'
+-INCLUDE 'HOST.INC'
 -INCLUDE 'SYSTEM.INC'
 -INCLUDE 'VDIFFER.INC'
 -STITL
@@ -31,7 +31,7 @@ START
 *
 * ifs.lss
 *
--LINE 72 "ifs.lss"
+-LINE 70 "ifs.lss"
 -PLUSOPS 1
 *
          TERMINAL = 'IFS (WED NOV  6 13:40:26 EST 2013)'

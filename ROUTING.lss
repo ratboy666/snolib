@@ -4,21 +4,22 @@
 a pattern that matches the method and path_info. It sets variables
 in the table passed in to ROUTING(), and sets ACTION.
 
+<h2>Uses</h2>
+<a href="BRKREM">BRKREM</a><br>
+<a href="SDIFF">SDIFF</a><br>
+<a href="UNIQUE">UNIQUE</a><br>
+
 <h2>See Also</h2>
 <a href="CGI.html">CGI</a>
 
-<h2>Uses</h2>
-<a href="SDIFF.html">SDIFF<a><br>
-<a href="UNIQUE.html">UNIQUE<a><br>
-<a href="BRKREM.html">BRKREM<a>
-
 <<INCLUDES>>=
+-INCLUDE 'BRKREM.INC'
 -INCLUDE 'SDIFF.INC'
 -INCLUDE 'UNIQUE.INC'
--INCLUDE 'BRKREM.INC'
 @
 
 <<ROUTING>>=
+-MODULE ROUTING
 -PUBLIC ROUTING_INIT(), ROUTING_ADD(), ROUTING()
          DEFINE('ROUTING_INIT()')
          DEFINE('ROUTING_ADD(ROUTE,PATTERN,ACTION_)NAME,P')
