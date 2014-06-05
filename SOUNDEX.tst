@@ -1,7 +1,7 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -INCLUDE 'SOUNDEX.INC'
--LINE 36 "SOUNDEX.lss"
+-LINE 37 "SOUNDEX.lss"
          &CODE = 1
          IDENT(SOUNDEX('washington'), 'W252')                    :F(END)
          &CODE = 0

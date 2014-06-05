@@ -1,8 +1,8 @@
--LINE 103 "SCOOP.lss"
+-LINE 104 "SCOOP.lss"
 -INCLUDE 'VDIFFER.INC'
 -EJECT
 -STITL SCOOP
--LINE 297 "SCOOP.lss"
+-LINE 298 "SCOOP.lss"
 -EJECT
 *
 ************************************************************************
@@ -24,7 +24,7 @@
 * THE SAFETY FLAG. IF 0, SOME CHECKS ARE NOT COMPILED IN. I RECOMMEND
 * THAT IT ALWAYS BE ENABLED.
 *
--LINE 107 "SCOOP.lss"
+-LINE 108 "SCOOP.lss"
 -MODULE SCOOP
 -PUBLIC OBJECT()
          DATA('OBJECT(CLASS,IVARS,METHODS)')

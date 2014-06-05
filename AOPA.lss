@@ -10,7 +10,8 @@ For example, [[AOPA(A,'+',1)]] will add [[1]] to each element of [[A]].
 scalar, scalar operation array, and finally scalar operation scalar.
 
 <h2>Uses</h2>
-<a href="SEQ">SEQ</a><br>
+<a href="SEQ.html">SEQ</a><br>
+<a href="SEQ.html">SEQ</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'SEQ.INC'

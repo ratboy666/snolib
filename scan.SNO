@@ -1,10 +1,10 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -PROGRAM SCAN
--LINE 61 "scan.lss"
+-LINE 62 "scan.lss"
 -TITLE SCAN
 START
--LINE 53 "scan.lss"
+-LINE 54 "scan.lss"
 -INCLUDE 'HOST.INC'
 -INCLUDE 'SLOAD.INC'
 -STITL

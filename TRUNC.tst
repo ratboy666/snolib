@@ -1,7 +1,7 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -INCLUDE 'TRUNC.INC'
--LINE 31 "TRUNC.lss"
+-LINE 32 "TRUNC.lss"
          &CODE = 1
          &CODE = 0
 END

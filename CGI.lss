@@ -32,16 +32,17 @@ with doc, respond 302 Location and doc returned
 ]]
 
 <h2>Uses</h2>
-<a href="CHARS">CHARS</a><br>
-<a href="COOKIE">COOKIE</a><br>
-<a href="CRACK">CRACK</a><br>
-<a href="HASH">HASH</a><br>
-<a href="HTMLESC">HTMLESC</a><br>
-<a href="JSON">JSON</a><br>
-<a href="SCOOP">SCOOP</a><br>
-<a href="SEQ">SEQ</a><br>
-<a href="UNIQUE">UNIQUE</a><br>
-<a href="VDIFFER">VDIFFER</a><br>
+<a href="CHARS.html">CHARS</a><br>
+<a href="COOKIE.html">COOKIE</a><br>
+<a href="CRACK.html">CRACK</a><br>
+<a href="HASH.html">HASH</a><br>
+<a href="HTMLESC.html">HTMLESC</a><br>
+<a href="JSON.html">JSON</a><br>
+<a href="SCOOP.html">SCOOP</a><br>
+<a href="SEQ.html">SEQ</a><br>
+<a href="UNIQUE.html">UNIQUE</a><br>
+<a href="VDIFFER.html">VDIFFER</a><br>
+<a href="VDIFFER.html">VDIFFER</a><br>
 
 <h2>See Also</h2>
 <a href="SESSION.html">SESSION</a><br>

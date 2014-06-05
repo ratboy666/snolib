@@ -5,7 +5,8 @@ suffix. [[STACK('A')]] creates functions [[PUSH_A(V)]], [[POP_A()]],
 and [[TOP_A()]].
 
 <h2>Uses</h2>
-<a href="REPL">REPL</a><br>
+<a href="REPL.html">REPL</a><br>
+<a href="REPL.html">REPL</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'REPL.INC'

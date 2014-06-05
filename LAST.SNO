@@ -1,8 +1,8 @@
--LINE 11 "LAST.lss"
+-LINE 12 "LAST.lss"
 -INCLUDE 'LINK.INC'
 -STITL LAST
 -EJECT
--LINE 39 "LAST.lss"
+-LINE 40 "LAST.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -20,7 +20,7 @@
 *
 * LAST.lss
 *
--LINE 15 "LAST.lss"
+-LINE 16 "LAST.lss"
 -MODULE LAST
 -PUBLIC LAST()
          DEFINE('LAST(L)')                                   :(LAST_END)

@@ -1,8 +1,8 @@
--LINE 19 "BALX.lss"
+-LINE 20 "BALX.lss"
 -INCLUDE 'UNIQUE.INC'
 -STITL BALX
 -EJECT
--LINE 53 "BALX.lss"
+-LINE 54 "BALX.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -20,7 +20,7 @@
 *
 * BALX.lss
 *
--LINE 23 "BALX.lss"
+-LINE 24 "BALX.lss"
 -MODULE BALX
 -PUBLIC BALX()
          DEFINE('BALX(PARENS,QTS)Q,GBAL,NAME,STAR,LP,RP')    :(BALX_END)

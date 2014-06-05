@@ -1,5 +1,5 @@
 -MODULE DDT
--LINE 65 "DDT.lss"
+-LINE 66 "DDT.lss"
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'FREEZE.INC'
 -INCLUDE 'HOST.INC'
@@ -9,7 +9,7 @@
 -INCLUDE 'TRIMB.INC'
 -INCLUDE 'VDIFFER.INC'
 -STITL DDT
--LINE 705 "DDT.lss"
+-LINE 706 "DDT.lss"
 -EJECT
 *
 ************************************************************************
@@ -28,7 +28,7 @@
 *
 * DDT.lss
 *
--LINE 76 "DDT.lss"
+-LINE 77 "DDT.lss"
 -WEAK DSERVE_APPNAME
 -USES SLOAD()
 -PUBLIC DDT(), DEBUG(), DDT_LOADED, DDT_ACTIVE
@@ -62,7 +62,7 @@ DDT      DDT_ACTIVE = 1
          DEFINE('DDT(S)', 'DDT_')
          DEFINE('DEBUG(S)', 'DDT_')
          DEFINE('DDT_SOURCE()')
--LINE 119 "DDT.lss"
+-LINE 120 "DDT.lss"
 -PUBLIC DDT_SUSPEND(), DDT_RESUME(), DDT_TOUT()
          DEFINE('DDT_SUSPEND()', 'DDT.O')
          DEFINE('DDT_RESUME()')
@@ -114,7 +114,7 @@ DDT      DDT_ACTIVE = 1
          HOST(HOST_GETENV, 'LIST')                              :F(DDT_)
          DDT_SOURCE()
 *
--LINE 180 "DDT.lss"
+-LINE 181 "DDT.lss"
 DDT_     S DDT_IGNORE                                          :F(DDT2_)
          DDT_COUNT = GT(DDT_COUNT) DDT_COUNT - 1              :S(RETURN)
 DDT2_    DDT_STEP_COUNT = 1
@@ -175,7 +175,7 @@ DDT_DISPLAY_2
 *
          GT(DDT_STEP_COUNT)                                   :S(RETURN)
 *
--LINE 250 "DDT.lss"
+-LINE 251 "DDT.lss"
          THAW(DDT_BREAK_TAB)
          THAW(DDT_BREAK_TEMP)
          DDT_BREAK_TEMP = TABLE()
@@ -191,7 +191,7 @@ DDT_DISPLAY_2
 DDT_CASE DDT_CASE = NE(&CASE)
 +           REPLACE(DDT_CASE, &LCASE, &UCASE)                  :(RETURN)
 *
--LINE 272 "DDT.lss"
+-LINE 273 "DDT.lss"
 DDT_LABEL
          IDENT(DDT_FINAL_STMT)                                :S(RETURN)
 DDT_LAB2 DDT_STMTS<STNO> DDT_DL_PAT                         :S(DDT_LAB1)
@@ -200,7 +200,7 @@ DDT_LAB2 DDT_STMTS<STNO> DDT_DL_PAT                         :S(DDT_LAB1)
 DDT_LAB1 DDT_LABEL = IDENT(OFFSET) '(' DDT_LABEL ')'          :S(RETURN)
          DDT_LABEL = '(' DDT_LABEL ' + ' OFFSET ')'            :(RETURN)
 *
--LINE 292 "DDT.lss"
+-LINE 293 "DDT.lss"
 DDT_GET_STMT
          IDENT($S)                                            :S(RETURN)
 * CHECK FOR SIMPLE NUMBER
@@ -217,7 +217,7 @@ DDT_GET_STMT
 +           + OFFSET                                          :S(RETURN)
 DDT_GET1 DDT_TOUT('BAD LABEL OR STATEMENT NUMBER')            :(FRETURN)
 *
--LINE 317 "DDT.lss"
+-LINE 318 "DDT.lss"
 DDT_READLIST
          PAT1 = FENCE (LEN(4) | SPAN(&DIGITS)) . STNO
 +           (LEN(4) | '') REM . STMT
@@ -252,7 +252,7 @@ DDT_RL3  DDT_READLIST<$LAST> = DDT_READLIST<$LAST> LINE
 DDT_RL4  DDT_TOUT('INCORRECT PROGRAM LIST FILE, LINE IN ERROR:')
          DDT_TOUT(LINE)                                       :(FRETURN)
 *
--LINE 362 "DDT.lss"
+-LINE 363 "DDT.lss"
 DDT_CMD  IDENT(DDT_UNIT2)                                   :S(DDT_CMD2)
          DDT_IN = DDT_INPUT                                 :F(DDT_CMD4)
          DDT_TOUT('DDT: ' DDT_IN)                            :(DDT_CMD3)
@@ -343,7 +343,7 @@ DDT.*                                                         :(DDT_CMD)
 *
 *** H OR ? - HELP
 *
--LINE 610 "DDT.lss"
+-LINE 611 "DDT.lss"
 DDT.H
  DDT_TOUT('STNO - STATEMENT NUMBERS SPECIFIED AS INTEGERS, OR LABEL+-N')
  DDT_TOUT('          BRACKETED ITEMS ARE OPTIONAL')
@@ -487,7 +487,7 @@ DDT_G1   DIFFER(DDT_IN)                                       :F(DDT_G2)
 DDT_G2   FREEZE(DDT_BREAK_TEMP)
          FREEZE(DDT_BREAK_TAB)
          DIFFER(DDT_CMD)                            :S(RETURN)F(FRETURN)
--LINE 647 "DDT.lss"
+-LINE 648 "DDT.lss"
 *
 *** L - LIST STATEMENT(S)
 *

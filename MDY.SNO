@@ -1,7 +1,7 @@
 -STITL MDY
 -EJECT
 *
--LINE 48 "MDY.lss"
+-LINE 49 "MDY.lss"
 ************************************************************************
 *                                                                      *
 *                      #     #  ######   #     #                       *
@@ -18,7 +18,7 @@
 *
 * MDY.lss
 *
--LINE 13 "MDY.lss"
+-LINE 14 "MDY.lss"
 -MODULE MDY
 -PUBLIC MDY()
          DEFINE('MDY(Y,DY)X,T')

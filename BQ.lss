@@ -9,6 +9,7 @@ but that has been fixed. To fix this, [[BQ()]] is a wrapper which
 disables [[DDT()]] and then calls the 'real' function [[BQ2()]].
 
 <h2>Uses</h2>
+<a href=".html"></a><br>
 
 <h2>See Also</h2>
 <a href="DDT.html">DDT</a>

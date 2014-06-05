@@ -1,7 +1,7 @@
 -STITL AGT
 -EJECT
 *
--LINE 42 "AGT.lss"
+-LINE 43 "AGT.lss"
 ************************************************************************
 *                                                                      *
 *                         #      #####   #######                       *
@@ -18,7 +18,7 @@
 *
 * AGT.lss
 *
--LINE 16 "AGT.lss"
+-LINE 17 "AGT.lss"
 -MODULE AGT
 -PUBLIC AGT()
          DEFINE('AGT(S1,S2)')

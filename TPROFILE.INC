@@ -1,9 +1,9 @@
--LINE 11 "TPROFILE.lss"
+-LINE 12 "TPROFILE.lss"
 -INCLUDE 'LPROG.INC'
 -INCLUDE 'SEQ.INC'
 -STITL TPROFILE
 -EJECT
--LINE 55 "TPROFILE.lss"
+-LINE 56 "TPROFILE.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -21,7 +21,7 @@
 *
 * TPROFILE.lss
 *
--LINE 16 "TPROFILE.lss"
+-LINE 17 "TPROFILE.lss"
 -MODULE TPROFILE
 -PUBLIC TPROFILE(), TPROFILE_DUMP()
          DEFINE('TPROFILE()S,T')

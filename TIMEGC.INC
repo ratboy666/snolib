@@ -1,10 +1,10 @@
--LINE 13 "TIMEGC.lss"
+-LINE 14 "TIMEGC.lss"
 -INCLUDE 'LINK.INC'
 -INCLUDE 'RESOL.INC'
 -INCLUDE 'SYSTEM.INC'
 -STITL TIMEGC
 -EJECT
--LINE 70 "TIMEGC.lss"
+-LINE 71 "TIMEGC.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -22,7 +22,7 @@
 *
 * TIMEGC.lss
 *
--LINE 19 "TIMEGC.lss"
+-LINE 20 "TIMEGC.lss"
 -MODULE TIMEGC
 -PUBLIC TIMEGC()
          DEFINE('TIMEGC(N)I,S,A,L,T,K,FREED')              :(TIMEGC_END)

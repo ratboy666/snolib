@@ -1,7 +1,7 @@
 -STITL P64
 -EJECT
 *
--LINE 635 "P64.lss"
+-LINE 636 "P64.lss"
 ************************************************************************
 *                                                                      *
 *                       ######    ###   #   #                          *
@@ -18,25 +18,25 @@
 *
 * P64.lss
 *
--LINE 59 "P64.lss"
+-LINE 60 "P64.lss"
 -MODULE P64
 -CASE 1
--LINE 69 "P64.lss"
--LINE 71 "P64.lss"
+-LINE 70 "P64.lss"
 -LINE 72 "P64.lss"
 -LINE 73 "P64.lss"
 -LINE 74 "P64.lss"
 -LINE 75 "P64.lss"
--LINE 82 "P64.lss"
+-LINE 76 "P64.lss"
+-LINE 83 "P64.lss"
          p64.h = 'p64.h'
--LINE 104 "P64.lss"
+-LINE 105 "P64.lss"
          p64 = 'p64.c'
--LINE 401 "P64.lss"
 -LINE 402 "P64.lss"
 -LINE 403 "P64.lss"
 -LINE 404 "P64.lss"
 -LINE 405 "P64.lss"
--LINE 416 "P64.lss"
+-LINE 406 "P64.lss"
+-LINE 417 "P64.lss"
          LOAD('GET_PHI()INTEGER', 'p64.so')
          LOAD('GET_PLO()INTEGER', 'p64.so')
          LOAD('SET_PHI(INTEGER)', 'p64.so')
@@ -82,7 +82,7 @@
 -PUBLIC POKE_P(), POKE_C(), POKE_S(), POKE_I(), POKE_D(), POKE_F()
 -PUBLIC POKE_LD()
 *
--LINE 503 "P64.lss"
+-LINE 504 "P64.lss"
          DEFINE('GET_P()LO,HI')
          DEFINE('SET_P(P)LO,HI')
          DEFINE('PEEK_P(P)')

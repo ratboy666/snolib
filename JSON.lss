@@ -27,13 +27,14 @@ for null, true or false. These three constants are defined as
 JSON_NULL, JSON_TRUE and JSON_FALSE.
 
 <h2>Uses</h2>
-<a href="CH">CH</a><br>
-<a href="CHARS">CHARS</a><br>
-<a href="HASH">HASH</a><br>
-<a href="HEX">HEX</a><br>
-<a href="SDIFF">SDIFF</a><br>
-<a href="SEQ">SEQ</a><br>
-<a href="SIZEA">SIZEA</a><br>
+<a href="CH.html">CH</a><br>
+<a href="CHARS.html">CHARS</a><br>
+<a href="HASH.html">HASH</a><br>
+<a href="HEX.html">HEX</a><br>
+<a href="SDIFF.html">SDIFF</a><br>
+<a href="SEQ.html">SEQ</a><br>
+<a href="SIZEA.html">SIZEA</a><br>
+<a href="SIZEA.html">SIZEA</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'CH.INC'

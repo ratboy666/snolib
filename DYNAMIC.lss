@@ -3,9 +3,10 @@
 Create dynamic modules for [[CSNOBOL4]].
 
 <h2>Uses</h2>
-<a href="BQ">BQ</a><br>
-<a href="HOST">HOST</a><br>
-<a href="REPL">REPL</a><br>
+<a href="BQ.html">BQ</a><br>
+<a href="HOST.html">HOST</a><br>
+<a href="REPL.html">REPL</a><br>
+<a href="REPL.html">REPL</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'BQ.INC'

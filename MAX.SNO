@@ -1,7 +1,7 @@
 -MODULE MAX
--LINE 9 "MAX.lss"
+-LINE 10 "MAX.lss"
 -STITL MAX
--LINE 24 "MAX.lss"
+-LINE 25 "MAX.lss"
 -EJECT
 *
 ************************************************************************

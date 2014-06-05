@@ -5,7 +5,8 @@ character of [[S]] and returns the result. [[SKIM('MISSISSIPPI')]]
 returns [['MISP']].
 
 <h2>Uses</h2>
-<a href="SDIFF">SDIFF</a><br>
+<a href="SDIFF.html">SDIFF</a><br>
+<a href="SDIFF.html">SDIFF</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'SDIFF.INC'

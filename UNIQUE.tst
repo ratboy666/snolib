@@ -1,7 +1,7 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -INCLUDE 'UNIQUE.INC'
--LINE 51 "UNIQUE.lss"
+-LINE 52 "UNIQUE.lss"
          &CODE = 1
          U1 = UNIQUE()
          IDENT($U1)                                              :F(END)

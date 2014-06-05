@@ -4,7 +4,8 @@ CH(H) will convert the sequence of hexadecimal digits into the
 corresponding character string. [[CH]] is the inverse of [[HEX]].
 
 <h2>Uses</h2>
-<a href="HEX">HEX</a><br>
+<a href="HEX.html">HEX</a><br>
+<a href="HEX.html">HEX</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'HEX.INC'

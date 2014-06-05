@@ -68,14 +68,15 @@ multiple processes on the same machine. -v1 or -v4 are (presumed)
 useful, and -v1 is the default in this code.
 
 <h2>Uses</h2>
-<a href="BQ">BQ</a><br>
-<a href="CHARS">CHARS</a><br>
-<a href="CRACK">CRACK</a><br>
-<a href="JSON">JSON</a><br>
-<a href="NDBM">NDBM</a><br>
-<a href="READFILE">READFILE</a><br>
-<a href="REPL">REPL</a><br>
-<a href="TIME">TIME</a><br>
+<a href="BQ.html">BQ</a><br>
+<a href="CHARS.html">CHARS</a><br>
+<a href="CRACK.html">CRACK</a><br>
+<a href="JSON.html">JSON</a><br>
+<a href="NDBM.html">NDBM</a><br>
+<a href="READFILE.html">READFILE</a><br>
+<a href="REPL.html">REPL</a><br>
+<a href="TIME.html">TIME</a><br>
+<a href="TIME.html">TIME</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'BQ.INC'

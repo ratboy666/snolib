@@ -1,7 +1,7 @@
 -STITL RESOL
 -EJECT
 *
--LINE 51 "RESOL.lss"
+-LINE 52 "RESOL.lss"
 ************************************************************************
 *                                                                      *
 *                 ######   #######   #####   #######  #                *
@@ -18,7 +18,7 @@
 *
 * RESOL.lss
 *
--LINE 12 "RESOL.lss"
+-LINE 13 "RESOL.lss"
 -MODULE RESOL
 %SET(CSNOBOL4,(?(SYSTEM ? 'CSNOBOL4') 1))
 -PUBLIC RESOLUTION()

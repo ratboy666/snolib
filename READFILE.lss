@@ -16,9 +16,10 @@ thus can only read or write text. CSNOBOL4 will read and write an
 arbitrary binary string.
 
 <h2>Uses</h2>
-<a href="BRKREM">BRKREM</a><br>
-<a href="CHARS">CHARS</a><br>
-<a href="SYSTEM">SYSTEM</a><br>
+<a href="BRKREM.html">BRKREM</a><br>
+<a href="CHARS.html">CHARS</a><br>
+<a href="SYSTEM.html">SYSTEM</a><br>
+<a href="SYSTEM.html">SYSTEM</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'BRKREM.INC'

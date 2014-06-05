@@ -4,9 +4,10 @@ Find and load a SNOBOL4 source file. Recursively load any INCLUDE
 files needed.
 
 <h2>Uses</h2>
-<a href="CRACK">CRACK</a><br>
-<a href="HOST">HOST</a><br>
-<a href="TRIMB">TRIMB</a><br>
+<a href="CRACK.html">CRACK</a><br>
+<a href="HOST.html">HOST</a><br>
+<a href="TRIMB.html">TRIMB</a><br>
+<a href="TRIMB.html">TRIMB</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'CRACK.INC'

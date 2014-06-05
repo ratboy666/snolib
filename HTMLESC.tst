@@ -1,7 +1,7 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -INCLUDE 'HTMLESC.INC'
--LINE 25 "HTMLESC.lss"
+-LINE 26 "HTMLESC.lss"
          &CODE = 1
          IDENT(HTML_ESCAPE('&<>"' "'"), '&amp;&lt;&gt;&quot;&#39;')
 +                                                                :F(END)

@@ -1,9 +1,9 @@
--LINE 43 "GETKEY.lss"
+-LINE 44 "GETKEY.lss"
 -INCLUDE 'BQ.INC'
 -INCLUDE 'CHARS.INC'
 -STITL GETKEY
 -EJECT
--LINE 147 "GETKEY.lss"
+-LINE 148 "GETKEY.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -21,7 +21,7 @@
 *
 * GETKEY.lss
 *
--LINE 48 "GETKEY.lss"
+-LINE 49 "GETKEY.lss"
 -MODULE GETKEY
 -PUBLIC GETKEY()
          DEFINE('GETKEY(IN)KEY,M')
@@ -40,7 +40,7 @@ GETKEY_INIT
          KEY_HOME   = BQ('tput khome')
          KEY_END    = BQ('tput kend')
          KEY_INS    = BQ('tput kich1')
--LINE 76 "GETKEY.lss"
+-LINE 77 "GETKEY.lss"
          BQ('echo $TERM') 'xterm'                         :F(GETKEY_END)
          KEY_LEFT   = REPLACE(KEY_LEFT,  'O', '[')
          KEY_RIGHT  = REPLACE(KEY_RIGHT, 'O', '[')
@@ -84,7 +84,7 @@ GK10     M = ?(KEY_INS ? FENCE KEY) 1                           :F(GK11)
 GK11     M = ?(KEY_ESC ? FENCE KEY) 1                           :F(GK12)
          EQ(SIZE(KEY), SIZE(KEY_ESC))                            :S(GKR)
 +                                                                 F(GK1)
--LINE 126 "GETKEY.lss"
+-LINE 127 "GETKEY.lss"
 GK12     DIFFER(M)                                               :S(GK1)
 GKR      GETKEY = KEY                                          :(RETURN)
 *

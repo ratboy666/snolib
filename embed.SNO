@@ -1,10 +1,10 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -PROGRAM EMBED
--LINE 120 "embed.lss"
+-LINE 121 "embed.lss"
 -TITLE EMBED
 START
--LINE 58 "embed.lss"
+-LINE 59 "embed.lss"
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'SLOAD.INC'
 -STITL
@@ -26,7 +26,7 @@ START
 *
 * embed.lss
 *
--LINE 63 "embed.lss"
+-LINE 64 "embed.lss"
 -USES SLOAD()
          TERMINAL = 'EMBED (SUN DEC  1 16:15:39 EST 2013)'
 *

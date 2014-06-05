@@ -1,7 +1,7 @@
 -STITL FIND
 -EJECT
 *
--LINE 47 "FIND.lss"
+-LINE 48 "FIND.lss"
 ************************************************************************
 *                                                                      *
 *                    #######  ###  #     #  ######                     *
@@ -18,7 +18,7 @@
 *
 * FIND.lss
 *
--LINE 17 "FIND.lss"
+-LINE 18 "FIND.lss"
 -MODULE FIND
 -PUBLIC FIND()
          DEFINE('FIND(A,PRED)EX,I,MAX,TEST')                 :(FIND_END)

@@ -1,6 +1,6 @@
 -MODULE HTMLTMPL
 -SNOCONE
--LINE 72 "HTMLTMPL.lss"
+-LINE 73 "HTMLTMPL.lss"
 
 # A compiled template is a list of template tokens
 
@@ -216,6 +216,6 @@ procedure tmpl_parse_args(s) n v {
 }
 
 // tmpl_init()
--LINE 293 "HTMLTMPL.lss"
+-LINE 294 "HTMLTMPL.lss"
 
 # ce: .f.msnocone;

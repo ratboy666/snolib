@@ -4,11 +4,12 @@ HTML (web) escaping. Provides three functions to escape a string in
 HTML, JS and URL encodings.
 
 <h2>Uses</h2>
-<a href="CH">CH</a><br>
-<a href="CHARS">CHARS</a><br>
-<a href="HEX">HEX</a><br>
-<a href="REPL">REPL</a><br>
-<a href="SDIFF">SDIFF</a><br>
+<a href="CH.html">CH</a><br>
+<a href="CHARS.html">CHARS</a><br>
+<a href="HEX.html">HEX</a><br>
+<a href="REPL.html">REPL</a><br>
+<a href="SDIFF.html">SDIFF</a><br>
+<a href="SDIFF.html">SDIFF</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'CH.INC'

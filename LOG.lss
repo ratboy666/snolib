@@ -6,7 +6,8 @@
 [[LN(X)]]). Note that CSNOBOL4 also has [[LOG(X)]] for natural log.
 
 <h2>Uses</h2>
-<a href="DEXP">DEXP</a><br>
+<a href="DEXP.html">DEXP</a><br>
+<a href="DEXP.html">DEXP</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'DEXP.INC'

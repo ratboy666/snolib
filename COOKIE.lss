@@ -38,12 +38,13 @@ If a cookie with a bad name is crafted by the browser, it will simply
 be returned (probably as a session cookie).
 
 <h2>Uses</h2>
-<a href="CHARS">CHARS</a><br>
-<a href="DEXP">DEXP</a><br>
-<a href="HASH">HASH</a><br>
-<a href="TIME">TIME</a><br>
-<a href="TRIMB">TRIMB</a><br>
-<a href="VDIFFER">VDIFFER</a><br>
+<a href="CHARS.html">CHARS</a><br>
+<a href="DEXP.html">DEXP</a><br>
+<a href="HASH.html">HASH</a><br>
+<a href="TIME.html">TIME</a><br>
+<a href="TRIMB.html">TRIMB</a><br>
+<a href="VDIFFER.html">VDIFFER</a><br>
+<a href="VDIFFER.html">VDIFFER</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'CHARS.INC'

@@ -5,9 +5,10 @@ a pattern that matches the method and path_info. It sets variables
 in the table passed in to ROUTING(), and sets ACTION.
 
 <h2>Uses</h2>
-<a href="BRKREM">BRKREM</a><br>
-<a href="SDIFF">SDIFF</a><br>
-<a href="UNIQUE">UNIQUE</a><br>
+<a href="BRKREM.html">BRKREM</a><br>
+<a href="SDIFF.html">SDIFF</a><br>
+<a href="UNIQUE.html">UNIQUE</a><br>
+<a href="UNIQUE.html">UNIQUE</a><br>
 
 <h2>See Also</h2>
 <a href="CGI.html">CGI</a>

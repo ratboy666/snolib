@@ -64,9 +64,10 @@ Example declarations:
 ]]
 
 <h2>Uses</h2>
-<a href="CHARS">CHARS</a><br>
-<a href="HASH">HASH</a><br>
-<a href="P64">P64</a><br>
+<a href="CHARS.html">CHARS</a><br>
+<a href="HASH.html">HASH</a><br>
+<a href="P64.html">P64</a><br>
+<a href="P64.html">P64</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'CHARS.INC'

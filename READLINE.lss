@@ -5,6 +5,7 @@ retrieval features. This is provided both internally in CSNOBOL4 and
 with the [[editline.so]] loadable library.
 
 <h2>Uses</h2>
+<a href=".html"></a><br>
 
 <<INCLUDES>>=
 @

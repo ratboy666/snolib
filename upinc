@@ -14,7 +14,6 @@
 -include 'JSON.INC'
 -include 'CHARS.INC'
 -include 'SEQ.INC'
--include 'REPL.INC'
 
  fn = host(HOST_ARGN, HOST(HOST_FIRSTARG)) :f(end)
  src = readfile(fn) :f(end)
@@ -24,6 +23,7 @@
  inc = json_decode(bq('uses ' on)) :f(end)
  ld = ?(src ? '-' ('snocone' | 'SNOCONE')) '//'
  &fullscan = 1
+ src '<H2>Uses</H2>' = '<h2>Uses</h2>'
  src '<h2>Uses</h2>' ((CHARS_NL @bh @eh CHARS_NL) |
 + (CHARS_NL @bh ARB CHARS_NL @eh CHARS_NL)) :f(tryi)
  dh = 1
@@ -33,9 +33,10 @@ tryi src '<<INCLUDES>>=' CHARS_NL @bi break('@') @ei '@' CHARS_NL
 noi q = "'"
  qq = '"'
  seq(' ni = ni ld "-INCLUDE " q inc<i> q CHARS_NL', .i)
- seq(' nh = nh "<a href=" qq inc<i> qq ">" inc<i> "</a><br>" CHARS_NL',
-+ .i)
+ seq(' s = inc<i>; s ".INC" = ;'
++ ' nh = nh "<a href=" qq s ".html" qq ">" s "</a><br>" CHARS_NL;'
++ ' inc<i>', .i)
  src differ(di) pos(bi) len(ei - bi) = ni
- src differ(dh) pos(bh) len(eh - bh) = repl(nh, '.INC')
+ src differ(dh) pos(bh) len(eh - bh) = nh
  writefile(fn, src)
 end

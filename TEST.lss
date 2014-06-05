@@ -10,7 +10,8 @@ SPITBOL does not have a one-character assumption.
 }}
 
 <h2>Uses</h2>
-<a href="UNIQUE">UNIQUE</a><br>
+<a href="UNIQUE.html">UNIQUE</a><br>
+<a href="UNIQUE.html">UNIQUE</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'UNIQUE.INC'

@@ -4,8 +4,9 @@
 SNOBOL4 statement.
 
 <h2>Uses</h2>
-<a href="LPROG">LPROG</a><br>
-<a href="SEQ">SEQ</a><br>
+<a href="LPROG.html">LPROG</a><br>
+<a href="SEQ.html">SEQ</a><br>
+<a href="SEQ.html">SEQ</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'LPROG.INC'

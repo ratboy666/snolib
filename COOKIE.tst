@@ -1,7 +1,7 @@
 #!/usr/bin/bash
          exec "/usr/local/bin/snobol4" "-b" "$0" "$@"
 -INCLUDE 'COOKIE.INC'
--LINE 187 "COOKIE.lss"
+-LINE 188 "COOKIE.lss"
 *
          &CODE = 1
          JAR = NEW_COOKIE_JAR()

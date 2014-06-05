@@ -1,10 +1,10 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -PROGRAM UPCASE
--LINE 45 "upcase.lss"
+-LINE 46 "upcase.lss"
 -TITLE UPCASE
 START
--LINE 11 "upcase.lss"
+-LINE 12 "upcase.lss"
 -INCLUDE 'HOST.INC'
 -INCLUDE 'SWAP.INC'
 *
@@ -24,7 +24,7 @@ START
 *
 * upcase.lss
 *
--LINE 16 "upcase.lss"
+-LINE 17 "upcase.lss"
          TERMINAL = 'UPCASE (TUE OCT 23 16:16:46 EDT 2007)'
          DEFINE('TOUPPER(S)')
          Q = "'"

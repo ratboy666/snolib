@@ -8,9 +8,10 @@ GNU Lightning does not have an ELF writer. It does appear to support
 all of the platforms that I would want.
 
 <h2>Uses</h2>
-<a href="CRACK">CRACK</a><br>
-<a href="P64">P64</a><br>
-<a href="SEQ">SEQ</a><br>
+<a href="CRACK.html">CRACK</a><br>
+<a href="P64.html">P64</a><br>
+<a href="SEQ.html">SEQ</a><br>
+<a href="SEQ.html">SEQ</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'CRACK.INC'

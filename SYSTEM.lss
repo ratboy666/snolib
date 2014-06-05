@@ -26,6 +26,7 @@ If source could be in CDC display code, test that first, before
 ISASCII() -- '()' is ordered the same in both of these character sets.
 
 <h2>Uses</h2>
+<a href=".html"></a><br>
 
 <<INCLUDES>>=
 @

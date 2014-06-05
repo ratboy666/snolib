@@ -6,6 +6,7 @@ interchanged. [[BALREV('F(X)')]] returns [['(X)F']] instead of
 [[')X(F']] like a simple reversal.
 
 <h2>Uses</h2>
+<a href=".html"></a><br>
 
 <<INCLUDES>>=
 @

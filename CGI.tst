@@ -1,7 +1,7 @@
 #!/usr/bin/bash
          export "SNOLIB=/home/fred/snolib"; export "SNOPATH=/home/fred/snolib"; export "LD_LIBRARY_PATH=/home/fred/snolib"
          exec "/usr/local/bin/snobol4" "-b" "$0" "$@"
--LINE 289 "CGI.lss"
+-LINE 290 "CGI.lss"
 -INCLUDE 'FCGI.INC'
 -INCLUDE 'CGI.INC'
 -INCLUDE 'READFILE.INC'

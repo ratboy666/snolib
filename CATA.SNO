@@ -1,8 +1,8 @@
--LINE 11 "CATA.lss"
+-LINE 12 "CATA.lss"
 -INCLUDE 'SEQ.INC'
 -STITL CATA
 -EJECT
--LINE 50 "CATA.lss"
+-LINE 51 "CATA.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -20,7 +20,7 @@
 *
 * CATA.lss
 *
--LINE 15 "CATA.lss"
+-LINE 16 "CATA.lss"
 -MODULE CATA
 -PUBLIC CATA()
          DEFINE('CATA(A1,A2)I,N1')                           :(CATA_END)

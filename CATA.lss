@@ -5,7 +5,8 @@
 [['low:high']] or this routine will not work.
 
 <h2>Uses</h2>
-<a href="SEQ">SEQ</a><br>
+<a href="SEQ.html">SEQ</a><br>
+<a href="SEQ.html">SEQ</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'SEQ.INC'

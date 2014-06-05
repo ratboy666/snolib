@@ -5,11 +5,12 @@ character, and outputs the character (from [[banner]]) and the rest
 of the sentence boxed with UTF-8 linedraw characters.
 
 <h2>Uses</h2>
-<a href="BQ">BQ</a><br>
-<a href="CRACK">CRACK</a><br>
-<a href="SEQ">SEQ</a><br>
-<a href="TRIMB">TRIMB</a><br>
-<a href="VDIFFER">VDIFFER</a><br>
+<a href="BQ.html">BQ</a><br>
+<a href="CRACK.html">CRACK</a><br>
+<a href="SEQ.html">SEQ</a><br>
+<a href="TRIMB.html">TRIMB</a><br>
+<a href="VDIFFER.html">VDIFFER</a><br>
+<a href="VDIFFER.html">VDIFFER</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'BQ.INC'

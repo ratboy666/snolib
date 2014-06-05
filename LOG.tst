@@ -1,7 +1,7 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -INCLUDE 'LOG.INC'
--LINE 19 "LOG.lss"
+-LINE 20 "LOG.lss"
 -INCLUDE 'FLOOR.INC'
          &CODE = 1
          EQ(CEIL(CLOG(1000)), 3)                                 :F(END)

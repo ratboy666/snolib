@@ -1,10 +1,10 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -PROGRAM UBAN
--LINE 86 "uban.lss"
+-LINE 87 "uban.lss"
 -TITLE UBAN
 START
--LINE 15 "uban.lss"
+-LINE 16 "uban.lss"
 -INCLUDE 'CRACK.INC'
 -INCLUDE 'SEQ.INC'
 -INCLUDE 'TRIMB.INC'
@@ -27,7 +27,7 @@ START
 *
 * uban.lss
 *
--LINE 21 "uban.lss"
+-LINE 22 "uban.lss"
          TERMINAL = 'UBAN (SAT NOV 23 23:02:17 EST 2013)'
 *
          A1 =    '┌────┐/ ┌─┐  /┌────┐/┌────┐/┌┐  ┌┐/┌────┐/┌┐    /'

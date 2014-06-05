@@ -1,7 +1,7 @@
 -STITL COUNT
 -EJECT
 *
--LINE 38 "COUNT.lss"
+-LINE 39 "COUNT.lss"
 ************************************************************************
 *                                                                      *
 *               #####   #######  #     #  #     #  #######             *
@@ -21,7 +21,7 @@
 *
 * COUNT.lss
 *
--LINE 11 "COUNT.lss"
+-LINE 12 "COUNT.lss"
 -MODULE COUNT
 -PUBLIC COUNT()
          DEFINE('COUNT(S1,S2)FIRST,REST,P')                 :(COUNT_END)

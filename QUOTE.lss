@@ -5,7 +5,8 @@ a SNOBOL4 expression which, when evaluated, will yield the original
 string [[S]].
 
 <h2>Uses</h2>
-<a href="REPL">REPL</a><br>
+<a href="REPL.html">REPL</a><br>
+<a href="REPL.html">REPL</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'REPL.INC'

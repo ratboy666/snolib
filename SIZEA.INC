@@ -1,10 +1,10 @@
--LINE 24 "SIZEA.lss"
+-LINE 25 "SIZEA.lss"
 -INCLUDE 'BRKREM.INC'
 -INCLUDE 'SWAP.INC'
 -INCLUDE 'SYSTEM.INC'
 -STITL SIZEA
 -EJECT
--LINE 87 "SIZEA.lss"
+-LINE 88 "SIZEA.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -22,7 +22,7 @@
 *
 * SIZEA.lss
 *
--LINE 30 "SIZEA.lss"
+-LINE 31 "SIZEA.lss"
 -MODULE SIZEA
 -PUBLIC SIZEA(), LOWA(), ARRAY0
          DEFINE('SIZEA(A)L,U')

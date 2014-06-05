@@ -4,8 +4,9 @@ Convert SNOBOL4 program to uppercase. Does not uppercase quoted
 strings, or comments. If /L is used, converts to lowercase.
 
 <h2>Uses</h2>
-<a href="HOST">HOST</a><br>
-<a href="SWAP">SWAP</a><br>
+<a href="HOST.html">HOST</a><br>
+<a href="SWAP.html">SWAP</a><br>
+<a href="SWAP.html">SWAP</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'HOST.INC'

@@ -1,7 +1,7 @@
 -STITL SYSTEM
 -EJECT
 *
--LINE 111 "SYSTEM.lss"
+-LINE 112 "SYSTEM.lss"
 ************************************************************************
 *                                                                      *
 *          #####   #     #   #####   #######  #######  #     #         *
@@ -18,7 +18,7 @@
 *
 * SYSTEM.lss
 *
--LINE 34 "SYSTEM.lss"
+-LINE 35 "SYSTEM.lss"
 -MODULE SYSTEM
 -PUBLIC SYSTEM(), ISSPITBOL(), ISSNOBOL4()
 -PUBLIC ISASCII(), ISEBCDIC(), ISCDC_DISPLAY_CODE()

@@ -5,7 +5,8 @@ of a list. Thus, if [[L1]] and [[L2]] are lists, [[LAST(L1) = L2]] will
 concatenate the two lists. [[LAST(L) = L]] creates a circular list.
 
 <h2>Uses</h2>
-<a href="LINK">LINK</a><br>
+<a href="LINK.html">LINK</a><br>
+<a href="LINK.html">LINK</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'LINK.INC'

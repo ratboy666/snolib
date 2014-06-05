@@ -46,9 +46,10 @@ table with a [[NULL]] key with value [['XXX']] and key [['NAME']] with
 a value of [['YYY']].  [[#'']] is pretty much the same as [[TABLE()]].
 
 <h2>Uses</h2>
-<a href="BRKREM">BRKREM</a><br>
-<a href="SEQ">SEQ</a><br>
-<a href="VDIFFER">VDIFFER</a><br>
+<a href="BRKREM.html">BRKREM</a><br>
+<a href="SEQ.html">SEQ</a><br>
+<a href="VDIFFER.html">VDIFFER</a><br>
+<a href="VDIFFER.html">VDIFFER</a><br>
 
 <h2>See Also</h2>
 <a href="PSQL.html">PSQL</a>

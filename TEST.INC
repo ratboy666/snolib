@@ -1,8 +1,8 @@
--LINE 16 "TEST.lss"
+-LINE 17 "TEST.lss"
 -INCLUDE 'UNIQUE.INC'
 -STITL TEST
 -EJECT
--LINE 46 "TEST.lss"
+-LINE 47 "TEST.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -21,7 +21,7 @@
 *
 * TEST.lss
 *
--LINE 20 "TEST.lss"
+-LINE 21 "TEST.lss"
 -MODULE TEST
 -PUBLIC TESTP()
          DEFINE('TESTP(ARG)NAME')                            :(TEST_END)

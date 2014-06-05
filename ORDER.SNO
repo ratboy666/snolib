@@ -1,7 +1,7 @@
 -STITL ORDER
 -EJECT
 *
--LINE 37 "ORDER.lss"
+-LINE 38 "ORDER.lss"
 ************************************************************************
 *                                                                      *
 *                #######  ######   ######   #######  ######            *
@@ -18,7 +18,7 @@
 *
 * ORDER.lss
 *
--LINE 12 "ORDER.lss"
+-LINE 13 "ORDER.lss"
 -MODULE ORDER
 -PUBLIC ORDER()
          DEFINE('ORDER(S)T,HIGHS,S1')                       :(ORDER_END)

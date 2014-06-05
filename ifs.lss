@@ -52,11 +52,12 @@ conditionals, and no other macro expansion.
 </ul>
 
 <h2>Uses</h2>
-<a href="CHARS">CHARS</a><br>
-<a href="FASTBAL">FASTBAL</a><br>
-<a href="HOST">HOST</a><br>
-<a href="SYSTEM">SYSTEM</a><br>
-<a href="VDIFFER">VDIFFER</a><br>
+<a href="CHARS.html">CHARS</a><br>
+<a href="FASTBAL.html">FASTBAL</a><br>
+<a href="HOST.html">HOST</a><br>
+<a href="SYSTEM.html">SYSTEM</a><br>
+<a href="VDIFFER.html">VDIFFER</a><br>
+<a href="VDIFFER.html">VDIFFER</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'CHARS.INC'

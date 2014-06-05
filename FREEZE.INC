@@ -1,8 +1,8 @@
--LINE 7 "FREEZE.lss"
+-LINE 8 "FREEZE.lss"
 -INCLUDE 'SYSTEM.INC'
 -STITL FREEZE
 -EJECT
--LINE 36 "FREEZE.lss"
+-LINE 37 "FREEZE.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -20,7 +20,7 @@
 *
 * FREEZE.lss
 *
--LINE 11 "FREEZE.lss"
+-LINE 12 "FREEZE.lss"
 -MODULE FREEZE
          SYSTEM() 'CSNOBOL4'                              :S(FREEZE_END)
 -PUBLIC FREEZE(), THAW()

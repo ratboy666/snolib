@@ -16,13 +16,14 @@ Very little error checking is done. In future we assume that some form
 of template caching will be done.
 
 <h2>Uses</h2>
-<a href="CHARS">CHARS</a><br>
-<a href="HTMLESC">HTMLESC</a><br>
-<a href="LAST">LAST</a><br>
-<a href="LINK">LINK</a><br>
-<a href="READFILE">READFILE</a><br>
-<a href="REVL">REVL</a><br>
-<a href="SWAP">SWAP</a><br>
+<a href="CHARS.html">CHARS</a><br>
+<a href="HTMLESC.html">HTMLESC</a><br>
+<a href="LAST.html">LAST</a><br>
+<a href="LINK.html">LINK</a><br>
+<a href="READFILE.html">READFILE</a><br>
+<a href="REVL.html">REVL</a><br>
+<a href="SWAP.html">SWAP</a><br>
+<a href="SWAP.html">SWAP</a><br>
 
 <<INCLUDES>>=
 //-INCLUDE 'CHARS.INC'

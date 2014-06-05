@@ -1,8 +1,8 @@
--LINE 16 "CRACK.lss"
+-LINE 17 "CRACK.lss"
 -INCLUDE 'COUNT.INC'
 -STITL CRACK
 -EJECT
--LINE 63 "CRACK.lss"
+-LINE 64 "CRACK.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -20,7 +20,7 @@
 *
 * CRACK.lss
 *
--LINE 20 "CRACK.lss"
+-LINE 21 "CRACK.lss"
 -MODULE CRACK
 -PUBLIC CRACK(), %1
          DEFINE('CRACK_1(S)P')

@@ -6,9 +6,10 @@ applications. We add to this file as additional display controls
 are needed.
 
 <h2>Uses</h2>
-<a href="BQ">BQ</a><br>
-<a href="CHARS">CHARS</a><br>
-<a href="VDIFFER">VDIFFER</a><br>
+<a href="BQ.html">BQ</a><br>
+<a href="CHARS.html">CHARS</a><br>
+<a href="VDIFFER.html">VDIFFER</a><br>
+<a href="VDIFFER.html">VDIFFER</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'BQ.INC'

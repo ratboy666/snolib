@@ -17,12 +17,13 @@ transmissions.
 When this is functional, we will work on performance.
 
 <h2>Uses</h2>
-<a href="BQ">BQ</a><br>
-<a href="CSNOBOL4">CSNOBOL4</a><br>
-<a href="FFI">FFI</a><br>
-<a href="JSON">JSON</a><br>
-<a href="LOGIC">LOGIC</a><br>
-<a href="TIME">TIME</a><br>
+<a href="BQ.html">BQ</a><br>
+<a href="CSNOBOL4.html">CSNOBOL4</a><br>
+<a href="FFI.html">FFI</a><br>
+<a href="JSON.html">JSON</a><br>
+<a href="LOGIC.html">LOGIC</a><br>
+<a href="TIME.html">TIME</a><br>
+<a href="TIME.html">TIME</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'BQ.INC'

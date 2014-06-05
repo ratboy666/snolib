@@ -5,8 +5,9 @@ argument. Example: [[TIMER(' A = B + C ')]]. Multiple statements
 should be separated by semicolons.
 
 <h2>Uses</h2>
-<a href="RESOL">RESOL</a><br>
-<a href="SYSTEM">SYSTEM</a><br>
+<a href="RESOL.html">RESOL</a><br>
+<a href="SYSTEM.html">SYSTEM</a><br>
+<a href="SYSTEM.html">SYSTEM</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'RESOL.INC'

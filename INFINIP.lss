@@ -3,8 +3,9 @@
 Infinite precision integer math.
 
 <h2>Uses</h2>
-<a href="REDEFINE">REDEFINE</a><br>
-<a href="SWAP">SWAP</a><br>
+<a href="REDEFINE.html">REDEFINE</a><br>
+<a href="SWAP.html">SWAP</a><br>
+<a href="SWAP.html">SWAP</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'REDEFINE.INC'

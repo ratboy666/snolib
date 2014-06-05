@@ -1,7 +1,7 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "-s" "$0" "$@"
 -INCLUDE 'TIMEGC.INC'
--LINE 58 "TIMEGC.lss"
+-LINE 59 "TIMEGC.lss"
          &CODE = 1
 * DEFAULT MEMORY IS 8MB
          TIMEGC(3500)

@@ -1,12 +1,12 @@
 -MODULE HTMLESC
--LINE 14 "HTMLESC.lss"
+-LINE 15 "HTMLESC.lss"
 -INCLUDE 'CH.INC'
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'HEX.INC'
 -INCLUDE 'REPL.INC'
 -INCLUDE 'SDIFF.INC'
 -STITL HTMLESC
--LINE 110 "HTMLESC.lss"
+-LINE 111 "HTMLESC.lss"
 -EJECT
 *
 ************************************************************************
@@ -25,7 +25,7 @@
 *
 * HTMLESC.lss
 *
--LINE 40 "HTMLESC.lss"
+-LINE 41 "HTMLESC.lss"
 -PUBLIC HTML_ESCAPE()
          DEFINE('HTML_ESCAPE(S)')                     :(END_HTML_ESCAPE)
 *
@@ -39,7 +39,7 @@ HTML_ESCAPE
 *
 END_HTML_ESCAPE
 *
--LINE 57 "HTMLESC.lss"
+-LINE 58 "HTMLESC.lss"
 -PUBLIC JS_ESCAPE()
          DEFINE('JS_ESCAPE(S)')                         :(END_JS_ESCAPE)
 *
@@ -53,7 +53,7 @@ JS_ESCAPE
 *
 END_JS_ESCAPE
 *
--LINE 78 "HTMLESC.lss"
+-LINE 79 "HTMLESC.lss"
 -PUBLIC URL_ESCAPE(), URL_DECODE()
          DEFINE('URL_ESCAPE(S)L,C,R')
          DEFINE('URL_DECODE(S)L,C,R')

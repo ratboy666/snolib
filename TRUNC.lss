@@ -5,8 +5,9 @@ array [[A]]. That is, a new array will be created and returned
 consisting of the elements
 [[A<sub>L</sub>, A<sub>L+1</sub>, ..., A<sub>H</sub>]].
 
-<H2>Uses</H2>
-<A HREF="SEQ.html">SEQ</A>
+<h2>Uses</h2>
+<a href="SEQ.html">SEQ</a><br>
+<a href="SEQ.html">SEQ</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'SEQ.INC'

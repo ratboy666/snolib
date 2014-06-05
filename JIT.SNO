@@ -1,10 +1,10 @@
 -MODULE JIT
--LINE 16 "JIT.lss"
+-LINE 17 "JIT.lss"
 -INCLUDE 'CRACK.INC'
 -INCLUDE 'P64.INC'
 -INCLUDE 'SEQ.INC'
 -STITL JIT
--LINE 2202 "JIT.lss"
+-LINE 2203 "JIT.lss"
 -EJECT
 *
 ************************************************************************
@@ -25,110 +25,110 @@
 *
 * JIT.lss
 *
--LINE 22 "JIT.lss"
+-LINE 23 "JIT.lss"
 -CASE 1
 -PLUSOPS 1
 -SNOBOL TERMINAL = 'JIT (THU JUL  4 14:54:49 EDT 2013)'
--LINE 25 "JIT.lss"
--SNOBOL SLOAD('CRACK.INC')
 -LINE 26 "JIT.lss"
--SNOBOL SLOAD('SEQ.INC')
+-SNOBOL SLOAD('CRACK.INC')
 -LINE 27 "JIT.lss"
--SNOBOL SLOAD('DYNAMIC.INC')
+-SNOBOL SLOAD('SEQ.INC')
 -LINE 28 "JIT.lss"
--SNOBOL SLOAD('WRAPPER.INC')
+-SNOBOL SLOAD('DYNAMIC.INC')
 -LINE 29 "JIT.lss"
--LINE 32 "JIT.lss"
+-SNOBOL SLOAD('WRAPPER.INC')
+-LINE 30 "JIT.lss"
+-LINE 33 "JIT.lss"
 -EMBED C 'jit'
-#line 36 "JIT.lss"
--SNOBOL WRAPPER_STARTFILE(.EMBED)
 #line 37 "JIT.lss"
+-SNOBOL WRAPPER_STARTFILE(.EMBED)
+#line 38 "JIT.lss"
 
 #include <lightning.h>
 #include "p64.h"
 
 /* Setup, state and misc */
 -SNOBOL C_WRAPPER_PROTO('INIT_JIT(STRING)', .EMBED)
-#line 43 "JIT.lss"
--SNOBOL C_WRAPPER_PROTO('FINISH_JIT()', .EMBED)
 #line 44 "JIT.lss"
+-SNOBOL C_WRAPPER_PROTO('FINISH_JIT()', .EMBED)
+#line 45 "JIT.lss"
 
 static jit_state_t *_jit;
 
 static void get_state_jit(void) { set_p_(_jit); }
 
 -SNOBOL C_WRAPPER_PROTO('GET_STATE_JIT()', .EMBED)
-#line 50 "JIT.lss"
+#line 51 "JIT.lss"
 
 static void set_state_jit(void) { _jit = get_p_(); }
 
 -SNOBOL C_WRAPPER_PROTO('SET_STATE_JIT()', .EMBED)
-#line 54 "JIT.lss"
+#line 55 "JIT.lss"
 
 static void new_state_jit(void) { set_p_(jit_new_state()); }
 
 -SNOBOL C_WRAPPER_PROTO('NEW_STATE_JIT()', .EMBED)
-#line 58 "JIT.lss"
+#line 59 "JIT.lss"
 
 static void destroy_state_jit(void) { jit_destroy_state(); }
 
 -SNOBOL C_WRAPPER_PROTO('DESTROY_STATE_JIT()', .EMBED)
-#line 62 "JIT.lss"
+#line 63 "JIT.lss"
 
 static void clear_state_jit(void) { jit_clear_state(); }
 
 -SNOBOL C_WRAPPER_PROTO('CLEAR_STATE_JIT()', .EMBED)
-#line 66 "JIT.lss"
+#line 67 "JIT.lss"
 
 static void prolog_jit(void) { jit_prolog(); }
 
 -SNOBOL C_WRAPPER_PROTO('PROLOG_JIT()', .EMBED)
-#line 70 "JIT.lss"
+#line 71 "JIT.lss"
 
 static void epilog_jit(void) { jit_epilog(); }
 
 -SNOBOL C_WRAPPER_PROTO('EPILOG_JIT()', .EMBED)
-#line 74 "JIT.lss"
+#line 75 "JIT.lss"
 
 static void note_jit(char *s, int n) { set_p_(jit_note(s, n)); }
 
 -SNOBOL C_WRAPPER_PROTO('NOTE_JIT(STRING,INTEGER)', .EMBED)
-#line 78 "JIT.lss"
+#line 79 "JIT.lss"
 
 static void name_jit(char *s) { set_p_(jit_name(s)); }
 
 -SNOBOL C_WRAPPER_PROTO('NAME_JIT(STRING)', .EMBED)
-#line 82 "JIT.lss"
+#line 83 "JIT.lss"
 
 static void address_jit(void) { set_p_(jit_address(get_p_())); }
 
 -SNOBOL C_WRAPPER_PROTO('ADDRESS_JIT()', .EMBED)
-#line 86 "JIT.lss"
+#line 87 "JIT.lss"
 
 static void disassemble_jit(void) { jit_disassemble(); }
 
 -SNOBOL C_WRAPPER_PROTO('DISASSEMBLE_JIT()', .EMBED)
-#line 90 "JIT.lss"
+#line 91 "JIT.lss"
 
 static void emit_jit(void) { set_p_(jit_emit()); }
 
 -SNOBOL C_WRAPPER_PROTO('EMIT_JIT()', .EMBED)
-#line 94 "JIT.lss"
+#line 95 "JIT.lss"
 
 static void print_jit(void) { jit_print(); }
 
 -SNOBOL C_WRAPPER_PROTO('PRINT_JIT()', .EMBED)
-#line 98 "JIT.lss"
+#line 99 "JIT.lss"
 
 static void label_jit(void) { set_p_(jit_label()); }
 
 -SNOBOL C_WRAPPER_PROTO('LABEL_JIT()', .EMBED)
-#line 102 "JIT.lss"
+#line 103 "JIT.lss"
 
 static void ellipsis_jit(void) { jit_ellipsis(); }
 
 -SNOBOL C_WRAPPER_PROTO('ELLIPSIS_JIT()', .EMBED)
-#line 106 "JIT.lss"
+#line 107 "JIT.lss"
 
 static int get_note_jit(void)
 {
@@ -141,88 +141,88 @@ static int get_note_jit(void)
 }
 
 -SNOBOL C_WRAPPER_PROTO('GET_NOTE_JIT()INTEGER', .EMBED)
-#line 118 "JIT.lss"
+#line 119 "JIT.lss"
 
 static int pointer_p_jit(void) { return jit_pointer_p(get_p_()); }
 
 -SNOBOL C_WRAPPER_PROTO('POINTER_P_JIT()PREDICATE', .EMBED)
-#line 122 "JIT.lss"
+#line 123 "JIT.lss"
 
 static int callee_save_p(int r) { return jit_callee_save_p(r); }
 
 -SNOBOL C_WRAPPER_PROTO('CALLEE_SAVE_P_JIT(INTEGER)PREDICATE', .EMBED)
-#line 126 "JIT.lss"
+#line 127 "JIT.lss"
 
 static void patch_at_jit(void) { jit_patch_at(get_p_(), get_p2_()); }
 
 -SNOBOL C_WRAPPER_PROTO('PATCH_AT_JIT()', .EMBED)
-#line 130 "JIT.lss"
+#line 131 "JIT.lss"
 
 static void patch_abs_jit(void) { jit_patch_abs(get_p_(), get_p2_()); }
 
 -SNOBOL C_WRAPPER_PROTO('PATCH_ABS_JIT()', .EMBED)
-#line 134 "JIT.lss"
+#line 135 "JIT.lss"
 
 static void patch_jit(void) { jit_patch(get_p_()); }
 
 -SNOBOL C_WRAPPER_PROTO('PATCH_JIT()', .EMBED)
-#line 138 "JIT.lss"
+#line 139 "JIT.lss"
 
 static void prepare_jit(void) { jit_prepare(); }
 
 -SNOBOL C_WRAPPER_PROTO('PREPARE_JIT()', .EMBED)
-#line 142 "JIT.lss"
+#line 143 "JIT.lss"
 
 static int allocai_jit(int n) { return jit_allocai(n); }
 
 -SNOBOL C_WRAPPER_PROTO('ALLOCAI_JIT(INTEGER)INTEGER', .EMBED)
-#line 146 "JIT.lss"
+#line 147 "JIT.lss"
 
 /* DATA, LENGTH, ALIGNMENT (0..4). DATA/LENGTH HASHED */
 static void data_jit(int l, int a) { set_p_(jit_data(get_p_(), l, a)); }
 
 -SNOBOL C_WRAPPER_PROTO('DATA_JIT(INTEGER,INTEGER)', .EMBED)
-#line 151 "JIT.lss"
+#line 152 "JIT.lss"
 
 static void forward_jit(void) { set_p_(jit_forward()); }
 
 -SNOBOL C_WRAPPER_PROTO('FORWARD_JIT()', .EMBED)
-#line 155 "JIT.lss"
+#line 156 "JIT.lss"
 
 static void live_jit(int r) { jit_live(r); }
 
 -SNOBOL C_WRAPPER_PROTO('LIVE_JIT(INTEGER)', .EMBED)
-#line 159 "JIT.lss"
+#line 160 "JIT.lss"
 
 static void link_jit(void) { jit_link(get_p_()); }
 
 -SNOBOL C_WRAPPER_PROTO('LINK_JIT()', .EMBED)
-#line 163 "JIT.lss"
+#line 164 "JIT.lss"
 
 /* REGISTERS */
 static int r_num_jit(void) { return jit_r_num(); }
 
 -SNOBOL C_WRAPPER_PROTO('R_NUM_JIT()INTEGER', .EMBED)
-#line 168 "JIT.lss"
+#line 169 "JIT.lss"
 
 static int v_num_jit(void) { return jit_v_num(); }
 
 -SNOBOL C_WRAPPER_PROTO('V_NUM_JIT()INTEGER', .EMBED)
-#line 172 "JIT.lss"
+#line 173 "JIT.lss"
 
 static int f_num_jit(void) { return jit_f_num(); }
 
 -SNOBOL C_WRAPPER_PROTO('F_NUM_JIT()INTEGER', .EMBED)
-#line 176 "JIT.lss"
+#line 177 "JIT.lss"
 
 -SNOBOL L = 'r0 r1 r2 r3 v0 v1 v2 v3 f0 f1 f2 f3 f4 f5 f6 f7 fp'
-#line 178 "JIT.lss"
--SNOBOL LU = REPLACE(L, &LCASE, &UCASE)
 #line 179 "JIT.lss"
--SNOBOL A = CRACK(L, ' ')
+-SNOBOL LU = REPLACE(L, &LCASE, &UCASE)
 #line 180 "JIT.lss"
--SNOBOL AU = CRACK(LU, ' ')
+-SNOBOL A = CRACK(L, ' ')
 #line 181 "JIT.lss"
+-SNOBOL AU = CRACK(LU, ' ')
+#line 182 "JIT.lss"
 -SNOBOL SEQ(" EMBED = 'static int get_' A<I> '_jit(void) { '; "        +
             " EMBED = '#ifdef JIT_' AU<I>; "                           +
             " EMBED = '    return JIT_' AU<I> ';'; "                   +
@@ -232,7 +232,7 @@ static int f_num_jit(void) { return jit_f_num(); }
             " EMBED = DIFFER(A<I>) '}'; "                              +
             " C_WRAPPER_PROTO('GET_' AU<I> '_JIT()INTEGER', .EMBED) "  +
             , .I)
-#line 190 "JIT.lss"
+#line 191 "JIT.lss"
 
 /* REGISTER MATH */
 -SNOBOL L = 'addr addcr addxr subr subcr subxr mulr divr divr_u '      +
@@ -246,20 +246,20 @@ static int f_num_jit(void) { return jit_f_num(); }
             'ldxr_c ldxr_uc ldxr_s ldxr_us ldxr_i ldxr_ui ldxr_l '     +
             'ldxr ldxr_f ldxr_d '                                      +
             'stxr_c stxr_s stxr_i stxr stxr_l stxr_f stxr_d '
-#line 203 "JIT.lss"
--SNOBOL LU = REPLACE(L, &LCASE, &UCASE)
 #line 204 "JIT.lss"
--SNOBOL A = CRACK(L, ' ')
+-SNOBOL LU = REPLACE(L, &LCASE, &UCASE)
 #line 205 "JIT.lss"
--SNOBOL AU = CRACK(LU, ' ')
+-SNOBOL A = CRACK(L, ' ')
 #line 206 "JIT.lss"
+-SNOBOL AU = CRACK(LU, ' ')
+#line 207 "JIT.lss"
 -SNOBOL SEQ(" EMBED = 'static void ' "                                 +
             " A<I> '_jit(int r1, int r2, int r3) { '; "                +
             " EMBED = '    jit_' A<I> '(r1, r2, r3);'; "               +
             " EMBED = DIFFER(A<I>) '}'; "                              +
             " C_WRAPPER_PROTO(AU<I> '_JIT(INTEGER,INTEGER,INTEGER)', " +
             " .EMBED) ", .I)
-#line 212 "JIT.lss"
+#line 213 "JIT.lss"
 
 /* INTEGER IMMEDIATE MATH */
 -SNOBOL L = 'addi addci addxi subi subci subxi muli divi divi_u '      +
@@ -267,66 +267,66 @@ static int f_num_jit(void) { return jit_f_num(); }
             'lti lti_u lei lei_u gei gei_u gti gti_u eqi nei '         +
             'ldxi_c ldxi_uc ldxi_s ldxi_us ldxi_i ldxi_ui ldxi_l '     +
             'ldxi ldxi_f ldxi_d '
-#line 219 "JIT.lss"
--SNOBOL LU = REPLACE(L, &LCASE, &UCASE)
 #line 220 "JIT.lss"
--SNOBOL A = CRACK(L, ' ')
+-SNOBOL LU = REPLACE(L, &LCASE, &UCASE)
 #line 221 "JIT.lss"
--SNOBOL AU = CRACK(LU, ' ')
+-SNOBOL A = CRACK(L, ' ')
 #line 222 "JIT.lss"
+-SNOBOL AU = CRACK(LU, ' ')
+#line 223 "JIT.lss"
 -SNOBOL SEQ(" EMBED = 'static void ' A<I> '_jit(int r1, int r2) { '; " +
             " EMBED = '    jit_' A<I> '(r1, r2, (long)get_p_());'; "   +
             " EMBED = DIFFER(A<I>) '}'; "                              +
             " C_WRAPPER_PROTO(AU<I> '_JIT(INTEGER,INTEGER)', "         +
             " .EMBED) ", .I)
-#line 227 "JIT.lss"
+#line 228 "JIT.lss"
 
 -SNOBOL L = 'stxi_c stxi_s stxi_i stxi_l stxi stxi_f stxi_d '
-#line 229 "JIT.lss"
--SNOBOL LU = REPLACE(L, &LCASE, &UCASE)
 #line 230 "JIT.lss"
--SNOBOL A = CRACK(L, ' ')
+-SNOBOL LU = REPLACE(L, &LCASE, &UCASE)
 #line 231 "JIT.lss"
--SNOBOL AU = CRACK(LU, ' ')
+-SNOBOL A = CRACK(L, ' ')
 #line 232 "JIT.lss"
+-SNOBOL AU = CRACK(LU, ' ')
+#line 233 "JIT.lss"
 -SNOBOL SEQ(" EMBED = 'static void ' A<I> '_jit(int r1, int r2) { '; " +
             " EMBED = '    jit_' A<I> '(r1, (long)get_p_(), r2);'; "   +
             " EMBED = DIFFER(A<I>) '}'; "                              +
             " C_WRAPPER_PROTO(AU<I> '_JIT(INTEGER,INTEGER)', "         +
             " .EMBED) ", .I)
-#line 237 "JIT.lss"
+#line 238 "JIT.lss"
 
 /* FLOAT IMMEDIATE MATH */
 -SNOBOL L = 'addi_f subi_f muli_f divi_f '
-#line 240 "JIT.lss"
--SNOBOL LU = REPLACE(L, &LCASE, &UCASE)
 #line 241 "JIT.lss"
--SNOBOL A = CRACK(L, ' ')
+-SNOBOL LU = REPLACE(L, &LCASE, &UCASE)
 #line 242 "JIT.lss"
--SNOBOL AU = CRACK(LU, ' ')
+-SNOBOL A = CRACK(L, ' ')
 #line 243 "JIT.lss"
+-SNOBOL AU = CRACK(LU, ' ')
+#line 244 "JIT.lss"
 -SNOBOL SEQ(" EMBED = 'static void ' A<I> '_jit(int r1, int r2) { '; " +
             " EMBED = '    jit_' A<I> '(r1, r2, get_f_());'; "         +
             " EMBED = DIFFER(A<I>) '}'; "                              +
             " C_WRAPPER_PROTO(AU<I> '_JIT(INTEGER,INTEGER)', "         +
             " .EMBED) ", .I)
-#line 248 "JIT.lss"
+#line 249 "JIT.lss"
 
 /* DOUBLE IMMEDIATE MATH */
 -SNOBOL L = 'addi_d subi_d muli_d divi_d '
-#line 251 "JIT.lss"
--SNOBOL LU = REPLACE(L, &LCASE, &UCASE)
 #line 252 "JIT.lss"
--SNOBOL A = CRACK(L, ' ')
+-SNOBOL LU = REPLACE(L, &LCASE, &UCASE)
 #line 253 "JIT.lss"
--SNOBOL AU = CRACK(LU, ' ')
+-SNOBOL A = CRACK(L, ' ')
 #line 254 "JIT.lss"
+-SNOBOL AU = CRACK(LU, ' ')
+#line 255 "JIT.lss"
 -SNOBOL SEQ(" EMBED = 'static void ' A<I> '_jit(int r1, int r2) { '; " +
             " EMBED = '    jit_' A<I> '(r1, r2, get_d_());'; "         +
             " EMBED = DIFFER(A<I>) '}'; "                              +
             " C_WRAPPER_PROTO(AU<I> '_JIT(INTEGER,INTEGER)', "         +
             " .EMBED) ", .I)
-#line 259 "JIT.lss"
+#line 260 "JIT.lss"
 
 /* BRANCH - REGISTER */
 -SNOBOL L = 'bltr bltr_u bler bler_u bgtr bgtr_u bger bger_u '         +
@@ -338,19 +338,19 @@ static int f_num_jit(void) { return jit_f_num(); }
             'bltr_d bler_d bgtr_d bger_d beqr_d bner_d '               +
             'bunltr_d bunler_d buneqr_d bunger_d bungtr_d '            +
             'bltgtr_d bordr_d bunordr_d '
-#line 270 "JIT.lss"
--SNOBOL LU = REPLACE(L, &LCASE, &UCASE)
 #line 271 "JIT.lss"
--SNOBOL A = CRACK(L, ' ')
+-SNOBOL LU = REPLACE(L, &LCASE, &UCASE)
 #line 272 "JIT.lss"
--SNOBOL AU = CRACK(LU, ' ')
+-SNOBOL A = CRACK(L, ' ')
 #line 273 "JIT.lss"
+-SNOBOL AU = CRACK(LU, ' ')
+#line 274 "JIT.lss"
 -SNOBOL SEQ(" EMBED = 'static void ' A<I> '_jit(int r1, int r2) { '; " +
             " EMBED = '    set_p_(jit_' A<I> '(r1, r2));'; "               +
             " EMBED = DIFFER(A<I>) '}'; "                              +
             " C_WRAPPER_PROTO(AU<I> '_JIT(INTEGER,INTEGER)', "         +
             " .EMBED) ", .I)
-#line 278 "JIT.lss"
+#line 279 "JIT.lss"
 
 /* TWO REGISTER MOV, HTONR, NTOHR, COM, NEG, ABS, SQRT, EXT, TRUNC */
 -SNOBOL L = 'movr movr_f movr_d movr_f_w movr_w_f movr_d_w movr_w_d '  +
@@ -363,36 +363,36 @@ static int f_num_jit(void) { return jit_f_num(); }
             'ldr_c ldr_uc ldr_s ldr_us ldr_i ldr ldr_ui ldr_l '        +
             'ldr_f ldr_d '                                             +
             'str_c str_s str_i str str_l str_f str_d'
-#line 290 "JIT.lss"
--SNOBOL LU = REPLACE(L, &LCASE, &UCASE)
 #line 291 "JIT.lss"
--SNOBOL A = CRACK(L, ' ')
+-SNOBOL LU = REPLACE(L, &LCASE, &UCASE)
 #line 292 "JIT.lss"
--SNOBOL AU = CRACK(LU, ' ')
+-SNOBOL A = CRACK(L, ' ')
 #line 293 "JIT.lss"
+-SNOBOL AU = CRACK(LU, ' ')
+#line 294 "JIT.lss"
 -SNOBOL SEQ(" EMBED = 'static void ' A<I> '_jit(int r1, int r2) { '; " +
             " EMBED = '    jit_' A<I> '(r1, r2);'; "                   +
             " EMBED = DIFFER(A<I>) '}'; "                              +
             " C_WRAPPER_PROTO(AU<I> '_JIT(INTEGER,INTEGER)', "         +
             " .EMBED) ", .I)
-#line 298 "JIT.lss"
+#line 299 "JIT.lss"
 
 /* THREE REGISTER MOV */
 -SNOBOL L = 'movr_d_ww movr_ww_d'
-#line 301 "JIT.lss"
--SNOBOL LU = REPLACE(L, &LCASE, &UCASE)
 #line 302 "JIT.lss"
--SNOBOL A = CRACK(L, ' ')
+-SNOBOL LU = REPLACE(L, &LCASE, &UCASE)
 #line 303 "JIT.lss"
--SNOBOL AU = CRACK(LU, ' ')
+-SNOBOL A = CRACK(L, ' ')
 #line 304 "JIT.lss"
+-SNOBOL AU = CRACK(LU, ' ')
+#line 305 "JIT.lss"
 -SNOBOL SEQ(" EMBED = 'static void '"                                  +
             " A<I> '_jit(int r,int s,int t) { '; "                     +
             " EMBED = '    jit_' A<I> '(r, s, t);'; "                  +
             " EMBED = DIFFER(A<I>) '}'; "                              +
             " C_WRAPPER_PROTO(AU<I> '_JIT(INTEGER,INTEGER,INTEGER)', " +
             " .EMBED) ", .I)
-#line 310 "JIT.lss"
+#line 311 "JIT.lss"
 
 static void movi_jit(int r1)
 {
@@ -400,7 +400,7 @@ static void movi_jit(int r1)
 }
 
 -SNOBOL C_WRAPPER_PROTO('MOVI_JIT(INTEGER)', .EMBED)
-#line 317 "JIT.lss"
+#line 318 "JIT.lss"
 
 static void movi_f_jit(int r1)
 {
@@ -408,7 +408,7 @@ static void movi_f_jit(int r1)
 }
 
 -SNOBOL C_WRAPPER_PROTO('MOVI_F_JIT(INTEGER)', .EMBED)
-#line 324 "JIT.lss"
+#line 325 "JIT.lss"
 
 static void movi_d_jit(int r1)
 {
@@ -416,7 +416,7 @@ static void movi_d_jit(int r1)
 }
 
 -SNOBOL C_WRAPPER_PROTO('MOVI_D_JIT(INTEGER)', .EMBED)
-#line 331 "JIT.lss"
+#line 332 "JIT.lss"
 
 static void movi_f_w_jit(int r1)
 {
@@ -424,7 +424,7 @@ static void movi_f_w_jit(int r1)
 }
 
 -SNOBOL C_WRAPPER_PROTO('MOVI_F_W_JIT(INTEGER)', .EMBED)
-#line 338 "JIT.lss"
+#line 339 "JIT.lss"
 
 static void movi_d_w_jit(int r1)
 {
@@ -432,7 +432,7 @@ static void movi_d_w_jit(int r1)
 }
 
 -SNOBOL C_WRAPPER_PROTO('MOVI_D_W_JIT(INTEGER)', .EMBED)
-#line 345 "JIT.lss"
+#line 346 "JIT.lss"
 
 static void movi_d_ww_jit(int r1, int r2)
 {
@@ -440,175 +440,175 @@ static void movi_d_ww_jit(int r1, int r2)
 }
 
 -SNOBOL C_WRAPPER_PROTO('MOVI_D_WW_JIT(INTEGER,INTEGER)', .EMBED)
-#line 352 "JIT.lss"
+#line 353 "JIT.lss"
 
 /* ARG */
 -SNOBOL L = 'arg arg_f arg_d'
-#line 355 "JIT.lss"
--SNOBOL LU = REPLACE(L, &LCASE, &UCASE)
 #line 356 "JIT.lss"
--SNOBOL A = CRACK(L, ' ')
+-SNOBOL LU = REPLACE(L, &LCASE, &UCASE)
 #line 357 "JIT.lss"
--SNOBOL AU = CRACK(LU, ' ')
+-SNOBOL A = CRACK(L, ' ')
 #line 358 "JIT.lss"
+-SNOBOL AU = CRACK(LU, ' ')
+#line 359 "JIT.lss"
 -SNOBOL SEQ(" EMBED = 'static void ' A<I> '_jit(void) { '; "           +
             " EMBED = '    set_p_(jit_' A<I> '());'; "                 +
             " EMBED = DIFFER(A<I>) '}'; "                              +
             " C_WRAPPER_PROTO(AU<I> '_JIT()', "                        +
             " .EMBED) ", .I)
-#line 363 "JIT.lss"
+#line 364 "JIT.lss"
 
 -SNOBOL L = 'getarg getarg_c getarg_uc getarg_s getarg_us getarg_i '   +
             'getarg_ui getarg_l getarg_f getarg_d '                    +
             'ldi_c ldi_uc ldi_s ldi_us ldi_i ldi ldi_ui ldi_l ldi_f '  +
             'ldi_d '
-#line 368 "JIT.lss"
--SNOBOL LU = REPLACE(L, &LCASE, &UCASE)
 #line 369 "JIT.lss"
--SNOBOL A = CRACK(L, ' ')
+-SNOBOL LU = REPLACE(L, &LCASE, &UCASE)
 #line 370 "JIT.lss"
--SNOBOL AU = CRACK(LU, ' ')
+-SNOBOL A = CRACK(L, ' ')
 #line 371 "JIT.lss"
+-SNOBOL AU = CRACK(LU, ' ')
+#line 372 "JIT.lss"
 -SNOBOL SEQ(" EMBED = 'static void ' A<I> '_jit(int r) { '; "          +
             " EMBED = '    jit_' A<I> '(r, get_p_());'; "              +
             " EMBED = DIFFER(A<I>) '}'; "                              +
             " C_WRAPPER_PROTO(AU<I> '_JIT(INTEGER)', "                 +
             " .EMBED) ", .I)
-#line 376 "JIT.lss"
+#line 377 "JIT.lss"
 
 -SNOBOL L = 'blti blti_u blei blei_u beqi bgei bgei_u bgti bgti_u '    +
             'bnei bmsi bmci boaddi boaddi_u bxaddi bxaddi_u '          +
             'bosubi bosubi_u bxsubi bxsubi_u '
-#line 380 "JIT.lss"
--SNOBOL LU = REPLACE(L, &LCASE, &UCASE)
 #line 381 "JIT.lss"
--SNOBOL A = CRACK(L, ' ')
+-SNOBOL LU = REPLACE(L, &LCASE, &UCASE)
 #line 382 "JIT.lss"
--SNOBOL AU = CRACK(LU, ' ')
+-SNOBOL A = CRACK(L, ' ')
 #line 383 "JIT.lss"
+-SNOBOL AU = CRACK(LU, ' ')
+#line 384 "JIT.lss"
 -SNOBOL SEQ(" EMBED = 'static void ' A<I> '_jit(int r) { '; "          +
         " EMBED = ' set_p_(jit_' A<I> '(r, (jit_word_t)get_p_()));'; " +
             " EMBED = DIFFER(A<I>) '}'; "                              +
             " C_WRAPPER_PROTO(AU<I> '_JIT(INTEGER)', "                 +
             " .EMBED) ", .I)
-#line 388 "JIT.lss"
+#line 389 "JIT.lss"
 
 -SNOBOL L = 'sti_c sti_s sti_i sti sti_l sti_f sti_d '
-#line 390 "JIT.lss"
--SNOBOL LU = REPLACE(L, &LCASE, &UCASE)
 #line 391 "JIT.lss"
--SNOBOL A = CRACK(L, ' ')
+-SNOBOL LU = REPLACE(L, &LCASE, &UCASE)
 #line 392 "JIT.lss"
--SNOBOL AU = CRACK(LU, ' ')
+-SNOBOL A = CRACK(L, ' ')
 #line 393 "JIT.lss"
+-SNOBOL AU = CRACK(LU, ' ')
+#line 394 "JIT.lss"
 -SNOBOL SEQ(" EMBED = 'static void ' A<I> '_jit(int r) { '; "          +
             " EMBED = '    jit_' A<I> '(get_p_(), r);'; "              +
             " EMBED = DIFFER(A<I>) '}'; "                              +
             " C_WRAPPER_PROTO(AU<I> '_JIT(INTEGER)', "                 +
             " .EMBED) ", .I)
-#line 398 "JIT.lss"
+#line 399 "JIT.lss"
 
 -SNOBOL L = 'pushargr pushargr_f pushargr_d '                          +
             'retr retval_c retval_uc retval_s retval_us retval_i '     +
             'retval retval_ui retval_l retr_f retval_f '               +
             'retr_d retval_d '
-#line 403 "JIT.lss"
--SNOBOL LU = REPLACE(L, &LCASE, &UCASE)
 #line 404 "JIT.lss"
--SNOBOL A = CRACK(L, ' ')
+-SNOBOL LU = REPLACE(L, &LCASE, &UCASE)
 #line 405 "JIT.lss"
--SNOBOL AU = CRACK(LU, ' ')
+-SNOBOL A = CRACK(L, ' ')
 #line 406 "JIT.lss"
+-SNOBOL AU = CRACK(LU, ' ')
+#line 407 "JIT.lss"
 -SNOBOL SEQ(" EMBED = 'static void ' A<I> '_jit(int r) { '; "          +
             " EMBED = '    jit_' A<I> '(r);'; "                        +
             " EMBED = DIFFER(A<I>) '}'; "                              +
             " C_WRAPPER_PROTO(AU<I> '_JIT(INTEGER)', "                 +
             " .EMBED) ", .I)
-#line 411 "JIT.lss"
+#line 412 "JIT.lss"
 
 static void pushargi_jit(void) { jit_pushargi((jit_word_t)get_p_()); }
 
 -SNOBOL C_WRAPPER_PROTO('PUSHARGI_JIT()', .EMBED)
-#line 415 "JIT.lss"
+#line 416 "JIT.lss"
 
 static void pushargi_f_jit(void) { jit_pushargi_f(get_f_()); }
 
 -SNOBOL C_WRAPPER_PROTO('PUSHARGI_F_JIT()', .EMBED)
-#line 419 "JIT.lss"
+#line 420 "JIT.lss"
 
 static void pushargi_d_jit(void) { jit_pushargi_d(get_d_()); }
 
 -SNOBOL C_WRAPPER_PROTO('PUSHARGI_D_JIT()', .EMBED)
-#line 423 "JIT.lss"
+#line 424 "JIT.lss"
 
 static void jmpr_jit(int r) { jit_jmpr(r); }
 
 -SNOBOL C_WRAPPER_PROTO('JMPR_JIT(INTEGER)', .EMBED)
-#line 427 "JIT.lss"
+#line 428 "JIT.lss"
 
 static void jmpi_jit(void) { set_p_(jit_jmpi()); }
 
 -SNOBOL C_WRAPPER_PROTO('JMPI_JIT()', .EMBED)
-#line 431 "JIT.lss"
+#line 432 "JIT.lss"
 
 static void callr_jit(int r) { jit_callr(r); }
 
 -SNOBOL C_WRAPPER_PROTO('CALLR_JIT(INTEGER)', .EMBED)
-#line 435 "JIT.lss"
+#line 436 "JIT.lss"
 
 static void calli_jit(void) { set_p_(jit_calli(get_p_())); }
 
 -SNOBOL C_WRAPPER_PROTO('CAllI_JIT()', .EMBED)
-#line 439 "JIT.lss"
+#line 440 "JIT.lss"
 
 static void finishr_jit(int r) { jit_finishr(r); }
 
 -SNOBOL C_WRAPPER_PROTO('FINISHR_JIT(INTEGER)', .EMBED)
-#line 443 "JIT.lss"
+#line 444 "JIT.lss"
 
 static void finishi_jit(void) { set_p_(jit_finishi(get_p_())); }
 
 -SNOBOL C_WRAPPER_PROTO('FINISHI_JIT()', .EMBED)
-#line 447 "JIT.lss"
+#line 448 "JIT.lss"
 
 static void ret_jit(void) { jit_ret(); }
 
 -SNOBOL C_WRAPPER_PROTO('RET_JIT()', .EMBED)
-#line 451 "JIT.lss"
+#line 452 "JIT.lss"
 
 static void reti_jit(void) { jit_reti((jit_word_t)get_p_()); }
 
 -SNOBOL C_WRAPPER_PROTO('RETI_JIT()', .EMBED)
-#line 455 "JIT.lss"
+#line 456 "JIT.lss"
 
 static void reti_f_jit(void) { jit_reti_f(get_f_()); }
 
 -SNOBOL C_WRAPPER_PROTO('RETI_F_JIT()', .EMBED)
-#line 459 "JIT.lss"
+#line 460 "JIT.lss"
 
 static void reti_d_jit(void) { jit_reti_d(get_d_()); }
 
 -SNOBOL C_WRAPPER_PROTO('RETI_D_JIT()', .EMBED)
-#line 463 "JIT.lss"
+#line 464 "JIT.lss"
 
 -END
--LINE 468 "JIT.lss"
--SNOBOL DYNAMIC_DEBUG = 1
 -LINE 469 "JIT.lss"
--SNOBOL COMPILE_DYNAMIC(jit) :F(ERROR) ;
+-SNOBOL DYNAMIC_DEBUG = 1
 -LINE 470 "JIT.lss"
--SNOBOL LIBS = ' -L. -lp64 -llightning'
+-SNOBOL COMPILE_DYNAMIC(jit) :F(ERROR) ;
 -LINE 471 "JIT.lss"
--SNOBOL OBJECTS = jit ; OBJECTS '.c' = '.o'
+-SNOBOL LIBS = ' -L. -lp64 -llightning'
 -LINE 472 "JIT.lss"
--SNOBOL LINK_DYNAMIC('./jit', OBJECTS, LIBS) :F(ERROR) ;
+-SNOBOL OBJECTS = jit ; OBJECTS '.c' = '.o'
 -LINE 473 "JIT.lss"
+-SNOBOL LINK_DYNAMIC('./jit', OBJECTS, LIBS) :F(ERROR) ;
+-LINE 474 "JIT.lss"
 -CMNT ERASE TEMPORARY FILES
 -CMNT     WE DON'T NEED THE C BITS, OR THE OBJECT FILES ANYMORE.
 -CMNT     ALL WE REQUIRE IS jit.so
 -CMNT -SNOBOL  A = CRACK(jit ' ' OBJECTS, ' ')
 -CMNT -SNOBOL  SEQ(' DELETE(A<K>) ', .K)
--LINE 481 "JIT.lss"
+-LINE 482 "JIT.lss"
          LOAD('INIT_JIT(STRING)', 'jit.so')
          LOAD('R_NUM_JIT()INTEGER', 'jit.so')
          LOAD('V_NUM_JIT()INTEGER', 'jit.so')
