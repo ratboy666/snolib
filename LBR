@@ -1,7 +1,7 @@
 {
   "LIBRARY": "LBR",
   "COMMENT": "SNOLIB library",
-  "TIMESTAMP": 1402034292,
+  "TIMESTAMP": 1402041067,
   "VERSION": 1,
   "CONTENTS": {
     "AGT": {
@@ -8956,5 +8956,5 @@
       ]
     }
   },
-  "DATAFILE": "DAT"
+  "DATAFILE": "LBR.DAT"
 }
