@@ -7,22 +7,7 @@
 *
 * The SNOBOL4 librarian
 *
-* -d 512k normal (8MB RAM)
-* -d 4m (64MB RAM)
-*
-* File data is stashed into a separate data file DAT. This avoids
-* string scanning in json. We record offset and length of the data part
-* of the string O:L
-*
-* Reading is still expensive -- we extract using data pos(o) len(l) . s
-* to extract the data to the file record contents
-*
-* Breaking up the data this way takes 43 seconds on my i3. Writing is
-* much faster -- append is fast, the pattern is much more expensive.
-
-* we need to be able to edit the file list, examine a module, build,
-* deliver. freshen
-* dependency checks -- is module dirty?
+* -d 4m : use 64MB (64 bit)
 
 -include 'JSON.INC'
 -include 'READFILE.INC'
@@ -34,6 +19,7 @@
 -include 'HASH.INC'
 -include 'DDT.INC'
 -include 'READLINE.INC'
+-include 'VDIFFER.INC'
 
          define('readlbr(nm)lbr,data,c,i,m,f,j,s,b,l')
          define('writelbr(lbr)c,i,m,f,j,data,n,s')
@@ -43,31 +29,64 @@
 +               'install,build,files,m,i')
          define('writefiles(lbr,m)f,i')
 
+         rlappname('SOOSIE')
+         read_history('.SOOSIE')
+         stifle_history(50)
+
          output(.term, 20, 'T', '/dev/stdout')
 
 top      l = readline('SOOSIE: ')
+         l = history_expand(l)
          l = trim(l)
+         add_history(vdiffer(l))
+
          l fence ('ls' | 'LS' | 'new' | 'NEW' | 'read' | 'READ' |
 +                 'write' | 'WRITE' | 'quit' | 'QUIT' |
-+                 'extract' | 'EXTRACT' | 'help' | 'HELP') . cmd
++                 'extract' | 'EXTRACT' | 'help' | 'HELP' |
++                 'info' | 'INFO' ) . cmd
 +          rem . args                                            :f(top)
 
                                                                  :($cmd)
-         l 'quit'                                        :s(end)f(tryls)
+quit     write_history('.SOOSIE')                        :s(end)f(tryls)
+
+info     ident(lbr) :s(nol)
+         args = trim(args)
+         differ(args) :s(info2)
+         terminal = 'lbr info'
+         
+         terminal = 'LIBRARY: ' lbr<'LIBRARY'>
+         terminal = 'DATAFILE: ' lbr<'DATAFILE'>
+         terminal = 'VERSION: ' lbr<'VERSION'>
+         terminal = 'COMMENT: ' lbr<'COMMENT'>
+* rfc 822 (%y) 2822 (%Y)
+         t = lbr<'TIMESTAMP'>
+*        t = strftime('%a, %d %b %Y %z', gmtime(t))
+         t = bq('date -d @' t)
+         terminal = 'TIMESTAMP: ' lbr<'TIMESTAMP'> ' (' t ')'
+         terminal = 'CONTENTS: use "ls" command to list index'
+ :(top)
+info2    terminal = 'module info'
+
+ :(top)
 
 ls       ident(lbr)                                              :s(nol)
+         args = eval(args)
          c = keys_in_table(lbr<'CONTENTS'>)                    :f(empty)
          i = 1
-lslup    c<i>                                                 :f(lslup2)
-         s = c<i>
+ls2      s = c<i>                                                :f(ls3)
+         s args                                                  :f(ls4)
          term = rpad(s, 16)
-         i = i + 1                                              :(lslup)
-lslup2   terminal =                                               :(top)
+ls4      i = i + 1                                                :(ls2)
+ls3      terminal =                                               :(top)
 empty    terminal = 'library empty'                               :(top)
 nol      terminal = 'no library loaded'                           :(top)
 
 * add lbr name/data name as args LBR and LBR.DAT
-new      lbr = createlbr('LBR', 'SNOLIB', 'LBR.DAT', 'SNOLIB library')
+new      args = trim(args)
+         args = ident(args) 'LBR'
+         lbr = createlbr(args, 'SNOLIB', args '.DAT', 'SNOLIB library')
+
+         differ(args, 'LBR') :s(top)
 
 * Seed in the lss files
 
@@ -75,7 +94,7 @@ new      lbr = createlbr('LBR', 'SNOLIB', 'LBR.DAT', 'SNOLIB library')
          files = crack(files, CHARS_NL)
 
          i = 1
-lup      fn = files<i>                                           :f(top)
+lup      fn = files<i>                                         :f(seed2)
          term = 'adding ' lpad(i, 3) ' ' rpad(fn, 16) CHARS_CR
 
 * For initial load, we assume .INC, .html and .tst are the artifacts
@@ -108,16 +127,18 @@ lup      fn = files<i>                                           :f(top)
 
          lbr<'CONTENTS'><m<'NAME'>> = m
          i = i + 1                                                :(lup)
+seed2    terminal =  :(top)
 
 * add name of LBR on command line, default to LBR
 
-read     terminal = 'reading library'
+read     args = trim(args)
+         args = ident(args) 'LBR'
+         terminal = 'reading library ' args
          t1 = time()
-         lbr = readlbr('LBR')
+         lbr = readlbr(args)
          terminal = 'took ' time() - t1 ' milliseconds'           :(top)
   
 write    ident(lbr)                                              :s(nol)
-
          terminal = 'writing library'
          t1 = time()
          writelbr(lbr)
@@ -165,7 +186,7 @@ readlbr_4
          term = rpad(f<j><'NAME'>, 16) CHARS_CR
          s = f<j><'CONTENTS'>
          s break(':') . b ':' rem . l
-         data pos(b) len(l) . s                                 :f(what)
+         data fence tab(b) len(l) . s                           :f(what)
          f<j><'CONTENTS'> = s
          j = j + 1                                          :(readlbr_4)
 readlbr_5
@@ -173,6 +194,7 @@ readlbr_5
 readlbr_2
          readlbr = lbr                                         :(return)
 what     terminal = 'bad file data'                               :(end)
+
 
 * Write library
 
