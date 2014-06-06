@@ -1,0 +1,8960 @@
+{
+  "LIBRARY": "LBR",
+  "COMMENT": "SNOLIB library",
+  "TIMESTAMP": 1402034292,
+  "VERSION": 1,
+  "CONTENTS": {
+    "AGT": {
+      "SOURCE": "AGT.lss",
+      "COMMENT": "AGT module",
+      "ARTIFACTS": [
+        "AGT.INC",
+        "AGT.html",
+        "AGT.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "AGT",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "AGT.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "AGT.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "AGT.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "AGT.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "AGT.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "AGT.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "AGT.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012715",
+          "ACCESS": "644",
+          "CONTENTS": "0:1950"
+        },
+        {
+          "NAME": "AGT.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012767",
+          "ACCESS": "644",
+          "CONTENTS": "1950:1299"
+        },
+        {
+          "NAME": "AGT.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012784",
+          "ACCESS": "664",
+          "CONTENTS": "3249:4326"
+        },
+        {
+          "NAME": "AGT.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012778",
+          "ACCESS": "775",
+          "CONTENTS": "7575:281"
+        }
+      ]
+    },
+    "AI": {
+      "SOURCE": "AI.lss",
+      "COMMENT": "AI module",
+      "ARTIFACTS": [
+        "AI.INC",
+        "AI.html",
+        "AI.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "AI",
+      "DEPENDS": [
+        "SEQ.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "AI.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "AI.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "AI.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "AI.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "AI.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "AI.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "AI.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012715",
+          "ACCESS": "644",
+          "CONTENTS": "7856:2547"
+        },
+        {
+          "NAME": "AI.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012768",
+          "ACCESS": "644",
+          "CONTENTS": "10403:1434"
+        },
+        {
+          "NAME": "AI.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012785",
+          "ACCESS": "664",
+          "CONTENTS": "11837:5425"
+        },
+        {
+          "NAME": "AI.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012778",
+          "ACCESS": "775",
+          "CONTENTS": "17262:586"
+        }
+      ]
+    },
+    "ALL": {
+      "SOURCE": "ALL.lss",
+      "COMMENT": "ALL module",
+      "ARTIFACTS": [
+        "ALL.INC",
+        "ALL.html"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "ALL",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "ALL.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "ALL.html",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "ALL.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "ALL.html",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "ALL.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012716",
+          "ACCESS": "644",
+          "CONTENTS": "17848:2964"
+        },
+        {
+          "NAME": "ALL.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012782",
+          "ACCESS": "644",
+          "CONTENTS": "20812:1123"
+        },
+        {
+          "NAME": "ALL.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012785",
+          "ACCESS": "664",
+          "CONTENTS": "21935:5023"
+        }
+      ]
+    },
+    "AOPA": {
+      "SOURCE": "AOPA.lss",
+      "COMMENT": "AOPA module",
+      "ARTIFACTS": [
+        "AOPA.INC",
+        "AOPA.html",
+        "AOPA.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "AOPA",
+      "DEPENDS": [
+        "SEQ.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "AOPA.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "AOPA.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "AOPA.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "AOPA.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "AOPA.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "AOPA.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "AOPA.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012716",
+          "ACCESS": "644",
+          "CONTENTS": "26958:3318"
+        },
+        {
+          "NAME": "AOPA.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012768",
+          "ACCESS": "644",
+          "CONTENTS": "30276:1749"
+        },
+        {
+          "NAME": "AOPA.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012786",
+          "ACCESS": "664",
+          "CONTENTS": "32025:6274"
+        },
+        {
+          "NAME": "AOPA.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012778",
+          "ACCESS": "775",
+          "CONTENTS": "38299:1123"
+        }
+      ]
+    },
+    "BALREV": {
+      "SOURCE": "BALREV.lss",
+      "COMMENT": "BALREV module",
+      "ARTIFACTS": [
+        "BALREV.INC",
+        "BALREV.html",
+        "BALREV.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "BALREV",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "BALREV.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "BALREV.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "BALREV.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "BALREV.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "BALREV.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "BALREV.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "BALREV.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012716",
+          "ACCESS": "644",
+          "CONTENTS": "39422:1730"
+        },
+        {
+          "NAME": "BALREV.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012768",
+          "ACCESS": "644",
+          "CONTENTS": "41152:1245"
+        },
+        {
+          "NAME": "BALREV.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012786",
+          "ACCESS": "664",
+          "CONTENTS": "42397:4050"
+        },
+        {
+          "NAME": "BALREV.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012778",
+          "ACCESS": "775",
+          "CONTENTS": "46447:214"
+        }
+      ]
+    },
+    "BALX": {
+      "SOURCE": "BALX.lss",
+      "COMMENT": "BALX module",
+      "ARTIFACTS": [
+        "BALX.INC",
+        "BALX.html",
+        "BALX.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "BALX",
+      "DEPENDS": [
+        "UNIQUE.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "BALX.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "BALX.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "BALX.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "BALX.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "BALX.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "BALX.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "BALX.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012716",
+          "ACCESS": "644",
+          "CONTENTS": "46661:2336"
+        },
+        {
+          "NAME": "BALX.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012768",
+          "ACCESS": "644",
+          "CONTENTS": "48997:1702"
+        },
+        {
+          "NAME": "BALX.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012787",
+          "ACCESS": "664",
+          "CONTENTS": "50699:4736"
+        },
+        {
+          "NAME": "BALX.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012778",
+          "ACCESS": "775",
+          "CONTENTS": "55435:137"
+        }
+      ]
+    },
+    "BLEND": {
+      "SOURCE": "BLEND.lss",
+      "COMMENT": "BLEND module",
+      "ARTIFACTS": [
+        "BLEND.INC",
+        "BLEND.html",
+        "BLEND.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "BLEND",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "BLEND.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "BLEND.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "BLEND.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "BLEND.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "BLEND.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "BLEND.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "BLEND.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012717",
+          "ACCESS": "644",
+          "CONTENTS": "55572:2401"
+        },
+        {
+          "NAME": "BLEND.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012768",
+          "ACCESS": "644",
+          "CONTENTS": "57973:1943"
+        },
+        {
+          "NAME": "BLEND.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012787",
+          "ACCESS": "664",
+          "CONTENTS": "59916:4721"
+        },
+        {
+          "NAME": "BLEND.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012778",
+          "ACCESS": "775",
+          "CONTENTS": "64637:212"
+        }
+      ]
+    },
+    "BQ": {
+      "SOURCE": "BQ.lss",
+      "COMMENT": "BQ module",
+      "ARTIFACTS": [
+        "BQ.INC",
+        "BQ.html",
+        "BQ.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "BQ",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "BQ.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "BQ.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "BQ.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "BQ.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "BQ.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "BQ.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "BQ.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012717",
+          "ACCESS": "644",
+          "CONTENTS": "64849:3476"
+        },
+        {
+          "NAME": "BQ.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012768",
+          "ACCESS": "644",
+          "CONTENTS": "68325:2203"
+        },
+        {
+          "NAME": "BQ.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012788",
+          "ACCESS": "664",
+          "CONTENTS": "70528:6804"
+        },
+        {
+          "NAME": "BQ.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012778",
+          "ACCESS": "775",
+          "CONTENTS": "77332:133"
+        }
+      ]
+    },
+    "BRKREM": {
+      "SOURCE": "BRKREM.lss",
+      "COMMENT": "BRKREM module",
+      "ARTIFACTS": [
+        "BRKREM.INC",
+        "BRKREM.html",
+        "BRKREM.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "BRKREM",
+      "DEPENDS": [
+        "SDIFF.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "BRKREM.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "BRKREM.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "BRKREM.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "BRKREM.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "BRKREM.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "BRKREM.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "BRKREM.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012717",
+          "ACCESS": "644",
+          "CONTENTS": "77465:1966"
+        },
+        {
+          "NAME": "BRKREM.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012770",
+          "ACCESS": "644",
+          "CONTENTS": "79431:1597"
+        },
+        {
+          "NAME": "BRKREM.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012837",
+          "ACCESS": "664",
+          "CONTENTS": "81028:4166"
+        },
+        {
+          "NAME": "BRKREM.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012781",
+          "ACCESS": "775",
+          "CONTENTS": "85194:141"
+        }
+      ]
+    },
+    "BUNDLE": {
+      "SOURCE": "bundle.lss",
+      "COMMENT": "bundle module",
+      "ARTIFACTS": [
+        "bundle",
+        "bundle.html"
+      ],
+      "TYPE": "PROGRAM",
+      "NAME": "BUNDLE",
+      "DEPENDS": [
+        "CRACK.INC",
+        "HOST.INC",
+        "TRIMB.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "bundle",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "bundle.html",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "bundle",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "bundle.html",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "bundle.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012718",
+          "ACCESS": "644",
+          "CONTENTS": "85335:3459"
+        },
+        {
+          "NAME": "bundle",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012782",
+          "ACCESS": "775",
+          "CONTENTS": "88794:3287"
+        },
+        {
+          "NAME": "bundle.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012788",
+          "ACCESS": "664",
+          "CONTENTS": "92081:5983"
+        }
+      ]
+    },
+    "CATA": {
+      "SOURCE": "CATA.lss",
+      "COMMENT": "CATA module",
+      "ARTIFACTS": [
+        "CATA.INC",
+        "CATA.html",
+        "CATA.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "CATA",
+      "DEPENDS": [
+        "SEQ.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "CATA.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "CATA.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "CATA.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "CATA.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "CATA.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "CATA.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "CATA.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012718",
+          "ACCESS": "644",
+          "CONTENTS": "98064:2304"
+        },
+        {
+          "NAME": "CATA.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012768",
+          "ACCESS": "644",
+          "CONTENTS": "100368:1378"
+        },
+        {
+          "NAME": "CATA.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012789",
+          "ACCESS": "664",
+          "CONTENTS": "101746:4720"
+        },
+        {
+          "NAME": "CATA.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012778",
+          "ACCESS": "775",
+          "CONTENTS": "106466:664"
+        }
+      ]
+    },
+    "CGI": {
+      "SOURCE": "CGI.lss",
+      "COMMENT": "CGI module",
+      "ARTIFACTS": [
+        "CGI.INC",
+        "CGI.html",
+        "CGI.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "CGI",
+      "DEPENDS": [
+        "CHARS.INC",
+        "COOKIE.INC",
+        "CRACK.INC",
+        "HASH.INC",
+        "HTMLESC.INC",
+        "JSON.INC",
+        "SCOOP.INC",
+        "SEQ.INC",
+        "UNIQUE.INC",
+        "VDIFFER.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "CGI.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "CGI.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "CGI.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "CGI.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "CGI.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "CGI.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "CGI.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012718",
+          "ACCESS": "664",
+          "CONTENTS": "107130:19570"
+        },
+        {
+          "NAME": "CGI.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012777",
+          "ACCESS": "644",
+          "CONTENTS": "126700:8621"
+        },
+        {
+          "NAME": "CGI.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012840",
+          "ACCESS": "664",
+          "CONTENTS": "135321:33301"
+        },
+        {
+          "NAME": "CGI.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012782",
+          "ACCESS": "775",
+          "CONTENTS": "168622:5676"
+        }
+      ]
+    },
+    "CHARS": {
+      "SOURCE": "CHARS.lss",
+      "COMMENT": "CHARS module",
+      "ARTIFACTS": [
+        "CHARS.INC",
+        "CHARS.html",
+        "CHARS.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "CHARS",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "CHARS.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "CHARS.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "CHARS.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "CHARS.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "CHARS.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "CHARS.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "CHARS.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012719",
+          "ACCESS": "644",
+          "CONTENTS": "174298:3896"
+        },
+        {
+          "NAME": "CHARS.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012768",
+          "ACCESS": "644",
+          "CONTENTS": "178194:3134"
+        },
+        {
+          "NAME": "CHARS.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012789",
+          "ACCESS": "664",
+          "CONTENTS": "181328:6837"
+        },
+        {
+          "NAME": "CHARS.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012778",
+          "ACCESS": "775",
+          "CONTENTS": "188165:139"
+        }
+      ]
+    },
+    "CH": {
+      "SOURCE": "CH.lss",
+      "COMMENT": "CH module",
+      "ARTIFACTS": [
+        "CH.INC",
+        "CH.html",
+        "CH.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "CH",
+      "DEPENDS": [
+        "HEX.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "CH.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "CH.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "CH.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "CH.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "CH.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "CH.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "CH.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012719",
+          "ACCESS": "644",
+          "CONTENTS": "188304:2077"
+        },
+        {
+          "NAME": "CH.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012768",
+          "ACCESS": "644",
+          "CONTENTS": "190381:1664"
+        },
+        {
+          "NAME": "CH.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012790",
+          "ACCESS": "664",
+          "CONTENTS": "192045:4392"
+        },
+        {
+          "NAME": "CH.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012778",
+          "ACCESS": "775",
+          "CONTENTS": "196437:206"
+        }
+      ]
+    },
+    "CODE": {
+      "SOURCE": "code.lss",
+      "COMMENT": "code module",
+      "ARTIFACTS": [
+        "code",
+        "code.html"
+      ],
+      "TYPE": "PROGRAM",
+      "NAME": "CODE",
+      "DEPENDS": [
+        "BQ.INC",
+        "CHARS.INC",
+        "HOST.INC",
+        "READLINE.INC",
+        "SEQ.INC",
+        "SLOAD.INC",
+        "VDIFFER.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "code",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "code.html",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "code",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "code.html",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "code.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012720",
+          "ACCESS": "644",
+          "CONTENTS": "196643:23751"
+        },
+        {
+          "NAME": "code",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012782",
+          "ACCESS": "775",
+          "CONTENTS": "220394:14676"
+        },
+        {
+          "NAME": "code.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012790",
+          "ACCESS": "664",
+          "CONTENTS": "235070:39051"
+        }
+      ]
+    },
+    "COMB": {
+      "SOURCE": "COMB.lss",
+      "COMMENT": "COMB module",
+      "ARTIFACTS": [
+        "COMB.INC",
+        "COMB.html",
+        "COMB.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "COMB",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "COMB.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "COMB.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "COMB.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "COMB.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "COMB.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "COMB.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "COMB.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012720",
+          "ACCESS": "644",
+          "CONTENTS": "274121:1591"
+        },
+        {
+          "NAME": "COMB.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012768",
+          "ACCESS": "644",
+          "CONTENTS": "275712:1304"
+        },
+        {
+          "NAME": "COMB.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012791",
+          "ACCESS": "664",
+          "CONTENTS": "277016:3783"
+        },
+        {
+          "NAME": "COMB.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012778",
+          "ACCESS": "775",
+          "CONTENTS": "280799:137"
+        }
+      ]
+    },
+    "COMPILE": {
+      "SOURCE": "compile.lss",
+      "COMMENT": "compile module",
+      "ARTIFACTS": [
+        "compile",
+        "compile.html"
+      ],
+      "TYPE": "PROGRAM",
+      "NAME": "COMPILE",
+      "DEPENDS": [
+        "CHARS.INC",
+        "HOST.INC",
+        "REPL.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "compile",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "compile.html",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "compile",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "compile.html",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "compile.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012721",
+          "ACCESS": "644",
+          "CONTENTS": "280936:7128"
+        },
+        {
+          "NAME": "compile",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012783",
+          "ACCESS": "775",
+          "CONTENTS": "288064:5896"
+        },
+        {
+          "NAME": "compile.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012792",
+          "ACCESS": "664",
+          "CONTENTS": "293960:10828"
+        }
+      ]
+    },
+    "COMPLEX": {
+      "SOURCE": "COMPLEX.lss",
+      "COMMENT": "COMPLEX module",
+      "ARTIFACTS": [
+        "COMPLEX.INC",
+        "COMPLEX.html",
+        "COMPLEX.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "COMPLEX",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "COMPLEX.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "COMPLEX.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "COMPLEX.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "COMPLEX.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "COMPLEX.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "COMPLEX.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "COMPLEX.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012721",
+          "ACCESS": "644",
+          "CONTENTS": "304788:2478"
+        },
+        {
+          "NAME": "COMPLEX.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012777",
+          "ACCESS": "644",
+          "CONTENTS": "307266:2225"
+        },
+        {
+          "NAME": "COMPLEX.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012843",
+          "ACCESS": "664",
+          "CONTENTS": "309491:4902"
+        },
+        {
+          "NAME": "COMPLEX.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012782",
+          "ACCESS": "775",
+          "CONTENTS": "314393:143"
+        }
+      ]
+    },
+    "COOKIE": {
+      "SOURCE": "COOKIE.lss",
+      "COMMENT": "COOKIE module",
+      "ARTIFACTS": [
+        "COOKIE.INC",
+        "COOKIE.html",
+        "COOKIE.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "COOKIE",
+      "DEPENDS": [
+        "CHARS.INC",
+        "DEXP.INC",
+        "HASH.INC",
+        "TIME.INC",
+        "TRIMB.INC",
+        "VDIFFER.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "COOKIE.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "COOKIE.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "COOKIE.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "COOKIE.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "COOKIE.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "COOKIE.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "COOKIE.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012721",
+          "ACCESS": "664",
+          "CONTENTS": "314536:8221"
+        },
+        {
+          "NAME": "COOKIE.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012777",
+          "ACCESS": "644",
+          "CONTENTS": "322757:5567"
+        },
+        {
+          "NAME": "COOKIE.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012843",
+          "ACCESS": "664",
+          "CONTENTS": "328324:13275"
+        },
+        {
+          "NAME": "COOKIE.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012782",
+          "ACCESS": "775",
+          "CONTENTS": "341599:999"
+        }
+      ]
+    },
+    "COPYL": {
+      "SOURCE": "COPYL.lss",
+      "COMMENT": "COPYL module",
+      "ARTIFACTS": [
+        "COPYL.INC",
+        "COPYL.html",
+        "COPYL.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "COPYL",
+      "DEPENDS": [
+        "LINK.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "COPYL.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "COPYL.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "COPYL.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "COPYL.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "COPYL.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "COPYL.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "COPYL.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012722",
+          "ACCESS": "644",
+          "CONTENTS": "342598:2005"
+        },
+        {
+          "NAME": "COPYL.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012769",
+          "ACCESS": "644",
+          "CONTENTS": "344603:1715"
+        },
+        {
+          "NAME": "COPYL.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012792",
+          "ACCESS": "664",
+          "CONTENTS": "346318:4248"
+        },
+        {
+          "NAME": "COPYL.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012778",
+          "ACCESS": "775",
+          "CONTENTS": "350566:139"
+        }
+      ]
+    },
+    "COUNT": {
+      "SOURCE": "COUNT.lss",
+      "COMMENT": "COUNT module",
+      "ARTIFACTS": [
+        "COUNT.INC",
+        "COUNT.html",
+        "COUNT.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "COUNT",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "COUNT.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "COUNT.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "COUNT.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "COUNT.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "COUNT.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "COUNT.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "COUNT.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012722",
+          "ACCESS": "644",
+          "CONTENTS": "350705:2002"
+        },
+        {
+          "NAME": "COUNT.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012769",
+          "ACCESS": "644",
+          "CONTENTS": "352707:1659"
+        },
+        {
+          "NAME": "COUNT.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012793",
+          "ACCESS": "664",
+          "CONTENTS": "354366:4332"
+        },
+        {
+          "NAME": "COUNT.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012778",
+          "ACCESS": "775",
+          "CONTENTS": "358698:212"
+        }
+      ]
+    },
+    "CRACK": {
+      "SOURCE": "CRACK.lss",
+      "COMMENT": "CRACK module",
+      "ARTIFACTS": [
+        "CRACK.INC",
+        "CRACK.html",
+        "CRACK.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "CRACK",
+      "DEPENDS": [
+        "COUNT.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "CRACK.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "CRACK.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "CRACK.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "CRACK.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "CRACK.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "CRACK.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "CRACK.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012722",
+          "ACCESS": "644",
+          "CONTENTS": "358910:2643"
+        },
+        {
+          "NAME": "CRACK.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012769",
+          "ACCESS": "644",
+          "CONTENTS": "361553:2160"
+        },
+        {
+          "NAME": "CRACK.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012793",
+          "ACCESS": "664",
+          "CONTENTS": "363713:5168"
+        },
+        {
+          "NAME": "CRACK.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012779",
+          "ACCESS": "775",
+          "CONTENTS": "368881:139"
+        }
+      ]
+    },
+    "CSNOBOL4": {
+      "SOURCE": "CSNOBOL4.lss",
+      "COMMENT": "CSNOBOL4 module",
+      "ARTIFACTS": [
+        "CSNOBOL4.INC",
+        "CSNOBOL4.html",
+        "CSNOBOL4.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "CSNOBOL4",
+      "DEPENDS": [
+        "FFI.INC",
+        "P64.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "CSNOBOL4.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "CSNOBOL4.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "CSNOBOL4.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "CSNOBOL4.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "CSNOBOL4.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "CSNOBOL4.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "CSNOBOL4.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012723",
+          "ACCESS": "664",
+          "CONTENTS": "369020:15538"
+        },
+        {
+          "NAME": "CSNOBOL4.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012770",
+          "ACCESS": "644",
+          "CONTENTS": "384558:4713"
+        },
+        {
+          "NAME": "CSNOBOL4.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012794",
+          "ACCESS": "664",
+          "CONTENTS": "389271:23423"
+        },
+        {
+          "NAME": "CSNOBOL4.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012779",
+          "ACCESS": "775",
+          "CONTENTS": "412694:413"
+        }
+      ]
+    },
+    "CVAR": {
+      "SOURCE": "CVAR.lss",
+      "COMMENT": "CVAR module",
+      "ARTIFACTS": [
+        "CVAR.INC",
+        "CVAR.html",
+        "CVAR.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "CVAR",
+      "DEPENDS": [
+        "CHARS.INC",
+        "HASH.INC",
+        "P64.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "CVAR.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "CVAR.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "CVAR.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "CVAR.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "CVAR.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "CVAR.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "CVAR.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012723",
+          "ACCESS": "644",
+          "CONTENTS": "413107:8759"
+        },
+        {
+          "NAME": "CVAR.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012771",
+          "ACCESS": "644",
+          "CONTENTS": "421866:5697"
+        },
+        {
+          "NAME": "CVAR.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012794",
+          "ACCESS": "664",
+          "CONTENTS": "427563:14422"
+        },
+        {
+          "NAME": "CVAR.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012779",
+          "ACCESS": "775",
+          "CONTENTS": "441985:138"
+        }
+      ]
+    },
+    "DAY": {
+      "SOURCE": "DAY.lss",
+      "COMMENT": "DAY module",
+      "ARTIFACTS": [
+        "DAY.INC",
+        "DAY.html",
+        "DAY.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "DAY",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "DAY.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "DAY.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "DAY.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "DAY.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "DAY.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "DAY.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "DAY.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012723",
+          "ACCESS": "644",
+          "CONTENTS": "442123:2565"
+        },
+        {
+          "NAME": "DAY.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012771",
+          "ACCESS": "644",
+          "CONTENTS": "444688:2174"
+        },
+        {
+          "NAME": "DAY.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012795",
+          "ACCESS": "664",
+          "CONTENTS": "446862:4848"
+        },
+        {
+          "NAME": "DAY.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012779",
+          "ACCESS": "775",
+          "CONTENTS": "451710:135"
+        }
+      ]
+    },
+    "DDTCARD": {
+      "SOURCE": "DDTCARD.lss",
+      "COMMENT": "DDTCARD module",
+      "ARTIFACTS": [
+        "DDTCARD.INC",
+        "DDTCARD.html",
+        "DDTCARD.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "DDTCARD",
+      "DEPENDS": [
+        "DDT.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "DDTCARD.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "DDTCARD.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "DDTCARD.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "DDTCARD.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "DDTCARD.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "DDTCARD.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "DDTCARD.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012724",
+          "ACCESS": "644",
+          "CONTENTS": "451845:1427"
+        },
+        {
+          "NAME": "DDTCARD.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012771",
+          "ACCESS": "644",
+          "CONTENTS": "453272:1087"
+        },
+        {
+          "NAME": "DDTCARD.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012795",
+          "ACCESS": "664",
+          "CONTENTS": "454359:3526"
+        },
+        {
+          "NAME": "DDTCARD.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012779",
+          "ACCESS": "775",
+          "CONTENTS": "457885:149"
+        }
+      ]
+    },
+    "DDT": {
+      "SOURCE": "DDT.lss",
+      "COMMENT": "DDT module",
+      "ARTIFACTS": [
+        "DDT.INC",
+        "DDT.html",
+        "DDT.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "DDT",
+      "DEPENDS": [
+        "CHARS.INC",
+        "FREEZE.INC",
+        "HOST.INC",
+        "QUOTE.INC",
+        "READLINE.INC",
+        "SLOAD.INC",
+        "TRIMB.INC",
+        "VDIFFER.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "DDT.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "DDT.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "DDT.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "DDT.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "DDT.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "DDT.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "DDT.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012725",
+          "ACCESS": "644",
+          "CONTENTS": "458034:27582"
+        },
+        {
+          "NAME": "DDT.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012771",
+          "ACCESS": "644",
+          "CONTENTS": "485616:23065"
+        },
+        {
+          "NAME": "DDT.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012796",
+          "ACCESS": "664",
+          "CONTENTS": "508681:43356"
+        },
+        {
+          "NAME": "DDT.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012779",
+          "ACCESS": "775",
+          "CONTENTS": "552037:136"
+        }
+      ]
+    },
+    "DERETN": {
+      "SOURCE": "deretn.lss",
+      "COMMENT": "deretn module",
+      "ARTIFACTS": [
+        "deretn",
+        "deretn.html"
+      ],
+      "TYPE": "PROGRAM",
+      "NAME": "DERETN",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "deretn",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "deretn.html",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "deretn",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "deretn.html",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "deretn.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012725",
+          "ACCESS": "644",
+          "CONTENTS": "552173:1540"
+        },
+        {
+          "NAME": "deretn",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012783",
+          "ACCESS": "775",
+          "CONTENTS": "553713:1443"
+        },
+        {
+          "NAME": "deretn.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012797",
+          "ACCESS": "664",
+          "CONTENTS": "555156:3591"
+        }
+      ]
+    },
+    "DESEQL": {
+      "SOURCE": "deseql.lss",
+      "COMMENT": "deseql module",
+      "ARTIFACTS": [
+        "deseql",
+        "deseql.html"
+      ],
+      "TYPE": "PROGRAM",
+      "NAME": "DESEQL",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "deseql",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "deseql.html",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "deseql",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "deseql.html",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "deseql.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012725",
+          "ACCESS": "644",
+          "CONTENTS": "558747:1383"
+        },
+        {
+          "NAME": "deseql",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012783",
+          "ACCESS": "775",
+          "CONTENTS": "560130:1348"
+        },
+        {
+          "NAME": "deseql.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012797",
+          "ACCESS": "664",
+          "CONTENTS": "561478:3154"
+        }
+      ]
+    },
+    "DESEQ": {
+      "SOURCE": "deseq.lss",
+      "COMMENT": "deseq module",
+      "ARTIFACTS": [
+        "deseq",
+        "deseq.html"
+      ],
+      "TYPE": "PROGRAM",
+      "NAME": "DESEQ",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "deseq",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "deseq.html",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "deseq",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "deseq.html",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "deseq.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012726",
+          "ACCESS": "644",
+          "CONTENTS": "564632:1568"
+        },
+        {
+          "NAME": "deseq",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012783",
+          "ACCESS": "775",
+          "CONTENTS": "566200:1365"
+        },
+        {
+          "NAME": "deseq.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012798",
+          "ACCESS": "664",
+          "CONTENTS": "567565:3551"
+        }
+      ]
+    },
+    "DEXP": {
+      "SOURCE": "DEXP.lss",
+      "COMMENT": "DEXP module",
+      "ARTIFACTS": [
+        "DEXP.INC",
+        "DEXP.html",
+        "DEXP.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "DEXP",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "DEXP.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "DEXP.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "DEXP.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "DEXP.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "DEXP.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "DEXP.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "DEXP.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012726",
+          "ACCESS": "644",
+          "CONTENTS": "571116:1729"
+        },
+        {
+          "NAME": "DEXP.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012771",
+          "ACCESS": "644",
+          "CONTENTS": "572845:1370"
+        },
+        {
+          "NAME": "DEXP.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012798",
+          "ACCESS": "664",
+          "CONTENTS": "574215:3999"
+        },
+        {
+          "NAME": "DEXP.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012779",
+          "ACCESS": "775",
+          "CONTENTS": "578214:137"
+        }
+      ]
+    },
+    "DISPLAY": {
+      "SOURCE": "DISPLAY.lss",
+      "COMMENT": "DISPLAY module",
+      "ARTIFACTS": [
+        "DISPLAY.INC",
+        "DISPLAY.html",
+        "DISPLAY.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "DISPLAY",
+      "DEPENDS": [
+        "BQ.INC",
+        "CHARS.INC",
+        "VDIFFER.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "DISPLAY.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "DISPLAY.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "DISPLAY.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "DISPLAY.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "DISPLAY.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "DISPLAY.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "DISPLAY.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012726",
+          "ACCESS": "644",
+          "CONTENTS": "578351:4624"
+        },
+        {
+          "NAME": "DISPLAY.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012771",
+          "ACCESS": "644",
+          "CONTENTS": "582975:3814"
+        },
+        {
+          "NAME": "DISPLAY.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012799",
+          "ACCESS": "664",
+          "CONTENTS": "586789:9362"
+        },
+        {
+          "NAME": "DISPLAY.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012779",
+          "ACCESS": "775",
+          "CONTENTS": "596151:144"
+        }
+      ]
+    },
+    "DSERVE": {
+      "SOURCE": "DSERVE.lss",
+      "COMMENT": "DSERVE module",
+      "ARTIFACTS": [
+        "DSERVE.INC",
+        "DSERVE.html",
+        "DSERVE.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "DSERVE",
+      "DEPENDS": [
+        "CHARS.INC",
+        "CSNOBOL4.INC",
+        "DDT.INC",
+        "P64.INC",
+        "REPL.INC",
+        "TRIMB.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "DSERVE.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "DSERVE.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "DSERVE.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "DSERVE.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "DSERVE.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "DSERVE.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "DSERVE.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012727",
+          "ACCESS": "644",
+          "CONTENTS": "596295:6070"
+        },
+        {
+          "NAME": "DSERVE.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012778",
+          "ACCESS": "644",
+          "CONTENTS": "602365:5090"
+        },
+        {
+          "NAME": "DSERVE.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012846",
+          "ACCESS": "664",
+          "CONTENTS": "607455:10019"
+        },
+        {
+          "NAME": "DSERVE.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012782",
+          "ACCESS": "775",
+          "CONTENTS": "617474:376"
+        }
+      ]
+    },
+    "DYNAMIC": {
+      "SOURCE": "DYNAMIC.lss",
+      "COMMENT": "DYNAMIC module",
+      "ARTIFACTS": [
+        "DYNAMIC.INC",
+        "DYNAMIC.html",
+        "DYNAMIC.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "DYNAMIC",
+      "DEPENDS": [
+        "BQ.INC",
+        "HOST.INC",
+        "REPL.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "DYNAMIC.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "DYNAMIC.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "DYNAMIC.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "DYNAMIC.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "DYNAMIC.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "DYNAMIC.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "DYNAMIC.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012727",
+          "ACCESS": "644",
+          "CONTENTS": "617850:7552"
+        },
+        {
+          "NAME": "DYNAMIC.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012769",
+          "ACCESS": "644",
+          "CONTENTS": "625402:6275"
+        },
+        {
+          "NAME": "DYNAMIC.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012799",
+          "ACCESS": "664",
+          "CONTENTS": "631677:13357"
+        },
+        {
+          "NAME": "DYNAMIC.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012779",
+          "ACCESS": "775",
+          "CONTENTS": "645034:144"
+        }
+      ]
+    },
+    "EMBED": {
+      "SOURCE": "embed.lss",
+      "COMMENT": "embed module",
+      "ARTIFACTS": [
+        "embed",
+        "embed.html"
+      ],
+      "TYPE": "PROGRAM",
+      "NAME": "EMBED",
+      "DEPENDS": [
+        "CHARS.INC",
+        "SLOAD.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "embed",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "embed.html",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "embed",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "embed.html",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "embed.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012728",
+          "ACCESS": "644",
+          "CONTENTS": "645178:5659"
+        },
+        {
+          "NAME": "embed",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012783",
+          "ACCESS": "775",
+          "CONTENTS": "650837:3529"
+        },
+        {
+          "NAME": "embed.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012800",
+          "ACCESS": "664",
+          "CONTENTS": "654366:9865"
+        }
+      ]
+    },
+    "ENDCARD": {
+      "SOURCE": "ENDCARD.lss",
+      "COMMENT": "ENDCARD module",
+      "ARTIFACTS": [
+        "ENDCARD.INC",
+        "ENDCARD.html",
+        "ENDCARD.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "ENDCARD",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "ENDCARD.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "ENDCARD.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "ENDCARD.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "ENDCARD.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "ENDCARD.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "ENDCARD.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "ENDCARD.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012728",
+          "ACCESS": "644",
+          "CONTENTS": "664231:1317"
+        },
+        {
+          "NAME": "ENDCARD.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012771",
+          "ACCESS": "644",
+          "CONTENTS": "665548:1074"
+        },
+        {
+          "NAME": "ENDCARD.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012800",
+          "ACCESS": "664",
+          "CONTENTS": "666622:3340"
+        },
+        {
+          "NAME": "ENDCARD.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012779",
+          "ACCESS": "775",
+          "CONTENTS": "669962:139"
+        }
+      ]
+    },
+    "FASTBAL": {
+      "SOURCE": "FASTBAL.lss",
+      "COMMENT": "FASTBAL module",
+      "ARTIFACTS": [
+        "FASTBAL.INC",
+        "FASTBAL.html",
+        "FASTBAL.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "FASTBAL",
+      "DEPENDS": [
+        "UNIQUE.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "FASTBAL.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "FASTBAL.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "FASTBAL.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "FASTBAL.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "FASTBAL.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "FASTBAL.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "FASTBAL.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012728",
+          "ACCESS": "644",
+          "CONTENTS": "670101:3624"
+        },
+        {
+          "NAME": "FASTBAL.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012772",
+          "ACCESS": "644",
+          "CONTENTS": "673725:2023"
+        },
+        {
+          "NAME": "FASTBAL.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012801",
+          "ACCESS": "664",
+          "CONTENTS": "675748:7466"
+        },
+        {
+          "NAME": "FASTBAL.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012779",
+          "ACCESS": "775",
+          "CONTENTS": "683214:143"
+        }
+      ]
+    },
+    "FCGI": {
+      "SOURCE": "FCGI.lss",
+      "COMMENT": "FCGI module",
+      "ARTIFACTS": [
+        "FCGI.INC",
+        "FCGI.html",
+        "FCGI.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "FCGI",
+      "DEPENDS": [
+        "BQ.INC",
+        "CSNOBOL4.INC",
+        "FFI.INC",
+        "JSON.INC",
+        "LOGIC.INC",
+        "TIME.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "FCGI.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "FCGI.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "FCGI.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "FCGI.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "FCGI.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "FCGI.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "FCGI.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012729",
+          "ACCESS": "664",
+          "CONTENTS": "683357:11693"
+        },
+        {
+          "NAME": "FCGI.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012778",
+          "ACCESS": "644",
+          "CONTENTS": "695050:10466"
+        },
+        {
+          "NAME": "FCGI.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012845",
+          "ACCESS": "664",
+          "CONTENTS": "705516:17254"
+        },
+        {
+          "NAME": "FCGI.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012782",
+          "ACCESS": "775",
+          "CONTENTS": "722770:262"
+        }
+      ]
+    },
+    "FENCE": {
+      "SOURCE": "FENCE.lss",
+      "COMMENT": "FENCE module",
+      "ARTIFACTS": [
+        "FENCE.INC",
+        "FENCE.html",
+        "FENCE.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "FENCE",
+      "DEPENDS": [
+        "UNIQUE.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "FENCE.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "FENCE.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "FENCE.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "FENCE.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "FENCE.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "FENCE.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "FENCE.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012729",
+          "ACCESS": "644",
+          "CONTENTS": "723032:2167"
+        },
+        {
+          "NAME": "FENCE.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012772",
+          "ACCESS": "644",
+          "CONTENTS": "725199:1264"
+        },
+        {
+          "NAME": "FENCE.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012801",
+          "ACCESS": "664",
+          "CONTENTS": "726463:4461"
+        },
+        {
+          "NAME": "FENCE.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012779",
+          "ACCESS": "775",
+          "CONTENTS": "730924:139"
+        }
+      ]
+    },
+    "FFI": {
+      "SOURCE": "FFI.lss",
+      "COMMENT": "FFI module",
+      "ARTIFACTS": [
+        "FFI.INC",
+        "FFI.html",
+        "FFI.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "FFI",
+      "DEPENDS": [
+        "P64.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "FFI.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "FFI.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "FFI.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "FFI.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "FFI.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "FFI.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "FFI.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012730",
+          "ACCESS": "664",
+          "CONTENTS": "731063:17341"
+        },
+        {
+          "NAME": "FFI.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012770",
+          "ACCESS": "644",
+          "CONTENTS": "748404:5484"
+        },
+        {
+          "NAME": "FFI.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012802",
+          "ACCESS": "664",
+          "CONTENTS": "753888:27770"
+        },
+        {
+          "NAME": "FFI.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012779",
+          "ACCESS": "775",
+          "CONTENTS": "781658:136"
+        }
+      ]
+    },
+    "FIND": {
+      "SOURCE": "FIND.lss",
+      "COMMENT": "FIND module",
+      "ARTIFACTS": [
+        "FIND.INC",
+        "FIND.html",
+        "FIND.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "FIND",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "FIND.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "FIND.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "FIND.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "FIND.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "FIND.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "FIND.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "FIND.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012730",
+          "ACCESS": "644",
+          "CONTENTS": "781794:1917"
+        },
+        {
+          "NAME": "FIND.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012772",
+          "ACCESS": "644",
+          "CONTENTS": "783711:1527"
+        },
+        {
+          "NAME": "FIND.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012803",
+          "ACCESS": "664",
+          "CONTENTS": "785238:4263"
+        },
+        {
+          "NAME": "FIND.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012779",
+          "ACCESS": "775",
+          "CONTENTS": "789501:137"
+        }
+      ]
+    },
+    "FLOOR": {
+      "SOURCE": "FLOOR.lss",
+      "COMMENT": "FLOOR module",
+      "ARTIFACTS": [
+        "FLOOR.INC",
+        "FLOOR.html",
+        "FLOOR.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "FLOOR",
+      "DEPENDS": [
+        "DEXP.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "FLOOR.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "FLOOR.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "FLOOR.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "FLOOR.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "FLOOR.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "FLOOR.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "FLOOR.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012730",
+          "ACCESS": "644",
+          "CONTENTS": "789638:1790"
+        },
+        {
+          "NAME": "FLOOR.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012772",
+          "ACCESS": "644",
+          "CONTENTS": "791428:1427"
+        },
+        {
+          "NAME": "FLOOR.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012803",
+          "ACCESS": "664",
+          "CONTENTS": "792855:4116"
+        },
+        {
+          "NAME": "FLOOR.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012779",
+          "ACCESS": "775",
+          "CONTENTS": "796971:139"
+        }
+      ]
+    },
+    "FOREACH": {
+      "SOURCE": "FOREACH.lss",
+      "COMMENT": "FOREACH module",
+      "ARTIFACTS": [
+        "FOREACH.INC",
+        "FOREACH.html",
+        "FOREACH.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "FOREACH",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "FOREACH.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "FOREACH.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "FOREACH.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "FOREACH.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "FOREACH.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "FOREACH.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "FOREACH.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012730",
+          "ACCESS": "644",
+          "CONTENTS": "797110:2540"
+        },
+        {
+          "NAME": "FOREACH.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012777",
+          "ACCESS": "664",
+          "CONTENTS": "799650:1233"
+        },
+        {
+          "NAME": "FOREACH.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012839",
+          "ACCESS": "664",
+          "CONTENTS": "800883:4865"
+        },
+        {
+          "NAME": "FOREACH.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012782",
+          "ACCESS": "775",
+          "CONTENTS": "805748:408"
+        }
+      ]
+    },
+    "FOR": {
+      "SOURCE": "FOR.lss",
+      "COMMENT": "FOR module",
+      "ARTIFACTS": [
+        "FOR.INC",
+        "FOR.html",
+        "FOR.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "FOR",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "FOR.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "FOR.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "FOR.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "FOR.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "FOR.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "FOR.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "FOR.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012731",
+          "ACCESS": "644",
+          "CONTENTS": "806156:8939"
+        },
+        {
+          "NAME": "FOR.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012778",
+          "ACCESS": "644",
+          "CONTENTS": "815095:4670"
+        },
+        {
+          "NAME": "FOR.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012847",
+          "ACCESS": "664",
+          "CONTENTS": "819765:15123"
+        },
+        {
+          "NAME": "FOR.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012782",
+          "ACCESS": "775",
+          "CONTENTS": "834888:2244"
+        }
+      ]
+    },
+    "FREEZE": {
+      "SOURCE": "FREEZE.lss",
+      "COMMENT": "FREEZE module",
+      "ARTIFACTS": [
+        "FREEZE.INC",
+        "FREEZE.html",
+        "FREEZE.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "FREEZE",
+      "DEPENDS": [
+        "SYSTEM.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "FREEZE.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "FREEZE.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "FREEZE.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "FREEZE.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "FREEZE.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "FREEZE.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "FREEZE.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012731",
+          "ACCESS": "644",
+          "CONTENTS": "837132:1641"
+        },
+        {
+          "NAME": "FREEZE.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012777",
+          "ACCESS": "644",
+          "CONTENTS": "838773:1405"
+        },
+        {
+          "NAME": "FREEZE.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012847",
+          "ACCESS": "664",
+          "CONTENTS": "840178:3716"
+        },
+        {
+          "NAME": "FREEZE.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012782",
+          "ACCESS": "775",
+          "CONTENTS": "843894:141"
+        }
+      ]
+    },
+    "GCD": {
+      "SOURCE": "GCD.lss",
+      "COMMENT": "GCD module",
+      "ARTIFACTS": [
+        "GCD.INC",
+        "GCD.html",
+        "GCD.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "GCD",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "GCD.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "GCD.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "GCD.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "GCD.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "GCD.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "GCD.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "GCD.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012731",
+          "ACCESS": "644",
+          "CONTENTS": "844035:1804"
+        },
+        {
+          "NAME": "GCD.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012777",
+          "ACCESS": "644",
+          "CONTENTS": "845839:1485"
+        },
+        {
+          "NAME": "GCD.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012842",
+          "ACCESS": "664",
+          "CONTENTS": "847324:4017"
+        },
+        {
+          "NAME": "GCD.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012782",
+          "ACCESS": "775",
+          "CONTENTS": "851341:208"
+        }
+      ]
+    },
+    "GETKEY": {
+      "SOURCE": "GETKEY.lss",
+      "COMMENT": "GETKEY module",
+      "ARTIFACTS": [
+        "GETKEY.INC",
+        "GETKEY.html",
+        "GETKEY.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "GETKEY",
+      "DEPENDS": [
+        "BQ.INC",
+        "CHARS.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "GETKEY.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "GETKEY.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "GETKEY.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "GETKEY.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "GETKEY.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "GETKEY.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "GETKEY.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012732",
+          "ACCESS": "644",
+          "CONTENTS": "851549:5750"
+        },
+        {
+          "NAME": "GETKEY.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012772",
+          "ACCESS": "644",
+          "CONTENTS": "857299:4048"
+        },
+        {
+          "NAME": "GETKEY.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012804",
+          "ACCESS": "664",
+          "CONTENTS": "861347:9819"
+        },
+        {
+          "NAME": "GETKEY.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012779",
+          "ACCESS": "775",
+          "CONTENTS": "871166:142"
+        }
+      ]
+    },
+    "GOTOS": {
+      "SOURCE": "GOTOS.lss",
+      "COMMENT": "GOTOS module",
+      "ARTIFACTS": [
+        "GOTOS.INC",
+        "GOTOS.html",
+        "GOTOS.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "GOTOS",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "GOTOS.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "GOTOS.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "GOTOS.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "GOTOS.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "GOTOS.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "GOTOS.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "GOTOS.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012732",
+          "ACCESS": "644",
+          "CONTENTS": "871308:2705"
+        },
+        {
+          "NAME": "GOTOS.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012772",
+          "ACCESS": "644",
+          "CONTENTS": "874013:1715"
+        },
+        {
+          "NAME": "GOTOS.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012804",
+          "ACCESS": "664",
+          "CONTENTS": "875728:5445"
+        },
+        {
+          "NAME": "GOTOS.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012779",
+          "ACCESS": "775",
+          "CONTENTS": "881173:139"
+        }
+      ]
+    },
+    "HASH": {
+      "SOURCE": "HASH.lss",
+      "COMMENT": "HASH module",
+      "ARTIFACTS": [
+        "HASH.INC",
+        "HASH.html",
+        "HASH.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "HASH",
+      "DEPENDS": [
+        "BRKREM.INC",
+        "SEQ.INC",
+        "VDIFFER.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "HASH.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "HASH.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "HASH.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "HASH.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "HASH.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "HASH.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "HASH.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012732",
+          "ACCESS": "644",
+          "CONTENTS": "881312:6453"
+        },
+        {
+          "NAME": "HASH.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012770",
+          "ACCESS": "644",
+          "CONTENTS": "887765:2874"
+        },
+        {
+          "NAME": "HASH.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012837",
+          "ACCESS": "664",
+          "CONTENTS": "890639:11058"
+        },
+        {
+          "NAME": "HASH.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012781",
+          "ACCESS": "775",
+          "CONTENTS": "901697:1353"
+        }
+      ]
+    },
+    "HEX": {
+      "SOURCE": "HEX.lss",
+      "COMMENT": "HEX module",
+      "ARTIFACTS": [
+        "HEX.INC",
+        "HEX.html",
+        "HEX.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "HEX",
+      "DEPENDS": [
+        "BLEND.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "HEX.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "HEX.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "HEX.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "HEX.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "HEX.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "HEX.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "HEX.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012733",
+          "ACCESS": "644",
+          "CONTENTS": "903050:2149"
+        },
+        {
+          "NAME": "HEX.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012768",
+          "ACCESS": "644",
+          "CONTENTS": "905199:1735"
+        },
+        {
+          "NAME": "HEX.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012805",
+          "ACCESS": "664",
+          "CONTENTS": "906934:4480"
+        },
+        {
+          "NAME": "HEX.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012779",
+          "ACCESS": "775",
+          "CONTENTS": "911414:195"
+        }
+      ]
+    },
+    "HOST": {
+      "SOURCE": "HOST.lss",
+      "COMMENT": "HOST module",
+      "ARTIFACTS": [
+        "HOST.INC",
+        "HOST.html",
+        "HOST.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "HOST",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "HOST.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "HOST.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "HOST.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "HOST.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "HOST.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "HOST.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "HOST.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012733",
+          "ACCESS": "644",
+          "CONTENTS": "911609:4718"
+        },
+        {
+          "NAME": "HOST.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012769",
+          "ACCESS": "644",
+          "CONTENTS": "916327:3489"
+        },
+        {
+          "NAME": "HOST.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012805",
+          "ACCESS": "664",
+          "CONTENTS": "919816:9055"
+        },
+        {
+          "NAME": "HOST.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012779",
+          "ACCESS": "775",
+          "CONTENTS": "928871:138"
+        }
+      ]
+    },
+    "HTMLESC": {
+      "SOURCE": "HTMLESC.lss",
+      "COMMENT": "HTMLESC module",
+      "ARTIFACTS": [
+        "HTMLESC.INC",
+        "HTMLESC.html",
+        "HTMLESC.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "HTMLESC",
+      "DEPENDS": [
+        "CH.INC",
+        "CHARS.INC",
+        "HEX.INC",
+        "REPL.INC",
+        "SDIFF.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "HTMLESC.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "HTMLESC.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "HTMLESC.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "HTMLESC.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "HTMLESC.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "HTMLESC.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "HTMLESC.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012733",
+          "ACCESS": "644",
+          "CONTENTS": "929009:4420"
+        },
+        {
+          "NAME": "HTMLESC.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012777",
+          "ACCESS": "644",
+          "CONTENTS": "933429:3079"
+        },
+        {
+          "NAME": "HTMLESC.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012835",
+          "ACCESS": "664",
+          "CONTENTS": "936508:7911"
+        },
+        {
+          "NAME": "HTMLESC.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012781",
+          "ACCESS": "775",
+          "CONTENTS": "944419:560"
+        }
+      ]
+    },
+    "HTMLTMPL": {
+      "SOURCE": "HTMLTMPL.lss",
+      "COMMENT": "HTMLTMPL module",
+      "ARTIFACTS": [
+        "HTMLTMPL.INC",
+        "HTMLTMPL.html",
+        "HTMLTMPL.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "HTMLTMPL",
+      "DEPENDS": [
+        "CHARS.INC",
+        "HTMLESC.INC",
+        "LAST.INC",
+        "LINK.INC",
+        "READFILE.INC",
+        "REVL.INC",
+        "SWAP.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "HTMLTMPL.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "HTMLTMPL.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "HTMLTMPL.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "HTMLTMPL.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "HTMLTMPL.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "HTMLTMPL.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "HTMLTMPL.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012734",
+          "ACCESS": "644",
+          "CONTENTS": "944979:7642"
+        },
+        {
+          "NAME": "HTMLTMPL.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012778",
+          "ACCESS": "664",
+          "CONTENTS": "952621:6503"
+        },
+        {
+          "NAME": "HTMLTMPL.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012844",
+          "ACCESS": "664",
+          "CONTENTS": "959124:11245"
+        },
+        {
+          "NAME": "HTMLTMPL.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012782",
+          "ACCESS": "775",
+          "CONTENTS": "970369:1035"
+        }
+      ]
+    },
+    "IFS": {
+      "SOURCE": "ifs.lss",
+      "COMMENT": "ifs module",
+      "ARTIFACTS": [
+        "ifs",
+        "ifs.html"
+      ],
+      "TYPE": "PROGRAM",
+      "NAME": "IFS",
+      "DEPENDS": [
+        "CHARS.INC",
+        "FASTBAL.INC",
+        "HOST.INC",
+        "SYSTEM.INC",
+        "VDIFFER.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "ifs",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "ifs.html",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "ifs",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "ifs.html",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "ifs.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012734",
+          "ACCESS": "644",
+          "CONTENTS": "971404:13230"
+        },
+        {
+          "NAME": "ifs",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012783",
+          "ACCESS": "775",
+          "CONTENTS": "984634:11381"
+        },
+        {
+          "NAME": "ifs.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012806",
+          "ACCESS": "664",
+          "CONTENTS": "996015:22086"
+        }
+      ]
+    },
+    "ILLUM": {
+      "SOURCE": "illum.lss",
+      "COMMENT": "illum module",
+      "ARTIFACTS": [
+        "illum",
+        "illum.html"
+      ],
+      "TYPE": "PROGRAM",
+      "NAME": "ILLUM",
+      "DEPENDS": [
+        "BQ.INC",
+        "CRACK.INC",
+        "SEQ.INC",
+        "TRIMB.INC",
+        "VDIFFER.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "illum",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "illum.html",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "illum",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "illum.html",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "illum.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012735",
+          "ACCESS": "644",
+          "CONTENTS": "1018101:2467"
+        },
+        {
+          "NAME": "illum",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012783",
+          "ACCESS": "775",
+          "CONTENTS": "1020568:2045"
+        },
+        {
+          "NAME": "illum.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012806",
+          "ACCESS": "664",
+          "CONTENTS": "1022613:4826"
+        }
+      ]
+    },
+    "INFINIP": {
+      "SOURCE": "INFINIP.lss",
+      "COMMENT": "INFINIP module",
+      "ARTIFACTS": [
+        "INFINIP.INC",
+        "INFINIP.html",
+        "INFINIP.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "INFINIP",
+      "DEPENDS": [
+        "REDEFINE.INC",
+        "SWAP.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "INFINIP.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "INFINIP.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "INFINIP.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "INFINIP.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "INFINIP.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "INFINIP.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "INFINIP.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012735",
+          "ACCESS": "644",
+          "CONTENTS": "1027439:8383"
+        },
+        {
+          "NAME": "INFINIP.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012772",
+          "ACCESS": "644",
+          "CONTENTS": "1035822:8074"
+        },
+        {
+          "NAME": "INFINIP.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012807",
+          "ACCESS": "664",
+          "CONTENTS": "1043896:12842"
+        },
+        {
+          "NAME": "INFINIP.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012779",
+          "ACCESS": "775",
+          "CONTENTS": "1056738:144"
+        }
+      ]
+    },
+    "JIT": {
+      "SOURCE": "JIT.lss",
+      "COMMENT": "JIT module",
+      "ARTIFACTS": [
+        "JIT.INC",
+        "JIT.html",
+        "JIT.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "JIT",
+      "DEPENDS": [
+        "CRACK.INC",
+        "P64.INC",
+        "SEQ.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "JIT.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "JIT.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "JIT.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "JIT.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "JIT.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "JIT.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "JIT.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012739",
+          "ACCESS": "644",
+          "CONTENTS": "1056882:74569"
+        },
+        {
+          "NAME": "JIT.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012774",
+          "ACCESS": "644",
+          "CONTENTS": "1131451:57711"
+        },
+        {
+          "NAME": "JIT.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012808",
+          "ACCESS": "664",
+          "CONTENTS": "1189162:100158"
+        },
+        {
+          "NAME": "JIT.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012779",
+          "ACCESS": "775",
+          "CONTENTS": "1289320:137"
+        }
+      ]
+    },
+    "JSON": {
+      "SOURCE": "JSON.lss",
+      "COMMENT": "JSON module",
+      "ARTIFACTS": [
+        "JSON.INC",
+        "JSON.html",
+        "JSON.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "JSON",
+      "DEPENDS": [
+        "CH.INC",
+        "CHARS.INC",
+        "HASH.INC",
+        "HEX.INC",
+        "SDIFF.INC",
+        "SEQ.INC",
+        "SIZEA.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "JSON.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "JSON.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "JSON.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "JSON.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "JSON.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "JSON.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "JSON.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012740",
+          "ACCESS": "644",
+          "CONTENTS": "1289457:16748"
+        },
+        {
+          "NAME": "JSON.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012777",
+          "ACCESS": "644",
+          "CONTENTS": "1306205:12991"
+        },
+        {
+          "NAME": "JSON.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012844",
+          "ACCESS": "664",
+          "CONTENTS": "1319196:23515"
+        },
+        {
+          "NAME": "JSON.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012782",
+          "ACCESS": "775",
+          "CONTENTS": "1342711:2230"
+        }
+      ]
+    },
+    "LAST": {
+      "SOURCE": "LAST.lss",
+      "COMMENT": "LAST module",
+      "ARTIFACTS": [
+        "LAST.INC",
+        "LAST.html",
+        "LAST.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "LAST",
+      "DEPENDS": [
+        "LINK.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "LAST.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "LAST.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "LAST.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "LAST.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "LAST.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "LAST.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "LAST.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012740",
+          "ACCESS": "644",
+          "CONTENTS": "1344941:1853"
+        },
+        {
+          "NAME": "LAST.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012774",
+          "ACCESS": "644",
+          "CONTENTS": "1346794:1417"
+        },
+        {
+          "NAME": "LAST.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012809",
+          "ACCESS": "664",
+          "CONTENTS": "1348211:4173"
+        },
+        {
+          "NAME": "LAST.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012779",
+          "ACCESS": "775",
+          "CONTENTS": "1352384:137"
+        }
+      ]
+    },
+    "LIKE": {
+      "SOURCE": "LIKE.lss",
+      "COMMENT": "LIKE module",
+      "ARTIFACTS": [
+        "LIKE.INC",
+        "LIKE.html",
+        "LIKE.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "LIKE",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "LIKE.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "LIKE.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "LIKE.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "LIKE.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "LIKE.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "LIKE.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "LIKE.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012740",
+          "ACCESS": "644",
+          "CONTENTS": "1352521:2158"
+        },
+        {
+          "NAME": "LIKE.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012774",
+          "ACCESS": "644",
+          "CONTENTS": "1354679:1667"
+        },
+        {
+          "NAME": "LIKE.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012809",
+          "ACCESS": "664",
+          "CONTENTS": "1356346:4469"
+        },
+        {
+          "NAME": "LIKE.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012779",
+          "ACCESS": "775",
+          "CONTENTS": "1360815:137"
+        }
+      ]
+    },
+    "LINK": {
+      "SOURCE": "LINK.lss",
+      "COMMENT": "LINK module",
+      "ARTIFACTS": [
+        "LINK.INC",
+        "LINK.html",
+        "LINK.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "LINK",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "LINK.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "LINK.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "LINK.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "LINK.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "LINK.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "LINK.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "LINK.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012741",
+          "ACCESS": "644",
+          "CONTENTS": "1360952:3049"
+        },
+        {
+          "NAME": "LINK.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012769",
+          "ACCESS": "644",
+          "CONTENTS": "1364001:2656"
+        },
+        {
+          "NAME": "LINK.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012834",
+          "ACCESS": "664",
+          "CONTENTS": "1366657:5683"
+        },
+        {
+          "NAME": "LINK.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012781",
+          "ACCESS": "775",
+          "CONTENTS": "1372340:137"
+        }
+      ]
+    },
+    "LIST": {
+      "SOURCE": "list.lss",
+      "COMMENT": "list module",
+      "ARTIFACTS": [
+        "list",
+        "list.html"
+      ],
+      "TYPE": "PROGRAM",
+      "NAME": "LIST",
+      "DEPENDS": [
+        "CHARS.INC",
+        "DISPLAY.INC",
+        "GETKEY.INC",
+        "HOST.INC",
+        "LOGIC.INC",
+        "READLINE.INC",
+        "REPL.INC",
+        "SEQ.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "list",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "list.html",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "list",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "list.html",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "list.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012741",
+          "ACCESS": "644",
+          "CONTENTS": "1372477:8479"
+        },
+        {
+          "NAME": "list",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012783",
+          "ACCESS": "775",
+          "CONTENTS": "1380956:7861"
+        },
+        {
+          "NAME": "list.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012812",
+          "ACCESS": "664",
+          "CONTENTS": "1388817:12489"
+        }
+      ]
+    },
+    "LOGIC": {
+      "SOURCE": "LOGIC.lss",
+      "COMMENT": "LOGIC module",
+      "ARTIFACTS": [
+        "LOGIC.INC",
+        "LOGIC.html",
+        "LOGIC.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "LOGIC",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "LOGIC.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "LOGIC.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "LOGIC.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "LOGIC.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "LOGIC.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "LOGIC.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "LOGIC.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012742",
+          "ACCESS": "644",
+          "CONTENTS": "1401306:4219"
+        },
+        {
+          "NAME": "LOGIC.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012775",
+          "ACCESS": "644",
+          "CONTENTS": "1405525:3945"
+        },
+        {
+          "NAME": "LOGIC.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012810",
+          "ACCESS": "664",
+          "CONTENTS": "1409470:7004"
+        },
+        {
+          "NAME": "LOGIC.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012780",
+          "ACCESS": "775",
+          "CONTENTS": "1416474:139"
+        }
+      ]
+    },
+    "LOG": {
+      "SOURCE": "LOG.lss",
+      "COMMENT": "LOG module",
+      "ARTIFACTS": [
+        "LOG.INC",
+        "LOG.html",
+        "LOG.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "LOG",
+      "DEPENDS": [
+        "DEXP.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "LOG.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "LOG.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "LOG.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "LOG.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "LOG.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "LOG.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "LOG.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012742",
+          "ACCESS": "644",
+          "CONTENTS": "1416613:2363"
+        },
+        {
+          "NAME": "LOG.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012775",
+          "ACCESS": "644",
+          "CONTENTS": "1418976:1674"
+        },
+        {
+          "NAME": "LOG.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012810",
+          "ACCESS": "664",
+          "CONTENTS": "1420650:4818"
+        },
+        {
+          "NAME": "LOG.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012780",
+          "ACCESS": "775",
+          "CONTENTS": "1425468:344"
+        }
+      ]
+    },
+    "LPROG": {
+      "SOURCE": "LPROG.lss",
+      "COMMENT": "LPROG module",
+      "ARTIFACTS": [
+        "LPROG.INC",
+        "LPROG.html",
+        "LPROG.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "LPROG",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "LPROG.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "LPROG.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "LPROG.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "LPROG.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "LPROG.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "LPROG.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "LPROG.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012742",
+          "ACCESS": "644",
+          "CONTENTS": "1425812:1970"
+        },
+        {
+          "NAME": "LPROG.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012775",
+          "ACCESS": "644",
+          "CONTENTS": "1427782:1238"
+        },
+        {
+          "NAME": "LPROG.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012811",
+          "ACCESS": "664",
+          "CONTENTS": "1429020:4241"
+        },
+        {
+          "NAME": "LPROG.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012780",
+          "ACCESS": "775",
+          "CONTENTS": "1433261:212"
+        }
+      ]
+    },
+    "LSEQ": {
+      "SOURCE": "lseq.lss",
+      "COMMENT": "lseq module",
+      "ARTIFACTS": [
+        "lseq",
+        "lseq.html"
+      ],
+      "TYPE": "PROGRAM",
+      "NAME": "LSEQ",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "lseq",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "lseq.html",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "lseq",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "lseq.html",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "lseq.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012742",
+          "ACCESS": "644",
+          "CONTENTS": "1433473:1567"
+        },
+        {
+          "NAME": "lseq",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012783",
+          "ACCESS": "775",
+          "CONTENTS": "1435040:1531"
+        },
+        {
+          "NAME": "lseq.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012811",
+          "ACCESS": "664",
+          "CONTENTS": "1436571:3425"
+        }
+      ]
+    },
+    "LSINC": {
+      "SOURCE": "lsinc.lss",
+      "COMMENT": "lsinc module",
+      "ARTIFACTS": [
+        "lsinc",
+        "lsinc.html"
+      ],
+      "TYPE": "PROGRAM",
+      "NAME": "LSINC",
+      "DEPENDS": [
+        "CRACK.INC",
+        "HOST.INC",
+        "SEQ.INC",
+        "TRIMB.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "lsinc",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "lsinc.html",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "lsinc",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "lsinc.html",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "lsinc.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012743",
+          "ACCESS": "644",
+          "CONTENTS": "1439996:3438"
+        },
+        {
+          "NAME": "lsinc",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012783",
+          "ACCESS": "775",
+          "CONTENTS": "1443434:3261"
+        },
+        {
+          "NAME": "lsinc.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012812",
+          "ACCESS": "664",
+          "CONTENTS": "1446695:5792"
+        }
+      ]
+    },
+    "MAX": {
+      "SOURCE": "MAX.lss",
+      "COMMENT": "MAX module",
+      "ARTIFACTS": [
+        "MAX.INC",
+        "MAX.html",
+        "MAX.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "MAX",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "MAX.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "MAX.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "MAX.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "MAX.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "MAX.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "MAX.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "MAX.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012743",
+          "ACCESS": "644",
+          "CONTENTS": "1452487:1778"
+        },
+        {
+          "NAME": "MAX.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012778",
+          "ACCESS": "644",
+          "CONTENTS": "1454265:1479"
+        },
+        {
+          "NAME": "MAX.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012838",
+          "ACCESS": "664",
+          "CONTENTS": "1455744:3990"
+        },
+        {
+          "NAME": "MAX.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012782",
+          "ACCESS": "775",
+          "CONTENTS": "1459734:135"
+        }
+      ]
+    },
+    "MDY": {
+      "SOURCE": "MDY.lss",
+      "COMMENT": "MDY module",
+      "ARTIFACTS": [
+        "MDY.INC",
+        "MDY.html",
+        "MDY.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "MDY",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "MDY.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "MDY.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "MDY.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "MDY.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "MDY.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "MDY.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "MDY.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012743",
+          "ACCESS": "644",
+          "CONTENTS": "1459869:2331"
+        },
+        {
+          "NAME": "MDY.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012775",
+          "ACCESS": "644",
+          "CONTENTS": "1462200:1941"
+        },
+        {
+          "NAME": "MDY.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012813",
+          "ACCESS": "664",
+          "CONTENTS": "1464141:4591"
+        },
+        {
+          "NAME": "MDY.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012780",
+          "ACCESS": "775",
+          "CONTENTS": "1468732:135"
+        }
+      ]
+    },
+    "NDBM": {
+      "SOURCE": "NDBM.lss",
+      "COMMENT": "NDBM module",
+      "ARTIFACTS": [
+        "NDBM.INC",
+        "NDBM.html",
+        "NDBM.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "NDBM",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "NDBM.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "NDBM.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "NDBM.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "NDBM.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "NDBM.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "NDBM.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "NDBM.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012744",
+          "ACCESS": "644",
+          "CONTENTS": "1468867:3174"
+        },
+        {
+          "NAME": "NDBM.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012775",
+          "ACCESS": "644",
+          "CONTENTS": "1472041:1997"
+        },
+        {
+          "NAME": "NDBM.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012813",
+          "ACCESS": "664",
+          "CONTENTS": "1474038:5761"
+        },
+        {
+          "NAME": "NDBM.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012780",
+          "ACCESS": "775",
+          "CONTENTS": "1479799:958"
+        }
+      ]
+    },
+    "NOTP": {
+      "SOURCE": "NOTP.lss",
+      "COMMENT": "NOTP module",
+      "ARTIFACTS": [
+        "NOTP.INC",
+        "NOTP.html",
+        "NOTP.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "NOTP",
+      "DEPENDS": [
+        "STACK.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "NOTP.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "NOTP.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "NOTP.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "NOTP.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "NOTP.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "NOTP.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "NOTP.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012744",
+          "ACCESS": "644",
+          "CONTENTS": "1480757:1959"
+        },
+        {
+          "NAME": "NOTP.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012775",
+          "ACCESS": "644",
+          "CONTENTS": "1482716:1342"
+        },
+        {
+          "NAME": "NOTP.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012814",
+          "ACCESS": "664",
+          "CONTENTS": "1484058:4620"
+        },
+        {
+          "NAME": "NOTP.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012780",
+          "ACCESS": "775",
+          "CONTENTS": "1488678:137"
+        }
+      ]
+    },
+    "ONCE": {
+      "SOURCE": "ONCE.lss",
+      "COMMENT": "ONCE module",
+      "ARTIFACTS": [
+        "ONCE.INC",
+        "ONCE.html",
+        "ONCE.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "ONCE",
+      "DEPENDS": [
+        "UNIQUE.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "ONCE.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "ONCE.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "ONCE.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "ONCE.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "ONCE.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "ONCE.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "ONCE.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012744",
+          "ACCESS": "644",
+          "CONTENTS": "1488815:1979"
+        },
+        {
+          "NAME": "ONCE.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012775",
+          "ACCESS": "644",
+          "CONTENTS": "1490794:1423"
+        },
+        {
+          "NAME": "ONCE.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012814",
+          "ACCESS": "664",
+          "CONTENTS": "1492217:4280"
+        },
+        {
+          "NAME": "ONCE.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012780",
+          "ACCESS": "775",
+          "CONTENTS": "1496497:137"
+        }
+      ]
+    },
+    "ORDER": {
+      "SOURCE": "ORDER.lss",
+      "COMMENT": "ORDER module",
+      "ARTIFACTS": [
+        "ORDER.INC",
+        "ORDER.html",
+        "ORDER.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "ORDER",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "ORDER.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "ORDER.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "ORDER.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "ORDER.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "ORDER.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "ORDER.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "ORDER.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012744",
+          "ACCESS": "644",
+          "CONTENTS": "1496634:1742"
+        },
+        {
+          "NAME": "ORDER.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012775",
+          "ACCESS": "644",
+          "CONTENTS": "1498376:1351"
+        },
+        {
+          "NAME": "ORDER.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012815",
+          "ACCESS": "664",
+          "CONTENTS": "1499727:3961"
+        },
+        {
+          "NAME": "ORDER.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012780",
+          "ACCESS": "775",
+          "CONTENTS": "1503688:212"
+        }
+      ]
+    },
+    "P64": {
+      "SOURCE": "P64.lss",
+      "COMMENT": "P64 module",
+      "ARTIFACTS": [
+        "P64.INC",
+        "P64.html",
+        "P64.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "P64",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "P64.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "P64.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "P64.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "P64.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "P64.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "P64.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "P64.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012745",
+          "ACCESS": "644",
+          "CONTENTS": "1503900:18823"
+        },
+        {
+          "NAME": "P64.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012769",
+          "ACCESS": "644",
+          "CONTENTS": "1522723:6129"
+        },
+        {
+          "NAME": "P64.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012816",
+          "ACCESS": "664",
+          "CONTENTS": "1528852:27016"
+        },
+        {
+          "NAME": "P64.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012780",
+          "ACCESS": "775",
+          "CONTENTS": "1555868:136"
+        }
+      ]
+    },
+    "PSQL": {
+      "SOURCE": "PSQL.lss",
+      "COMMENT": "PSQL module",
+      "ARTIFACTS": [
+        "PSQL.INC",
+        "PSQL.html",
+        "PSQL.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "PSQL",
+      "DEPENDS": [
+        "BRKREM.INC",
+        "CHARS.INC",
+        "COUNT.INC",
+        "CSNOBOL4.INC",
+        "REPL.INC",
+        "SCOOP.INC",
+        "SEQ.INC",
+        "UNIQUE.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "PSQL.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "PSQL.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "PSQL.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "PSQL.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "PSQL.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "PSQL.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "PSQL.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012745",
+          "ACCESS": "644",
+          "CONTENTS": "1556004:15751"
+        },
+        {
+          "NAME": "PSQL.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012777",
+          "ACCESS": "644",
+          "CONTENTS": "1571755:6189"
+        },
+        {
+          "NAME": "PSQL.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012836",
+          "ACCESS": "664",
+          "CONTENTS": "1577944:25544"
+        },
+        {
+          "NAME": "PSQL.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012781",
+          "ACCESS": "775",
+          "CONTENTS": "1603488:4318"
+        }
+      ]
+    },
+    "QUOTE": {
+      "SOURCE": "QUOTE.lss",
+      "COMMENT": "QUOTE module",
+      "ARTIFACTS": [
+        "QUOTE.INC",
+        "QUOTE.html",
+        "QUOTE.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "QUOTE",
+      "DEPENDS": [
+        "REPL.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "QUOTE.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "QUOTE.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "QUOTE.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "QUOTE.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "QUOTE.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "QUOTE.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "QUOTE.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012746",
+          "ACCESS": "644",
+          "CONTENTS": "1607806:1676"
+        },
+        {
+          "NAME": "QUOTE.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012771",
+          "ACCESS": "644",
+          "CONTENTS": "1609482:1306"
+        },
+        {
+          "NAME": "QUOTE.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012817",
+          "ACCESS": "664",
+          "CONTENTS": "1610788:3897"
+        },
+        {
+          "NAME": "QUOTE.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012780",
+          "ACCESS": "775",
+          "CONTENTS": "1614685:139"
+        }
+      ]
+    },
+    "RANDOM": {
+      "SOURCE": "RANDOM.lss",
+      "COMMENT": "RANDOM module",
+      "ARTIFACTS": [
+        "RANDOM.INC",
+        "RANDOM.html",
+        "RANDOM.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "RANDOM",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "RANDOM.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "RANDOM.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "RANDOM.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "RANDOM.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "RANDOM.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "RANDOM.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "RANDOM.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012746",
+          "ACCESS": "644",
+          "CONTENTS": "1614824:2132"
+        },
+        {
+          "NAME": "RANDOM.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012775",
+          "ACCESS": "644",
+          "CONTENTS": "1616956:1802"
+        },
+        {
+          "NAME": "RANDOM.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012817",
+          "ACCESS": "664",
+          "CONTENTS": "1618758:4471"
+        },
+        {
+          "NAME": "RANDOM.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012780",
+          "ACCESS": "775",
+          "CONTENTS": "1623229:141"
+        }
+      ]
+    },
+    "READFILE": {
+      "SOURCE": "READFILE.lss",
+      "COMMENT": "READFILE module",
+      "ARTIFACTS": [
+        "READFILE.INC",
+        "READFILE.html",
+        "READFILE.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "READFILE",
+      "DEPENDS": [
+        "BRKREM.INC",
+        "CHARS.INC",
+        "SYSTEM.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "READFILE.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "READFILE.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "READFILE.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "READFILE.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "READFILE.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "READFILE.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "READFILE.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012746",
+          "ACCESS": "644",
+          "CONTENTS": "1623370:3494"
+        },
+        {
+          "NAME": "READFILE.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012777",
+          "ACCESS": "644",
+          "CONTENTS": "1626864:2543"
+        },
+        {
+          "NAME": "READFILE.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012841",
+          "ACCESS": "664",
+          "CONTENTS": "1629407:6036"
+        },
+        {
+          "NAME": "READFILE.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012782",
+          "ACCESS": "775",
+          "CONTENTS": "1635443:218"
+        }
+      ]
+    },
+    "READLINE": {
+      "SOURCE": "READLINE.lss",
+      "COMMENT": "READLINE module",
+      "ARTIFACTS": [
+        "READLINE.INC",
+        "READLINE.html",
+        "READLINE.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "READLINE",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "READLINE.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "READLINE.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "READLINE.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "READLINE.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "READLINE.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "READLINE.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "READLINE.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012746",
+          "ACCESS": "644",
+          "CONTENTS": "1635661:5146"
+        },
+        {
+          "NAME": "READLINE.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012771",
+          "ACCESS": "644",
+          "CONTENTS": "1640807:2328"
+        },
+        {
+          "NAME": "READLINE.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012818",
+          "ACCESS": "664",
+          "CONTENTS": "1643135:8344"
+        },
+        {
+          "NAME": "READLINE.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012780",
+          "ACCESS": "775",
+          "CONTENTS": "1651479:146"
+        }
+      ]
+    },
+    "READL": {
+      "SOURCE": "READL.lss",
+      "COMMENT": "READL module",
+      "ARTIFACTS": [
+        "READL.INC",
+        "READL.html",
+        "READL.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "READL",
+      "DEPENDS": [
+        "LINK.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "READL.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "READL.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "READL.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "READL.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "READL.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "READL.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "READL.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012747",
+          "ACCESS": "644",
+          "CONTENTS": "1651625:2042"
+        },
+        {
+          "NAME": "READL.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012777",
+          "ACCESS": "644",
+          "CONTENTS": "1653667:1526"
+        },
+        {
+          "NAME": "READL.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012838",
+          "ACCESS": "664",
+          "CONTENTS": "1655193:4295"
+        },
+        {
+          "NAME": "READL.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012781",
+          "ACCESS": "775",
+          "CONTENTS": "1659488:139"
+        }
+      ]
+    },
+    "REDEFINE": {
+      "SOURCE": "REDEFINE.lss",
+      "COMMENT": "REDEFINE module",
+      "ARTIFACTS": [
+        "REDEFINE.INC",
+        "REDEFINE.html",
+        "REDEFINE.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "REDEFINE",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "REDEFINE.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "REDEFINE.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "REDEFINE.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "REDEFINE.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "REDEFINE.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "REDEFINE.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "REDEFINE.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012747",
+          "ACCESS": "644",
+          "CONTENTS": "1659627:2596"
+        },
+        {
+          "NAME": "REDEFINE.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012772",
+          "ACCESS": "644",
+          "CONTENTS": "1662223:2017"
+        },
+        {
+          "NAME": "REDEFINE.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012818",
+          "ACCESS": "664",
+          "CONTENTS": "1664240:5355"
+        },
+        {
+          "NAME": "REDEFINE.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012780",
+          "ACCESS": "775",
+          "CONTENTS": "1669595:145"
+        }
+      ]
+    },
+    "REPL": {
+      "SOURCE": "REPL.lss",
+      "COMMENT": "REPL module",
+      "ARTIFACTS": [
+        "REPL.INC",
+        "REPL.html",
+        "REPL.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "REPL",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "REPL.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "REPL.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "REPL.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "REPL.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "REPL.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "REPL.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "REPL.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012747",
+          "ACCESS": "644",
+          "CONTENTS": "1669740:2197"
+        },
+        {
+          "NAME": "REPL.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012768",
+          "ACCESS": "644",
+          "CONTENTS": "1671937:1657"
+        },
+        {
+          "NAME": "REPL.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012819",
+          "ACCESS": "664",
+          "CONTENTS": "1673594:4577"
+        },
+        {
+          "NAME": "REPL.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012780",
+          "ACCESS": "775",
+          "CONTENTS": "1678171:137"
+        }
+      ]
+    },
+    "RESOL": {
+      "SOURCE": "RESOL.lss",
+      "COMMENT": "RESOL module",
+      "ARTIFACTS": [
+        "RESOL.INC",
+        "RESOL.html",
+        "RESOL.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "RESOL",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "RESOL.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "RESOL.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "RESOL.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "RESOL.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "RESOL.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "RESOL.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "RESOL.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012747",
+          "ACCESS": "644",
+          "CONTENTS": "1678308:2146"
+        },
+        {
+          "NAME": "RESOL.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012775",
+          "ACCESS": "644",
+          "CONTENTS": "1680454:1747"
+        },
+        {
+          "NAME": "RESOL.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012819",
+          "ACCESS": "664",
+          "CONTENTS": "1682201:4303"
+        },
+        {
+          "NAME": "RESOL.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012780",
+          "ACCESS": "775",
+          "CONTENTS": "1686504:170"
+        }
+      ]
+    },
+    "REVL": {
+      "SOURCE": "REVL.lss",
+      "COMMENT": "REVL module",
+      "ARTIFACTS": [
+        "REVL.INC",
+        "REVL.html",
+        "REVL.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "REVL",
+      "DEPENDS": [
+        "LINK.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "REVL.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "REVL.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "REVL.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "REVL.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "REVL.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "REVL.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "REVL.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012748",
+          "ACCESS": "644",
+          "CONTENTS": "1686674:1923"
+        },
+        {
+          "NAME": "REVL.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012775",
+          "ACCESS": "644",
+          "CONTENTS": "1688597:1544"
+        },
+        {
+          "NAME": "REVL.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012820",
+          "ACCESS": "664",
+          "CONTENTS": "1690141:4091"
+        },
+        {
+          "NAME": "REVL.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012780",
+          "ACCESS": "775",
+          "CONTENTS": "1694232:137"
+        }
+      ]
+    },
+    "ROMAN": {
+      "SOURCE": "ROMAN.lss",
+      "COMMENT": "ROMAN module",
+      "ARTIFACTS": [
+        "ROMAN.INC",
+        "ROMAN.html",
+        "ROMAN.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "ROMAN",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "ROMAN.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "ROMAN.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "ROMAN.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "ROMAN.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "ROMAN.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "ROMAN.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "ROMAN.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012748",
+          "ACCESS": "644",
+          "CONTENTS": "1694369:2500"
+        },
+        {
+          "NAME": "ROMAN.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012775",
+          "ACCESS": "644",
+          "CONTENTS": "1696869:1846"
+        },
+        {
+          "NAME": "ROMAN.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012820",
+          "ACCESS": "664",
+          "CONTENTS": "1698715:5054"
+        },
+        {
+          "NAME": "ROMAN.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012780",
+          "ACCESS": "775",
+          "CONTENTS": "1703769:399"
+        }
+      ]
+    },
+    "ROTATER": {
+      "SOURCE": "ROTATER.lss",
+      "COMMENT": "ROTATER module",
+      "ARTIFACTS": [
+        "ROTATER.INC",
+        "ROTATER.html",
+        "ROTATER.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "ROTATER",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "ROTATER.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "ROTATER.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "ROTATER.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "ROTATER.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "ROTATER.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "ROTATER.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "ROTATER.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012748",
+          "ACCESS": "644",
+          "CONTENTS": "1704168:1745"
+        },
+        {
+          "NAME": "ROTATER.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012776",
+          "ACCESS": "644",
+          "CONTENTS": "1705913:1430"
+        },
+        {
+          "NAME": "ROTATER.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012821",
+          "ACCESS": "664",
+          "CONTENTS": "1707343:3969"
+        },
+        {
+          "NAME": "ROTATER.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012780",
+          "ACCESS": "775",
+          "CONTENTS": "1711312:143"
+        }
+      ]
+    },
+    "ROUTING": {
+      "SOURCE": "ROUTING.lss",
+      "COMMENT": "ROUTING module",
+      "ARTIFACTS": [
+        "ROUTING.INC",
+        "ROUTING.html",
+        "ROUTING.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "ROUTING",
+      "DEPENDS": [
+        "BRKREM.INC",
+        "SDIFF.INC",
+        "UNIQUE.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "ROUTING.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "ROUTING.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "ROUTING.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "ROUTING.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "ROUTING.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "ROUTING.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "ROUTING.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012749",
+          "ACCESS": "664",
+          "CONTENTS": "1711455:4434"
+        },
+        {
+          "NAME": "ROUTING.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012778",
+          "ACCESS": "600",
+          "CONTENTS": "1715889:2794"
+        },
+        {
+          "NAME": "ROUTING.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012848",
+          "ACCESS": "664",
+          "CONTENTS": "1718683:8185"
+        },
+        {
+          "NAME": "ROUTING.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012782",
+          "ACCESS": "775",
+          "CONTENTS": "1726868:1235"
+        }
+      ]
+    },
+    "RSEQ": {
+      "SOURCE": "rseq.lss",
+      "COMMENT": "rseq module",
+      "ARTIFACTS": [
+        "rseq",
+        "rseq.html"
+      ],
+      "TYPE": "PROGRAM",
+      "NAME": "RSEQ",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "rseq",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "rseq.html",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "rseq",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "rseq.html",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "rseq.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012749",
+          "ACCESS": "644",
+          "CONTENTS": "1728103:1536"
+        },
+        {
+          "NAME": "rseq",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012783",
+          "ACCESS": "775",
+          "CONTENTS": "1729639:1455"
+        },
+        {
+          "NAME": "rseq.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012821",
+          "ACCESS": "664",
+          "CONTENTS": "1731094:3535"
+        }
+      ]
+    },
+    "SCAN": {
+      "SOURCE": "scan.lss",
+      "COMMENT": "scan module",
+      "ARTIFACTS": [
+        "scan",
+        "scan.html"
+      ],
+      "TYPE": "PROGRAM",
+      "NAME": "SCAN",
+      "DEPENDS": [
+        "HOST.INC",
+        "SLOAD.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "scan",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "scan.html",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "scan",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "scan.html",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "scan.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012749",
+          "ACCESS": "644",
+          "CONTENTS": "1734629:5218"
+        },
+        {
+          "NAME": "scan",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012784",
+          "ACCESS": "775",
+          "CONTENTS": "1739847:3383"
+        },
+        {
+          "NAME": "scan.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012839",
+          "ACCESS": "664",
+          "CONTENTS": "1743230:8530"
+        }
+      ]
+    },
+    "SCOOP": {
+      "SOURCE": "SCOOP.lss",
+      "COMMENT": "SCOOP module",
+      "ARTIFACTS": [
+        "SCOOP.INC",
+        "SCOOP.html",
+        "SCOOP.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "SCOOP",
+      "DEPENDS": [
+        "VDIFFER.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "SCOOP.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SCOOP.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SCOOP.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "SCOOP.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SCOOP.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SCOOP.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "SCOOP.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012750",
+          "ACCESS": "644",
+          "CONTENTS": "1751760:12344"
+        },
+        {
+          "NAME": "SCOOP.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012777",
+          "ACCESS": "644",
+          "CONTENTS": "1764104:6455"
+        },
+        {
+          "NAME": "SCOOP.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012840",
+          "ACCESS": "664",
+          "CONTENTS": "1770559:20646"
+        },
+        {
+          "NAME": "SCOOP.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012782",
+          "ACCESS": "775",
+          "CONTENTS": "1791205:1411"
+        }
+      ]
+    },
+    "SDIFF": {
+      "SOURCE": "SDIFF.lss",
+      "COMMENT": "SDIFF module",
+      "ARTIFACTS": [
+        "SDIFF.INC",
+        "SDIFF.html",
+        "SDIFF.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "SDIFF",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "SDIFF.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SDIFF.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SDIFF.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "SDIFF.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SDIFF.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SDIFF.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "SDIFF.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012750",
+          "ACCESS": "644",
+          "CONTENTS": "1792616:1692"
+        },
+        {
+          "NAME": "SDIFF.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012770",
+          "ACCESS": "644",
+          "CONTENTS": "1794308:1354"
+        },
+        {
+          "NAME": "SDIFF.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012822",
+          "ACCESS": "664",
+          "CONTENTS": "1795662:3902"
+        },
+        {
+          "NAME": "SDIFF.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012780",
+          "ACCESS": "775",
+          "CONTENTS": "1799564:139"
+        }
+      ]
+    },
+    "SEQ": {
+      "SOURCE": "SEQ.lss",
+      "COMMENT": "SEQ module",
+      "ARTIFACTS": [
+        "SEQ.INC",
+        "SEQ.html",
+        "SEQ.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "SEQ",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "SEQ.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SEQ.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SEQ.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "SEQ.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SEQ.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SEQ.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "SEQ.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012750",
+          "ACCESS": "644",
+          "CONTENTS": "1799703:2519"
+        },
+        {
+          "NAME": "SEQ.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012768",
+          "ACCESS": "644",
+          "CONTENTS": "1802222:1506"
+        },
+        {
+          "NAME": "SEQ.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012822",
+          "ACCESS": "664",
+          "CONTENTS": "1803728:5541"
+        },
+        {
+          "NAME": "SEQ.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012780",
+          "ACCESS": "775",
+          "CONTENTS": "1809269:135"
+        }
+      ]
+    },
+    "SESSION": {
+      "SOURCE": "SESSION.lss",
+      "COMMENT": "SESSION module",
+      "ARTIFACTS": [
+        "SESSION.INC",
+        "SESSION.html",
+        "SESSION.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "SESSION",
+      "DEPENDS": [
+        "BQ.INC",
+        "CHARS.INC",
+        "CRACK.INC",
+        "JSON.INC",
+        "NDBM.INC",
+        "READFILE.INC",
+        "REPL.INC",
+        "TIME.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "SESSION.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SESSION.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SESSION.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "SESSION.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SESSION.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SESSION.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "SESSION.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012750",
+          "ACCESS": "664",
+          "CONTENTS": "1809404:10577"
+        },
+        {
+          "NAME": "SESSION.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012777",
+          "ACCESS": "644",
+          "CONTENTS": "1819981:5159"
+        },
+        {
+          "NAME": "SESSION.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012842",
+          "ACCESS": "664",
+          "CONTENTS": "1825140:17267"
+        },
+        {
+          "NAME": "SESSION.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012782",
+          "ACCESS": "775",
+          "CONTENTS": "1842407:1754"
+        }
+      ]
+    },
+    "SIZEA": {
+      "SOURCE": "SIZEA.lss",
+      "COMMENT": "SIZEA module",
+      "ARTIFACTS": [
+        "SIZEA.INC",
+        "SIZEA.html",
+        "SIZEA.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "SIZEA",
+      "DEPENDS": [
+        "BRKREM.INC",
+        "SWAP.INC",
+        "SYSTEM.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "SIZEA.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SIZEA.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SIZEA.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "SIZEA.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SIZEA.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SIZEA.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "SIZEA.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012751",
+          "ACCESS": "644",
+          "CONTENTS": "1844161:3936"
+        },
+        {
+          "NAME": "SIZEA.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012775",
+          "ACCESS": "644",
+          "CONTENTS": "1848097:2532"
+        },
+        {
+          "NAME": "SIZEA.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012816",
+          "ACCESS": "664",
+          "CONTENTS": "1850629:6821"
+        },
+        {
+          "NAME": "SIZEA.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012780",
+          "ACCESS": "775",
+          "CONTENTS": "1857450:584"
+        }
+      ]
+    },
+    "SKIM": {
+      "SOURCE": "SKIM.lss",
+      "COMMENT": "SKIM module",
+      "ARTIFACTS": [
+        "SKIM.INC",
+        "SKIM.html",
+        "SKIM.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "SKIM",
+      "DEPENDS": [
+        "SDIFF.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "SKIM.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SKIM.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SKIM.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "SKIM.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SKIM.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SKIM.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "SKIM.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012751",
+          "ACCESS": "644",
+          "CONTENTS": "1858034:1944"
+        },
+        {
+          "NAME": "SKIM.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012776",
+          "ACCESS": "644",
+          "CONTENTS": "1859978:1564"
+        },
+        {
+          "NAME": "SKIM.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012823",
+          "ACCESS": "664",
+          "CONTENTS": "1861542:4243"
+        },
+        {
+          "NAME": "SKIM.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012780",
+          "ACCESS": "775",
+          "CONTENTS": "1865785:137"
+        }
+      ]
+    },
+    "SLOAD": {
+      "SOURCE": "SLOAD.lss",
+      "COMMENT": "SLOAD module",
+      "ARTIFACTS": [
+        "SLOAD.INC",
+        "SLOAD.html",
+        "SLOAD.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "SLOAD",
+      "DEPENDS": [
+        "CRACK.INC",
+        "HOST.INC",
+        "TRIMB.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "SLOAD.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SLOAD.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SLOAD.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "SLOAD.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SLOAD.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SLOAD.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "SLOAD.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012751",
+          "ACCESS": "644",
+          "CONTENTS": "1865922:5072"
+        },
+        {
+          "NAME": "SLOAD.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012776",
+          "ACCESS": "644",
+          "CONTENTS": "1870994:4701"
+        },
+        {
+          "NAME": "SLOAD.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012823",
+          "ACCESS": "664",
+          "CONTENTS": "1875695:8391"
+        },
+        {
+          "NAME": "SLOAD.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012780",
+          "ACCESS": "775",
+          "CONTENTS": "1884086:140"
+        }
+      ]
+    },
+    "SNOFMT": {
+      "SOURCE": "snofmt.lss",
+      "COMMENT": "snofmt module",
+      "ARTIFACTS": [
+        "snofmt",
+        "snofmt.html"
+      ],
+      "TYPE": "PROGRAM",
+      "NAME": "SNOFMT",
+      "DEPENDS": [
+        "BALX.INC",
+        "CHARS.INC",
+        "VDIFFER.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "snofmt",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "snofmt.html",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "snofmt",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "snofmt.html",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "snofmt.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012752",
+          "ACCESS": "644",
+          "CONTENTS": "1884226:4410"
+        },
+        {
+          "NAME": "snofmt",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012783",
+          "ACCESS": "775",
+          "CONTENTS": "1888636:4104"
+        },
+        {
+          "NAME": "snofmt.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012824",
+          "ACCESS": "664",
+          "CONTENTS": "1892740:8483"
+        }
+      ]
+    },
+    "SOUNDEX": {
+      "SOURCE": "SOUNDEX.lss",
+      "COMMENT": "SOUNDEX module",
+      "ARTIFACTS": [
+        "SOUNDEX.INC",
+        "SOUNDEX.html",
+        "SOUNDEX.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "SOUNDEX",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "SOUNDEX.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SOUNDEX.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SOUNDEX.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "SOUNDEX.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SOUNDEX.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SOUNDEX.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "SOUNDEX.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012752",
+          "ACCESS": "644",
+          "CONTENTS": "1901223:2171"
+        },
+        {
+          "NAME": "SOUNDEX.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012776",
+          "ACCESS": "644",
+          "CONTENTS": "1903394:1878"
+        },
+        {
+          "NAME": "SOUNDEX.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012824",
+          "ACCESS": "664",
+          "CONTENTS": "1905272:4399"
+        },
+        {
+          "NAME": "SOUNDEX.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012781",
+          "ACCESS": "775",
+          "CONTENTS": "1909671:216"
+        }
+      ]
+    },
+    "SPELL": {
+      "SOURCE": "SPELL.lss",
+      "COMMENT": "SPELL module",
+      "ARTIFACTS": [
+        "SPELL.INC",
+        "SPELL.html",
+        "SPELL.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "SPELL",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "SPELL.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SPELL.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SPELL.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "SPELL.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SPELL.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SPELL.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "SPELL.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012752",
+          "ACCESS": "644",
+          "CONTENTS": "1909887:2639"
+        },
+        {
+          "NAME": "SPELL.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012776",
+          "ACCESS": "644",
+          "CONTENTS": "1912526:2321"
+        },
+        {
+          "NAME": "SPELL.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012825",
+          "ACCESS": "664",
+          "CONTENTS": "1914847:5048"
+        },
+        {
+          "NAME": "SPELL.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012781",
+          "ACCESS": "775",
+          "CONTENTS": "1919895:139"
+        }
+      ]
+    },
+    "STACK": {
+      "SOURCE": "STACK.lss",
+      "COMMENT": "STACK module",
+      "ARTIFACTS": [
+        "STACK.INC",
+        "STACK.html",
+        "STACK.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "STACK",
+      "DEPENDS": [
+        "REPL.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "STACK.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "STACK.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "STACK.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "STACK.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "STACK.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "STACK.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "STACK.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012753",
+          "ACCESS": "644",
+          "CONTENTS": "1920034:2355"
+        },
+        {
+          "NAME": "STACK.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012775",
+          "ACCESS": "644",
+          "CONTENTS": "1922389:1979"
+        },
+        {
+          "NAME": "STACK.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012825",
+          "ACCESS": "664",
+          "CONTENTS": "1924368:4789"
+        },
+        {
+          "NAME": "STACK.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012781",
+          "ACCESS": "775",
+          "CONTENTS": "1929157:139"
+        }
+      ]
+    },
+    "TCL": {
+      "SOURCE": "STCL.lss",
+      "COMMENT": "STCL module",
+      "ARTIFACTS": [
+        "STCL.INC",
+        "STCL.html",
+        "STCL.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "TCL",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "STCL.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "STCL.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "STCL.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "STCL.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "STCL.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "STCL.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "STCL.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012753",
+          "ACCESS": "644",
+          "CONTENTS": "1929296:4082"
+        },
+        {
+          "NAME": "STCL.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012776",
+          "ACCESS": "644",
+          "CONTENTS": "1933378:2548"
+        },
+        {
+          "NAME": "STCL.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012826",
+          "ACCESS": "664",
+          "CONTENTS": "1935926:7117"
+        },
+        {
+          "NAME": "STCL.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012781",
+          "ACCESS": "775",
+          "CONTENTS": "1943043:1453"
+        }
+      ]
+    },
+    "STROUT": {
+      "SOURCE": "STROUT.lss",
+      "COMMENT": "STROUT module",
+      "ARTIFACTS": [
+        "STROUT.INC",
+        "STROUT.html",
+        "STROUT.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "STROUT",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "STROUT.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "STROUT.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "STROUT.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "STROUT.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "STROUT.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "STROUT.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "STROUT.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012753",
+          "ACCESS": "644",
+          "CONTENTS": "1944496:1787"
+        },
+        {
+          "NAME": "STROUT.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012776",
+          "ACCESS": "644",
+          "CONTENTS": "1946283:1380"
+        },
+        {
+          "NAME": "STROUT.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012827",
+          "ACCESS": "664",
+          "CONTENTS": "1947663:4043"
+        },
+        {
+          "NAME": "STROUT.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012781",
+          "ACCESS": "775",
+          "CONTENTS": "1951706:141"
+        }
+      ]
+    },
+    "SWAP": {
+      "SOURCE": "SWAP.lss",
+      "COMMENT": "SWAP module",
+      "ARTIFACTS": [
+        "SWAP.INC",
+        "SWAP.html",
+        "SWAP.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "SWAP",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "SWAP.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SWAP.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SWAP.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "SWAP.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SWAP.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SWAP.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "SWAP.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012753",
+          "ACCESS": "644",
+          "CONTENTS": "1951847:1625"
+        },
+        {
+          "NAME": "SWAP.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012772",
+          "ACCESS": "644",
+          "CONTENTS": "1953472:1318"
+        },
+        {
+          "NAME": "SWAP.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012827",
+          "ACCESS": "664",
+          "CONTENTS": "1954790:3746"
+        },
+        {
+          "NAME": "SWAP.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012781",
+          "ACCESS": "775",
+          "CONTENTS": "1958536:137"
+        }
+      ]
+    },
+    "SYSLOG": {
+      "SOURCE": "SYSLOG.lss",
+      "COMMENT": "SYSLOG module",
+      "ARTIFACTS": [
+        "SYSLOG.INC",
+        "SYSLOG.html",
+        "SYSLOG.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "SYSLOG",
+      "DEPENDS": [
+        "FFI.INC",
+        "P64.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "SYSLOG.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SYSLOG.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SYSLOG.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "SYSLOG.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SYSLOG.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SYSLOG.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "SYSLOG.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012754",
+          "ACCESS": "644",
+          "CONTENTS": "1958673:4032"
+        },
+        {
+          "NAME": "SYSLOG.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012776",
+          "ACCESS": "644",
+          "CONTENTS": "1962705:3709"
+        },
+        {
+          "NAME": "SYSLOG.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012828",
+          "ACCESS": "664",
+          "CONTENTS": "1966414:6732"
+        },
+        {
+          "NAME": "SYSLOG.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012781",
+          "ACCESS": "775",
+          "CONTENTS": "1973146:141"
+        }
+      ]
+    },
+    "SYSTEM": {
+      "SOURCE": "SYSTEM.lss",
+      "COMMENT": "SYSTEM module",
+      "ARTIFACTS": [
+        "SYSTEM.INC",
+        "SYSTEM.html",
+        "SYSTEM.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "SYSTEM",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "SYSTEM.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SYSTEM.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SYSTEM.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "SYSTEM.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SYSTEM.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SYSTEM.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "SYSTEM.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012754",
+          "ACCESS": "644",
+          "CONTENTS": "1973287:4226"
+        },
+        {
+          "NAME": "SYSTEM.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012771",
+          "ACCESS": "644",
+          "CONTENTS": "1977513:3424"
+        },
+        {
+          "NAME": "SYSTEM.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012828",
+          "ACCESS": "664",
+          "CONTENTS": "1980937:7504"
+        },
+        {
+          "NAME": "SYSTEM.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012781",
+          "ACCESS": "775",
+          "CONTENTS": "1988441:142"
+        }
+      ]
+    },
+    "TEST": {
+      "SOURCE": "TEST.lss",
+      "COMMENT": "TEST module",
+      "ARTIFACTS": [
+        "TEST.INC",
+        "TEST.html",
+        "TEST.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "TEST",
+      "DEPENDS": [
+        "UNIQUE.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "TEST.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "TEST.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "TEST.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "TEST.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "TEST.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "TEST.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "TEST.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012754",
+          "ACCESS": "644",
+          "CONTENTS": "1988583:2058"
+        },
+        {
+          "NAME": "TEST.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012776",
+          "ACCESS": "644",
+          "CONTENTS": "1990641:1539"
+        },
+        {
+          "NAME": "TEST.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012829",
+          "ACCESS": "664",
+          "CONTENTS": "1992180:4462"
+        },
+        {
+          "NAME": "TEST.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012781",
+          "ACCESS": "775",
+          "CONTENTS": "1996642:137"
+        }
+      ]
+    },
+    "TIMEGC": {
+      "SOURCE": "TIMEGC.lss",
+      "COMMENT": "TIMEGC module",
+      "ARTIFACTS": [
+        "TIMEGC.INC",
+        "TIMEGC.html",
+        "TIMEGC.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "TIMEGC",
+      "DEPENDS": [
+        "LINK.INC",
+        "RESOL.INC",
+        "SYSTEM.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "TIMEGC.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "TIMEGC.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "TIMEGC.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "TIMEGC.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "TIMEGC.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "TIMEGC.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "TIMEGC.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012755",
+          "ACCESS": "644",
+          "CONTENTS": "1996779:2905"
+        },
+        {
+          "NAME": "TIMEGC.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012776",
+          "ACCESS": "644",
+          "CONTENTS": "1999684:2352"
+        },
+        {
+          "NAME": "TIMEGC.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012829",
+          "ACCESS": "664",
+          "CONTENTS": "2002036:5282"
+        },
+        {
+          "NAME": "TIMEGC.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012781",
+          "ACCESS": "775",
+          "CONTENTS": "2007318:212"
+        }
+      ]
+    },
+    "TIME": {
+      "SOURCE": "TIME.lss",
+      "COMMENT": "TIME module",
+      "ARTIFACTS": [
+        "TIME.INC",
+        "TIME.html",
+        "TIME.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "TIME",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "TIME.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "TIME.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "TIME.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "TIME.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "TIME.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "TIME.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "TIME.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012755",
+          "ACCESS": "644",
+          "CONTENTS": "2007530:3023"
+        },
+        {
+          "NAME": "TIME.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012776",
+          "ACCESS": "644",
+          "CONTENTS": "2010553:2803"
+        },
+        {
+          "NAME": "TIME.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012830",
+          "ACCESS": "664",
+          "CONTENTS": "2013356:5768"
+        },
+        {
+          "NAME": "TIME.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012781",
+          "ACCESS": "775",
+          "CONTENTS": "2019124:137"
+        }
+      ]
+    },
+    "TIMER": {
+      "SOURCE": "TIMER.lss",
+      "COMMENT": "TIMER module",
+      "ARTIFACTS": [
+        "TIMER.INC",
+        "TIMER.html",
+        "TIMER.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "TIMER",
+      "DEPENDS": [
+        "RESOL.INC",
+        "SYSTEM.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "TIMER.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "TIMER.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "TIMER.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "TIMER.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "TIMER.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "TIMER.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "TIMER.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012755",
+          "ACCESS": "644",
+          "CONTENTS": "2019261:3469"
+        },
+        {
+          "NAME": "TIMER.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012776",
+          "ACCESS": "644",
+          "CONTENTS": "2022730:3045"
+        },
+        {
+          "NAME": "TIMER.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012830",
+          "ACCESS": "664",
+          "CONTENTS": "2025775:6186"
+        },
+        {
+          "NAME": "TIMER.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012781",
+          "ACCESS": "775",
+          "CONTENTS": "2031961:139"
+        }
+      ]
+    },
+    "TPROFILE": {
+      "SOURCE": "TPROFILE.lss",
+      "COMMENT": "TPROFILE module",
+      "ARTIFACTS": [
+        "TPROFILE.INC",
+        "TPROFILE.html",
+        "TPROFILE.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "TPROFILE",
+      "DEPENDS": [
+        "LPROG.INC",
+        "SEQ.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "TPROFILE.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "TPROFILE.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "TPROFILE.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "TPROFILE.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "TPROFILE.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "TPROFILE.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "TPROFILE.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012755",
+          "ACCESS": "644",
+          "CONTENTS": "2032100:2230"
+        },
+        {
+          "NAME": "TPROFILE.INC",
+          "TYPE": "BINARY",
+          "TIMESTAMP": "1402012776",
+          "ACCESS": "644",
+          "CONTENTS": "2034330:1891"
+        },
+        {
+          "NAME": "TPROFILE.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012831",
+          "ACCESS": "664",
+          "CONTENTS": "2036221:4535"
+        },
+        {
+          "NAME": "TPROFILE.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012781",
+          "ACCESS": "775",
+          "CONTENTS": "2040756:145"
+        }
+      ]
+    },
+    "TRIMB": {
+      "SOURCE": "TRIMB.lss",
+      "COMMENT": "TRIMB module",
+      "ARTIFACTS": [
+        "TRIMB.INC",
+        "TRIMB.html",
+        "TRIMB.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "TRIMB",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "TRIMB.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "TRIMB.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "TRIMB.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "TRIMB.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "TRIMB.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "TRIMB.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "TRIMB.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012756",
+          "ACCESS": "644",
+          "CONTENTS": "2040901:1595"
+        },
+        {
+          "NAME": "TRIMB.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012771",
+          "ACCESS": "644",
+          "CONTENTS": "2042496:1238"
+        },
+        {
+          "NAME": "TRIMB.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012835",
+          "ACCESS": "664",
+          "CONTENTS": "2043734:3839"
+        },
+        {
+          "NAME": "TRIMB.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012781",
+          "ACCESS": "775",
+          "CONTENTS": "2047573:214"
+        }
+      ]
+    },
+    "TRUNC": {
+      "SOURCE": "TRUNC.lss",
+      "COMMENT": "TRUNC module",
+      "ARTIFACTS": [
+        "TRUNC.INC",
+        "TRUNC.html",
+        "TRUNC.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "TRUNC",
+      "DEPENDS": [
+        "SEQ.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "TRUNC.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "TRUNC.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "TRUNC.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "TRUNC.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "TRUNC.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "TRUNC.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "TRUNC.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012756",
+          "ACCESS": "644",
+          "CONTENTS": "2047787:1762"
+        },
+        {
+          "NAME": "TRUNC.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012776",
+          "ACCESS": "644",
+          "CONTENTS": "2049549:1331"
+        },
+        {
+          "NAME": "TRUNC.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012831",
+          "ACCESS": "664",
+          "CONTENTS": "2050880:3992"
+        },
+        {
+          "NAME": "TRUNC.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012781",
+          "ACCESS": "775",
+          "CONTENTS": "2054872:139"
+        }
+      ]
+    },
+    "UBAN": {
+      "SOURCE": "uban.lss",
+      "COMMENT": "uban module",
+      "ARTIFACTS": [
+        "uban",
+        "uban.html"
+      ],
+      "TYPE": "PROGRAM",
+      "NAME": "UBAN",
+      "DEPENDS": [
+        "CRACK.INC",
+        "SEQ.INC",
+        "TRIMB.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "uban",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "uban.html",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "uban",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "uban.html",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "uban.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012756",
+          "ACCESS": "644",
+          "CONTENTS": "2055011:6902"
+        },
+        {
+          "NAME": "uban",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012783",
+          "ACCESS": "775",
+          "CONTENTS": "2061913:6484"
+        },
+        {
+          "NAME": "uban.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012832",
+          "ACCESS": "664",
+          "CONTENTS": "2068397:9536"
+        }
+      ]
+    },
+    "UNIQUE": {
+      "SOURCE": "UNIQUE.lss",
+      "COMMENT": "UNIQUE module",
+      "ARTIFACTS": [
+        "UNIQUE.INC",
+        "UNIQUE.html",
+        "UNIQUE.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "UNIQUE",
+      "DEPENDS": [
+        "REPL.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "UNIQUE.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "UNIQUE.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "UNIQUE.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "UNIQUE.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "UNIQUE.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "UNIQUE.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "UNIQUE.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012757",
+          "ACCESS": "644",
+          "CONTENTS": "2077933:3226"
+        },
+        {
+          "NAME": "UNIQUE.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012768",
+          "ACCESS": "644",
+          "CONTENTS": "2081159:1748"
+        },
+        {
+          "NAME": "UNIQUE.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012832",
+          "ACCESS": "664",
+          "CONTENTS": "2082907:6146"
+        },
+        {
+          "NAME": "UNIQUE.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012781",
+          "ACCESS": "775",
+          "CONTENTS": "2089053:721"
+        }
+      ]
+    },
+    "UPCASE": {
+      "SOURCE": "upcase.lss",
+      "COMMENT": "upcase module",
+      "ARTIFACTS": [
+        "upcase",
+        "upcase.html"
+      ],
+      "TYPE": "PROGRAM",
+      "NAME": "UPCASE",
+      "DEPENDS": [
+        "HOST.INC",
+        "SWAP.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "upcase",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "upcase.html",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "upcase",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "upcase.html",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "upcase.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012757",
+          "ACCESS": "644",
+          "CONTENTS": "2089774:2239"
+        },
+        {
+          "NAME": "upcase",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012783",
+          "ACCESS": "775",
+          "CONTENTS": "2092013:2018"
+        },
+        {
+          "NAME": "upcase.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012833",
+          "ACCESS": "664",
+          "CONTENTS": "2094031:4429"
+        }
+      ]
+    },
+    "UTF8": {
+      "SOURCE": "UTF8.lss",
+      "COMMENT": "UTF8 module",
+      "ARTIFACTS": [
+        "UTF8.INC",
+        "UTF8.html",
+        "UTF8.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "UTF8",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "UTF8.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "UTF8.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "UTF8.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "UTF8.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "UTF8.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "UTF8.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "UTF8.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012757",
+          "ACCESS": "644",
+          "CONTENTS": "2098460:8780"
+        },
+        {
+          "NAME": "UTF8.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012776",
+          "ACCESS": "644",
+          "CONTENTS": "2107240:8471"
+        },
+        {
+          "NAME": "UTF8.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012833",
+          "ACCESS": "664",
+          "CONTENTS": "2115711:16296"
+        },
+        {
+          "NAME": "UTF8.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012781",
+          "ACCESS": "775",
+          "CONTENTS": "2132007:138"
+        }
+      ]
+    },
+    "VDIFFER": {
+      "SOURCE": "VDIFFER.lss",
+      "COMMENT": "VDIFFER module",
+      "ARTIFACTS": [
+        "VDIFFER.INC",
+        "VDIFFER.html",
+        "VDIFFER.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "VDIFFER",
+      "DEPENDS": [
+        "SYSTEM.INC"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "VDIFFER.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "VDIFFER.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "VDIFFER.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "VDIFFER.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "VDIFFER.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "VDIFFER.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "VDIFFER.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012758",
+          "ACCESS": "644",
+          "CONTENTS": "2132145:1674"
+        },
+        {
+          "NAME": "VDIFFER.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012771",
+          "ACCESS": "644",
+          "CONTENTS": "2133819:1370"
+        },
+        {
+          "NAME": "VDIFFER.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012846",
+          "ACCESS": "664",
+          "CONTENTS": "2135189:3866"
+        },
+        {
+          "NAME": "VDIFFER.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012782",
+          "ACCESS": "775",
+          "CONTENTS": "2139055:143"
+        }
+      ]
+    },
+    "WRAPPER": {
+      "SOURCE": "WRAPPER.lss",
+      "COMMENT": "WRAPPER module",
+      "ARTIFACTS": [
+        "WRAPPER.INC",
+        "WRAPPER.html",
+        "WRAPPER.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "WRAPPER",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "WRAPPER.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "WRAPPER.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "WRAPPER.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "WRAPPER.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "WRAPPER.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "WRAPPER.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "WRAPPER.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012758",
+          "ACCESS": "644",
+          "CONTENTS": "2139198:11216"
+        },
+        {
+          "NAME": "WRAPPER.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012769",
+          "ACCESS": "644",
+          "CONTENTS": "2150414:10872"
+        },
+        {
+          "NAME": "WRAPPER.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012834",
+          "ACCESS": "664",
+          "CONTENTS": "2161286:17258"
+        },
+        {
+          "NAME": "WRAPPER.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402012781",
+          "ACCESS": "775",
+          "CONTENTS": "2178544:144"
+        }
+      ]
+    }
+  },
+  "DATAFILE": "DAT"
+}

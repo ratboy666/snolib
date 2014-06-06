@@ -1,3 +1,5 @@
+#!/usr/bin/bash
+ exec "snobol4" "-b" "-s" "-d 4m" "$0" "$@"
 * soosie
 *
 * The SNOBOL4 librarian
@@ -122,6 +124,13 @@ trywrite
   writelbr(lbr)
   terminal = 'took ' time() - t1 ' milliseconds' :(top)
 
+*
+* checking out files - use 'touch' to set time on file
+* need to record attribs
+*
+* need to record attribs of file (use stat?)
+* stat -c %a file.c
+*
 
 
 
@@ -205,6 +214,7 @@ create_file
  s = (?(bq('file ' fn) ? 'text') 'TEXT', 'BINARY')
  create_file<'TYPE'> = s
  create_file<'TIMESTAMP'> = bq('stat -c %Y ' fn)
+ create_file<'ACCESS'> = bq('stat -c %a ' fn)
  s = readfile(fn) :f(return)
  create_file<'CONTENTS'> = s :(return)
 
