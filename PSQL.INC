@@ -1,4 +1,4 @@
--LINE 70 "PSQL.lss"
+-LINE 69 "PSQL.lss"
 -INCLUDE 'BRKREM.INC'
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'COUNT.INC'
@@ -9,7 +9,7 @@
 -INCLUDE 'UNIQUE.INC'
 -STITL PSQL
 -EJECT
--LINE 383 "PSQL.lss"
+-LINE 382 "PSQL.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -27,7 +27,7 @@
 *
 * PSQL.lss
 *
--LINE 117 "PSQL.lss"
+-LINE 116 "PSQL.lss"
 -MODULE PSQL
 *
 * THESE THREE ARE FUNCTIONS -- SIMPLY EASIER THAT WAY.

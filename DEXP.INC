@@ -1,7 +1,7 @@
 -STITL DEXP
 -EJECT
 *
--LINE 42 "DEXP.lss"
+-LINE 41 "DEXP.lss"
 ************************************************************************
 *                                                                      *
 *                   ######   #######  #     #  ######                  *
@@ -18,7 +18,7 @@
 *
 * DEXP.lss
 *
--LINE 17 "DEXP.lss"
+-LINE 16 "DEXP.lss"
 -MODULE DEXP
 -PUBLIC DEXP()
          DEFINE('DEXP(PROTO)NAME,ARGS')                      :(DEXP_END)

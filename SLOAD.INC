@@ -1,10 +1,10 @@
--LINE 13 "SLOAD.lss"
+-LINE 12 "SLOAD.lss"
 -INCLUDE 'CRACK.INC'
 -INCLUDE 'HOST.INC'
 -INCLUDE 'TRIMB.INC'
 -STITL SLOAD
 -EJECT
--LINE 113 "SLOAD.lss"
+-LINE 112 "SLOAD.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -26,7 +26,7 @@
 *
 * SLOAD.lss
 *
--LINE 19 "SLOAD.lss"
+-LINE 18 "SLOAD.lss"
 -MODULE SLOAD
 -PUBLIC SLOAD()
          DEFINE('SLOAD(FILENAME)'

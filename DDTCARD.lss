@@ -5,7 +5,6 @@ CSNOBOL4 options.
 
 <h2>Uses</h2>
 <a href="DDT.html">DDT</a><br>
-<a href="DDT.html">DDT</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'DDT.INC'

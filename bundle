@@ -1,9 +1,9 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -TITLE BUNDLE
--LINE 74 "bundle.lss"
+-LINE 73 "bundle.lss"
 START
--LINE 12 "bundle.lss"
+-LINE 11 "bundle.lss"
 -INCLUDE 'CRACK.INC'
 -INCLUDE 'HOST.INC'
 -INCLUDE 'TRIMB.INC'
@@ -27,7 +27,7 @@ START
 *
 * bundle.lss
 *
--LINE 18 "bundle.lss"
+-LINE 17 "bundle.lss"
 -PROGRAM BUNDLE
          TERMINAL = 'BUNDLE (THU DEC  5 12:09:11 EST 2013)'
 *

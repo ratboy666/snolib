@@ -1,7 +1,7 @@
 -MODULE UTF8
 -STITL UTF8
 -EJECT
--LINE 250 "UTF8.lss"
+-LINE 249 "UTF8.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -20,7 +20,7 @@
 * SNOBOL4 FUNCTIONS TO IMPLEMENT UTF-ENCODED UNICODE HANDLING
 * UTF8.lss
 *
--LINE 13 "UTF8.lss"
+-LINE 12 "UTF8.lss"
 * PHIL BUDNE <PHIL@ULTIMATE.COM>
 * SEPTEMBER 1996
 * UPDATED FOR 4/5/6 BYTE RUNES JUNE 1997

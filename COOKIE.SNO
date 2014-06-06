@@ -1,4 +1,4 @@
--LINE 50 "COOKIE.lss"
+-LINE 49 "COOKIE.lss"
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'DEXP.INC'
 -INCLUDE 'HASH.INC'
@@ -7,7 +7,7 @@
 -INCLUDE 'VDIFFER.INC'
 -STITL COOKIE
 -EJECT
--LINE 213 "COOKIE.lss"
+-LINE 212 "COOKIE.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -25,7 +25,7 @@
 *
 * COOKIE.lss
 *
--LINE 59 "COOKIE.lss"
+-LINE 58 "COOKIE.lss"
 -MODULE COOKIE
 -PUBLIC NEW_COOKIE_JAR(), NEW_COOKIE(), COOKIE_SET_VALUE()
 -PUBLIC COOKIE_VALUE(), COOKIE_SET_CRUMB(), COOKIE_GET_CRUMB()

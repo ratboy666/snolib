@@ -34,7 +34,6 @@ JSON_NULL, JSON_TRUE and JSON_FALSE.
 <a href="SDIFF.html">SDIFF</a><br>
 <a href="SEQ.html">SEQ</a><br>
 <a href="SIZEA.html">SIZEA</a><br>
-<a href="SIZEA.html">SIZEA</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'CH.INC'

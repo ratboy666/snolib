@@ -1,7 +1,7 @@
 -STITL LPROG
 -EJECT
 *
--LINE 42 "LPROG.lss"
+-LINE 41 "LPROG.lss"
 ************************************************************************
 *                                                                      *
 *               #        ######   ######   #######   #####             *
@@ -18,7 +18,7 @@
 *
 * LPROG.lss
 *
--LINE 19 "LPROG.lss"
+-LINE 18 "LPROG.lss"
 -MODULE LPROG
 -PUBLIC LPROG()
          DEFINE('LPROG()')                                  :(LPROG_END)

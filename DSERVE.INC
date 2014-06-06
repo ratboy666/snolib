@@ -1,4 +1,4 @@
--LINE 21 "DSERVE.lss"
+-LINE 20 "DSERVE.lss"
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'REPL.INC'
 -INCLUDE 'CSNOBOL4.INC'
@@ -7,7 +7,7 @@
 -INCLUDE 'DDT.INC'
 -STITL DSERVE
 -EJECT
--LINE 154 "DSERVE.lss"
+-LINE 153 "DSERVE.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -25,7 +25,7 @@
 *
 * DSERVE.lss
 *
--LINE 30 "DSERVE.lss"
+-LINE 29 "DSERVE.lss"
 -MODULE DSERVE
 -PUBLIC DSERVE_INIT(), DSERVE()
 -PUBLIC DSERVE_PORT, DSERVE_APPNAME

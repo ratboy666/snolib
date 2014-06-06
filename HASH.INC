@@ -1,10 +1,10 @@
--LINE 58 "HASH.lss"
+-LINE 57 "HASH.lss"
 -INCLUDE 'BRKREM.INC'
 -INCLUDE 'SEQ.INC'
 -INCLUDE 'VDIFFER.INC'
 -STITL HASH
 -EJECT
--LINE 141 "HASH.lss"
+-LINE 140 "HASH.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -23,7 +23,7 @@
 *
 * HASH.lss
 *
--LINE 64 "HASH.lss"
+-LINE 63 "HASH.lss"
 -MODULE HASH
 -PUBLIC HASH(), COPY_TABLE(), MERGE_TABLE(), KEYS_IN_TABLE(), #1
          DEFINE('HASH(S,E,P,TS,TI,FK,FV,SP)K,V,C')

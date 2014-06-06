@@ -8,7 +8,6 @@ however, failure in subsequent tries is like [[FAIL]], (as opposed to
 
 <h2>Uses</h2>
 <a href="UNIQUE.html">UNIQUE</a><br>
-<a href="UNIQUE.html">UNIQUE</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'UNIQUE.INC'

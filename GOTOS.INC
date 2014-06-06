@@ -1,7 +1,7 @@
 -STITL GOTOS
 -EJECT
 *
--LINE 66 "GOTOS.lss"
+-LINE 65 "GOTOS.lss"
 ************************************************************************
 *                                                                      *
 *              #####   #######  #######  #######   #####               *
@@ -18,7 +18,7 @@
 *
 * GOTOS.lss
 *
--LINE 34 "GOTOS.lss"
+-LINE 33 "GOTOS.lss"
 -MODULE GOTOS
 -PUBLIC GOTOS_()
          DEFINE('GOTOS_()')

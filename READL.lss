@@ -9,7 +9,6 @@ to but not including the first string having 'STOP' in column 1.
 
 <h2>Uses</h2>
 <a href="LINK.html">LINK</a><br>
-<a href="LINK.html">LINK</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'LINK.INC'

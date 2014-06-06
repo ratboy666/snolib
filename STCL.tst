@@ -1,7 +1,7 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -TITLE TCL_TEST
--LINE 74 "STCL.lss"
+-LINE 73 "STCL.lss"
 START
 -INCLUDE 'STCL.INC'
 -STITL

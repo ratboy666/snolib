@@ -1,7 +1,7 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -PROGRAM LSEQ
--LINE 13 "lseq.lss"
+-LINE 12 "lseq.lss"
 -TITLE LSEQ
 START
 *

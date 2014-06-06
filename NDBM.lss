@@ -5,7 +5,6 @@ on disk.  Hashed, so performance may be better than TABLE usage
 (for very large TABLEs).
 
 <h2>Uses</h2>
-<a href=".html"></a><br>
 
 <<INCLUDES>>=
 @

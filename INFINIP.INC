@@ -1,9 +1,9 @@
--LINE 11 "INFINIP.lss"
+-LINE 10 "INFINIP.lss"
 -INCLUDE 'REDEFINE.INC'
 -INCLUDE 'SWAP.INC'
 -STITL INFINIP
 -EJECT
--LINE 192 "INFINIP.lss"
+-LINE 191 "INFINIP.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -21,7 +21,7 @@
 *
 * INFINIP.lss
 *
--LINE 16 "INFINIP.lss"
+-LINE 15 "INFINIP.lss"
 -MODULE INFINIP
          SIGN_OFF  = POS(0) '-'
          LDG_ZEROS = BREAK('123456789') | RTAB(1)

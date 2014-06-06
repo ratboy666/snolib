@@ -5,7 +5,6 @@
 [[BLEND('ABC','123')]] will return [['A1B2C3']].
 
 <h2>Uses</h2>
-<a href=".html"></a><br>
 
 <<INCLUDES>>=
 @

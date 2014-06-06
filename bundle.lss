@@ -6,7 +6,6 @@ Bundle application with its includes.
 <a href="CRACK.html">CRACK</a><br>
 <a href="HOST.html">HOST</a><br>
 <a href="TRIMB.html">TRIMB</a><br>
-<a href="TRIMB.html">TRIMB</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'CRACK.INC'

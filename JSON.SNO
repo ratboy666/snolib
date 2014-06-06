@@ -1,4 +1,4 @@
--LINE 40 "JSON.lss"
+-LINE 39 "JSON.lss"
 -INCLUDE 'CH.INC'
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'HASH.INC'
@@ -8,7 +8,7 @@
 -INCLUDE 'SIZEA.INC'
 -STITL JSON
 -EJECT
--LINE 382 "JSON.lss"
+-LINE 381 "JSON.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -26,7 +26,7 @@
 *
 * JSON.lss
 *
--LINE 50 "JSON.lss"
+-LINE 49 "JSON.lss"
 -MODULE JSON
 -PUBLIC JSON_ENCODE(), JSON_DECODE()
          DEFINE('JSON_ENCODE(X)L')

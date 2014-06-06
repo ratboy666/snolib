@@ -1,8 +1,8 @@
--LINE 12 "REVL.lss"
+-LINE 11 "REVL.lss"
 -INCLUDE 'LINK.INC'
 -STITL REVL
 -EJECT
--LINE 46 "REVL.lss"
+-LINE 45 "REVL.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -20,7 +20,7 @@
 *
 * REVL.lss
 *
--LINE 16 "REVL.lss"
+-LINE 15 "REVL.lss"
 -MODULE REVL
 -PUBLIC REVL()
          DEFINE('REVL(L)T')                                  :(REVL_END)

@@ -1,7 +1,7 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -INCLUDE 'SCOOP.INC'
--LINE 256 "SCOOP.lss"
+-LINE 255 "SCOOP.lss"
 -INCLUDE 'TIMER.INC'
          &CODE = 1
          SHAPE_CLASS = SEND(CLASS, 'NEW_CLASS', 'SHAPE')

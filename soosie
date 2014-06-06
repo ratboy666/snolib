@@ -1,0 +1,283 @@
+* soosie
+*
+* The SNOBOL4 librarian
+*
+* -d 512k normal (8MB RAM)
+* -d 4m (64MB RAM)
+*
+* File data may be stashed into a separate data file DAT. This would
+* avoid the string scan.We record offset and length of the data part
+* of the string N/N
+*
+* Record the data file in the header. What we can do is convert from
+* string rep to dat rep on writing and reading. Read them both, walk
+* the library, and the opposite on writing.
+
+-include 'JSON.INC'
+-include 'READFILE.INC'
+-include 'BQ.INC'
+-include 'SIZEA.INC'
+-include 'CRACK.INC'
+-include 'TIMER.INC'
+-include 'TIME.INC'
+-include 'HASH.INC'
+-include 'DDT.INC'
+
+  define('readlbr(nm)lbr,data,c,i,m,f,j,s,b,l')
+  define('writelbr(lbr)c,i,m,f,j,data,n,s')
+  define('createlbr(nm,lnm,dt,lc)lbr')
+ define('create_file(fn)s')
+ define('create_module(src,cmnt,artifacts,depends)'
++ 'install,build,files,m,i')
+
+
+top
+ output(.term, 20, 'T', '/dev/stdout')
+
+ terminal = 'soosie'
+
+ terminal = 'new, read, write, quit, ls'
+
+ l = trim(terminal)
+ l = replace(l, &ucase, &lcase)
+
+ l 'quit' :s(end)f(tryls)
+
+tryls
+ l 'ls' :f(trynew)
+
+ ident(lbr) :s(nol)
+  c = keys_in_table(lbr<'CONTENTS'>) :f(empty)
+  i = 1
+lslup
+  c<i> :f(lslup2)
+  s = c<i>
+  term = rpad(s, 16)
+  i = i + 1 :(lslup)
+lslup2
+  terminal = :(top)  
+empty terminal = 'library empty' :(top)
+nol terminal = 'no library, read or new' :(top)
+
+trynew
+ l 'new' :f(tryread)
+
+ lbr = createlbr('LBR', 'SNOLIB', 'DAT', 'SNOLIB library')
+
+ files = bq('ls *.lss', CHARS_NL)
+ files = crack(files, CHARS_NL)
+
+ i = 1
+lup
+ fn = files<i> :f(btmadd)
+ term = 'adding ' i ' ' fn '      ' CHARS_CR
+
+* For initial load, we assume .INC, .html and .tst are the artifacts
+* for a .lss file.
+*
+* note that .INC may be empty for a program. eg bundle
+*
+* need to deal with
+* editline.c ffi.c format.c init.c jit.c p64.c p64.h
+* htm -> html
+* ditaa images
+
+ base = fn
+ base '.lss' =
+
+ n = 1
+ n = file(base '.html') n + 1
+ n = file(base '.tst') n + 1
+ a = array(n)
+ a<1> = base
+ a<1> = file(base '.INC') base '.INC'
+ a<2> = file(base '.html') base '.html'
+ a<3> = file(base '.tst') base '.tst'
+
+* create a module (automatic dependencies)
+
+ m = create_module(fn, base ' module', a)
+
+* add the module to the library
+
+ lbr<'CONTENTS'><m<'NAME'>> = m
+
+ i = i + 1 :(lup)
+btmadd :(top)
+
+tryread
+  l 'read' :f(trywrite)
+
+  terminal = 'reading library'
+  t1 = time()
+  lbr = readlbr('LBR')
+  terminal = 'took ' time() - t1 ' milliseconds' :(top)
+  
+trywrite
+  l 'write' :f(top)
+ ident(lbr) :s(nol)
+
+  terminal = 'writing library'
+  t1 = time()
+  writelbr(lbr)
+  terminal = 'took ' time() - t1 ' milliseconds' :(top)
+
+
+
+
+
+* Read library
+
+readlbr
+
+  lbr = json_decode(readfile(nm)) :f(freturn)
+  readlbr = lbr
+  data = readfile(lbr<'DATAFILE'>) :f(freturn)
+  c = keys_in_table(lbr<'CONTENTS'>) :f(readlbr_2)
+  data =
+  i = 1
+readlbr_3
+  m = c<i> :f(readlbr_2)
+  f = lbr<'CONTENTS'><m><'FILES'>
+  j = 1
+readlbr_4
+  f<j> :f(readlbr_5)
+  s = f<j><'CONTENTS'>
+  s break(':') . b ':' rem . l
+  n = size(data)
+  data pos(b) len(l) . f<j><'CONTENTS'>
+  j = j + 1 :(readlbr_4)
+readlbr_5
+  i = i + 1 :(readlbr_3)
+readlbr_2
+  readlbr = lbr
+ :(return)
+
+
+* Write library
+
+writelbr
+
+  c = keys_in_table(lbr<'CONTENTS'>) :f(writelbr_2)
+  data =
+  i = 1
+writelbr_3
+  m = c<i> :f(writelbr_2)
+  f = lbr<'CONTENTS'><m><'FILES'>
+  j = 1
+writelbr_4
+  f<j> :f(writelbr_5)
+  n = size(data)
+  s = f<j><'CONTENTS'>
+  data = data s
+  f<j><'CONTENTS'> = n ':' size(s)
+  j = j + 1 :(writelbr_4)
+writelbr_5
+  i = i + 1 :(writelbr_3)
+writelbr_2
+  writefile(lbr<'LIBRARY'>, json_encode(lbr)) :f(end)
+  writefile(lbr<'DATAFILE'>, data) :f(end)
+  :(return)
+
+
+* Create empty library
+
+createlbr
+
+  lbr = table()
+  lbr<'LIBRARY'> = nm
+  lbr<'COMMENT'> = lc
+  lbr<'TIMESTAMP'> = tv_sec(gettimeofday())
+  lbr<'VERSION'> = 1
+  lbr<'CONTENTS'> = table()
+  lbr<'DATAFILE'> = dt
+  createlbr = lbr :(return)
+
+
+* create a file entry for the module
+*
+* use file command to determine TEXT/BINARY.
+
+create_file
+
+ create_file = table()
+ create_file<'NAME'> = fn
+ s = (?(bq('file ' fn) ? 'text') 'TEXT', 'BINARY')
+ create_file<'TYPE'> = s
+ create_file<'TIMESTAMP'> = bq('stat -c %Y ' fn)
+ s = readfile(fn) :f(return)
+ create_file<'CONTENTS'> = s :(return)
+
+
+* create a module for the library
+*
+* we begin with the source file, and fill in the rest
+
+create_module
+
+ m = table()
+
+ m<'SOURCE'> = src
+ m<'COMMENT'> = cmnt
+ m<'ARTIFACTS'> = artifacts
+
+* find -MODULE or -PROGRAM directive in the source file to determine
+* the module type. If a -MODULE is not seen, we assume PROGRAM to
+* support older main programs.
+*
+* slight problem in bq(). the command may report success/fail, which
+* is returned correctly. but if the command returns success, and
+* no output, it is taken to be fail. this should be documented in
+* bq.
+
+ m<'TYPE'> = (?bq('grep -- -MODULE ' src) 'MODULE', 'PROGRAM')
+
+* hunt down the module or program name. if we can't find it, we
+* assume the src name with any extension removed.
+
+ s = src
+ src arb . s '.' arb rpos(0)
+ s = bq('grep -- ^-MODULE ' src ' | sed -e "s/-MODULE //"')
+ s = bq('grep -- ^-PROGRAM ' src ' | sed -e "s/-PROGRAM //"')
+ m<'NAME'> = s
+
+* determine depends. this is determine by the first artifact, run
+* through 'uses', or is supplied.
+
+ depends = ident(depends) json_decode(bq('uses ' artifacts<1>)) :f(end)
+ m<'DEPENDS'> = depends
+
+* from the artifacts, we create install, build and files
+
+ n = prototype(artifacts)
+ install = array(n)
+ build = array(n)
+ files = array(n + 1)
+ m<'INSTALL'> = install
+ m<'BUILD'> = build
+ m<'FILES'> = files
+
+* add build commands to module. if the build array is empty,
+* its a standard build. otherwise the exceptional commands will
+* be recorded here.
+
+ seq(' build<i> = ?artifacts<i> table();'
++    ' build<i><"TARGET"> = artifacts<i>;'
++    ' build<i><"COMMANDS"> = ?artifacts<i> array0', .i)
+
+* add install commands to module.
+
+ seq(' install<i> = ?artifacts<i> table();'
++    ' install<i><"TARGET"> = artifacts<i>;'
++    ' install<i><"COMMANDS"> = ?artifacts<i> array0', .i)
+
+* add files to module.
+
+ files<1> = create_file(src, dat)
+ seq(' files<i + 1> = create_file(artifacts<i>)', .i, 1)
+
+* return the new module.
+
+ create_module = m :(return)
+
+end

@@ -19,7 +19,6 @@ elements is computed and returned.
 <a href="BRKREM.html">BRKREM</a><br>
 <a href="SWAP.html">SWAP</a><br>
 <a href="SYSTEM.html">SYSTEM</a><br>
-<a href="SYSTEM.html">SYSTEM</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'BRKREM.INC'

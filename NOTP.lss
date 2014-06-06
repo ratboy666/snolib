@@ -6,7 +6,6 @@ will also abort.
 
 <h2>Uses</h2>
 <a href="STACK.html">STACK</a><br>
-<a href="STACK.html">STACK</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'STACK.INC'

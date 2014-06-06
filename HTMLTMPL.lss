@@ -23,7 +23,6 @@ of template caching will be done.
 <a href="READFILE.html">READFILE</a><br>
 <a href="REVL.html">REVL</a><br>
 <a href="SWAP.html">SWAP</a><br>
-<a href="SWAP.html">SWAP</a><br>
 
 <<INCLUDES>>=
 //-INCLUDE 'CHARS.INC'

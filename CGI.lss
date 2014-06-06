@@ -42,7 +42,6 @@ with doc, respond 302 Location and doc returned
 <a href="SEQ.html">SEQ</a><br>
 <a href="UNIQUE.html">UNIQUE</a><br>
 <a href="VDIFFER.html">VDIFFER</a><br>
-<a href="VDIFFER.html">VDIFFER</a><br>
 
 <h2>See Also</h2>
 <a href="SESSION.html">SESSION</a><br>

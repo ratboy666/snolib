@@ -5,7 +5,6 @@ Uses FFI rather than LOAD() to access SYSLOG functions
 <h2>Uses</h2>
 <a href="FFI.html">FFI</a><br>
 <a href="P64.html">P64</a><br>
-<a href="P64.html">P64</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'FFI.INC'

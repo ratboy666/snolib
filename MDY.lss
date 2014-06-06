@@ -5,7 +5,6 @@ For example [[MDY(71,83)]] will return '3/24/71'. The global variables
 M and D are set to equal to the month and day respectively.
 
 <h2>Uses</h2>
-<a href=".html"></a><br>
 
 <<INCLUDES>>=
 @

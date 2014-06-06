@@ -1,8 +1,8 @@
--LINE 19 "AI.lss"
+-LINE 18 "AI.lss"
 -INCLUDE 'SEQ.INC'
 -STITL AI
 -EJECT
--LINE 57 "AI.lss"
+-LINE 56 "AI.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -20,7 +20,7 @@
 *
 * AI.lss
 *
--LINE 23 "AI.lss"
+-LINE 22 "AI.lss"
 -MODULE AI
 -PUBLIC AI()
          DEFINE('AI(A,I)J')                                    :(AI_END)

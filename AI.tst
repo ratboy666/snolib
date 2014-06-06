@@ -1,7 +1,7 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -INCLUDE 'AI.INC'
--LINE 39 "AI.lss"
+-LINE 38 "AI.lss"
 -INCLUDE 'CRACK.INC'
          &CODE = 1
          A = %'5,6,7'

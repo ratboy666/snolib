@@ -4,7 +4,6 @@ Swap values of two variables passed by name.  [[SWAP(.N,.M)]] will
 swap the contents of the two named variables.
 
 <h2>Uses</h2>
-<a href=".html"></a><br>
 
 <<INCLUDES>>=
 @

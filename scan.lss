@@ -48,7 +48,6 @@ lines.
 <h2>Uses</h2>
 <a href="HOST.html">HOST</a><br>
 <a href="SLOAD.html">SLOAD</a><br>
-<a href="SLOAD.html">SLOAD</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'HOST.INC'

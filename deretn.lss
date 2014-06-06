@@ -3,7 +3,6 @@
 Remove line numbers (de-retain) from [[code]] SAVE file.
 
 <h2>Uses</h2>
-<a href=".html"></a><br>
 
 <<INCLUDES>>=
 @

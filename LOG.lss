@@ -7,7 +7,6 @@
 
 <h2>Uses</h2>
 <a href="DEXP.html">DEXP</a><br>
-<a href="DEXP.html">DEXP</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'DEXP.INC'

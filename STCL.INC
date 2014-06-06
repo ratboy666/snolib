@@ -1,7 +1,7 @@
 -STITL STCL
 -EJECT
 *
--LINE 44 "STCL.lss"
+-LINE 43 "STCL.lss"
 ************************************************************************
 *                                                                      *
 *                    #####   #######   #####   #                       *
@@ -23,7 +23,7 @@
 *
 * STCL.lss
 *
--LINE 12 "STCL.lss"
+-LINE 11 "STCL.lss"
 -MODULE TCL
 STCL_LOAD
 *

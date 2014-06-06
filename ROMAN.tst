@@ -1,7 +1,7 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -INCLUDE 'ROMAN.INC'
--LINE 43 "ROMAN.lss"
+-LINE 42 "ROMAN.lss"
          &CODE = 1
 LOOP     I = I + 1
          R = ROMAN(I)

@@ -5,7 +5,6 @@ An interface to [[libffi]] providing a Foreign Function Interface
 
 <h2>Uses</h2>
 <a href="P64.html">P64</a><br>
-<a href="P64.html">P64</a><br>
 
 When building, the following INCLUDEs are also needed:
 

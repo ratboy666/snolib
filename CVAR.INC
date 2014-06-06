@@ -1,10 +1,10 @@
--LINE 73 "CVAR.lss"
+-LINE 72 "CVAR.lss"
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'HASH.INC'
 -INCLUDE 'P64.INC'
 -STITL CVAR
 -EJECT
--LINE 224 "CVAR.lss"
+-LINE 223 "CVAR.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -23,7 +23,7 @@
 *
 * CVAR.lss
 *
--LINE 79 "CVAR.lss"
+-LINE 78 "CVAR.lss"
 -MODULE CVAR
 -USES HASH()
 -PUBLIC CVART(), CV_OFFSET(), CV_SIZE(), CV_DIM(), CV_SIGN(), CV_ISINT()
@@ -64,7 +64,7 @@ LOADV_2  LOADV = PEEK_S(B)
          LOADV = LT(LOADV) (2 ** 16) + LOADV                   :(RETURN)
 LOADV_4  LOADV = EQ(CV_ISINT(V)) PEEK_F(B)                    :S(RETURN)
          LOADV = PEEK_I(B)
--LINE 128 "CVAR.lss"
+-LINE 127 "CVAR.lss"
          NE(CV_SIGN(V))                                       :S(RETURN)
          LOADV = LT(LOADV) (2 ** 32) + LOADV                   :(RETURN)
 LOADV_8  LOADV = EQ(CV_ISINT(V)) PEEK_D(B)                    :S(RETURN)

@@ -1,10 +1,10 @@
 -MODULE JIT
--LINE 17 "JIT.lss"
+-LINE 16 "JIT.lss"
 -INCLUDE 'CRACK.INC'
 -INCLUDE 'P64.INC'
 -INCLUDE 'SEQ.INC'
 -STITL JIT
--LINE 2203 "JIT.lss"
+-LINE 2202 "JIT.lss"
 -EJECT
 *
 ************************************************************************
@@ -25,23 +25,23 @@
 *
 * JIT.lss
 *
--LINE 23 "JIT.lss"
+-LINE 22 "JIT.lss"
 -CASE 1
 -PLUSOPS 1
+-LINE 25 "JIT.lss"
 -LINE 26 "JIT.lss"
 -LINE 27 "JIT.lss"
 -LINE 28 "JIT.lss"
 -LINE 29 "JIT.lss"
--LINE 30 "JIT.lss"
--LINE 33 "JIT.lss"
+-LINE 32 "JIT.lss"
          jit = 'jit.c'
+-LINE 468 "JIT.lss"
 -LINE 469 "JIT.lss"
 -LINE 470 "JIT.lss"
 -LINE 471 "JIT.lss"
 -LINE 472 "JIT.lss"
 -LINE 473 "JIT.lss"
--LINE 474 "JIT.lss"
--LINE 482 "JIT.lss"
+-LINE 481 "JIT.lss"
          LOAD('INIT_JIT(STRING)', 'jit.so')
          LOAD('R_NUM_JIT()INTEGER', 'jit.so')
          LOAD('V_NUM_JIT()INTEGER', 'jit.so')

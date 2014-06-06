@@ -1,10 +1,10 @@
--LINE 17 "ROUTING.lss"
+-LINE 16 "ROUTING.lss"
 -INCLUDE 'BRKREM.INC'
 -INCLUDE 'SDIFF.INC'
 -INCLUDE 'UNIQUE.INC'
 -STITL ROUTING
 -EJECT
--LINE 125 "ROUTING.lss"
+-LINE 124 "ROUTING.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -22,7 +22,7 @@
 *
 * ROUTING.lss
 *
--LINE 23 "ROUTING.lss"
+-LINE 22 "ROUTING.lss"
 -MODULE ROUTING
 -PUBLIC ROUTING_INIT(), ROUTING_ADD(), ROUTING()
          DEFINE('ROUTING_INIT()')

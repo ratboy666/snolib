@@ -1,7 +1,7 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -PROGRAM DESEQL
--LINE 13 "deseql.lss"
+-LINE 12 "deseql.lss"
 -TITLE DESEQL
 START
 *

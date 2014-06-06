@@ -14,7 +14,6 @@ list knows to use terminal hardware scrolling if available.
 <a href="READLINE.html">READLINE</a><br>
 <a href="REPL.html">REPL</a><br>
 <a href="SEQ.html">SEQ</a><br>
-<a href="SEQ.html">SEQ</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'CHARS.INC'

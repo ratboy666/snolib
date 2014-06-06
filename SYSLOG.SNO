@@ -1,9 +1,9 @@
--LINE 11 "SYSLOG.lss"
+-LINE 10 "SYSLOG.lss"
 -INCLUDE 'FFI.INC'
 -INCLUDE 'P64.INC'
 -STITL SYSLOG
 -EJECT
--LINE 109 "SYSLOG.lss"
+-LINE 108 "SYSLOG.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -22,7 +22,7 @@
 *
 * SYSLOG.lss
 *
--LINE 16 "SYSLOG.lss"
+-LINE 15 "SYSLOG.lss"
 -MODULE SYSLOG
          FFI_OPENLOG = FFI_NEW('V', 'P,I,I')
          FFI_SET_CALLP(FFI_OPENLOG, DLSYM(0, 'openlog'))

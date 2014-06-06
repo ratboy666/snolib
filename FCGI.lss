@@ -23,7 +23,6 @@ When this is functional, we will work on performance.
 <a href="JSON.html">JSON</a><br>
 <a href="LOGIC.html">LOGIC</a><br>
 <a href="TIME.html">TIME</a><br>
-<a href="TIME.html">TIME</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'BQ.INC'

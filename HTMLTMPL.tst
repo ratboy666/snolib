@@ -1,7 +1,7 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -INCLUDE 'HTMLTMPL.INC'
--LINE 42 "HTMLTMPL.lss"
+-LINE 41 "HTMLTMPL.lss"
 -INCLUDE 'TIMER.INC'
 -INCLUDE 'HASH.INC'
 -INCLUDE 'TIMER.INC'

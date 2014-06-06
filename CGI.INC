@@ -1,4 +1,4 @@
--LINE 53 "CGI.lss"
+-LINE 52 "CGI.lss"
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'COOKIE.INC'
 -INCLUDE 'CRACK.INC'
@@ -11,7 +11,7 @@
 -INCLUDE 'VDIFFER.INC'
 -STITL CGI
 -EJECT
--LINE 576 "CGI.lss"
+-LINE 575 "CGI.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -30,7 +30,7 @@
 *
 * CGI.lss
 *
--LINE 66 "CGI.lss"
+-LINE 65 "CGI.lss"
 -MODULE CGI
 -USES CRACK(), HOST(), URL_DECODE(), COOKIE_FIX_NAME()
 -WEAK USE_FCGI, FCGI_ENV, FCGI_IN, FCGI_REQUEST_COMPLETE

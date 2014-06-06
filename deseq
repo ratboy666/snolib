@@ -1,7 +1,7 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -PROGRAM DESEQ
--LINE 28 "deseq.lss"
+-LINE 27 "deseq.lss"
 -TITLE DESEQ
 START
 *
@@ -21,7 +21,7 @@ START
 *
 * deseq.lss
 *
--LINE 14 "deseq.lss"
+-LINE 13 "deseq.lss"
          TERMINAL = 'DESEQ (SUN JUN 16 14:13:20 EDT 2013)'
 *
          S = DUPL(' ', 72)

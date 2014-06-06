@@ -1,7 +1,7 @@
 -STITL TIME
 -EJECT
 *
--LINE 79 "TIME.lss"
+-LINE 78 "TIME.lss"
 ************************************************************************
 *                                                                      *
 *                    #######  ###  #     #  #######                    *
@@ -21,7 +21,7 @@
 *
 * TIME.lss
 *
--LINE 12 "TIME.lss"
+-LINE 11 "TIME.lss"
 -MODULE TIME
 -PUBLIC TIMEVAL(), TV_SEC(), TV_USEC()
          DATA('TIMEVAL(TV_SEC,TV_USEC)')

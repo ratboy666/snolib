@@ -3,7 +3,6 @@
 [[COUNT(S1,S2)]] counts the number of times [[S2]] occurs in [[S1]].
 
 <h2>Uses</h2>
-<a href=".html"></a><br>
 
 <<INCLUDES>>=
 @

@@ -4,7 +4,6 @@ Writes a C function to do parameter and result conversion to allow
 an external function to be used with [[LOAD()]].
 
 <h2>Uses</h2>
-<a href=".html"></a><br>
 
 <<INCLUDES>>=
 @

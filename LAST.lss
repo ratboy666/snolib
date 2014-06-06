@@ -6,7 +6,6 @@ concatenate the two lists. [[LAST(L) = L]] creates a circular list.
 
 <h2>Uses</h2>
 <a href="LINK.html">LINK</a><br>
-<a href="LINK.html">LINK</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'LINK.INC'

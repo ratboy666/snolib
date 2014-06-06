@@ -44,7 +44,6 @@ be returned (probably as a session cookie).
 <a href="TIME.html">TIME</a><br>
 <a href="TRIMB.html">TRIMB</a><br>
 <a href="VDIFFER.html">VDIFFER</a><br>
-<a href="VDIFFER.html">VDIFFER</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'CHARS.INC'

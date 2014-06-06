@@ -23,7 +23,6 @@ well.
 <a href="CHARS.html">CHARS</a><br>
 <a href="HOST.html">HOST</a><br>
 <a href="REPL.html">REPL</a><br>
-<a href="REPL.html">REPL</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'CHARS.INC'

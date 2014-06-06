@@ -34,8 +34,8 @@ noi q = "'"
  qq = '"'
  seq(' ni = ni ld "-INCLUDE " q inc<i> q CHARS_NL', .i)
  seq(' s = inc<i>; s ".INC" = ;'
-+ ' nh = nh "<a href=" qq s ".html" qq ">" s "</a><br>" CHARS_NL;'
-+ ' inc<i>', .i)
++ ' nh = differ(inc<i>) nh "<a href=" qq s ".html" qq ">" s "</a><br>" '
++ ' CHARS_NL; inc<i>', .i)
  src differ(di) pos(bi) len(ei - bi) = ni
  src differ(dh) pos(bh) len(eh - bh) = nh
  writefile(fn, src)

@@ -15,7 +15,6 @@ Not very good at cleaning up, but this does work.
 <a href="P64.html">P64</a><br>
 <a href="REPL.html">REPL</a><br>
 <a href="TRIMB.html">TRIMB</a><br>
-<a href="TRIMB.html">TRIMB</a><br>
 
 <<INCLUDES>>= 
 -INCLUDE 'CHARS.INC'

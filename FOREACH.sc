@@ -1,7 +1,7 @@
 -SNOCONE
 -STITL FOREACH
 -EJECT
--LINE 73 "FOREACH.lss"
+-LINE 72 "FOREACH.lss"
 #
 ########################################################################
 #                                                                      #
@@ -21,7 +21,7 @@
 # FOREACH.lss
 #
 
--LINE 14 "FOREACH.lss"
+-LINE 13 "FOREACH.lss"
 # Apply procedure proc to each element of x, where x may be an array,
 # table, or expression that produces a sequence of values.
 #

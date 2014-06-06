@@ -38,7 +38,6 @@ applications.
 <h2>Uses</h2>
 <a href="BQ.html">BQ</a><br>
 <a href="CHARS.html">CHARS</a><br>
-<a href="CHARS.html">CHARS</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'BQ.INC'

@@ -9,7 +9,6 @@ HTML, JS and URL encodings.
 <a href="HEX.html">HEX</a><br>
 <a href="REPL.html">REPL</a><br>
 <a href="SDIFF.html">SDIFF</a><br>
-<a href="SDIFF.html">SDIFF</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'CH.INC'

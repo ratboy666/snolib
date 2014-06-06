@@ -51,7 +51,6 @@ failure of TEST, resulting in a RETURN.
 This component also implements [[WHILE]] and [[IF]].
 
 <h2>Uses</h2>
-<a href=".html"></a><br>
 
 <h2>See Also</h2>
 <a href="SEQ.html">SEQ</a>

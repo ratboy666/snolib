@@ -1,7 +1,7 @@
 -STITL BALREV
 -EJECT
 *
--LINE 38 "BALREV.lss"
+-LINE 37 "BALREV.lss"
 ************************************************************************
 *                                                                      *
 *           ######      #     #        ######   #######  #     #       *
@@ -18,7 +18,7 @@
 *
 * BALREV.lss
 *
--LINE 15 "BALREV.lss"
+-LINE 14 "BALREV.lss"
 -MODULE BALREV
 -PUBLIC BALREV()
          DEFINE('BALREV(S)')                               :(BALREV_END)

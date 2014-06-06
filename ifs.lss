@@ -57,7 +57,6 @@ conditionals, and no other macro expansion.
 <a href="HOST.html">HOST</a><br>
 <a href="SYSTEM.html">SYSTEM</a><br>
 <a href="VDIFFER.html">VDIFFER</a><br>
-<a href="VDIFFER.html">VDIFFER</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'CHARS.INC'

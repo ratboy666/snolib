@@ -5,7 +5,6 @@ CSNOBOL4, but not in SPITBOL.EXE.
 
 <h2>Uses</h2>
 <a href="SYSTEM.html">SYSTEM</a><br>
-<a href="SYSTEM.html">SYSTEM</a><br>
 
 <<INCLUDES>>= 
 -INCLUDE 'SYSTEM.INC'

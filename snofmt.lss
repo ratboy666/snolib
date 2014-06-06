@@ -8,7 +8,6 @@ and to tidy up lines after editing.
 <a href="BALX.html">BALX</a><br>
 <a href="CHARS.html">CHARS</a><br>
 <a href="VDIFFER.html">VDIFFER</a><br>
-<a href="VDIFFER.html">VDIFFER</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'BALX.INC'

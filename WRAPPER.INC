@@ -1,7 +1,7 @@
 -STITL WRAPPER
 -EJECT
 *
--LINE 279 "WRAPPER.lss"
+-LINE 278 "WRAPPER.lss"
 ************************************************************************
 *                                                                      *
 *    #     #  ######      #     ######   ######   #######  ######      *
@@ -26,7 +26,7 @@
 *     STRING2, REQUIRES LEN PARAMETER, COPY FIXED LENGTH
 *     REMOVE HANDLE TYPE COMPLETELY
 *
--LINE 13 "WRAPPER.lss"
+-LINE 12 "WRAPPER.lss"
 -MODULE WRAPPER
          WPMAXSTR = 1024
          WPSTRTYPE = 'STRING'

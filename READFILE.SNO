@@ -1,10 +1,10 @@
--LINE 25 "READFILE.lss"
+-LINE 24 "READFILE.lss"
 -INCLUDE 'BRKREM.INC'
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'SYSTEM.INC'
 -STITL READLINE
 -EJECT
--LINE 86 "READFILE.lss"
+-LINE 85 "READFILE.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -22,7 +22,7 @@
 *
 * READFILE.lss
 *
--LINE 31 "READFILE.lss"
+-LINE 30 "READFILE.lss"
 -MODULE READFILE
 -PUBLIC WRITEFILE(), READFILE()
          DEFINE('WRITEFILE(FILE,S)F,U,E,T')

@@ -1,7 +1,7 @@
 -STITL ROMAN
 -EJECT
 *
--LINE 58 "ROMAN.lss"
+-LINE 57 "ROMAN.lss"
 ************************************************************************
 *                                                                      *
 *             ######   #######  #     #     #     #     #              *
@@ -18,7 +18,7 @@
 *
 * ROMAN.lss
 *
--LINE 16 "ROMAN.lss"
+-LINE 15 "ROMAN.lss"
 -MODULE ROMAN
 -PUBLIC ROMAN()
          DEFINE('ROMAN(N)T')                                :(ROMAN_END)

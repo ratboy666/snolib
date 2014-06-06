@@ -76,7 +76,6 @@ useful, and -v1 is the default in this code.
 <a href="READFILE.html">READFILE</a><br>
 <a href="REPL.html">REPL</a><br>
 <a href="TIME.html">TIME</a><br>
-<a href="TIME.html">TIME</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'BQ.INC'

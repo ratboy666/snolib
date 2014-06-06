@@ -60,7 +60,6 @@ additional tools to be incorporated while debugging.
 <a href="SLOAD.html">SLOAD</a><br>
 <a href="TRIMB.html">TRIMB</a><br>
 <a href="VDIFFER.html">VDIFFER</a><br>
-<a href="VDIFFER.html">VDIFFER</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'CHARS.INC'

@@ -1,7 +1,7 @@
 -MODULE READLINE
 -STITL READLINE
 -EJECT
--LINE 167 "READLINE.lss"
+-LINE 166 "READLINE.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -22,22 +22,22 @@
 *
 * READLINE.lss
 *
+-LINE 13 "READLINE.lss"
 -LINE 14 "READLINE.lss"
 -LINE 15 "READLINE.lss"
 -LINE 16 "READLINE.lss"
 -LINE 17 "READLINE.lss"
 -LINE 18 "READLINE.lss"
 -LINE 19 "READLINE.lss"
--LINE 20 "READLINE.lss"
--LINE 23 "READLINE.lss"
+-LINE 22 "READLINE.lss"
          editline = 'editline.c'
+-LINE 122 "READLINE.lss"
 -LINE 123 "READLINE.lss"
 -LINE 124 "READLINE.lss"
 -LINE 125 "READLINE.lss"
 -LINE 126 "READLINE.lss"
 -LINE 127 "READLINE.lss"
--LINE 128 "READLINE.lss"
--LINE 137 "READLINE.lss"
+-LINE 136 "READLINE.lss"
 -PUBLIC READLINE(), ADD_HISTORY(), HISTORY_EXPAND()
 READLINE LOAD('READLINE(STRING)STRING')
          LOAD('ADD_HISTORY(STRING)STRING')

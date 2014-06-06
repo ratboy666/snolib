@@ -1,7 +1,7 @@
 -STITL STROUT
 -EJECT
 *
--LINE 44 "STROUT.lss"
+-LINE 43 "STROUT.lss"
 ************************************************************************
 *                                                                      *
 *            #####   #######  ######   #######  #     #  #######       *
@@ -18,7 +18,7 @@
 *
 * STROUT.lss
 *
--LINE 17 "STROUT.lss"
+-LINE 16 "STROUT.lss"
 -MODULE STROUT
 -PUBLIC STRINGOUT()
          DEFINE('STRINGOUT(A,SEP)I')                    :(STRINGOUT_END)
