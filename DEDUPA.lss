@@ -1,0 +1,67 @@
+<h1>DEDUPA - "Dedup" a vector</h1>
+
+Removes identical elements frome a one-dimension array (vector) [[A]]
+by making it into a table, and then making an array from from the keys.
+An empty array dedups to itself, and if keys_in_table fails, no update
+is made.                   
+
+<h2>Uses</h2>
+<a href="SIZEA.html">SIZEA</a><br>
+<a href="HASH.html">HASH</a><br>
+<a href="SEQ.html">SEQ</a><br>
+
+<<INCLUDES>>= 
+-INCLUDE 'SIZEA.INC'
+-INCLUDE 'HASH.INC'
+-INCLUDE 'SEQ.INC'
+@
+
+<<DEDUPA>>=
+-MODULE DEDUPA
+-PUBLIC DEDUPA()
+*
+         DEFINE('DEDUPA(A)T,I')                            :(END_DEDUPA)
+*
+DEDUPA   DEDUPA = IDENT(A, ARRAY0) A                          :S(RETURN)
+         T = TABLE()
+         SEQ(' T<A<I>> = 1', .I)
+         DEDUPA = KEYS_IN_TABLE(T)                             :(RETURN)
+*
+END_DEDUPA
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'DEDUPA.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL DEDUPA
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*         ######   #######  ######   #     #  ######      #            *
+*         #     #  #        #     #  #     #  #     #    # #           *
+*         #     #  #        #     #  #     #  #     #   #   #          *
+*         #     #  #####    #     #  #     #  ######   #     #         *
+*         #     #  #        #     #  #     #  #        #######         *
+*         #     #  #        #     #  #     #  #        #     #         *
+*         ######   #######  ######    #####   #        #     #         *
+*                                                                      *
+*                                                                      *
+* DEDUPA                      DEDUP ARRAY                              *
+*                                                                      *
+************************************************************************
+*
+* DEDUPA.lss
+*
+<<DEDUPA>>
+*
+* CE: .MSNOBOL4;
+@

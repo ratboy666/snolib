@@ -1,0 +1,62 @@
+<h1>ATOL - Array to List</h1>
+
+[[ATOL(A)]] returns a list of the elements of array [[A]].
+
+<h2>Uses</h2>
+<a href="LINK.html">LINK</a><br>
+<a href="SEQ.html">SEQ</a><br>
+<a href="REVL.html">REVL</a><br>
+
+<<INCLUDES>>= 
+-INCLUDE 'LINK.INC'
+-INCLUDE 'SEQ.INC'
+-INCLUDE 'REVL.INC'
+@
+
+<<ATOL>>=
+-MODULE ATOL
+-PUBLIC ATOL()
+-USES LINK()
+
+         DEFINE('ATOL(A)I')                                  :(END_ATOL)
+
+ATOL     SEQ(' ATOL = LINK(A<I>, ATOL)', .I)
+         ATOL = REVL(ATOL)                                     :(RETURN)
+
+END_ATOL
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'ATOL.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL ATOL
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                     #     #######  #######  #                        *
+*                    # #       #     #     #  #                        *
+*                   #   #      #     #     #  #                        *
+*                  #     #     #     #     #  #                        *
+*                  #######     #     #     #  #                        *
+*                  #     #     #     #     #  #                        *
+*                  #     #     #     #######  #######                  *
+*                                                                      *
+* ATOL                      ARRAY TO LIST                              *
+*                                                                      *
+************************************************************************
+*
+* ATOL.lss
+*
+<<ATOL>>
+*
+* CE: .MSNOBOL4;
+@

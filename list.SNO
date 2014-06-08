@@ -1,7 +1,7 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -PROGRAM LIST
--LINE 202 "list.lss"
+-LINE 204 "list.lss"
 -TITLE LIST
 START
 -LINE 19 "list.lss"
@@ -83,8 +83,10 @@ FN1      LINES = TABLE()
          DEFINE('SHOWLINE(N)S,T,B,LS,C')                       :(SL_END)
 *
 SHOWLINE S = LINES<N>
+*
 * IF TERMINAL TAB IS 8, MAKE LINE NUMBERING 8 CHARACTERS TO NOT
 * DISTURB TABBING WHEN 'N' IS USED
+*
          S = LE(N, L) DIFFER(NUMBER) LPAD(N, 6) ': ' S
          LT(SIZE(S), DS_COLS)                                    :S(SL2)
 *

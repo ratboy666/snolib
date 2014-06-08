@@ -91,8 +91,10 @@ FN1      LINES = TABLE()
          DEFINE(&#39;SHOWLINE(N)S,T,B,LS,C&#39;)                       <b>:(SL_END)</b>
 <font color="#818181"><i>*</i></font>
 SHOWLINE S = LINES&lt;N&gt;
+<font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* IF TERMINAL TAB IS 8, MAKE LINE NUMBERING 8 CHARACTERS TO NOT</i></font>
 <font color="#818181"><i>* DISTURB TABBING WHEN &#39;N&#39; IS USED</i></font>
+<font color="#818181"><i>*</i></font>
          S = LE(N, L) DIFFER(NUMBER) LPAD(N, 6) &#39;: &#39; S
          LT(SIZE(S), DS_COLS)                                    <b>:S(SL2)</b>
 <font color="#818181"><i>*</i></font>
@@ -246,7 +248,7 @@ START
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 20:00:11 EDT 2014</p></td><td><p align=right>
+Fri Jun  6 14:26:49 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

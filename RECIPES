@@ -1,0 +1,32 @@
+# RECIPES
+#
+# Default recipes for SOOSIE
+# need to add snocone awareness and better ditaa
+
+{
+  ".lss.INC": [
+    "IFSLC=@ LSS=SNOBOL4 ifs {{src}} |",
+    "        LSS=SNOBOL4 stangle     |",
+    "        LSS=SNOBOL4 ifs         |",
+    "                    embed >{{tgt}}"
+  ],
+
+  ".lss.html": [
+    "IFSLC=@ ifs {{src}} | sweave >{{tgt}}",
+    "echo ditaa {{tgt}} opt html opt overwrite"
+  ],
+
+  ".lss.tst": [
+    "IFSLC=@                LSS=SNOBOL4 ifs {{src}} |",
+    "STANGLE_ROOT=unit_test LSS=SNOBOL4 stangle     |",
+    "                       LSS=SNOBOL4 ifs         |",
+    "                                   embed >{{tgt}}"
+  ],
+
+  ".lss": [
+    "IFSLC=@ LSS=SNOBOL4 ifs {{src}} |",
+    "        LSS=SNOBOL4 stangle     |",
+    "        LSS=SNOBOL4 ifs         |",
+    "                    embed >{{tgt}}"
+  ]
+}

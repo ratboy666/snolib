@@ -35,7 +35,8 @@ T = AGT.tst      AI.tst       AOPA.tst     BALREV.tst   BALX.tst     \
     CGI.tst      READFILE.tst SESSION.tst  GCD.tst      COMPLEX.tst  \
     COOKIE.tst   HTMLTMPL.tst JSON.tst     FCGI.tst     MAX.tst      \
     DSERVE.tst   VDIFFER.tst  FOR.tst      FREEZE.tst   ROUTING.tst  \
-    GDDT.tst
+    GDDT.tst     DEDUPA.tst   ATOL.tst     ITERDIR.tst  SIZEL.tst    \
+    SIZET.tst
 
 # Library files FIXME: TRIAL should be removed.
 
@@ -123,6 +124,11 @@ FREEZE.INC:   SYSTEM.INC
 READFILE.INC: SYSTEM.INC   CHARS.INC    BRKREM.INC
 ROUTING.INC:  SDIFF.INC    UNIQUE.INC   BRKREM.INC
 GDDT.INC:     STCL.INC     REPL.INC     CHARS.INC    DDT.INC
+DEDUPA.INC:   HASH.INC     SIZEA.INC    SEQ.INC
+ATOL.INC:     LINK.INC     SEQ.INC      REVL.INC
+ITERDIR.INC:  BQ.INC       CRACK.INC    ATOL.INC     CHARS.INC
+SIZEL.INC:    LINK.INC
+SIZET.INC:    HASH.INC     SIZEA.INC
 
 # Bootstrapping. We need embed, ifs, sweave, stangle, snocone and ED4
 # to build the code. We keep embed0, ifs0, sweave0 and stangle0 for
@@ -413,3 +419,8 @@ VDIFFER.INC: VDIFFER.SNO
 FOR.INC: FOR.SNO
 FREEZE.INC: FREEZE.SNO
 ROUTING.INC: ROUTING.SNO
+DEDUPA.INC: DEDUPA.SNO
+ATOL.INC: ATOL.SNO
+ITERDIR.INC: ITERDIR.SNO
+SIZEL.INC: SIZEL.SNO
+SIZET.INC: SIZET.SNO

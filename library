@@ -13,6 +13,9 @@
   <li><a href="AOPA.html">
     AOPA - Apply infix operator to array
   </a></li>
+  <li><a href="ATOL.html">
+    ATOL - Array to List
+  </a></li>
   <li><a href="BALREV.html">
     BALREV - Balanced reverse
   </a></li>
@@ -72,6 +75,9 @@
   </a></li>
   <li><a href="DDT.html">
     DDT - An interactive SNOBOL4 debugger
+  </a></li>
+  <li><a href="DEDUPA.html">
+    DEDUPA - "Dedup" array - remove duplicates
   </a></li>
   <li><a href="DEXP.html">
     DEXP - Simple function definition
@@ -236,7 +242,13 @@
     SESSION - CGI SESSION Support
   </a></li>
   <li><a href="SIZEA.html">
-    SKIM - Size of array in first dimension
+    SIZEA - Size of array in first dimension
+  </a></li>
+  <li><a href="SIZEL.html">
+    SIZEL - Size of list
+  </a></li>
+  <li><a href="SIZET.html">
+    SIZET - Size of table
   </a></li>
   <li><a href="SKIM.html">
     SKIM - Skim unique characters

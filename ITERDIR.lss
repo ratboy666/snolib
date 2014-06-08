@@ -1,0 +1,90 @@
+<h1>ITERDIR - Directory (file) iterator</h1>
+
+Use bq to gather directory data matching pattern. crack to crack
+the string into an array of lines. atol to produce a linked list,
+and return that list as the directory iterator.
+
+General note on iterators. The iter_() function returns an iterator
+This iterator is passed to a value function v() which returns the
+next thing being iterated. v() should fail if the end of iteration
+is reached. The iterator is also passed to next() which returns a
+new iterator which will return the next item in the iteration.
+next_() may fail on the end of the iteration, but this is not
+expected.
+
+[[
+An iterator should be used as:
+
+    i = iter_type(args)
+top   v = vali(i) :f(btm)
+      do stuff with v
+    i = next_type(i) :(top)
+btm
+]]
+
+<h2>Uses</h2>
+<a href="BQ.html">BQ</a><br>
+<a href="CRACK.html">CRACK</a><br>
+<a href="ATOL.html">ATOL</a><br>
+<a href="CHARS.html">CHARS</a><br>
+
+<<INCLUDES>>= 
+-INCLUDE 'BQ.INC'
+-INCLUDE 'CRACK.INC'
+-INCLUDE 'ATOL.INC'
+-INCLUDE 'CHARS.INC'
+@
+
+<<ITERDIR>>=
+-MODULE ITERDIR
+-PUBLIC `VALUE_DIR(), ITER_DIR(), NEXT_DIR()
+*
+         DEFINE('ITER_DIR(W)')
+         DEFINE('VALUE_DIR(D)')
+         DEFINE('NEXT_DIR(D)')                           :(END_ITER_DIR)
+*
+VALUE_DIR
+         VALUE_DIR = DIFFER(D) VALUE(D)             :S(RETURN)F(FRETURN)
+*
+ITER_DIR ITER_DIR = ATOL(CRACK(BQ('ls ' W, CHARS_NL), CHARS_NL))
++                                                   :S(RETURN)F(FRETURN)
+*
+NEXT_DIR NEXT_DIR = DIFFER(D) NEXT(D)               :S(RETURN)F(FRETURN)
+*
+END_ITER_DIR
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'ITERDIR.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL ITERDIR
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*        ###  #######  #######  ######   ######   ###  ######          *
+*         #      #     #        #     #  #     #   #   #     #         *
+*         #      #     #        #     #  #     #   #   #     #         *
+*         #      #     #####    ######   #     #   #   ######          *
+*         #      #     #        #   #    #     #   #   #   #           *
+*         #      #     #        #    #   #     #   #   #    #          *
+*        ###     #     #######  #     #  ######   ###  #     #         *
+*                                                                      *
+* ITERDIR                   DIRECTORY ITERATOR                         *
+*                                                                      *
+************************************************************************
+*
+* ITERDIR.lss
+*
+<<ITERDIR>>
+*
+* CE: .MSNOBOL4;
+@

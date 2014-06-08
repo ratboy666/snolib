@@ -176,7 +176,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 19:59:44 EDT 2014</p></td><td><p align=right>
+Sun Jun  8 10:45:30 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>
@@ -479,12 +479,111 @@ The majority of the time in generating the library is spent generating
 the html documentation (mostly in the <i>ditaa</i> utility.
 ]]
 
-<<INCLUDES>>=
+<<INCS>>=
+-INCLUDE 'AGT.INC'
+-INCLUDE 'AI.INC'
+-INCLUDE 'AOPA.INC'
+-INCLUDE 'ATOL.INC'
+-INCLUDE 'BALREV.INC'
+-INCLUDE 'BALX.INC'
+-INCLUDE 'BLEND.INC'
+-INCLUDE 'BQ.INC'
+-INCLUDE 'BRKREM.INC'
+-INCLUDE 'CATA.INC'
+-INCLUDE 'CGI.INC'
+-INCLUDE 'CHARS.INC'
+-INCLUDE 'CH.INC'
+-INCLUDE 'COMB.INC'
+-INCLUDE 'COMPLEX.INC'
+-INCLUDE 'COOKIE.INC'
+-INCLUDE 'COPYL.INC'
+-INCLUDE 'COUNT.INC'
+-INCLUDE 'CRACK.INC'
+-INCLUDE 'CSNOBOL4.INC'
+-INCLUDE 'CVAR.INC'
+-INCLUDE 'DAY.INC'
+-INCLUDE 'DDT.INC'
+-INCLUDE 'DEDUPA.INC'
+-INCLUDE 'DEXP.INC'
+-INCLUDE 'DISPLAY.INC'
+-INCLUDE 'DSERVE.INC'
+-INCLUDE 'DYNAMIC.INC'
+-INCLUDE 'FASTBAL.INC'
+-INCLUDE 'FCGI.INC'
+-INCLUDE 'FENCE.INC'
+-INCLUDE 'FFI.INC'
+-INCLUDE 'FIND.INC'
+-INCLUDE 'FLOOR.INC'
+-INCLUDE 'FOREACH.INC'
+-INCLUDE 'FOR.INC'
+-INCLUDE 'FREEZE.INC'
+-INCLUDE 'GCD.INC'
+-INCLUDE 'GDDT.INC'
+-INCLUDE 'GETKEY.INC'
+-INCLUDE 'HASH.INC'
+-INCLUDE 'HEX.INC'
+-INCLUDE 'HOST.INC'
+-INCLUDE 'HTMLESC.INC'
+-INCLUDE 'HTMLTMPL.INC'
+-INCLUDE 'INFINIP.INC'
+-INCLUDE 'JIT.INC'
+-INCLUDE 'JSON.INC'
+-INCLUDE 'LAST.INC'
+-INCLUDE 'LIKE.INC'
+-INCLUDE 'LINK.INC'
+-INCLUDE 'LOGIC.INC'
+-INCLUDE 'LOG.INC'
+-INCLUDE 'LPROG.INC'
+-INCLUDE 'MAX.INC'
+-INCLUDE 'MDY.INC'
+-INCLUDE 'NDBM.INC'
+-INCLUDE 'NOTP.INC'
+-INCLUDE 'ONCE.INC'
+-INCLUDE 'ORDER.INC'
+-INCLUDE 'P64.INC'
+-INCLUDE 'PSQL.INC'
+-INCLUDE 'QUOTE.INC'
+-INCLUDE 'RANDOM.INC'
+-INCLUDE 'READFILE.INC'
+-INCLUDE 'READL.INC'
+-INCLUDE 'READLINE.INC'
+-INCLUDE 'REDEFINE.INC'
+-INCLUDE 'REPL.INC'
+-INCLUDE 'RESOL.INC'
+-INCLUDE 'REVL.INC'
+-INCLUDE 'ROMAN.INC'
+-INCLUDE 'ROTATER.INC'
+-INCLUDE 'ROUTING.INC'
+-INCLUDE 'SCOOP.INC'
+-INCLUDE 'SDIFF.INC'
+-INCLUDE 'SEQ.INC'
+-INCLUDE 'SESSION.INC'
+-INCLUDE 'SIZEA.INC'
+-INCLUDE 'SKIM.INC'
+-INCLUDE 'SLOAD.INC'
+-INCLUDE 'SOUNDEX.INC'
+-INCLUDE 'SPELL.INC'
+-INCLUDE 'STACK.INC'
+-INCLUDE 'STCL.INC'
+-INCLUDE 'STROUT.INC'
+-INCLUDE 'SWAP.INC'
+-INCLUDE 'SYSLOG.INC'
+-INCLUDE 'SYSTEM.INC'
+-INCLUDE 'TEST.INC'
+-INCLUDE 'TIMEGC.INC'
+-INCLUDE 'TIME.INC'
+-INCLUDE 'TIMER.INC'
+-INCLUDE 'TRIMB.INC'
+-INCLUDE 'TRUNC.INC'
+-INCLUDE 'UNIQUE.INC'
+-INCLUDE 'UTF8.INC'
+-INCLUDE 'VDIFFER.INC'
+-INCLUDE 'WRAPPER.INC'
 @
 
 <<>>=
 -MODULE ALL
-<<INCLUDES>>
+<<INCS>>
 -STITL ALL
 -EJECT
 *
@@ -509,8 +608,107 @@ the html documentation (mostly in the <i>ditaa</i> utility.
 @
 -MODULE ALL
 -LINE 60 "ALL.lss"
+-INCLUDE 'AGT.INC'
+-INCLUDE 'AI.INC'
+-INCLUDE 'AOPA.INC'
+-INCLUDE 'ATOL.INC'
+-INCLUDE 'BALREV.INC'
+-INCLUDE 'BALX.INC'
+-INCLUDE 'BLEND.INC'
+-INCLUDE 'BQ.INC'
+-INCLUDE 'BRKREM.INC'
+-INCLUDE 'CATA.INC'
+-INCLUDE 'CGI.INC'
+-INCLUDE 'CHARS.INC'
+-INCLUDE 'CH.INC'
+-INCLUDE 'COMB.INC'
+-INCLUDE 'COMPLEX.INC'
+-INCLUDE 'COOKIE.INC'
+-INCLUDE 'COPYL.INC'
+-INCLUDE 'COUNT.INC'
+-INCLUDE 'CRACK.INC'
+-INCLUDE 'CSNOBOL4.INC'
+-INCLUDE 'CVAR.INC'
+-INCLUDE 'DAY.INC'
+-INCLUDE 'DDT.INC'
+-INCLUDE 'DEDUPA.INC'
+-INCLUDE 'DEXP.INC'
+-INCLUDE 'DISPLAY.INC'
+-INCLUDE 'DSERVE.INC'
+-INCLUDE 'DYNAMIC.INC'
+-INCLUDE 'FASTBAL.INC'
+-INCLUDE 'FCGI.INC'
+-INCLUDE 'FENCE.INC'
+-INCLUDE 'FFI.INC'
+-INCLUDE 'FIND.INC'
+-INCLUDE 'FLOOR.INC'
+-INCLUDE 'FOREACH.INC'
+-INCLUDE 'FOR.INC'
+-INCLUDE 'FREEZE.INC'
+-INCLUDE 'GCD.INC'
+-INCLUDE 'GDDT.INC'
+-INCLUDE 'GETKEY.INC'
+-INCLUDE 'HASH.INC'
+-INCLUDE 'HEX.INC'
+-INCLUDE 'HOST.INC'
+-INCLUDE 'HTMLESC.INC'
+-INCLUDE 'HTMLTMPL.INC'
+-INCLUDE 'INFINIP.INC'
+-INCLUDE 'JIT.INC'
+-INCLUDE 'JSON.INC'
+-INCLUDE 'LAST.INC'
+-INCLUDE 'LIKE.INC'
+-INCLUDE 'LINK.INC'
+-INCLUDE 'LOGIC.INC'
+-INCLUDE 'LOG.INC'
+-INCLUDE 'LPROG.INC'
+-INCLUDE 'MAX.INC'
+-INCLUDE 'MDY.INC'
+-INCLUDE 'NDBM.INC'
+-INCLUDE 'NOTP.INC'
+-INCLUDE 'ONCE.INC'
+-INCLUDE 'ORDER.INC'
+-INCLUDE 'P64.INC'
+-INCLUDE 'PSQL.INC'
+-INCLUDE 'QUOTE.INC'
+-INCLUDE 'RANDOM.INC'
+-INCLUDE 'READFILE.INC'
+-INCLUDE 'READL.INC'
+-INCLUDE 'READLINE.INC'
+-INCLUDE 'REDEFINE.INC'
+-INCLUDE 'REPL.INC'
+-INCLUDE 'RESOL.INC'
+-INCLUDE 'REVL.INC'
+-INCLUDE 'ROMAN.INC'
+-INCLUDE 'ROTATER.INC'
+-INCLUDE 'ROUTING.INC'
+-INCLUDE 'SCOOP.INC'
+-INCLUDE 'SDIFF.INC'
+-INCLUDE 'SEQ.INC'
+-INCLUDE 'SESSION.INC'
+-INCLUDE 'SIZEA.INC'
+-INCLUDE 'SKIM.INC'
+-INCLUDE 'SLOAD.INC'
+-INCLUDE 'SOUNDEX.INC'
+-INCLUDE 'SPELL.INC'
+-INCLUDE 'STACK.INC'
+-INCLUDE 'STCL.INC'
+-INCLUDE 'STROUT.INC'
+-INCLUDE 'SWAP.INC'
+-INCLUDE 'SYSLOG.INC'
+-INCLUDE 'SYSTEM.INC'
+-INCLUDE 'TEST.INC'
+-INCLUDE 'TIMEGC.INC'
+-INCLUDE 'TIME.INC'
+-INCLUDE 'TIMER.INC'
+-INCLUDE 'TRIMB.INC'
+-INCLUDE 'TRUNC.INC'
+-INCLUDE 'UNIQUE.INC'
+-INCLUDE 'UTF8.INC'
+-INCLUDE 'VDIFFER.INC'
+-INCLUDE 'WRAPPER.INC'
 -STITL ALL
--LINE 66 "ALL.lss"
+-LINE 165 "ALL.lss"
 -EJECT
 *
 ************************************************************************
@@ -605,14 +803,113 @@ It taskes 36 milliseconds to compile ALL.INC on my Intel i3 (1.4Ghz).
 </font></p>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
-<b>&laquo;INCLUDES&raquo;&equiv;</b>
+<b>&laquo;INCS&raquo;&equiv;</b>
+-INCLUDE &#39;AGT.INC&#39;
+-INCLUDE &#39;AI.INC&#39;
+-INCLUDE &#39;AOPA.INC&#39;
+-INCLUDE &#39;ATOL.INC&#39;
+-INCLUDE &#39;BALREV.INC&#39;
+-INCLUDE &#39;BALX.INC&#39;
+-INCLUDE &#39;BLEND.INC&#39;
+-INCLUDE &#39;BQ.INC&#39;
+-INCLUDE &#39;BRKREM.INC&#39;
+-INCLUDE &#39;CATA.INC&#39;
+-INCLUDE &#39;CGI.INC&#39;
+-INCLUDE &#39;CHARS.INC&#39;
+-INCLUDE &#39;CH.INC&#39;
+-INCLUDE &#39;COMB.INC&#39;
+-INCLUDE &#39;COMPLEX.INC&#39;
+-INCLUDE &#39;COOKIE.INC&#39;
+-INCLUDE &#39;COPYL.INC&#39;
+-INCLUDE &#39;COUNT.INC&#39;
+-INCLUDE &#39;CRACK.INC&#39;
+-INCLUDE &#39;CSNOBOL4.INC&#39;
+-INCLUDE &#39;CVAR.INC&#39;
+-INCLUDE &#39;DAY.INC&#39;
+-INCLUDE &#39;DDT.INC&#39;
+-INCLUDE &#39;DEDUPA.INC&#39;
+-INCLUDE &#39;DEXP.INC&#39;
+-INCLUDE &#39;DISPLAY.INC&#39;
+-INCLUDE &#39;DSERVE.INC&#39;
+-INCLUDE &#39;DYNAMIC.INC&#39;
+-INCLUDE &#39;FASTBAL.INC&#39;
+-INCLUDE &#39;FCGI.INC&#39;
+-INCLUDE &#39;FENCE.INC&#39;
+-INCLUDE &#39;FFI.INC&#39;
+-INCLUDE &#39;FIND.INC&#39;
+-INCLUDE &#39;FLOOR.INC&#39;
+-INCLUDE &#39;FOREACH.INC&#39;
+-INCLUDE &#39;FOR.INC&#39;
+-INCLUDE &#39;FREEZE.INC&#39;
+-INCLUDE &#39;GCD.INC&#39;
+-INCLUDE &#39;GDDT.INC&#39;
+-INCLUDE &#39;GETKEY.INC&#39;
+-INCLUDE &#39;HASH.INC&#39;
+-INCLUDE &#39;HEX.INC&#39;
+-INCLUDE &#39;HOST.INC&#39;
+-INCLUDE &#39;HTMLESC.INC&#39;
+-INCLUDE &#39;HTMLTMPL.INC&#39;
+-INCLUDE &#39;INFINIP.INC&#39;
+-INCLUDE &#39;JIT.INC&#39;
+-INCLUDE &#39;JSON.INC&#39;
+-INCLUDE &#39;LAST.INC&#39;
+-INCLUDE &#39;LIKE.INC&#39;
+-INCLUDE &#39;LINK.INC&#39;
+-INCLUDE &#39;LOGIC.INC&#39;
+-INCLUDE &#39;LOG.INC&#39;
+-INCLUDE &#39;LPROG.INC&#39;
+-INCLUDE &#39;MAX.INC&#39;
+-INCLUDE &#39;MDY.INC&#39;
+-INCLUDE &#39;NDBM.INC&#39;
+-INCLUDE &#39;NOTP.INC&#39;
+-INCLUDE &#39;ONCE.INC&#39;
+-INCLUDE &#39;ORDER.INC&#39;
+-INCLUDE &#39;P64.INC&#39;
+-INCLUDE &#39;PSQL.INC&#39;
+-INCLUDE &#39;QUOTE.INC&#39;
+-INCLUDE &#39;RANDOM.INC&#39;
+-INCLUDE &#39;READFILE.INC&#39;
+-INCLUDE &#39;READL.INC&#39;
+-INCLUDE &#39;READLINE.INC&#39;
+-INCLUDE &#39;REDEFINE.INC&#39;
+-INCLUDE &#39;REPL.INC&#39;
+-INCLUDE &#39;RESOL.INC&#39;
+-INCLUDE &#39;REVL.INC&#39;
+-INCLUDE &#39;ROMAN.INC&#39;
+-INCLUDE &#39;ROTATER.INC&#39;
+-INCLUDE &#39;ROUTING.INC&#39;
+-INCLUDE &#39;SCOOP.INC&#39;
+-INCLUDE &#39;SDIFF.INC&#39;
+-INCLUDE &#39;SEQ.INC&#39;
+-INCLUDE &#39;SESSION.INC&#39;
+-INCLUDE &#39;SIZEA.INC&#39;
+-INCLUDE &#39;SKIM.INC&#39;
+-INCLUDE &#39;SLOAD.INC&#39;
+-INCLUDE &#39;SOUNDEX.INC&#39;
+-INCLUDE &#39;SPELL.INC&#39;
+-INCLUDE &#39;STACK.INC&#39;
+-INCLUDE &#39;STCL.INC&#39;
+-INCLUDE &#39;STROUT.INC&#39;
+-INCLUDE &#39;SWAP.INC&#39;
+-INCLUDE &#39;SYSLOG.INC&#39;
+-INCLUDE &#39;SYSTEM.INC&#39;
+-INCLUDE &#39;TEST.INC&#39;
+-INCLUDE &#39;TIMEGC.INC&#39;
+-INCLUDE &#39;TIME.INC&#39;
+-INCLUDE &#39;TIMER.INC&#39;
+-INCLUDE &#39;TRIMB.INC&#39;
+-INCLUDE &#39;TRUNC.INC&#39;
+-INCLUDE &#39;UNIQUE.INC&#39;
+-INCLUDE &#39;UTF8.INC&#39;
+-INCLUDE &#39;VDIFFER.INC&#39;
+-INCLUDE &#39;WRAPPER.INC&#39;
 <b>@</b>
 </font></pre></div>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
 -MODULE ALL
-<b>&laquo;INCLUDES&raquo;</b>
+<b>&laquo;INCS&raquo;</b>
 -STITL ALL
 -EJECT
 <font color="#818181"><i>*</i></font>
@@ -640,7 +937,7 @@ It taskes 36 milliseconds to compile ALL.INC on my Intel i3 (1.4Ghz).
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 19:59:45 EDT 2014</p></td><td><p align=right>
+Sat Jun  7 23:45:08 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>
@@ -924,6 +1221,112 @@ Return to <a href="index.html">index</a>
          EQ(C<3>, 90)                                            :F(END)
 * SCALAR OPERATION SCALAR
          EQ(AOPA(6, '/', 3), 2)                                  :F(END)
+         &CODE = 0
+END
+<h1>ATOL - Array to List</h1>
+
+[[ATOL(A)]] returns a list of the elements of array [[A]].
+
+<h2>Uses</h2>
+<a href="LINK.html">LINK</a><br>
+<a href="SEQ.html">SEQ</a><br>
+<a href="REVL.html">REVL</a><br>
+
+<<INCLUDES>>= 
+-INCLUDE 'LINK.INC'
+-INCLUDE 'SEQ.INC'
+-INCLUDE 'REVL.INC'
+@
+
+<<ATOL>>=
+-MODULE ATOL
+-PUBLIC ATOL()
+-USES LINK()
+
+         DEFINE('ATOL(A)I')                                  :(END_ATOL)
+
+ATOL     SEQ(' ATOL = LINK(A<I>, ATOL)', .I)
+         ATOL = REVL(ATOL)                                     :(RETURN)
+
+END_ATOL
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'ATOL.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL ATOL
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                     #     #######  #######  #                        *
+*                    # #       #     #     #  #                        *
+*                   #   #      #     #     #  #                        *
+*                  #     #     #     #     #  #                        *
+*                  #######     #     #     #  #                        *
+*                  #     #     #     #     #  #                        *
+*                  #     #     #     #######  #######                  *
+*                                                                      *
+* ATOL                      ARRAY TO LIST                              *
+*                                                                      *
+************************************************************************
+*
+* ATOL.lss
+*
+<<ATOL>>
+*
+* CE: .MSNOBOL4;
+@
+-LINE 11 "ATOL.lss"
+-INCLUDE 'LINK.INC'
+-INCLUDE 'SEQ.INC'
+-INCLUDE 'REVL.INC'
+-STITL ATOL
+-EJECT
+-LINE 42 "ATOL.lss"
+*
+************************************************************************
+*                                                                      *
+*                     #     #######  #######  #                        *
+*                    # #       #     #     #  #                        *
+*                   #   #      #     #     #  #                        *
+*                  #     #     #     #     #  #                        *
+*                  #######     #     #     #  #                        *
+*                  #     #     #     #     #  #                        *
+*                  #     #     #     #######  #######                  *
+*                                                                      *
+* ATOL                      ARRAY TO LIST                              *
+*                                                                      *
+************************************************************************
+*
+* ATOL.lss
+*
+-LINE 17 "ATOL.lss"
+-MODULE ATOL
+-PUBLIC ATOL()
+-USES LINK()
+
+         DEFINE('ATOL(A)I')                                  :(END_ATOL)
+
+ATOL     SEQ(' ATOL = LINK(A<I>, ATOL)', .I)
+         ATOL = REVL(ATOL)                                     :(RETURN)
+
+END_ATOL
+*
+* CE: .MSNOBOL4;
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'ATOL.INC'
+-LINE 33 "ATOL.lss"
+         &CODE = 1
          &CODE = 0
 END
 <h1>BALREV - Balanced Reverse</h1>
@@ -13523,6 +13926,119 @@ Return to <a href="index.html">index</a>
          exec "snobol4" "-b" "$0" "$@"
 -INCLUDE 'DDT.INC'
 -LINE 696 "DDT.lss"
+         &CODE = 1
+         &CODE = 0
+END
+<h1>DEDUPA - "Dedup" a vector</h1>
+
+Removes identical elements frome a one-dimension array (vector) [[A]]
+by making it into a table, and then making an array from from the keys.
+An empty array dedups to itself, and if keys_in_table fails, no update
+is made.                   
+
+<h2>Uses</h2>
+<a href="SIZEA.html">SIZEA</a><br>
+<a href="HASH.html">HASH</a><br>
+<a href="SEQ.html">SEQ</a><br>
+
+<<INCLUDES>>= 
+-INCLUDE 'SIZEA.INC'
+-INCLUDE 'HASH.INC'
+-INCLUDE 'SEQ.INC'
+@
+
+<<DEDUPA>>=
+-MODULE DEDUPA
+-PUBLIC DEDUPA()
+*
+         DEFINE('DEDUPA(A)T,I')                            :(END_DEDUPA)
+*
+DEDUPA   DEDUPA = IDENT(A, ARRAY0) A                          :S(RETURN)
+         T = TABLE()
+         SEQ(' T<A<I>> = 1', .I)
+         DEDUPA = KEYS_IN_TABLE(T)                             :(RETURN)
+*
+END_DEDUPA
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'DEDUPA.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL DEDUPA
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*         ######   #######  ######   #     #  ######      #            *
+*         #     #  #        #     #  #     #  #     #    # #           *
+*         #     #  #        #     #  #     #  #     #   #   #          *
+*         #     #  #####    #     #  #     #  ######   #     #         *
+*         #     #  #        #     #  #     #  #        #######         *
+*         #     #  #        #     #  #     #  #        #     #         *
+*         ######   #######  ######    #####   #        #     #         *
+*                                                                      *
+*                                                                      *
+* DEDUPA                      DEDUP ARRAY                              *
+*                                                                      *
+************************************************************************
+*
+* DEDUPA.lss
+*
+<<DEDUPA>>
+*
+* CE: .MSNOBOL4;
+@
+-LINE 14 "DEDUPA.lss"
+-INCLUDE 'SIZEA.INC'
+-INCLUDE 'HASH.INC'
+-INCLUDE 'SEQ.INC'
+-STITL DEDUPA
+-EJECT
+-LINE 46 "DEDUPA.lss"
+*
+************************************************************************
+*                                                                      *
+*         ######   #######  ######   #     #  ######      #            *
+*         #     #  #        #     #  #     #  #     #    # #           *
+*         #     #  #        #     #  #     #  #     #   #   #          *
+*         #     #  #####    #     #  #     #  ######   #     #         *
+*         #     #  #        #     #  #     #  #        #######         *
+*         #     #  #        #     #  #     #  #        #     #         *
+*         ######   #######  ######    #####   #        #     #         *
+*                                                                      *
+*                                                                      *
+* DEDUPA                      DEDUP ARRAY                              *
+*                                                                      *
+************************************************************************
+*
+* DEDUPA.lss
+*
+-LINE 20 "DEDUPA.lss"
+-MODULE DEDUPA
+-PUBLIC DEDUPA()
+*
+         DEFINE('DEDUPA(A)T,I')                            :(END_DEDUPA)
+*
+DEDUPA   DEDUPA = IDENT(A, ARRAY0) A                          :S(RETURN)
+         T = TABLE()
+         SEQ(' T<A<I>> = 1', .I)
+         DEDUPA = KEYS_IN_TABLE(T)                             :(RETURN)
+*
+END_DEDUPA
+*
+* CE: .MSNOBOL4;
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'DEDUPA.INC'
+-LINE 37 "DEDUPA.lss"
          &CODE = 1
          &CODE = 0
 END
@@ -26655,6 +27171,147 @@ Return to <a href="index.html">index</a>
          &CODE = 1
          &CODE = 0
 END
+<h1>ITERDIR - Directory (file) iterator</h1>
+
+Use bq to gather directory data matching pattern. crack to crack
+the string into an array of lines. atol to produce a linked list,
+and return that list as the directory iterator.
+
+General note on iterators. The iter_() function returns an iterator
+This iterator is passed to a value function v() which returns the
+next thing being iterated. v() should fail if the end of iteration
+is reached. The iterator is also passed to next() which returns a
+new iterator which will return the next item in the iteration.
+next_() may fail on the end of the iteration, but this is not
+expected.
+
+[[
+An iterator should be used as:
+
+    i = iter_type(args)
+top   v = vali(i) :f(btm)
+      do stuff with v
+    i = next_type(i) :(top)
+btm
+]]
+
+<h2>Uses</h2>
+<a href="BQ.html">BQ</a><br>
+<a href="CRACK.html">CRACK</a><br>
+<a href="ATOL.html">ATOL</a><br>
+<a href="CHARS.html">CHARS</a><br>
+
+<<INCLUDES>>= 
+-INCLUDE 'BQ.INC'
+-INCLUDE 'CRACK.INC'
+-INCLUDE 'ATOL.INC'
+-INCLUDE 'CHARS.INC'
+@
+
+<<ITERDIR>>=
+-MODULE ITERDIR
+-PUBLIC `VALUE_DIR(), ITER_DIR(), NEXT_DIR()
+*
+         DEFINE('ITER_DIR(W)')
+         DEFINE('VALUE_DIR(D)')
+         DEFINE('NEXT_DIR(D)')                           :(END_ITER_DIR)
+*
+VALUE_DIR
+         VALUE_DIR = DIFFER(D) VALUE(D)             :S(RETURN)F(FRETURN)
+*
+ITER_DIR ITER_DIR = ATOL(CRACK(BQ('ls ' W, CHARS_NL), CHARS_NL))
++                                                   :S(RETURN)F(FRETURN)
+*
+NEXT_DIR NEXT_DIR = DIFFER(D) NEXT(D)               :S(RETURN)F(FRETURN)
+*
+END_ITER_DIR
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'ITERDIR.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL ITERDIR
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*        ###  #######  #######  ######   ######   ###  ######          *
+*         #      #     #        #     #  #     #   #   #     #         *
+*         #      #     #        #     #  #     #   #   #     #         *
+*         #      #     #####    ######   #     #   #   ######          *
+*         #      #     #        #   #    #     #   #   #   #           *
+*         #      #     #        #    #   #     #   #   #    #          *
+*        ###     #     #######  #     #  ######   ###  #     #         *
+*                                                                      *
+* ITERDIR                   DIRECTORY ITERATOR                         *
+*                                                                      *
+************************************************************************
+*
+* ITERDIR.lss
+*
+<<ITERDIR>>
+*
+* CE: .MSNOBOL4;
+@
+-LINE 32 "ITERDIR.lss"
+-INCLUDE 'BQ.INC'
+-INCLUDE 'CRACK.INC'
+-INCLUDE 'ATOL.INC'
+-INCLUDE 'CHARS.INC'
+-STITL ITERDIR
+-EJECT
+-LINE 70 "ITERDIR.lss"
+*
+************************************************************************
+*                                                                      *
+*        ###  #######  #######  ######   ######   ###  ######          *
+*         #      #     #        #     #  #     #   #   #     #         *
+*         #      #     #        #     #  #     #   #   #     #         *
+*         #      #     #####    ######   #     #   #   ######          *
+*         #      #     #        #   #    #     #   #   #   #           *
+*         #      #     #        #    #   #     #   #   #    #          *
+*        ###     #     #######  #     #  ######   ###  #     #         *
+*                                                                      *
+* ITERDIR                   DIRECTORY ITERATOR                         *
+*                                                                      *
+************************************************************************
+*
+* ITERDIR.lss
+*
+-LINE 39 "ITERDIR.lss"
+-MODULE ITERDIR
+-PUBLIC `VALUE_DIR(), ITER_DIR(), NEXT_DIR()
+*
+         DEFINE('ITER_DIR(W)')
+         DEFINE('VALUE_DIR(D)')
+         DEFINE('NEXT_DIR(D)')                           :(END_ITER_DIR)
+*
+VALUE_DIR
+         VALUE_DIR = DIFFER(D) VALUE(D)             :S(RETURN)F(FRETURN)
+*
+ITER_DIR ITER_DIR = ATOL(CRACK(BQ('ls ' W, CHARS_NL), CHARS_NL))
++                                                   :S(RETURN)F(FRETURN)
+*
+NEXT_DIR NEXT_DIR = DIFFER(D) NEXT(D)               :S(RETURN)F(FRETURN)
+*
+END_ITER_DIR
+*
+* CE: .MSNOBOL4;
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'ITERDIR.INC'
+-LINE 61 "ITERDIR.lss"
+         &CODE = 1
+         &CODE = 0
+END
 <h1>JIT - Just In Time Code Generation</h1>
 
 Interface to the GNU Lightning library to allow dynamic code production
@@ -34025,7 +34682,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 20:00:44 EDT 2014</p></td><td><p align=right>
+Sun Jun  8 10:45:31 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>
@@ -34837,8 +35494,10 @@ FN1      LINES = TABLE()
          DEFINE('SHOWLINE(N)S,T,B,LS,C')                       :(SL_END)
 *
 SHOWLINE S = LINES<N>
+*
 * IF TERMINAL TAB IS 8, MAKE LINE NUMBERING 8 CHARACTERS TO NOT
 * DISTURB TABBING WHEN 'N' IS USED
+*
          S = LE(N, L) DIFFER(NUMBER) LPAD(N, 6) ': ' S
          LT(SIZE(S), DS_COLS)                                    :S(SL2)
 *
@@ -34988,7 +35647,7 @@ START
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -PROGRAM LIST
--LINE 202 "list.lss"
+-LINE 204 "list.lss"
 -TITLE LIST
 START
 -LINE 19 "list.lss"
@@ -35070,8 +35729,10 @@ FN1      LINES = TABLE()
          DEFINE('SHOWLINE(N)S,T,B,LS,C')                       :(SL_END)
 *
 SHOWLINE S = LINES<N>
+*
 * IF TERMINAL TAB IS 8, MAKE LINE NUMBERING 8 CHARACTERS TO NOT
 * DISTURB TABBING WHEN 'N' IS USED
+*
          S = LE(N, L) DIFFER(NUMBER) LPAD(N, 6) ': ' S
          LT(SIZE(S), DS_COLS)                                    :S(SL2)
 *
@@ -35281,8 +35942,10 @@ FN1      LINES = TABLE()
          DEFINE(&#39;SHOWLINE(N)S,T,B,LS,C&#39;)                       <b>:(SL_END)</b>
 <font color="#818181"><i>*</i></font>
 SHOWLINE S = LINES&lt;N&gt;
+<font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* IF TERMINAL TAB IS 8, MAKE LINE NUMBERING 8 CHARACTERS TO NOT</i></font>
 <font color="#818181"><i>* DISTURB TABBING WHEN &#39;N&#39; IS USED</i></font>
+<font color="#818181"><i>*</i></font>
          S = LE(N, L) DIFFER(NUMBER) LPAD(N, 6) &#39;: &#39; S
          LT(SIZE(S), DS_COLS)                                    <b>:S(SL2)</b>
 <font color="#818181"><i>*</i></font>
@@ -35436,7 +36099,7 @@ START
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 20:00:11 EDT 2014</p></td><td><p align=right>
+Fri Jun  6 14:26:49 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>
@@ -46525,7 +47188,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 20:00:16 EDT 2014</p></td><td><p align=right>
+Sun Jun  8 01:21:14 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>
@@ -46547,6 +47210,105 @@ Return to <a href="index.html">index</a>
          OUTPUT = 'SIZEA/LOWA ARRAY0'
          OUTPUT = SIZEA(ARRAY0)
          OUTPUT = LOWA(ARRAY0)
+         &CODE = 0
+END
+<h1>SIZET - Number of items in table</h1>
+
+[[SIZET(T)]] returns the number of items in table [[T]].
+
+<h2>Uses</h2>
+<a href="HASH.html">HASH</a><br>
+<a href="SIZEA.html">SIZEA</a><br>
+
+<<INCLUDES>>= 
+-INCLUDE 'HASH.INC'
+-INCLUDE 'SIZEA.INC'
+@
+
+<<SIZET>>=
+-MODULE SIZEL
+-PUBLIC SIZET()
+*
+         DEFINE('SIZET(T)')                                 :(END_SIZET)
+*
+SIZET    SIZET =  SIZEA(KEYS_IN_TABLE(T))                      :(RETURN)
+*
+END_SIZET
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'SIZET.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL SIZET
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                #####   ###  #######  #######  #######                *
+*               #     #   #        #   #           #                   *
+*               #         #       #    #           #                   *
+*                #####    #     #      #####       #                   *
+*                     #   #    #       #           #                   *
+*               #     #   #   #        #           #                   *
+*                #####   ###  #######  #######     #                   *
+*                                                                      *
+* SIZET                    SIZE OF TABLE                               *
+*                                                                      *
+************************************************************************
+*
+* SIZET.lss
+*
+<<SIZET>>
+*
+* CE: .MSNOBOL4;
+@
+-LINE 10 "SIZET.lss"
+-INCLUDE 'HASH.INC'
+-INCLUDE 'SIZEA.INC'
+-STITL SIZET
+-EJECT
+-LINE 38 "SIZET.lss"
+*
+************************************************************************
+*                                                                      *
+*                #####   ###  #######  #######  #######                *
+*               #     #   #        #   #           #                   *
+*               #         #       #    #           #                   *
+*                #####    #     #      #####       #                   *
+*                     #   #    #       #           #                   *
+*               #     #   #   #        #           #                   *
+*                #####   ###  #######  #######     #                   *
+*                                                                      *
+* SIZET                    SIZE OF TABLE                               *
+*                                                                      *
+************************************************************************
+*
+* SIZET.lss
+*
+-LINE 15 "SIZET.lss"
+-MODULE SIZEL
+-PUBLIC SIZET()
+*
+         DEFINE('SIZET(T)')                                 :(END_SIZET)
+*
+SIZET    SIZET =  SIZEA(KEYS_IN_TABLE(T))                      :(RETURN)
+*
+END_SIZET
+*
+* CE: .MSNOBOL4;
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'SIZET.INC'
+-LINE 29 "SIZET.lss"
+         &CODE = 1
          &CODE = 0
 END
 <h1>SKIM - Skim unique characters</h1>

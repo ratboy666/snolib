@@ -1,0 +1,58 @@
+<h1>SIZET - Number of items in table</h1>
+
+[[SIZET(T)]] returns the number of items in table [[T]].
+
+<h2>Uses</h2>
+<a href="HASH.html">HASH</a><br>
+<a href="SIZEA.html">SIZEA</a><br>
+
+<<INCLUDES>>= 
+-INCLUDE 'HASH.INC'
+-INCLUDE 'SIZEA.INC'
+@
+
+<<SIZET>>=
+-MODULE SIZEL
+-PUBLIC SIZET()
+*
+         DEFINE('SIZET(T)')                                 :(END_SIZET)
+*
+SIZET    SIZET =  SIZEA(KEYS_IN_TABLE(T))                      :(RETURN)
+*
+END_SIZET
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'SIZET.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL SIZET
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                #####   ###  #######  #######  #######                *
+*               #     #   #        #   #           #                   *
+*               #         #       #    #           #                   *
+*                #####    #     #      #####       #                   *
+*                     #   #    #       #           #                   *
+*               #     #   #   #        #           #                   *
+*                #####   ###  #######  #######     #                   *
+*                                                                      *
+* SIZET                    SIZE OF TABLE                               *
+*                                                                      *
+************************************************************************
+*
+* SIZET.lss
+*
+<<SIZET>>
+*
+* CE: .MSNOBOL4;
+@

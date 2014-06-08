@@ -1,0 +1,58 @@
+<h1>SIZEL - Number of elements in list</h1>
+
+[[SIZEL(L)]] returns the number of elements in list [[L]].
+
+<h2>Uses</h2>
+<a href="LINK.html">LINK</a><br>
+
+<<INCLUDES>>= 
+-INCLUDE 'LINK.INC'
+@
+
+<<SIZEL>>=
+-MODULE SIZEL
+-PUBLIC SIZEL()
+*
+         DEFINE('SIZEL(L)')                                 :(END_SIZEL)
+*
+SIZEL    SIZEL = 0
+SIZEL_2  SIZEL = DIFFER(L) SIZEL + 1                          :F(RETURN)
+         L = NEXT(L)                                          :(SIZEL_2)
+*
+END_SIZEL
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'SIZEL.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+<<INCLUDES>>
+-STITL SIZEL
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                #####   ###  #######  #######  #                      *
+*               #     #   #        #   #        #                      *
+*               #         #       #    #        #                      *
+*                #####    #     #      #####    #                      *
+*                     #   #    #       #        #                      *
+*               #     #   #   #        #        #                      *
+*                #####   ###  #######  #######  #######                *
+*                                                                      *
+* SIZEL                    SIZE OF LIST                                *
+*                                                                      *
+************************************************************************
+*
+* SIZEL.lss
+*
+<<SIZEL>>
+*
+* CE: .MSNOBOL4;
+@
