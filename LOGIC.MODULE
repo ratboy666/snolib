@@ -1,0 +1,77 @@
+{
+  "SOURCE": "LOGIC.lss",
+  "COMMENT": "LOGIC module",
+  "ARTIFACTS": [
+    "LOGIC.INC",
+    "LOGIC.html",
+    "LOGIC.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "LOGIC",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "LOGIC.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "LOGIC.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "LOGIC.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "LOGIC.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "LOGIC.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "LOGIC.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "LOGIC.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012742",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "LOGIC.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012775",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "LOGIC.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012810",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "LOGIC.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012780",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

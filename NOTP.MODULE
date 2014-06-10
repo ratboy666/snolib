@@ -1,0 +1,78 @@
+{
+  "SOURCE": "NOTP.lss",
+  "COMMENT": "NOTP module",
+  "ARTIFACTS": [
+    "NOTP.INC",
+    "NOTP.html",
+    "NOTP.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "NOTP",
+  "DEPENDS": [
+    "STACK"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "NOTP.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "NOTP.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "NOTP.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "NOTP.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "NOTP.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "NOTP.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "NOTP.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012744",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "NOTP.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012775",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "NOTP.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012814",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "NOTP.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012780",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

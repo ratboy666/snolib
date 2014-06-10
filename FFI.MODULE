@@ -1,0 +1,77 @@
+{
+  "SOURCE": "FFI.lss",
+  "COMMENT": "FFI module",
+  "ARTIFACTS": [
+    "FFI.INC",
+    "FFI.html",
+    "FFI.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "FFI",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "FFI.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "FFI.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "FFI.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "FFI.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "FFI.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "FFI.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "FFI.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402336388",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "FFI.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402394872",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "FFI.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402336391",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "FFI.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402336391",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

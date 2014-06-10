@@ -1,0 +1,77 @@
+{
+  "SOURCE": "ROMAN.lss",
+  "COMMENT": "ROMAN module",
+  "ARTIFACTS": [
+    "ROMAN.INC",
+    "ROMAN.html",
+    "ROMAN.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "ROMAN",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "ROMAN.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "ROMAN.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "ROMAN.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "ROMAN.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "ROMAN.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "ROMAN.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "ROMAN.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012748",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "ROMAN.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012775",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "ROMAN.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012820",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "ROMAN.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012780",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

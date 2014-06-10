@@ -1,0 +1,78 @@
+{
+  "SOURCE": "VDIFFER.lss",
+  "COMMENT": "VDIFFER module",
+  "ARTIFACTS": [
+    "VDIFFER.INC",
+    "VDIFFER.html",
+    "VDIFFER.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "VDIFFER",
+  "DEPENDS": [
+    "SYSTEM"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "VDIFFER.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "VDIFFER.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "VDIFFER.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "VDIFFER.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "VDIFFER.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "VDIFFER.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "VDIFFER.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012758",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "VDIFFER.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012771",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "VDIFFER.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012846",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "VDIFFER.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012782",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

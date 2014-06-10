@@ -1,0 +1,77 @@
+{
+  "SOURCE": "RANDOM.lss",
+  "COMMENT": "RANDOM module",
+  "ARTIFACTS": [
+    "RANDOM.INC",
+    "RANDOM.html",
+    "RANDOM.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "RANDOM",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "RANDOM.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "RANDOM.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "RANDOM.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "RANDOM.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "RANDOM.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "RANDOM.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "RANDOM.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012746",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "RANDOM.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012775",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "RANDOM.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012817",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "RANDOM.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012780",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

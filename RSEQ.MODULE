@@ -1,0 +1,59 @@
+{
+  "SOURCE": "rseq.lss",
+  "COMMENT": "rseq module",
+  "ARTIFACTS": [
+    "rseq",
+    "rseq.html"
+  ],
+  "TYPE": "PROGRAM",
+  "NAME": "RSEQ",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "rseq",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "rseq.html",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "rseq",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "rseq.html",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "rseq.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012749",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "rseq",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012783",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "rseq.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012821",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    }
+  ]
+}

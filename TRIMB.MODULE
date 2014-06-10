@@ -1,0 +1,77 @@
+{
+  "SOURCE": "TRIMB.lss",
+  "COMMENT": "TRIMB module",
+  "ARTIFACTS": [
+    "TRIMB.INC",
+    "TRIMB.html",
+    "TRIMB.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "TRIMB",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "TRIMB.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "TRIMB.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "TRIMB.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "TRIMB.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "TRIMB.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "TRIMB.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "TRIMB.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012756",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "TRIMB.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012771",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "TRIMB.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012835",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "TRIMB.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012781",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

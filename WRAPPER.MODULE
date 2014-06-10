@@ -1,0 +1,77 @@
+{
+  "SOURCE": "WRAPPER.lss",
+  "COMMENT": "WRAPPER module",
+  "ARTIFACTS": [
+    "WRAPPER.INC",
+    "WRAPPER.html",
+    "WRAPPER.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "WRAPPER",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "WRAPPER.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "WRAPPER.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "WRAPPER.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "WRAPPER.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "WRAPPER.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "WRAPPER.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "WRAPPER.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402261445",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "WRAPPER.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402261462",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "WRAPPER.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402274287",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "WRAPPER.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402274285",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

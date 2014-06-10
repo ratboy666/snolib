@@ -1,0 +1,77 @@
+{
+  "SOURCE": "REDEFINE.lss",
+  "COMMENT": "REDEFINE module",
+  "ARTIFACTS": [
+    "REDEFINE.INC",
+    "REDEFINE.html",
+    "REDEFINE.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "REDEFINE",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "REDEFINE.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "REDEFINE.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "REDEFINE.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "REDEFINE.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "REDEFINE.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "REDEFINE.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "REDEFINE.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012747",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "REDEFINE.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012772",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "REDEFINE.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012818",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "REDEFINE.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012780",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

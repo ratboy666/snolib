@@ -31,7 +31,6 @@ is made.
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;DEDUPA&raquo;&equiv;</b>
--MODULE DEDUPA
 -PUBLIC DEDUPA()
 <font color="#818181"><i>*</i></font>
          DEFINE(&#39;DEDUPA(A)T,I&#39;)                            <b>:(END_DEDUPA)</b>
@@ -39,7 +38,7 @@ is made.
 DEDUPA   DEDUPA = IDENT(A, ARRAY0) A                          <b>:S(RETURN)</b>
          T = TABLE()
          SEQ(&#39; T&lt;A&lt;I&gt;&gt; = 1&#39;, .I)
-         DEDUPA = KEYS_IN_TABLE(T)                             <b>:(RETURN)</b>
+         DEDUPA = KEYST(T)                                     <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 END_DEDUPA
 <b>@</b>
@@ -58,6 +57,8 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+-MODULE DEDUPA
+-IN72
 <b>&laquo;INCLUDES&raquo;</b>
 -STITL DEDUPA
 -EJECT
@@ -88,7 +89,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Sun Jun  8 20:26:58 EDT 2014</p></td><td><p align=right>
+Tue Jun 10 06:49:25 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

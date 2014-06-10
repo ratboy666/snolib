@@ -14,6 +14,7 @@ comparision.
 
 <<AGT>>=
 -PUBLIC AGT()
+*
          DEFINE('AGT(S1,S2)')
          AGT_TT = REPLACE(&ALPHABET, &UCASE, &LCASE)          :(AGT_END)
 *
@@ -35,9 +36,9 @@ END
 @
 
 <<>>=
-<<INCLUDES>>
 -MODULE AGT
 -IN72
+<<INCLUDES>>
 -STITL AGT
 -EJECT
 *

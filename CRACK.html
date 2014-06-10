@@ -28,17 +28,23 @@ from strings: <code>%'A,B,C'</code> creates a three-element array.
 <pre><font face="Source Code Pro">
 <b>&laquo;INCLUDES&raquo;&equiv;</b>
 -INCLUDE &#39;COUNT.INC&#39;
+-INCLUDE &#39;SEQ.INC&#39;
 <b>@</b>
 </font></pre></div>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;CRACK&raquo;&equiv;</b>
--MODULE CRACK
 -PUBLIC CRACK(), %1
+-PUBLIC COPYA()
+<font color="#818181"><i>*</i></font>
+         DEFINE(&#39;COPYA(A)I&#39;)
          DEFINE(&#39;CRACK_1(S)P&#39;)
          DEFINE(&#39;CRACK(S,B,F)I,PAT,N&#39;)
          DEFINE(&#39;CRACK_4(S)&#39;)
          OPSYN(&#39;%&#39;, &#39;CRACK_1&#39;, 1)                           <b>:(CRACK_END)</b>
+<font color="#818181"><i>*</i></font>
+COPYA    COPYA = ARRAY(PROTOTYPE(A))
+         SEQ(&#39; COPYA&lt;I&gt; = A&lt;I&gt;&#39;, .I)                           <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 CRACK_1  P = IDENT(P) &#39;,&#39;
          CRACK_1 = CRACK(S, P)                                 <b>:(RETURN)</b>
@@ -77,6 +83,8 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+-MODULE CRACK
+-IN72
 <b>&laquo;INCLUDES&raquo;</b>
 -STITL CRACK
 -EJECT
@@ -106,7 +114,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 19:59:53 EDT 2014</p></td><td><p align=right>
+Tue Jun 10 06:07:55 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

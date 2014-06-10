@@ -1,0 +1,59 @@
+{
+  "SOURCE": "lseq.lss",
+  "COMMENT": "lseq module",
+  "ARTIFACTS": [
+    "lseq",
+    "lseq.html"
+  ],
+  "TYPE": "PROGRAM",
+  "NAME": "LSEQ",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "lseq",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "lseq.html",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "lseq",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "lseq.html",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "lseq.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012742",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "lseq",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012783",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "lseq.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012811",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    }
+  ]
+}

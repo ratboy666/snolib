@@ -1,0 +1,77 @@
+{
+  "SOURCE": "UTF8.lss",
+  "COMMENT": "UTF8 module",
+  "ARTIFACTS": [
+    "UTF8.INC",
+    "UTF8.html",
+    "UTF8.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "UTF8",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "UTF8.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "UTF8.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "UTF8.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "UTF8.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "UTF8.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "UTF8.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "UTF8.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012757",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "UTF8.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012776",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "UTF8.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012833",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "UTF8.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012781",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

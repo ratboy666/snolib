@@ -1,0 +1,79 @@
+{
+  "SOURCE": "TIMER.lss",
+  "COMMENT": "TIMER module",
+  "ARTIFACTS": [
+    "TIMER.INC",
+    "TIMER.html",
+    "TIMER.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "TIMER",
+  "DEPENDS": [
+    "RESOL",
+    "SYSTEM"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "TIMER.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "TIMER.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "TIMER.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "TIMER.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "TIMER.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "TIMER.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "TIMER.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012755",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "TIMER.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012776",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "TIMER.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012830",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "TIMER.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012781",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

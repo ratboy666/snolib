@@ -1,0 +1,80 @@
+{
+  "SOURCE": "CVAR.lss",
+  "COMMENT": "CVAR module",
+  "ARTIFACTS": [
+    "CVAR.INC",
+    "CVAR.html",
+    "CVAR.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "CVAR",
+  "DEPENDS": [
+    "CHARS",
+    "HASH",
+    "P64"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "CVAR.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "CVAR.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "CVAR.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "CVAR.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "CVAR.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "CVAR.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "CVAR.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012723",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "CVAR.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402394872",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "CVAR.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012794",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "CVAR.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012779",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

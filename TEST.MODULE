@@ -1,0 +1,78 @@
+{
+  "SOURCE": "TEST.lss",
+  "COMMENT": "TEST module",
+  "ARTIFACTS": [
+    "TEST.INC",
+    "TEST.html",
+    "TEST.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "TEST",
+  "DEPENDS": [
+    "UNIQUE"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "TEST.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "TEST.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "TEST.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "TEST.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "TEST.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "TEST.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "TEST.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012754",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "TEST.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012776",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "TEST.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012829",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "TEST.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012781",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

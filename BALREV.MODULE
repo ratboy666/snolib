@@ -1,0 +1,77 @@
+{
+  "SOURCE": "BALREV.lss",
+  "COMMENT": "BALREV module",
+  "ARTIFACTS": [
+    "BALREV.INC",
+    "BALREV.html",
+    "BALREV.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "BALREV",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "BALREV.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "BALREV.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "BALREV.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "BALREV.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "BALREV.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "BALREV.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "BALREV.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012716",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "BALREV.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012768",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "BALREV.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012786",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "BALREV.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012778",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

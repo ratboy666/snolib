@@ -1,0 +1,64 @@
+{
+  "SOURCE": "ifs.lss",
+  "COMMENT": "ifs module",
+  "ARTIFACTS": [
+    "ifs",
+    "ifs.html"
+  ],
+  "TYPE": "PROGRAM",
+  "NAME": "IFS",
+  "DEPENDS": [
+    "CHARS",
+    "FASTBAL",
+    "HOST",
+    "SYSTEM",
+    "VDIFFER"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "ifs",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "ifs.html",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "ifs",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "ifs.html",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "ifs.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012734",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "ifs",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402394875",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "ifs.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012806",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "SOURCE": "STCL.lss",
+  "COMMENT": "STCL module",
+  "ARTIFACTS": [
+    "STCL.INC",
+    "STCL.html",
+    "STCL.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "TCL",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "STCL.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "STCL.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "STCL.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "STCL.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "STCL.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "STCL.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "STCL.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012753",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "STCL.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012776",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "STCL.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012826",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "STCL.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012781",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

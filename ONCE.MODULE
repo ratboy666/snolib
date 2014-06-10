@@ -1,0 +1,78 @@
+{
+  "SOURCE": "ONCE.lss",
+  "COMMENT": "ONCE module",
+  "ARTIFACTS": [
+    "ONCE.INC",
+    "ONCE.html",
+    "ONCE.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "ONCE",
+  "DEPENDS": [
+    "UNIQUE"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "ONCE.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "ONCE.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "ONCE.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "ONCE.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "ONCE.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "ONCE.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "ONCE.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012744",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "ONCE.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012775",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "ONCE.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012814",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "ONCE.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012780",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

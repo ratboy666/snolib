@@ -1,0 +1,78 @@
+{
+  "SOURCE": "AI.lss",
+  "COMMENT": "AI module",
+  "ARTIFACTS": [
+    "AI.INC",
+    "AI.html",
+    "AI.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "AI",
+  "DEPENDS": [
+    "SEQ"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "AI.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "AI.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "AI.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "AI.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "AI.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "AI.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "AI.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402396821",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "AI.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402397362",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "AI.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402397363",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "AI.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402397362",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

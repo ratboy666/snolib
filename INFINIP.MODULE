@@ -1,0 +1,79 @@
+{
+  "SOURCE": "INFINIP.lss",
+  "COMMENT": "INFINIP module",
+  "ARTIFACTS": [
+    "INFINIP.INC",
+    "INFINIP.html",
+    "INFINIP.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "INFINIP",
+  "DEPENDS": [
+    "REDEFINE",
+    "SWAP"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "INFINIP.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "INFINIP.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "INFINIP.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "INFINIP.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "INFINIP.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "INFINIP.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "INFINIP.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012735",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "INFINIP.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012772",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "INFINIP.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012807",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "INFINIP.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012779",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

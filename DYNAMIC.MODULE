@@ -1,0 +1,80 @@
+{
+  "SOURCE": "DYNAMIC.lss",
+  "COMMENT": "DYNAMIC module",
+  "ARTIFACTS": [
+    "DYNAMIC.INC",
+    "DYNAMIC.html",
+    "DYNAMIC.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "DYNAMIC",
+  "DEPENDS": [
+    "BQ",
+    "HOST",
+    "REPL"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "DYNAMIC.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "DYNAMIC.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "DYNAMIC.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "DYNAMIC.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "DYNAMIC.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "DYNAMIC.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "DYNAMIC.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012727",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "DYNAMIC.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012769",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "DYNAMIC.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012799",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "DYNAMIC.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012779",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

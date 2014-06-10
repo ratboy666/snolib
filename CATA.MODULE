@@ -1,0 +1,78 @@
+{
+  "SOURCE": "CATA.lss",
+  "COMMENT": "CATA module",
+  "ARTIFACTS": [
+    "CATA.INC",
+    "CATA.html",
+    "CATA.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "CATA",
+  "DEPENDS": [
+    "SEQ"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "CATA.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "CATA.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "CATA.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "CATA.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "CATA.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "CATA.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "CATA.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012718",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "CATA.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402195041",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "CATA.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012789",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "CATA.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012778",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

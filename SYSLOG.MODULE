@@ -1,0 +1,79 @@
+{
+  "SOURCE": "SYSLOG.lss",
+  "COMMENT": "SYSLOG module",
+  "ARTIFACTS": [
+    "SYSLOG.INC",
+    "SYSLOG.html",
+    "SYSLOG.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "SYSLOG",
+  "DEPENDS": [
+    "FFI",
+    "P64"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "SYSLOG.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SYSLOG.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SYSLOG.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "SYSLOG.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SYSLOG.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SYSLOG.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "SYSLOG.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012754",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "SYSLOG.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402394875",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "SYSLOG.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012828",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "SYSLOG.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012781",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

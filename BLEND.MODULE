@@ -1,0 +1,77 @@
+{
+  "SOURCE": "BLEND.lss",
+  "COMMENT": "BLEND module",
+  "ARTIFACTS": [
+    "BLEND.INC",
+    "BLEND.html",
+    "BLEND.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "BLEND",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "BLEND.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "BLEND.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "BLEND.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "BLEND.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "BLEND.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "BLEND.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "BLEND.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012717",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "BLEND.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012768",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "BLEND.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012787",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "BLEND.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012778",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

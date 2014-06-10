@@ -4,7 +4,7 @@
 -INCLUDE 'VDIFFER.INC'
 -STITL HASH
 -EJECT
--LINE 149 "HASH.lss"
+-LINE 148 "HASH.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -25,21 +25,21 @@
 *
 -LINE 64 "HASH.lss"
 -MODULE HASH
--PUBLIC HASH(), COPY_TABLE(), MERGE_TABLE(), KEYS_IN_TABLE(), #1
--PUBLIC PRUNE_TABLE()
+-PUBLIC HASH(), COPYT(), MERGET(), KEYST(), #1
+-PUBLIC PRUNET()
 *
          DEFINE('HASH(S,E,P,TS,TI,FK,FV,SP)K,V,C')
          DEFINE('HASH_3(S)')
-         DEFINE('COPY_TABLE(T)')
-         DEFINE('MERGE_TABLE(T1,T2)A,I')
-         DEFINE('KEYS_IN_TABLE(T)A,N,I')
-         DEFINE('PRUNE_TABLE(T)A,I')
+         DEFINE('COPYT(T)')
+         DEFINE('MERGET(T1,T2)A,I')
+         DEFINE('KEYST(T)A,N,I')
+         DEFINE('PRUNET(T)A,I')
          OPSYN('#', 'HASH', 1)                               :(HASH_END)
 *
-PRUNE_TABLE
-         PRUNE_TABLE = TABLE()
-         A = KEYS_IN_TABLE(T)                                 :F(RETURN)
-         SEQ( ' PRUNE_TABLE<A<I>> = VDIFFER(T<A<I>>)', .I)     :(RETURN)
+PRUNET
+         PRUNET = TABLE()
+         A = KEYST(T)                                         :F(RETURN)
+         SEQ( ' PRUNET<A<I>> = VDIFFER(T<A<I>>)', .I)          :(RETURN)
 *
 HASH     HASH = TABLE(TS, TI)
          E = IDENT(E) '='
@@ -59,19 +59,18 @@ HASH_4   S POS(0) BRKREM(P) . V (P | RPOS(0)) =               :F(RETURN)
 *
 HASH_3   HASH_3 = S                                            :(RETURN)
 *
-COPY_TABLE
-         COPY_TABLE = CONVERT(CONVERT(T, 'ARRAY'), 'TABLE')    :(RETURN)
+COPYT
+         COPYT = CONVERT(CONVERT(T, 'ARRAY'), 'TABLE')         :(RETURN)
 *
-MERGE_TABLE
-         MERGE_TABLE = COPY_TABLE(T1)
+MERGET
+         MERGET = COPYT(T1)
          A = CONVERT(T2, 'ARRAY')
-         SEQ(' MERGE_TABLE<A<I, 1>> = A<I, 2> ', .I)           :(RETURN)
+         SEQ(' MERGET<A<I, 1>> = A<I, 2> ', .I)                :(RETURN)
 *
-KEYS_IN_TABLE
-         A = CONVERT(T, 'ARRAY')                             :F(FRETURN)
+KEYST    A = CONVERT(T, 'ARRAY')                             :F(FRETURN)
          PROTOTYPE(A) BREAK(',') . N                         :F(FRETURN)
-         KEYS_IN_TABLE = ARRAY(N)
-         SEQ(' KEYS_IN_TABLE<I> = A<I,1> ', .I)                :(RETURN)
+         KEYST = ARRAY(N)
+         SEQ(' KEYST<I> = A<I,1> ', .I)                        :(RETURN)
 *
 HASH_END
 *

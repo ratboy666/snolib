@@ -1,0 +1,77 @@
+{
+  "SOURCE": "SPELL.lss",
+  "COMMENT": "SPELL module",
+  "ARTIFACTS": [
+    "SPELL.INC",
+    "SPELL.html",
+    "SPELL.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "SPELL",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "SPELL.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SPELL.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SPELL.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "SPELL.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SPELL.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SPELL.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "SPELL.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012752",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "SPELL.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012776",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "SPELL.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012825",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "SPELL.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012781",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

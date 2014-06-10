@@ -1,0 +1,77 @@
+{
+  "SOURCE": "COUNT.lss",
+  "COMMENT": "COUNT module",
+  "ARTIFACTS": [
+    "COUNT.INC",
+    "COUNT.html",
+    "COUNT.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "COUNT",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "COUNT.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "COUNT.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "COUNT.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "COUNT.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "COUNT.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "COUNT.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "COUNT.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012722",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "COUNT.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012769",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "COUNT.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012793",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "COUNT.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012778",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

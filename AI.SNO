@@ -1,8 +1,8 @@
--LINE 18 "AI.lss"
--INCLUDE 'SEQ.INC'
 -MODULE AI
 -IN72
--LINE 55 "AI.lss"
+-LINE 18 "AI.lss"
+-INCLUDE 'SEQ.INC'
+-LINE 56 "AI.lss"
 -STITL AI
 -EJECT
 *
@@ -24,6 +24,7 @@
 *
 -LINE 22 "AI.lss"
 -PUBLIC AI()
+*
          DEFINE('AI(A,I)J')                                    :(AI_END)
 *
 AI       IDENT(DATATYPE(I), 'ARRAY')                            :F(AI_1)

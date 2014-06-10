@@ -1,0 +1,77 @@
+{
+  "SOURCE": "LINK.lss",
+  "COMMENT": "LINK module",
+  "ARTIFACTS": [
+    "LINK.INC",
+    "LINK.html",
+    "LINK.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "LINK",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "LINK.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "LINK.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "LINK.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "LINK.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "LINK.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "LINK.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "LINK.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012741",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "LINK.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012769",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "LINK.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012834",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "LINK.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012781",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "SOURCE": "bundle.lss",
+  "COMMENT": "bundle module",
+  "ARTIFACTS": [
+    "bundle",
+    "bundle.html"
+  ],
+  "TYPE": "PROGRAM",
+  "NAME": "BUNDLE",
+  "DEPENDS": [
+    "CRACK",
+    "HOST",
+    "TRIMB"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "bundle",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "bundle.html",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "bundle",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "bundle.html",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "bundle.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012718",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "bundle",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402394875",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "bundle.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012788",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    }
+  ]
+}

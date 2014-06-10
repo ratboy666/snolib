@@ -1,0 +1,77 @@
+{
+  "SOURCE": "LIKE.lss",
+  "COMMENT": "LIKE module",
+  "ARTIFACTS": [
+    "LIKE.INC",
+    "LIKE.html",
+    "LIKE.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "LIKE",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "LIKE.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "LIKE.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "LIKE.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "LIKE.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "LIKE.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "LIKE.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "LIKE.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012740",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "LIKE.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012774",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "LIKE.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012809",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "LIKE.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012779",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

@@ -9,23 +9,34 @@
 *
 * -d 4m : use 64MB (64 bit)
 *
-* The philosophy behind SOOSIE is similar to st-80 or dedicated lisp
+* The philosophy behind SOOSIE is similar to ST-80 or dedicated lisp
 * boxes. SOOSIE manages an "image" which is all the code in the
 * system. Pieces can be added in, and freely used. SOOSIE manages
 * the image, which includes all source code and "object" files.
 *
 * However, SOOSIE must be much more aware of the filesystem. The
-* only thing available is "-include" which can only bring in files
-* from the filesystem. Therefore, SOOSIE also manages files in the
-* filesystem (only those related to SOOSIE).
+* only thing available to running programs is "-include" which can only
+* bring in files from the filesystem. Therefore, SOOSIE also manages
+* files in the filesystem (only those related to SOOSIE).
 *
 * SOOSIE is the most complicated program in the SNOLIB suite. It
 * manages the other build programs ('uses', 'bldidx, and the building
-* program 'sweave', 'stangle', 'g360', 'embed', and 'ifs'). It also
-* manages the external editor, and can run 'code'.
+* program 'sweave', 'stangle', 'g360', 'embed', 'in72' and 'ifs'). It
+* also manages the external editor, and can run 'code'.
 *
-* Running deseq automatically. If the source file has -IN72 in it,
-* a deseq pass should be executed before generating the INC file.
+* FIXME - edit the build and install commands associated with module:
+* need to identify base from RECIPES -- fill it in, and edit that.
+*
+* Implement EXPORT and IMPORT to allow testing of MODULE EDIT.
+*
+* Implement library edit.
+*
+* Implement MODULE COPY.
+*
+* Implement INSTALL MODULE.
+*
+* "Super commands" - build modules out of date. Generate Makefile.
+* Generate listing, test compile of PROGRAM.
 
 -include 'JSON.INC'
 -include 'READFILE.INC'
@@ -49,6 +60,7 @@
 -include 'SIZET.INC'
 -include 'STROUT.INC'
 -include 'REPL.INC'
+-include 'APPENDA.INC'
 
 
          define('iter_artifacts(lbr,m)')
@@ -78,22 +90,37 @@
 
 
          terminal = 'SOOSIE (FRI JUN  6 12:22:12 EDT 2014)'
+
+* Load configuration
+
+         config = json_decode(readfile('SOOSIE.CFG'))
+         
          rlappname('SOOSIE')
          read_history('.SOOSIE')
          stifle_history(50)
          output(.term, 19, 'T', '/dev/stdout')
 
-top      l = readline('SOOSIE: ')
+* Load the default recipes
+
+         recipes = json_decode(readfile('RECIPES'))
+
+* Load default installation rules
+
+         insrules = json_decode(json_rest)
+
+top      p = (differ(lbr) lbr<'LIBRARY'>, 'NO LIBRARY')
+         l = readline('SOOSIE (' p '): ')
          l = history_expand(l)
          l = trim(l) ' '
          add_history(vdiffer(l))
 
 * major command, go to handler
 
-         l fence ('ls' | 'LS' | 'new' | 'NEW' | 'load' | 'load' |
+         l fence ('ls' | 'LS' | 'seed' | 'SEED' | 'load' | 'load' |
 +                 'save' | 'save' | 'quit' | 'QUIT' |
-+                 'extract' | 'EXTRACT' | 'help' | 'HELP' |
++                 'export' | 'EXPORT' | 'help' | 'HELP' |
 +                 'info' | 'INFO' | 'build' | 'BUILD' |
++                 'import' | 'IMPORT' | 'exportall' | 'EXPORTALL' |
 +                 'edit' | 'EDIT' | 'module' | 'MODULE') . cmd ' '
 +          rem . args                                     :s($(cmd '.'))
          terminal = '?'                                           :(top)
@@ -101,16 +128,27 @@ top      l = readline('SOOSIE: ')
 
 * Help
 
-help.    terminal = 'SOOSIE'
+* NOTE: exportall, seed are "hidden" commands
+
+help.    terminal = 'SOOSIE COMMANDS'
          terminal =
-         terminal = 'NEW'
-         terminal = 'LOAD'
+         terminal = 'LOAD <LIBRARY>'
          terminal = 'SAVE'
          terminal = 'LS'
-         terminal = 'EXTRACT'
-         terminal = 'BUILD'
+         terminal = 'EXPORT <MODULE>'
+         terminal = 'IMPORT <MODULE>'
+         terminal = 'BUILD <MODULE>'
          terminal = 'QUIT'
-         terminal = 'MODULE'
+         terminal = 'EDIT <FILE>'
+         terminal = 'INFO'
+         terminal = 'INFO <MODULE>'
+         terminal = 'INFO FILE <FILE>'
+         terminal = 'MODULE ADD <MODULE>'
+         terminal = 'MODULE REM <MODULE>'
+         terminal = 'MODULE EDIT <MODULE> NAME,SOURCE,COMMENT,TYPE,'
++                                                            'ARTIFACTS'
+         terminal = '                     DEPENDS,FILES <NEW VALUE>'
+         terminal = 'MODULE FRESHEN <MODULE>'
                                                                   :(top)
 
 
@@ -129,18 +167,13 @@ module.  ident(lbr)                                              :s(nol)
 
          terminal = 'UNKNOWN MODULE SUBCOMMAND'                   :(top)
 
-* notes: build and install arrays should always be ordered
-* in artifact order. build and install arrays have entries
-* added and removed with artifact edit. files gets entries
-* added when artifact is added.
-* files tracks source and artifacts, with possibly
-* extra.
+* files tracks source and artifacts, with possibly extra files.
 *
-* ident('TYPE') means this module will never be built. It
-* can however, contribute to the DEPENDS ("uber" modules)
+* ident('TYPE') means this module will never be built. It can, however,
+* contribute to the DEPENDS ("uber" modules)
 *
-* eg, a "LIST" ubermodule can be defined that will make
-* all LINK sub-modules.
+* eg, a "LIST" ubermodule can be defined that will make all LINK
+* (list) sub-modules.
 *
 * module rename m or module copy -- copy is problematic due to
 * deep copy semantics - the elements will still refer to each other
@@ -168,18 +201,15 @@ module_edit
          val 'MODULE' | 'PROGRAM' | ''                           :s(me2)
          terminal = 'TYPE MUST BE MODULE, PROGRAM OR EMPTY'       :(top)
 me2      lbr<'CONTENTS'><mod><var> = destring(var, val)        :(fresh2)
-*
-* fixme: should adjust files for artifacts and source. note that there
-*        may be extra files in files -- don't touch. just add. also,
-*        try loading any files in files (freshen) do this on all
-*        these edits (just in case).
-*
-* reorder build/install into artifacts order. make sure there is an
-* entry in build/install for each artifact.
-*
-* what about circular dependency? blows up now in build.
+
+
+* FIXME: what about circular dependency? blows up now in build.
+
+* FIXME: need a freshen all
 
 module_freshen
+         mod = replace(trimb(args), &lcase, &ucase)
+         ident(lbr<'CONTENTS'><mod>)                             :s(nom)
 
 fresh2
 
@@ -203,12 +233,62 @@ fresh2
 
 * Create array a, containing SOURCE and ARTIFACTS.
 
-         n = (differ(c<mod><'SOURCE'>) 1, 0)
- terminal = sizea(c<mod><'ARTIFACTS'>)
+         a = array0
+         seq(' a = appenda(a, c<mod><"ARTIFACTS"><i>)', .i)
+         a = appenda(a, vdiffer(c<mod><'SOURCE'>))
 
-* Spin through and freshen the FILES
+* There should be a file for each a<i>. Make a table from FILES. Check
+* each element in array a, and add a new file for each not found.
 
- :(top)
+         f = table()
+         seq(' f<c<mod><"FILES"><i><"NAME">> = c<mod><"FILES"><i>', .i)
+         seq(' f<a<i>> = (vdiffer(f<a<i>>), create_file(a<i>))', .i)
+
+* Convert f table back to array
+
+         k = keyst(f)
+         a = array(sizea(k))
+         seq(' a<i> = f<k<i>>', .i)
+
+* Assign back to files
+
+         c<mod><'FILES'> = a
+
+* Spin through and freshen the FILES. Read each file. Compare the
+* timestamp of the new file against the current timestamp. If more
+* recent, replace the file record.
+
+         seq(' f = create_file(a<i><"NAME">);'
++            ' a<i> = gt(f<"TIMESTAMP">, a<i><"TIMESTAMP">) f', .i)
+
+* Now, adjust build and install vectors (to artifacts order). Add new
+* entries to build and install as needed. Both 'INSTALL'/'BUILD' are
+* array of 'TARGET'/'COMMANDS'-array.
+
+         t = table()
+         c = lbr<'CONTENTS'><mod><'BUILD'>
+         seq(' t<c<i><"TARGET">> = c<i>', .i)
+         ar = lbr<'CONTENTS'><mod><'ARTIFACTS'>
+         a = array(sizea(ar))
+         seq(' a<i> = t<ar<i>>', .i)
+         seq(' bt = table();'
++            ' bt<"COMMANDS"> = array0;'
++            ' bt<"TARGET"> = ar<i>;'
++            ' a<i> = ident(a<i>) bt', .i)
+         lbr<'CONTENTS'><mod><'BUILD'> = a
+
+         t = table()
+         c = lbr<'CONTENTS'><mod><'INSTALL'>
+         seq(' t<c<i><"TARGET">> = c<i>', .i)
+         ar = lbr<'CONTENTS'><mod><'ARTIFACTS'>
+         a = array(sizea(ar))
+         seq(' a<i> = t<ar<i>>', .i)
+         seq(' bt = table();'
++            ' bt<"COMMANDS"> = array0;'
++            ' bt<"TARGET"> = ar<i>;'
++            ' a<i> = ident(a<i>) bt', .i)
+         lbr<'CONTENTS'><mod><'CONTENTS'> = a
+                                                                  :(top)
 
 stringize
          stringize = v
@@ -217,7 +297,7 @@ stringize
          n 'FILES'                                              :f(str2)
          s = table()
          seq(' s<v<i><"NAME">> = 1', .i)
-         v = keys_in_table(s)
+         v = keyst(s)
 str2     s = stringout(v, CHARS_NUL)
          s = repl(s, '\', '\\')
          s = repl(s, ' ', '\ ')
@@ -226,7 +306,7 @@ str2     s = stringout(v, CHARS_NUL)
 
 destring v = trimb(v)
          destring = v
-         v = ?(n 'DEPENDS') replace(v, &lcase, &ucase)
+         v = ?(n ? 'DEPENDS') replace(v, &lcase, &ucase)
          n 'ARTIFACTS' | 'DEPENDS' | 'FILES'                  :f(return)
          s = repl(v, '\\', CHARS_NUL)
          s = repl(s, '\ ', CHARS_SOH)
@@ -243,7 +323,7 @@ destring v = trimb(v)
          destring = s
          n 'FILES'                                            :f(return)
          f = filest(lbr)
-         seq(' s<i> = (vdiffer(filest<s<i>>), create_file(s<i>))', .i)
+         seq(' s<i> = (vdiffer(f<s<i>>), create_file(s<i>))', .i)
          destring = s                                          :(return)
 
 mesyn    terminal = 'MODULE M_NAME EDIT ITEM VALUE'
@@ -277,7 +357,7 @@ module_rem
          args = replace(args, &lcase, &ucase)
          ident(lbr<'CONTENTS'><args>)                        :s(mnexist)
          lbr<'CONTENTS'><args> =
-         lbr<'CONTENTS'> = prune_table(lbr<'CONTENTS'>)           :(top)
+         lbr<'CONTENTS'> = prunet(lbr<'CONTENTS'>)                :(top)
 
 * Edit a file in the library. We edit by file, because a module may
 * have multiple source artifacts. In future, we should determine
@@ -354,10 +434,6 @@ co_1       ident(p)                                             :s(co_2)
            writefiles(lbr, m)
          p = next(p)                                             :(co_1)
 co_2
-
-* Load the default recipes
-
-         recipes = json_decode(readfile('RECIPES'))
 
 * The modules can now be built, in order from least to most dependent.
 * This is the order that bl is in.
@@ -503,37 +579,29 @@ nom      terminal = 'MODULE ' args ' NOT FOUND'                   :(top)
 
 * New library. Seed in '*.lss' as modules.
 
-new.     args = trimb(args)
+seed.    args = trimb(args)
          args = ident(args) 'LBR'
          lbr = createlbr(args, 'SNOLIB', args '.DAT', 'SNOLIB library')
-
          differ(args, 'LBR')                                     :s(top)
-
-* Seed in the lss files for LBR/LBR.DAT
-
          files = iter_dir('*.lss')
 seed1      fn = value_dir(files)                                :f(seed2)
-           term = 'adding ' rpad(fn, 16) CHARS_CR
+           term = 'SEEDING ' rpad(fn, 16) CHARS_CR
 
-* guess at artifacts from the .lss (or other passed in filename)
+* Guess at artifacts from the .lss (or other passed in filename)
 
-* this will become a 'add_module()' function to add a new module
+* This will become a 'add_module()' function to add a new module
 * to the library. note that there is a "chicken and egg" problem
 * here -- we can't determine details until the module is built,
 * and we can't (yet) actually build modules.
-
-* need to deal with editline.c ffi.c format.c init.c jit.c p64.c p64.h
-* htm -> html
-* ditaa images
 
            base = fn
            base '.lss' =
 
            a = table()
 
-* the bare program, or .INC file must be the first artifact, in order
+* The bare program, or .INC file must be the first artifact, in order
 * for create_module() to correctly determine the dependencies
-* automatically
+* automatically.
 
            a<base>         = file(base) 1
            a<base '.INC'>  = file(base '.INC') 1
@@ -541,7 +609,7 @@ seed1      fn = value_dir(files)                                :f(seed2)
            a<base '.html'> = file(base '.html') 1
            a<base '.tst'>  = file(base '.tst') 1
            a<base '.txt'>  = file(base '.txt') 1
-           a = keys_in_table(a)
+           a = keyst(a)
 
            m = create_module(fn, base ' module', a)
 
@@ -565,17 +633,56 @@ load.    args = trimb(args)
 * Save library
 
 save.    ident(lbr)                                              :s(nol)
+         args = lbr<'LIBRARY'>
          writelbr(lbr)
-         lbr =                                                    :(top)
+         lbr =                                                  :(load.)
 
 
-* Extract files from module
+* Export all
 
-extract. ident(lbr)                                              :s(nol)
+exportall.
+         ident(lbr)
+         mi = iter_modules(lbr)
+xall2      m = module(mi)                                      :f(xall3)
+           t = lbr<'CONTENTS'><m>
+           term = 'EXPORTING ' rpad(t<'NAME'>, 16) CHARS_CR
+           writefiles(lbr, t<'NAME'>)
+         t = copyt(t)
+         t<'FILES'> = copya(t<'FILES'>)
+         seq(' t<"FILES"><i> = copyt(t<"FILES"><i>)', .i)
+         seq(' t<"FILES"><i><"LOCATION"> = "FILE"', .i)
+         seq(' t<"FILES"><i><"CONTENTS"> = ', .i)
+         writefile(t<'NAME'> '.MODULE', json_encode(t))
+         mi = next_module(mi)                                   :(xall2)
+xall3    terminal =                                               :(top)
+
+* Export files from module
+
+export.  ident(lbr)                                              :s(nol)
          args = trimb(args)
-         ident(lbr<'CONTENTS'><args>)                            :s(nom)
-         writefiles(lbr, args)                                   :s(top)
-         terminal = "CAN'T EXTRACT"                               :(top)
+         t = lbr<'CONTENTS'><args>
+         ident(t)                                                :s(nom)
+         writefiles(lbr, args)
+
+* Copy the module, deep copy FILES, change LOCATION to FILE, remove
+* contents
+
+         t = copyt(t)
+         t<'FILES'> = copya(t<'FILES'>)
+         seq(' t<"FILES"><i> = copyt(t<"FILES"><i>)', .i)
+         seq(' t<"FILES"><i><"LOCATION"> = "FILE"', .i)
+         seq(' t<"FILES"><i><"CONTENTS"> = ', .i)
+
+         writefile(t<'NAME'> '.MODULE', json_encode(t))
+                                                                  :(top)
+
+
+* Import
+
+import.  ident(lbr)                                              :s(nol)
+         args = trimb(args)
+         differ(lbr<'CONTENTS'><args>)                        :s(mexist)
+ :(top)
 
 
 * Functions for soosie
@@ -601,6 +708,18 @@ wf2        f = mfile(fi)                                      :f(return)
 * Read library. Reads the library as a json document. Then reads the
 * associated datafile. Iterates the modules in the newly read library,
 * and each file, converting DATA references into DIRECT references.
+*
+* LOCATION may be:
+*   DIRECT - file data is in memory
+*   DATA   - file data is OFFSET:LENGTH in library data
+*   FILE   - file data is external file
+*
+* DIRECT is internal representation. DATA is when library is at rest
+* on disk. FILE is the export representation.
+*
+* FIXME - EXTRACT should be EXPORT. Write out files, copy module record
+* adjusting DIRECT to EXTERNAL, write out NAME.MODULE file.
+* This can be the name of IMPORT command.
 
 readlbr  lbr = json_decode(readfile(nm))                     :f(freturn)
          readlbr = lbr
@@ -834,7 +953,7 @@ f2mt_4   mi = next_module(mi)                                  :(f2mt_2)
 * Iterate modules in library
 
 iter_modules
-         iter_modules = atol(keys_in_table(lbr<'CONTENTS'>))
+         iter_modules = atol(keyst(lbr<'CONTENTS'>))
 +                                                   :s(return)f(freturn)
 
 module   module = differ(m) value(m)                :s(return)f(freturn)

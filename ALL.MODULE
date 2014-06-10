@@ -1,0 +1,59 @@
+{
+  "SOURCE": "ALL.lss",
+  "COMMENT": "ALL module",
+  "ARTIFACTS": [
+    "ALL.INC",
+    "ALL.html"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "ALL",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "ALL.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "ALL.html",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "ALL.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "ALL.html",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "ALL.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402396838",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "ALL.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402397362",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "ALL.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402397364",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    }
+  ]
+}

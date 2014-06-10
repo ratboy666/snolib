@@ -1,0 +1,77 @@
+{
+  "SOURCE": "RESOL.lss",
+  "COMMENT": "RESOL module",
+  "ARTIFACTS": [
+    "RESOL.INC",
+    "RESOL.html",
+    "RESOL.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "RESOL",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "RESOL.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "RESOL.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "RESOL.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "RESOL.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "RESOL.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "RESOL.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "RESOL.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012747",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "RESOL.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012775",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "RESOL.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012819",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "RESOL.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012780",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

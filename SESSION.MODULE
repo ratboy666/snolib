@@ -1,0 +1,85 @@
+{
+  "SOURCE": "SESSION.lss",
+  "COMMENT": "SESSION module",
+  "ARTIFACTS": [
+    "SESSION.INC",
+    "SESSION.html",
+    "SESSION.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "SESSION",
+  "DEPENDS": [
+    "BQ",
+    "CHARS",
+    "CRACK",
+    "JSON",
+    "NDBM",
+    "READFILE",
+    "REPL",
+    "TIME"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "SESSION.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SESSION.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SESSION.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "SESSION.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SESSION.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SESSION.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "SESSION.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012750",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "SESSION.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402394875",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "SESSION.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012842",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "SESSION.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012782",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

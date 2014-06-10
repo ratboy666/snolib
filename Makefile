@@ -36,7 +36,7 @@ T = AGT.tst      AI.tst       AOPA.tst     BALREV.tst   BALX.tst     \
     COOKIE.tst   HTMLTMPL.tst JSON.tst     FCGI.tst     MAX.tst      \
     DSERVE.tst   VDIFFER.tst  FOR.tst      FREEZE.tst   ROUTING.tst  \
     GDDT.tst     DEDUPA.tst   ATOL.tst     ITERDIR.tst  SIZEL.tst    \
-    SIZET.tst
+    SIZET.tst    APPENDA.tst
 
 # Library files FIXME: TRIAL should be removed.
 
@@ -129,6 +129,7 @@ ATOL.INC:     LINK.INC     SEQ.INC      REVL.INC
 ITERDIR.INC:  BQ.INC       CRACK.INC    ATOL.INC     CHARS.INC
 SIZEL.INC:    LINK.INC
 SIZET.INC:    HASH.INC     SIZEA.INC
+APPENDA.INC:  SEQ.INC      SIZEA.INC
 
 # Bootstrapping. We need embed, ifs, sweave, stangle, snocone and ED4
 # to build the code. We keep embed0, ifs0, sweave0 and stangle0 for
@@ -299,7 +300,9 @@ docs:         AGT.html      AI.html       ALL.html      AOPA.html     \
               stangle       sweave        greenbar.gif  index.html    \
               utility.html  snocone.html  cpmed.html    ED4           \
               FCGI.html     DSERVE.html   VDIFFER.html  FOR.html      \
-              FREEZE.html   ROUTING.html  in72.html              
+              FREEZE.html   ROUTING.html  in72.html     DEDUPA.html   \
+              ATOL.html     ITERDIR.html  SIZEL.html    SIZET.html    \
+              APPENDA.html
 	touch docs
 
 snocone.html: snocone.htm
@@ -426,3 +429,4 @@ ATOL.INC: ATOL.SNO
 ITERDIR.INC: ITERDIR.SNO
 SIZEL.INC: SIZEL.SNO
 SIZET.INC: SIZET.SNO
+APPENDA.INC: APPENDA.SNO

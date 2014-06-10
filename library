@@ -13,6 +13,9 @@
   <li><a href="AOPA.html">
     AOPA - Apply infix operator to array
   </a></li>
+  <li><a href="APPENDA.html">
+    APPENDA - Append element to array
+  </a></li>
   <li><a href="ATOL.html">
     ATOL - Array to List
   </a></li>
@@ -37,11 +40,11 @@
   <li><a href="CGI.html">
     CGI - CGI Support Functions
   </a></li>
-  <li><a href="CHARS.html">
-    CHARS - Symbolic names for some characters
-  </a></li>
   <li><a href="CH.html">
     CH - Hex to string
+  </a></li>
+  <li><a href="CHARS.html">
+    CHARS - Symbolic names for some characters
   </a></li>
   <li><a href="COMB.html">
     COMB - Number of combinations
@@ -70,11 +73,11 @@
   <li><a href="DAY.html">
     DAY - Day of week
   </a></li>
-  <li><a href="DDTCARD.html">
-    DDTCARD - A card with DDT()
-  </a></li>
   <li><a href="DDT.html">
     DDT - An interactive SNOBOL4 debugger
+  </a></li>
+  <li><a href="DDTCARD.html">
+    DDTCARD - A card with DDT()
   </a></li>
   <li><a href="DEDUPA.html">
     DEDUPA - "Dedup" array - remove duplicates
@@ -118,6 +121,9 @@
   <li><a href="FOREACH.html">
     FOREACH - Apply procedure to each element
   </a></li>
+  <li><a href="FREEZE.html">
+    FREEZE - FREEZE/THAW for SPITBOL
+  </a></li>
   <li><a href="GCD.html">
     GCD - Greatest Common Divisor
   </a></li>
@@ -148,11 +154,11 @@
   <li><a href="ITERDIR.html">
     ITERDIR - Directory iterator
   </a></li>
-  <li><a href="JSON.html">
-    JSON - Encode/Decode JSON
-  </a></li>
   <li><a href="JIT.html">
     JIT - Just in time code generation
+  </a></li>
+  <li><a href="JSON.html">
+    JSON - Encode/Decode JSON
   </a></li>
   <li><a href="LAST.html">
     LAST - Return last list element
@@ -163,11 +169,11 @@
   <li><a href="LINK.html">
     LINK - Define LINK type
   </a></li>
-  <li><a href="LOGIC.html">
-    LOGIC - CATSPAW SPITBOL compatible LOGIC() functions
-  </a></li>
   <li><a href="LOG.html">
     LOG - LOG functions
+  </a></li>
+  <li><a href="LOGIC.html">
+    LOGIC - CATSPAW SPITBOL compatible LOGIC() functions
   </a></li>
   <li><a href="LPROG.html">
     LPROG - Length of program
@@ -286,11 +292,11 @@
   <li><a href="TEST.html">
     TEST - Bypass one character assumption
   </a></li>
-  <li><a href="TIMEGC.html">
-    TIMEGC - Time garbage collect
-  </a></li>
   <li><a href="TIME.html">
     TIME - Date/time functions
+  </a></li>
+  <li><a href="TIMEGC.html">
+    TIMEGC - Time garbage collect
   </a></li>
   <li><a href="TIMER.html">
     TIMER - Time statements
@@ -311,7 +317,7 @@
     UTF8 - UTF-8 encoded UNICODE handling
   </a></li>
   <li><a href="VDIFFER.html">
-    VDIFFER - VDIFFER() for SPITBOL.EXE
+    VDIFFER - VDIFFER() for SPITBOL
   </a></li>
   <li><a href="WRAPPER.html">
     WRAPPER - Create C code to wrap a function for LOAD()ing

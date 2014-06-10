@@ -1,0 +1,77 @@
+{
+  "SOURCE": "STROUT.lss",
+  "COMMENT": "STROUT module",
+  "ARTIFACTS": [
+    "STROUT.INC",
+    "STROUT.html",
+    "STROUT.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "STROUT",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "STROUT.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "STROUT.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "STROUT.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "STROUT.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "STROUT.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "STROUT.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "STROUT.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012753",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "STROUT.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012776",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "STROUT.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012827",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "STROUT.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012781",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

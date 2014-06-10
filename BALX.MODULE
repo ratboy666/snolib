@@ -1,0 +1,78 @@
+{
+  "SOURCE": "BALX.lss",
+  "COMMENT": "BALX module",
+  "ARTIFACTS": [
+    "BALX.INC",
+    "BALX.html",
+    "BALX.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "BALX",
+  "DEPENDS": [
+    "UNIQUE"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "BALX.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "BALX.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "BALX.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "BALX.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "BALX.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "BALX.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "BALX.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012716",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "BALX.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012768",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "BALX.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012787",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "BALX.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012778",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

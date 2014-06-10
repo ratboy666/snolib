@@ -28,15 +28,13 @@
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;ATOL&raquo;&equiv;</b>
--MODULE ATOL
 -PUBLIC ATOL()
--USES LINK()
-
+<font color="#818181"><i>*</i></font>
          DEFINE(&#39;ATOL(A)I&#39;)                                  <b>:(END_ATOL)</b>
-
+<font color="#818181"><i>*</i></font>
 ATOL     SEQ(&#39; ATOL = LINK(A&lt;I&gt;, ATOL)&#39;, .I)
          ATOL = REVL(ATOL)                                     <b>:(RETURN)</b>
-
+<font color="#818181"><i>*</i></font>
 END_ATOL
 <b>@</b>
 </font></pre></div>
@@ -54,7 +52,10 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+-MODULE ATOL
+-USES LINK()
 <b>&laquo;INCLUDES&raquo;</b>
+-IN72
 -STITL ATOL
 -EJECT
 <font color="#818181"><i>*</i></font>
@@ -83,7 +84,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Sun Jun  8 20:25:46 EDT 2014</p></td><td><p align=right>
+Tue Jun 10 06:49:26 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

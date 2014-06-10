@@ -1,0 +1,77 @@
+{
+  "SOURCE": "COMB.lss",
+  "COMMENT": "COMB module",
+  "ARTIFACTS": [
+    "COMB.INC",
+    "COMB.html",
+    "COMB.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "COMB",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "COMB.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "COMB.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "COMB.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "COMB.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "COMB.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "COMB.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "COMB.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012720",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "COMB.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012768",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "COMB.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012791",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "COMB.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012778",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

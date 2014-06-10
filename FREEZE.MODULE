@@ -1,0 +1,78 @@
+{
+  "SOURCE": "FREEZE.lss",
+  "COMMENT": "FREEZE module",
+  "ARTIFACTS": [
+    "FREEZE.INC",
+    "FREEZE.html",
+    "FREEZE.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "FREEZE",
+  "DEPENDS": [
+    "SYSTEM"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "FREEZE.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "FREEZE.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "FREEZE.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "FREEZE.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "FREEZE.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "FREEZE.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "FREEZE.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012731",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "FREEZE.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012777",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "FREEZE.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012847",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "FREEZE.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012782",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "SOURCE": "SIZEA.lss",
+  "COMMENT": "SIZEA module",
+  "ARTIFACTS": [
+    "SIZEA.INC",
+    "SIZEA.html",
+    "SIZEA.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "SIZEA",
+  "DEPENDS": [
+    "BRKREM",
+    "SWAP",
+    "SYSTEM"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "SIZEA.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SIZEA.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SIZEA.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "SIZEA.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SIZEA.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SIZEA.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "SIZEA.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402204730",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "SIZEA.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402204873",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "SIZEA.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402204874",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "SIZEA.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402204874",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

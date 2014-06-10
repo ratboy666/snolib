@@ -1,3 +1,5 @@
+-MODULE JSON
+-IN72
 -LINE 39 "JSON.lss"
 -INCLUDE 'CH.INC'
 -INCLUDE 'CHARS.INC'
@@ -6,9 +8,9 @@
 -INCLUDE 'SDIFF.INC'
 -INCLUDE 'SEQ.INC'
 -INCLUDE 'SIZEA.INC'
+-LINE 380 "JSON.lss"
 -STITL JSON
 -EJECT
--LINE 381 "JSON.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -27,7 +29,6 @@
 * JSON.lss
 *
 -LINE 49 "JSON.lss"
--MODULE JSON
 -PUBLIC JSON_ENCODE(), JSON_DECODE()
          DEFINE('JSON_ENCODE(X)L')
          DEFINE('JSON_DECODE(X)')
@@ -187,7 +188,7 @@ JSON_ENCODE_OBJECT
          JSON_ENCODE_OBJECT = '{'
          L = L + 1
          DIFFER(DATATYPE(X), 'TABLE')           :S(JSON_ENCODE_OBJECT_2)
-         K = KEYS_IN_TABLE(X)                   :F(JSON_ENCODE_OBJECT_2)
+         K = KEYST(X)                           :F(JSON_ENCODE_OBJECT_2)
          I = 1
 JSON_ENCODE_OBJECT_1
          JSON_ENCODE_OBJECT = JSON_ENCODE_OBJECT JSON_NL

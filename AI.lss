@@ -20,6 +20,7 @@ If [[I]] is not an array, simply returns [[A&lt;I&gt;]].
 
 <<AI>>=
 -PUBLIC AI()
+*
          DEFINE('AI(A,I)J')                                    :(AI_END)
 *
 AI       IDENT(DATATYPE(I), 'ARRAY')                            :F(AI_1)
@@ -49,9 +50,9 @@ END
 @
 
 <<>>=
-<<INCLUDES>>
 -MODULE AI
 -IN72
+<<INCLUDES>>
 -STITL AI
 -EJECT
 *

@@ -1,0 +1,77 @@
+{
+  "SOURCE": "ORDER.lss",
+  "COMMENT": "ORDER module",
+  "ARTIFACTS": [
+    "ORDER.INC",
+    "ORDER.html",
+    "ORDER.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "ORDER",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "ORDER.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "ORDER.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "ORDER.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "ORDER.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "ORDER.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "ORDER.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "ORDER.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012744",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "ORDER.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012775",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "ORDER.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012815",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "ORDER.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012780",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

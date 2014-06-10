@@ -1,0 +1,78 @@
+{
+  "SOURCE": "SKIM.lss",
+  "COMMENT": "SKIM module",
+  "ARTIFACTS": [
+    "SKIM.INC",
+    "SKIM.html",
+    "SKIM.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "SKIM",
+  "DEPENDS": [
+    "SDIFF"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "SKIM.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SKIM.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SKIM.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "SKIM.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SKIM.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SKIM.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "SKIM.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012751",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "SKIM.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012776",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "SKIM.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012823",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "SKIM.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012780",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

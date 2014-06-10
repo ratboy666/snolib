@@ -1,0 +1,80 @@
+{
+  "SOURCE": "ATOL.lss",
+  "COMMENT": "ATOL module",
+  "ARTIFACTS": [
+    "ATOL.INC",
+    "ATOL.html",
+    "ATOL.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "ATOL",
+  "DEPENDS": [
+    "LINK",
+    "REVL",
+    "SEQ"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "ATOL.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "ATOL.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "ATOL.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "ATOL.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "ATOL.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "ATOL.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "ATOL.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402396889",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "ATOL.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402397362",
+      "ACCESS": "600",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "ATOL.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402397366",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "ATOL.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402397362",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "SOURCE": "FASTBAL.lss",
+  "COMMENT": "FASTBAL module",
+  "ARTIFACTS": [
+    "FASTBAL.INC",
+    "FASTBAL.html",
+    "FASTBAL.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "FASTBAL",
+  "DEPENDS": [
+    "UNIQUE"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "FASTBAL.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "FASTBAL.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "FASTBAL.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "FASTBAL.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "FASTBAL.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "FASTBAL.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "FASTBAL.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012728",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "FASTBAL.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012772",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "FASTBAL.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012801",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "FASTBAL.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012779",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

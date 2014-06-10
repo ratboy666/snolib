@@ -1,0 +1,78 @@
+{
+  "SOURCE": "FLOOR.lss",
+  "COMMENT": "FLOOR module",
+  "ARTIFACTS": [
+    "FLOOR.INC",
+    "FLOOR.html",
+    "FLOOR.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "FLOOR",
+  "DEPENDS": [
+    "DEXP"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "FLOOR.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "FLOOR.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "FLOOR.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "FLOOR.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "FLOOR.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "FLOOR.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "FLOOR.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012730",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "FLOOR.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012772",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "FLOOR.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012803",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "FLOOR.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012779",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

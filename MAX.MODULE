@@ -1,0 +1,77 @@
+{
+  "SOURCE": "MAX.lss",
+  "COMMENT": "MAX module",
+  "ARTIFACTS": [
+    "MAX.INC",
+    "MAX.html",
+    "MAX.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "MAX",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "MAX.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "MAX.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "MAX.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "MAX.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "MAX.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "MAX.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "MAX.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012743",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "MAX.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012778",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "MAX.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012838",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "MAX.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012782",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

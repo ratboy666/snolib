@@ -1,0 +1,78 @@
+{
+  "SOURCE": "LAST.lss",
+  "COMMENT": "LAST module",
+  "ARTIFACTS": [
+    "LAST.INC",
+    "LAST.html",
+    "LAST.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "LAST",
+  "DEPENDS": [
+    "LINK"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "LAST.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "LAST.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "LAST.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "LAST.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "LAST.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "LAST.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "LAST.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012740",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "LAST.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012774",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "LAST.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012809",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "LAST.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012779",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

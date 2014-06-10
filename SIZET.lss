@@ -12,12 +12,11 @@
 @
 
 <<SIZET>>=
--MODULE SIZEL
 -PUBLIC SIZET()
 *
          DEFINE('SIZET(T)')                                 :(END_SIZET)
 *
-SIZET    SIZET =  SIZEA(KEYS_IN_TABLE(T))                      :(RETURN)
+SIZET    SIZET =  SIZEA(KEYST(T))                              :(RETURN)
 *
 END_SIZET
 @
@@ -32,6 +31,8 @@ END
 @
 
 <<>>=
+-MODULE SIZEL
+-IN72
 <<INCLUDES>>
 -STITL SIZET
 -EJECT

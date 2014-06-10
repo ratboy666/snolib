@@ -1,0 +1,80 @@
+{
+  "SOURCE": "ROUTING.lss",
+  "COMMENT": "ROUTING module",
+  "ARTIFACTS": [
+    "ROUTING.INC",
+    "ROUTING.html",
+    "ROUTING.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "ROUTING",
+  "DEPENDS": [
+    "BRKREM",
+    "SDIFF",
+    "UNIQUE"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "ROUTING.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "ROUTING.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "ROUTING.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "ROUTING.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "ROUTING.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "ROUTING.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "ROUTING.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012749",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "ROUTING.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012778",
+      "ACCESS": "600",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "ROUTING.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012848",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "ROUTING.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012782",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "SOURCE": "ENDCARD.lss",
+  "COMMENT": "ENDCARD module",
+  "ARTIFACTS": [
+    "ENDCARD.INC",
+    "ENDCARD.html",
+    "ENDCARD.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "ENDCARD",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "ENDCARD.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "ENDCARD.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "ENDCARD.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "ENDCARD.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "ENDCARD.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "ENDCARD.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "ENDCARD.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012728",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "ENDCARD.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012771",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "ENDCARD.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012800",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "ENDCARD.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012779",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

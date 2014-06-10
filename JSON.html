@@ -65,7 +65,6 @@ JSON_NULL, JSON_TRUE and JSON_FALSE.
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;JSON&raquo;&equiv;</b>
--MODULE JSON
 -PUBLIC JSON_ENCODE(), JSON_DECODE()
          DEFINE(&#39;JSON_ENCODE(X)L&#39;)
          DEFINE(&#39;JSON_DECODE(X)&#39;)
@@ -225,7 +224,7 @@ JSON_ENCODE_OBJECT
          JSON_ENCODE_OBJECT = &#39;{&#39;
          L = L + 1
          DIFFER(DATATYPE(X), &#39;TABLE&#39;)           <b>:S(JSON_ENCODE_OBJECT_2)</b>
-         K = KEYS_IN_TABLE(X)                   <b>:F(JSON_ENCODE_OBJECT_2)</b>
+         K = KEYST(X)                           <b>:F(JSON_ENCODE_OBJECT_2)</b>
          I = 1
 JSON_ENCODE_OBJECT_1
          JSON_ENCODE_OBJECT = JSON_ENCODE_OBJECT JSON_NL
@@ -398,6 +397,8 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+-MODULE JSON
+-IN72
 <b>&laquo;INCLUDES&raquo;</b>
 -STITL JSON
 -EJECT
@@ -427,7 +428,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Sun Jun  8 10:45:31 EDT 2014</p></td><td><p align=right>
+Tue Jun 10 06:01:52 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

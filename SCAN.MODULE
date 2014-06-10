@@ -1,0 +1,61 @@
+{
+  "SOURCE": "scan.lss",
+  "COMMENT": "scan module",
+  "ARTIFACTS": [
+    "scan",
+    "scan.html"
+  ],
+  "TYPE": "PROGRAM",
+  "NAME": "SCAN",
+  "DEPENDS": [
+    "HOST",
+    "SLOAD"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "scan",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "scan.html",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "scan",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "scan.html",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "scan.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012749",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "scan",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012784",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "scan.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012839",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    }
+  ]
+}

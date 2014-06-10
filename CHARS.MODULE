@@ -1,0 +1,77 @@
+{
+  "SOURCE": "CHARS.lss",
+  "COMMENT": "CHARS module",
+  "ARTIFACTS": [
+    "CHARS.INC",
+    "CHARS.html",
+    "CHARS.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "CHARS",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "CHARS.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "CHARS.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "CHARS.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "CHARS.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "CHARS.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "CHARS.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "CHARS.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012719",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "CHARS.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012768",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "CHARS.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012789",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "CHARS.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012778",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

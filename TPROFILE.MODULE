@@ -1,0 +1,79 @@
+{
+  "SOURCE": "TPROFILE.lss",
+  "COMMENT": "TPROFILE module",
+  "ARTIFACTS": [
+    "TPROFILE.INC",
+    "TPROFILE.html",
+    "TPROFILE.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "TPROFILE",
+  "DEPENDS": [
+    "LPROG",
+    "SEQ"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "TPROFILE.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "TPROFILE.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "TPROFILE.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "TPROFILE.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "TPROFILE.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "TPROFILE.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "TPROFILE.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012755",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "TPROFILE.INC",
+      "TYPE": "BINARY",
+      "TIMESTAMP": "1402195044",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "TPROFILE.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012831",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "TPROFILE.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012781",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

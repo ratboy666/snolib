@@ -1,0 +1,78 @@
+{
+  "SOURCE": "DDTCARD.lss",
+  "COMMENT": "DDTCARD module",
+  "ARTIFACTS": [
+    "DDTCARD.INC",
+    "DDTCARD.html",
+    "DDTCARD.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "DDTCARD",
+  "DEPENDS": [
+    "DDT"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "DDTCARD.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "DDTCARD.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "DDTCARD.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "DDTCARD.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "DDTCARD.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "DDTCARD.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "DDTCARD.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012724",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "DDTCARD.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012771",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "DDTCARD.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012795",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "DDTCARD.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012779",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

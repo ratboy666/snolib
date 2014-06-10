@@ -1,0 +1,77 @@
+{
+  "SOURCE": "FIND.lss",
+  "COMMENT": "FIND module",
+  "ARTIFACTS": [
+    "FIND.INC",
+    "FIND.html",
+    "FIND.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "FIND",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "FIND.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "FIND.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "FIND.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "FIND.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "FIND.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "FIND.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "FIND.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012730",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "FIND.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012772",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "FIND.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012803",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "FIND.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012779",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "SOURCE": "P64.lss",
+  "COMMENT": "P64 module",
+  "ARTIFACTS": [
+    "P64.INC",
+    "P64.html",
+    "P64.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "P64",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "P64.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "P64.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "P64.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "P64.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "P64.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "P64.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "P64.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402261818",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "P64.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402394872",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "P64.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402262511",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "P64.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402262514",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

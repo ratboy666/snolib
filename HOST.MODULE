@@ -1,0 +1,77 @@
+{
+  "SOURCE": "HOST.lss",
+  "COMMENT": "HOST module",
+  "ARTIFACTS": [
+    "HOST.INC",
+    "HOST.html",
+    "HOST.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "HOST",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "HOST.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "HOST.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "HOST.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "HOST.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "HOST.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "HOST.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "HOST.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012733",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "HOST.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012769",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "HOST.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012805",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "HOST.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012779",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

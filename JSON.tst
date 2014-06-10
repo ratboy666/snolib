@@ -1,7 +1,7 @@
 #!/usr/bin/bash
          exec "/usr/local/bin/snobol4" "-b" "$0" "$@"
 -INCLUDE 'DDT.INC'
--LINE 319 "JSON.lss"
+-LINE 318 "JSON.lss"
 -INCLUDE 'JSON.INC'
 -INCLUDE 'CRACK.INC'
 *

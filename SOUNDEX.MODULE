@@ -1,0 +1,77 @@
+{
+  "SOURCE": "SOUNDEX.lss",
+  "COMMENT": "SOUNDEX module",
+  "ARTIFACTS": [
+    "SOUNDEX.INC",
+    "SOUNDEX.html",
+    "SOUNDEX.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "SOUNDEX",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "SOUNDEX.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SOUNDEX.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SOUNDEX.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "SOUNDEX.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SOUNDEX.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SOUNDEX.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "SOUNDEX.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012752",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "SOUNDEX.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012776",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "SOUNDEX.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012824",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "SOUNDEX.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012781",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

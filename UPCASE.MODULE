@@ -1,0 +1,61 @@
+{
+  "SOURCE": "upcase.lss",
+  "COMMENT": "upcase module",
+  "ARTIFACTS": [
+    "upcase",
+    "upcase.html"
+  ],
+  "TYPE": "PROGRAM",
+  "NAME": "UPCASE",
+  "DEPENDS": [
+    "HOST",
+    "SWAP"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "upcase",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "upcase.html",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "upcase",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "upcase.html",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "upcase.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012757",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "upcase",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012783",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "upcase.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012833",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    }
+  ]
+}

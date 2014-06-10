@@ -1,0 +1,66 @@
+{
+  "SOURCE": "code.lss",
+  "COMMENT": "code module",
+  "ARTIFACTS": [
+    "code",
+    "code.html"
+  ],
+  "TYPE": "PROGRAM",
+  "NAME": "CODE",
+  "DEPENDS": [
+    "BQ",
+    "CHARS",
+    "HOST",
+    "READLINE",
+    "SEQ",
+    "SLOAD",
+    "VDIFFER"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "code",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "code.html",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "code",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "code.html",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "code.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012720",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "code",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402394875",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "code.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012790",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    }
+  ]
+}

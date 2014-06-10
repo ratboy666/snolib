@@ -1,0 +1,77 @@
+{
+  "SOURCE": "SWAP.lss",
+  "COMMENT": "SWAP module",
+  "ARTIFACTS": [
+    "SWAP.INC",
+    "SWAP.html",
+    "SWAP.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "SWAP",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "SWAP.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SWAP.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SWAP.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "SWAP.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SWAP.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SWAP.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "SWAP.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012753",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "SWAP.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012772",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "SWAP.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012827",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "SWAP.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012781",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

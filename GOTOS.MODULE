@@ -1,0 +1,77 @@
+{
+  "SOURCE": "GOTOS.lss",
+  "COMMENT": "GOTOS module",
+  "ARTIFACTS": [
+    "GOTOS.INC",
+    "GOTOS.html",
+    "GOTOS.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "GOTOS",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "GOTOS.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "GOTOS.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "GOTOS.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "GOTOS.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "GOTOS.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "GOTOS.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "GOTOS.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012732",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "GOTOS.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012772",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "GOTOS.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012804",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "GOTOS.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012779",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

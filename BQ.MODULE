@@ -1,0 +1,77 @@
+{
+  "SOURCE": "BQ.lss",
+  "COMMENT": "BQ module",
+  "ARTIFACTS": [
+    "BQ.INC",
+    "BQ.html",
+    "BQ.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "BQ",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "BQ.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "BQ.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "BQ.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "BQ.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "BQ.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "BQ.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "BQ.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012717",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "BQ.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012768",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "BQ.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012788",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "BQ.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012778",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

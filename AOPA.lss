@@ -18,6 +18,7 @@ scalar, scalar operation array, and finally scalar operation scalar.
 
 <<AOPA>>=
 -PUBLIC AOPA()
+*
          DEFINE('AOPA(A1,OP,A2)S1,I,S2,S')                   :(AOPA_END)
 *
 AOPA     IDENT(DATATYPE(A1), 'ARRAY')                         :S(AOPA_1)
@@ -65,9 +66,9 @@ END
 @
 
 <<>>=
-<<INCLUDES>>
 -MODULE AOPA
 -IN72
+<<INCLUDES>>
 -STITL AOPA
 -EJECT
 *

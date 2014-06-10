@@ -1,0 +1,62 @@
+{
+  "SOURCE": "uban.lss",
+  "COMMENT": "uban module",
+  "ARTIFACTS": [
+    "uban",
+    "uban.html"
+  ],
+  "TYPE": "PROGRAM",
+  "NAME": "UBAN",
+  "DEPENDS": [
+    "CRACK",
+    "SEQ",
+    "TRIMB"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "uban",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "uban.html",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "uban",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "uban.html",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "uban.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012756",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "uban",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402394875",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "uban.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012832",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    }
+  ]
+}

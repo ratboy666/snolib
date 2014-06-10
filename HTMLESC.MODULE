@@ -1,0 +1,82 @@
+{
+  "SOURCE": "HTMLESC.lss",
+  "COMMENT": "HTMLESC module",
+  "ARTIFACTS": [
+    "HTMLESC.INC",
+    "HTMLESC.html",
+    "HTMLESC.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "HTMLESC",
+  "DEPENDS": [
+    "CH",
+    "CHARS",
+    "HEX",
+    "REPL",
+    "SDIFF"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "HTMLESC.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "HTMLESC.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "HTMLESC.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "HTMLESC.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "HTMLESC.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "HTMLESC.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "HTMLESC.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012733",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "HTMLESC.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012777",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "HTMLESC.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012835",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "HTMLESC.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012781",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

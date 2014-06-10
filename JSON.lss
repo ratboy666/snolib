@@ -46,7 +46,6 @@ JSON_NULL, JSON_TRUE and JSON_FALSE.
 @
 
 <<JSON>>=
--MODULE JSON
 -PUBLIC JSON_ENCODE(), JSON_DECODE()
          DEFINE('JSON_ENCODE(X)L')
          DEFINE('JSON_DECODE(X)')
@@ -206,7 +205,7 @@ JSON_ENCODE_OBJECT
          JSON_ENCODE_OBJECT = '{'
          L = L + 1
          DIFFER(DATATYPE(X), 'TABLE')           :S(JSON_ENCODE_OBJECT_2)
-         K = KEYS_IN_TABLE(X)                   :F(JSON_ENCODE_OBJECT_2)
+         K = KEYST(X)                           :F(JSON_ENCODE_OBJECT_2)
          I = 1
 JSON_ENCODE_OBJECT_1
          JSON_ENCODE_OBJECT = JSON_ENCODE_OBJECT JSON_NL
@@ -375,6 +374,8 @@ END
 @
 
 <<>>=
+-MODULE JSON
+-IN72
 <<INCLUDES>>
 -STITL JSON
 -EJECT

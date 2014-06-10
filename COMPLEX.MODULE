@@ -1,0 +1,77 @@
+{
+  "SOURCE": "COMPLEX.lss",
+  "COMMENT": "COMPLEX module",
+  "ARTIFACTS": [
+    "COMPLEX.INC",
+    "COMPLEX.html",
+    "COMPLEX.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "COMPLEX",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "COMPLEX.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "COMPLEX.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "COMPLEX.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "COMPLEX.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "COMPLEX.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "COMPLEX.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "COMPLEX.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012721",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "COMPLEX.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012777",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "COMPLEX.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012843",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "COMPLEX.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012782",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

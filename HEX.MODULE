@@ -1,0 +1,78 @@
+{
+  "SOURCE": "HEX.lss",
+  "COMMENT": "HEX module",
+  "ARTIFACTS": [
+    "HEX.INC",
+    "HEX.html",
+    "HEX.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "HEX",
+  "DEPENDS": [
+    "BLEND"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "HEX.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "HEX.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "HEX.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "HEX.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "HEX.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "HEX.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "HEX.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012733",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "HEX.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012768",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "HEX.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012805",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "HEX.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012779",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

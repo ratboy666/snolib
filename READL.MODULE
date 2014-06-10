@@ -1,0 +1,78 @@
+{
+  "SOURCE": "READL.lss",
+  "COMMENT": "READL module",
+  "ARTIFACTS": [
+    "READL.INC",
+    "READL.html",
+    "READL.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "READL",
+  "DEPENDS": [
+    "LINK"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "READL.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "READL.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "READL.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "READL.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "READL.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "READL.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "READL.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012747",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "READL.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012777",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "READL.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012838",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "READL.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012781",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

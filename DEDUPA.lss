@@ -17,7 +17,6 @@ is made.
 @
 
 <<DEDUPA>>=
--MODULE DEDUPA
 -PUBLIC DEDUPA()
 *
          DEFINE('DEDUPA(A)T,I')                            :(END_DEDUPA)
@@ -25,7 +24,7 @@ is made.
 DEDUPA   DEDUPA = IDENT(A, ARRAY0) A                          :S(RETURN)
          T = TABLE()
          SEQ(' T<A<I>> = 1', .I)
-         DEDUPA = KEYS_IN_TABLE(T)                             :(RETURN)
+         DEDUPA = KEYST(T)                                     :(RETURN)
 *
 END_DEDUPA
 @
@@ -40,6 +39,8 @@ END
 @
 
 <<>>=
+-MODULE DEDUPA
+-IN72
 <<INCLUDES>>
 -STITL DEDUPA
 -EJECT

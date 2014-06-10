@@ -1,0 +1,78 @@
+{
+  "SOURCE": "CH.lss",
+  "COMMENT": "CH module",
+  "ARTIFACTS": [
+    "CH.INC",
+    "CH.html",
+    "CH.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "CH",
+  "DEPENDS": [
+    "HEX"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "CH.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "CH.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "CH.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "CH.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "CH.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "CH.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "CH.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012719",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "CH.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012768",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "CH.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012790",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "CH.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012778",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

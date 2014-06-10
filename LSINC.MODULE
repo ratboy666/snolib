@@ -1,0 +1,63 @@
+{
+  "SOURCE": "lsinc.lss",
+  "COMMENT": "lsinc module",
+  "ARTIFACTS": [
+    "lsinc",
+    "lsinc.html"
+  ],
+  "TYPE": "PROGRAM",
+  "NAME": "LSINC",
+  "DEPENDS": [
+    "CRACK",
+    "HOST",
+    "SEQ",
+    "TRIMB"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "lsinc",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "lsinc.html",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "lsinc",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "lsinc.html",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "lsinc.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012743",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "lsinc",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402394875",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "lsinc.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012812",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    }
+  ]
+}

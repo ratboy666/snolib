@@ -1,0 +1,80 @@
+{
+  "SOURCE": "READFILE.lss",
+  "COMMENT": "READFILE module",
+  "ARTIFACTS": [
+    "READFILE.INC",
+    "READFILE.html",
+    "READFILE.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "READFILE",
+  "DEPENDS": [
+    "BRKREM",
+    "CHARS",
+    "SYSTEM"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "READFILE.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "READFILE.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "READFILE.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "READFILE.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "READFILE.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "READFILE.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "READFILE.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012746",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "READFILE.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012777",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "READFILE.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012841",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "READFILE.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012782",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

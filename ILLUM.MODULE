@@ -1,0 +1,64 @@
+{
+  "SOURCE": "illum.lss",
+  "COMMENT": "illum module",
+  "ARTIFACTS": [
+    "illum",
+    "illum.html"
+  ],
+  "TYPE": "PROGRAM",
+  "NAME": "ILLUM",
+  "DEPENDS": [
+    "BQ",
+    "CRACK",
+    "SEQ",
+    "TRIMB",
+    "VDIFFER"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "illum",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "illum.html",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "illum",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "illum.html",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "illum.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012735",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "illum",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402394875",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "illum.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012806",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    }
+  ]
+}

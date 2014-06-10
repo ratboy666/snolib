@@ -1,0 +1,59 @@
+{
+  "SOURCE": "deretn.lss",
+  "COMMENT": "deretn module",
+  "ARTIFACTS": [
+    "deretn",
+    "deretn.html"
+  ],
+  "TYPE": "PROGRAM",
+  "NAME": "DERETN",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "deretn",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "deretn.html",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "deretn",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "deretn.html",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "deretn.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012725",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "deretn",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012783",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "deretn.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012797",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    }
+  ]
+}

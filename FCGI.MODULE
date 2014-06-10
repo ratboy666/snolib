@@ -1,0 +1,83 @@
+{
+  "SOURCE": "FCGI.lss",
+  "COMMENT": "FCGI module",
+  "ARTIFACTS": [
+    "FCGI.INC",
+    "FCGI.html",
+    "FCGI.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "FCGI",
+  "DEPENDS": [
+    "BQ",
+    "CSNOBOL4",
+    "FFI",
+    "JSON",
+    "LOGIC",
+    "TIME"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "FCGI.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "FCGI.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "FCGI.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "FCGI.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "FCGI.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "FCGI.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "FCGI.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012729",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "FCGI.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402394875",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "FCGI.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012845",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "FCGI.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012782",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

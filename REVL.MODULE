@@ -1,0 +1,78 @@
+{
+  "SOURCE": "REVL.lss",
+  "COMMENT": "REVL module",
+  "ARTIFACTS": [
+    "REVL.INC",
+    "REVL.html",
+    "REVL.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "REVL",
+  "DEPENDS": [
+    "LINK"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "REVL.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "REVL.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "REVL.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "REVL.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "REVL.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "REVL.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "REVL.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012748",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "REVL.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012775",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "REVL.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012820",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "REVL.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012780",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

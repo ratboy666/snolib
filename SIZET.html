@@ -26,12 +26,11 @@
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;SIZET&raquo;&equiv;</b>
--MODULE SIZEL
 -PUBLIC SIZET()
 <font color="#818181"><i>*</i></font>
          DEFINE(&#39;SIZET(T)&#39;)                                 <b>:(END_SIZET)</b>
 <font color="#818181"><i>*</i></font>
-SIZET    SIZET =  SIZEA(KEYS_IN_TABLE(T))                      <b>:(RETURN)</b>
+SIZET    SIZET =  SIZEA(KEYST(T))                              <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 END_SIZET
 <b>@</b>
@@ -50,6 +49,8 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+-MODULE SIZEL
+-IN72
 <b>&laquo;INCLUDES&raquo;</b>
 -STITL SIZET
 -EJECT
@@ -79,7 +80,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Sun Jun  8 20:30:38 EDT 2014</p></td><td><p align=right>
+Tue Jun 10 06:49:26 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

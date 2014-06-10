@@ -1,0 +1,62 @@
+{
+  "SOURCE": "snofmt.lss",
+  "COMMENT": "snofmt module",
+  "ARTIFACTS": [
+    "snofmt",
+    "snofmt.html"
+  ],
+  "TYPE": "PROGRAM",
+  "NAME": "SNOFMT",
+  "DEPENDS": [
+    "BALX",
+    "CHARS",
+    "VDIFFER"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "snofmt",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "snofmt.html",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "snofmt",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "snofmt.html",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "snofmt.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012752",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "snofmt",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012783",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "snofmt.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012824",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    }
+  ]
+}

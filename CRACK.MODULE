@@ -1,0 +1,79 @@
+{
+  "SOURCE": "CRACK.lss",
+  "COMMENT": "CRACK module",
+  "ARTIFACTS": [
+    "CRACK.INC",
+    "CRACK.html",
+    "CRACK.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "CRACK",
+  "DEPENDS": [
+    "COUNT",
+    "SEQ"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "CRACK.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "CRACK.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "CRACK.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "CRACK.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "CRACK.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "CRACK.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "CRACK.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402394865",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "CRACK.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402394871",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "CRACK.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402394876",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "CRACK.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402394875",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

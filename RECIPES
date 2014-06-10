@@ -1,6 +1,6 @@
 # RECIPES
 #
-# Default recipes for SOOSIE
+# Default recipes
 # need to add snocone awareness and better ditaa
 
 {
@@ -34,5 +34,21 @@
     "        LSS=SNOBOL4 ifs         |",
     "                    embed       |",
     "                    in72 >{{tgt}}"
+  ]
+}
+
+# Default installation instructions
+
+{
+  ".INC": [
+    "sudo cp {{tgt}} {{INCDIR}}"
+  ],
+
+  ".so": [
+    "sudo cp {{tgt}} {{SODIR}}"
+  ],
+
+  "": [
+    "sudo cp {{tgt}} {{PRGDIR}}"
   ]
 }

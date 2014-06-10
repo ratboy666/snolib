@@ -1,0 +1,79 @@
+{
+  "SOURCE": "GETKEY.lss",
+  "COMMENT": "GETKEY module",
+  "ARTIFACTS": [
+    "GETKEY.INC",
+    "GETKEY.html",
+    "GETKEY.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "GETKEY",
+  "DEPENDS": [
+    "BQ",
+    "CHARS"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "GETKEY.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "GETKEY.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "GETKEY.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "GETKEY.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "GETKEY.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "GETKEY.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "GETKEY.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012732",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "GETKEY.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012772",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "GETKEY.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012804",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "GETKEY.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012779",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

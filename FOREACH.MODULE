@@ -1,0 +1,77 @@
+{
+  "SOURCE": "FOREACH.lss",
+  "COMMENT": "FOREACH module",
+  "ARTIFACTS": [
+    "FOREACH.INC",
+    "FOREACH.html",
+    "FOREACH.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "FOREACH",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "FOREACH.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "FOREACH.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "FOREACH.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "FOREACH.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "FOREACH.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "FOREACH.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "FOREACH.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012730",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "FOREACH.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012777",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "FOREACH.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012839",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "FOREACH.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012782",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

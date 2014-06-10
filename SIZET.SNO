@@ -1,9 +1,11 @@
+-MODULE SIZEL
+-IN72
 -LINE 10 "SIZET.lss"
 -INCLUDE 'HASH.INC'
 -INCLUDE 'SIZEA.INC'
+-LINE 37 "SIZET.lss"
 -STITL SIZET
 -EJECT
--LINE 38 "SIZET.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -22,12 +24,11 @@
 * SIZET.lss
 *
 -LINE 15 "SIZET.lss"
--MODULE SIZEL
 -PUBLIC SIZET()
 *
          DEFINE('SIZET(T)')                                 :(END_SIZET)
 *
-SIZET    SIZET =  SIZEA(KEYS_IN_TABLE(T))                      :(RETURN)
+SIZET    SIZET =  SIZEA(KEYST(T))                              :(RETURN)
 *
 END_SIZET
 *

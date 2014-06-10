@@ -24,11 +24,11 @@ to make it easier to construct simple tables. It is <font face="Source Code Pro"
 <font face="Source Code Pro">#</font> to make it's use more convenient.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
-<font face="Source Code Pro">COPY_TABLE(T)</font> returns a copy of table <font face="Source Code Pro">T</font>. <font face="Source Code Pro">MERGE_TABLE(T1,T2)</font>
+<font face="Source Code Pro">COPYT(T)</font> returns a copy of table <font face="Source Code Pro">T</font>. <font face="Source Code Pro">MERGET(T1,T2)</font>
 merges two tables together. Entries in <font face="Source Code Pro">T2</font> override entries in
 <font face="Source Code Pro">T1</font>. The returned table is a new table. Neither <font face="Source Code Pro">T1</font> nor <font face="Source Code Pro">T2</font>
-are changed. <font face="Source Code Pro">KEYS_IN_TABLE(T)</font> returns an array of the keys in
-table <font face="Source Code Pro">T</font>. <font face="Source Code Pro">PRUNE_TABLE(T)</font> returns a pruned table. This is a new
+are changed. <font face="Source Code Pro">KEYST(T)</font> returns an array of the keys in
+table <font face="Source Code Pro">T</font>. <font face="Source Code Pro">PRUNET(T)</font> returns a pruned table. This is a new
 table with only non-IDENT elements inserted.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
@@ -84,21 +84,21 @@ a value of <font face="Source Code Pro">'YYY'</font>.  <font face="Source Code P
 <pre><font face="Source Code Pro">
 <b>&laquo;HASH&raquo;&equiv;</b>
 -MODULE HASH
--PUBLIC HASH(), COPY_TABLE(), MERGE_TABLE(), KEYS_IN_TABLE(), #1
--PUBLIC PRUNE_TABLE()
+-PUBLIC HASH(), COPYT(), MERGET(), KEYST(), #1
+-PUBLIC PRUNET()
 <font color="#818181"><i>*</i></font>
          DEFINE(&#39;HASH(S,E,P,TS,TI,FK,FV,SP)K,V,C&#39;)
          DEFINE(&#39;HASH_3(S)&#39;)
-         DEFINE(&#39;COPY_TABLE(T)&#39;)
-         DEFINE(&#39;MERGE_TABLE(T1,T2)A,I&#39;)
-         DEFINE(&#39;KEYS_IN_TABLE(T)A,N,I&#39;)
-         DEFINE(&#39;PRUNE_TABLE(T)A,I&#39;)
+         DEFINE(&#39;COPYT(T)&#39;)
+         DEFINE(&#39;MERGET(T1,T2)A,I&#39;)
+         DEFINE(&#39;KEYST(T)A,N,I&#39;)
+         DEFINE(&#39;PRUNET(T)A,I&#39;)
          OPSYN(&#39;#&#39;, &#39;HASH&#39;, 1)                               <b>:(HASH_END)</b>
 <font color="#818181"><i>*</i></font>
-PRUNE_TABLE
-         PRUNE_TABLE = TABLE()
-         A = KEYS_IN_TABLE(T)                                 <b>:F(RETURN)</b>
-         SEQ( &#39; PRUNE_TABLE&lt;A&lt;I&gt;&gt; = VDIFFER(T&lt;A&lt;I&gt;&gt;)&#39;, .I)     <b>:(RETURN)</b>
+PRUNET
+         PRUNET = TABLE()
+         A = KEYST(T)                                         <b>:F(RETURN)</b>
+         SEQ( &#39; PRUNET&lt;A&lt;I&gt;&gt; = VDIFFER(T&lt;A&lt;I&gt;&gt;)&#39;, .I)          <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 HASH     HASH = TABLE(TS, TI)
          E = IDENT(E) &#39;=&#39;
@@ -118,19 +118,18 @@ HASH_4   S POS(0) BRKREM(P) . V (P | RPOS(0)) =               <b>:F(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 HASH_3   HASH_3 = S                                            <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
-COPY_TABLE
-         COPY_TABLE = CONVERT(CONVERT(T, &#39;ARRAY&#39;), &#39;TABLE&#39;)    <b>:(RETURN)</b>
+COPYT
+         COPYT = CONVERT(CONVERT(T, &#39;ARRAY&#39;), &#39;TABLE&#39;)         <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
-MERGE_TABLE
-         MERGE_TABLE = COPY_TABLE(T1)
+MERGET
+         MERGET = COPYT(T1)
          A = CONVERT(T2, &#39;ARRAY&#39;)
-         SEQ(&#39; MERGE_TABLE&lt;A&lt;I, 1&gt;&gt; = A&lt;I, 2&gt; &#39;, .I)           <b>:(RETURN)</b>
+         SEQ(&#39; MERGET&lt;A&lt;I, 1&gt;&gt; = A&lt;I, 2&gt; &#39;, .I)                <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
-KEYS_IN_TABLE
-         A = CONVERT(T, &#39;ARRAY&#39;)                             <b>:F(FRETURN)</b>
+KEYST    A = CONVERT(T, &#39;ARRAY&#39;)                             <b>:F(FRETURN)</b>
          PROTOTYPE(A) BREAK(&#39;,&#39;) . N                         <b>:F(FRETURN)</b>
-         KEYS_IN_TABLE = ARRAY(N)
-         SEQ(&#39; KEYS_IN_TABLE&lt;I&gt; = A&lt;I,1&gt; &#39;, .I)                <b>:(RETURN)</b>
+         KEYST = ARRAY(N)
+         SEQ(&#39; KEYST&lt;I&gt; = A&lt;I,1&gt; &#39;, .I)                        <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 HASH_END
 <b>@</b>
@@ -145,19 +144,19 @@ HASH_END
          H = #&#39;FIRST=BOB,LAST=LOBLAW&#39;
          IDENT(H&lt;&#39;FIRST&#39;&gt;, &#39;BOB&#39;)                                <b>:F(END)</b>
          IDENT(H&lt;&#39;LAST&#39;&gt;, &#39;LOBLAW&#39;)                              <b>:F(END)</b>
-         T = COPY_TABLE(H)
+         T = COPYT(H)
          IDENT(T&lt;&#39;FIRST&#39;&gt;, &#39;BOB&#39;)                                <b>:F(END)</b>
          T&lt;&#39;FIRST&#39;&gt; = &#39;FRED&#39;
          IDENT(H&lt;&#39;FIRST&#39;&gt;, &#39;BOB&#39;)                                <b>:F(END)</b>
          T2 = #&#39;ADDRESS=SOMEWHERE&#39;
-         T3 = MERGE_TABLE(T, T2)
+         T3 = MERGET(T, T2)
          IDENT(T3&lt;&#39;FIRST&#39;&gt;, &#39;FRED&#39;)                              <b>:F(END)</b>
          IDENT(T3&lt;&#39;LAST&#39;&gt;, &#39;LOBLAW&#39;)                             <b>:F(END)</b>
          IDENT(T3&lt;&#39;ADDRESS&#39;&gt;, &#39;SOMEWHERE&#39;)                       <b>:F(END)</b>
          H = #&#39;XXX,NAME=VALUE&#39;
          IDENT(H&lt;NULL&gt;, &#39;XXX&#39;)                                   <b>:F(END)</b>
          IDENT(H&lt;&#39;NAME&#39;&gt;, &#39;VALUE&#39;)                               <b>:F(END)</b>
-         A = KEYS_IN_TABLE(T3)                                   <b>:F(END)</b>
+         A = KEYST(T3)                                           <b>:F(END)</b>
          A = SORT(A)                                             <b>:F(END)</b>
          IDENT(A&lt;1&gt;, &#39;ADDRESS&#39;)                                  <b>:F(END)</b>
          IDENT(A&lt;2&gt;, &#39;FIRST&#39;)                                    <b>:F(END)</b>
@@ -199,7 +198,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Mon Jun  9 16:00:17 EDT 2014</p></td><td><p align=right>
+Tue Jun 10 05:53:30 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

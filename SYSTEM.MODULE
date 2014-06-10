@@ -1,0 +1,77 @@
+{
+  "SOURCE": "SYSTEM.lss",
+  "COMMENT": "SYSTEM module",
+  "ARTIFACTS": [
+    "SYSTEM.INC",
+    "SYSTEM.html",
+    "SYSTEM.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "SYSTEM",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "SYSTEM.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SYSTEM.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SYSTEM.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "SYSTEM.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SYSTEM.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SYSTEM.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "SYSTEM.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012754",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "SYSTEM.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012771",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "SYSTEM.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012828",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "SYSTEM.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012781",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

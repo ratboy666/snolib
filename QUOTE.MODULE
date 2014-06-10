@@ -1,0 +1,78 @@
+{
+  "SOURCE": "QUOTE.lss",
+  "COMMENT": "QUOTE module",
+  "ARTIFACTS": [
+    "QUOTE.INC",
+    "QUOTE.html",
+    "QUOTE.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "QUOTE",
+  "DEPENDS": [
+    "REPL"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "QUOTE.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "QUOTE.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "QUOTE.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "QUOTE.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "QUOTE.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "QUOTE.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "QUOTE.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012746",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "QUOTE.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012771",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "QUOTE.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012817",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "QUOTE.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012780",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

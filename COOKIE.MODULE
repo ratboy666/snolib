@@ -1,0 +1,82 @@
+{
+  "SOURCE": "COOKIE.lss",
+  "COMMENT": "COOKIE module",
+  "ARTIFACTS": [
+    "COOKIE.INC",
+    "COOKIE.html",
+    "COOKIE.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "COOKIE",
+  "DEPENDS": [
+    "CHARS",
+    "DEXP",
+    "TIME",
+    "TRIMB",
+    "VDIFFER"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "COOKIE.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "COOKIE.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "COOKIE.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "COOKIE.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "COOKIE.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "COOKIE.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "COOKIE.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402394148",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "COOKIE.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402394511",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "COOKIE.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402394512",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "COOKIE.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402394511",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "SOURCE": "FENCE.lss",
+  "COMMENT": "FENCE module",
+  "ARTIFACTS": [
+    "FENCE.INC",
+    "FENCE.html",
+    "FENCE.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "FENCE",
+  "DEPENDS": [
+    "UNIQUE"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "FENCE.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "FENCE.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "FENCE.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "FENCE.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "FENCE.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "FENCE.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "FENCE.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012729",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "FENCE.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012772",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "FENCE.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012801",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "FENCE.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012779",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

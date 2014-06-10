@@ -1,0 +1,79 @@
+{
+  "SOURCE": "APPENDA.lss",
+  "COMMENT": "APPENDA module",
+  "ARTIFACTS": [
+    "APPENDA.INC",
+    "APPENDA.html",
+    "APPENDA.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "APPENDA",
+  "DEPENDS": [
+    "SEQ",
+    "SIZEA"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "APPENDA.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "APPENDA.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "APPENDA.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "APPENDA.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "APPENDA.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "APPENDA.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "APPENDA.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402396869",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "APPENDA.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402397362",
+      "ACCESS": "600",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "APPENDA.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402397367",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "APPENDA.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402397362",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

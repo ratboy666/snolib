@@ -1,0 +1,77 @@
+{
+  "SOURCE": "NDBM.lss",
+  "COMMENT": "NDBM module",
+  "ARTIFACTS": [
+    "NDBM.INC",
+    "NDBM.html",
+    "NDBM.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "NDBM",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "NDBM.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "NDBM.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "NDBM.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "NDBM.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "NDBM.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "NDBM.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "NDBM.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012744",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "NDBM.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012775",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "NDBM.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012813",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "NDBM.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012780",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

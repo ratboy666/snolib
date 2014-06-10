@@ -1,0 +1,61 @@
+{
+  "SOURCE": "embed.lss",
+  "COMMENT": "embed module",
+  "ARTIFACTS": [
+    "embed",
+    "embed.html"
+  ],
+  "TYPE": "PROGRAM",
+  "NAME": "EMBED",
+  "DEPENDS": [
+    "CHARS",
+    "SLOAD"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "embed",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "embed.html",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "embed",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "embed.html",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "embed.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012728",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "embed",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402394875",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "embed.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012800",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    }
+  ]
+}

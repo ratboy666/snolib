@@ -1,0 +1,80 @@
+{
+  "SOURCE": "HASH.lss",
+  "COMMENT": "HASH module",
+  "ARTIFACTS": [
+    "HASH.INC",
+    "HASH.html",
+    "HASH.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "HASH",
+  "DEPENDS": [
+    "BRKREM",
+    "SEQ",
+    "VDIFFER"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "HASH.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "HASH.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "HASH.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "HASH.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "HASH.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "HASH.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "HASH.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402394007",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "HASH.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402394009",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "HASH.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402394011",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "HASH.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402394010",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

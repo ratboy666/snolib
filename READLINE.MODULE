@@ -1,0 +1,77 @@
+{
+  "SOURCE": "READLINE.lss",
+  "COMMENT": "READLINE module",
+  "ARTIFACTS": [
+    "READLINE.INC",
+    "READLINE.html",
+    "READLINE.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "READLINE",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "READLINE.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "READLINE.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "READLINE.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "READLINE.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "READLINE.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "READLINE.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "READLINE.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402281632",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "READLINE.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402281634",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "READLINE.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402281635",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "READLINE.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402281634",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

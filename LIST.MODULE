@@ -1,0 +1,67 @@
+{
+  "SOURCE": "list.lss",
+  "COMMENT": "list module",
+  "ARTIFACTS": [
+    "list",
+    "list.html"
+  ],
+  "TYPE": "PROGRAM",
+  "NAME": "LIST",
+  "DEPENDS": [
+    "CHARS",
+    "DISPLAY",
+    "GETKEY",
+    "HOST",
+    "LOGIC",
+    "READLINE",
+    "REPL",
+    "SEQ"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "list",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "list.html",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "list",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "list.html",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "list.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402079208",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "list",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402281634",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "list.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402079210",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    }
+  ]
+}

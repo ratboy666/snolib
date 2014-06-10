@@ -1,0 +1,85 @@
+{
+  "SOURCE": "DDT.lss",
+  "COMMENT": "DDT module",
+  "ARTIFACTS": [
+    "DDT.INC",
+    "DDT.html",
+    "DDT.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "DDT",
+  "DEPENDS": [
+    "CHARS",
+    "FREEZE",
+    "HOST",
+    "QUOTE",
+    "READLINE",
+    "SLOAD",
+    "TRIMB",
+    "VDIFFER"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "DDT.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "DDT.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "DDT.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "DDT.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "DDT.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "DDT.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "DDT.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012725",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "DDT.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402281634",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "DDT.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012796",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "DDT.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012779",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

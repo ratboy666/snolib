@@ -1,0 +1,77 @@
+{
+  "SOURCE": "SDIFF.lss",
+  "COMMENT": "SDIFF module",
+  "ARTIFACTS": [
+    "SDIFF.INC",
+    "SDIFF.html",
+    "SDIFF.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "SDIFF",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "SDIFF.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SDIFF.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SDIFF.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "SDIFF.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SDIFF.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SDIFF.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "SDIFF.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012750",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "SDIFF.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012770",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "SDIFF.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012822",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "SDIFF.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012780",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

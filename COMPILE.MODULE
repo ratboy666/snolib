@@ -1,0 +1,62 @@
+{
+  "SOURCE": "compile.lss",
+  "COMMENT": "compile module",
+  "ARTIFACTS": [
+    "compile",
+    "compile.html"
+  ],
+  "TYPE": "PROGRAM",
+  "NAME": "COMPILE",
+  "DEPENDS": [
+    "CHARS",
+    "HOST",
+    "REPL"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "compile",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "compile.html",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "compile",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "compile.html",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "compile.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012721",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "compile",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402394875",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "compile.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012792",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "SOURCE": "ROTATER.lss",
+  "COMMENT": "ROTATER module",
+  "ARTIFACTS": [
+    "ROTATER.INC",
+    "ROTATER.html",
+    "ROTATER.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "ROTATER",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "ROTATER.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "ROTATER.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "ROTATER.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "ROTATER.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "ROTATER.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "ROTATER.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "ROTATER.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012748",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "ROTATER.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012776",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "ROTATER.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012821",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "ROTATER.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012780",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

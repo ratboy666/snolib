@@ -1,0 +1,83 @@
+{
+  "SOURCE": "JSON.lss",
+  "COMMENT": "JSON module",
+  "ARTIFACTS": [
+    "JSON.INC",
+    "JSON.html",
+    "JSON.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "JSON",
+  "DEPENDS": [
+    "CH",
+    "CHARS",
+    "HEX",
+    "SDIFF",
+    "SEQ",
+    "SIZEA"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "JSON.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "JSON.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "JSON.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "JSON.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "JSON.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "JSON.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "JSON.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402394265",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "JSON.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402394511",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "JSON.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402394513",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "JSON.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402394511",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

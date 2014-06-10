@@ -42,7 +42,7 @@ pats     functions<'#'> =
          operators<'#'> =
 
 * build variable pattern
-         k = keys_in_table(variables) :f(end)
+         k = keyst(variables) :f(end)
          i = 1
 nxtv     k<i> :f(endv)
          s = '"' k<i> '"' ' . e *?(f = "' variables<k<i>> '")'
@@ -51,7 +51,7 @@ nxtv     k<i> :f(endv)
 endv     vp = (pos(0) | any(ss)) @bp vp @ep (any(ss) | rpos(0))
 
 * build function pattern
-         k = keys_in_table(functions) : f(end)
+         k = keyst(functions) : f(end)
          i = 1
 nxtf     k<i> :f(endf)
          m = k<i>
@@ -100,7 +100,7 @@ done     process(r) :(top)
 
 * output the includes
 incout   output =
-+           json_encode((sort(keys_in_table(incs)), array0)) :s(end)
++           json_encode((sort(keyst(incs)), array0)) :s(end)
 *        a = sort(incs) :f(end)
 *        i = 1
 *inco2   a<i,1> :f(end)

@@ -1,7 +1,7 @@
 {
   "LIBRARY": "LBR",
   "COMMENT": "SNOLIB library",
-  "TIMESTAMP": 1402239044,
+  "TIMESTAMP": 1402399528,
   "VERSION": 1,
   "CONTENTS": {
     "AGT": {
@@ -54,34 +54,34 @@
         {
           "NAME": "AGT.lss",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402213750",
+          "TIMESTAMP": "1402396799",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "0:1950"
+          "CONTENTS": "0:1971"
         },
         {
           "NAME": "AGT.INC",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402238730",
+          "TIMESTAMP": "1402397362",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1950:1299"
+          "CONTENTS": "1971:1326"
         },
         {
           "NAME": "AGT.html",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402238731",
+          "TIMESTAMP": "1402397363",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "3249:4326"
+          "CONTENTS": "3297:4400"
         },
         {
           "NAME": "AGT.tst",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402238730",
+          "TIMESTAMP": "1402397362",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "7575:281"
+          "CONTENTS": "7697:281"
         }
       ]
     },
@@ -136,34 +136,34 @@
         {
           "NAME": "AI.lss",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012715",
+          "TIMESTAMP": "1402396821",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "7856:2547"
+          "CONTENTS": "7978:2555"
         },
         {
           "NAME": "AI.INC",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402195041",
+          "TIMESTAMP": "1402397362",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "10403:1434"
+          "CONTENTS": "10533:1442"
         },
         {
           "NAME": "AI.html",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012785",
+          "TIMESTAMP": "1402397363",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "11837:5425"
+          "CONTENTS": "11975:5469"
         },
         {
           "NAME": "AI.tst",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012778",
+          "TIMESTAMP": "1402397362",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "17262:586"
+          "CONTENTS": "17444:586"
         }
       ]
     },
@@ -206,26 +206,26 @@
         {
           "NAME": "ALL.lss",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402198983",
+          "TIMESTAMP": "1402396838",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "17848:5024"
+          "CONTENTS": "18030:5053"
         },
         {
           "NAME": "ALL.INC",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402238730",
+          "TIMESTAMP": "1402397362",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "22872:3192"
+          "CONTENTS": "23083:3221"
         },
         {
           "NAME": "ALL.html",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402199108",
+          "TIMESTAMP": "1402397364",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "26064:7875"
+          "CONTENTS": "26304:7912"
         }
       ]
     },
@@ -280,34 +280,117 @@
         {
           "NAME": "AOPA.lss",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012716",
+          "TIMESTAMP": "1402396862",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "33939:3318"
+          "CONTENTS": "34216:3326"
         },
         {
           "NAME": "AOPA.INC",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402195041",
+          "TIMESTAMP": "1402397362",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "37257:1749"
+          "CONTENTS": "37542:1757"
         },
         {
           "NAME": "AOPA.html",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012786",
+          "TIMESTAMP": "1402397364",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "39006:6274"
+          "CONTENTS": "39299:6318"
         },
         {
           "NAME": "AOPA.tst",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012778",
+          "TIMESTAMP": "1402397362",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "45280:1123"
+          "CONTENTS": "45617:1123"
+        }
+      ]
+    },
+    "APPENDA": {
+      "SOURCE": "APPENDA.lss",
+      "COMMENT": "APPENDA module",
+      "ARTIFACTS": [
+        "APPENDA.INC",
+        "APPENDA.html",
+        "APPENDA.tst"
+      ],
+      "TYPE": "MODULE",
+      "NAME": "APPENDA",
+      "DEPENDS": [
+        "SEQ",
+        "SIZEA"
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "APPENDA.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "APPENDA.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "APPENDA.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "APPENDA.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "APPENDA.html",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "APPENDA.tst",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "APPENDA.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402396869",
+          "ACCESS": "664",
+          "LOCATION": "DATA",
+          "CONTENTS": "46740:1747"
+        },
+        {
+          "NAME": "APPENDA.INC",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402397362",
+          "ACCESS": "600",
+          "LOCATION": "DATA",
+          "CONTENTS": "48487:1394"
+        },
+        {
+          "NAME": "APPENDA.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402397367",
+          "ACCESS": "664",
+          "LOCATION": "DATA",
+          "CONTENTS": "49881:3930"
+        },
+        {
+          "NAME": "APPENDA.tst",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402397362",
+          "ACCESS": "775",
+          "LOCATION": "DATA",
+          "CONTENTS": "53811:143"
         }
       ]
     },
@@ -316,6 +399,7 @@
       "COMMENT": "ATOL module",
       "ARTIFACTS": [
         "ATOL.INC",
+        "ATOL.html",
         "ATOL.tst"
       ],
       "TYPE": "MODULE",
@@ -332,6 +416,11 @@
           ]
         },
         {
+          "TARGET": "ATOL.html",
+          "COMMANDS": [
+          ]
+        },
+        {
           "TARGET": "ATOL.tst",
           "COMMANDS": [
           ]
@@ -340,6 +429,11 @@
       "BUILD": [
         {
           "TARGET": "ATOL.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "ATOL.html",
           "COMMANDS": [
           ]
         },
@@ -353,26 +447,34 @@
         {
           "NAME": "ATOL.lss",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402204073",
+          "TIMESTAMP": "1402396889",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "46403:1706"
+          "CONTENTS": "53954:1715"
         },
         {
           "NAME": "ATOL.INC",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402204874",
+          "TIMESTAMP": "1402397362",
           "ACCESS": "600",
           "LOCATION": "DATA",
-          "CONTENTS": "48109:1367"
+          "CONTENTS": "55669:1376"
+        },
+        {
+          "NAME": "ATOL.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402397366",
+          "ACCESS": "664",
+          "LOCATION": "DATA",
+          "CONTENTS": "57045:3958"
         },
         {
           "NAME": "ATOL.tst",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402204874",
+          "TIMESTAMP": "1402397362",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "49476:137"
+          "CONTENTS": "61003:137"
         }
       ]
     },
@@ -429,7 +531,7 @@
           "TIMESTAMP": "1402012716",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "49613:1730"
+          "CONTENTS": "61140:1730"
         },
         {
           "NAME": "BALREV.INC",
@@ -437,7 +539,7 @@
           "TIMESTAMP": "1402012768",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "51343:1245"
+          "CONTENTS": "62870:1245"
         },
         {
           "NAME": "BALREV.html",
@@ -445,7 +547,7 @@
           "TIMESTAMP": "1402012786",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "52588:4050"
+          "CONTENTS": "64115:4050"
         },
         {
           "NAME": "BALREV.tst",
@@ -453,7 +555,7 @@
           "TIMESTAMP": "1402012778",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "56638:214"
+          "CONTENTS": "68165:214"
         }
       ]
     },
@@ -511,7 +613,7 @@
           "TIMESTAMP": "1402012716",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "56852:2336"
+          "CONTENTS": "68379:2336"
         },
         {
           "NAME": "BALX.INC",
@@ -519,7 +621,7 @@
           "TIMESTAMP": "1402012768",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "59188:1702"
+          "CONTENTS": "70715:1702"
         },
         {
           "NAME": "BALX.html",
@@ -527,7 +629,7 @@
           "TIMESTAMP": "1402012787",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "60890:4736"
+          "CONTENTS": "72417:4736"
         },
         {
           "NAME": "BALX.tst",
@@ -535,7 +637,7 @@
           "TIMESTAMP": "1402012778",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "65626:137"
+          "CONTENTS": "77153:137"
         }
       ]
     },
@@ -592,7 +694,7 @@
           "TIMESTAMP": "1402012717",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "65763:2401"
+          "CONTENTS": "77290:2401"
         },
         {
           "NAME": "BLEND.INC",
@@ -600,7 +702,7 @@
           "TIMESTAMP": "1402012768",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "68164:1943"
+          "CONTENTS": "79691:1943"
         },
         {
           "NAME": "BLEND.html",
@@ -608,7 +710,7 @@
           "TIMESTAMP": "1402012787",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "70107:4721"
+          "CONTENTS": "81634:4721"
         },
         {
           "NAME": "BLEND.tst",
@@ -616,7 +718,7 @@
           "TIMESTAMP": "1402012778",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "74828:212"
+          "CONTENTS": "86355:212"
         }
       ]
     },
@@ -673,7 +775,7 @@
           "TIMESTAMP": "1402012717",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "75040:3476"
+          "CONTENTS": "86567:3476"
         },
         {
           "NAME": "BQ.INC",
@@ -681,7 +783,7 @@
           "TIMESTAMP": "1402012768",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "78516:2203"
+          "CONTENTS": "90043:2203"
         },
         {
           "NAME": "BQ.html",
@@ -689,7 +791,7 @@
           "TIMESTAMP": "1402012788",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "80719:6804"
+          "CONTENTS": "92246:6804"
         },
         {
           "NAME": "BQ.tst",
@@ -697,7 +799,7 @@
           "TIMESTAMP": "1402012778",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "87523:133"
+          "CONTENTS": "99050:133"
         }
       ]
     },
@@ -755,7 +857,7 @@
           "TIMESTAMP": "1402012717",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "87656:1966"
+          "CONTENTS": "99183:1966"
         },
         {
           "NAME": "BRKREM.INC",
@@ -763,7 +865,7 @@
           "TIMESTAMP": "1402012770",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "89622:1597"
+          "CONTENTS": "101149:1597"
         },
         {
           "NAME": "BRKREM.html",
@@ -771,7 +873,7 @@
           "TIMESTAMP": "1402012837",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "91219:4166"
+          "CONTENTS": "102746:4166"
         },
         {
           "NAME": "BRKREM.tst",
@@ -779,7 +881,7 @@
           "TIMESTAMP": "1402012781",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "95385:141"
+          "CONTENTS": "106912:141"
         }
       ]
     },
@@ -828,15 +930,15 @@
           "TIMESTAMP": "1402012718",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "95526:3459"
+          "CONTENTS": "107053:3459"
         },
         {
           "NAME": "bundle",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012782",
+          "TIMESTAMP": "1402394875",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "98985:3287"
+          "CONTENTS": "110512:3287"
         },
         {
           "NAME": "bundle.html",
@@ -844,7 +946,7 @@
           "TIMESTAMP": "1402012788",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "102272:5983"
+          "CONTENTS": "113799:5983"
         }
       ]
     },
@@ -902,7 +1004,7 @@
           "TIMESTAMP": "1402012718",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "108255:2304"
+          "CONTENTS": "119782:2304"
         },
         {
           "NAME": "CATA.INC",
@@ -910,7 +1012,7 @@
           "TIMESTAMP": "1402195041",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "110559:1378"
+          "CONTENTS": "122086:1378"
         },
         {
           "NAME": "CATA.html",
@@ -918,7 +1020,7 @@
           "TIMESTAMP": "1402012789",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "111937:4720"
+          "CONTENTS": "123464:4720"
         },
         {
           "NAME": "CATA.tst",
@@ -926,7 +1028,7 @@
           "TIMESTAMP": "1402012778",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "116657:664"
+          "CONTENTS": "128184:664"
         }
       ]
     },
@@ -993,15 +1095,15 @@
           "TIMESTAMP": "1402012718",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "117321:19570"
+          "CONTENTS": "128848:19570"
         },
         {
           "NAME": "CGI.INC",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402238730",
+          "TIMESTAMP": "1402394875",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "136891:8621"
+          "CONTENTS": "148418:8621"
         },
         {
           "NAME": "CGI.html",
@@ -1009,7 +1111,7 @@
           "TIMESTAMP": "1402012840",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "145512:33301"
+          "CONTENTS": "157039:33301"
         },
         {
           "NAME": "CGI.tst",
@@ -1017,7 +1119,7 @@
           "TIMESTAMP": "1402012782",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "178813:5676"
+          "CONTENTS": "190340:5676"
         }
       ]
     },
@@ -1074,7 +1176,7 @@
           "TIMESTAMP": "1402012719",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "184489:3896"
+          "CONTENTS": "196016:3896"
         },
         {
           "NAME": "CHARS.INC",
@@ -1082,7 +1184,7 @@
           "TIMESTAMP": "1402012768",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "188385:3134"
+          "CONTENTS": "199912:3134"
         },
         {
           "NAME": "CHARS.html",
@@ -1090,7 +1192,7 @@
           "TIMESTAMP": "1402012789",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "191519:6837"
+          "CONTENTS": "203046:6837"
         },
         {
           "NAME": "CHARS.tst",
@@ -1098,7 +1200,7 @@
           "TIMESTAMP": "1402012778",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "198356:139"
+          "CONTENTS": "209883:139"
         }
       ]
     },
@@ -1156,7 +1258,7 @@
           "TIMESTAMP": "1402012719",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "198495:2077"
+          "CONTENTS": "210022:2077"
         },
         {
           "NAME": "CH.INC",
@@ -1164,7 +1266,7 @@
           "TIMESTAMP": "1402012768",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "200572:1664"
+          "CONTENTS": "212099:1664"
         },
         {
           "NAME": "CH.html",
@@ -1172,7 +1274,7 @@
           "TIMESTAMP": "1402012790",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "202236:4392"
+          "CONTENTS": "213763:4392"
         },
         {
           "NAME": "CH.tst",
@@ -1180,7 +1282,7 @@
           "TIMESTAMP": "1402012778",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "206628:206"
+          "CONTENTS": "218155:206"
         }
       ]
     },
@@ -1233,15 +1335,15 @@
           "TIMESTAMP": "1402012720",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "206834:23751"
+          "CONTENTS": "218361:23751"
         },
         {
           "NAME": "code",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402195065",
+          "TIMESTAMP": "1402394875",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "230585:14676"
+          "CONTENTS": "242112:14676"
         },
         {
           "NAME": "code.html",
@@ -1249,7 +1351,7 @@
           "TIMESTAMP": "1402012790",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "245261:39051"
+          "CONTENTS": "256788:39051"
         }
       ]
     },
@@ -1306,7 +1408,7 @@
           "TIMESTAMP": "1402012720",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "284312:1591"
+          "CONTENTS": "295839:1591"
         },
         {
           "NAME": "COMB.INC",
@@ -1314,7 +1416,7 @@
           "TIMESTAMP": "1402012768",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "285903:1304"
+          "CONTENTS": "297430:1304"
         },
         {
           "NAME": "COMB.html",
@@ -1322,7 +1424,7 @@
           "TIMESTAMP": "1402012791",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "287207:3783"
+          "CONTENTS": "298734:3783"
         },
         {
           "NAME": "COMB.tst",
@@ -1330,7 +1432,7 @@
           "TIMESTAMP": "1402012778",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "290990:137"
+          "CONTENTS": "302517:137"
         }
       ]
     },
@@ -1379,15 +1481,15 @@
           "TIMESTAMP": "1402012721",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "291127:7128"
+          "CONTENTS": "302654:7128"
         },
         {
           "NAME": "compile",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012783",
+          "TIMESTAMP": "1402394875",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "298255:5896"
+          "CONTENTS": "309782:5896"
         },
         {
           "NAME": "compile.html",
@@ -1395,7 +1497,7 @@
           "TIMESTAMP": "1402012792",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "304151:10828"
+          "CONTENTS": "315678:10828"
         }
       ]
     },
@@ -1452,7 +1554,7 @@
           "TIMESTAMP": "1402012721",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "314979:2478"
+          "CONTENTS": "326506:2478"
         },
         {
           "NAME": "COMPLEX.INC",
@@ -1460,7 +1562,7 @@
           "TIMESTAMP": "1402012777",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "317457:2225"
+          "CONTENTS": "328984:2225"
         },
         {
           "NAME": "COMPLEX.html",
@@ -1468,7 +1570,7 @@
           "TIMESTAMP": "1402012843",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "319682:4902"
+          "CONTENTS": "331209:4902"
         },
         {
           "NAME": "COMPLEX.tst",
@@ -1476,7 +1578,7 @@
           "TIMESTAMP": "1402012782",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "324584:143"
+          "CONTENTS": "336111:143"
         }
       ]
     },
@@ -1493,7 +1595,6 @@
       "DEPENDS": [
         "CHARS",
         "DEXP",
-        "HASH",
         "TIME",
         "TRIMB",
         "VDIFFER"
@@ -1536,34 +1637,34 @@
         {
           "NAME": "COOKIE.lss",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012721",
+          "TIMESTAMP": "1402394148",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "324727:8221"
+          "CONTENTS": "336254:8229"
         },
         {
           "NAME": "COOKIE.INC",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012777",
+          "TIMESTAMP": "1402394511",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "332948:5567"
+          "CONTENTS": "344483:5575"
         },
         {
           "NAME": "COOKIE.html",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012843",
+          "TIMESTAMP": "1402394512",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "338515:13275"
+          "CONTENTS": "350058:13319"
         },
         {
           "NAME": "COOKIE.tst",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012782",
+          "TIMESTAMP": "1402394511",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "351790:999"
+          "CONTENTS": "363377:999"
         }
       ]
     },
@@ -1621,7 +1722,7 @@
           "TIMESTAMP": "1402012722",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "352789:2005"
+          "CONTENTS": "364376:2005"
         },
         {
           "NAME": "COPYL.INC",
@@ -1629,7 +1730,7 @@
           "TIMESTAMP": "1402012769",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "354794:1715"
+          "CONTENTS": "366381:1715"
         },
         {
           "NAME": "COPYL.html",
@@ -1637,7 +1738,7 @@
           "TIMESTAMP": "1402012792",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "356509:4248"
+          "CONTENTS": "368096:4248"
         },
         {
           "NAME": "COPYL.tst",
@@ -1645,7 +1746,7 @@
           "TIMESTAMP": "1402012778",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "360757:139"
+          "CONTENTS": "372344:139"
         }
       ]
     },
@@ -1702,7 +1803,7 @@
           "TIMESTAMP": "1402012722",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "360896:2002"
+          "CONTENTS": "372483:2002"
         },
         {
           "NAME": "COUNT.INC",
@@ -1710,7 +1811,7 @@
           "TIMESTAMP": "1402012769",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "362898:1659"
+          "CONTENTS": "374485:1659"
         },
         {
           "NAME": "COUNT.html",
@@ -1718,7 +1819,7 @@
           "TIMESTAMP": "1402012793",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "364557:4332"
+          "CONTENTS": "376144:4332"
         },
         {
           "NAME": "COUNT.tst",
@@ -1726,7 +1827,7 @@
           "TIMESTAMP": "1402012778",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "368889:212"
+          "CONTENTS": "380476:212"
         }
       ]
     },
@@ -1741,7 +1842,8 @@
       "TYPE": "MODULE",
       "NAME": "CRACK",
       "DEPENDS": [
-        "COUNT"
+        "COUNT",
+        "SEQ"
       ],
       "INSTALL": [
         {
@@ -1781,34 +1883,34 @@
         {
           "NAME": "CRACK.lss",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012722",
+          "TIMESTAMP": "1402394865",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "369101:2643"
+          "CONTENTS": "380688:2827"
         },
         {
           "NAME": "CRACK.INC",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012769",
+          "TIMESTAMP": "1402394871",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "371744:2160"
+          "CONTENTS": "383515:2344"
         },
         {
           "NAME": "CRACK.html",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012793",
+          "TIMESTAMP": "1402394876",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "373904:5168"
+          "CONTENTS": "385859:5467"
         },
         {
           "NAME": "CRACK.tst",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012779",
+          "TIMESTAMP": "1402394875",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "379072:139"
+          "CONTENTS": "391326:139"
         }
       ]
     },
@@ -1823,8 +1925,7 @@
       "TYPE": "MODULE",
       "NAME": "CSNOBOL4",
       "DEPENDS": [
-        "FFI",
-        "P64"
+        "FFI"
       ],
       "INSTALL": [
         {
@@ -1864,34 +1965,34 @@
         {
           "NAME": "CSNOBOL4.lss",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012723",
+          "TIMESTAMP": "1402336573",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "379211:15538"
+          "CONTENTS": "391465:15429"
         },
         {
           "NAME": "CSNOBOL4.INC",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402195042",
+          "TIMESTAMP": "1402394872",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "394749:4713"
+          "CONTENTS": "406894:4530"
         },
         {
           "NAME": "CSNOBOL4.html",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012794",
+          "TIMESTAMP": "1402336577",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "399462:23423"
+          "CONTENTS": "411424:23325"
         },
         {
           "NAME": "CSNOBOL4.tst",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012779",
+          "TIMESTAMP": "1402336576",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "422885:413"
+          "CONTENTS": "434749:413"
         }
       ]
     },
@@ -1951,15 +2052,15 @@
           "TIMESTAMP": "1402012723",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "423298:8759"
+          "CONTENTS": "435162:8759"
         },
         {
           "NAME": "CVAR.INC",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402195042",
+          "TIMESTAMP": "1402394872",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "432057:5697"
+          "CONTENTS": "443921:5697"
         },
         {
           "NAME": "CVAR.html",
@@ -1967,7 +2068,7 @@
           "TIMESTAMP": "1402012794",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "437754:14422"
+          "CONTENTS": "449618:14422"
         },
         {
           "NAME": "CVAR.tst",
@@ -1975,7 +2076,7 @@
           "TIMESTAMP": "1402012779",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "452176:138"
+          "CONTENTS": "464040:138"
         }
       ]
     },
@@ -2032,7 +2133,7 @@
           "TIMESTAMP": "1402012723",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "452314:2565"
+          "CONTENTS": "464178:2565"
         },
         {
           "NAME": "DAY.INC",
@@ -2040,7 +2141,7 @@
           "TIMESTAMP": "1402012771",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "454879:2174"
+          "CONTENTS": "466743:2174"
         },
         {
           "NAME": "DAY.html",
@@ -2048,7 +2149,7 @@
           "TIMESTAMP": "1402012795",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "457053:4848"
+          "CONTENTS": "468917:4848"
         },
         {
           "NAME": "DAY.tst",
@@ -2056,7 +2157,7 @@
           "TIMESTAMP": "1402012779",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "461901:135"
+          "CONTENTS": "473765:135"
         }
       ]
     },
@@ -2114,7 +2215,7 @@
           "TIMESTAMP": "1402012724",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "462036:1427"
+          "CONTENTS": "473900:1427"
         },
         {
           "NAME": "DDTCARD.INC",
@@ -2122,7 +2223,7 @@
           "TIMESTAMP": "1402012771",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "463463:1087"
+          "CONTENTS": "475327:1087"
         },
         {
           "NAME": "DDTCARD.html",
@@ -2130,7 +2231,7 @@
           "TIMESTAMP": "1402012795",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "464550:3526"
+          "CONTENTS": "476414:3526"
         },
         {
           "NAME": "DDTCARD.tst",
@@ -2138,7 +2239,7 @@
           "TIMESTAMP": "1402012779",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "468076:149"
+          "CONTENTS": "479940:149"
         }
       ]
     },
@@ -2203,15 +2304,15 @@
           "TIMESTAMP": "1402012725",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "468225:27582"
+          "CONTENTS": "480089:27582"
         },
         {
           "NAME": "DDT.INC",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012771",
+          "TIMESTAMP": "1402281634",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "495807:23065"
+          "CONTENTS": "507671:23065"
         },
         {
           "NAME": "DDT.html",
@@ -2219,7 +2320,7 @@
           "TIMESTAMP": "1402012796",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "518872:43356"
+          "CONTENTS": "530736:43356"
         },
         {
           "NAME": "DDT.tst",
@@ -2227,7 +2328,7 @@
           "TIMESTAMP": "1402012779",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "562228:136"
+          "CONTENTS": "574092:136"
         }
       ]
     },
@@ -2236,18 +2337,23 @@
       "COMMENT": "DEDUPA module",
       "ARTIFACTS": [
         "DEDUPA.INC",
+        "DEDUPA.html",
         "DEDUPA.tst"
       ],
       "TYPE": "MODULE",
       "NAME": "DEDUPA",
       "DEPENDS": [
-        "HASH",
         "SEQ",
         "SIZEA"
       ],
       "INSTALL": [
         {
           "TARGET": "DEDUPA.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "DEDUPA.html",
           "COMMANDS": [
           ]
         },
@@ -2264,6 +2370,11 @@
           ]
         },
         {
+          "TARGET": "DEDUPA.html",
+          "COMMANDS": [
+          ]
+        },
+        {
           "TARGET": "DEDUPA.tst",
           "COMMANDS": [
           ]
@@ -2273,26 +2384,34 @@
         {
           "NAME": "DEDUPA.lss",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402195334",
+          "TIMESTAMP": "1402394204",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "562364:2057"
+          "CONTENTS": "574228:2063"
         },
         {
           "NAME": "DEDUPA.INC",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402204874",
+          "TIMESTAMP": "1402394511",
           "ACCESS": "600",
           "LOCATION": "DATA",
-          "CONTENTS": "564421:1529"
+          "CONTENTS": "576291:1535"
+        },
+        {
+          "NAME": "DEDUPA.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402397365",
+          "ACCESS": "664",
+          "LOCATION": "DATA",
+          "CONTENTS": "577826:4304"
         },
         {
           "NAME": "DEDUPA.tst",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402195335",
+          "TIMESTAMP": "1402394511",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "565950:141"
+          "CONTENTS": "582130:141"
         }
       ]
     },
@@ -2338,7 +2457,7 @@
           "TIMESTAMP": "1402012725",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "566091:1540"
+          "CONTENTS": "582271:1540"
         },
         {
           "NAME": "deretn",
@@ -2346,7 +2465,7 @@
           "TIMESTAMP": "1402012783",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "567631:1443"
+          "CONTENTS": "583811:1443"
         },
         {
           "NAME": "deretn.html",
@@ -2354,7 +2473,7 @@
           "TIMESTAMP": "1402012797",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "569074:3591"
+          "CONTENTS": "585254:3591"
         }
       ]
     },
@@ -2400,7 +2519,7 @@
           "TIMESTAMP": "1402012725",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "572665:1383"
+          "CONTENTS": "588845:1383"
         },
         {
           "NAME": "deseql",
@@ -2408,7 +2527,7 @@
           "TIMESTAMP": "1402012783",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "574048:1348"
+          "CONTENTS": "590228:1348"
         },
         {
           "NAME": "deseql.html",
@@ -2416,7 +2535,7 @@
           "TIMESTAMP": "1402012797",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "575396:3154"
+          "CONTENTS": "591576:3154"
         }
       ]
     },
@@ -2462,7 +2581,7 @@
           "TIMESTAMP": "1402012726",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "578550:1568"
+          "CONTENTS": "594730:1568"
         },
         {
           "NAME": "deseq",
@@ -2470,7 +2589,7 @@
           "TIMESTAMP": "1402012783",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "580118:1365"
+          "CONTENTS": "596298:1365"
         },
         {
           "NAME": "deseq.html",
@@ -2478,7 +2597,7 @@
           "TIMESTAMP": "1402012798",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "581483:3551"
+          "CONTENTS": "597663:3551"
         }
       ]
     },
@@ -2535,7 +2654,7 @@
           "TIMESTAMP": "1402012726",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "585034:1729"
+          "CONTENTS": "601214:1729"
         },
         {
           "NAME": "DEXP.INC",
@@ -2543,7 +2662,7 @@
           "TIMESTAMP": "1402012771",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "586763:1370"
+          "CONTENTS": "602943:1370"
         },
         {
           "NAME": "DEXP.html",
@@ -2551,7 +2670,7 @@
           "TIMESTAMP": "1402012798",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "588133:3999"
+          "CONTENTS": "604313:3999"
         },
         {
           "NAME": "DEXP.tst",
@@ -2559,7 +2678,7 @@
           "TIMESTAMP": "1402012779",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "592132:137"
+          "CONTENTS": "608312:137"
         }
       ]
     },
@@ -2619,7 +2738,7 @@
           "TIMESTAMP": "1402012726",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "592269:4624"
+          "CONTENTS": "608449:4624"
         },
         {
           "NAME": "DISPLAY.INC",
@@ -2627,7 +2746,7 @@
           "TIMESTAMP": "1402012771",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "596893:3814"
+          "CONTENTS": "613073:3814"
         },
         {
           "NAME": "DISPLAY.html",
@@ -2635,7 +2754,7 @@
           "TIMESTAMP": "1402012799",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "600707:9362"
+          "CONTENTS": "616887:9362"
         },
         {
           "NAME": "DISPLAY.tst",
@@ -2643,7 +2762,7 @@
           "TIMESTAMP": "1402012779",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "610069:144"
+          "CONTENTS": "626249:144"
         }
       ]
     },
@@ -2706,15 +2825,15 @@
           "TIMESTAMP": "1402012727",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "610213:6070"
+          "CONTENTS": "626393:6070"
         },
         {
           "NAME": "DSERVE.INC",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402195044",
+          "TIMESTAMP": "1402394875",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "616283:5090"
+          "CONTENTS": "632463:5090"
         },
         {
           "NAME": "DSERVE.html",
@@ -2722,7 +2841,7 @@
           "TIMESTAMP": "1402012846",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "621373:10019"
+          "CONTENTS": "637553:10019"
         },
         {
           "NAME": "DSERVE.tst",
@@ -2730,7 +2849,7 @@
           "TIMESTAMP": "1402012782",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "631392:376"
+          "CONTENTS": "647572:376"
         }
       ]
     },
@@ -2790,7 +2909,7 @@
           "TIMESTAMP": "1402012727",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "631768:7552"
+          "CONTENTS": "647948:7552"
         },
         {
           "NAME": "DYNAMIC.INC",
@@ -2798,7 +2917,7 @@
           "TIMESTAMP": "1402012769",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "639320:6275"
+          "CONTENTS": "655500:6275"
         },
         {
           "NAME": "DYNAMIC.html",
@@ -2806,7 +2925,7 @@
           "TIMESTAMP": "1402012799",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "645595:13357"
+          "CONTENTS": "661775:13357"
         },
         {
           "NAME": "DYNAMIC.tst",
@@ -2814,7 +2933,7 @@
           "TIMESTAMP": "1402012779",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "658952:144"
+          "CONTENTS": "675132:144"
         }
       ]
     },
@@ -2862,15 +2981,15 @@
           "TIMESTAMP": "1402012728",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "659096:5659"
+          "CONTENTS": "675276:5659"
         },
         {
           "NAME": "embed",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012783",
+          "TIMESTAMP": "1402394875",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "664755:3529"
+          "CONTENTS": "680935:3529"
         },
         {
           "NAME": "embed.html",
@@ -2878,7 +2997,7 @@
           "TIMESTAMP": "1402012800",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "668284:9865"
+          "CONTENTS": "684464:9865"
         }
       ]
     },
@@ -2935,7 +3054,7 @@
           "TIMESTAMP": "1402012728",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "678149:1317"
+          "CONTENTS": "694329:1317"
         },
         {
           "NAME": "ENDCARD.INC",
@@ -2943,7 +3062,7 @@
           "TIMESTAMP": "1402012771",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "679466:1074"
+          "CONTENTS": "695646:1074"
         },
         {
           "NAME": "ENDCARD.html",
@@ -2951,7 +3070,7 @@
           "TIMESTAMP": "1402012800",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "680540:3340"
+          "CONTENTS": "696720:3340"
         },
         {
           "NAME": "ENDCARD.tst",
@@ -2959,7 +3078,7 @@
           "TIMESTAMP": "1402012779",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "683880:139"
+          "CONTENTS": "700060:139"
         }
       ]
     },
@@ -3017,7 +3136,7 @@
           "TIMESTAMP": "1402012728",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "684019:3624"
+          "CONTENTS": "700199:3624"
         },
         {
           "NAME": "FASTBAL.INC",
@@ -3025,7 +3144,7 @@
           "TIMESTAMP": "1402012772",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "687643:2023"
+          "CONTENTS": "703823:2023"
         },
         {
           "NAME": "FASTBAL.html",
@@ -3033,7 +3152,7 @@
           "TIMESTAMP": "1402012801",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "689666:7466"
+          "CONTENTS": "705846:7466"
         },
         {
           "NAME": "FASTBAL.tst",
@@ -3041,7 +3160,7 @@
           "TIMESTAMP": "1402012779",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "697132:143"
+          "CONTENTS": "713312:143"
         }
       ]
     },
@@ -3104,15 +3223,15 @@
           "TIMESTAMP": "1402012729",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "697275:11693"
+          "CONTENTS": "713455:11693"
         },
         {
           "NAME": "FCGI.INC",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402238730",
+          "TIMESTAMP": "1402394875",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "708968:10466"
+          "CONTENTS": "725148:10466"
         },
         {
           "NAME": "FCGI.html",
@@ -3120,7 +3239,7 @@
           "TIMESTAMP": "1402012845",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "719434:17254"
+          "CONTENTS": "735614:17254"
         },
         {
           "NAME": "FCGI.tst",
@@ -3128,7 +3247,7 @@
           "TIMESTAMP": "1402012782",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "736688:262"
+          "CONTENTS": "752868:262"
         }
       ]
     },
@@ -3186,7 +3305,7 @@
           "TIMESTAMP": "1402012729",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "736950:2167"
+          "CONTENTS": "753130:2167"
         },
         {
           "NAME": "FENCE.INC",
@@ -3194,7 +3313,7 @@
           "TIMESTAMP": "1402012772",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "739117:1264"
+          "CONTENTS": "755297:1264"
         },
         {
           "NAME": "FENCE.html",
@@ -3202,7 +3321,7 @@
           "TIMESTAMP": "1402012801",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "740381:4461"
+          "CONTENTS": "756561:4461"
         },
         {
           "NAME": "FENCE.tst",
@@ -3210,7 +3329,7 @@
           "TIMESTAMP": "1402012779",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "744842:139"
+          "CONTENTS": "761022:139"
         }
       ]
     },
@@ -3225,7 +3344,6 @@
       "TYPE": "MODULE",
       "NAME": "FFI",
       "DEPENDS": [
-        "P64"
       ],
       "INSTALL": [
         {
@@ -3265,34 +3383,34 @@
         {
           "NAME": "FFI.lss",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012730",
+          "TIMESTAMP": "1402336388",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "744981:17341"
+          "CONTENTS": "761161:16202"
         },
         {
           "NAME": "FFI.INC",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402195042",
+          "TIMESTAMP": "1402394872",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "762322:5484"
+          "CONTENTS": "777363:4525"
         },
         {
           "NAME": "FFI.html",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012802",
+          "TIMESTAMP": "1402336391",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "767806:27770"
+          "CONTENTS": "781888:26233"
         },
         {
           "NAME": "FFI.tst",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012779",
+          "TIMESTAMP": "1402336391",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "795576:136"
+          "CONTENTS": "808121:136"
         }
       ]
     },
@@ -3349,7 +3467,7 @@
           "TIMESTAMP": "1402012730",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "795712:1917"
+          "CONTENTS": "808257:1917"
         },
         {
           "NAME": "FIND.INC",
@@ -3357,7 +3475,7 @@
           "TIMESTAMP": "1402012772",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "797629:1527"
+          "CONTENTS": "810174:1527"
         },
         {
           "NAME": "FIND.html",
@@ -3365,7 +3483,7 @@
           "TIMESTAMP": "1402012803",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "799156:4263"
+          "CONTENTS": "811701:4263"
         },
         {
           "NAME": "FIND.tst",
@@ -3373,7 +3491,7 @@
           "TIMESTAMP": "1402012779",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "803419:137"
+          "CONTENTS": "815964:137"
         }
       ]
     },
@@ -3431,7 +3549,7 @@
           "TIMESTAMP": "1402012730",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "803556:1790"
+          "CONTENTS": "816101:1790"
         },
         {
           "NAME": "FLOOR.INC",
@@ -3439,7 +3557,7 @@
           "TIMESTAMP": "1402012772",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "805346:1427"
+          "CONTENTS": "817891:1427"
         },
         {
           "NAME": "FLOOR.html",
@@ -3447,7 +3565,7 @@
           "TIMESTAMP": "1402012803",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "806773:4116"
+          "CONTENTS": "819318:4116"
         },
         {
           "NAME": "FLOOR.tst",
@@ -3455,7 +3573,7 @@
           "TIMESTAMP": "1402012779",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "810889:139"
+          "CONTENTS": "823434:139"
         }
       ]
     },
@@ -3512,7 +3630,7 @@
           "TIMESTAMP": "1402012730",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "811028:2540"
+          "CONTENTS": "823573:2540"
         },
         {
           "NAME": "FOREACH.INC",
@@ -3520,7 +3638,7 @@
           "TIMESTAMP": "1402012777",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "813568:1233"
+          "CONTENTS": "826113:1233"
         },
         {
           "NAME": "FOREACH.html",
@@ -3528,7 +3646,7 @@
           "TIMESTAMP": "1402012839",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "814801:4865"
+          "CONTENTS": "827346:4865"
         },
         {
           "NAME": "FOREACH.tst",
@@ -3536,7 +3654,7 @@
           "TIMESTAMP": "1402012782",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "819666:408"
+          "CONTENTS": "832211:408"
         }
       ]
     },
@@ -3593,7 +3711,7 @@
           "TIMESTAMP": "1402012731",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "820074:8939"
+          "CONTENTS": "832619:8939"
         },
         {
           "NAME": "FOR.INC",
@@ -3601,7 +3719,7 @@
           "TIMESTAMP": "1402012778",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "829013:4670"
+          "CONTENTS": "841558:4670"
         },
         {
           "NAME": "FOR.html",
@@ -3609,7 +3727,7 @@
           "TIMESTAMP": "1402012847",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "833683:15123"
+          "CONTENTS": "846228:15123"
         },
         {
           "NAME": "FOR.tst",
@@ -3617,7 +3735,7 @@
           "TIMESTAMP": "1402012782",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "848806:2244"
+          "CONTENTS": "861351:2244"
         }
       ]
     },
@@ -3675,7 +3793,7 @@
           "TIMESTAMP": "1402012731",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "851050:1641"
+          "CONTENTS": "863595:1641"
         },
         {
           "NAME": "FREEZE.INC",
@@ -3683,7 +3801,7 @@
           "TIMESTAMP": "1402012777",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "852691:1405"
+          "CONTENTS": "865236:1405"
         },
         {
           "NAME": "FREEZE.html",
@@ -3691,7 +3809,7 @@
           "TIMESTAMP": "1402012847",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "854096:3716"
+          "CONTENTS": "866641:3716"
         },
         {
           "NAME": "FREEZE.tst",
@@ -3699,7 +3817,7 @@
           "TIMESTAMP": "1402012782",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "857812:141"
+          "CONTENTS": "870357:141"
         }
       ]
     },
@@ -3756,7 +3874,7 @@
           "TIMESTAMP": "1402012731",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "857953:1804"
+          "CONTENTS": "870498:1804"
         },
         {
           "NAME": "GCD.INC",
@@ -3764,7 +3882,7 @@
           "TIMESTAMP": "1402012777",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "859757:1485"
+          "CONTENTS": "872302:1485"
         },
         {
           "NAME": "GCD.html",
@@ -3772,7 +3890,7 @@
           "TIMESTAMP": "1402012842",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "861242:4017"
+          "CONTENTS": "873787:4017"
         },
         {
           "NAME": "GCD.tst",
@@ -3780,7 +3898,7 @@
           "TIMESTAMP": "1402012782",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "865259:208"
+          "CONTENTS": "877804:208"
         }
       ]
     },
@@ -3839,7 +3957,7 @@
           "TIMESTAMP": "1402012732",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "865467:5750"
+          "CONTENTS": "878012:5750"
         },
         {
           "NAME": "GETKEY.INC",
@@ -3847,7 +3965,7 @@
           "TIMESTAMP": "1402012772",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "871217:4048"
+          "CONTENTS": "883762:4048"
         },
         {
           "NAME": "GETKEY.html",
@@ -3855,7 +3973,7 @@
           "TIMESTAMP": "1402012804",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "875265:9819"
+          "CONTENTS": "887810:9819"
         },
         {
           "NAME": "GETKEY.tst",
@@ -3863,7 +3981,7 @@
           "TIMESTAMP": "1402012779",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "885084:142"
+          "CONTENTS": "897629:142"
         }
       ]
     },
@@ -3920,7 +4038,7 @@
           "TIMESTAMP": "1402012732",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "885226:2705"
+          "CONTENTS": "897771:2705"
         },
         {
           "NAME": "GOTOS.INC",
@@ -3928,7 +4046,7 @@
           "TIMESTAMP": "1402012772",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "887931:1715"
+          "CONTENTS": "900476:1715"
         },
         {
           "NAME": "GOTOS.html",
@@ -3936,7 +4054,7 @@
           "TIMESTAMP": "1402012804",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "889646:5445"
+          "CONTENTS": "902191:5445"
         },
         {
           "NAME": "GOTOS.tst",
@@ -3944,7 +4062,7 @@
           "TIMESTAMP": "1402012779",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "895091:139"
+          "CONTENTS": "907636:139"
         }
       ]
     },
@@ -4001,34 +4119,34 @@
         {
           "NAME": "HASH.lss",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012732",
+          "TIMESTAMP": "1402394007",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "895230:6453"
+          "CONTENTS": "907775:6689"
         },
         {
           "NAME": "HASH.INC",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012770",
+          "TIMESTAMP": "1402394009",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "901683:2874"
+          "CONTENTS": "914464:3028"
         },
         {
           "NAME": "HASH.html",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012837",
+          "TIMESTAMP": "1402394011",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "904557:11058"
+          "CONTENTS": "917492:11484"
         },
         {
           "NAME": "HASH.tst",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012781",
+          "TIMESTAMP": "1402394010",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "915615:1353"
+          "CONTENTS": "928976:1343"
         }
       ]
     },
@@ -4086,7 +4204,7 @@
           "TIMESTAMP": "1402012733",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "916968:2149"
+          "CONTENTS": "930319:2149"
         },
         {
           "NAME": "HEX.INC",
@@ -4094,7 +4212,7 @@
           "TIMESTAMP": "1402012768",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "919117:1735"
+          "CONTENTS": "932468:1735"
         },
         {
           "NAME": "HEX.html",
@@ -4102,7 +4220,7 @@
           "TIMESTAMP": "1402012805",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "920852:4480"
+          "CONTENTS": "934203:4480"
         },
         {
           "NAME": "HEX.tst",
@@ -4110,7 +4228,7 @@
           "TIMESTAMP": "1402012779",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "925332:195"
+          "CONTENTS": "938683:195"
         }
       ]
     },
@@ -4167,7 +4285,7 @@
           "TIMESTAMP": "1402012733",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "925527:4718"
+          "CONTENTS": "938878:4718"
         },
         {
           "NAME": "HOST.INC",
@@ -4175,7 +4293,7 @@
           "TIMESTAMP": "1402012769",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "930245:3489"
+          "CONTENTS": "943596:3489"
         },
         {
           "NAME": "HOST.html",
@@ -4183,7 +4301,7 @@
           "TIMESTAMP": "1402012805",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "933734:9055"
+          "CONTENTS": "947085:9055"
         },
         {
           "NAME": "HOST.tst",
@@ -4191,7 +4309,7 @@
           "TIMESTAMP": "1402012779",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "942789:138"
+          "CONTENTS": "956140:138"
         }
       ]
     },
@@ -4253,7 +4371,7 @@
           "TIMESTAMP": "1402012733",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "942927:4420"
+          "CONTENTS": "956278:4420"
         },
         {
           "NAME": "HTMLESC.INC",
@@ -4261,7 +4379,7 @@
           "TIMESTAMP": "1402012777",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "947347:3079"
+          "CONTENTS": "960698:3079"
         },
         {
           "NAME": "HTMLESC.html",
@@ -4269,7 +4387,7 @@
           "TIMESTAMP": "1402012835",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "950426:7911"
+          "CONTENTS": "963777:7911"
         },
         {
           "NAME": "HTMLESC.tst",
@@ -4277,7 +4395,7 @@
           "TIMESTAMP": "1402012781",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "958337:560"
+          "CONTENTS": "971688:560"
         }
       ]
     },
@@ -4341,7 +4459,7 @@
           "TIMESTAMP": "1402012734",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "958897:7642"
+          "CONTENTS": "972248:7642"
         },
         {
           "NAME": "HTMLTMPL.INC",
@@ -4349,7 +4467,7 @@
           "TIMESTAMP": "1402012778",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "966539:6503"
+          "CONTENTS": "979890:6503"
         },
         {
           "NAME": "HTMLTMPL.html",
@@ -4357,7 +4475,7 @@
           "TIMESTAMP": "1402012844",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "973042:11245"
+          "CONTENTS": "986393:11245"
         },
         {
           "NAME": "HTMLTMPL.tst",
@@ -4365,7 +4483,7 @@
           "TIMESTAMP": "1402012782",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "984287:1035"
+          "CONTENTS": "997638:1035"
         }
       ]
     },
@@ -4416,15 +4534,15 @@
           "TIMESTAMP": "1402012734",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "985322:13230"
+          "CONTENTS": "998673:13230"
         },
         {
           "NAME": "ifs",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012783",
+          "TIMESTAMP": "1402394875",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "998552:11381"
+          "CONTENTS": "1011903:11381"
         },
         {
           "NAME": "ifs.html",
@@ -4432,7 +4550,7 @@
           "TIMESTAMP": "1402012806",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1009933:22086"
+          "CONTENTS": "1023284:22086"
         }
       ]
     },
@@ -4483,15 +4601,15 @@
           "TIMESTAMP": "1402012735",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1032019:2467"
+          "CONTENTS": "1045370:2467"
         },
         {
           "NAME": "illum",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402195065",
+          "TIMESTAMP": "1402394875",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1034486:2045"
+          "CONTENTS": "1047837:2045"
         },
         {
           "NAME": "illum.html",
@@ -4499,7 +4617,69 @@
           "TIMESTAMP": "1402012806",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1036531:4826"
+          "CONTENTS": "1049882:4826"
+        }
+      ]
+    },
+    "IN72": {
+      "SOURCE": "in72.lss",
+      "COMMENT": "in72 module",
+      "ARTIFACTS": [
+        "in72",
+        "in72.html"
+      ],
+      "TYPE": "PROGRAM",
+      "NAME": "IN72",
+      "DEPENDS": [
+      ],
+      "INSTALL": [
+        {
+          "TARGET": "in72",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "in72.html",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "BUILD": [
+        {
+          "TARGET": "in72",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "in72.html",
+          "COMMANDS": [
+          ]
+        }
+      ],
+      "FILES": [
+        {
+          "NAME": "in72.lss",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402360856",
+          "ACCESS": "644",
+          "LOCATION": "DATA",
+          "CONTENTS": "1054708:1615"
+        },
+        {
+          "NAME": "in72",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402360858",
+          "ACCESS": "775",
+          "LOCATION": "DATA",
+          "CONTENTS": "1056323:1501"
+        },
+        {
+          "NAME": "in72.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402360858",
+          "ACCESS": "664",
+          "LOCATION": "DATA",
+          "CONTENTS": "1057824:3641"
         }
       ]
     },
@@ -4558,7 +4738,7 @@
           "TIMESTAMP": "1402012735",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1041357:8383"
+          "CONTENTS": "1061465:8383"
         },
         {
           "NAME": "INFINIP.INC",
@@ -4566,7 +4746,7 @@
           "TIMESTAMP": "1402012772",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1049740:8074"
+          "CONTENTS": "1069848:8074"
         },
         {
           "NAME": "INFINIP.html",
@@ -4574,7 +4754,7 @@
           "TIMESTAMP": "1402012807",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1057814:12842"
+          "CONTENTS": "1077922:12842"
         },
         {
           "NAME": "INFINIP.tst",
@@ -4582,7 +4762,7 @@
           "TIMESTAMP": "1402012779",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1070656:144"
+          "CONTENTS": "1090764:144"
         }
       ]
     },
@@ -4591,11 +4771,14 @@
       "COMMENT": "ITERDIR module",
       "ARTIFACTS": [
         "ITERDIR.INC",
+        "ITERDIR.html",
         "ITERDIR.tst"
       ],
       "TYPE": "MODULE",
       "NAME": "ITERDIR",
       "DEPENDS": [
+        "ATOL",
+        "BQ",
         "CHARS",
         "CRACK",
         "LINK"
@@ -4603,6 +4786,11 @@
       "INSTALL": [
         {
           "TARGET": "ITERDIR.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "ITERDIR.html",
           "COMMANDS": [
           ]
         },
@@ -4619,6 +4807,11 @@
           ]
         },
         {
+          "TARGET": "ITERDIR.html",
+          "COMMANDS": [
+          ]
+        },
+        {
           "TARGET": "ITERDIR.tst",
           "COMMANDS": [
           ]
@@ -4631,15 +4824,23 @@
           "TIMESTAMP": "1402201503",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1070800:2728"
+          "CONTENTS": "1090908:2728"
         },
         {
           "NAME": "ITERDIR.INC",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402204874",
+          "TIMESTAMP": "1402397362",
           "ACCESS": "600",
           "LOCATION": "DATA",
-          "CONTENTS": "1073528:1673"
+          "CONTENTS": "1093636:1673"
+        },
+        {
+          "NAME": "ITERDIR.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402273692",
+          "ACCESS": "664",
+          "LOCATION": "DATA",
+          "CONTENTS": "1095309:5201"
         },
         {
           "NAME": "ITERDIR.tst",
@@ -4647,7 +4848,7 @@
           "TIMESTAMP": "1402201644",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1075201:143"
+          "CONTENTS": "1100510:143"
         }
       ]
     },
@@ -4663,7 +4864,6 @@
       "NAME": "JIT",
       "DEPENDS": [
         "CRACK",
-        "P64",
         "SEQ"
       ],
       "INSTALL": [
@@ -4704,34 +4904,34 @@
         {
           "NAME": "JIT.lss",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012739",
+          "TIMESTAMP": "1402368279",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1075344:74569"
+          "CONTENTS": "1100653:73433"
         },
         {
           "NAME": "JIT.INC",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402195044",
+          "TIMESTAMP": "1402394874",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1149913:57711"
+          "CONTENTS": "1174086:56318"
         },
         {
           "NAME": "JIT.html",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012808",
+          "TIMESTAMP": "1402368284",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1207624:100158"
+          "CONTENTS": "1230404:99195"
         },
         {
           "NAME": "JIT.tst",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012779",
+          "TIMESTAMP": "1402368283",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1307782:137"
+          "CONTENTS": "1329599:137"
         }
       ]
     },
@@ -4748,7 +4948,6 @@
       "DEPENDS": [
         "CH",
         "CHARS",
-        "HASH",
         "HEX",
         "SDIFF",
         "SEQ",
@@ -4792,34 +4991,34 @@
         {
           "NAME": "JSON.lss",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402214133",
+          "TIMESTAMP": "1402394265",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1307919:16748"
+          "CONTENTS": "1329736:16754"
         },
         {
           "NAME": "JSON.INC",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402238730",
+          "TIMESTAMP": "1402394511",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1324667:12991"
+          "CONTENTS": "1346490:12997"
         },
         {
           "NAME": "JSON.html",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402238731",
+          "TIMESTAMP": "1402394513",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1337658:23515"
+          "CONTENTS": "1359487:23521"
         },
         {
           "NAME": "JSON.tst",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402238730",
+          "TIMESTAMP": "1402394511",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1361173:2230"
+          "CONTENTS": "1383008:2230"
         }
       ]
     },
@@ -4877,7 +5076,7 @@
           "TIMESTAMP": "1402012740",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1363403:1853"
+          "CONTENTS": "1385238:1853"
         },
         {
           "NAME": "LAST.INC",
@@ -4885,7 +5084,7 @@
           "TIMESTAMP": "1402012774",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1365256:1417"
+          "CONTENTS": "1387091:1417"
         },
         {
           "NAME": "LAST.html",
@@ -4893,7 +5092,7 @@
           "TIMESTAMP": "1402012809",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1366673:4173"
+          "CONTENTS": "1388508:4173"
         },
         {
           "NAME": "LAST.tst",
@@ -4901,7 +5100,7 @@
           "TIMESTAMP": "1402012779",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1370846:137"
+          "CONTENTS": "1392681:137"
         }
       ]
     },
@@ -4958,7 +5157,7 @@
           "TIMESTAMP": "1402012740",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1370983:2158"
+          "CONTENTS": "1392818:2158"
         },
         {
           "NAME": "LIKE.INC",
@@ -4966,7 +5165,7 @@
           "TIMESTAMP": "1402012774",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1373141:1667"
+          "CONTENTS": "1394976:1667"
         },
         {
           "NAME": "LIKE.html",
@@ -4974,7 +5173,7 @@
           "TIMESTAMP": "1402012809",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1374808:4469"
+          "CONTENTS": "1396643:4469"
         },
         {
           "NAME": "LIKE.tst",
@@ -4982,7 +5181,7 @@
           "TIMESTAMP": "1402012779",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1379277:137"
+          "CONTENTS": "1401112:137"
         }
       ]
     },
@@ -5039,7 +5238,7 @@
           "TIMESTAMP": "1402012741",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1379414:3049"
+          "CONTENTS": "1401249:3049"
         },
         {
           "NAME": "LINK.INC",
@@ -5047,7 +5246,7 @@
           "TIMESTAMP": "1402012769",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1382463:2656"
+          "CONTENTS": "1404298:2656"
         },
         {
           "NAME": "LINK.html",
@@ -5055,7 +5254,7 @@
           "TIMESTAMP": "1402012834",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1385119:5683"
+          "CONTENTS": "1406954:5683"
         },
         {
           "NAME": "LINK.tst",
@@ -5063,7 +5262,7 @@
           "TIMESTAMP": "1402012781",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1390802:137"
+          "CONTENTS": "1412637:137"
         }
       ]
     },
@@ -5117,15 +5316,15 @@
           "TIMESTAMP": "1402079208",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1390939:8483"
+          "CONTENTS": "1412774:8483"
         },
         {
           "NAME": "list",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402079209",
+          "TIMESTAMP": "1402281634",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1399422:7865"
+          "CONTENTS": "1421257:7865"
         },
         {
           "NAME": "list.html",
@@ -5133,7 +5332,7 @@
           "TIMESTAMP": "1402079210",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1407287:12565"
+          "CONTENTS": "1429122:12565"
         }
       ]
     },
@@ -5190,7 +5389,7 @@
           "TIMESTAMP": "1402012742",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1419852:4219"
+          "CONTENTS": "1441687:4219"
         },
         {
           "NAME": "LOGIC.INC",
@@ -5198,7 +5397,7 @@
           "TIMESTAMP": "1402012775",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1424071:3945"
+          "CONTENTS": "1445906:3945"
         },
         {
           "NAME": "LOGIC.html",
@@ -5206,7 +5405,7 @@
           "TIMESTAMP": "1402012810",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1428016:7004"
+          "CONTENTS": "1449851:7004"
         },
         {
           "NAME": "LOGIC.tst",
@@ -5214,7 +5413,7 @@
           "TIMESTAMP": "1402012780",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1435020:139"
+          "CONTENTS": "1456855:139"
         }
       ]
     },
@@ -5272,7 +5471,7 @@
           "TIMESTAMP": "1402012742",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1435159:2363"
+          "CONTENTS": "1456994:2363"
         },
         {
           "NAME": "LOG.INC",
@@ -5280,7 +5479,7 @@
           "TIMESTAMP": "1402012775",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1437522:1674"
+          "CONTENTS": "1459357:1674"
         },
         {
           "NAME": "LOG.html",
@@ -5288,7 +5487,7 @@
           "TIMESTAMP": "1402012810",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1439196:4818"
+          "CONTENTS": "1461031:4818"
         },
         {
           "NAME": "LOG.tst",
@@ -5296,7 +5495,7 @@
           "TIMESTAMP": "1402012780",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1444014:344"
+          "CONTENTS": "1465849:344"
         }
       ]
     },
@@ -5353,7 +5552,7 @@
           "TIMESTAMP": "1402012742",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1444358:1970"
+          "CONTENTS": "1466193:1970"
         },
         {
           "NAME": "LPROG.INC",
@@ -5361,7 +5560,7 @@
           "TIMESTAMP": "1402012775",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1446328:1238"
+          "CONTENTS": "1468163:1238"
         },
         {
           "NAME": "LPROG.html",
@@ -5369,7 +5568,7 @@
           "TIMESTAMP": "1402012811",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1447566:4241"
+          "CONTENTS": "1469401:4241"
         },
         {
           "NAME": "LPROG.tst",
@@ -5377,7 +5576,7 @@
           "TIMESTAMP": "1402012780",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1451807:212"
+          "CONTENTS": "1473642:212"
         }
       ]
     },
@@ -5423,7 +5622,7 @@
           "TIMESTAMP": "1402012742",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1452019:1567"
+          "CONTENTS": "1473854:1567"
         },
         {
           "NAME": "lseq",
@@ -5431,7 +5630,7 @@
           "TIMESTAMP": "1402012783",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1453586:1531"
+          "CONTENTS": "1475421:1531"
         },
         {
           "NAME": "lseq.html",
@@ -5439,7 +5638,7 @@
           "TIMESTAMP": "1402012811",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1455117:3425"
+          "CONTENTS": "1476952:3425"
         }
       ]
     },
@@ -5489,15 +5688,15 @@
           "TIMESTAMP": "1402012743",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1458542:3438"
+          "CONTENTS": "1480377:3438"
         },
         {
           "NAME": "lsinc",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402195065",
+          "TIMESTAMP": "1402394875",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1461980:3261"
+          "CONTENTS": "1483815:3261"
         },
         {
           "NAME": "lsinc.html",
@@ -5505,7 +5704,7 @@
           "TIMESTAMP": "1402012812",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1465241:5792"
+          "CONTENTS": "1487076:5792"
         }
       ]
     },
@@ -5562,7 +5761,7 @@
           "TIMESTAMP": "1402012743",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1471033:1778"
+          "CONTENTS": "1492868:1778"
         },
         {
           "NAME": "MAX.INC",
@@ -5570,7 +5769,7 @@
           "TIMESTAMP": "1402012778",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1472811:1479"
+          "CONTENTS": "1494646:1479"
         },
         {
           "NAME": "MAX.html",
@@ -5578,7 +5777,7 @@
           "TIMESTAMP": "1402012838",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1474290:3990"
+          "CONTENTS": "1496125:3990"
         },
         {
           "NAME": "MAX.tst",
@@ -5586,7 +5785,7 @@
           "TIMESTAMP": "1402012782",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1478280:135"
+          "CONTENTS": "1500115:135"
         }
       ]
     },
@@ -5643,7 +5842,7 @@
           "TIMESTAMP": "1402012743",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1478415:2331"
+          "CONTENTS": "1500250:2331"
         },
         {
           "NAME": "MDY.INC",
@@ -5651,7 +5850,7 @@
           "TIMESTAMP": "1402012775",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1480746:1941"
+          "CONTENTS": "1502581:1941"
         },
         {
           "NAME": "MDY.html",
@@ -5659,7 +5858,7 @@
           "TIMESTAMP": "1402012813",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1482687:4591"
+          "CONTENTS": "1504522:4591"
         },
         {
           "NAME": "MDY.tst",
@@ -5667,7 +5866,7 @@
           "TIMESTAMP": "1402012780",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1487278:135"
+          "CONTENTS": "1509113:135"
         }
       ]
     },
@@ -5724,7 +5923,7 @@
           "TIMESTAMP": "1402012744",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1487413:3174"
+          "CONTENTS": "1509248:3174"
         },
         {
           "NAME": "NDBM.INC",
@@ -5732,7 +5931,7 @@
           "TIMESTAMP": "1402012775",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1490587:1997"
+          "CONTENTS": "1512422:1997"
         },
         {
           "NAME": "NDBM.html",
@@ -5740,7 +5939,7 @@
           "TIMESTAMP": "1402012813",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1492584:5761"
+          "CONTENTS": "1514419:5761"
         },
         {
           "NAME": "NDBM.tst",
@@ -5748,7 +5947,7 @@
           "TIMESTAMP": "1402012780",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1498345:958"
+          "CONTENTS": "1520180:958"
         }
       ]
     },
@@ -5806,7 +6005,7 @@
           "TIMESTAMP": "1402012744",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1499303:1959"
+          "CONTENTS": "1521138:1959"
         },
         {
           "NAME": "NOTP.INC",
@@ -5814,7 +6013,7 @@
           "TIMESTAMP": "1402012775",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1501262:1342"
+          "CONTENTS": "1523097:1342"
         },
         {
           "NAME": "NOTP.html",
@@ -5822,7 +6021,7 @@
           "TIMESTAMP": "1402012814",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1502604:4620"
+          "CONTENTS": "1524439:4620"
         },
         {
           "NAME": "NOTP.tst",
@@ -5830,7 +6029,7 @@
           "TIMESTAMP": "1402012780",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1507224:137"
+          "CONTENTS": "1529059:137"
         }
       ]
     },
@@ -5888,7 +6087,7 @@
           "TIMESTAMP": "1402012744",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1507361:1979"
+          "CONTENTS": "1529196:1979"
         },
         {
           "NAME": "ONCE.INC",
@@ -5896,7 +6095,7 @@
           "TIMESTAMP": "1402012775",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1509340:1423"
+          "CONTENTS": "1531175:1423"
         },
         {
           "NAME": "ONCE.html",
@@ -5904,7 +6103,7 @@
           "TIMESTAMP": "1402012814",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1510763:4280"
+          "CONTENTS": "1532598:4280"
         },
         {
           "NAME": "ONCE.tst",
@@ -5912,7 +6111,7 @@
           "TIMESTAMP": "1402012780",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1515043:137"
+          "CONTENTS": "1536878:137"
         }
       ]
     },
@@ -5969,7 +6168,7 @@
           "TIMESTAMP": "1402012744",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1515180:1742"
+          "CONTENTS": "1537015:1742"
         },
         {
           "NAME": "ORDER.INC",
@@ -5977,7 +6176,7 @@
           "TIMESTAMP": "1402012775",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1516922:1351"
+          "CONTENTS": "1538757:1351"
         },
         {
           "NAME": "ORDER.html",
@@ -5985,7 +6184,7 @@
           "TIMESTAMP": "1402012815",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1518273:3961"
+          "CONTENTS": "1540108:3961"
         },
         {
           "NAME": "ORDER.tst",
@@ -5993,7 +6192,7 @@
           "TIMESTAMP": "1402012780",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1522234:212"
+          "CONTENTS": "1544069:212"
         }
       ]
     },
@@ -6047,34 +6246,34 @@
         {
           "NAME": "P64.lss",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012745",
+          "TIMESTAMP": "1402261818",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1522446:18823"
+          "CONTENTS": "1544281:6136"
         },
         {
           "NAME": "P64.INC",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402195041",
+          "TIMESTAMP": "1402394872",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1541269:6129"
+          "CONTENTS": "1550417:2931"
         },
         {
           "NAME": "P64.html",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012816",
+          "TIMESTAMP": "1402262511",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1547398:27016"
+          "CONTENTS": "1553348:10337"
         },
         {
           "NAME": "P64.tst",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012780",
+          "TIMESTAMP": "1402262514",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1574414:136"
+          "CONTENTS": "1563685:136"
         }
       ]
     },
@@ -6139,7 +6338,7 @@
           "TIMESTAMP": "1402012745",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1574550:15751"
+          "CONTENTS": "1563821:15751"
         },
         {
           "NAME": "PSQL.INC",
@@ -6147,7 +6346,7 @@
           "TIMESTAMP": "1402195044",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1590301:6189"
+          "CONTENTS": "1579572:6189"
         },
         {
           "NAME": "PSQL.html",
@@ -6155,7 +6354,7 @@
           "TIMESTAMP": "1402012836",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1596490:25544"
+          "CONTENTS": "1585761:25544"
         },
         {
           "NAME": "PSQL.tst",
@@ -6163,7 +6362,7 @@
           "TIMESTAMP": "1402012781",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1622034:4318"
+          "CONTENTS": "1611305:4318"
         }
       ]
     },
@@ -6221,7 +6420,7 @@
           "TIMESTAMP": "1402012746",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1626352:1676"
+          "CONTENTS": "1615623:1676"
         },
         {
           "NAME": "QUOTE.INC",
@@ -6229,7 +6428,7 @@
           "TIMESTAMP": "1402012771",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1628028:1306"
+          "CONTENTS": "1617299:1306"
         },
         {
           "NAME": "QUOTE.html",
@@ -6237,7 +6436,7 @@
           "TIMESTAMP": "1402012817",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1629334:3897"
+          "CONTENTS": "1618605:3897"
         },
         {
           "NAME": "QUOTE.tst",
@@ -6245,7 +6444,7 @@
           "TIMESTAMP": "1402012780",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1633231:139"
+          "CONTENTS": "1622502:139"
         }
       ]
     },
@@ -6302,7 +6501,7 @@
           "TIMESTAMP": "1402012746",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1633370:2132"
+          "CONTENTS": "1622641:2132"
         },
         {
           "NAME": "RANDOM.INC",
@@ -6310,7 +6509,7 @@
           "TIMESTAMP": "1402012775",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1635502:1802"
+          "CONTENTS": "1624773:1802"
         },
         {
           "NAME": "RANDOM.html",
@@ -6318,7 +6517,7 @@
           "TIMESTAMP": "1402012817",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1637304:4471"
+          "CONTENTS": "1626575:4471"
         },
         {
           "NAME": "RANDOM.tst",
@@ -6326,7 +6525,7 @@
           "TIMESTAMP": "1402012780",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1641775:141"
+          "CONTENTS": "1631046:141"
         }
       ]
     },
@@ -6386,7 +6585,7 @@
           "TIMESTAMP": "1402012746",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1641916:3494"
+          "CONTENTS": "1631187:3494"
         },
         {
           "NAME": "READFILE.INC",
@@ -6394,7 +6593,7 @@
           "TIMESTAMP": "1402012777",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1645410:2543"
+          "CONTENTS": "1634681:2543"
         },
         {
           "NAME": "READFILE.html",
@@ -6402,7 +6601,7 @@
           "TIMESTAMP": "1402012841",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1647953:6036"
+          "CONTENTS": "1637224:6036"
         },
         {
           "NAME": "READFILE.tst",
@@ -6410,7 +6609,7 @@
           "TIMESTAMP": "1402012782",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1653989:218"
+          "CONTENTS": "1643260:218"
         }
       ]
     },
@@ -6464,34 +6663,34 @@
         {
           "NAME": "READLINE.lss",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012746",
+          "TIMESTAMP": "1402281632",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1654207:5146"
+          "CONTENTS": "1643478:5146"
         },
         {
           "NAME": "READLINE.INC",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012771",
+          "TIMESTAMP": "1402281634",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1659353:2328"
+          "CONTENTS": "1648624:2328"
         },
         {
           "NAME": "READLINE.html",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012818",
+          "TIMESTAMP": "1402281635",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1661681:8344"
+          "CONTENTS": "1650952:8344"
         },
         {
           "NAME": "READLINE.tst",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012780",
+          "TIMESTAMP": "1402281634",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1670025:146"
+          "CONTENTS": "1659296:146"
         }
       ]
     },
@@ -6549,7 +6748,7 @@
           "TIMESTAMP": "1402012747",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1670171:2042"
+          "CONTENTS": "1659442:2042"
         },
         {
           "NAME": "READL.INC",
@@ -6557,7 +6756,7 @@
           "TIMESTAMP": "1402012777",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1672213:1526"
+          "CONTENTS": "1661484:1526"
         },
         {
           "NAME": "READL.html",
@@ -6565,7 +6764,7 @@
           "TIMESTAMP": "1402012838",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1673739:4295"
+          "CONTENTS": "1663010:4295"
         },
         {
           "NAME": "READL.tst",
@@ -6573,7 +6772,7 @@
           "TIMESTAMP": "1402012781",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1678034:139"
+          "CONTENTS": "1667305:139"
         }
       ]
     },
@@ -6630,7 +6829,7 @@
           "TIMESTAMP": "1402012747",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1678173:2596"
+          "CONTENTS": "1667444:2596"
         },
         {
           "NAME": "REDEFINE.INC",
@@ -6638,7 +6837,7 @@
           "TIMESTAMP": "1402012772",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1680769:2017"
+          "CONTENTS": "1670040:2017"
         },
         {
           "NAME": "REDEFINE.html",
@@ -6646,7 +6845,7 @@
           "TIMESTAMP": "1402012818",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1682786:5355"
+          "CONTENTS": "1672057:5355"
         },
         {
           "NAME": "REDEFINE.tst",
@@ -6654,7 +6853,7 @@
           "TIMESTAMP": "1402012780",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1688141:145"
+          "CONTENTS": "1677412:145"
         }
       ]
     },
@@ -6711,7 +6910,7 @@
           "TIMESTAMP": "1402012747",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1688286:2197"
+          "CONTENTS": "1677557:2197"
         },
         {
           "NAME": "REPL.INC",
@@ -6719,7 +6918,7 @@
           "TIMESTAMP": "1402012768",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1690483:1657"
+          "CONTENTS": "1679754:1657"
         },
         {
           "NAME": "REPL.html",
@@ -6727,7 +6926,7 @@
           "TIMESTAMP": "1402012819",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1692140:4577"
+          "CONTENTS": "1681411:4577"
         },
         {
           "NAME": "REPL.tst",
@@ -6735,7 +6934,7 @@
           "TIMESTAMP": "1402012780",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1696717:137"
+          "CONTENTS": "1685988:137"
         }
       ]
     },
@@ -6792,7 +6991,7 @@
           "TIMESTAMP": "1402012747",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1696854:2146"
+          "CONTENTS": "1686125:2146"
         },
         {
           "NAME": "RESOL.INC",
@@ -6800,7 +6999,7 @@
           "TIMESTAMP": "1402012775",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1699000:1747"
+          "CONTENTS": "1688271:1747"
         },
         {
           "NAME": "RESOL.html",
@@ -6808,7 +7007,7 @@
           "TIMESTAMP": "1402012819",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1700747:4303"
+          "CONTENTS": "1690018:4303"
         },
         {
           "NAME": "RESOL.tst",
@@ -6816,7 +7015,7 @@
           "TIMESTAMP": "1402012780",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1705050:170"
+          "CONTENTS": "1694321:170"
         }
       ]
     },
@@ -6874,7 +7073,7 @@
           "TIMESTAMP": "1402012748",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1705220:1923"
+          "CONTENTS": "1694491:1923"
         },
         {
           "NAME": "REVL.INC",
@@ -6882,7 +7081,7 @@
           "TIMESTAMP": "1402012775",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1707143:1544"
+          "CONTENTS": "1696414:1544"
         },
         {
           "NAME": "REVL.html",
@@ -6890,7 +7089,7 @@
           "TIMESTAMP": "1402012820",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1708687:4091"
+          "CONTENTS": "1697958:4091"
         },
         {
           "NAME": "REVL.tst",
@@ -6898,7 +7097,7 @@
           "TIMESTAMP": "1402012780",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1712778:137"
+          "CONTENTS": "1702049:137"
         }
       ]
     },
@@ -6955,7 +7154,7 @@
           "TIMESTAMP": "1402012748",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1712915:2500"
+          "CONTENTS": "1702186:2500"
         },
         {
           "NAME": "ROMAN.INC",
@@ -6963,7 +7162,7 @@
           "TIMESTAMP": "1402012775",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1715415:1846"
+          "CONTENTS": "1704686:1846"
         },
         {
           "NAME": "ROMAN.html",
@@ -6971,7 +7170,7 @@
           "TIMESTAMP": "1402012820",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1717261:5054"
+          "CONTENTS": "1706532:5054"
         },
         {
           "NAME": "ROMAN.tst",
@@ -6979,7 +7178,7 @@
           "TIMESTAMP": "1402012780",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1722315:399"
+          "CONTENTS": "1711586:399"
         }
       ]
     },
@@ -7036,7 +7235,7 @@
           "TIMESTAMP": "1402012748",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1722714:1745"
+          "CONTENTS": "1711985:1745"
         },
         {
           "NAME": "ROTATER.INC",
@@ -7044,7 +7243,7 @@
           "TIMESTAMP": "1402012776",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1724459:1430"
+          "CONTENTS": "1713730:1430"
         },
         {
           "NAME": "ROTATER.html",
@@ -7052,7 +7251,7 @@
           "TIMESTAMP": "1402012821",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1725889:3969"
+          "CONTENTS": "1715160:3969"
         },
         {
           "NAME": "ROTATER.tst",
@@ -7060,7 +7259,7 @@
           "TIMESTAMP": "1402012780",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1729858:143"
+          "CONTENTS": "1719129:143"
         }
       ]
     },
@@ -7120,7 +7319,7 @@
           "TIMESTAMP": "1402012749",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1730001:4434"
+          "CONTENTS": "1719272:4434"
         },
         {
           "NAME": "ROUTING.INC",
@@ -7128,7 +7327,7 @@
           "TIMESTAMP": "1402012778",
           "ACCESS": "600",
           "LOCATION": "DATA",
-          "CONTENTS": "1734435:2794"
+          "CONTENTS": "1723706:2794"
         },
         {
           "NAME": "ROUTING.html",
@@ -7136,7 +7335,7 @@
           "TIMESTAMP": "1402012848",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1737229:8185"
+          "CONTENTS": "1726500:8185"
         },
         {
           "NAME": "ROUTING.tst",
@@ -7144,7 +7343,7 @@
           "TIMESTAMP": "1402012782",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1745414:1235"
+          "CONTENTS": "1734685:1235"
         }
       ]
     },
@@ -7190,7 +7389,7 @@
           "TIMESTAMP": "1402012749",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1746649:1536"
+          "CONTENTS": "1735920:1536"
         },
         {
           "NAME": "rseq",
@@ -7198,7 +7397,7 @@
           "TIMESTAMP": "1402012783",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1748185:1455"
+          "CONTENTS": "1737456:1455"
         },
         {
           "NAME": "rseq.html",
@@ -7206,7 +7405,7 @@
           "TIMESTAMP": "1402012821",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1749640:3535"
+          "CONTENTS": "1738911:3535"
         }
       ]
     },
@@ -7254,7 +7453,7 @@
           "TIMESTAMP": "1402012749",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1753175:5218"
+          "CONTENTS": "1742446:5218"
         },
         {
           "NAME": "scan",
@@ -7262,7 +7461,7 @@
           "TIMESTAMP": "1402012784",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1758393:3383"
+          "CONTENTS": "1747664:3383"
         },
         {
           "NAME": "scan.html",
@@ -7270,7 +7469,7 @@
           "TIMESTAMP": "1402012839",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1761776:8530"
+          "CONTENTS": "1751047:8530"
         }
       ]
     },
@@ -7328,7 +7527,7 @@
           "TIMESTAMP": "1402012750",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1770306:12344"
+          "CONTENTS": "1759577:12344"
         },
         {
           "NAME": "SCOOP.INC",
@@ -7336,7 +7535,7 @@
           "TIMESTAMP": "1402012777",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1782650:6455"
+          "CONTENTS": "1771921:6455"
         },
         {
           "NAME": "SCOOP.html",
@@ -7344,7 +7543,7 @@
           "TIMESTAMP": "1402012840",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1789105:20646"
+          "CONTENTS": "1778376:20646"
         },
         {
           "NAME": "SCOOP.tst",
@@ -7352,7 +7551,7 @@
           "TIMESTAMP": "1402012782",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1809751:1411"
+          "CONTENTS": "1799022:1411"
         }
       ]
     },
@@ -7409,7 +7608,7 @@
           "TIMESTAMP": "1402012750",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1811162:1692"
+          "CONTENTS": "1800433:1692"
         },
         {
           "NAME": "SDIFF.INC",
@@ -7417,7 +7616,7 @@
           "TIMESTAMP": "1402012770",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1812854:1354"
+          "CONTENTS": "1802125:1354"
         },
         {
           "NAME": "SDIFF.html",
@@ -7425,7 +7624,7 @@
           "TIMESTAMP": "1402012822",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1814208:3902"
+          "CONTENTS": "1803479:3902"
         },
         {
           "NAME": "SDIFF.tst",
@@ -7433,7 +7632,7 @@
           "TIMESTAMP": "1402012780",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1818110:139"
+          "CONTENTS": "1807381:139"
         }
       ]
     },
@@ -7490,7 +7689,7 @@
           "TIMESTAMP": "1402012750",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1818249:2519"
+          "CONTENTS": "1807520:2519"
         },
         {
           "NAME": "SEQ.INC",
@@ -7498,7 +7697,7 @@
           "TIMESTAMP": "1402174985",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1820768:1506"
+          "CONTENTS": "1810039:1506"
         },
         {
           "NAME": "SEQ.html",
@@ -7506,7 +7705,7 @@
           "TIMESTAMP": "1402012822",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1822274:5541"
+          "CONTENTS": "1811545:5541"
         },
         {
           "NAME": "SEQ.tst",
@@ -7514,7 +7713,7 @@
           "TIMESTAMP": "1402012780",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1827815:135"
+          "CONTENTS": "1817086:135"
         }
       ]
     },
@@ -7579,15 +7778,15 @@
           "TIMESTAMP": "1402012750",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1827950:10577"
+          "CONTENTS": "1817221:10577"
         },
         {
           "NAME": "SESSION.INC",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402195044",
+          "TIMESTAMP": "1402394875",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1838527:5159"
+          "CONTENTS": "1827798:5159"
         },
         {
           "NAME": "SESSION.html",
@@ -7595,7 +7794,7 @@
           "TIMESTAMP": "1402012842",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1843686:17267"
+          "CONTENTS": "1832957:17267"
         },
         {
           "NAME": "SESSION.tst",
@@ -7603,7 +7802,7 @@
           "TIMESTAMP": "1402012782",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1860953:1754"
+          "CONTENTS": "1850224:1754"
         }
       ]
     },
@@ -7663,7 +7862,7 @@
           "TIMESTAMP": "1402204730",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1862707:3936"
+          "CONTENTS": "1851978:3936"
         },
         {
           "NAME": "SIZEA.INC",
@@ -7671,7 +7870,7 @@
           "TIMESTAMP": "1402204873",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1866643:2532"
+          "CONTENTS": "1855914:2532"
         },
         {
           "NAME": "SIZEA.html",
@@ -7679,7 +7878,7 @@
           "TIMESTAMP": "1402204874",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1869175:6821"
+          "CONTENTS": "1858446:6821"
         },
         {
           "NAME": "SIZEA.tst",
@@ -7687,7 +7886,7 @@
           "TIMESTAMP": "1402204874",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1875996:584"
+          "CONTENTS": "1865267:584"
         }
       ]
     },
@@ -7696,17 +7895,22 @@
       "COMMENT": "SIZET module",
       "ARTIFACTS": [
         "SIZET.INC",
+        "SIZET.html",
         "SIZET.tst"
       ],
       "TYPE": "MODULE",
       "NAME": "SIZEL",
       "DEPENDS": [
-        "HASH",
         "SIZEA"
       ],
       "INSTALL": [
         {
           "TARGET": "SIZET.INC",
+          "COMMANDS": [
+          ]
+        },
+        {
+          "TARGET": "SIZET.html",
           "COMMANDS": [
           ]
         },
@@ -7723,6 +7927,11 @@
           ]
         },
         {
+          "TARGET": "SIZET.html",
+          "COMMANDS": [
+          ]
+        },
+        {
           "TARGET": "SIZET.tst",
           "COMMANDS": [
           ]
@@ -7732,26 +7941,34 @@
         {
           "NAME": "SIZET.lss",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402205880",
+          "TIMESTAMP": "1402394323",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1876580:1622"
+          "CONTENTS": "1865851:1628"
         },
         {
           "NAME": "SIZET.INC",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402205886",
+          "TIMESTAMP": "1402394511",
           "ACCESS": "600",
           "LOCATION": "DATA",
-          "CONTENTS": "1878202:1302"
+          "CONTENTS": "1867479:1308"
+        },
+        {
+          "NAME": "SIZET.html",
+          "TYPE": "TEXT",
+          "TIMESTAMP": "1402397367",
+          "ACCESS": "664",
+          "LOCATION": "DATA",
+          "CONTENTS": "1868787:3849"
         },
         {
           "NAME": "SIZET.tst",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402205886",
+          "TIMESTAMP": "1402394511",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1879504:139"
+          "CONTENTS": "1872636:139"
         }
       ]
     },
@@ -7809,7 +8026,7 @@
           "TIMESTAMP": "1402012751",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1879643:1944"
+          "CONTENTS": "1872775:1944"
         },
         {
           "NAME": "SKIM.INC",
@@ -7817,7 +8034,7 @@
           "TIMESTAMP": "1402012776",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1881587:1564"
+          "CONTENTS": "1874719:1564"
         },
         {
           "NAME": "SKIM.html",
@@ -7825,7 +8042,7 @@
           "TIMESTAMP": "1402012823",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1883151:4243"
+          "CONTENTS": "1876283:4243"
         },
         {
           "NAME": "SKIM.tst",
@@ -7833,7 +8050,7 @@
           "TIMESTAMP": "1402012780",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1887394:137"
+          "CONTENTS": "1880526:137"
         }
       ]
     },
@@ -7893,15 +8110,15 @@
           "TIMESTAMP": "1402012751",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1887531:5072"
+          "CONTENTS": "1880663:5072"
         },
         {
           "NAME": "SLOAD.INC",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012776",
+          "TIMESTAMP": "1402394875",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1892603:4701"
+          "CONTENTS": "1885735:4701"
         },
         {
           "NAME": "SLOAD.html",
@@ -7909,7 +8126,7 @@
           "TIMESTAMP": "1402012823",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1897304:8391"
+          "CONTENTS": "1890436:8391"
         },
         {
           "NAME": "SLOAD.tst",
@@ -7917,7 +8134,7 @@
           "TIMESTAMP": "1402012780",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1905695:140"
+          "CONTENTS": "1898827:140"
         }
       ]
     },
@@ -7966,7 +8183,7 @@
           "TIMESTAMP": "1402012752",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1905835:4410"
+          "CONTENTS": "1898967:4410"
         },
         {
           "NAME": "snofmt",
@@ -7974,7 +8191,7 @@
           "TIMESTAMP": "1402012783",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1910245:4104"
+          "CONTENTS": "1903377:4104"
         },
         {
           "NAME": "snofmt.html",
@@ -7982,7 +8199,7 @@
           "TIMESTAMP": "1402012824",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1914349:8483"
+          "CONTENTS": "1907481:8483"
         }
       ]
     },
@@ -8039,7 +8256,7 @@
           "TIMESTAMP": "1402012752",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1922832:2171"
+          "CONTENTS": "1915964:2171"
         },
         {
           "NAME": "SOUNDEX.INC",
@@ -8047,7 +8264,7 @@
           "TIMESTAMP": "1402012776",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1925003:1878"
+          "CONTENTS": "1918135:1878"
         },
         {
           "NAME": "SOUNDEX.html",
@@ -8055,7 +8272,7 @@
           "TIMESTAMP": "1402012824",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1926881:4399"
+          "CONTENTS": "1920013:4399"
         },
         {
           "NAME": "SOUNDEX.tst",
@@ -8063,7 +8280,7 @@
           "TIMESTAMP": "1402012781",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1931280:216"
+          "CONTENTS": "1924412:216"
         }
       ]
     },
@@ -8120,7 +8337,7 @@
           "TIMESTAMP": "1402012752",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1931496:2639"
+          "CONTENTS": "1924628:2639"
         },
         {
           "NAME": "SPELL.INC",
@@ -8128,7 +8345,7 @@
           "TIMESTAMP": "1402012776",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1934135:2321"
+          "CONTENTS": "1927267:2321"
         },
         {
           "NAME": "SPELL.html",
@@ -8136,7 +8353,7 @@
           "TIMESTAMP": "1402012825",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1936456:5048"
+          "CONTENTS": "1929588:5048"
         },
         {
           "NAME": "SPELL.tst",
@@ -8144,7 +8361,7 @@
           "TIMESTAMP": "1402012781",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1941504:139"
+          "CONTENTS": "1934636:139"
         }
       ]
     },
@@ -8202,7 +8419,7 @@
           "TIMESTAMP": "1402012753",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1941643:2355"
+          "CONTENTS": "1934775:2355"
         },
         {
           "NAME": "STACK.INC",
@@ -8210,7 +8427,7 @@
           "TIMESTAMP": "1402012775",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1943998:1979"
+          "CONTENTS": "1937130:1979"
         },
         {
           "NAME": "STACK.html",
@@ -8218,7 +8435,7 @@
           "TIMESTAMP": "1402012825",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1945977:4789"
+          "CONTENTS": "1939109:4789"
         },
         {
           "NAME": "STACK.tst",
@@ -8226,7 +8443,7 @@
           "TIMESTAMP": "1402012781",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1950766:139"
+          "CONTENTS": "1943898:139"
         }
       ]
     },
@@ -8283,7 +8500,7 @@
           "TIMESTAMP": "1402012753",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1950905:4082"
+          "CONTENTS": "1944037:4082"
         },
         {
           "NAME": "STCL.INC",
@@ -8291,7 +8508,7 @@
           "TIMESTAMP": "1402012776",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1954987:2548"
+          "CONTENTS": "1948119:2548"
         },
         {
           "NAME": "STCL.html",
@@ -8299,7 +8516,7 @@
           "TIMESTAMP": "1402012826",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1957535:7117"
+          "CONTENTS": "1950667:7117"
         },
         {
           "NAME": "STCL.tst",
@@ -8307,7 +8524,7 @@
           "TIMESTAMP": "1402012781",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1964652:1453"
+          "CONTENTS": "1957784:1453"
         }
       ]
     },
@@ -8364,7 +8581,7 @@
           "TIMESTAMP": "1402012753",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1966105:1787"
+          "CONTENTS": "1959237:1787"
         },
         {
           "NAME": "STROUT.INC",
@@ -8372,7 +8589,7 @@
           "TIMESTAMP": "1402012776",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1967892:1380"
+          "CONTENTS": "1961024:1380"
         },
         {
           "NAME": "STROUT.html",
@@ -8380,7 +8597,7 @@
           "TIMESTAMP": "1402012827",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1969272:4043"
+          "CONTENTS": "1962404:4043"
         },
         {
           "NAME": "STROUT.tst",
@@ -8388,7 +8605,7 @@
           "TIMESTAMP": "1402012781",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1973315:141"
+          "CONTENTS": "1966447:141"
         }
       ]
     },
@@ -8445,7 +8662,7 @@
           "TIMESTAMP": "1402012753",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1973456:1625"
+          "CONTENTS": "1966588:1625"
         },
         {
           "NAME": "SWAP.INC",
@@ -8453,7 +8670,7 @@
           "TIMESTAMP": "1402012772",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1975081:1318"
+          "CONTENTS": "1968213:1318"
         },
         {
           "NAME": "SWAP.html",
@@ -8461,7 +8678,7 @@
           "TIMESTAMP": "1402012827",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1976399:3746"
+          "CONTENTS": "1969531:3746"
         },
         {
           "NAME": "SWAP.tst",
@@ -8469,7 +8686,7 @@
           "TIMESTAMP": "1402012781",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1980145:137"
+          "CONTENTS": "1973277:137"
         }
       ]
     },
@@ -8528,15 +8745,15 @@
           "TIMESTAMP": "1402012754",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1980282:4032"
+          "CONTENTS": "1973414:4032"
         },
         {
           "NAME": "SYSLOG.INC",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402195044",
+          "TIMESTAMP": "1402394875",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1984314:3709"
+          "CONTENTS": "1977446:3709"
         },
         {
           "NAME": "SYSLOG.html",
@@ -8544,7 +8761,7 @@
           "TIMESTAMP": "1402012828",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "1988023:6732"
+          "CONTENTS": "1981155:6732"
         },
         {
           "NAME": "SYSLOG.tst",
@@ -8552,7 +8769,7 @@
           "TIMESTAMP": "1402012781",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "1994755:141"
+          "CONTENTS": "1987887:141"
         }
       ]
     },
@@ -8609,7 +8826,7 @@
           "TIMESTAMP": "1402012754",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1994896:4226"
+          "CONTENTS": "1988028:4226"
         },
         {
           "NAME": "SYSTEM.INC",
@@ -8617,7 +8834,7 @@
           "TIMESTAMP": "1402012771",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "1999122:3424"
+          "CONTENTS": "1992254:3424"
         },
         {
           "NAME": "SYSTEM.html",
@@ -8625,7 +8842,7 @@
           "TIMESTAMP": "1402012828",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "2002546:7504"
+          "CONTENTS": "1995678:7504"
         },
         {
           "NAME": "SYSTEM.tst",
@@ -8633,7 +8850,7 @@
           "TIMESTAMP": "1402012781",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "2010050:142"
+          "CONTENTS": "2003182:142"
         }
       ]
     },
@@ -8691,7 +8908,7 @@
           "TIMESTAMP": "1402012754",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "2010192:2058"
+          "CONTENTS": "2003324:2058"
         },
         {
           "NAME": "TEST.INC",
@@ -8699,7 +8916,7 @@
           "TIMESTAMP": "1402012776",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "2012250:1539"
+          "CONTENTS": "2005382:1539"
         },
         {
           "NAME": "TEST.html",
@@ -8707,7 +8924,7 @@
           "TIMESTAMP": "1402012829",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "2013789:4462"
+          "CONTENTS": "2006921:4462"
         },
         {
           "NAME": "TEST.tst",
@@ -8715,7 +8932,7 @@
           "TIMESTAMP": "1402012781",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "2018251:137"
+          "CONTENTS": "2011383:137"
         }
       ]
     },
@@ -8775,7 +8992,7 @@
           "TIMESTAMP": "1402012755",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "2018388:2905"
+          "CONTENTS": "2011520:2905"
         },
         {
           "NAME": "TIMEGC.INC",
@@ -8783,7 +9000,7 @@
           "TIMESTAMP": "1402012776",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "2021293:2352"
+          "CONTENTS": "2014425:2352"
         },
         {
           "NAME": "TIMEGC.html",
@@ -8791,7 +9008,7 @@
           "TIMESTAMP": "1402012829",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "2023645:5282"
+          "CONTENTS": "2016777:5282"
         },
         {
           "NAME": "TIMEGC.tst",
@@ -8799,7 +9016,7 @@
           "TIMESTAMP": "1402012781",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "2028927:212"
+          "CONTENTS": "2022059:212"
         }
       ]
     },
@@ -8856,7 +9073,7 @@
           "TIMESTAMP": "1402012755",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "2029139:3023"
+          "CONTENTS": "2022271:3023"
         },
         {
           "NAME": "TIME.INC",
@@ -8864,7 +9081,7 @@
           "TIMESTAMP": "1402012776",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "2032162:2803"
+          "CONTENTS": "2025294:2803"
         },
         {
           "NAME": "TIME.html",
@@ -8872,7 +9089,7 @@
           "TIMESTAMP": "1402012830",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "2034965:5768"
+          "CONTENTS": "2028097:5768"
         },
         {
           "NAME": "TIME.tst",
@@ -8880,7 +9097,7 @@
           "TIMESTAMP": "1402012781",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "2040733:137"
+          "CONTENTS": "2033865:137"
         }
       ]
     },
@@ -8939,7 +9156,7 @@
           "TIMESTAMP": "1402012755",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "2040870:3469"
+          "CONTENTS": "2034002:3469"
         },
         {
           "NAME": "TIMER.INC",
@@ -8947,7 +9164,7 @@
           "TIMESTAMP": "1402012776",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "2044339:3045"
+          "CONTENTS": "2037471:3045"
         },
         {
           "NAME": "TIMER.html",
@@ -8955,7 +9172,7 @@
           "TIMESTAMP": "1402012830",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "2047384:6186"
+          "CONTENTS": "2040516:6186"
         },
         {
           "NAME": "TIMER.tst",
@@ -8963,7 +9180,7 @@
           "TIMESTAMP": "1402012781",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "2053570:139"
+          "CONTENTS": "2046702:139"
         }
       ]
     },
@@ -9022,7 +9239,7 @@
           "TIMESTAMP": "1402012755",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "2053709:2230"
+          "CONTENTS": "2046841:2230"
         },
         {
           "NAME": "TPROFILE.INC",
@@ -9030,7 +9247,7 @@
           "TIMESTAMP": "1402195044",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "2055939:1891"
+          "CONTENTS": "2049071:1891"
         },
         {
           "NAME": "TPROFILE.html",
@@ -9038,7 +9255,7 @@
           "TIMESTAMP": "1402012831",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "2057830:4535"
+          "CONTENTS": "2050962:4535"
         },
         {
           "NAME": "TPROFILE.tst",
@@ -9046,7 +9263,7 @@
           "TIMESTAMP": "1402012781",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "2062365:145"
+          "CONTENTS": "2055497:145"
         }
       ]
     },
@@ -9103,7 +9320,7 @@
           "TIMESTAMP": "1402012756",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "2062510:1595"
+          "CONTENTS": "2055642:1595"
         },
         {
           "NAME": "TRIMB.INC",
@@ -9111,7 +9328,7 @@
           "TIMESTAMP": "1402012771",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "2064105:1238"
+          "CONTENTS": "2057237:1238"
         },
         {
           "NAME": "TRIMB.html",
@@ -9119,7 +9336,7 @@
           "TIMESTAMP": "1402012835",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "2065343:3839"
+          "CONTENTS": "2058475:3839"
         },
         {
           "NAME": "TRIMB.tst",
@@ -9127,7 +9344,7 @@
           "TIMESTAMP": "1402012781",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "2069182:214"
+          "CONTENTS": "2062314:214"
         }
       ]
     },
@@ -9185,7 +9402,7 @@
           "TIMESTAMP": "1402012756",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "2069396:1762"
+          "CONTENTS": "2062528:1762"
         },
         {
           "NAME": "TRUNC.INC",
@@ -9193,7 +9410,7 @@
           "TIMESTAMP": "1402195044",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "2071158:1331"
+          "CONTENTS": "2064290:1331"
         },
         {
           "NAME": "TRUNC.html",
@@ -9201,7 +9418,7 @@
           "TIMESTAMP": "1402012831",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "2072489:3992"
+          "CONTENTS": "2065621:3992"
         },
         {
           "NAME": "TRUNC.tst",
@@ -9209,7 +9426,7 @@
           "TIMESTAMP": "1402012781",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "2076481:139"
+          "CONTENTS": "2069613:139"
         }
       ]
     },
@@ -9258,15 +9475,15 @@
           "TIMESTAMP": "1402012756",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "2076620:6902"
+          "CONTENTS": "2069752:6902"
         },
         {
           "NAME": "uban",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402195065",
+          "TIMESTAMP": "1402394875",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "2083522:6484"
+          "CONTENTS": "2076654:6484"
         },
         {
           "NAME": "uban.html",
@@ -9274,7 +9491,7 @@
           "TIMESTAMP": "1402012832",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "2090006:9536"
+          "CONTENTS": "2083138:9536"
         }
       ]
     },
@@ -9332,7 +9549,7 @@
           "TIMESTAMP": "1402012757",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "2099542:3226"
+          "CONTENTS": "2092674:3226"
         },
         {
           "NAME": "UNIQUE.INC",
@@ -9340,7 +9557,7 @@
           "TIMESTAMP": "1402012768",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "2102768:1748"
+          "CONTENTS": "2095900:1748"
         },
         {
           "NAME": "UNIQUE.html",
@@ -9348,7 +9565,7 @@
           "TIMESTAMP": "1402012832",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "2104516:6146"
+          "CONTENTS": "2097648:6146"
         },
         {
           "NAME": "UNIQUE.tst",
@@ -9356,7 +9573,7 @@
           "TIMESTAMP": "1402012781",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "2110662:721"
+          "CONTENTS": "2103794:721"
         }
       ]
     },
@@ -9404,7 +9621,7 @@
           "TIMESTAMP": "1402012757",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "2111383:2239"
+          "CONTENTS": "2104515:2239"
         },
         {
           "NAME": "upcase",
@@ -9412,7 +9629,7 @@
           "TIMESTAMP": "1402012783",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "2113622:2018"
+          "CONTENTS": "2106754:2018"
         },
         {
           "NAME": "upcase.html",
@@ -9420,7 +9637,7 @@
           "TIMESTAMP": "1402012833",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "2115640:4429"
+          "CONTENTS": "2108772:4429"
         }
       ]
     },
@@ -9477,7 +9694,7 @@
           "TIMESTAMP": "1402012757",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "2120069:8780"
+          "CONTENTS": "2113201:8780"
         },
         {
           "NAME": "UTF8.INC",
@@ -9485,7 +9702,7 @@
           "TIMESTAMP": "1402012776",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "2128849:8471"
+          "CONTENTS": "2121981:8471"
         },
         {
           "NAME": "UTF8.html",
@@ -9493,7 +9710,7 @@
           "TIMESTAMP": "1402012833",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "2137320:16296"
+          "CONTENTS": "2130452:16296"
         },
         {
           "NAME": "UTF8.tst",
@@ -9501,7 +9718,7 @@
           "TIMESTAMP": "1402012781",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "2153616:138"
+          "CONTENTS": "2146748:138"
         }
       ]
     },
@@ -9559,7 +9776,7 @@
           "TIMESTAMP": "1402012758",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "2153754:1674"
+          "CONTENTS": "2146886:1674"
         },
         {
           "NAME": "VDIFFER.INC",
@@ -9567,7 +9784,7 @@
           "TIMESTAMP": "1402012771",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "2155428:1370"
+          "CONTENTS": "2148560:1370"
         },
         {
           "NAME": "VDIFFER.html",
@@ -9575,7 +9792,7 @@
           "TIMESTAMP": "1402012846",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "2156798:3866"
+          "CONTENTS": "2149930:3866"
         },
         {
           "NAME": "VDIFFER.tst",
@@ -9583,7 +9800,7 @@
           "TIMESTAMP": "1402012782",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "2160664:143"
+          "CONTENTS": "2153796:143"
         }
       ]
     },
@@ -9637,34 +9854,34 @@
         {
           "NAME": "WRAPPER.lss",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012758",
+          "TIMESTAMP": "1402261445",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "2160807:11216"
+          "CONTENTS": "2153939:11516"
         },
         {
           "NAME": "WRAPPER.INC",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012769",
+          "TIMESTAMP": "1402261462",
           "ACCESS": "644",
           "LOCATION": "DATA",
-          "CONTENTS": "2172023:10872"
+          "CONTENTS": "2165455:11172"
         },
         {
           "NAME": "WRAPPER.html",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012834",
+          "TIMESTAMP": "1402274287",
           "ACCESS": "664",
           "LOCATION": "DATA",
-          "CONTENTS": "2182895:17258"
+          "CONTENTS": "2176627:17630"
         },
         {
           "NAME": "WRAPPER.tst",
           "TYPE": "TEXT",
-          "TIMESTAMP": "1402012781",
+          "TIMESTAMP": "1402274285",
           "ACCESS": "775",
           "LOCATION": "DATA",
-          "CONTENTS": "2200153:144"
+          "CONTENTS": "2194257:144"
         }
       ]
     }

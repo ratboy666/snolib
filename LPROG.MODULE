@@ -1,0 +1,77 @@
+{
+  "SOURCE": "LPROG.lss",
+  "COMMENT": "LPROG module",
+  "ARTIFACTS": [
+    "LPROG.INC",
+    "LPROG.html",
+    "LPROG.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "LPROG",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "LPROG.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "LPROG.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "LPROG.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "LPROG.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "LPROG.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "LPROG.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "LPROG.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012742",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "LPROG.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012775",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "LPROG.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012811",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "LPROG.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012780",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

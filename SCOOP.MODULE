@@ -1,0 +1,78 @@
+{
+  "SOURCE": "SCOOP.lss",
+  "COMMENT": "SCOOP module",
+  "ARTIFACTS": [
+    "SCOOP.INC",
+    "SCOOP.html",
+    "SCOOP.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "SCOOP",
+  "DEPENDS": [
+    "VDIFFER"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "SCOOP.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SCOOP.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SCOOP.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "SCOOP.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SCOOP.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SCOOP.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "SCOOP.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012750",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "SCOOP.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012777",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "SCOOP.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012840",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "SCOOP.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012782",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

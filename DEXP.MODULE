@@ -1,0 +1,77 @@
+{
+  "SOURCE": "DEXP.lss",
+  "COMMENT": "DEXP module",
+  "ARTIFACTS": [
+    "DEXP.INC",
+    "DEXP.html",
+    "DEXP.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "DEXP",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "DEXP.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "DEXP.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "DEXP.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "DEXP.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "DEXP.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "DEXP.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "DEXP.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012726",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "DEXP.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012771",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "DEXP.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012798",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "DEXP.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012779",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "SOURCE": "DISPLAY.lss",
+  "COMMENT": "DISPLAY module",
+  "ARTIFACTS": [
+    "DISPLAY.INC",
+    "DISPLAY.html",
+    "DISPLAY.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "DISPLAY",
+  "DEPENDS": [
+    "BQ",
+    "CHARS",
+    "VDIFFER"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "DISPLAY.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "DISPLAY.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "DISPLAY.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "DISPLAY.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "DISPLAY.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "DISPLAY.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "DISPLAY.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012726",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "DISPLAY.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012771",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "DISPLAY.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012799",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "DISPLAY.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012779",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

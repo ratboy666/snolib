@@ -1,0 +1,78 @@
+{
+  "SOURCE": "TRUNC.lss",
+  "COMMENT": "TRUNC module",
+  "ARTIFACTS": [
+    "TRUNC.INC",
+    "TRUNC.html",
+    "TRUNC.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "TRUNC",
+  "DEPENDS": [
+    "SEQ"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "TRUNC.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "TRUNC.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "TRUNC.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "TRUNC.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "TRUNC.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "TRUNC.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "TRUNC.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012756",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "TRUNC.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402195044",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "TRUNC.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012831",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "TRUNC.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012781",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

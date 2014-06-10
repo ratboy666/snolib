@@ -1,0 +1,59 @@
+{
+  "SOURCE": "in72.lss",
+  "COMMENT": "in72 module",
+  "ARTIFACTS": [
+    "in72",
+    "in72.html"
+  ],
+  "TYPE": "PROGRAM",
+  "NAME": "IN72",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "in72",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "in72.html",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "in72",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "in72.html",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "in72.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402360856",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "in72",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402360858",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "in72.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402360858",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    }
+  ]
+}

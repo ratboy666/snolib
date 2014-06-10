@@ -1,0 +1,78 @@
+{
+  "SOURCE": "BRKREM.lss",
+  "COMMENT": "BRKREM module",
+  "ARTIFACTS": [
+    "BRKREM.INC",
+    "BRKREM.html",
+    "BRKREM.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "BRKREM",
+  "DEPENDS": [
+    "SDIFF"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "BRKREM.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "BRKREM.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "BRKREM.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "BRKREM.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "BRKREM.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "BRKREM.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "BRKREM.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012717",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "BRKREM.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012770",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "BRKREM.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012837",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "BRKREM.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012781",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

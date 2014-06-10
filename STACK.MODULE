@@ -1,0 +1,78 @@
+{
+  "SOURCE": "STACK.lss",
+  "COMMENT": "STACK module",
+  "ARTIFACTS": [
+    "STACK.INC",
+    "STACK.html",
+    "STACK.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "STACK",
+  "DEPENDS": [
+    "REPL"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "STACK.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "STACK.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "STACK.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "STACK.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "STACK.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "STACK.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "STACK.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012753",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "STACK.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012775",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "STACK.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012825",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "STACK.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012781",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

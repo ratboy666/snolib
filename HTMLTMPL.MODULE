@@ -1,0 +1,84 @@
+{
+  "SOURCE": "HTMLTMPL.lss",
+  "COMMENT": "HTMLTMPL module",
+  "ARTIFACTS": [
+    "HTMLTMPL.INC",
+    "HTMLTMPL.html",
+    "HTMLTMPL.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "HTMLTMPL",
+  "DEPENDS": [
+    "CHARS",
+    "HTMLESC",
+    "LAST",
+    "LINK",
+    "READFILE",
+    "REVL",
+    "SWAP"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "HTMLTMPL.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "HTMLTMPL.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "HTMLTMPL.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "HTMLTMPL.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "HTMLTMPL.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "HTMLTMPL.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "HTMLTMPL.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012734",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "HTMLTMPL.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012778",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "HTMLTMPL.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012844",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "HTMLTMPL.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012782",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

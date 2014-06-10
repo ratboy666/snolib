@@ -1,0 +1,78 @@
+{
+  "SOURCE": "COPYL.lss",
+  "COMMENT": "COPYL module",
+  "ARTIFACTS": [
+    "COPYL.INC",
+    "COPYL.html",
+    "COPYL.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "COPYL",
+  "DEPENDS": [
+    "LINK"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "COPYL.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "COPYL.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "COPYL.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "COPYL.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "COPYL.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "COPYL.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "COPYL.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012722",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "COPYL.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012769",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "COPYL.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012792",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "COPYL.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012778",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

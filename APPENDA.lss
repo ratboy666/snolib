@@ -1,0 +1,62 @@
+<h1>APPENDA - Append element to array</h1>
+
+Array append. Append V onto the end of array A. Extends a by one
+element. Not an efficient way to build an array, but it is
+convenient.
+
+<h2>Uses</h2>
+<a href="SEQ.html">SEQ</a><br>
+
+<<INCLUDES>>= 
+-INCLUDE 'SEQ.INC'
+-INCLUDE 'SIZEA.INC'
+@
+
+<<AI>>=
+-PUBLIC APPENDA
+*
+         DEFINE('APPENDA(A,V)I')                          :(END_APPENDA)
+*
+APPENDA  APPENDA = ARRAY(SIZEA(A) + 1)
+         SEQ(' APPENDA<I> = A<I>', .I)
+         APPENDA<I> = V                                        :(RETURN)
+*
+END_APPENDA
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'APPENDA.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+-MODULE APPENDA
+-IN72
+<<INCLUDES>>
+-STITL AI
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*       #     ######   ######   #######  #     #  ######      #        *
+*      # #    #     #  #     #  #        ##    #  #     #    # #       *
+*     #   #   #     #  #     #  #        # #   #  #     #   #   #      *
+*    #     #  ######   ######   #####    #  #  #  #     #  #     #     *
+*    #######  #        #        #        #   # #  #     #  #######     *
+*    #     #  #        #        #        #    ##  #     #  #     #     *
+*    #     #  #        #        #######  #     #  ######   #     #     *
+*                                                                      *
+* APPENDA              APPEND ELEMENT TO ARRRAY                        *
+*                                                                      *
+************************************************************************
+*
+* APPENDA.lss
+*
+<<AI>>
+*
+* CE: .MSNOBOL4;
+@

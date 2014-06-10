@@ -1,0 +1,77 @@
+{
+  "SOURCE": "SEQ.lss",
+  "COMMENT": "SEQ module",
+  "ARTIFACTS": [
+    "SEQ.INC",
+    "SEQ.html",
+    "SEQ.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "SEQ",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "SEQ.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SEQ.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SEQ.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "SEQ.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SEQ.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SEQ.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "SEQ.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012750",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "SEQ.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402174985",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "SEQ.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012822",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "SEQ.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012780",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

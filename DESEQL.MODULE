@@ -1,0 +1,59 @@
+{
+  "SOURCE": "deseql.lss",
+  "COMMENT": "deseql module",
+  "ARTIFACTS": [
+    "deseql",
+    "deseql.html"
+  ],
+  "TYPE": "PROGRAM",
+  "NAME": "DESEQL",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "deseql",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "deseql.html",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "deseql",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "deseql.html",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "deseql.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012725",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "deseql",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012783",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "deseql.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012797",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    }
+  ]
+}

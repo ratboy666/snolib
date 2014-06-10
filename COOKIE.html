@@ -78,12 +78,12 @@ be returned (probably as a session cookie).
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;COOKIE&raquo;&equiv;</b>
--MODULE COOKIE
 -PUBLIC NEW_COOKIE_JAR(), NEW_COOKIE(), COOKIE_SET_VALUE()
 -PUBLIC COOKIE_VALUE(), COOKIE_SET_CRUMB(), COOKIE_GET_CRUMB()
 -PUBLIC PUT_COOKIE_IN_JAR(), GET_COOKIE_FROM_JAR(), COOKIES_IN_JAR()
 -PUBLIC CRUMBS_IN_COOKIE(), COOKIE_EXPIRY(), COOKIE_STRING()
 -PuBLIC COOKIE_FIX_NAME()
+<font color="#818181"><i>*</i></font>
          DEFINE(&#39;NEW_COOKIE_JAR()&#39;)
          DEFINE(&#39;NEW_COOKIE(VALUE)&#39;)
          DEFINE(&#39;COOKIE_SET_VALUE(COOKIE,VALUE)&#39;)
@@ -189,14 +189,14 @@ GET_COOKIE_FROM_JAR
 <font color="#818181"><i>* RETURN ARRAY OF COOKIE NAMES IN THE COOKIE JAR, SORTED.</i></font>
 <font color="#818181"><i>*</i></font>
 COOKIES_IN_JAR
-         COOKIES_IN_JAR = KEYS_IN_TABLE(COOKIE_JAR)          <b>:F(FRETURN)</b>
+         COOKIES_IN_JAR = KEYST(COOKIE_JAR)                  <b>:F(FRETURN)</b>
          COOKIES_IN_JAR = SORT(COOKIES_IN_JAR)                 <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* RETURN ARRAY OF CRUMBS IN THE COOKIE, SORTED. THE FIRST CRUMB WILL</i></font>
 <font color="#818181"><i>* BE THE UNAMED VALUE OF THE COOKIE.</i></font>
 <font color="#818181"><i>*</i></font>
 CRUMBS_IN_COOKIE
-         CRUMBS_IN_COOKIE = KEYS_IN_TABLE(COOKIE)            <b>:F(FRETURN)</b>
+         CRUMBS_IN_COOKIE = KEYST(COOKIE)                    <b>:F(FRETURN)</b>
          CRUMBS_IN_COOKIE = SORT(CRUMBS_IN_COOKIE)             <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 COOKIE_END
@@ -233,6 +233,8 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+-MODULE COOKIE
+-IN72
 <b>&laquo;INCLUDES&raquo;</b>
 -STITL COOKIE
 -EJECT
@@ -262,7 +264,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 20:00:43 EDT 2014</p></td><td><p align=right>
+Tue Jun 10 06:01:51 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

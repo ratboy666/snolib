@@ -1,0 +1,82 @@
+{
+  "SOURCE": "ITERDIR.lss",
+  "COMMENT": "ITERDIR module",
+  "ARTIFACTS": [
+    "ITERDIR.INC",
+    "ITERDIR.html",
+    "ITERDIR.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "ITERDIR",
+  "DEPENDS": [
+    "ATOL",
+    "BQ",
+    "CHARS",
+    "CRACK",
+    "LINK"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "ITERDIR.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "ITERDIR.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "ITERDIR.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "ITERDIR.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "ITERDIR.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "ITERDIR.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "ITERDIR.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402201503",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "ITERDIR.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402397362",
+      "ACCESS": "600",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "ITERDIR.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402273692",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "ITERDIR.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402201644",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

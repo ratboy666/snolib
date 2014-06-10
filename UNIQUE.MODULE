@@ -1,0 +1,78 @@
+{
+  "SOURCE": "UNIQUE.lss",
+  "COMMENT": "UNIQUE module",
+  "ARTIFACTS": [
+    "UNIQUE.INC",
+    "UNIQUE.html",
+    "UNIQUE.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "UNIQUE",
+  "DEPENDS": [
+    "REPL"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "UNIQUE.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "UNIQUE.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "UNIQUE.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "UNIQUE.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "UNIQUE.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "UNIQUE.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "UNIQUE.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012757",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "UNIQUE.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012768",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "UNIQUE.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012832",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "UNIQUE.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012781",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "SOURCE": "DSERVE.lss",
+  "COMMENT": "DSERVE module",
+  "ARTIFACTS": [
+    "DSERVE.INC",
+    "DSERVE.html",
+    "DSERVE.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "DSERVE",
+  "DEPENDS": [
+    "CHARS",
+    "CSNOBOL4",
+    "DDT",
+    "P64",
+    "REPL",
+    "TRIMB"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "DSERVE.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "DSERVE.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "DSERVE.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "DSERVE.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "DSERVE.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "DSERVE.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "DSERVE.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012727",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "DSERVE.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402394875",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "DSERVE.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012846",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "DSERVE.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012782",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "SOURCE": "REPL.lss",
+  "COMMENT": "REPL module",
+  "ARTIFACTS": [
+    "REPL.INC",
+    "REPL.html",
+    "REPL.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "REPL",
+  "DEPENDS": [
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "REPL.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "REPL.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "REPL.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "REPL.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "REPL.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "REPL.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "REPL.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012747",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "REPL.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012768",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "REPL.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012819",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "REPL.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012780",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

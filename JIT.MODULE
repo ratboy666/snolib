@@ -1,0 +1,79 @@
+{
+  "SOURCE": "JIT.lss",
+  "COMMENT": "JIT module",
+  "ARTIFACTS": [
+    "JIT.INC",
+    "JIT.html",
+    "JIT.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "JIT",
+  "DEPENDS": [
+    "CRACK",
+    "SEQ"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "JIT.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "JIT.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "JIT.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "JIT.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "JIT.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "JIT.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "JIT.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402368279",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "JIT.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402394874",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "JIT.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402368284",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "JIT.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402368283",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

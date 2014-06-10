@@ -1,0 +1,87 @@
+{
+  "SOURCE": "CGI.lss",
+  "COMMENT": "CGI module",
+  "ARTIFACTS": [
+    "CGI.INC",
+    "CGI.html",
+    "CGI.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "CGI",
+  "DEPENDS": [
+    "CHARS",
+    "COOKIE",
+    "CRACK",
+    "HASH",
+    "HTMLESC",
+    "JSON",
+    "SCOOP",
+    "SEQ",
+    "UNIQUE",
+    "VDIFFER"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "CGI.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "CGI.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "CGI.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "CGI.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "CGI.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "CGI.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "CGI.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012718",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "CGI.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402394875",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "CGI.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012840",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "CGI.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012782",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}

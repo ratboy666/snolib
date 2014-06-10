@@ -1,7 +1,7 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -INCLUDE 'AGT.INC'
--LINE 30 "AGT.lss"
+-LINE 31 "AGT.lss"
          &CODE = 1
          AGT('abd', 'ABC')                                       :F(END)
          AGT('abc', 'ABC')                                       :S(END)

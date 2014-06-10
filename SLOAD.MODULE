@@ -1,0 +1,80 @@
+{
+  "SOURCE": "SLOAD.lss",
+  "COMMENT": "SLOAD module",
+  "ARTIFACTS": [
+    "SLOAD.INC",
+    "SLOAD.html",
+    "SLOAD.tst"
+  ],
+  "TYPE": "MODULE",
+  "NAME": "SLOAD",
+  "DEPENDS": [
+    "CRACK",
+    "HOST",
+    "TRIMB"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "SLOAD.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SLOAD.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SLOAD.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+    {
+      "TARGET": "SLOAD.INC",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SLOAD.html",
+      "COMMANDS": [
+      ]
+    },
+    {
+      "TARGET": "SLOAD.tst",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "FILES": [
+    {
+      "NAME": "SLOAD.lss",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012751",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "SLOAD.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402394875",
+      "ACCESS": "644",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "SLOAD.html",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012823",
+      "ACCESS": "664",
+      "LOCATION": "FILE"
+    },
+    {
+      "NAME": "SLOAD.tst",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402012780",
+      "ACCESS": "775",
+      "LOCATION": "FILE"
+    }
+  ]
+}
