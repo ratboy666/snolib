@@ -87,6 +87,7 @@
          define('dependencies(lbr,m)done')
          define('f2mt(lbr)mi,m,fi,f,n')
          define('extension(f)s')
+         define('crepl(s,n1,v1,n2,v2,n3,v3,n4,v4)a,i,k,r')
 
 
          terminal = 'SOOSIE (FRI JUN  6 12:22:12 EDT 2014)'
@@ -94,7 +95,7 @@
 * Load configuration
 
          config = json_decode(readfile('SOOSIE.CFG'))
-         
+
          rlappname('SOOSIE')
          read_history('.SOOSIE')
          stifle_history(50)
@@ -372,8 +373,8 @@ edit.    fn = trimb(args)
          differ(f = filest<fn>)                                  :f(unf)
          terminal = 'EDITING ' f<'NAME'>
          wfile(f)
-         host(HOST_SYSCMD, 'ED ' fn)
-         ts = (file(fn) bq('stat -c %Y ' fn), 0)
+         host(HOST_SYSCMD, crepl('{{EDIT}}', 'file=', fn))
+         ts = (file(fn) bq(crepl('{{TIMESTAMP}}', 'file=', fn)), 0)
          ne(ts, f<'TIMESTAMP'>)                                :s(edit2)
          terminal = 'FILE NOT CHANGED'                            :(top)
 edit2    rfile(f)                                                 :(top)
@@ -467,13 +468,14 @@ bu_1         b<i>                                               :f(bu_2)
 
 * If we don't have any commands, stub in a touch
 
-bu_3         c = eq(sizea(c)) %'touch {{tgt}}'
-             s = stringout(c, CHARS_NL)
+bu_3         ne(sizea(c))                                       :s(bu_5)
+             c = array(1)
+             c<1> = crepl('{{TOUCH}}', 'file=', '{{tgt}}')
+bu_5         s = stringout(c, CHARS_NL)
 
 * Replacements in the recipe
 
-             s = repl(s, '{{src}}', src)
-             s = repl(s, '{{tgt}}', tgt)
+             s = crepl(s, 'src=', src, 'tgt=', tgt)
 
 * Display the complete recipe
 
@@ -524,11 +526,11 @@ cntf_5
          terminal = 'VERSION:   ' lbr<'VERSION'>
          terminal = 'COMMENT:   ' lbr<'COMMENT'>
          t = (vdiffer(lbr<'TIMESTAMP'>), 0)
-         t = bq('date -d @' t)
+         t = bq(crepl('{{DISPLAY_TIMESTAMP}}', 'ts=', t))
          terminal = 'TIMESTAMP: ' lbr<'TIMESTAMP'> ' (' t ')'
          terminal = 'CONTENTS:  ' sizet(lbr<'CONTENTS'>) ' modules, '
 +                                 n ' files'
-         terminal = '           use "ls" command to list index'
+         terminal = '           use "ls" command to list index'   :(top)
 
 * build and install commands not shown
 
@@ -560,7 +562,7 @@ info3    filest = filest(lbr)
          terminal = 'NAME:      ' f<'NAME'>
          terminal = 'TYPE:      ' f<'TYPE'>
          t = (vdiffer(f<'TIMESTAMP'>), 0)
-         t = bq('date -d @' t)
+         t = bq(crepl('{{DISPLAY_TIMESTAMP}}', 'ts=', t))
          terminal = 'TIMESTAMP: ' f<'TIMESTAMP'> ' (' t ')'
          terminal = 'ACCESS:    ' f<'ACCESS'>
 * location should always be DIRECT
@@ -705,7 +707,7 @@ import2    f = mfile(fi)                                     :f(import3)
            s =
            s = readfile(f<'NAME'>)
            f<'LOCATION'> = 'DIRECT'
-           md5 = bq('md5sum ' f<'NAME'>)
+           md5 = bq(crepl('{{MD5}}', 'file=',  f<'NAME'>))
            md5 break(' ') . md5
            terminal = differ(md5, f<'MD5'>) 'MD5 FAILS'
            terminal = ne(f<'SIZE'>, size(s)) 'NOT CORRECT SIZE'
@@ -725,8 +727,10 @@ nomd     terminal = 'NO MODULE FILE ' mn                          :(top)
 * are restored
 
 wfile    writefile(f<'NAME'>, f<'CONTENTS'>)                 :f(freturn)
-         bq('chmod ' f<'ACCESS'> ' ' f<'NAME'>)
-         bq('touch -d @' f<'TIMESTAMP'> ' ' f<'NAME'>)         :(return)
+         bq(crepl('{{SET_ACCESS}}',
++                 'access=', f<'ACCESS'>, 'file=', f<'NAME'>))
+         bq(crepl('{{SET_TIMESTAMP}}'
++                 'ts=', f<'TIMESTAMP'>, 'file=', f<'NAME'>))  :(return)
 
 
 * Write all files for module to filesystem
@@ -816,17 +820,20 @@ create_file
 rfile    fn = ident(fn) f<'NAME'>
          f<'NAME'> = fn
          f<'TYPE'> = 'TEXT'
-         f<'TYPE'> = (?(file(fn) bq('file ' fn) ? 'text') 'TEXT',
+         f<'TYPE'> =
++  (?(file(fn) bq(crepl('{{FILE_TYPE}}', 'file=', fn)) ? 'text') 'TEXT',
 +                     'BINARY')
-         f<'TIMESTAMP'> = (file(fn) bq('stat -c %Y ' fn), 0)
-         f<'ACCESS'> = (file(fn) bq('stat -c %a ' fn), '644')
+         f<'TIMESTAMP'> =
++           (file(fn) bq(crepl('{{TIMESTAMP}}', 'file=', fn)), 0)
+         f<'ACCESS'> =
++           (file(fn) bq(crepl('{{ACCESS}}', 'file=', fn)), '644')
          f<'LOCATION'> = 'DIRECT'
          s = (file(fn) readfile(fn), '')
 
 * The md5 for an empty file
 
          md5 = 'd41d8cd98f00b204e9800998ecf8427e -'
-         md5 = file(fn) bq('md5sum ' fn)
+         md5 = file(fn) bq(crepl('{{MD5}}', 'file=', fn))
          md5 break(' ') . md5
 
          f<'MD5'> = md5
@@ -855,7 +862,9 @@ create_module
 * no output, it is taken to be fail. This should be documented in
 * bq.
 
-         m<'TYPE'> = (?(file(src) bq('grep -- -MODULE ' src))
+         m<'TYPE'> =
++  (?(file(src)
++     bq(crepl('{{GREP}}', 'pattern=', '^-MODULE', 'file=', src)))
 +                     'MODULE', 'PROGRAM')
 
 * Hunt down the module or program name. If we can't find it, we
@@ -864,16 +873,18 @@ create_module
          s = src
          src arb . s '.' arb rpos(0)
          s = file(src)
-+            bq('grep -- ^-MODULE ' src ' | sed -e "s/-MODULE //"')
++ bq(crepl('{{GREP}} {{SED}}', 'pattern=', '^-MODULE', 'file=', src,
++          'old=', '-MODULE', 'new=', ''))
          s = file(src)
-+            bq('grep -- ^-PROGRAM ' src ' | sed -e "s/-PROGRAM //"')
++ bq(crepl('{{GREP}} {{SED}}', 'pattern=', '^-PROGRAM', 'file=', src,
++          'old=', '-PROGRAM', 'new=', ''))
          m<'NAME'> = s
 
 * Determine depends. This is determine by the first artifact, run
 * through 'uses', or is supplied.
 
          depends = ident(depends) file(artifacts<1>)
-+                  json_decode(bq('uses ' artifacts<1>))
++              json_decode(bq(crepl('{{USES}}', 'file=', artifacts<1>)))
 +                                                                :f(end)
          m<'DEPENDS'> = depends
 
@@ -1038,6 +1049,46 @@ extension
          s break('./') . extension '.'
          extension = reverse(extension)
          extension = '.' vdiffer(extension)                    :(return)
+
+
+* config<'REPLACE'> is a table of replacement strings to be applied
+* to command strings and build recipes. For example, {{INCDIR}}
+* will be replaced with INCDIR as defined. There is an entry
+* for each directory needed in build and install recipes, and
+* for each command that is used by SOOSIE.
+*
+*  {{src}} and {{tgt}}
+* are replaced by the source and target in build recipes. {{tgt}}
+* is replaced by the file to be installed in install recipes.
+
+crepl    a = keyst(config<'REPLACE'>)
+ terminal = 's: ' s
+         seq(' k = ?a<i> "{{" a<i> "}}";'
++            ' r = ?a<i> config<"REPLACE"><a<i>>;'
++            ' s = ?a<i> repl(s, k, r)', .i)
+ terminal = 's: ' s
+
+         ident(n1)                                            :s(crepl2)
+         n1 '=' =
+         s = repl(s, '{{' n1 '}}', v1)
+ terminal = 's: ' s
+
+         ident(n2)                                            :s(crepl2)
+         n2 '=' =
+         s = repl(s, '{{' n2 '}}', v2)
+ terminal = 's: ' s
+
+         ident(n3)                                            :s(crepl2)
+         n3 '=' =
+         s = repl(s, '{{' n3 '}}', v3)
+ terminal = 's: ' s
+
+         ident(n4)                                            :s(crepl2)
+         n4 '=' =
+         s = repl(s, '{{' n4 '}}', v4)
+ terminal = 's: ' s
+
+crepl2   crepl = s                                             :(return)
 
 
 end

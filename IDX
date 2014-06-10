@@ -1,6 +1,5 @@
 {
   "#": "FUNCTIONS",
-  "AGT()": "AGT.INC",
   "AI()": "AI.INC",
   "AOPA()": "AOPA.INC",
   "ATOL()": "ATOL.INC",
@@ -35,6 +34,7 @@
   "COPYL()": "COPYL.INC",
   "COUNT()": "COUNT.INC",
   "CRACK()": "CRACK.INC",
+  "COPYA()": "CRACK.INC",
   "FORK()": "CSNOBOL4.INC",
   "WAIT()": "CSNOBOL4.INC",
   "SPRINTF()": "CSNOBOL4.INC",
@@ -136,10 +136,10 @@
   "GETKEY()": "GETKEY.INC",
   "GOTOS_()": "GOTOS.INC",
   "HASH()": "HASH.INC",
-  "COPY_TABLE()": "HASH.INC",
-  "MERGE_TABLE()": "HASH.INC",
-  "KEYS_IN_TABLE()": "HASH.INC",
-  "PRUNE_TABLE()": "HASH.INC",
+  "COPYT()": "HASH.INC",
+  "MERGET()": "HASH.INC",
+  "KEYST()": "HASH.INC",
+  "PRUNET()": "HASH.INC",
   "HEX()": "HEX.INC",
   "HTML_ESCAPE()": "HTMLESC.INC",
   "JS_ESCAPE()": "HTMLESC.INC",
@@ -687,6 +687,7 @@
 }
 {
   "#": "VARIABLES",
+  "APPENDA": "APPENDA.INC",
   "CHARS_NUL": "CHARS.INC",
   "CHARS_SOH": "CHARS.INC",
   "CHARS_STX": "CHARS.INC",
