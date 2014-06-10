@@ -46,6 +46,7 @@
 -INCLUDE 'HTMLESC.INC'
 -INCLUDE 'HTMLTMPL.INC'
 -INCLUDE 'INFINIP.INC'
+-INCLUDE 'ITERDIR.INC'
 -INCLUDE 'JIT.INC'
 -INCLUDE 'JSON.INC'
 -INCLUDE 'LAST.INC'
@@ -100,7 +101,7 @@
 -INCLUDE 'VDIFFER.INC'
 -INCLUDE 'WRAPPER.INC'
 -STITL ALL
--LINE 165 "ALL.lss"
+-LINE 166 "ALL.lss"
 -EJECT
 *
 ************************************************************************

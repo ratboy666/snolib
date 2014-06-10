@@ -29,10 +29,11 @@ an external function to be used with <font face="Source Code Pro">LOAD()</font>.
          WPSTRFREE = &#39;STRING_FREE&#39;
          WPSTRTYP2 = &#39;STRING2&#39;
          WPINTTYPE = &#39;INTEGER&#39;
+         WPLONGTYPE = &#39;LONG&#39;
          WPREALTYPE = &#39;REAL&#39;
          WPREDTYPE = &#39;PREDICATE&#39;
          WPSPREDTYPE = &#39;SYSPRED&#39;
-         WPTYPES = WPINTTYPE | WPREALTYPE | WPSTRTYPE
+         WPTYPES = WPLONGTYPE | WPINTTYPE | WPREALTYPE | WPSTRTYPE
          WPRTYPES = WPTYPES | WPREDTYPE | WPSPREDTYPE | WPSTRFREE |
 +                   WPSTRTYP2 | &#39;&#39;
          WPNAME = ANY(&amp;UCASE &amp;LCASE &#39;_&#39;)
@@ -118,6 +119,7 @@ WPCPY_STRING
          $FN = WP4SP
 +              &#39;getstring(LA_PTR(&#39; I &#39;), arg&#39; I &#39;, sizeof(arg&#39; I &#39;));&#39;
                                                               <b>:(WPNCOPY)</b>
+WPCPY_LONG
 WPCPY_INTEGER
 WPCPY_REAL
 WPCPY_
@@ -128,6 +130,8 @@ WPNOSTRS CALL = REPLACE(NAME, &amp;UCASE, &amp;LCASE) &#39;(&#39;
          I = 0
 WPCALL   GE(I, N)                                            <b>:S(WPECALL)</b>
          CALL = GT(I, 0) CALL &#39;,&#39;                <b>:($(&#39;WPARG_&#39; TYPES&lt;I&gt;))</b>
+WPARG_LONG
+         CALL = CALL &#39;(long)LA_INT(&#39; I &#39;)&#39;                    <b>:(WPNCALL)</b>
 WPARG_INTEGER
          CALL = CALL &#39;(int)LA_INT(&#39; I &#39;)&#39;                     <b>:(WPNCALL)</b>
 WPARG_REAL
@@ -143,6 +147,7 @@ WPRET_STRING2
          $FN = WP4SP &#39;RETSTR2((char *)&#39; CALL &#39;,&#39; LEN &#39;);&#39;      <b>:(WPDONE)</b>
 WPRET_STRING_FREE
          $FN = WP4SP &#39;RETSTR_FREE((char *)&#39; CALL &#39;);&#39;          <b>:(WPDONE)</b>
+WPRET_LONG
 WPRET_INTEGER
          $FN = WP4SP &#39;RETINT(&#39; CALL &#39;);&#39;                       <b>:(WPDONE)</b>
 WPRET_REAL
@@ -211,6 +216,8 @@ FWPEPARS WPCOPY = N
 <font color="#818181"><i>*</i></font>
 FWPLOOP2 $FN = IDENT(TYPES&lt;I&gt;, WPSTRTYPE)
 +           WP4SP &#39;char arg&#39; I &#39;[&#39; WPMAXSTR &#39;];&#39;            <b>:S(FWPNEXT2)</b>
+         $FN = IDENT(TYPES&lt;I&gt;, WPLONGTYPE)
++           WP4SP &#39;long arg&#39; I &#39;;&#39;                          <b>:S(FWPNEXT2)</b>
          $FN = IDENT(TYPES&lt;I&gt;, WPINTTYPE)
 +           WP4SP &#39;int arg&#39; I &#39;;&#39;                           <b>:S(FWPNEXT2)</b>
          $FN = IDENT(TYPES&lt;I&gt;, WPREALTYPE)
@@ -224,6 +231,8 @@ FWPCPY_STRING
          $FN = WP4SP
 +              &#39;getstring(LA_PTR(&#39; I &#39;), arg&#39; I &#39;, sizeof(arg&#39; I &#39;));&#39;
                                                              <b>:(FWPNCOPY)</b>
+FWPCPY_LONG
+         $FN = WP4SP &#39;arg&#39; I &#39; = (long)LA_INT(&#39; I &#39;);&#39;       <b>:(FWPNCOPY)</b>
 FWPCPY_INTEGER
          $FN = WP4SP &#39;arg&#39; I &#39; = (int)LA_INT(&#39; I &#39;);&#39;        <b>:(FWPNCOPY)</b>
 FWPCPY_REAL
@@ -237,8 +246,8 @@ FWPNOSTRS
          I = 0
 FWPCALL  GE(I, N)                                           <b>:S(FWPECALL)</b>
          CALL = GT(I, 0) CALL &#39;,&#39;               <b>:($(&#39;FWPARG_&#39; TYPES&lt;I&gt;))</b>
+FWPARG_LONG
 FWPARG_INTEGER
-         CALL = CALL &#39;&amp;arg&#39; I                                <b>:(FWPNCALL)</b>
 FWPARG_REAL
          CALL = CALL &#39;&amp;arg&#39; I                                <b>:(FWPNCALL)</b>
 FWPARG_STRING
@@ -254,6 +263,7 @@ FWPRET_STRING2
 FWPRETST2
          CALL = CALL &#39;, result&#39;
          $FN = WP4SP &#39;RETSTR2((&#39; CALL &#39;), &#39; LEN &#39;);&#39;          <b>:(FWPDONE)</b>
+FWPRET_LONG
 FWPRET_INTEGER
          $FN = WP4SP &#39;RETINT(&#39; CALL &#39;);&#39;                      <b>:(FWPDONE)</b>
 FWPRET_REAL
@@ -326,7 +336,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 20:00:33 EDT 2014</p></td><td><p align=right>
+Sun Jun  8 20:38:06 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

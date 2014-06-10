@@ -1,7 +1,7 @@
 -STITL P64
 -EJECT
 *
--LINE 635 "P64.lss"
+-LINE 195 "P64.lss"
 ************************************************************************
 *                                                                      *
 *                       ######    ###   #   #                          *
@@ -12,459 +12,146 @@
 *                       #        #   #      #                          *
 *                       #         ###       #                          *
 *                                                                      *
-* P64                64 BIT PARAMETER HANDLING                         *
+* P64                    POINTER UTILITIES                             *
 *                                                                      *
 ************************************************************************
 *
 * P64.lss
 *
--LINE 59 "P64.lss"
+-LINE 22 "P64.lss"
 -MODULE P64
 -CASE 1
--LINE 69 "P64.lss"
-%SET (BITS, HOST(HOST_POINTER_BITS))
+-LINE 27 "P64.lss"
 -SNOBOL TERMINAL = 'P64 (SUN NOV 10 03:57:08 EST 2013)'
--LINE 71 "P64.lss"
+-LINE 28 "P64.lss"
 -SNOBOL SLOAD('CRACK.INC')
--LINE 72 "P64.lss"
+-LINE 29 "P64.lss"
 -SNOBOL SLOAD('DYNAMIC.INC')
--LINE 73 "P64.lss"
+-LINE 30 "P64.lss"
 -SNOBOL SLOAD('SEQ.INC')
--LINE 74 "P64.lss"
+-LINE 31 "P64.lss"
 -SNOBOL SLOAD('WRAPPER.INC')
--LINE 75 "P64.lss"
--LINE 82 "P64.lss"
--EMBED FILE 'p64.h'
-#line 86 "P64.lss"
-
-void *get_p_(void);
-void *get_p2_(void);
-float get_f_(void);
-double get_d_(void);
-long double get_ld_(void);
-void set_p_(void *v);
-void set_p2_(void *v);
-void set_f_(float v);
-void set_d_(double v);
-void set_ld_(long double v);
-
--END
--LINE 104 "P64.lss"
+-LINE 32 "P64.lss"
+-LINE 37 "P64.lss"
 -EMBED C 'p64'
-#line 108 "P64.lss"
+#line 41 "P64.lss"
 -SNOBOL WRAPPER_STARTFILE(.EMBED)
-#line 109 "P64.lss"
+#line 42 "P64.lss"
 
 #include <stdlib.h>
 #include <string.h>
 
-static void *p;
-static void *p2;
-static void *p3;
-static void *p4;
-static float f;
-static double d;
-static long double ld;
+static long peek_p(long p) { return (long)*(void **)p; }
 
-void *get_p_(void) { return p; }
-void *get_p2_(void) { return p2; }
-float get_f_(void) { return f; }
-double get_d_(void) { return d; }
-long double get_ld_(void) { return ld; }
-void set_p_(void *v) { p = v; }
-void set_p2_(void *v) { p2 = v; }
-void set_f_(float v) { f = v; }
-void set_d_(double v) { d = v; }
-void set_ld_(long double v) { ld = v; }
+-SNOBOL C_WRAPPER_PROTO('PEEK_P(LONG)LONG', .EMBED)
+#line 49 "P64.lss"
 
-%IF (BITS EQ 64)
+static long peek_c(long p) { return *(char *)p; }
 
-static int get_phi(void)
-{
-    long n = (long)p;
-    return (int)(n >> 32);
-}
+-SNOBOL C_WRAPPER_PROTO('PEEK_C(LONG)INTEGER', .EMBED)
+#line 53 "P64.lss"
 
--SNOBOL C_WRAPPER_PROTO('GET_PHI()INTEGER', .EMBED)
-#line 141 "P64.lss"
+static long peek_s(long p) { return *(short *)p; }
 
-static int get_plo(void)
-{
-    long n = (long)p;
-    return (int)(n & 0xffffffff);
-}
+-SNOBOL C_WRAPPER_PROTO('PEEK_S(LONG)INTEGER', .EMBED)
+#line 57 "P64.lss"
 
--SNOBOL C_WRAPPER_PROTO('GET_PLO()INTEGER', .EMBED)
-#line 149 "P64.lss"
+static long peek_i(long p) { return *(int *)p; }
 
-static void set_phi(int h)
-{
-    long n = (long)p;
-    n &= 0xffffffff;
-    p = (void *)(((long)h << 32) | n);
-}
+-SNOBOL C_WRAPPER_PROTO('PEEK_I(LONG)INTEGER', .EMBED)
+#line 61 "P64.lss"
 
--SNOBOL C_WRAPPER_PROTO('SET_PHI(INTEGER)', .EMBED)
-#line 158 "P64.lss"
+static double peek_d(long p) { return *(double *)p; }
 
-static void set_plo(int l)
-{
-    long n = (long)p;
-    n &= 0xffffffff00000000L;
-    p = (void *)(n | (unsigned)l);
-}
+-SNOBOL C_WRAPPER_PROTO('PEEK_D(LONG)REAL', .EMBED)
+#line 65 "P64.lss"
 
--SNOBOL C_WRAPPER_PROTO('SET_PLO(INTEGER)', .EMBED)
-#line 167 "P64.lss"
+static double peek_f(long p) { return *(float *)p; }
 
-%ENDIF
+-SNOBOL C_WRAPPER_PROTO('PEEK_F(LONG)REAL', .EMBED)
+#line 69 "P64.lss"
 
-%IF (BITS EQ 32)
+static double peek_ld(long p) { return *(long double *)p; }
 
-static int get_p(void) { return (int)p; }
+-SNOBOL C_WRAPPER_PROTO('PEEK_LD(LONG)REAL', .EMBED)
+#line 73 "P64.lss"
 
--SNOBOL C_WRAPPER_PROTO('GET_P()INTEGER', .EMBED)
-#line 175 "P64.lss"
+static void poke_p(long p, long v) { *(void **)p = (void *)v; }
 
-static int set_p(int v) { p = (void *)v; }
+-SNOBOL C_WRAPPER_PROTO('POKE_P(LONG,LONG)', .EMBED)
+#line 77 "P64.lss"
 
--SNOBOL C_WRAPPER_PROTO('SET_P()INTEGER', .EMBED)
-#line 179 "P64.lss"
+static void poke_c(long p, int c) { *(char *)p = (char)c; }
 
-%ENDIF
+-SNOBOL C_WRAPPER_PROTO('POKE_C(LONG,INTEGER)', .EMBED)
+#line 81 "P64.lss"
 
-static void p_to_p2(void) { p2 = p; }
+static void poke_s(long p, int s) { *(short *)p = (short)s; }
 
--SNOBOL C_WRAPPER_PROTO('P_TO_P2()', .EMBED)
-#line 185 "P64.lss"
+-SNOBOL C_WRAPPER_PROTO('POKE_S(LONG,INTEGER)', .EMBED)
+#line 85 "P64.lss"
 
-static void p_to_p3(void) { p3 = p; }
+static void poke_i(long p, int i) { *(int *)p = (int)i; }
 
--SNOBOL C_WRAPPER_PROTO('P_TO_P3()', .EMBED)
-#line 189 "P64.lss"
+-SNOBOL C_WRAPPER_PROTO('POKE_I(LONG,INTEGER)', .EMBED)
+#line 89 "P64.lss"
 
-static void p_to_p4(void) { p4 = p; }
+static void poke_d(long p, double v) { *(double *)p = v; }
 
--SNOBOL C_WRAPPER_PROTO('P_TO_P4()', .EMBED)
-#line 193 "P64.lss"
+-SNOBOL C_WRAPPER_PROTO('POKE_D(LONG,REAL)', .EMBED)
+#line 93 "P64.lss"
 
-static void p2_to_p(void) { p = p2; }
+static void poke_f(long p, double v) { *(float *)p = v; }
 
--SNOBOL C_WRAPPER_PROTO('P2_TO_P()', .EMBED)
-#line 197 "P64.lss"
+-SNOBOL C_WRAPPER_PROTO('POKE_F(LONG,REAL)', .EMBED)
+#line 97 "P64.lss"
 
-static void p3_to_p(void) { p = p3; }
+static void poke_ld(long p, double v) { *(long double *)p = v; }
 
--SNOBOL C_WRAPPER_PROTO('P3_TO_P()', .EMBED)
-#line 201 "P64.lss"
+-SNOBOL C_WRAPPER_PROTO('POKE_LD(LONG,REAL)', .EMBED)
+#line 101 "P64.lss"
 
-static void p4_to_p(void) { p = p4; }
+static long malloc_(int n) { return (long)malloc(n); }
 
--SNOBOL C_WRAPPER_PROTO('P4_TO_P()', .EMBED)
-#line 205 "P64.lss"
+-SNOBOL C_WRAPPER_PROTO('MALLOC_(INTEGER)LONG', .EMBED)
+#line 105 "P64.lss"
 
-static void set_f(double v) { f = v; }
+static void free_(long p) { free((void *)p); }
 
--SNOBOL C_WRAPPER_PROTO('SET_F(REAL)', .EMBED)
-#line 209 "P64.lss"
+-SNOBOL C_WRAPPER_PROTO('FREE_(LONG)', .EMBED)
+#line 109 "P64.lss"
 
-static void set_d(double v) { d = v; }
+static long strdup_(char *s) { return (long)strdup(s); }
 
--SNOBOL C_WRAPPER_PROTO('SET_D(REAL)', .EMBED)
-#line 213 "P64.lss"
+-SNOBOL C_WRAPPER_PROTO('STRDUP_(STRING)LONG', .EMBED)
+#line 113 "P64.lss"
 
-static void set_ld(double v) { ld = v; }
+static long strlen_(long p) { return strlen((char *)p); }
 
--SNOBOL C_WRAPPER_PROTO('SET_LD(REAL)', .EMBED)
-#line 217 "P64.lss"
-
-static float get_f(void) { return f; }
-
--SNOBOL C_WRAPPER_PROTO('GET_F()REAL', .EMBED)
-#line 221 "P64.lss"
-
-static double get_d(void) { return d; }
-
--SNOBOL C_WRAPPER_PROTO('GET_D()REAL', .EMBED)
-#line 225 "P64.lss"
-
-static double get_ld(void) { return ld; }
-
--SNOBOL C_WRAPPER_PROTO('GET_LD()REAL', .EMBED)
-#line 229 "P64.lss"
-
-static char *get_s(void) { return (char *)p; }
-
--SNOBOL C_WRAPPER_PROTO('GET_S()STRING', .EMBED)
-#line 233 "P64.lss"
-
-static void swap_p(void)
-{
-    void *t = p2;
-    p2 = p;
-    p = t;
-}
-
--SNOBOL C_WRAPPER_PROTO('SWAP_P()', .EMBED)
-#line 242 "P64.lss"
-
-%IF (BITS EQ 64)
-
-static void peek_p_(void) { p = *(void **)p; }
-
--SNOBOL C_WRAPPER_PROTO('PEEK_P_()', .EMBED)
-#line 248 "P64.lss"
-
-static int peek_c_(void) { return *(char *)p; }
-
--SNOBOL C_WRAPPER_PROTO('PEEK_C_()INTEGER', .EMBED)
-#line 252 "P64.lss"
-
-static int peek_s_(void) { return *(short *)p; }
-
--SNOBOL C_WRAPPER_PROTO('PEEK_S_()INTEGER', .EMBED)
-#line 256 "P64.lss"
-
-static int peek_i_(void) { return *(int *)p; }
-
--SNOBOL C_WRAPPER_PROTO('PEEK_I_()INTEGER', .EMBED)
-#line 260 "P64.lss"
-
-static void peek_d_(void) { d =  *(double *)p; }
-
--SNOBOL C_WRAPPER_PROTO('PEEK_D_()', .EMBED)
-#line 264 "P64.lss"
-
-static void peek_f_(void) { f = *(float *)p; }
-
--SNOBOL C_WRAPPER_PROTO('PEEK_F_()', .EMBED)
-#line 268 "P64.lss"
-
-static void peek_ld_(void) { ld = *(long double *)p; }
-
--SNOBOL C_WRAPPER_PROTO('PEEK_LD_()', .EMBED)
-#line 272 "P64.lss"
-
-static void poke_p_(void) { *(void **)p = p2; }
-
--SNOBOL C_WRAPPER_PROTO('POKE_P_()', .EMBED)
-#line 276 "P64.lss"
-
-static void poke_c_(int c) { *(char *)p = (char)c; }
-
--SNOBOL C_WRAPPER_PROTO('POKE_C_(INTEGER)', .EMBED)
-#line 280 "P64.lss"
-
-static void poke_s_(int s) { *(short *)p = (short)s; }
-
--SNOBOL C_WRAPPER_PROTO('POKE_S_(INTEGER)', .EMBED)
-#line 284 "P64.lss"
-
-static void poke_i_(int i) { *(int *)p = (int)i; }
-
--SNOBOL C_WRAPPER_PROTO('POKE_I_(INTEGER)', .EMBED)
-#line 288 "P64.lss"
-
-static void poke_d_(void) { *(double *)p = d; }
-
--SNOBOL C_WRAPPER_PROTO('POKE_D_()', .EMBED)
-#line 292 "P64.lss"
-
-static void poke_f_(void) { *(float *)p = f; }
-
--SNOBOL C_WRAPPER_PROTO('POKE_F_()', .EMBED)
-#line 296 "P64.lss"
-
-static void poke_ld_(void) { *(long double *)p = ld; }
-
--SNOBOL C_WRAPPER_PROTO('POKE_LD_()', .EMBED)
-#line 300 "P64.lss"
-
-static void malloc_(int n) { p = malloc(n); }
-
--SNOBOL C_WRAPPER_PROTO('MALLOC_(INTEGER)', .EMBED)
-#line 304 "P64.lss"
-
-static void free_(void) { free(p); }
-
--SNOBOL C_WRAPPER_PROTO('FREE_()', .EMBED)
-#line 308 "P64.lss"
-
-static int strdup_(char *s) { p = strdup(s); }
-
--SNOBOL C_WRAPPER_PROTO('STRDUP_(STRING)', .EMBED)
-#line 312 "P64.lss"
-
-static int strlen_(void) { return strlen((char *)p); }
-
--SNOBOL C_WRAPPER_PROTO('STRLEN_()INTEGER', .EMBED)
-#line 316 "P64.lss"
-
-%ENDIF
-
-%IF (BITS EQ 32)
-
-static int peek_p(int p) { return (int)*(void **)p; }
-
--SNOBOL C_WRAPPER_PROTO('PEEK_P(INTEGER)INTEGER', .EMBED)
-#line 324 "P64.lss"
-
-static int peek_c(int p) { return *(char *)p; }
-
--SNOBOL C_WRAPPER_PROTO('PEEK_C(INTEGER)INTEGER', .EMBED)
-#line 328 "P64.lss"
-
-static int peek_s(int p) { return *(short *)p; }
-
--SNOBOL C_WRAPPER_PROTO('PEEK_S(INTEGER)INTEGER', .EMBED)
-#line 332 "P64.lss"
-
-static int peek_i(int p) { return *(int *)p; }
-
--SNOBOL C_WRAPPER_PROTO('PEEK_I(INTEGER)INTEGER', .EMBED)
-#line 336 "P64.lss"
-
-static double peek_d(int p) { return *(double *)p; }
-
--SNOBOL C_WRAPPER_PROTO('PEEK_D(INTEGER)REAL', .EMBED)
-#line 340 "P64.lss"
-
-static double peek_f(int p) { return *(float *)p; }
-
--SNOBOL C_WRAPPER_PROTO('PEEK_F(INTEGER)REAL', .EMBED)
-#line 344 "P64.lss"
-
-static double peek_ld(int p) { return *(long double *)p; }
-
--SNOBOL C_WRAPPER_PROTO('PEEK_LD(INTEGER)REAL', .EMBED)
-#line 348 "P64.lss"
-
-static void poke_p(int p, int v) { *(void **)p = (void *)v; }
-
--SNOBOL C_WRAPPER_PROTO('POKE_P(INTEGER,INTEGER)', .EMBED)
-#line 352 "P64.lss"
-
-static void poke_c(int p, int c) { *(char *)p = (char)c; }
-
--SNOBOL C_WRAPPER_PROTO('POKE_C(INTEGER,INTEGER)', .EMBED)
-#line 356 "P64.lss"
-
-static void poke_s(int p, int s) { *(short *)p = (short)s; }
-
--SNOBOL C_WRAPPER_PROTO('POKE_S(INTEGER,INTEGER)', .EMBED)
-#line 360 "P64.lss"
-
-static void poke_i_(int p, int i) { *(int *)p = (int)i; }
-
--SNOBOL C_WRAPPER_PROTO('POKE_I(INTEGER,INTEGER)', .EMBED)
-#line 364 "P64.lss"
-
-static void poke_d_(int p, double v) { *(double *)p = v; }
-
--SNOBOL C_WRAPPER_PROTO('POKE_D_(INTEGER,REAL)', .EMBED)
-#line 368 "P64.lss"
-
-static void poke_f_(int p, double v) { *(float *)p = v; }
-
--SNOBOL C_WRAPPER_PROTO('POKE_F_(INTEGER,REAL)', .EMBED)
-#line 372 "P64.lss"
-
-static void poke_ld_(int p, double v) { *(long double *)p = v; }
-
--SNOBOL C_WRAPPER_PROTO('POKE_LD_(INTEGER,REAL)', .EMBED)
-#line 376 "P64.lss"
-
-static int malloc_(int n) { return (int)malloc(n); }
-
--SNOBOL C_WRAPPER_PROTO('MALLOC_(INTEGER)INTEGER', .EMBED)
-#line 380 "P64.lss"
-
-static void free_(int p) { free((void *)p); }
-
--SNOBOL C_WRAPPER_PROTO('FREE_(INTEGER)', .EMBED)
-#line 384 "P64.lss"
-
-static int strdup_(char *s) { return (int)strdup(s); }
-
--SNOBOL C_WRAPPER_PROTO('STRDUP_(STRING)INTEGER', .EMBED)
-#line 388 "P64.lss"
-
-static int strlen_(int p) { return strlen((char *)p); }
-
--SNOBOL C_WRAPPER_PROTO('STRLEN_(INTEGER)INTEGER', .EMBED)
-#line 392 "P64.lss"
-
-%ENDIF
+-SNOBOL C_WRAPPER_PROTO('STRLEN_(LONG)INTEGER', .EMBED)
+#line 117 "P64.lss"
 
 -END
--LINE 401 "P64.lss"
+-LINE 124 "P64.lss"
 -SNOBOL DYNAMIC_DEBUG = 1
--LINE 402 "P64.lss"
+-LINE 125 "P64.lss"
 -SNOBOL COMPILE_DYNAMIC(p64) :F(ERROR) ;
--LINE 403 "P64.lss"
+-LINE 126 "P64.lss"
 -SNOBOL OBJECTS = p64; OBJECTS '.c' = '.o'
--LINE 404 "P64.lss"
+-LINE 127 "P64.lss"
 -SNOBOL LINK_DYNAMIC('./p64', OBJECTS) :F(ERROR) ;
--LINE 405 "P64.lss"
+-LINE 128 "P64.lss"
 -CMNT ERASE TEMPORARY FILES
 -CMNT     WE DON'T NEED THE C BITS, OR THE OBJECT FILES ANYMORE.
 -CMNT     ALL WE REQUIRE IS p64.so
 -CMNT -SNOBOL A = CRACK(p64 ' ' OBJECTS, ' ')
 -CMNT -SNOBOL SEQ(' DELETE(A<K>) ', .K)
--LINE 416 "P64.lss"
-%IF (BITS EQ 64)
-         LOAD('GET_PHI()INTEGER', 'p64.so')
-         LOAD('GET_PLO()INTEGER', 'p64.so')
-         LOAD('SET_PHI(INTEGER)', 'p64.so')
-         LOAD('SET_PLO(INTEGER)', 'p64.so')
-%ENDIF
--PUBLIC GET_P(), SET_P()
-%IF (BITS EQ 32)
-         LOAD('GET_P()INTEGER', 'p64.so')
-         LOAD('SET_P(INTEGER)', 'p64.so')
-%ENDIF
--PUBLIC P_TO_P2(), P_TO_P3(), P_TO_P4(), P2_TO_P(), P3_TO_P(), P4_TO_P()
-         LOAD('P_TO_P2()', 'p64.so')
-         LOAD('P_TO_P3()', 'p64.so')
-         LOAD('P_TO_P4()', 'p64.so')
-         LOAD('P2_TO_P()', 'p64.so')
-         LOAD('P3_TO_P()', 'p64.so')
-         LOAD('P4_TO_P()', 'p64.so')
--PUBLIC SET_F(), SET_D(), SET_LD(), GET_F(), GET_D(), GET_LD(), GET_S()
-         LOAD('SET_F(REAL)', 'p64.so')
-         LOAD('SET_D(REAL)', 'p64.so')
-         LOAD('SET_LD(REAL)', 'p64.so')
-         LOAD('GET_F()REAL', 'p64.so')
-         LOAD('GET_D()REAL', 'p64.so')
-         LOAD('GET_LD()REAL', 'p64.so')
-         LOAD('GET_S()STRING', 'p64.so')
--PUBLIC SWAP_P()
-         LOAD('SWAP_P()', 'p64.so')
-%IF (BITS EQ 64)
-         LOAD('PEEK_P_()', 'p64.so')
-         LOAD('PEEK_C_()INTEGER', 'p64.so')
-         LOAD('PEEK_S_()INTEGER', 'p64.so')
-         LOAD('PEEK_I_()INTEGER', 'p64.so')
-         LOAD('PEEK_D_()', 'p64.so')
-         LOAD('PEEK_F_()', 'p64.so')
-         LOAD('PEEK_LD_()', 'p64.so')
-         LOAD('POKE_P_()', 'p64.so')
-         LOAD('POKE_C_(INTEGER)', 'p64.so')
-         LOAD('POKE_S_(INTEGER)', 'p64.so')
-         LOAD('POKE_I_(INTEGER)', 'p64.so')
-         LOAD('POKE_D_()', 'p64.so')
-         LOAD('POKE_F_()', 'p64.so')
-         LOAD('POKE_LD_()', 'p64.so')
-         LOAD('MALLOC_(INTEGER)', 'p64.so')
-         LOAD('FREE_()', 'p64.so')
-         LOAD('STRDUP_(STRING)', 'p64.so')
-         LOAD('STRLEN_()INTEGER', 'p64.so')
-%ENDIF
+-LINE 136 "P64.lss"
 -PUBLIC PEEK_P(), PEEK_C(), PEEK_S(), PEEK_I(), PEEK_D(), PEEK_F()
 -PUBLIC PEEK_LD()
 -PUBLIC POKE_P(), POKE_C(), POKE_S(), POKE_I(), POKE_D(), POKE_F()
 -PUBLIC POKE_LD()
-%IF (BITS EQ 32)
+*
          LOAD('PEEK_P(INTEGER)INTEGER', 'p64.so')
          LOAD('PEEK_C(INTEGER)INTEGER', 'p64.so')
          LOAD('PEEK_S(INTEGER)INTEGER', 'p64.so')
@@ -483,116 +170,14 @@ static int strlen_(int p) { return strlen((char *)p); }
          LOAD('FREE_(INTEGER)', 'p64.so')
          LOAD('STRDUP_(STRING)INTEGER', 'p64.so')
          LOAD('STRLEN_(INTEGER)INTEGER', 'p64.so')
-%ENDIF
 *
--LINE 503 "P64.lss"
-%IF (BITS EQ 64)
-         DEFINE('GET_P()LO,HI')
-         DEFINE('SET_P(P)LO,HI')
-         DEFINE('PEEK_P(P)')
-         DEFINE('PEEK_C(P)')
-         DEFINE('PEEK_S(P)')
-         DEFINE('PEEK_I(P)')
-         DEFINE('PEEK_D(P)')
-         DEFINE('PEEK_F(P)')
-         DEFINE('PEEK_LD(P)')
-         DEFINE('POKE_P(P,P2)')
-         DEFINE('POKE_C(P,C)')
-         DEFINE('POKE_S(P,S)')
-         DEFINE('POKE_I(P,I)')
-         DEFINE('POKE_D(P,D)')
-         DEFINE('POKE_F(P,F)')
-         DEFINE('POKE_LD(P,LD)')
-         DEFINE('MALLOC(N)')
-         DEFINE('FREE(P)')
-         DEFINE('STRDUP(S)')
-         DEFINE('STRLEN(P)')
-%ENDIF
+-LINE 165 "P64.lss"
 -PUBLIC MALLOC(), FREE(), STRDUP(), STRLEN()
-%IF (BITS EQ 32)
          DEFINE('MALLOC(N)')
          DEFINE('FREE(P)')
          DEFINE('STRDUP(S)')
-         DEFINE('STRLEN(P)')
-%ENDIF
-                                                              :(P64_END)
+         DEFINE('STRLEN(P)')                                  :(P64_END)
 *
-%IF (BITS EQ 64)
-GET_P    HI = GET_PHI()
-         HI = HI * (2 ** 32)
-         LO = GET_PLO()
-         LO = LT(LO, 0) LO + (2 ** 32)
-         GET_P = HI + LO                                       :(RETURN)
-*
-SET_P    HI = P / (2 ** 32)
-         LO = REMDR(P, 2 ** 32)
-         SET_PHI(HI)
-         SET_PLO(LO)                                           :(RETURN)
-*
-PEEK_P   SET_P(P)
-         PEEK_P_()
-         PEEK_P = GET_P()                                      :(RETURN)
-*
-PEEK_C   SET_P(P)
-         PEEK_C = PEEK_C_()                                    :(RETURN)
-*
-PEEK_S   SET_P(P)
-         PEEK_S = PEEK_S_()                                    :(RETURN)
-*
-PEEK_I   SET_P(P)
-         PEEK_I = PEEK_I_()                                    :(RETURN)
-*
-PEEK_D   SET_P(P)
-         PEEK_D_()
-         PEEK_D = GET_D()                                      :(RETURN)
-*
-PEEK_F   SET_P(P)
-         PEEK_F_()
-         PEEK_F = GET_F()                                      :(RETURN)
-*
-PEEK_LD  SET_P(P)
-         PEEK_LD_()
-         PEEK_LD = GET_LD()                                    :(RETURN)
-*
-POKE_P   SET_P(P2)
-         P_TO_P2()
-         SET_P(P)
-         POKE_P_()                                             :(RETURN)
-*
-POKE_C   SET_P(P)
-         POKE_C_(C)                                            :(RETURN)
-*
-POKE_S   SET_P(P)
-         POKE_S_(S)                                            :(RETURN)
-*
-POKE_I   SET_P(P)
-         POKE_I_(I)                                            :(RETURN)
-*
-POKE_D   SET_P(P)
-         SET_D(D)
-         POKE_D_()                                             :(RETURN)
-*
-POKE_F   SET_P(P)
-         SET_F(F)
-         POKE_F_()                                             :(RETURN)
-*
-POKE_LD  SET_P(P)
-         SET_LD(LD)
-         POKE_LD_()                                            :(RETURN)
-*
-MALLOC   MALLOC_(N)
-         MALLOC = GET_P()                                      :(RETURN)
-*
-FREE     SET_P(P)
-         FREE_()                                               :(RETURN)
-*
-STRDUP   STRDUP_(S)
-         STRDUP = GET_P()                                      :(RETURN)
-*
-STRLEN   SET_P(P)
-         STRLEN = STRLEN_()                                    :(RETURN)
-%ENDIF
-%IF (BITS EQ 32)
 MALLOC   MALLOC = MALLOC_(N)                                   :(RETURN)
 *
 FREE     FREE_(P)                                              :(RETURN)
@@ -600,7 +185,6 @@ FREE     FREE_(P)                                              :(RETURN)
 STRDUP   STRDUP = STRDUP_(S)                                   :(RETURN)
 *
 STRLEN   STRLEN = STRLEN_(P)                                   :(RETURN)
-%ENDIF
 *
 P64_END
 *

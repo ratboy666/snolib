@@ -145,6 +145,9 @@
   <li><a href="INFINIP.html">
     INFINIP - Infinite precision integer math
   </a></li>
+  <li><a href="ITERDIR.html">
+    ITERDIR - Directory iterator
+  </a></li>
   <li><a href="JSON.html">
     JSON - Encode/Decode JSON
   </a></li>

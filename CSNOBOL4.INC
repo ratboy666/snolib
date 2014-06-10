@@ -1,9 +1,9 @@
 -MODULE CSNOBOL4
--LINE 23 "CSNOBOL4.lss"
+-LINE 24 "CSNOBOL4.lss"
 -INCLUDE 'FFI.INC'
 -INCLUDE 'P64.INC'
 -STITL CSNOBOL4
--LINE 612 "CSNOBOL4.lss"
+-LINE 604 "CSNOBOL4.lss"
 -EJECT
 *
 ************************************************************************
@@ -22,14 +22,14 @@
 *
 * CSNOBOL4.lss
 *
--LINE 28 "CSNOBOL4.lss"
 -LINE 29 "CSNOBOL4.lss"
 -LINE 30 "CSNOBOL4.lss"
 -LINE 31 "CSNOBOL4.lss"
 -LINE 32 "CSNOBOL4.lss"
 -LINE 33 "CSNOBOL4.lss"
 -LINE 34 "CSNOBOL4.lss"
--LINE 37 "CSNOBOL4.lss"
+-LINE 35 "CSNOBOL4.lss"
+-LINE 38 "CSNOBOL4.lss"
          format = 'format.c'
 -LINE 395 "CSNOBOL4.lss"
 -LINE 396 "CSNOBOL4.lss"
@@ -49,8 +49,9 @@
 -LINE 502 "CSNOBOL4.lss"
 -PUBLIC FTN_FORMAT(), CREATEPIPE(), GETPIPEFD(), GET_ERRNO()
 -PUBLIC CLEAR_ERRNO(), WAITPID(), GET_STATUS(), SIZEOF_TIMEVAL()
--PUBLIC SET_TIMEVAL(), SIZEOF_FD_SET, FD_ZERO(), FD_CLR(), FD_SET()
+-PUBLIC SET_TIMEVAL(), SIZEOF_FD_SET(), FD_ZERO(), FD_CLR(), FD_SET()
 -PUBLIC FD_ISSET()
+*
          LOAD('FTN_FORMAT(STRING,STRING)STRING', 'format.so')
          LOAD('CREATEPIPE()INTEGER', 'format.so')
          LOAD('GETPIPEFD(INTEGER)INTEGER', 'format.so')
@@ -59,17 +60,16 @@
          LOAD('WAITPID_(INTEGER,INTEGER)INTEGER', 'format.so')
          LOAD('GET_STATUS()INTEGER', 'format.so')
          LOAD('SIZEOF_TIMEVAL()INTEGER', 'format.so')
-         LOAD('SET_TIMEVAL_()', 'format.so')
+         LOAD('SET_TIMEVAL(INTEGER,INTEGER,INTEGER)', 'format.so')
          LOAD('SIZEOF_FD_SET()INTEGER', 'format.so')
-         LOAD('FD_ZERO_()', 'format.so')
-         LOAD('FD_CLR_(INTEGER)', 'format.so')
-         LOAD('FD_SET_(INTEGER)', 'format.so')
-         LOAD('FD_ISSET_(INTEGER)INTEGER', 'format.so')
+         LOAD('FD_ZERO_(INTEGER)', 'format.so')
+         LOAD('FD_CLR_(INTEGER,INTEGER)', 'format.so')
+         LOAD('FD_SET_(INTEGER,INTEGER)', 'format.so')
+         LOAD('FD_ISSET_(INTEGER,INTEGER)INTEGER', 'format.so')
          DEFINE('FD_ZERO(FD_SET)')
          DEFINE('FD_CLR(FD,FD_SET)')
          DEFINE('FD_ISSET(FD,FD_SET)')
          DEFINE('FD_SET(FD,FD_SET)')
-         DEFINE('SET_TIMEVAL(TV,SEC,USEC)')
 -LINE 538 "CSNOBOL4.lss"
 -PUBLIC CLOSE(), SELECT(), IO_GETFP(), FILENO()
          CLOSE_FFI = FFI_NEW('I', 'I')
@@ -87,22 +87,14 @@
 *
 CLOSE    FFI_PAR_N_INTEGER(CLOSE_FFI, 1, FD)
          CLOSE = FFI_CALL_INTEGER(CLOSE_FFI)                   :(RETURN)
-
-SET_TIMEVAL
-         SET_P(TV)
-         SET_TIMEVAL_(SEC, USEC)                               :(RETURN)
-
-FD_CLR   SET_P(FD_SET)
-         FD_CLR_(FD)                                           :(RETURN)
 *
-FD_ISSET SET_P(FD_SET)
-         FD_ISSET = FD_ISSET_(FD)                              :(RETURN)
+FD_CLR   FD_CLR_(FD, FD_SET)                                   :(RETURN)
 *
-FD_SET   SET_P(FD_SET)
-         FD_SET_(FD)                                           :(RETURN)
+FD_ISSET FD_ISSET = FD_ISSET_(FD, FD_SET)                      :(RETURN)
 *
-FD_ZERO  SET_P(FD_SET)
-         FD_ZERO_()                                            :(RETURN)
+FD_SET   FD_SET_(FD, FD_SET)                                   :(RETURN)
+*
+FD_ZERO  FD_ZERO_(FD_SET)                                      :(RETURN)
 *
 IO_GETFP FFI_PAR_N_INTEGER(IO_GETFP_FFI, 1, UNIT)
          IO_GETFP = FFI_CALL_PTR(IO_GETFP_FFI)                 :(RETURN)

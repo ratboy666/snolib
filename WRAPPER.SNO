@@ -1,7 +1,7 @@
 -STITL WRAPPER
 -EJECT
 *
--LINE 278 "WRAPPER.lss"
+-LINE 288 "WRAPPER.lss"
 ************************************************************************
 *                                                                      *
 *    #     #  ######      #     ######   ######   #######  ######      *
@@ -33,10 +33,11 @@
          WPSTRFREE = 'STRING_FREE'
          WPSTRTYP2 = 'STRING2'
          WPINTTYPE = 'INTEGER'
+         WPLONGTYPE = 'LONG'
          WPREALTYPE = 'REAL'
          WPREDTYPE = 'PREDICATE'
          WPSPREDTYPE = 'SYSPRED'
-         WPTYPES = WPINTTYPE | WPREALTYPE | WPSTRTYPE
+         WPTYPES = WPLONGTYPE | WPINTTYPE | WPREALTYPE | WPSTRTYPE
          WPRTYPES = WPTYPES | WPREDTYPE | WPSPREDTYPE | WPSTRFREE |
 +                   WPSTRTYP2 | ''
          WPNAME = ANY(&UCASE &LCASE '_')
@@ -122,6 +123,7 @@ WPCPY_STRING
          $FN = WP4SP
 +              'getstring(LA_PTR(' I '), arg' I ', sizeof(arg' I '));'
                                                               :(WPNCOPY)
+WPCPY_LONG
 WPCPY_INTEGER
 WPCPY_REAL
 WPCPY_
@@ -132,6 +134,8 @@ WPNOSTRS CALL = REPLACE(NAME, &UCASE, &LCASE) '('
          I = 0
 WPCALL   GE(I, N)                                            :S(WPECALL)
          CALL = GT(I, 0) CALL ','                :($('WPARG_' TYPES<I>))
+WPARG_LONG
+         CALL = CALL '(long)LA_INT(' I ')'                    :(WPNCALL)
 WPARG_INTEGER
          CALL = CALL '(int)LA_INT(' I ')'                     :(WPNCALL)
 WPARG_REAL
@@ -147,6 +151,7 @@ WPRET_STRING2
          $FN = WP4SP 'RETSTR2((char *)' CALL ',' LEN ');'      :(WPDONE)
 WPRET_STRING_FREE
          $FN = WP4SP 'RETSTR_FREE((char *)' CALL ');'          :(WPDONE)
+WPRET_LONG
 WPRET_INTEGER
          $FN = WP4SP 'RETINT(' CALL ');'                       :(WPDONE)
 WPRET_REAL
@@ -215,6 +220,8 @@ FWPEPARS WPCOPY = N
 *
 FWPLOOP2 $FN = IDENT(TYPES<I>, WPSTRTYPE)
 +           WP4SP 'char arg' I '[' WPMAXSTR '];'            :S(FWPNEXT2)
+         $FN = IDENT(TYPES<I>, WPLONGTYPE)
++           WP4SP 'long arg' I ';'                          :S(FWPNEXT2)
          $FN = IDENT(TYPES<I>, WPINTTYPE)
 +           WP4SP 'int arg' I ';'                           :S(FWPNEXT2)
          $FN = IDENT(TYPES<I>, WPREALTYPE)
@@ -228,6 +235,8 @@ FWPCPY_STRING
          $FN = WP4SP
 +              'getstring(LA_PTR(' I '), arg' I ', sizeof(arg' I '));'
                                                              :(FWPNCOPY)
+FWPCPY_LONG
+         $FN = WP4SP 'arg' I ' = (long)LA_INT(' I ');'       :(FWPNCOPY)
 FWPCPY_INTEGER
          $FN = WP4SP 'arg' I ' = (int)LA_INT(' I ');'        :(FWPNCOPY)
 FWPCPY_REAL
@@ -241,8 +250,8 @@ FWPNOSTRS
          I = 0
 FWPCALL  GE(I, N)                                           :S(FWPECALL)
          CALL = GT(I, 0) CALL ','               :($('FWPARG_' TYPES<I>))
+FWPARG_LONG
 FWPARG_INTEGER
-         CALL = CALL '&arg' I                                :(FWPNCALL)
 FWPARG_REAL
          CALL = CALL '&arg' I                                :(FWPNCALL)
 FWPARG_STRING
@@ -258,6 +267,7 @@ FWPRET_STRING2
 FWPRETST2
          CALL = CALL ', result'
          $FN = WP4SP 'RETSTR2((' CALL '), ' LEN ');'          :(FWPDONE)
+FWPRET_LONG
 FWPRET_INTEGER
          $FN = WP4SP 'RETINT(' CALL ');'                      :(FWPDONE)
 FWPRET_REAL

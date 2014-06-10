@@ -14,7 +14,6 @@ An interface to <font face="Source Code Pro">libffi</font> providing a Foreign F
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 <h2>Uses</h2>
-<a href="P64.html">P64</a><br>
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 When building, the following INCLUDEs are also needed:
@@ -29,7 +28,6 @@ When building, the following INCLUDEs are also needed:
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;INCLUDES&raquo;&equiv;</b>
--INCLUDE &#39;P64.INC&#39;
 <b>@</b>
 </font></pre></div>
 <div style="background-image: url(greenbar.gif)">
@@ -70,7 +68,6 @@ When building ffi.so the following INCLUDES are needed.
 <font color="#818181"><i>#include &lt;stdlib.h&gt;</i></font>
 <font color="#818181"><i>#include &lt;string.h&gt;</i></font>
 <font color="#818181"><i>#include &lt;dlfcn.h&gt;</i></font>
-<font color="#818181"><i>#include &quot;p64.h&quot;</i></font>
 
 static int errors;
 static ffi_status ffi_error;
@@ -193,15 +190,13 @@ typedef struct {
 </font></pre></div>
 <p align="justify"><font face="Sorts Mill Goudy">
 Create a new FFI descriptor, given return type <font face="Source Code Pro">*r</font> with argument
-types <font face="Source Code Pro">*s</font>. Return 0 on error, 1 if ok, allowing this function to
-be used as a predicate. Result is stored in global pointers <font face="Source Code Pro">p</font>
-and <font face="Source Code Pro">p2</font>.
+types <font face="Source Code Pro">*s</font>. Return 0 on error, else the new descriptor.
 </font></p>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;FFI,TYPE=C&raquo;&equiv;</b>
 
-static int new_ffi(char *r, char *s)
+static long ffi_new(char *r, char *s)
 {
     ffi_t *ffip;
     int n = 0;
@@ -211,8 +206,6 @@ static int new_ffi(char *r, char *s)
     if (ffip == NULL) {
 	return 0;
     }
-    set_p_(ffip);
-    set_p2_(get_p_());
     ffip-&gt;result_type = interpret_ptype(&amp;r);
     if (ffip-&gt;result_type == NULL) {
 	return 0;
@@ -251,10 +244,10 @@ static int new_ffi(char *r, char *s)
 			     ffip-&gt;arg_types);
     if (ffi_error != FFI_OK)
 	return 0;
-    return 1;
+    return (long)ffip;
 }
 
--SNOBOL C_WRAPPER_PROTO(&#39;NEW_FFI(STRING,STRING)PREDICATE&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;FFI_NEW(STRING,STRING)LONG&#39;, .EMBED)
 
 <b>@</b>
 </font></pre></div>
@@ -266,9 +259,9 @@ Clear FFI descriptor after a call has been made. Deallocates
 <pre><font face="Source Code Pro">
 <b>&laquo;FFI,TYPE=C&raquo;&equiv;</b>
 
-static void clear_ffi(void)
+static void ffi_clear(long p)
 {
-    ffi_t *ffip = get_p_();
+    ffi_t *ffip = (void *)p;
     int i;
     for (i = 0; i &lt; ffip-&gt;nargs; ++i) {
 	if (ffip-&gt;arg_needfree[i]) {
@@ -278,7 +271,7 @@ static void clear_ffi(void)
     }
 }
 
--SNOBOL C_WRAPPER_PROTO(&#39;CLEAR_FFI()&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;FFI_CLEAR(LONG)&#39;, .EMBED)
 
 <b>@</b>
 </font></pre></div>
@@ -289,9 +282,9 @@ Destroy FFI descriptor.
 <pre><font face="Source Code Pro">
 <b>&laquo;FFI,TYPE=C&raquo;&equiv;</b>
 
-static void free_ffi(void)
+static void ffi_free(long p)
 {
-    ffi_t *ffip = get_p_();
+    ffi_t *ffip = (void *)p;
     free(ffip-&gt;arg_values);
     free(ffip-&gt;arg_types);
     free(ffip-&gt;arg_needfree);
@@ -299,7 +292,7 @@ static void free_ffi(void)
     free(ffip);
 }
 
--SNOBOL C_WRAPPER_PROTO(&#39;FREE_FFI()&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;FFI_FREE(LONG)&#39;, .EMBED)
 
 <b>@</b>
 </font></pre></div>
@@ -311,16 +304,17 @@ Indicate that parameter <font face="Source Code Pro">n</font> (counting from 1) 
 <pre><font face="Source Code Pro">
 <b>&laquo;FFI,TYPE=C&raquo;&equiv;</b>
 
-static int par_n_needfree(int n)
+static int ffi_par_n_needfree(long p,int n)
 {
-    ffi_t *ffip = get_p_();
+    ffi_t *ffip = (void *)p;
     if ((n &lt; 1) || (n &gt; ffip-&gt;nargs))
 	return 0;
     ffip-&gt;arg_needfree[n - 1] = 1;
     return 1;
 }
 
--SNOBOL C_WRAPPER_PROTO(&#39;PAR_N_NEEDFREE(INTEGER)PREDICATE&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;FFI_PAR_N_NEEDFREE(LONG,INTEGER)PREDICATE&#39;,   +
+           .EMBED)
 
 <b>@</b>
 </font></pre></div>
@@ -331,17 +325,17 @@ Set value of parameter <font face="Source Code Pro">n</font> to integer <font fa
 <pre><font face="Source Code Pro">
 <b>&laquo;FFI,TYPE=C&raquo;&equiv;</b>
 
-static int set_par_n_integer(int n, int v)
+static int ffi_par_n_integer(long p, int n, int v)
 {
-    ffi_t *ffip = get_p_();
+    ffi_t *ffip = (void *)p;
     if ((n &lt; 1) || (n &gt; ffip-&gt;nargs))
 	return 0;
     ffip-&gt;arg_values[n - 1] = v;
     return 1;
 }
 
--SNOBOL C_WRAPPER_PROTO(&#39;SET_PAR_N_INTEGER(INTEGER,INTEGER)PREDICATE&#39;, +
-           .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;FFI_PAR_N_INTEGER(&#39;                       +
+                        &#39;LONG,INTEGER,INTEGER)PREDICATE&#39;, .EMBED)
 
 <b>@</b>
 </font></pre></div>
@@ -353,16 +347,17 @@ but this should be useable to get a REAL parameter into a double.
 <pre><font face="Source Code Pro">
 <b>&laquo;FFI,TYPE=C&raquo;&equiv;</b>
 
-static int set_par_n_real(int n, double v)
+static int ffi_par_n_real(long p, int n, double v)
 {
-    ffi_t *ffip = get_p_();
+    ffi_t *ffip = (void *)p;
     if ((n &lt; 1) || (n &gt; ffip-&gt;nargs))
 	return 0;
     ffip-&gt;arg_values[n - 1] = v;
     return 1;
 }
 
--SNOBOL C_WRAPPER_PROTO(&#39;SET_PAR_N_REAL(INTEGER,REAL)PREDICATE&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;FFI_PAR_N_REAL(&#39;                              +
+                        &#39;LONG,INTEGER,REAL)PREDICATE&#39;, .EMBED)
 
 <b>@</b>
 </font></pre></div>
@@ -374,16 +369,17 @@ FFI descriptor and <font face="Source Code Pro">p</font> the 64 bit long or poin
 <pre><font face="Source Code Pro">
 <b>&laquo;FFI,TYPE=C&raquo;&equiv;</b>
 
-static int set_par_n_p(int n)
+static int ffi_par_n_ptr(long p, int n, long p2)
 {
-    ffi_t *ffip = get_p2_();
+    ffi_t *ffip = (void *)p;
     if ((n &lt; 1) || (n &gt; ffip-&gt;nargs))
 	return 0;
-    ffip-&gt;arg_values[n - 1] = (long)get_p_();
+    ffip-&gt;arg_values[n - 1] = (long)p2;
     return 1;
 }
 
--SNOBOL C_WRAPPER_PROTO(&#39;SET_PAR_N_P(INTEGER)PREDICATE&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;FFI_PAR_N_PTR(LONG,INTEGER,LONG)PREDICATE&#39;,   +
+                        .EMBED)
 
 <b>@</b>
 </font></pre></div>
@@ -394,16 +390,17 @@ Set value of parameter <font face="Source Code Pro">n</font> to float <font face
 <pre><font face="Source Code Pro">
 <b>&laquo;FFI,TYPE=C&raquo;&equiv;</b>
 
-static int set_par_n_f(int n)
+static int ffi_par_n_f(long p, int n, double f)
 {
-    ffi_t *ffip = get_p_();
+    ffi_t *ffip = (void *)p;
     if ((n &lt; 1) || (n &gt; ffip-&gt;nargs))
 	return 0;
-    ffip-&gt;arg_values[n - 1] = get_f_();
+    ffip-&gt;arg_values[n - 1] = (float)f;
     return 1;
 }
 
--SNOBOL C_WRAPPER_PROTO(&#39;SET_PAR_N_F(INTEGER)PREDICATE&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;FFI_PAR_N_F(LONG,INTEGER,REAL)PREDICATE&#39;,     +
+                        .EMBED)
 
 <b>@</b>
 </font></pre></div>
@@ -414,16 +411,17 @@ Set value of parameter <font face="Source Code Pro">n</font> to double <font fac
 <pre><font face="Source Code Pro">
 <b>&laquo;FFI,TYPE=C&raquo;&equiv;</b>
 
-static int set_par_n_d(int n)
+static int ffi_par_n_d(long p, int n, double d)
 {
-    ffi_t *ffip = get_p_();
+    ffi_t *ffip = (void *)p;
     if ((n &lt; 1) || (n &gt; ffip-&gt;nargs))
 	return 0;
-    ffip-&gt;arg_values[n - 1] = get_d_();
+    ffip-&gt;arg_values[n - 1] = (double)d;
     return 1;
 }
 
--SNOBOL C_WRAPPER_PROTO(&#39;SET_PAR_N_D(INTEGER)PREDICATE&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;FFI_PAR_N_D(LONG,INTEGER,REAL)PREDICATE&#39;,     +
+                        .EMBED)
 
 <b>@</b>
 </font></pre></div>
@@ -434,16 +432,17 @@ Set value of parameter <font face="Source Code Pro">n</font> to long double <fon
 <pre><font face="Source Code Pro">
 <b>&laquo;FFI,TYPE=C&raquo;&equiv;</b>
 
-static int set_par_n_ld(int n)
+static int ffi_par_n_ld(long p, int n, double d)
 {
-    ffi_t *ffip = get_p_();
+    ffi_t *ffip = (void *)p;
     if ((n &lt; 1) || (n &gt; ffip-&gt;nargs))
 	return 0;
-    ffip-&gt;arg_values[n - 1] = get_ld_();
+    ffip-&gt;arg_values[n - 1] = (long double)d;
     return 1;
 }
 
--SNOBOL C_WRAPPER_PROTO(&#39;SET_PAR_N_LD(INTEGER)PREDICATE&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;FFI_PAR_N_LD(LONG,INTEGER,REAL)PREDICATE&#39;,    +
+                        .EMBED)
 
 <b>@</b>
 </font></pre></div>
@@ -455,9 +454,9 @@ a copy of the string, and marks it for <font face="Source Code Pro">free()</font
 <pre><font face="Source Code Pro">
 <b>&laquo;FFI,TYPE=C&raquo;&equiv;</b>
 
-static int set_par_n_string(int n, char *s)
+static int ffi_par_n_string(long p, int n, char *s)
 {
-    ffi_t *ffip = get_p_();
+    ffi_t *ffip = (void *)p;
     if ((n &lt; 1) || (n &gt; ffip-&gt;nargs))
         return 0;
     ffip-&gt;arg_values[n - 1] = (long)strdup(s);
@@ -467,8 +466,8 @@ static int set_par_n_string(int n, char *s)
     return 1;
 }
 
--SNOBOL C_WRAPPER_PROTO(&#39;SET_PAR_N_STRING(INTEGER,STRING)PREDICATE&#39;,   +
-           .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;FFI_PAR_N_STRING(&#39;                            +
+                        &#39;LONG,INTEGER,STRING)PREDICATE&#39;, .EMBED)
 
 <b>@</b>
 </font></pre></div>
@@ -480,13 +479,13 @@ Set pointer to function in FFI descriptor.
 <b>&laquo;FFI,TYPE=C&raquo;&equiv;</b>
 
 /* CIF in P2, FN in P */
-static void set_callp(void)
+static void ffi_set_callp(long p2, long p)
 {
-    ffi_t *ffip = get_p2_();
-    ffip-&gt;callp = get_p_();
+    ffi_t *ffip = (void *)p2;
+    ffip-&gt;callp = (void *)p;
 }
 
--SNOBOL C_WRAPPER_PROTO(&#39;SET_CALLP()&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;FFI_SET_CALLP(LONG,LONG)&#39;, .EMBED)
 
 <b>@</b>
 </font></pre></div>
@@ -497,71 +496,73 @@ Call FFI function.
 <pre><font face="Source Code Pro">
 <b>&laquo;FFI,TYPE=C&raquo;&equiv;</b>
 
-static void call_ffi(void)
+static void call_ffi(long p)
 {
-    ffi_t *ffip = get_p_();
+    ffi_t *ffip = (void *)p;
     ffi_call(ffip-&gt;cif, FFI_FN(ffip-&gt;callp),
 	     &amp;ffip-&gt;result, ffip-&gt;arg_ptrs);
-    if (ffip-&gt;result_type == &amp;ffi_type_void) /* */ ;
-    else if ((ffip-&gt;result_type == &amp;ffi_type_uint8) ||
-	     (ffip-&gt;result_type == &amp;ffi_type_sint8) ||
-	     (ffip-&gt;result_type == &amp;ffi_type_uint16) ||
-	     (ffip-&gt;result_type == &amp;ffi_type_sint16) ||
-	     (ffip-&gt;result_type == &amp;ffi_type_uint32) ||
-	     (ffip-&gt;result_type == &amp;ffi_type_sint32) ||
-	     (ffip-&gt;result_type == &amp;ffi_type_uint64) ||
-	     (ffip-&gt;result_type == &amp;ffi_type_sint64) ||
-	     (ffip-&gt;result_type == &amp;ffi_type_pointer))
-	set_p_((void *)(long)ffip-&gt;result);
-    else if (ffip-&gt;result_type == &amp;ffi_type_float)
-	set_f_(ffip-&gt;result);
-    else if (ffip-&gt;result_type == &amp;ffi_type_double)
-	set_d_(ffip-&gt;result);
-    else if (ffip-&gt;result_type == &amp;ffi_type_longdouble)
-	set_ld_(ffip-&gt;result);
 }
 
--SNOBOL C_WRAPPER_PROTO(&#39;CALL_FFI()&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;CALL_FFI(LONG)&#39;, .EMBED)
+
+/* Return address of call result, use peek_() function to retrieve */
+static long ffi_resultp(long p)
+{
+    ffi_t *ffip = (void *)p;
+    return (long)(&amp;(ffip-&gt;result));
+}
+
+-SNOBOL C_WRAPPER_PROTO(&#39;FFI_RESULTP(LONG)LONG&#39;, .EMBED)
 
 <b>@</b>
 </font></pre></div>
 <p align="justify"><font face="Sorts Mill Goudy">
 Simplified calls, actually returning result (instead of just leaving
-it in P64 global variables).
+it in the ffi structure).
 </font></p>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;FFI,TYPE=C&raquo;&equiv;</b>
 
-static int call_integer_ffi(void)
+static int call_integer_ffi(long p)
 {
-    ffi_t *ffip = get_p_();
+    ffi_t *ffip = (void *)p;
     ffi_call(ffip-&gt;cif, FFI_FN(ffip-&gt;callp),
 	     &amp;ffip-&gt;result, ffip-&gt;arg_ptrs);
     return ffip-&gt;result;
 }
 
--SNOBOL C_WRAPPER_PROTO(&#39;CALL_INTEGER_FFI()INTEGER&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;CALL_INTEGER_FFI(LONG)INTEGER&#39;, .EMBED)
 
-static double call_real_ffi(void)
+static long call_ptr_ffi(long p)
 {
-    ffi_t *ffip = get_p_();
+    ffi_t *ffip = (void *)p;
     ffi_call(ffip-&gt;cif, FFI_FN(ffip-&gt;callp),
 	     &amp;ffip-&gt;result, ffip-&gt;arg_ptrs);
     return ffip-&gt;result;
 }
 
--SNOBOL C_WRAPPER_PROTO(&#39;CALL_REAL_FFI()REAL&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;CALL_PTR_FFI(LONG)LONG&#39;, .EMBED)
 
-static char *call_string_ffi(void)
+static double call_real_ffi(long p)
 {
-    ffi_t *ffip = get_p_();
+    ffi_t *ffip = (void *)p;
+    ffi_call(ffip-&gt;cif, FFI_FN(ffip-&gt;callp),
+	     &amp;ffip-&gt;result, ffip-&gt;arg_ptrs);
+    return ffip-&gt;result;
+}
+
+-SNOBOL C_WRAPPER_PROTO(&#39;CALL_REAL_FFI(LONG)REAL&#39;, .EMBED)
+
+static char *call_string_ffi(long p)
+{
+    ffi_t *ffip = (void *)p;
     ffi_call(ffip-&gt;cif, FFI_FN(ffip-&gt;callp),
 	     &amp;ffip-&gt;result, ffip-&gt;arg_ptrs);
     return (char *)ffip-&gt;result;
 }
 
--SNOBOL C_WRAPPER_PROTO(&#39;CALL_STRING_FFI()STRING&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;CALL_STRING_FFI(LONG)STRING&#39;, .EMBED)
 
 <b>@</b>
 </font></pre></div>
@@ -576,40 +577,42 @@ if a handle of NULL is used).
 
 /* DL functions
  */
-static void dlopen_ffi(char *s, int n) { set_p_(dlopen(s, n)); }
+static long dlopen_(char *s, int n) { return (long)dlopen(s, n); }
 
--SNOBOL C_WRAPPER_PROTO(&#39;DLOPEN_FFI(STRING,INTEGER)&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;DLOPEN_(STRING,INTEGER)LONG&#39;, .EMBED)
 
-static char *dlerror_ffi(void)
+static char *dlerror_(void)
 {
     char *s = dlerror();
     if (s == NULL) return &quot;&quot;;
     return s;
 }
 
--SNOBOL C_WRAPPER_PROTO(&#39;DLERROR_FFI()STRING&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;DLERROR_()STRING&#39;, .EMBED)
 
-static void dlsym_ffi(char *s) { set_p_(dlsym(get_p_(), s)); }
+static long dlsym_(long p, char *s)
+{
+    return (long)dlsym((void *)p, s);
+}
 
--SNOBOL C_WRAPPER_PROTO(&#39;DLSYM_FFI(STRING)&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;DLSYM_(LONG,STRING)LONG&#39;, .EMBED)
 
-static int dlclose_ffi(void) { return dlclose(get_p_()); }
+static int dlclose_(long p) { return dlclose((void *)p); }
 
--SNOBOL C_WRAPPER_PROTO(&#39;DLCLOSE_FFI()INTEGER&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;DLCLOSE_(LONG)INTEGER&#39;, .EMBED)
 
 -END
 <b>@</b>
 </font></pre></div>
 <p align="justify"><font face="Sorts Mill Goudy">
-Build ffi.so. Note that pwd is wrong -- we need to have run-time
-search start with actual library directory.
+Build ffi.so.
 </font></p>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;FFI&raquo;&equiv;</b>
 -SNOBOL DYNAMIC_DEBUG = 1
 -SNOBOL COMPILE_DYNAMIC(ffi) :F(ERROR) ;
--SNOBOL LIBS = &#39; -L. -lp64 -lffi -ldl&#39;
+-SNOBOL LIBS = &#39;-lffi -ldl&#39;
 -SNOBOL OBJECTS = ffi ; OBJECTS &#39;.c&#39; = &#39;.o&#39;
 -SNOBOL LINK_DYNAMIC(&#39;./ffi&#39;, OBJECTS, LIBS) :F(ERROR) ;
 -CMNT ERASE TEMPORARY FILES
@@ -625,134 +628,90 @@ Actually <font face="Source Code Pro">LOAD()</font> the functions defined into C
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;FFI&raquo;&equiv;</b>
-         LOAD(&#39;FREE_FFI()&#39;, &#39;ffi.so&#39;)
-         LOAD(&#39;CLEAR_FFI()&#39;, &#39;ffi.so&#39;)
-         LOAD(&#39;NEW_FFI(STRING,STRING)&#39;, &#39;ffi.so&#39;)
-         LOAD(&#39;PAR_N_NEEDFREE(INTEGER)&#39;, &#39;ffi.so&#39;)
-         LOAD(&#39;SET_PAR_N_INTEGER(INTEGER,INTEGER)&#39;, &#39;ffi.so&#39;)
-         LOAD(&#39;SET_PAR_N_REAL(INTEGER,REAL)&#39;, &#39;ffi.so&#39;)
-         LOAD(&#39;SET_PAR_N_STRING(INTEGER,STRING)&#39;, &#39;ffi.so&#39;)
-         LOAD(&#39;SET_PAR_N_P(INTEGER)&#39;, &#39;ffi.so&#39;)
-         LOAD(&#39;SET_PAR_N_F(INTEGER)&#39;, &#39;ffi.so&#39;)
-         LOAD(&#39;SET_PAR_N_D(INTEGER)&#39;, &#39;ffi.so&#39;)
-         LOAD(&#39;SET_PAR_N_LD(INTEGER)&#39;, &#39;ffi.so&#39;)
-         LOAD(&#39;SET_CALLP()&#39;, &#39;ffi.so&#39;)
-         LOAD(&#39;CALL_FFI()&#39;, &#39;ffi.so&#39;)
-         LOAD(&#39;CALL_INTEGER_FFI()INTEGER&#39;, &#39;ffi.so&#39;)
-         LOAD(&#39;CALL_REAL_FFI()REAL&#39;, &#39;ffi.so&#39;)
-         LOAD(&#39;CALL_STRING_FFI()STRING&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;FFI_FREE(INTEGER)&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;FFI_CLEAR(INTEGER)&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;FFI_NEW(STRING,STRING)INTEGER&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;FFI_PAR_N_NEEDFREE(INTEGER,INTEGER)&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;FFI_PAR_N_INTEGER(INTEGER,INTEGER,INTEGER)&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;FFI_PAR_N_PTR(INTEGER,INTEGER,INTEGER)&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;FFI_PAR_N_REAL(INTEGER,INTEGER,REAL)&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;FFI_PAR_N_STRING(INTEGER,INTEGER,STRING)&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;FFI_PAR_N_P(INTEGER,INTEGER,INTEGER)&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;FFI_PAR_N_F(INTEGER,INTEGER,REAL)&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;FFI_PAR_N_D(INTEGER,INTEGER,REAL)&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;FFI_PAR_N_LD(INTEGER,INTEGER,REAL)&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;FFI_SET_CALLP(INTEGER,INTEGER)&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;FFI_RESULTP(INTEGER)INTEGER&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;CALL_FFI(INTEGER)&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;CALL_INTEGER_FFI(INTEGER)INTEGER&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;CALL_PTR_FFI(INTEGER)INTEGER&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;CALL_REAL_FFI(INTEGER)REAL&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;CALL_STRING_FFI(INTEGER)STRING&#39;, &#39;ffi.so&#39;)
 <font color="#818181"><i>*</i></font>
          RTLD_LAZY   = 1
          RTLD_NOW    = 2
          RTLD_GLOBAL = 256
          RTLD_LOCAL  = 0
 <font color="#818181"><i>*</i></font>
-         LOAD(&#39;DLOPEN_FFI(STRING,INTEGER)&#39;, &#39;ffi.so&#39;)
-         LOAD(&#39;DLERROR_FFI()STRING&#39;, &#39;ffi.so&#39;)
-         LOAD(&#39;DLSYM_FFI(STRING)&#39;, &#39;ffi.so&#39;)
-         LOAD(&#39;DLCLOSE_FFI()INTEGER&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;DLOPEN_(STRING,INTEGER)INTEGER&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;DLERROR_()STRING&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;DLSYM_(INTEGER,STRING)&#39;, &#39;ffi.so&#39;)
+         LOAD(&#39;DLCLOSE_(INTEGER)INTEGER&#39;, &#39;ffi.so&#39;)
 <font color="#818181"><i>*</i></font>
 <b>@</b>
 </font></pre></div>
 <p align="justify"><font face="Sorts Mill Goudy">
-The actual “API” for FFI. This also gives opportunity to run pre or
-post functions. CLEAR_FFI() as an example, which free()s strdup()d
-parameters after an FFI call.
+The actual “API” for FFI.
 </font></p>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;FFI&raquo;&equiv;</b>
 -PUBLIC DLOPEN(), DLERROR(), DLSYM(), DLCLOSE()
+<font color="#818181"><i>*</i></font>
          DEFINE(&#39;DLOPEN(S,I)&#39;)
          DEFINE(&#39;DLERROR()&#39;)
          DEFINE(&#39;DLSYM(H,S)&#39;)
          DEFINE(&#39;DLCLOSE(H)&#39;)
 <font color="#818181"><i>*</i></font>
--PUBLIC FFI_NEW(), FFI_FREE(), FFI_PAR_N_INTEGER(), FFI_PAR_N_REAL()
--PUBLIC FFI_PAR_N_STRING(), FFI_PAR_N_PTR, FFI_SET_CALLP()
+-PUBLIC FFI_NEW(), FFI_FREE(), FFI_CLEAR(), FFI_PAR_N_NEEDFREE()
+-PUBLIC FFI_PAR_N_INTEGER(), FFI_PAR_N_PTR(), FFI_PAR_N_REAL()
+-PUBLIC FFI_PAR_N_STRING(),  FFI_SET_CALLP()
 -PUBLIC FFI_CALL_VOID(), FFI_CALL_INTEGER(), FFI_CALL_REAL()
--PUBLIC FFI_CALL_STRING(), FFI_CALL_PTR()
-         DEFINE(&#39;FFI_NEW(RS,PS)&#39;)
-         DEFINE(&#39;FFI_FREE(FFI)&#39;)
-         DEFINE(&#39;FFI_PAR_N_INTEGER(FFI,N,I)&#39;)
-         DEFINE(&#39;FFI_PAR_N_REAL(FFI,N,R)&#39;)
-         DEFINE(&#39;FFI_PAR_N_STRING(FFI,N,S)&#39;)
-         DEFINE(&#39;FFI_PAR_N_PTR(FFI,N,P)&#39;)
-         DEFINE(&#39;FFI_SET_CALLP(FFI,PROC)&#39;)
-         DEFINE(&#39;FFI_CALL_VOID(FFI)&#39;)
+-PUBLIC FFI_CALL_STRING(), FFI_CALL_PTR(), CALL_FFI(), FFI_RESULTP()
+<font color="#818181"><i>*</i></font>
          DEFINE(&#39;FFI_CALL_INTEGER(FFI)&#39;)
          DEFINE(&#39;FFI_CALL_REAL(FFI)&#39;)
          DEFINE(&#39;FFI_CALL_STRING(FFI)&#39;)
-         DEFINE(&#39;FFI_CALL_PTR(FFI)&#39;)                          <b>:(FFI_END)</b>
+         DEFINE(&#39;FFI_CALL_PTR(FFI)&#39;)
+         DEFINE(&#39;FFI_CALL_VOID(FFI)&#39;)                         <b>:(FFI_END)</b>
 <font color="#818181"><i>*</i></font>
-DLOPEN   DLOPEN_FFI(S, I)
-         DLOPEN = GET_P()                                      <b>:(RETURN)</b>
+DLOPEN   DLOPEN = DLOPEN_(S, I)                                <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
-DLERROR  DLERROR = DLERROR_FFI()                               <b>:(RETURN)</b>
+DLERROR  DLERROR = DLERROR_()                                  <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
-DLSYM    SET_P(H)
-         DLSYM_FFI(S)
-         DLSYM = GET_P()                                       <b>:(RETURN)</b>
+DLSYM    DLSYM = DLSYM_(H, S)                                  <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
-DLCLOSE  SET_P(H)
-         DLCLOSE = DLCLOSE_FFI()                               <b>:(RETURN)</b>
-<font color="#818181"><i>*</i></font>
-FFI_NEW  NEW_FFI(RS, PS)                                     <b>:F(FRETURN)</b>
-         FFI_NEW = GET_P()                                     <b>:(RETURN)</b>
-<font color="#818181"><i>*</i></font>
-FFI_FREE SET_P(FFI)
-         FREE_FFI()                                            <b>:(RETURN)</b>
-<font color="#818181"><i>*</i></font>
-FFI_PAR_N_INTEGER
-         SET_P(FFI)
-         SET_PAR_N_INTEGER(N, I)                    <b>:S(RETURN)F(FRETURN)</b>
-<font color="#818181"><i>*</i></font>
-FFI_PAR_N_REAL
-         SET_P(FFI)
-         SET_PAR_N_REAL(N, R)                       <b>:S(RETURN)F(FRETURN)</b>
-<font color="#818181"><i>*</i></font>
-FFI_PAR_N_STRING
-         SET_P(FFI)
-         SET_PAR_N_STRING(N, S)                     <b>:S(RETURN)F(FRETURN)</b>
-<font color="#818181"><i>*</i></font>
-FFI_PAR_N_PTR
-         SET_P(FFI)
-         P_TO_P2()
-         SET_P(P)
-         SET_PAR_N_P(N)                             <b>:S(RETURN)F(FRETURN)</b>
-<font color="#818181"><i>*</i></font>
-FFI_SET_CALLP
-         SET_P(FFI)
-         P_TO_P2()
-         SET_P(PROC)
-         SET_CALLP()                                           <b>:(RETURN)</b>
+DLCLOSE  DLCLOSE = DLCLOSE_(H)                                 <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 FFI_CALL_VOID
-         SET_P(FFI)
-         CALL_FFI()
-         CLEAR_FFI()                                           <b>:(RETURN)</b>
+         CALL_FFI(FFI)
+         FFI_CLEAR(FFI)                                        <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 FFI_CALL_INTEGER
-         SET_P(FFI)
-         FFI_CALL_INTEGER = CALL_INTEGER_FFI()
-         CLEAR_FFI()                                           <b>:(RETURN)</b>
+         FFI_CALL_INTEGER = CALL_INTEGER_FFI(FFI)
+         FFI_CLEAR(FFI)                                        <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 FFI_CALL_REAL
-         SET_P(FFI)
-         FFI_CALL_REAL = CALL_REAL_FFI()
-         CLEAR_FFI()                                           <b>:(RETURN)</b>
+         FFI_CALL_REAL = CALL_REAL_FFI(FFI)
+         FFI_CLEAR(FFI)                                        <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 FFI_CALL_STRING
-         SET_P(FFI)
-         FFI_CALL_STRING = CALL_STRING_FFI()
-         CLEAR_FFI()                                           <b>:(RETURN)</b>
+         FFI_CALL_STRING = CALL_STRING_FFI(FFI)
+         FFI_CLEAR(FFI)                                        <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 FFI_CALL_PTR
-         SET_P(FFI)
-         CALL_FFI()
-         FFI_CALL_PTR = GET_P()
-         SET_P(FFI)
-         CLEAR_FFI()                                           <b>:(RETURN)</b>
+         FFI_CALL_PTR = CALL_PTR_FFI(FFI)
+         FFI_CLEAR(FFI)                                        <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 FFI_END
 <b>@</b>
@@ -800,7 +759,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 20:00:02 EDT 2014</p></td><td><p align=right>
+Mon Jun  9 13:53:11 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

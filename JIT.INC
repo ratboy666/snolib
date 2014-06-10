@@ -4,7 +4,7 @@
 -INCLUDE 'P64.INC'
 -INCLUDE 'SEQ.INC'
 -STITL JIT
--LINE 2202 "JIT.lss"
+-LINE 2164 "JIT.lss"
 -EJECT
 *
 ************************************************************************
@@ -35,36 +35,36 @@
 -LINE 29 "JIT.lss"
 -LINE 32 "JIT.lss"
          jit = 'jit.c'
--LINE 468 "JIT.lss"
--LINE 469 "JIT.lss"
 -LINE 470 "JIT.lss"
 -LINE 471 "JIT.lss"
 -LINE 472 "JIT.lss"
 -LINE 473 "JIT.lss"
--LINE 481 "JIT.lss"
+-LINE 474 "JIT.lss"
+-LINE 475 "JIT.lss"
+-LINE 483 "JIT.lss"
          LOAD('INIT_JIT(STRING)', 'jit.so')
          LOAD('R_NUM_JIT()INTEGER', 'jit.so')
          LOAD('V_NUM_JIT()INTEGER', 'jit.so')
          LOAD('F_NUM_JIT()INTEGER', 'jit.so')
          LOAD('FINISH_JIT()', 'jit.so')
 *
-         LOAD('GET_STATE_JIT()', 'jit.so')
-         LOAD('SET_STATE_JIT()', 'jit.so')
-         LOAD('NEW_STATE_JIT()', 'jit.so')
+         LOAD('GET_STATE_JIT()INTEGER', 'jit.so')
+         LOAD('SET_STATE_JIT(INTEGER)', 'jit.so')
+         LOAD('NEW_STATE_JIT()INTEGER', 'jit.so')
          LOAD('DESTROY_STATE_JIT()', 'jit.so')
          LOAD('CLEAR_STATE_JIT()', 'jit.so')
 *
          LOAD('PROLOG_JIT()', 'jit.so')
          LOAD('EPILOG_JIT()', 'jit.so')
-         LOAD('NOTE_JIT(STRING,INTEGER)', 'jit.so')
-         LOAD('NAME_JIT(STRING)', 'jit.so')
-         LOAD('ADDRESS_JIT()', 'jit.so')
+         LOAD('NOTE_JIT(STRING,INTEGER)INTEGER', 'jit.so')
+         LOAD('NAME_JIT(STRING)INTEGER', 'jit.so')
+         LOAD('ADDRESS_JIT(INTEGER)INTEGER', 'jit.so')
          LOAD('DISASSEMBLE_JIT()', 'jit.so')
-         LOAD('EMIT_JIT()', 'jit.so')
+         LOAD('EMIT_JIT()INTEGER', 'jit.so')
          LOAD('PRINT_JIT()', 'jit.so')
-         LOAD('LABEL_JIT()', 'jit.so')
+         LOAD('LABEL_JIT()INTEGER', 'jit.so')
          LOAD('ELLIPSIS_JIT()', 'jit.so')
-         LOAD('GET_NOTE_JIT()INTEGER', 'jit.so')
+*        LOAD('GET_NOTE_JIT()INTEGER', 'jit.so')
          LOAD('POINTER_P_JIT()', 'jit.so')
          LOAD('CALLEE_SAVE_P_JIT(INTEGER)', 'jit.so')
          LOAD('PATCH_AT_JIT()', 'jit.so')
@@ -72,8 +72,8 @@
          LOAD('PATCH_JIT()', 'jit.so')
          LOAD('PREPARE_JIT()', 'jit.so')
          LOAD('ALLOCAI_JIT(INTEGER)INTEGER', 'jit.so')
-         LOAD('DATA_JIT(INTEGER,INTEGER)', 'jit.so')
-         LOAD('FORWARD_JIT()', 'jit.so')
+         LOAD('DATA_JIT(INTEGER,INTEGER,INTEGER)INTEGER', 'jit.so')
+         LOAD('FORWARD_JIT()INTEGER', 'jit.so')
          LOAD('LIVE_JIT(INTEGER)', 'jit.so')
          LOAD('LINK_JIT()', 'jit.so')
 *
@@ -750,19 +750,15 @@ JIT_DISASSEMBLE
          DISASSEMBLE_JIT()                                     :(RETURN)
 *
 JIT_LABEL
-         LABEL_JIT()
-         JIT_LABEL = GET_P()                                   :(RETURN)
+         JIT_LABEL = LABEL_JIT()                               :(RETURN)
 *
 JIT_ELLIPSIS
          ELLIPSIS_JIT()                                        :(RETURN)
 *
-JIT_EMIT EMIT_JIT()
-         JIT_EMIT = GET_P()                                    :(RETURN)
+JIT_EMIT JIT_EMIT = EMIT_JIT()                                 :(RETURN)
 *
 JIT_ADDRESS
-         SET_P(P)
-         ADDRESS_JIT()
-         JIT_ADDRESS = GET_P()                                 :(RETURN)
+         JIT_ADDRESS = ADDRESS_JIT(P)                          :(RETURN)
 *
 JIT_RETR RETR_JIT(R)                                           :(RETURN)
 *
@@ -773,16 +769,13 @@ JIT_RETR_D
          RETR_D_JIT(R)                                         :(RETURN)
 *
 JIT_GET_STATE
-         GET_STATE_JIT()
-         JIT_GET_STATE = GET_P()                               :(RETURN)
+         JIT_GET_STATE = GET_STATE_JIT()                       :(RETURN)
 *
 JIT_SET_STATE
-         SET_P(JIT)
-         SET_STATE_JIT()                                       :(RETURN)
+         SET_STATE_JIT(JIT)                                    :(RETURN)
 *
 JIT_NEW_STATE
-         NEW_STATE_JIT()
-         JIT_NEW_STATE = GET_P()                               :(RETURN)
+         JIT_NEW_STATE = NEW_STATE_JIT()                       :(RETURN)
 *
 JIT_DESTROY_STATE
          DESTROY_STATE_JIT()                                   :(RETURN)
@@ -804,11 +797,9 @@ JIT_CALLI
          CALLI_JIT()
          JIT_CALLI = GET_P()                                   :(RETURN)
 *
-JIT_NOTE NOTE_JIT(S, N)
-         JIT_NOTE = GET_P()                                    :(RETURN)
+JIT_NOTE JIT_NOTE = NOTE_JIT(S, N)                             :(RETURN)
 *
-JIT_NAME NAME_JIT(S)
-         JIT_NAME = GET_P()                                    :(RETURN)
+JIT_NAME JIT_NAME = NAME_JIT(S)                                :(RETURN)
 *
 JIT_PREPARE
          PREPARE_JIT()                                         :(RETURN)
@@ -1054,134 +1045,103 @@ JIT_STXR_F
 JIT_STXR_D
          STXR_D_JIT(R1, R2, R3)                                :(RETURN)
 *
-JIT_BLTR BLTR_JIT(R1, R2)
-         JIT_BLTR = GET_P()                                    :(RETURN)
+JIT_BLTR JIT_BLTR = BLTR_JIT(R1, R2)                           :(RETURN)
 *
 JIT_BLTR_U
-         BLTR_U_JIT(R1, R2)
-         JIT_BLTR_U = GET_P()                                  :(RETURN)
+         JIT_BLTR_U = BLTR_U_JIT(R1, R2)                       :(RETURN)
 *
-JIT_BLER BLER_JIT(R1, R2)
-         JIT_BLER = GET_P()                                    :(RETURN)
+JIT_BLER JIT_BLER = BLER_JIT(R1, R2)                           :(RETURN)
 *
 JIT_BLER_U
-         BLER_U_JIT(R1, R2)
-         JIT_BLER_U = GET_P()                                  :(RETURN)
+         BLER_U_JIT = BLER_U_JIT(R1, R2)                       :(RETURN)
 *
-JIT_BGTR BGTR_JIT(R1, R2)
-         JIT_BGTR = GET_P()                                    :(RETURN)
+JIT_BGTR JIT_BGTR = BGTR_JIT(R1, R2)                           :(RETURN)
 *
 JIT_BGTR_U
-         BGTR_U_JIT(R1, R2)
-         JIT_BGTR_U = GET_P()                                  :(RETURN)
+         JIT_BGTR_U = BGTR_U_JIT(R1, R2)                       :(RETURN)
 *
-JIT_BGER BGER_JIT(R1, R2)
-         JIT_BGER = GET_P()                                    :(RETURN)
+JIT_BGER JIT_BGER = BGER_JIT(R1, R2)                           :(RETURN)
 *
 JIT_BGER_U
-         BGER_U_JIT(R1, R2)
-         JIT_BGER_U = GET_P()                                  :(RETURN)
+         JIT_BGER_U = BGER_U_JIT(R1, R2)                       :(RETURN)
 *
-JIT_BEQR BEQR_JIT(R1, R2)
-         JIT_BEQR = GET_P()                                    :(RETURN)
+JIT_BEQR JIT_BEQR = BEQR_JIT(R1, R2)                           :(RETURN)
 *
-JIT_BNER BNER_JIT(R1, R2)
-         JIT_BNER = GET_P()                                    :(RETURN)
+JIT_BNER JIT_BNER = BNER_JIT(R1, R2)                           :(RETURN)
 *
-JIT_BMSR BMSR_JIT(R1, R2)
-         JIT_BMSR = GET_P()                                    :(RETURN)
+JIT_BMSR JIT_BMSR = BMSR_JIT(R1, R2)                           :(RETURN)
 *
-JIT_BMCR BMCR_JIT(R1, R2)
-         JIT_BMCR = GET_P()                                    :(RETURN)
+JIT_BMCR JIT_BMCR = BMCR_JIT(R1, R2)                           :(RETURN)
 *
 JIT_BOADDR
-         BOADDR_JIT(R1, R2)
-         JIT_BOADDR = GET_P()                                  :(RETURN)
+         JIT_BOADDR = BOADDR_JIT(R1, R2)                       :(RETURN)
 *
 JIT_BXADDR
-         BXADDR_JIT(R1, R2)
-         JIT_BXADDR = GET_P()                                  :(RETURN)
+         JIT_BXADDR = BXADDR_JIT(R1, R2)                       :(RETURN)
 *
 JIT_BOSUBR
-         BOSUBR_JIT(R1, R2)
-         JIT_BOSUBR = GET_P()                                  :(RETURN)
+         JIT_BOSUBR = BOSUBR_JIT(R1, R2)                       :(RETURN)
 *
 JIT_BXSUBR
-         BXSUBR_JIT(R1, R2)
-         JIT_BXSUBR = GET_P()                                  :(RETURN)
+         JIT_BXSUBR = BXSUBR_JIT(R1, R2)                       :(RETURN)
 *
 JIT_BOADDR_U
-         BOADDR_U_JIT(R1, R2)
-         JIT_BOADDR_U = GET_P()                                :(RETURN)
+         JIT_BOADDR_U = BOADDR_U_JIT(R1, R2)                   :(RETURN)
 *
 JIT_BXADDR_U
-         BXADDR_U_JIT(R1, R2)
-         JIT_BXADDR_U = GET_P()                                :(RETURN)
+         JIT_BXADDR_U = BXADDR_U_JIT(R1, R2)                   :(RETURN)
 *
 JIT_BOSUBR_U
-         BOSUBR_U_JIT(R1, R2)
-         JIT_BOSUBR_U = GET_P()                                :(RETURN)
+         JIT_BOSUBR_U = BOSUBR_U_JIT(R1, R2)                   :(RETURN)
 *
 JIT_BXSUBR_U
-         BXSUBR_U_JIT(R1, R2)
-         JIT_BXSUBR_U = GET_P()                                :(RETURN)
+         JIT_BXSUBR_U = BXSUBR_U_JIT(R1, R2)                   :(RETURN)
 *
 JIT_BLTR_F
-         BLTR_F_JIT(R1, R2)
-         JIT_BLTR_F = GET_P()                                  :(RETURN)
+         JIT_BLTR_F = BLTR_F_JIT(R1, R2)                       :(RETURN)
 *
 JIT_BLER_F
-         BLER_F_JIT(R1, R2)
-         JIT_BLER_F = GET_P()                                  :(RETURN)
+         JIT_BLER_F = BLER_F_JIT(R1, R2)                       :(RETURN)
 *
 JIT_BGTR_F
-         BGTR_F_JIT(R1, R2)
-         JIT_BGTR_F = GET_P()                                  :(RETURN)
+         JIT_BGTR_F = BGTR_F_JIT(R1, R2)                       :(RETURN)
 *
 JIT_BGER_F
-         BGER_F_JIT(R1, R2)
-         JIT_BGER_F = GET_P()                                  :(RETURN)
+         JIT_BGER_F = BGER_F_JIT(R1, R2)                       :(RETURN)
 *
 JIT_BEQR_F
-         BEQR_F_JIT(R1, R2)
-         JIT_BEQR_F = GET_P()                                  :(RETURN)
+         JIT_BEQR_F = BEQR_F_JIT(R1, R2)                       :(RETURN)
 *
 JIT_BNER_R
-         BNER_R_JIT(R1, R2)
-         JIT_BNER_R = GET_P()                                  :(RETURN)
+         JIT_BNER_R = BNER_R_JIT(R1, R2)                       :(RETURN)
 *
 JIT_BUNLTR_F
-         BUNLTR_F_JIT(R1, R2)
-         JIT_BUNLTR_F = GET_P()                                :(RETURN)
+         JIT_BUNLTR_F = BUNLTR_F_JIT(R1, R2)                   :(RETURN)
 *
 JIT_BUNLER_F
-         BUNLER_F_JIT(R1, R2)
-         JIT_BUNLER_F = GET_P()                                :(RETURN)
+         JIT_BUNLER_F = BUNLER_F_JIT(R1, R2)                   :(RETURN)
 *
 JIT_BUNEQR_F
-         BUNEQR_F_JIT(R1, R2)
-         JIT_BUNEQR_F = GET_P()                                :(RETURN)
+         JIT_BUNEQR_F = BUNEQR_F_JIT(R1, R2)                   :(RETURN)
 *
 JIT_BUNGER_F
-         BUNGER_F_JIT(R1, R2)
-         JIT_BUNGER_F = GET_P()                                :(RETURN)
+         JIT_BUNGER_F = BUNGER_F_JIT(R1, R2)                   :(RETURN)
 *
 JIT_BUNGTR_F
-         BUNGTR_F_JIT(R1, R2)
-         JIT_BUNGTR_F = GET_P()                                :(RETURN)
+         JIT_BUNGTR_F = BUNGTR_F_JIT(R1, R2)                   :(RETURN)
 *
 JIT_BLTGTR_F
-         BLTGTR_F_JIT(R1, R2)
-         JIT_BLTGTR_F = GET_P()                                :(RETURN)
+         JIT_BLTGTR_F = BLTGTR_F_JIT(R1, R2)                   :(RETURN)
 *
 JIT_BORDR_F
-         BORDR_F_JIT(R1, R2)
-         JIT_BORDR_F = GET_P()                                 :(RETURN)
+         JIT_BORDR_F = BORDR_F_JIT(R1, R2)                     :(RETURN)
 *
 JIT_BUNORDR_F
-         BUNORDR_F_JIT(R1, R2)
-         JIT_BUNORDR_F = GET_P()                               :(RETURN)
+         JIT_BUNORDR_F = BUNORDR_F_JIT(R1, R2)                 :(RETURN)
 *
+            'bltr_d bler_d bgtr_d bger_d beqr_d bner_d '               +
+            'bunltr_d bunler_d buneqr_d bunger_d bungtr_d '            +
+            'bltgtr_d bordr_d bunordr_d '
 JIT_BLTR_D
          BLTR_D_JIT(R1, R2)
          JIT_BLTR_D = GET_P()                                  :(RETURN)

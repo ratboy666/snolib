@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>ITERDIR - Directory (file) iterator</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Use bq to gather directory data matching pattern. crack to crack
+the string into an array of lines. atol to produce a linked list,
+and return that list as the directory iterator.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+General note on iterators. The iter_() function returns an iterator
+This iterator is passed to a value function v() which returns the
+next thing being iterated. v() should fail if the end of iteration
+is reached. The iterator is also passed to next() which returns a
+new iterator which will return the next item in the iteration.
+next_() may fail on the end of the iteration, but this is not
+expected.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+| An iterator should be used as:
+| 
+|     i = iter_type(args)
+| top   v = vali(i) :f(btm)
+|       do stuff with v
+|     i = next_type(i) :(top)
+| btm
+</font></pre>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="BQ.html">BQ</a><br>
+<a href="CRACK.html">CRACK</a><br>
+<a href="ATOL.html">ATOL</a><br>
+<a href="CHARS.html">CHARS</a><br>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;BQ.INC&#39;
+-INCLUDE &#39;CRACK.INC&#39;
+-INCLUDE &#39;ATOL.INC&#39;
+-INCLUDE &#39;CHARS.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;ITERDIR&raquo;&equiv;</b>
+-MODULE ITERDIR
+-PUBLIC `VALUE_DIR(), ITER_DIR(), NEXT_DIR()
+<font color="#818181"><i>*</i></font>
+         DEFINE(&#39;ITER_DIR(W)&#39;)
+         DEFINE(&#39;VALUE_DIR(D)&#39;)
+         DEFINE(&#39;NEXT_DIR(D)&#39;)                           <b>:(END_ITER_DIR)</b>
+<font color="#818181"><i>*</i></font>
+VALUE_DIR
+         VALUE_DIR = DIFFER(D) VALUE(D)             <b>:S(RETURN)F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+ITER_DIR ITER_DIR = ATOL(CRACK(BQ(&#39;ls &#39; W, CHARS_NL), CHARS_NL))
++                                                   <b>:S(RETURN)F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+NEXT_DIR NEXT_DIR = DIFFER(D) NEXT(D)               <b>:S(RETURN)F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+END_ITER_DIR
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;ITERDIR.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL ITERDIR
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*        ###  #######  #######  ######   ######   ###  ######          *</i></font>
+<font color="#818181"><i>*         #      #     #        #     #  #     #   #   #     #         *</i></font>
+<font color="#818181"><i>*         #      #     #        #     #  #     #   #   #     #         *</i></font>
+<font color="#818181"><i>*         #      #     #####    ######   #     #   #   ######          *</i></font>
+<font color="#818181"><i>*         #      #     #        #   #    #     #   #   #   #           *</i></font>
+<font color="#818181"><i>*         #      #     #        #    #   #     #   #   #    #          *</i></font>
+<font color="#818181"><i>*        ###     #     #######  #     #  ######   ###  #     #         *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* ITERDIR                   DIRECTORY ITERATOR                         *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* ITERDIR.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;ITERDIR&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Sun Jun  8 20:28:11 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

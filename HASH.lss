@@ -16,9 +16,10 @@ to make it easier to construct simple tables. It is [[OPSYN]]'d to
 merges two tables together. Entries in [[T2]] override entries in
 [[T1]]. The returned table is a new table. Neither [[T1]] nor [[T2]]
 are changed. [[KEYS_IN_TABLE(T)]] returns an array of the keys in
-table [[T]].
+table [[T]]. [[PRUNE_TABLE(T)]] returns a pruned table. This is a new
+table with only non-IDENT elements inserted.
 
-The full call is
+The full call to [[HASH()]]is
 [[
 HASH(S,E,P,TS,TI,FK,FD,SP) where
 S is the string to break into table entries
@@ -62,12 +63,20 @@ a value of [['YYY']].  [[#'']] is pretty much the same as [[TABLE()]].
 <<HASH>>=
 -MODULE HASH
 -PUBLIC HASH(), COPY_TABLE(), MERGE_TABLE(), KEYS_IN_TABLE(), #1
+-PUBLIC PRUNE_TABLE()
+*
          DEFINE('HASH(S,E,P,TS,TI,FK,FV,SP)K,V,C')
          DEFINE('HASH_3(S)')
          DEFINE('COPY_TABLE(T)')
          DEFINE('MERGE_TABLE(T1,T2)A,I')
          DEFINE('KEYS_IN_TABLE(T)A,N,I')
+         DEFINE('PRUNE_TABLE(T)A,I')
          OPSYN('#', 'HASH', 1)                               :(HASH_END)
+*
+PRUNE_TABLE
+         PRUNE_TABLE = TABLE()
+         A = KEYS_IN_TABLE(T)                                 :F(RETURN)
+         SEQ( ' PRUNE_TABLE<A<I>> = VDIFFER(T<A<I>>)', .I)     :(RETURN)
 *
 HASH     HASH = TABLE(TS, TI)
          E = IDENT(E) '='

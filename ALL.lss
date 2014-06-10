@@ -103,6 +103,7 @@ the html documentation (mostly in the <i>ditaa</i> utility.
 -INCLUDE 'HTMLESC.INC'
 -INCLUDE 'HTMLTMPL.INC'
 -INCLUDE 'INFINIP.INC'
+-INCLUDE 'ITERDIR.INC'
 -INCLUDE 'JIT.INC'
 -INCLUDE 'JSON.INC'
 -INCLUDE 'LAST.INC'

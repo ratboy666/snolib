@@ -28,10 +28,11 @@ to make it easier to construct simple tables. It is <font face="Source Code Pro"
 merges two tables together. Entries in <font face="Source Code Pro">T2</font> override entries in
 <font face="Source Code Pro">T1</font>. The returned table is a new table. Neither <font face="Source Code Pro">T1</font> nor <font face="Source Code Pro">T2</font>
 are changed. <font face="Source Code Pro">KEYS_IN_TABLE(T)</font> returns an array of the keys in
-table <font face="Source Code Pro">T</font>.
+table <font face="Source Code Pro">T</font>. <font face="Source Code Pro">PRUNE_TABLE(T)</font> returns a pruned table. This is a new
+table with only non-IDENT elements inserted.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
-The full call is
+The full call to <font face="Source Code Pro">HASH()</font>is
 </font></p><pre><font face="Source Code Pro">
 | HASH(S,E,P,TS,TI,FK,FD,SP) where
 | S is the string to break into table entries
@@ -84,12 +85,20 @@ a value of <font face="Source Code Pro">'YYY'</font>.  <font face="Source Code P
 <b>&laquo;HASH&raquo;&equiv;</b>
 -MODULE HASH
 -PUBLIC HASH(), COPY_TABLE(), MERGE_TABLE(), KEYS_IN_TABLE(), #1
+-PUBLIC PRUNE_TABLE()
+<font color="#818181"><i>*</i></font>
          DEFINE(&#39;HASH(S,E,P,TS,TI,FK,FV,SP)K,V,C&#39;)
          DEFINE(&#39;HASH_3(S)&#39;)
          DEFINE(&#39;COPY_TABLE(T)&#39;)
          DEFINE(&#39;MERGE_TABLE(T1,T2)A,I&#39;)
          DEFINE(&#39;KEYS_IN_TABLE(T)A,N,I&#39;)
+         DEFINE(&#39;PRUNE_TABLE(T)A,I&#39;)
          OPSYN(&#39;#&#39;, &#39;HASH&#39;, 1)                               <b>:(HASH_END)</b>
+<font color="#818181"><i>*</i></font>
+PRUNE_TABLE
+         PRUNE_TABLE = TABLE()
+         A = KEYS_IN_TABLE(T)                                 <b>:F(RETURN)</b>
+         SEQ( &#39; PRUNE_TABLE&lt;A&lt;I&gt;&gt; = VDIFFER(T&lt;A&lt;I&gt;&gt;)&#39;, .I)     <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 HASH     HASH = TABLE(TS, TI)
          E = IDENT(E) &#39;=&#39;
@@ -190,7 +199,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 20:00:37 EDT 2014</p></td><td><p align=right>
+Mon Jun  9 16:00:17 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

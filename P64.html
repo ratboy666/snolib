@@ -6,57 +6,15 @@
       content="sweave generated">
 </head><body><font face="Sorts Mill Goudy">
 <p align="justify"><font face="Sorts Mill Goudy">
-<h1>P64 - 64 bit parameter handling</h1>
+<h1>P64 - Pointer Utilities</h1>
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
-CSNOBOL4 builds on 32 and 64 bit platforms. On 32 bit platforms
-C types <font face="Source Code Pro">int</font> and <font face="Source Code Pro">pointer</font> are both 32 bits. The SNOBOL
-<font face="Source Code Pro">LOAD()</font> function allows <font face="Source Code Pro">INTEGER</font> and <font face="Source Code Pro">REAL</font> parameters (and
-STRINGS). <font face="Source Code Pro">INTEGER</font> on a 32 bit platform is a 32 bit number, and
-can be used for both <font face="Source Code Pro">int</font> and <font face="Source Code Pro">pointer</font> types.
+Pointer utilities Includes peek and poke of various types (_p = pointer,
+_c = char, _s = short, _i = int, _f = float, _d = double, _ld = long
+double). Note that long long is excluded.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
-On 64 bit platforms, <font face="Source Code Pro">int</font> is still 32 bit, and this is the type used
-by CSNOBOL4 for passing <font face="Source Code Pro">INTEGER</font> to <font face="Source Code Pro">LOAD()</font> functions. <font face="Source Code Pro">long</font>
-is 64 bit and <font face="Source Code Pro">pointer</font> is also 64 bit, and cannot be passed by
-<font face="Source Code Pro">LOAD()</font>. Internally, however, CSNOBOL4 uses 64 bit signed integers
-on 64 bit platforms.
-</font></p>
-<p align="justify"><font face="Sorts Mill Goudy">
-To remedy this, P64 offers functions to set a pointer to a value.
-On a 64 bit platform, this is done in two pieces: high 32 bits and
-low 32 bits. 32 bit implementations of the functions are offered,
-to allow higher level software to not require alteration when moving
-between 32 and 64 bit platforms.
-</font></p>
-<p align="justify"><font face="Sorts Mill Goudy">
-P64 allows 64 bit parameters on 64 bit platform, and also float,
-double and long double (128 bit float). Only really of use with FFI
-(because the limitation is <font face="Source Code Pro">LOAD()</font> and CSNOBOL4 <i>normally</i>
-allows 64 bit integers when built on a 64 bit platform. Modules using
-P64 should do their best to hide this (allowing a clean upgrade in
-the future).
-</font></p>
-<p align="justify"><font face="Sorts Mill Goudy">
-Pointers are transferred to and from pointer variable <font face="Source Code Pro">P</font> through
-GET/SET P HI/LO routines. This is expensive (especially in CSNOBOL4),
-so 3 additional pointers are provided: <font face="Source Code Pro">P2</font> through <font face="Source Code Pro">P4</font>. This
-allows up to 4 active 64 bit integers or pointers. This allows
-programs to keep and reuse pointers. Perhaps common operations like
-add to pointer should be provided as well (not defined yet).
-</font></p>
-<p align="justify"><font face="Sorts Mill Goudy">
-The “ifs” processor is used to examine <font face="Source Code Pro">HOST(HOST_POINTER_BITS)</font>
-to determine if pointer construction/deconstruction is needed.
-</font></p>
-<p align="justify"><font face="Sorts Mill Goudy">
-This is still incredibly bad. Examine the 64 implementation of
-<font face="Source Code Pro">POKE_P()</font>.  Six calls to C functions are made: 2 to set the 64
-bit value; 1 to move it to another location; 2 more to set the 64
-bit pointer; and, finally, 1 to actually store the value into the
-location. Contrast with the 32 bit implementation, which (since it can
-pass a pointer) does this in 1 call to a C function. The 32 bit version
-is approximately an order of magnitude more efficient at this task.
+Defines interface to malloc(), free(), strdup() and strlen().
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 <font face="Source Code Pro">INCLUDE</font>s used while building p64.so are:
@@ -82,50 +40,14 @@ is approximately an order of magnitude more efficient at this task.
 -CASE 1
 <b>@</b>
 </font></pre></div>
-<p align="justify"><font face="Sorts Mill Goudy">
-Use HOST function to determine number of bits for a pointer. This
-will be either 32 or 64. If 64, we assume LP64 model, which requires
-passing pointers as two <font face="Source Code Pro">int</font> pieces. If 32 bit, we assume <font face="Source Code Pro">int</font>
-and <font face="Source Code Pro">pointer</font> are interchangable.
-</font></p>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;P64&raquo;&equiv;</b>
-%SET (BITS, HOST(HOST_POINTER_BITS))
 -SNOBOL TERMINAL = &#39;P64 (SUN NOV 10 03:57:08 EST 2013)&#39;
 -SNOBOL SLOAD(&#39;CRACK.INC&#39;)
 -SNOBOL SLOAD(&#39;DYNAMIC.INC&#39;)
 -SNOBOL SLOAD(&#39;SEQ.INC&#39;)
 -SNOBOL SLOAD(&#39;WRAPPER.INC&#39;)
-<b>@</b>
-</font></pre></div>
-<p align="justify"><font face="Sorts Mill Goudy">
-Generate file <font face="Source Code Pro">p64.h</font>. This defines <font face="Source Code Pro">p, p2, p3, p4, f, d</font> and
-<font face="Source Code Pro">ld</font> as externals, so that other shared libraries can access these
-variables.
-</font></p>
-<div style="background-image: url(greenbar.gif)">
-<pre><font face="Source Code Pro">
-<b>&laquo;P64&raquo;&equiv;</b>
--EMBED FILE &#39;p64.h&#39;
-<b>@</b>
-</font></pre></div>
-<div style="background-image: url(greenbar.gif)">
-<pre><font face="Source Code Pro">
-<b>&laquo;P64,TYPE=C&raquo;&equiv;</b>
-
-void *get_p_(void);
-void *get_p2_(void);
-float get_f_(void);
-double get_d_(void);
-long double get_ld_(void);
-void set_p_(void *v);
-void set_p2_(void *v);
-void set_f_(float v);
-void set_d_(double v);
-void set_ld_(long double v);
-
--END
 <b>@</b>
 </font></pre></div>
 <p align="justify"><font face="Sorts Mill Goudy">
@@ -145,287 +67,77 @@ Build <font face="Source Code Pro">p64.c</font> so we can produce our shared lib
 <font color="#818181"><i>#include &lt;stdlib.h&gt;</i></font>
 <font color="#818181"><i>#include &lt;string.h&gt;</i></font>
 
-static void *p;
-static void *p2;
-static void *p3;
-static void *p4;
-static float f;
-static double d;
-static long double ld;
+static long peek_p(long p) { return (long)*(void **)p; }
 
-void *get_p_(void) { return p; }
-void *get_p2_(void) { return p2; }
-float get_f_(void) { return f; }
-double get_d_(void) { return d; }
-long double get_ld_(void) { return ld; }
-void set_p_(void *v) { p = v; }
-void set_p2_(void *v) { p2 = v; }
-void set_f_(float v) { f = v; }
-void set_d_(double v) { d = v; }
-void set_ld_(long double v) { ld = v; }
+-SNOBOL C_WRAPPER_PROTO(&#39;PEEK_P(LONG)LONG&#39;, .EMBED)
 
-%IF (BITS EQ 64)
+static long peek_c(long p) { return *(char *)p; }
 
-static int get_phi(void)
-{
-    long n = (long)p;
-    return (int)(n &gt;&gt; 32);
-}
+-SNOBOL C_WRAPPER_PROTO(&#39;PEEK_C(LONG)INTEGER&#39;, .EMBED)
 
--SNOBOL C_WRAPPER_PROTO(&#39;GET_PHI()INTEGER&#39;, .EMBED)
+static long peek_s(long p) { return *(short *)p; }
 
-static int get_plo(void)
-{
-    long n = (long)p;
-    return (int)(n &amp; 0xffffffff);
-}
+-SNOBOL C_WRAPPER_PROTO(&#39;PEEK_S(LONG)INTEGER&#39;, .EMBED)
 
--SNOBOL C_WRAPPER_PROTO(&#39;GET_PLO()INTEGER&#39;, .EMBED)
+static long peek_i(long p) { return *(int *)p; }
 
-static void set_phi(int h)
-{
-    long n = (long)p;
-    n &amp;= 0xffffffff;
-    p = (void *)(((long)h &lt;&lt; 32) | n);
-}
+-SNOBOL C_WRAPPER_PROTO(&#39;PEEK_I(LONG)INTEGER&#39;, .EMBED)
 
--SNOBOL C_WRAPPER_PROTO(&#39;SET_PHI(INTEGER)&#39;, .EMBED)
+static double peek_d(long p) { return *(double *)p; }
 
-static void set_plo(int l)
-{
-    long n = (long)p;
-    n &amp;= 0xffffffff00000000L;
-    p = (void *)(n | (unsigned)l);
-}
+-SNOBOL C_WRAPPER_PROTO(&#39;PEEK_D(LONG)REAL&#39;, .EMBED)
 
--SNOBOL C_WRAPPER_PROTO(&#39;SET_PLO(INTEGER)&#39;, .EMBED)
+static double peek_f(long p) { return *(float *)p; }
 
-%ENDIF
+-SNOBOL C_WRAPPER_PROTO(&#39;PEEK_F(LONG)REAL&#39;, .EMBED)
 
-%IF (BITS EQ 32)
+static double peek_ld(long p) { return *(long double *)p; }
 
-static int get_p(void) { return (int)p; }
+-SNOBOL C_WRAPPER_PROTO(&#39;PEEK_LD(LONG)REAL&#39;, .EMBED)
 
--SNOBOL C_WRAPPER_PROTO(&#39;GET_P()INTEGER&#39;, .EMBED)
+static void poke_p(long p, long v) { *(void **)p = (void *)v; }
 
-static int set_p(int v) { p = (void *)v; }
+-SNOBOL C_WRAPPER_PROTO(&#39;POKE_P(LONG,LONG)&#39;, .EMBED)
 
--SNOBOL C_WRAPPER_PROTO(&#39;SET_P()INTEGER&#39;, .EMBED)
+static void poke_c(long p, int c) { *(char *)p = (char)c; }
 
-%ENDIF
+-SNOBOL C_WRAPPER_PROTO(&#39;POKE_C(LONG,INTEGER)&#39;, .EMBED)
 
-static void p_to_p2(void) { p2 = p; }
+static void poke_s(long p, int s) { *(short *)p = (short)s; }
 
--SNOBOL C_WRAPPER_PROTO(&#39;P_TO_P2()&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;POKE_S(LONG,INTEGER)&#39;, .EMBED)
 
-static void p_to_p3(void) { p3 = p; }
+static void poke_i(long p, int i) { *(int *)p = (int)i; }
 
--SNOBOL C_WRAPPER_PROTO(&#39;P_TO_P3()&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;POKE_I(LONG,INTEGER)&#39;, .EMBED)
 
-static void p_to_p4(void) { p4 = p; }
+static void poke_d(long p, double v) { *(double *)p = v; }
 
--SNOBOL C_WRAPPER_PROTO(&#39;P_TO_P4()&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;POKE_D(LONG,REAL)&#39;, .EMBED)
 
-static void p2_to_p(void) { p = p2; }
+static void poke_f(long p, double v) { *(float *)p = v; }
 
--SNOBOL C_WRAPPER_PROTO(&#39;P2_TO_P()&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;POKE_F(LONG,REAL)&#39;, .EMBED)
 
-static void p3_to_p(void) { p = p3; }
+static void poke_ld(long p, double v) { *(long double *)p = v; }
 
--SNOBOL C_WRAPPER_PROTO(&#39;P3_TO_P()&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;POKE_LD(LONG,REAL)&#39;, .EMBED)
 
-static void p4_to_p(void) { p = p4; }
+static long malloc_(int n) { return (long)malloc(n); }
 
--SNOBOL C_WRAPPER_PROTO(&#39;P4_TO_P()&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;MALLOC_(INTEGER)LONG&#39;, .EMBED)
 
-static void set_f(double v) { f = v; }
+static void free_(long p) { free((void *)p); }
 
--SNOBOL C_WRAPPER_PROTO(&#39;SET_F(REAL)&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;FREE_(LONG)&#39;, .EMBED)
 
-static void set_d(double v) { d = v; }
+static long strdup_(char *s) { return (long)strdup(s); }
 
--SNOBOL C_WRAPPER_PROTO(&#39;SET_D(REAL)&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;STRDUP_(STRING)LONG&#39;, .EMBED)
 
-static void set_ld(double v) { ld = v; }
+static long strlen_(long p) { return strlen((char *)p); }
 
--SNOBOL C_WRAPPER_PROTO(&#39;SET_LD(REAL)&#39;, .EMBED)
-
-static float get_f(void) { return f; }
-
--SNOBOL C_WRAPPER_PROTO(&#39;GET_F()REAL&#39;, .EMBED)
-
-static double get_d(void) { return d; }
-
--SNOBOL C_WRAPPER_PROTO(&#39;GET_D()REAL&#39;, .EMBED)
-
-static double get_ld(void) { return ld; }
-
--SNOBOL C_WRAPPER_PROTO(&#39;GET_LD()REAL&#39;, .EMBED)
-
-static char *get_s(void) { return (char *)p; }
-
--SNOBOL C_WRAPPER_PROTO(&#39;GET_S()STRING&#39;, .EMBED)
-
-static void swap_p(void)
-{
-    void *t = p2;
-    p2 = p;
-    p = t;
-}
-
--SNOBOL C_WRAPPER_PROTO(&#39;SWAP_P()&#39;, .EMBED)
-
-%IF (BITS EQ 64)
-
-static void peek_p_(void) { p = *(void **)p; }
-
--SNOBOL C_WRAPPER_PROTO(&#39;PEEK_P_()&#39;, .EMBED)
-
-static int peek_c_(void) { return *(char *)p; }
-
--SNOBOL C_WRAPPER_PROTO(&#39;PEEK_C_()INTEGER&#39;, .EMBED)
-
-static int peek_s_(void) { return *(short *)p; }
-
--SNOBOL C_WRAPPER_PROTO(&#39;PEEK_S_()INTEGER&#39;, .EMBED)
-
-static int peek_i_(void) { return *(int *)p; }
-
--SNOBOL C_WRAPPER_PROTO(&#39;PEEK_I_()INTEGER&#39;, .EMBED)
-
-static void peek_d_(void) { d =  *(double *)p; }
-
--SNOBOL C_WRAPPER_PROTO(&#39;PEEK_D_()&#39;, .EMBED)
-
-static void peek_f_(void) { f = *(float *)p; }
-
--SNOBOL C_WRAPPER_PROTO(&#39;PEEK_F_()&#39;, .EMBED)
-
-static void peek_ld_(void) { ld = *(long double *)p; }
-
--SNOBOL C_WRAPPER_PROTO(&#39;PEEK_LD_()&#39;, .EMBED)
-
-static void poke_p_(void) { *(void **)p = p2; }
-
--SNOBOL C_WRAPPER_PROTO(&#39;POKE_P_()&#39;, .EMBED)
-
-static void poke_c_(int c) { *(char *)p = (char)c; }
-
--SNOBOL C_WRAPPER_PROTO(&#39;POKE_C_(INTEGER)&#39;, .EMBED)
-
-static void poke_s_(int s) { *(short *)p = (short)s; }
-
--SNOBOL C_WRAPPER_PROTO(&#39;POKE_S_(INTEGER)&#39;, .EMBED)
-
-static void poke_i_(int i) { *(int *)p = (int)i; }
-
--SNOBOL C_WRAPPER_PROTO(&#39;POKE_I_(INTEGER)&#39;, .EMBED)
-
-static void poke_d_(void) { *(double *)p = d; }
-
--SNOBOL C_WRAPPER_PROTO(&#39;POKE_D_()&#39;, .EMBED)
-
-static void poke_f_(void) { *(float *)p = f; }
-
--SNOBOL C_WRAPPER_PROTO(&#39;POKE_F_()&#39;, .EMBED)
-
-static void poke_ld_(void) { *(long double *)p = ld; }
-
--SNOBOL C_WRAPPER_PROTO(&#39;POKE_LD_()&#39;, .EMBED)
-
-static void malloc_(int n) { p = malloc(n); }
-
--SNOBOL C_WRAPPER_PROTO(&#39;MALLOC_(INTEGER)&#39;, .EMBED)
-
-static void free_(void) { free(p); }
-
--SNOBOL C_WRAPPER_PROTO(&#39;FREE_()&#39;, .EMBED)
-
-static int strdup_(char *s) { p = strdup(s); }
-
--SNOBOL C_WRAPPER_PROTO(&#39;STRDUP_(STRING)&#39;, .EMBED)
-
-static int strlen_(void) { return strlen((char *)p); }
-
--SNOBOL C_WRAPPER_PROTO(&#39;STRLEN_()INTEGER&#39;, .EMBED)
-
-%ENDIF
-
-%IF (BITS EQ 32)
-
-static int peek_p(int p) { return (int)*(void **)p; }
-
--SNOBOL C_WRAPPER_PROTO(&#39;PEEK_P(INTEGER)INTEGER&#39;, .EMBED)
-
-static int peek_c(int p) { return *(char *)p; }
-
--SNOBOL C_WRAPPER_PROTO(&#39;PEEK_C(INTEGER)INTEGER&#39;, .EMBED)
-
-static int peek_s(int p) { return *(short *)p; }
-
--SNOBOL C_WRAPPER_PROTO(&#39;PEEK_S(INTEGER)INTEGER&#39;, .EMBED)
-
-static int peek_i(int p) { return *(int *)p; }
-
--SNOBOL C_WRAPPER_PROTO(&#39;PEEK_I(INTEGER)INTEGER&#39;, .EMBED)
-
-static double peek_d(int p) { return *(double *)p; }
-
--SNOBOL C_WRAPPER_PROTO(&#39;PEEK_D(INTEGER)REAL&#39;, .EMBED)
-
-static double peek_f(int p) { return *(float *)p; }
-
--SNOBOL C_WRAPPER_PROTO(&#39;PEEK_F(INTEGER)REAL&#39;, .EMBED)
-
-static double peek_ld(int p) { return *(long double *)p; }
-
--SNOBOL C_WRAPPER_PROTO(&#39;PEEK_LD(INTEGER)REAL&#39;, .EMBED)
-
-static void poke_p(int p, int v) { *(void **)p = (void *)v; }
-
--SNOBOL C_WRAPPER_PROTO(&#39;POKE_P(INTEGER,INTEGER)&#39;, .EMBED)
-
-static void poke_c(int p, int c) { *(char *)p = (char)c; }
-
--SNOBOL C_WRAPPER_PROTO(&#39;POKE_C(INTEGER,INTEGER)&#39;, .EMBED)
-
-static void poke_s(int p, int s) { *(short *)p = (short)s; }
-
--SNOBOL C_WRAPPER_PROTO(&#39;POKE_S(INTEGER,INTEGER)&#39;, .EMBED)
-
-static void poke_i_(int p, int i) { *(int *)p = (int)i; }
-
--SNOBOL C_WRAPPER_PROTO(&#39;POKE_I(INTEGER,INTEGER)&#39;, .EMBED)
-
-static void poke_d_(int p, double v) { *(double *)p = v; }
-
--SNOBOL C_WRAPPER_PROTO(&#39;POKE_D_(INTEGER,REAL)&#39;, .EMBED)
-
-static void poke_f_(int p, double v) { *(float *)p = v; }
-
--SNOBOL C_WRAPPER_PROTO(&#39;POKE_F_(INTEGER,REAL)&#39;, .EMBED)
-
-static void poke_ld_(int p, double v) { *(long double *)p = v; }
-
--SNOBOL C_WRAPPER_PROTO(&#39;POKE_LD_(INTEGER,REAL)&#39;, .EMBED)
-
-static int malloc_(int n) { return (int)malloc(n); }
-
--SNOBOL C_WRAPPER_PROTO(&#39;MALLOC_(INTEGER)INTEGER&#39;, .EMBED)
-
-static void free_(int p) { free((void *)p); }
-
--SNOBOL C_WRAPPER_PROTO(&#39;FREE_(INTEGER)&#39;, .EMBED)
-
-static int strdup_(char *s) { return (int)strdup(s); }
-
--SNOBOL C_WRAPPER_PROTO(&#39;STRDUP_(STRING)INTEGER&#39;, .EMBED)
-
-static int strlen_(int p) { return strlen((char *)p); }
-
--SNOBOL C_WRAPPER_PROTO(&#39;STRLEN_(INTEGER)INTEGER&#39;, .EMBED)
-
-%ENDIF
+-SNOBOL C_WRAPPER_PROTO(&#39;STRLEN_(LONG)INTEGER&#39;, .EMBED)
 
 -END
 <b>@</b>
@@ -447,66 +159,14 @@ Build <font face="Source Code Pro">p64.so</font> shared library.
 -CMNT -SNOBOL SEQ(&#39; DELETE(A&lt;K&gt;) &#39;, .K)
 <b>@</b>
 </font></pre></div>
-<p align="justify"><font face="Sorts Mill Goudy">
-<font face="Source Code Pro">LOAD()</font> functions from <font face="Source Code Pro">p64.so</font> into CSNOBOL4. Note that the
-actual functions differ if we are on a 64 bit or 32 bit processor.
-</font></p>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;P64&raquo;&equiv;</b>
-%IF (BITS EQ 64)
-         LOAD(&#39;GET_PHI()INTEGER&#39;, &#39;p64.so&#39;)
-         LOAD(&#39;GET_PLO()INTEGER&#39;, &#39;p64.so&#39;)
-         LOAD(&#39;SET_PHI(INTEGER)&#39;, &#39;p64.so&#39;)
-         LOAD(&#39;SET_PLO(INTEGER)&#39;, &#39;p64.so&#39;)
-%ENDIF
--PUBLIC GET_P(), SET_P()
-%IF (BITS EQ 32)
-         LOAD(&#39;GET_P()INTEGER&#39;, &#39;p64.so&#39;)
-         LOAD(&#39;SET_P(INTEGER)&#39;, &#39;p64.so&#39;)
-%ENDIF
--PUBLIC P_TO_P2(), P_TO_P3(), P_TO_P4(), P2_TO_P(), P3_TO_P(), P4_TO_P()
-         LOAD(&#39;P_TO_P2()&#39;, &#39;p64.so&#39;)
-         LOAD(&#39;P_TO_P3()&#39;, &#39;p64.so&#39;)
-         LOAD(&#39;P_TO_P4()&#39;, &#39;p64.so&#39;)
-         LOAD(&#39;P2_TO_P()&#39;, &#39;p64.so&#39;)
-         LOAD(&#39;P3_TO_P()&#39;, &#39;p64.so&#39;)
-         LOAD(&#39;P4_TO_P()&#39;, &#39;p64.so&#39;)
--PUBLIC SET_F(), SET_D(), SET_LD(), GET_F(), GET_D(), GET_LD(), GET_S()
-         LOAD(&#39;SET_F(REAL)&#39;, &#39;p64.so&#39;)
-         LOAD(&#39;SET_D(REAL)&#39;, &#39;p64.so&#39;)
-         LOAD(&#39;SET_LD(REAL)&#39;, &#39;p64.so&#39;)
-         LOAD(&#39;GET_F()REAL&#39;, &#39;p64.so&#39;)
-         LOAD(&#39;GET_D()REAL&#39;, &#39;p64.so&#39;)
-         LOAD(&#39;GET_LD()REAL&#39;, &#39;p64.so&#39;)
-         LOAD(&#39;GET_S()STRING&#39;, &#39;p64.so&#39;)
--PUBLIC SWAP_P()
-         LOAD(&#39;SWAP_P()&#39;, &#39;p64.so&#39;)
-%IF (BITS EQ 64)
-         LOAD(&#39;PEEK_P_()&#39;, &#39;p64.so&#39;)
-         LOAD(&#39;PEEK_C_()INTEGER&#39;, &#39;p64.so&#39;)
-         LOAD(&#39;PEEK_S_()INTEGER&#39;, &#39;p64.so&#39;)
-         LOAD(&#39;PEEK_I_()INTEGER&#39;, &#39;p64.so&#39;)
-         LOAD(&#39;PEEK_D_()&#39;, &#39;p64.so&#39;)
-         LOAD(&#39;PEEK_F_()&#39;, &#39;p64.so&#39;)
-         LOAD(&#39;PEEK_LD_()&#39;, &#39;p64.so&#39;)
-         LOAD(&#39;POKE_P_()&#39;, &#39;p64.so&#39;)
-         LOAD(&#39;POKE_C_(INTEGER)&#39;, &#39;p64.so&#39;)
-         LOAD(&#39;POKE_S_(INTEGER)&#39;, &#39;p64.so&#39;)
-         LOAD(&#39;POKE_I_(INTEGER)&#39;, &#39;p64.so&#39;)
-         LOAD(&#39;POKE_D_()&#39;, &#39;p64.so&#39;)
-         LOAD(&#39;POKE_F_()&#39;, &#39;p64.so&#39;)
-         LOAD(&#39;POKE_LD_()&#39;, &#39;p64.so&#39;)
-         LOAD(&#39;MALLOC_(INTEGER)&#39;, &#39;p64.so&#39;)
-         LOAD(&#39;FREE_()&#39;, &#39;p64.so&#39;)
-         LOAD(&#39;STRDUP_(STRING)&#39;, &#39;p64.so&#39;)
-         LOAD(&#39;STRLEN_()INTEGER&#39;, &#39;p64.so&#39;)
-%ENDIF
 -PUBLIC PEEK_P(), PEEK_C(), PEEK_S(), PEEK_I(), PEEK_D(), PEEK_F()
 -PUBLIC PEEK_LD()
 -PUBLIC POKE_P(), POKE_C(), POKE_S(), POKE_I(), POKE_D(), POKE_F()
 -PUBLIC POKE_LD()
-%IF (BITS EQ 32)
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;PEEK_P(INTEGER)INTEGER&#39;, &#39;p64.so&#39;)
          LOAD(&#39;PEEK_C(INTEGER)INTEGER&#39;, &#39;p64.so&#39;)
          LOAD(&#39;PEEK_S(INTEGER)INTEGER&#39;, &#39;p64.so&#39;)
@@ -525,132 +185,21 @@ actual functions differ if we are on a 64 bit or 32 bit processor.
          LOAD(&#39;FREE_(INTEGER)&#39;, &#39;p64.so&#39;)
          LOAD(&#39;STRDUP_(STRING)INTEGER&#39;, &#39;p64.so&#39;)
          LOAD(&#39;STRLEN_(INTEGER)INTEGER&#39;, &#39;p64.so&#39;)
-%ENDIF
 <font color="#818181"><i>*</i></font>
 <b>@</b>
 </font></pre></div>
 <p align="justify"><font face="Sorts Mill Goudy">
-Define the actual “API” for the P64 module. If using 32 bit mode,
-the <font face="Source Code Pro">PEEK_?</font> and <font face="Source Code Pro">POKE_?</font> used are brought in by the <font face="Source Code Pro">LOAD()</font>
-- an intermediate function is not needed. In 64 bit mode, these
-functions need pointers, which are 64 bit quantities. These are set
-using <font face="Source Code Pro">SET_P()</font>, requiring an intermediate function. Even in 32 bit
-mode, <font face="Source Code Pro">malloc(), free(), strdup() and strlen()</font> use an intermediate
-function. This is because we want the naming to match <font face="Source Code Pro">C</font>. <font face="Source Code Pro">C</font>
-function <font face="Source Code Pro">malloc()</font> would collide with library function <font face="Source Code Pro">malloc()</font>,
-so we have <font face="Source Code Pro">C</font> function <font face="Source Code Pro">malloc_()</font> call <font face="Source Code Pro">malloc()</font>. <font face="Source Code Pro">MALLOC()</font>
-defined here then just calls <font face="Source Code Pro">MALLOC_()</font>.
+Define the actual “API” for the P64 module.
 </font></p>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;P64&raquo;&equiv;</b>
-%IF (BITS EQ 64)
-         DEFINE(&#39;GET_P()LO,HI&#39;)
-         DEFINE(&#39;SET_P(P)LO,HI&#39;)
-         DEFINE(&#39;PEEK_P(P)&#39;)
-         DEFINE(&#39;PEEK_C(P)&#39;)
-         DEFINE(&#39;PEEK_S(P)&#39;)
-         DEFINE(&#39;PEEK_I(P)&#39;)
-         DEFINE(&#39;PEEK_D(P)&#39;)
-         DEFINE(&#39;PEEK_F(P)&#39;)
-         DEFINE(&#39;PEEK_LD(P)&#39;)
-         DEFINE(&#39;POKE_P(P,P2)&#39;)
-         DEFINE(&#39;POKE_C(P,C)&#39;)
-         DEFINE(&#39;POKE_S(P,S)&#39;)
-         DEFINE(&#39;POKE_I(P,I)&#39;)
-         DEFINE(&#39;POKE_D(P,D)&#39;)
-         DEFINE(&#39;POKE_F(P,F)&#39;)
-         DEFINE(&#39;POKE_LD(P,LD)&#39;)
-         DEFINE(&#39;MALLOC(N)&#39;)
-         DEFINE(&#39;FREE(P)&#39;)
-         DEFINE(&#39;STRDUP(S)&#39;)
-         DEFINE(&#39;STRLEN(P)&#39;)
-%ENDIF
 -PUBLIC MALLOC(), FREE(), STRDUP(), STRLEN()
-%IF (BITS EQ 32)
          DEFINE(&#39;MALLOC(N)&#39;)
          DEFINE(&#39;FREE(P)&#39;)
          DEFINE(&#39;STRDUP(S)&#39;)
-         DEFINE(&#39;STRLEN(P)&#39;)
-%ENDIF
-                                                              <b>:(P64_END)</b>
+         DEFINE(&#39;STRLEN(P)&#39;)                                  <b>:(P64_END)</b>
 <font color="#818181"><i>*</i></font>
-%IF (BITS EQ 64)
-GET_P    HI = GET_PHI()
-         HI = HI * (2 ** 32)
-         LO = GET_PLO()
-         LO = LT(LO, 0) LO + (2 ** 32)
-         GET_P = HI + LO                                       <b>:(RETURN)</b>
-<font color="#818181"><i>*</i></font>
-SET_P    HI = P / (2 ** 32)
-         LO = REMDR(P, 2 ** 32)
-         SET_PHI(HI)
-         SET_PLO(LO)                                           <b>:(RETURN)</b>
-<font color="#818181"><i>*</i></font>
-PEEK_P   SET_P(P)
-         PEEK_P_()
-         PEEK_P = GET_P()                                      <b>:(RETURN)</b>
-<font color="#818181"><i>*</i></font>
-PEEK_C   SET_P(P)
-         PEEK_C = PEEK_C_()                                    <b>:(RETURN)</b>
-<font color="#818181"><i>*</i></font>
-PEEK_S   SET_P(P)
-         PEEK_S = PEEK_S_()                                    <b>:(RETURN)</b>
-<font color="#818181"><i>*</i></font>
-PEEK_I   SET_P(P)
-         PEEK_I = PEEK_I_()                                    <b>:(RETURN)</b>
-<font color="#818181"><i>*</i></font>
-PEEK_D   SET_P(P)
-         PEEK_D_()
-         PEEK_D = GET_D()                                      <b>:(RETURN)</b>
-<font color="#818181"><i>*</i></font>
-PEEK_F   SET_P(P)
-         PEEK_F_()
-         PEEK_F = GET_F()                                      <b>:(RETURN)</b>
-<font color="#818181"><i>*</i></font>
-PEEK_LD  SET_P(P)
-         PEEK_LD_()
-         PEEK_LD = GET_LD()                                    <b>:(RETURN)</b>
-<font color="#818181"><i>*</i></font>
-POKE_P   SET_P(P2)
-         P_TO_P2()
-         SET_P(P)
-         POKE_P_()                                             <b>:(RETURN)</b>
-<font color="#818181"><i>*</i></font>
-POKE_C   SET_P(P)
-         POKE_C_(C)                                            <b>:(RETURN)</b>
-<font color="#818181"><i>*</i></font>
-POKE_S   SET_P(P)
-         POKE_S_(S)                                            <b>:(RETURN)</b>
-<font color="#818181"><i>*</i></font>
-POKE_I   SET_P(P)
-         POKE_I_(I)                                            <b>:(RETURN)</b>
-<font color="#818181"><i>*</i></font>
-POKE_D   SET_P(P)
-         SET_D(D)
-         POKE_D_()                                             <b>:(RETURN)</b>
-<font color="#818181"><i>*</i></font>
-POKE_F   SET_P(P)
-         SET_F(F)
-         POKE_F_()                                             <b>:(RETURN)</b>
-<font color="#818181"><i>*</i></font>
-POKE_LD  SET_P(P)
-         SET_LD(LD)
-         POKE_LD_()                                            <b>:(RETURN)</b>
-<font color="#818181"><i>*</i></font>
-MALLOC   MALLOC_(N)
-         MALLOC = GET_P()                                      <b>:(RETURN)</b>
-<font color="#818181"><i>*</i></font>
-FREE     SET_P(P)
-         FREE_()                                               <b>:(RETURN)</b>
-<font color="#818181"><i>*</i></font>
-STRDUP   STRDUP_(S)
-         STRDUP = GET_P()                                      <b>:(RETURN)</b>
-<font color="#818181"><i>*</i></font>
-STRLEN   SET_P(P)
-         STRLEN = STRLEN_()                                    <b>:(RETURN)</b>
-%ENDIF
-%IF (BITS EQ 32)
 MALLOC   MALLOC = MALLOC_(N)                                   <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 FREE     FREE_(P)                                              <b>:(RETURN)</b>
@@ -658,7 +207,6 @@ FREE     FREE_(P)                                              <b>:(RETURN)</b>
 STRDUP   STRDUP = STRDUP_(S)                                   <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 STRLEN   STRLEN = STRLEN_(P)                                   <b>:(RETURN)</b>
-%ENDIF
 <font color="#818181"><i>*</i></font>
 P64_END
 <b>@</b>
@@ -690,7 +238,7 @@ END
 <font color="#818181"><i>*                       #        #   #      #                          *</i></font>
 <font color="#818181"><i>*                       #         ###       #                          *</i></font>
 <font color="#818181"><i>*                                                                      *</i></font>
-<font color="#818181"><i>* P64                64 BIT PARAMETER HANDLING                         *</i></font>
+<font color="#818181"><i>* P64                    POINTER UTILITIES                             *</i></font>
 <font color="#818181"><i>*                                                                      *</i></font>
 <font color="#818181"><i>************************************************************************</i></font>
 <font color="#818181"><i>*</i></font>
@@ -705,7 +253,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 20:00:15 EDT 2014</p></td><td><p align=right>
+Sun Jun  8 17:21:50 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

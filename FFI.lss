@@ -4,7 +4,6 @@ An interface to [[libffi]] providing a Foreign Function Interface
 (FFI) for SNOBOL4.
 
 <h2>Uses</h2>
-<a href="P64.html">P64</a><br>
 
 When building, the following INCLUDEs are also needed:
 
@@ -15,7 +14,6 @@ When building, the following INCLUDEs are also needed:
 <a href="SEQ.html">SEQ</a>
 
 <<INCLUDES>>=
--INCLUDE 'P64.INC'
 @
 
 <<FFI>>=
@@ -47,7 +45,6 @@ When building ffi.so the following INCLUDES are needed.
 #include <stdlib.h>
 #include <string.h>
 #include <dlfcn.h>
-#include "p64.h"
 
 static int errors;
 static ffi_status ffi_error;
@@ -161,13 +158,11 @@ typedef struct {
 @
 
 Create a new FFI descriptor, given return type [[*r]] with argument
-types [[*s]]. Return 0 on error, 1 if ok, allowing this function to
-be used as a predicate. Result is stored in global pointers [[p]]
-and [[p2]].
+types [[*s]]. Return 0 on error, else the new descriptor.
 
 <<FFI,TYPE=C>>=
 
-static int new_ffi(char *r, char *s)
+static long ffi_new(char *r, char *s)
 {
     ffi_t *ffip;
     int n = 0;
@@ -177,8 +172,6 @@ static int new_ffi(char *r, char *s)
     if (ffip == NULL) {
 	return 0;
     }
-    set_p_(ffip);
-    set_p2_(get_p_());
     ffip->result_type = interpret_ptype(&r);
     if (ffip->result_type == NULL) {
 	return 0;
@@ -217,10 +210,10 @@ static int new_ffi(char *r, char *s)
 			     ffip->arg_types);
     if (ffi_error != FFI_OK)
 	return 0;
-    return 1;
+    return (long)ffip;
 }
 
--SNOBOL C_WRAPPER_PROTO('NEW_FFI(STRING,STRING)PREDICATE', .EMBED)
+-SNOBOL C_WRAPPER_PROTO('FFI_NEW(STRING,STRING)LONG', .EMBED)
 
 @
 
@@ -229,9 +222,9 @@ Clear FFI descriptor after a call has been made. Deallocates
 
 <<FFI,TYPE=C>>=
 
-static void clear_ffi(void)
+static void ffi_clear(long p)
 {
-    ffi_t *ffip = get_p_();
+    ffi_t *ffip = (void *)p;
     int i;
     for (i = 0; i < ffip->nargs; ++i) {
 	if (ffip->arg_needfree[i]) {
@@ -241,7 +234,7 @@ static void clear_ffi(void)
     }
 }
 
--SNOBOL C_WRAPPER_PROTO('CLEAR_FFI()', .EMBED)
+-SNOBOL C_WRAPPER_PROTO('FFI_CLEAR(LONG)', .EMBED)
 
 @
 
@@ -249,9 +242,9 @@ Destroy FFI descriptor.
 
 <<FFI,TYPE=C>>=
 
-static void free_ffi(void)
+static void ffi_free(long p)
 {
-    ffi_t *ffip = get_p_();
+    ffi_t *ffip = (void *)p;
     free(ffip->arg_values);
     free(ffip->arg_types);
     free(ffip->arg_needfree);
@@ -259,7 +252,7 @@ static void free_ffi(void)
     free(ffip);
 }
 
--SNOBOL C_WRAPPER_PROTO('FREE_FFI()', .EMBED)
+-SNOBOL C_WRAPPER_PROTO('FFI_FREE(LONG)', .EMBED)
 
 @
 
@@ -268,16 +261,17 @@ Indicate that parameter [[n]] (counting from 1) requires deallocation
 
 <<FFI,TYPE=C>>=
 
-static int par_n_needfree(int n)
+static int ffi_par_n_needfree(long p,int n)
 {
-    ffi_t *ffip = get_p_();
+    ffi_t *ffip = (void *)p;
     if ((n < 1) || (n > ffip->nargs))
 	return 0;
     ffip->arg_needfree[n - 1] = 1;
     return 1;
 }
 
--SNOBOL C_WRAPPER_PROTO('PAR_N_NEEDFREE(INTEGER)PREDICATE', .EMBED)
+-SNOBOL C_WRAPPER_PROTO('FFI_PAR_N_NEEDFREE(LONG,INTEGER)PREDICATE',   +
+           .EMBED)
 
 @
 
@@ -285,17 +279,17 @@ Set value of parameter [[n]] to integer [[v]] (32 bit).
 
 <<FFI,TYPE=C>>=
 
-static int set_par_n_integer(int n, int v)
+static int ffi_par_n_integer(long p, int n, int v)
 {
-    ffi_t *ffip = get_p_();
+    ffi_t *ffip = (void *)p;
     if ((n < 1) || (n > ffip->nargs))
 	return 0;
     ffip->arg_values[n - 1] = v;
     return 1;
 }
 
--SNOBOL C_WRAPPER_PROTO('SET_PAR_N_INTEGER(INTEGER,INTEGER)PREDICATE', +
-           .EMBED)
+-SNOBOL C_WRAPPER_PROTO('FFI_PAR_N_INTEGER('                       +
+                        'LONG,INTEGER,INTEGER)PREDICATE', .EMBED)
 
 @
 
@@ -304,16 +298,17 @@ but this should be useable to get a REAL parameter into a double.
 
 <<FFI,TYPE=C>>=
 
-static int set_par_n_real(int n, double v)
+static int ffi_par_n_real(long p, int n, double v)
 {
-    ffi_t *ffip = get_p_();
+    ffi_t *ffip = (void *)p;
     if ((n < 1) || (n > ffip->nargs))
 	return 0;
     ffip->arg_values[n - 1] = v;
     return 1;
 }
 
--SNOBOL C_WRAPPER_PROTO('SET_PAR_N_REAL(INTEGER,REAL)PREDICATE', .EMBED)
+-SNOBOL C_WRAPPER_PROTO('FFI_PAR_N_REAL('                              +
+                        'LONG,INTEGER,REAL)PREDICATE', .EMBED)
 
 @
 
@@ -322,16 +317,17 @@ FFI descriptor and [[p]] the 64 bit long or pointer argument.
 
 <<FFI,TYPE=C>>=
 
-static int set_par_n_p(int n)
+static int ffi_par_n_ptr(long p, int n, long p2)
 {
-    ffi_t *ffip = get_p2_();
+    ffi_t *ffip = (void *)p;
     if ((n < 1) || (n > ffip->nargs))
 	return 0;
-    ffip->arg_values[n - 1] = (long)get_p_();
+    ffip->arg_values[n - 1] = (long)p2;
     return 1;
 }
 
--SNOBOL C_WRAPPER_PROTO('SET_PAR_N_P(INTEGER)PREDICATE', .EMBED)
+-SNOBOL C_WRAPPER_PROTO('FFI_PAR_N_PTR(LONG,INTEGER,LONG)PREDICATE',   +
+                        .EMBED)
 
 @
 
@@ -339,16 +335,17 @@ Set value of parameter [[n]] to float [[f]].
 
 <<FFI,TYPE=C>>=
 
-static int set_par_n_f(int n)
+static int ffi_par_n_f(long p, int n, double f)
 {
-    ffi_t *ffip = get_p_();
+    ffi_t *ffip = (void *)p;
     if ((n < 1) || (n > ffip->nargs))
 	return 0;
-    ffip->arg_values[n - 1] = get_f_();
+    ffip->arg_values[n - 1] = (float)f;
     return 1;
 }
 
--SNOBOL C_WRAPPER_PROTO('SET_PAR_N_F(INTEGER)PREDICATE', .EMBED)
+-SNOBOL C_WRAPPER_PROTO('FFI_PAR_N_F(LONG,INTEGER,REAL)PREDICATE',     +
+                        .EMBED)
 
 @
 
@@ -356,16 +353,17 @@ Set value of parameter [[n]] to double [[d]].
 
 <<FFI,TYPE=C>>=
 
-static int set_par_n_d(int n)
+static int ffi_par_n_d(long p, int n, double d)
 {
-    ffi_t *ffip = get_p_();
+    ffi_t *ffip = (void *)p;
     if ((n < 1) || (n > ffip->nargs))
 	return 0;
-    ffip->arg_values[n - 1] = get_d_();
+    ffip->arg_values[n - 1] = (double)d;
     return 1;
 }
 
--SNOBOL C_WRAPPER_PROTO('SET_PAR_N_D(INTEGER)PREDICATE', .EMBED)
+-SNOBOL C_WRAPPER_PROTO('FFI_PAR_N_D(LONG,INTEGER,REAL)PREDICATE',     +
+                        .EMBED)
 
 @
 
@@ -373,16 +371,17 @@ Set value of parameter [[n]] to long double [[ld]].
 
 <<FFI,TYPE=C>>=
 
-static int set_par_n_ld(int n)
+static int ffi_par_n_ld(long p, int n, double d)
 {
-    ffi_t *ffip = get_p_();
+    ffi_t *ffip = (void *)p;
     if ((n < 1) || (n > ffip->nargs))
 	return 0;
-    ffip->arg_values[n - 1] = get_ld_();
+    ffip->arg_values[n - 1] = (long double)d;
     return 1;
 }
 
--SNOBOL C_WRAPPER_PROTO('SET_PAR_N_LD(INTEGER)PREDICATE', .EMBED)
+-SNOBOL C_WRAPPER_PROTO('FFI_PAR_N_LD(LONG,INTEGER,REAL)PREDICATE',    +
+                        .EMBED)
 
 @
 
@@ -391,9 +390,9 @@ a copy of the string, and marks it for [[free()]] after call returns.
 
 <<FFI,TYPE=C>>=
 
-static int set_par_n_string(int n, char *s)
+static int ffi_par_n_string(long p, int n, char *s)
 {
-    ffi_t *ffip = get_p_();
+    ffi_t *ffip = (void *)p;
     if ((n < 1) || (n > ffip->nargs))
         return 0;
     ffip->arg_values[n - 1] = (long)strdup(s);
@@ -403,8 +402,8 @@ static int set_par_n_string(int n, char *s)
     return 1;
 }
 
--SNOBOL C_WRAPPER_PROTO('SET_PAR_N_STRING(INTEGER,STRING)PREDICATE',   +
-           .EMBED)
+-SNOBOL C_WRAPPER_PROTO('FFI_PAR_N_STRING('                            +
+                        'LONG,INTEGER,STRING)PREDICATE', .EMBED)
 
 @
 
@@ -413,13 +412,13 @@ Set pointer to function in FFI descriptor.
 <<FFI,TYPE=C>>=
 
 /* CIF in P2, FN in P */
-static void set_callp(void)
+static void ffi_set_callp(long p2, long p)
 {
-    ffi_t *ffip = get_p2_();
-    ffip->callp = get_p_();
+    ffi_t *ffip = (void *)p2;
+    ffip->callp = (void *)p;
 }
 
--SNOBOL C_WRAPPER_PROTO('SET_CALLP()', .EMBED)
+-SNOBOL C_WRAPPER_PROTO('FFI_SET_CALLP(LONG,LONG)', .EMBED)
 
 @
 
@@ -427,68 +426,70 @@ Call FFI function.
 
 <<FFI,TYPE=C>>=
 
-static void call_ffi(void)
+static void call_ffi(long p)
 {
-    ffi_t *ffip = get_p_();
+    ffi_t *ffip = (void *)p;
     ffi_call(ffip->cif, FFI_FN(ffip->callp),
 	     &ffip->result, ffip->arg_ptrs);
-    if (ffip->result_type == &ffi_type_void) /* */ ;
-    else if ((ffip->result_type == &ffi_type_uint8) ||
-	     (ffip->result_type == &ffi_type_sint8) ||
-	     (ffip->result_type == &ffi_type_uint16) ||
-	     (ffip->result_type == &ffi_type_sint16) ||
-	     (ffip->result_type == &ffi_type_uint32) ||
-	     (ffip->result_type == &ffi_type_sint32) ||
-	     (ffip->result_type == &ffi_type_uint64) ||
-	     (ffip->result_type == &ffi_type_sint64) ||
-	     (ffip->result_type == &ffi_type_pointer))
-	set_p_((void *)(long)ffip->result);
-    else if (ffip->result_type == &ffi_type_float)
-	set_f_(ffip->result);
-    else if (ffip->result_type == &ffi_type_double)
-	set_d_(ffip->result);
-    else if (ffip->result_type == &ffi_type_longdouble)
-	set_ld_(ffip->result);
 }
 
--SNOBOL C_WRAPPER_PROTO('CALL_FFI()', .EMBED)
+-SNOBOL C_WRAPPER_PROTO('CALL_FFI(LONG)', .EMBED)
+
+/* Return address of call result, use peek_() function to retrieve */
+static long ffi_resultp(long p)
+{
+    ffi_t *ffip = (void *)p;
+    return (long)(&(ffip->result));
+}
+
+-SNOBOL C_WRAPPER_PROTO('FFI_RESULTP(LONG)LONG', .EMBED)
 
 @
 
 Simplified calls, actually returning result (instead of just leaving
-it in P64 global variables).
+it in the ffi structure).
 
 <<FFI,TYPE=C>>=
 
-static int call_integer_ffi(void)
+static int call_integer_ffi(long p)
 {
-    ffi_t *ffip = get_p_();
+    ffi_t *ffip = (void *)p;
     ffi_call(ffip->cif, FFI_FN(ffip->callp),
 	     &ffip->result, ffip->arg_ptrs);
     return ffip->result;
 }
 
--SNOBOL C_WRAPPER_PROTO('CALL_INTEGER_FFI()INTEGER', .EMBED)
+-SNOBOL C_WRAPPER_PROTO('CALL_INTEGER_FFI(LONG)INTEGER', .EMBED)
 
-static double call_real_ffi(void)
+static long call_ptr_ffi(long p)
 {
-    ffi_t *ffip = get_p_();
+    ffi_t *ffip = (void *)p;
     ffi_call(ffip->cif, FFI_FN(ffip->callp),
 	     &ffip->result, ffip->arg_ptrs);
     return ffip->result;
 }
 
--SNOBOL C_WRAPPER_PROTO('CALL_REAL_FFI()REAL', .EMBED)
+-SNOBOL C_WRAPPER_PROTO('CALL_PTR_FFI(LONG)LONG', .EMBED)
 
-static char *call_string_ffi(void)
+static double call_real_ffi(long p)
 {
-    ffi_t *ffip = get_p_();
+    ffi_t *ffip = (void *)p;
+    ffi_call(ffip->cif, FFI_FN(ffip->callp),
+	     &ffip->result, ffip->arg_ptrs);
+    return ffip->result;
+}
+
+-SNOBOL C_WRAPPER_PROTO('CALL_REAL_FFI(LONG)REAL', .EMBED)
+
+static char *call_string_ffi(long p)
+{
+    ffi_t *ffip = (void *)p;
     ffi_call(ffip->cif, FFI_FN(ffip->callp),
 	     &ffip->result, ffip->arg_ptrs);
     return (char *)ffip->result;
 }
 
--SNOBOL C_WRAPPER_PROTO('CALL_STRING_FFI()STRING', .EMBED)
+-SNOBOL C_WRAPPER_PROTO('CALL_STRING_FFI(LONG)STRING', .EMBED)
 
 @
 
@@ -500,37 +501,39 @@ if a handle of NULL is used).
 
 /* DL functions
  */
-static void dlopen_ffi(char *s, int n) { set_p_(dlopen(s, n)); }
+static long dlopen_(char *s, int n) { return (long)dlopen(s, n); }
 
--SNOBOL C_WRAPPER_PROTO('DLOPEN_FFI(STRING,INTEGER)', .EMBED)
+-SNOBOL C_WRAPPER_PROTO('DLOPEN_(STRING,INTEGER)LONG', .EMBED)
 
-static char *dlerror_ffi(void)
+static char *dlerror_(void)
 {
     char *s = dlerror();
     if (s == NULL) return "";
     return s;
 }
 
--SNOBOL C_WRAPPER_PROTO('DLERROR_FFI()STRING', .EMBED)
+-SNOBOL C_WRAPPER_PROTO('DLERROR_()STRING', .EMBED)
 
-static void dlsym_ffi(char *s) { set_p_(dlsym(get_p_(), s)); }
+static long dlsym_(long p, char *s)
+{
+    return (long)dlsym((void *)p, s);
+}
 
--SNOBOL C_WRAPPER_PROTO('DLSYM_FFI(STRING)', .EMBED)
+-SNOBOL C_WRAPPER_PROTO('DLSYM_(LONG,STRING)LONG', .EMBED)
 
-static int dlclose_ffi(void) { return dlclose(get_p_()); }
+static int dlclose_(long p) { return dlclose((void *)p); }
 
--SNOBOL C_WRAPPER_PROTO('DLCLOSE_FFI()INTEGER', .EMBED)
+-SNOBOL C_WRAPPER_PROTO('DLCLOSE_(LONG)INTEGER', .EMBED)
 
 -END
 @
 
-Build ffi.so. Note that pwd is wrong -- we need to have run-time
-search start with actual library directory.
+Build ffi.so.
 
 <<FFI>>=
 -SNOBOL DYNAMIC_DEBUG = 1
 -SNOBOL COMPILE_DYNAMIC(ffi) :F(ERROR) ;
--SNOBOL LIBS = ' -L. -lp64 -lffi -ldl'
+-SNOBOL LIBS = '-lffi -ldl'
 -SNOBOL OBJECTS = ffi ; OBJECTS '.c' = '.o'
 -SNOBOL LINK_DYNAMIC('./ffi', OBJECTS, LIBS) :F(ERROR) ;
 -CMNT ERASE TEMPORARY FILES
@@ -543,132 +546,87 @@ search start with actual library directory.
 Actually [[LOAD()]] the functions defined into CSNOBOL4.
 
 <<FFI>>=
-         LOAD('FREE_FFI()', 'ffi.so')
-         LOAD('CLEAR_FFI()', 'ffi.so')
-         LOAD('NEW_FFI(STRING,STRING)', 'ffi.so')
-         LOAD('PAR_N_NEEDFREE(INTEGER)', 'ffi.so')
-         LOAD('SET_PAR_N_INTEGER(INTEGER,INTEGER)', 'ffi.so')
-         LOAD('SET_PAR_N_REAL(INTEGER,REAL)', 'ffi.so')
-         LOAD('SET_PAR_N_STRING(INTEGER,STRING)', 'ffi.so')
-         LOAD('SET_PAR_N_P(INTEGER)', 'ffi.so')
-         LOAD('SET_PAR_N_F(INTEGER)', 'ffi.so')
-         LOAD('SET_PAR_N_D(INTEGER)', 'ffi.so')
-         LOAD('SET_PAR_N_LD(INTEGER)', 'ffi.so')
-         LOAD('SET_CALLP()', 'ffi.so')
-         LOAD('CALL_FFI()', 'ffi.so')
-         LOAD('CALL_INTEGER_FFI()INTEGER', 'ffi.so')
-         LOAD('CALL_REAL_FFI()REAL', 'ffi.so')
-         LOAD('CALL_STRING_FFI()STRING', 'ffi.so')
+         LOAD('FFI_FREE(INTEGER)', 'ffi.so')
+         LOAD('FFI_CLEAR(INTEGER)', 'ffi.so')
+         LOAD('FFI_NEW(STRING,STRING)INTEGER', 'ffi.so')
+         LOAD('FFI_PAR_N_NEEDFREE(INTEGER,INTEGER)', 'ffi.so')
+         LOAD('FFI_PAR_N_INTEGER(INTEGER,INTEGER,INTEGER)', 'ffi.so')
+         LOAD('FFI_PAR_N_PTR(INTEGER,INTEGER,INTEGER)', 'ffi.so')
+         LOAD('FFI_PAR_N_REAL(INTEGER,INTEGER,REAL)', 'ffi.so')
+         LOAD('FFI_PAR_N_STRING(INTEGER,INTEGER,STRING)', 'ffi.so')
+         LOAD('FFI_PAR_N_P(INTEGER,INTEGER,INTEGER)', 'ffi.so')
+         LOAD('FFI_PAR_N_F(INTEGER,INTEGER,REAL)', 'ffi.so')
+         LOAD('FFI_PAR_N_D(INTEGER,INTEGER,REAL)', 'ffi.so')
+         LOAD('FFI_PAR_N_LD(INTEGER,INTEGER,REAL)', 'ffi.so')
+         LOAD('FFI_SET_CALLP(INTEGER,INTEGER)', 'ffi.so')
+         LOAD('FFI_RESULTP(INTEGER)INTEGER', 'ffi.so')
+         LOAD('CALL_FFI(INTEGER)', 'ffi.so')
+         LOAD('CALL_INTEGER_FFI(INTEGER)INTEGER', 'ffi.so')
+         LOAD('CALL_PTR_FFI(INTEGER)INTEGER', 'ffi.so')
+         LOAD('CALL_REAL_FFI(INTEGER)REAL', 'ffi.so')
+         LOAD('CALL_STRING_FFI(INTEGER)STRING', 'ffi.so')
 *
          RTLD_LAZY   = 1
          RTLD_NOW    = 2
          RTLD_GLOBAL = 256
          RTLD_LOCAL  = 0
 *
-         LOAD('DLOPEN_FFI(STRING,INTEGER)', 'ffi.so')
-         LOAD('DLERROR_FFI()STRING', 'ffi.so')
-         LOAD('DLSYM_FFI(STRING)', 'ffi.so')
-         LOAD('DLCLOSE_FFI()INTEGER', 'ffi.so')
+         LOAD('DLOPEN_(STRING,INTEGER)INTEGER', 'ffi.so')
+         LOAD('DLERROR_()STRING', 'ffi.so')
+         LOAD('DLSYM_(INTEGER,STRING)', 'ffi.so')
+         LOAD('DLCLOSE_(INTEGER)INTEGER', 'ffi.so')
 *
 @
 
-The actual “API” for FFI. This also gives opportunity to run pre or
-post functions. CLEAR_FFI() as an example, which free()s strdup()d
-parameters after an FFI call.
-
+The actual “API” for FFI.
 
 <<FFI>>=
 -PUBLIC DLOPEN(), DLERROR(), DLSYM(), DLCLOSE()
+*
          DEFINE('DLOPEN(S,I)')
          DEFINE('DLERROR()')
          DEFINE('DLSYM(H,S)')
          DEFINE('DLCLOSE(H)')
 *
--PUBLIC FFI_NEW(), FFI_FREE(), FFI_PAR_N_INTEGER(), FFI_PAR_N_REAL()
--PUBLIC FFI_PAR_N_STRING(), FFI_PAR_N_PTR, FFI_SET_CALLP()
+-PUBLIC FFI_NEW(), FFI_FREE(), FFI_CLEAR(), FFI_PAR_N_NEEDFREE()
+-PUBLIC FFI_PAR_N_INTEGER(), FFI_PAR_N_PTR(), FFI_PAR_N_REAL()
+-PUBLIC FFI_PAR_N_STRING(),  FFI_SET_CALLP()
 -PUBLIC FFI_CALL_VOID(), FFI_CALL_INTEGER(), FFI_CALL_REAL()
--PUBLIC FFI_CALL_STRING(), FFI_CALL_PTR()
-         DEFINE('FFI_NEW(RS,PS)')
-         DEFINE('FFI_FREE(FFI)')
-         DEFINE('FFI_PAR_N_INTEGER(FFI,N,I)')
-         DEFINE('FFI_PAR_N_REAL(FFI,N,R)')
-         DEFINE('FFI_PAR_N_STRING(FFI,N,S)')
-         DEFINE('FFI_PAR_N_PTR(FFI,N,P)')
-         DEFINE('FFI_SET_CALLP(FFI,PROC)')
-         DEFINE('FFI_CALL_VOID(FFI)')
+-PUBLIC FFI_CALL_STRING(), FFI_CALL_PTR(), CALL_FFI(), FFI_RESULTP()
+*
          DEFINE('FFI_CALL_INTEGER(FFI)')
          DEFINE('FFI_CALL_REAL(FFI)')
          DEFINE('FFI_CALL_STRING(FFI)')
-         DEFINE('FFI_CALL_PTR(FFI)')                          :(FFI_END)
+         DEFINE('FFI_CALL_PTR(FFI)')
+         DEFINE('FFI_CALL_VOID(FFI)')                         :(FFI_END)
 *
-DLOPEN   DLOPEN_FFI(S, I)
-         DLOPEN = GET_P()                                      :(RETURN)
+DLOPEN   DLOPEN = DLOPEN_(S, I)                                :(RETURN)
 *
-DLERROR  DLERROR = DLERROR_FFI()                               :(RETURN)
+DLERROR  DLERROR = DLERROR_()                                  :(RETURN)
 *
-DLSYM    SET_P(H)
-         DLSYM_FFI(S)
-         DLSYM = GET_P()                                       :(RETURN)
+DLSYM    DLSYM = DLSYM_(H, S)                                  :(RETURN)
 *
-DLCLOSE  SET_P(H)
-         DLCLOSE = DLCLOSE_FFI()                               :(RETURN)
-*
-FFI_NEW  NEW_FFI(RS, PS)                                     :F(FRETURN)
-         FFI_NEW = GET_P()                                     :(RETURN)
-*
-FFI_FREE SET_P(FFI)
-         FREE_FFI()                                            :(RETURN)
-*
-FFI_PAR_N_INTEGER
-         SET_P(FFI)
-         SET_PAR_N_INTEGER(N, I)                    :S(RETURN)F(FRETURN)
-*
-FFI_PAR_N_REAL
-         SET_P(FFI)
-         SET_PAR_N_REAL(N, R)                       :S(RETURN)F(FRETURN)
-*
-FFI_PAR_N_STRING
-         SET_P(FFI)
-         SET_PAR_N_STRING(N, S)                     :S(RETURN)F(FRETURN)
-*
-FFI_PAR_N_PTR
-         SET_P(FFI)
-         P_TO_P2()
-         SET_P(P)
-         SET_PAR_N_P(N)                             :S(RETURN)F(FRETURN)
-*
-FFI_SET_CALLP
-         SET_P(FFI)
-         P_TO_P2()
-         SET_P(PROC)
-         SET_CALLP()                                           :(RETURN)
+DLCLOSE  DLCLOSE = DLCLOSE_(H)                                 :(RETURN)
 *
 FFI_CALL_VOID
-         SET_P(FFI)
-         CALL_FFI()
-         CLEAR_FFI()                                           :(RETURN)
+         CALL_FFI(FFI)
+         FFI_CLEAR(FFI)                                        :(RETURN)
 *
 FFI_CALL_INTEGER
-         SET_P(FFI)
-         FFI_CALL_INTEGER = CALL_INTEGER_FFI()
-         CLEAR_FFI()                                           :(RETURN)
+         FFI_CALL_INTEGER = CALL_INTEGER_FFI(FFI)
+         FFI_CLEAR(FFI)                                        :(RETURN)
 *
 FFI_CALL_REAL
-         SET_P(FFI)
-         FFI_CALL_REAL = CALL_REAL_FFI()
-         CLEAR_FFI()                                           :(RETURN)
+         FFI_CALL_REAL = CALL_REAL_FFI(FFI)
+         FFI_CLEAR(FFI)                                        :(RETURN)
 *
 FFI_CALL_STRING
-         SET_P(FFI)
-         FFI_CALL_STRING = CALL_STRING_FFI()
-         CLEAR_FFI()                                           :(RETURN)
+         FFI_CALL_STRING = CALL_STRING_FFI(FFI)
+         FFI_CLEAR(FFI)                                        :(RETURN)
 *
 FFI_CALL_PTR
-         SET_P(FFI)
-         CALL_FFI()
-         FFI_CALL_PTR = GET_P()
-         SET_P(FFI)
-         CLEAR_FFI()                                           :(RETURN)
+         FFI_CALL_PTR = CALL_PTR_FFI(FFI)
+         FFI_CLEAR(FFI)                                        :(RETURN)
 *
 FFI_END
 @

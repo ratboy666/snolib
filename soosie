@@ -9,8 +9,6 @@
 *
 * -d 4m : use 64MB (64 bit)
 *
-* Most editing (eg comments) is deferred to the GUI version.
-*
 * The philosophy behind SOOSIE is similar to st-80 or dedicated lisp
 * boxes. SOOSIE manages an "image" which is all the code in the
 * system. Pieces can be added in, and freely used. SOOSIE manages
@@ -20,6 +18,14 @@
 * only thing available is "-include" which can only bring in files
 * from the filesystem. Therefore, SOOSIE also manages files in the
 * filesystem (only those related to SOOSIE).
+*
+* SOOSIE is the most complicated program in the SNOLIB suite. It
+* manages the other build programs ('uses', 'bldidx, and the building
+* program 'sweave', 'stangle', 'g360', 'embed', and 'ifs'). It also
+* manages the external editor, and can run 'code'.
+*
+* Running deseq automatically. If the source file has -IN72 in it,
+* a deseq pass should be executed before generating the INC file.
 
 -include 'JSON.INC'
 -include 'READFILE.INC'
@@ -79,34 +85,180 @@
 
 top      l = readline('SOOSIE: ')
          l = history_expand(l)
-         l = trim(l)
+         l = trim(l) ' '
          add_history(vdiffer(l))
+
+* major command, go to handler
 
          l fence ('ls' | 'LS' | 'new' | 'NEW' | 'load' | 'load' |
 +                 'save' | 'save' | 'quit' | 'QUIT' |
 +                 'extract' | 'EXTRACT' | 'help' | 'HELP' |
 +                 'info' | 'INFO' | 'build' | 'BUILD' |
-+                 'edit' | 'EDIT') . cmd
-+          rem . args                                           :s($cmd)
++                 'edit' | 'EDIT' | 'module' | 'MODULE') . cmd ' '
++          rem . args                                     :s($(cmd '.'))
          terminal = '?'                                           :(top)
+
+
+* Help
+
+help.    terminal = 'SOOSIE'
+         terminal =
+         terminal = 'NEW'
+         terminal = 'LOAD'
+         terminal = 'SAVE'
+         terminal = 'LS'
+         terminal = 'EXTRACT'
+         terminal = 'BUILD'
+         terminal = 'QUIT'
+         terminal = 'MODULE'
+                                                                  :(top)
 
 
 * Exit
 
-quit     write_history('.SOOSIE')                        :s(end)f(tryls)
+quit.     write_history('.SOOSIE')                       :s(end)f(tryls)
 
+
+* module commands
+* module add,rem mod
+
+module.  ident(lbr)                                              :s(nol)
+         a = trimb(args) ' '
+         a fence ('add' | 'ADD' | 'rem' | 'REM' |
++                 'edit' | 'EDIT') . s ' '
++             rem . args =                            :s($('module_' s))
+
+         terminal = 'UNKNOWN MODULE SUBCOMMAND'                   :(top)
+
+
+* Adds an empty module to the library
+* module edit module key remainder is value
+* if its not an array, use editline() to edit it.
+* need to edit the arrays. -
+*
+* module edit name,source,comment,type,artifacts,depends,files
+*
+* notes: build and install arrays should always be ordered
+* in artifact order. build and install arrays have entries
+* added and removed with artifact edit. files gets entries
+* added when artifact is added.
+* need to reorder artifacts. editline() can be exploited
+* so, add artifacts and depends to 'edit' subcommand
+* changing source removes old source from files, adds new
+* source. files tracks source and artifacts, with possibly
+* extra.
+*
+* ident('TYPE') means this module will never be built. It
+* can however, contribute to the DEPENDS ("uber" modules)
+*
+* eg, a "LIST" ubermodule can be defined that will make
+* all LINK sub-modules.
+*
+* module rename m or module copy -- copy is problematic due to
+* deep copy semantics - the elements will still refer to each other
+
+module_edit
+ define('stringize(n,v)s')
+ define('destring(n,v)s,i')
+         args = trimb(args) ' '
+         args break(' ') . mod ' ' rem . a
+         mod = replace(mod, &lcase, &ucase)
+         ident(lbr<'CONTENTS'><mod>)                         :s(mnexist)
+         args = trimb(a) ' '
+         args fence ('name' | 'NAME' | 'source' | 'SOURCE' |
++                    'comment' | 'COMMENT' | 'type' | 'TYPE' |
++                    'artifacts' | 'ARTIFACTS' | 'depends' | 'DEPENDS' |
++                    'files' | 'FILES') . var ' '
++            rem . val :f(mesyn)
+* need artifacts depends files. These require conversion to string
+* format and back again. type must be MODULE, PROGRAM, or empty.
+         var = replace(var, &lcase, &ucase)
+         val = trimb(val)
+         differ(val) :s(me2)
+         val = stringize(var, lbr<'CONTENTS'><mod><var>)         :f(top)
+         val = editline(mod ':' var ': ', val)
+me2      lbr<'CONTENTS'><mod><var> = destring(var, val)           :(top)
+
+
+stringize
+  stringize = v
+  n 'ARTIFACTS' | 'DEPENDS' | 'FILES' :f(return)
+  s =
+  n 'FILES' :f(str2)
+  s = table()
+  seq(' s<v<i><"NAME">> = 1', .i)
+  v = keys_in_table(s)
+str2
+  s = stringout(v, CHARS_NUL)
+  s = repl(s, '\', '\\')
+  s = repl(s, ' ', '\ ')
+  s = replace(s, CHARS_NUL, ' ')
+  stringize = s :(return)
+
+destring
+  destring = v
+  n 'ARTIFACTS' | 'DEPENDS' | 'FILES' :f(return)
+  s = repl(v, '\\', CHARS_NUL)
+  s = repl(s, '\ ', CHARS_SOH)
+  s = repl(s, CHARS_NUL, '\')
+  s = crack(s, ' ')
+  seq(' s<i> = repl(s<i>, CHARS_SOH, " ")', .i)
+  destring = s
+  n 'FILES' :f(return)
+  terminal = 'destring FILES'
+  f = filest(lbr)
+*  seq(' output = s<i>', .i)
+  seq(' s<i> = (vdiffer(filest<s<i>>), create_file(s<i>))', .i)
+  destring = s :(return)
+
+mesyn    terminal = 'MODULE M_NAME EDIT ITEM VALUE'
+         terminal = 'ITEM - NAME, SOURCE, COMMENT, ARTIFACTS,'
+         terminal = '       TYPE, DEPENDS, FILES'                 :(top)
+ 
+module_add
+         args = trimb(args)
+         args = replace(args, &lcase, &ucase)
+         ident(args)                                            :s(msyn)
+         differ(lbr<'CONTENTS'><args>)                        :s(mexist)
+         m = table()
+         m<'NAME'> = args
+         m<'SOURCE'> =
+         m<'COMMENT'> =
+         m<'ARTIFACTS'> = array0
+         m<'TYPE'> =
+         m<'DEPENDS'> = array0
+         m<'INSTALL'> = array0
+         m<'BUILD'> = array0
+         m<'FILES'> = array0
+         lbr<'CONTENTS'><args> = m                                :(top)
+
+msyn     terminal = 'MODULE ADD|REM NAME'                         :(top)
+mexist   terminal = 'MODULE ' args ' ALREADY IN LIBRARY'          :(top)
+mnexist  terminal = 'MODULE ' args ' NOT IN LIBRARY'              :(top)
+
+* we need an "undo" operation. to do this, we can copy_table() of the
+* loaded lbr, and restore that back to lbr. Also, any "deep edit" needs
+* to keep a copy of the deep edit entry and how to restore it.
+
+module_rem
+         args = trimb(args)
+         ident(args)                                            :s(msyn)
+         args = replace(args, &lcase, &ucase)
+         ident(lbr<'CONTENTS'><args>)                        :s(mnexist)
+         lbr<'CONTENTS'><args> =
+         lbr<'CONTENTS'> = prune_table(lbr<'CONTENTS'>)           :(top)
 
 * Edit a file in the library. We edit by file, because a module may
 * have multiple source artifacts. In future, we should determine
 * file collisions -- and deal with that.
 
-edit     fn = trimb(args)
+edit.    fn = trimb(args)
          filest = filest(lbr)
          differ(f = filest<fn>)                                  :f(unf)
          terminal = 'EDITING ' f<'NAME'>
          wfile(f)
          host(HOST_SYSCMD, 'ED ' fn)
-         ts = bq('stat -c %Y ' fn)
+         ts = (file(fn) bq('stat -c %Y ' fn), 0)
          ne(ts, f<'TIMESTAMP'>)                                :s(edit2)
          terminal = 'FILE NOT CHANGED'                            :(top)
 edit2    rfile(f)                                                 :(top)
@@ -116,8 +268,9 @@ unf      terminal = 'UNKNOWN FILE' :(top)
 
 * Build a module
 
-build    ident(lbr)                                              :s(nol)
+build.   ident(lbr)                                              :s(nol)
          args = trimb(args)
+         args = replace(args, &lcase, &ucase)
          m = lbr<'CONTENTS'><args>
          ident(m)                                                :s(nom)
 
@@ -220,12 +373,13 @@ bu_3         c = eq(sizea(c)) %'touch {{tgt}}'
              host(HOST_SYSCMD, s)
 
 * If this artifact is newer than what we have (and we hope so), replace
-* the library file.
+* the library file. If not don't update, but issue a warning message
 
              newf = create_file(tgt)
              oldf = filest<tgt>
              terminal = le(newf<'TIMESTAMP'>, oldf<'TIMESTAMP'>)
-+ 'TARGET ' tgt ' APPEARS NOT TO HAVE BEEN UPDATED?'            :s(bu_4)
++                     'TARGET ' tgt ' APPEARS NOT TO HAVE BEEN UPDATED?'
++                                                               :s(bu_4)
              oldf<'TIMESTAMP'> = newf<'TIMESTAMP'>
              oldf<'ACCESS'> = newf<'ACCESS'>
              oldf<'CONTENTS'> = newf<'CONTENTS'>
@@ -240,7 +394,7 @@ bl_2
 
 * Information on the library, or a module
 
-info     ident(lbr)                                              :s(nol)
+info.    ident(lbr)                                              :s(nol)
          args = trimb(args)
          differ(args)                                          :s(info2)
 
@@ -258,7 +412,7 @@ cntf_5
          terminal = 'DATAFILE:  ' lbr<'DATAFILE'>
          terminal = 'VERSION:   ' lbr<'VERSION'>
          terminal = 'COMMENT:   ' lbr<'COMMENT'>
-         t = lbr<'TIMESTAMP'>
+         t = (vdiffer(lbr<'TIMESTAMP'>), 0)
          t = bq('date -d @' t)
          terminal = 'TIMESTAMP: ' lbr<'TIMESTAMP'> ' (' t ')'
          terminal = 'CONTENTS:  ' sizet(lbr<'CONTENTS'>) ' modules, '
@@ -268,6 +422,7 @@ cntf_5
 * build and install commands not shown
 
 info2    args fence ('file ' | 'FILE ') =                      :s(info3)
+         args = replace(args, &lcase, &ucase)
          m = args
          m = vdiffer(lbr<'CONTENTS'><m>)                         :f(top)
          terminal = 'NAME:      ' m<'NAME'>
@@ -292,7 +447,7 @@ info3    filest = filest(lbr)
          terminal = ident(f = filest<args>) 'NO FILE'            :s(top)
          terminal = 'NAME:      ' f<'NAME'>
          terminal = 'TYPE:      ' f<'TYPE'>
-         t = f<'TIMESTAMP'>
+         t = (vdiffer(f<'TIMESTAMP'>), 0)
          t = bq('date -d @' t)
          terminal = 'TIMESTAMP: ' f<'TIMESTAMP'> ' (' t ')'
          terminal = 'ACCESS:    ' f<'ACCESS'>
@@ -303,7 +458,7 @@ info3    filest = filest(lbr)
 
 * List the modules in the library
 
-ls       ident(lbr)                                              :s(nol)
+ls.      ident(lbr)                                              :s(nol)
          args = eval(args)
          m = iter_modules(lbr)
 ls2        n = module(m)                                         :f(ls3)
@@ -317,7 +472,7 @@ nom      terminal = 'MODULE ' args ' NOT FOUND'                   :(top)
 
 * New library. Seed in '*.lss' as modules.
 
-new      args = trimb(args)
+new.     args = trimb(args)
          args = ident(args) 'LBR'
          lbr = createlbr(args, 'SNOLIB', args '.DAT', 'SNOLIB library')
 
@@ -371,32 +526,25 @@ seed2    terminal =
 
 * Load library
 
-load     args = trimb(args)
+load.    args = trimb(args)
          args = ident(args) 'LBR'
          lbr = readlbr(args)                                      :(top)
 
 
 * Save library
 
-save     ident(lbr)                                              :s(nol)
+save.    ident(lbr)                                              :s(nol)
          writelbr(lbr)
          lbr =                                                    :(top)
 
 
 * Extract files from module
 
-extract  ident(lbr)                                              :s(nol)
+extract. ident(lbr)                                              :s(nol)
          args = trimb(args)
          ident(lbr<'CONTENTS'><args>)                            :s(nom)
          writefiles(lbr, args)                                   :s(top)
          terminal = "CAN'T EXTRACT"                               :(top)
-
-
-* Help
-
-help     terminal = 'SOOSIE'
-         terminal =
-         terminal = 'new, load, save, ls, extract, build, quit'   :(top)
 
 
 * Functions for soosie
@@ -479,17 +627,17 @@ create_file
 
 
 * Fill in file details (including contents) of a file entry from the
-* file in the filesystem.
+* file in the filesystem. Fill in default for non-existent file.
 
 rfile    fn = ident(fn) f<'NAME'>
          f<'NAME'> = fn
-         s = (?(bq('file ' fn) ? 'text') 'TEXT', 'BINARY')
-         f<'TYPE'> = s
-         f<'TIMESTAMP'> = bq('stat -c %Y ' fn)
-         f<'ACCESS'> = bq('stat -c %a ' fn)
+         f<'TYPE'> = 'TEXT'
+         f<'TYPE'> = (?(file(fn) bq('file ' fn) ? 'text') 'TEXT',
++                     'BINARY')
+         f<'TIMESTAMP'> = (file(fn) bq('stat -c %Y ' fn), 0)
+         f<'ACCESS'> = (file(fn) bq('stat -c %a ' fn), '644')
          f<'LOCATION'> = 'DIRECT'
-         s = readfile(fn)                                     :f(return)
-         f<'CONTENTS'> = s                                     :(return)
+         f<'CONTENTS'> =(file(fn) readfile(fn), '')            :(return)
 
 
 * Create a module for the library
@@ -513,21 +661,25 @@ create_module
 * no output, it is taken to be fail. This should be documented in
 * bq.
 
-         m<'TYPE'> = (?bq('grep -- -MODULE ' src) 'MODULE', 'PROGRAM')
+         m<'TYPE'> = (?(file(src) bq('grep -- -MODULE ' src))
++                     'MODULE', 'PROGRAM')
 
 * Hunt down the module or program name. If we can't find it, we
 * assume the src name with any extension removed.
 
          s = src
          src arb . s '.' arb rpos(0)
-         s = bq('grep -- ^-MODULE ' src ' | sed -e "s/-MODULE //"')
-         s = bq('grep -- ^-PROGRAM ' src ' | sed -e "s/-PROGRAM //"')
+         s = file(src)
++            bq('grep -- ^-MODULE ' src ' | sed -e "s/-MODULE //"')
+         s = file(src)
++            bq('grep -- ^-PROGRAM ' src ' | sed -e "s/-PROGRAM //"')
          m<'NAME'> = s
 
 * Determine depends. This is determine by the first artifact, run
 * through 'uses', or is supplied.
 
-         depends = ident(depends) json_decode(bq('uses ' artifacts<1>))
+         depends = ident(depends) file(artifacts<1>)
++                  json_decode(bq('uses ' artifacts<1>))
 +                                                                :f(end)
          m<'DEPENDS'> = depends
 

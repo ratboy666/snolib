@@ -7,8 +7,7 @@
 </head><body><font face="Sorts Mill Goudy">
 <p align="justify"><font face="Sorts Mill Goudy">
 <h1>JIT - Just In Time Code Generation</h1>
-</font></p>
-<p align="justify"><font face="Sorts Mill Goudy">
+1580
 Interface to the GNU Lightning library to allow dynamic code production
 at run-time for: ARM, HPPA, IA64, MIPS, PPC, S390, SPARC, Intel X86
 (32 bit) and X86_64.
@@ -55,7 +54,6 @@ all of the platforms that I would want.
 -SNOBOL WRAPPER_STARTFILE(.EMBED)
 
 <font color="#818181"><i>#include &lt;lightning.h&gt;</i></font>
-<font color="#818181"><i>#include &quot;p64.h&quot;</i></font>
 
 /* Setup, state and misc */
 -SNOBOL C_WRAPPER_PROTO(&#39;INIT_JIT(STRING)&#39;, .EMBED)
@@ -63,17 +61,17 @@ all of the platforms that I would want.
 
 static jit_state_t *_jit;
 
-static void get_state_jit(void) { set_p_(_jit); }
+static long get_state_jit(void) { return (long)_jit; }
 
--SNOBOL C_WRAPPER_PROTO(&#39;GET_STATE_JIT()&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;GET_STATE_JIT()LONG&#39;, .EMBED)
 
-static void set_state_jit(void) { _jit = get_p_(); }
+static void set_state_jit(long p) { _jit = (void *)p; }
 
--SNOBOL C_WRAPPER_PROTO(&#39;SET_STATE_JIT()&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;SET_STATE_JIT(LONG)&#39;, .EMBED)
 
-static void new_state_jit(void) { set_p_(jit_new_state()); }
+static long new_state_jit(void) { return (long)jit_new_state(); }
 
--SNOBOL C_WRAPPER_PROTO(&#39;NEW_STATE_JIT()&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;NEW_STATE_JIT()LONG&#39;, .EMBED)
 
 static void destroy_state_jit(void) { jit_destroy_state(); }
 
@@ -91,49 +89,49 @@ static void epilog_jit(void) { jit_epilog(); }
 
 -SNOBOL C_WRAPPER_PROTO(&#39;EPILOG_JIT()&#39;, .EMBED)
 
-static void note_jit(char *s, int n) { set_p_(jit_note(s, n)); }
+static long note_jit(char *s, int n) { return (long)jit_note(s, n); }
 
--SNOBOL C_WRAPPER_PROTO(&#39;NOTE_JIT(STRING,INTEGER)&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;NOTE_JIT(STRING,INTEGER)LONG&#39;, .EMBED)
 
-static void name_jit(char *s) { set_p_(jit_name(s)); }
+static long name_jit(char *s) { return (long)jit_name(s); }
 
--SNOBOL C_WRAPPER_PROTO(&#39;NAME_JIT(STRING)&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;NAME_JIT(STRING)LONG&#39;, .EMBED)
 
-static void address_jit(void) { set_p_(jit_address(get_p_())); }
+static long address_jit(long p) { return (long)jit_address((void *)p); }
 
--SNOBOL C_WRAPPER_PROTO(&#39;ADDRESS_JIT()&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;ADDRESS_JIT(LONG)LONG&#39;, .EMBED)
 
 static void disassemble_jit(void) { jit_disassemble(); }
 
 -SNOBOL C_WRAPPER_PROTO(&#39;DISASSEMBLE_JIT()&#39;, .EMBED)
 
-static void emit_jit(void) { set_p_(jit_emit()); }
+static long emit_jit(void) { (long)jit_emit(); }
 
--SNOBOL C_WRAPPER_PROTO(&#39;EMIT_JIT()&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;EMIT_JIT()LONG&#39;, .EMBED)
 
 static void print_jit(void) { jit_print(); }
 
 -SNOBOL C_WRAPPER_PROTO(&#39;PRINT_JIT()&#39;, .EMBED)
 
-static void label_jit(void) { set_p_(jit_label()); }
+static long label_jit(void) { return (long)jit_label(); }
 
--SNOBOL C_WRAPPER_PROTO(&#39;LABEL_JIT()&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;LABEL_JIT()INTEGER&#39;, .EMBED)
 
 static void ellipsis_jit(void) { jit_ellipsis(); }
 
 -SNOBOL C_WRAPPER_PROTO(&#39;ELLIPSIS_JIT()&#39;, .EMBED)
 
-static int get_note_jit(void)
-{
-    int notei;
-    void *p, *p2;
-    jit_get_note(get_p_(), (char **)&amp;p, (char **)&amp;p2, &amp;notei);
-    set_p_(p);
-    set_p2_(p2);
-    return notei;
-}
+//static int get_note_jit(void)
+//{
+//    int notei;
+//    void *p, *p2;
+//    jit_get_note(get_p_(), (char **)&amp;p, (char **)&amp;p2, &amp;notei);
+//    set_p_(p);
+//    set_p2_(p2);
+//    return notei;
+//}
 
--SNOBOL C_WRAPPER_PROTO(&#39;GET_NOTE_JIT()INTEGER&#39;, .EMBED)
+-CMNT -SNOBOL C_WRAPPER_PROTO(&#39;GET_NOTE_JIT()INTEGER&#39;, .EMBED)
 
 static int pointer_p_jit(void) { return jit_pointer_p(get_p_()); }
 
@@ -164,13 +162,16 @@ static int allocai_jit(int n) { return jit_allocai(n); }
 -SNOBOL C_WRAPPER_PROTO(&#39;ALLOCAI_JIT(INTEGER)INTEGER&#39;, .EMBED)
 
 /* DATA, LENGTH, ALIGNMENT (0..4). DATA/LENGTH HASHED */
-static void data_jit(int l, int a) { set_p_(jit_data(get_p_(), l, a)); }
+static long data_jit(long p, int l, int a)
+{
+    return (long)jit_data((void *)p, l, a);
+}
 
--SNOBOL C_WRAPPER_PROTO(&#39;DATA_JIT(INTEGER,INTEGER)&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;DATA_JIT(LONG,INTEGER,INTEGER)LONG&#39;, .EMBED)
 
-static void forward_jit(void) { set_p_(jit_forward()); }
+static long forward_jit(void) { return (long)jit_forward(); }
 
--SNOBOL C_WRAPPER_PROTO(&#39;FORWARD_JIT()&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;FORWARD_JIT()LONG&#39;, .EMBED)
 
 static void live_jit(int r) { jit_live(r); }
 
@@ -290,9 +291,9 @@ static int f_num_jit(void) { return jit_f_num(); }
 -SNOBOL A = CRACK(L, &#39; &#39;)
 -SNOBOL AU = CRACK(LU, &#39; &#39;)
 -SNOBOL SEQ(&quot; EMBED = &#39;static void &#39; A&lt;I&gt; &#39;_jit(int r1, int r2) { &#39;; &quot; +
-            &quot; EMBED = &#39;    set_p_(jit_&#39; A&lt;I&gt; &#39;(r1, r2));&#39;; &quot;               +
+            &quot; EMBED = &#39;    return (long)jit_&#39; A&lt;I&gt; &#39;(r1, r2);&#39;; &quot;      +
             &quot; EMBED = DIFFER(A&lt;I&gt;) &#39;}&#39;; &quot;                              +
-            &quot; C_WRAPPER_PROTO(AU&lt;I&gt; &#39;_JIT(INTEGER,INTEGER)&#39;, &quot;         +
+            &quot; C_WRAPPER_PROTO(AU&lt;I&gt; &#39;_JIT(INTEGER,INTEGER)LONG&#39;, &quot;     +
             &quot; .EMBED) &quot;, .I)
 
 /* TWO REGISTER MOV, HTONR, NTOHR, COM, NEG, ABS, SQRT, EXT, TRUNC */
@@ -507,23 +508,23 @@ static void reti_d_jit(void) { jit_reti_d(get_d_()); }
          LOAD(&#39;F_NUM_JIT()INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;FINISH_JIT()&#39;, &#39;jit.so&#39;)
 <font color="#818181"><i>*</i></font>
-         LOAD(&#39;GET_STATE_JIT()&#39;, &#39;jit.so&#39;)
-         LOAD(&#39;SET_STATE_JIT()&#39;, &#39;jit.so&#39;)
-         LOAD(&#39;NEW_STATE_JIT()&#39;, &#39;jit.so&#39;)
+         LOAD(&#39;GET_STATE_JIT()INTEGER&#39;, &#39;jit.so&#39;)
+         LOAD(&#39;SET_STATE_JIT(INTEGER)&#39;, &#39;jit.so&#39;)
+         LOAD(&#39;NEW_STATE_JIT()INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;DESTROY_STATE_JIT()&#39;, &#39;jit.so&#39;)
          LOAD(&#39;CLEAR_STATE_JIT()&#39;, &#39;jit.so&#39;)
 <font color="#818181"><i>*</i></font>
          LOAD(&#39;PROLOG_JIT()&#39;, &#39;jit.so&#39;)
          LOAD(&#39;EPILOG_JIT()&#39;, &#39;jit.so&#39;)
-         LOAD(&#39;NOTE_JIT(STRING,INTEGER)&#39;, &#39;jit.so&#39;)
-         LOAD(&#39;NAME_JIT(STRING)&#39;, &#39;jit.so&#39;)
-         LOAD(&#39;ADDRESS_JIT()&#39;, &#39;jit.so&#39;)
+         LOAD(&#39;NOTE_JIT(STRING,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
+         LOAD(&#39;NAME_JIT(STRING)INTEGER&#39;, &#39;jit.so&#39;)
+         LOAD(&#39;ADDRESS_JIT(INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;DISASSEMBLE_JIT()&#39;, &#39;jit.so&#39;)
-         LOAD(&#39;EMIT_JIT()&#39;, &#39;jit.so&#39;)
+         LOAD(&#39;EMIT_JIT()INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;PRINT_JIT()&#39;, &#39;jit.so&#39;)
-         LOAD(&#39;LABEL_JIT()&#39;, &#39;jit.so&#39;)
+         LOAD(&#39;LABEL_JIT()INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;ELLIPSIS_JIT()&#39;, &#39;jit.so&#39;)
-         LOAD(&#39;GET_NOTE_JIT()INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*        LOAD(&#39;GET_NOTE_JIT()INTEGER&#39;, &#39;jit.so&#39;)</i></font>
          LOAD(&#39;POINTER_P_JIT()&#39;, &#39;jit.so&#39;)
          LOAD(&#39;CALLEE_SAVE_P_JIT(INTEGER)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;PATCH_AT_JIT()&#39;, &#39;jit.so&#39;)
@@ -531,8 +532,8 @@ static void reti_d_jit(void) { jit_reti_d(get_d_()); }
          LOAD(&#39;PATCH_JIT()&#39;, &#39;jit.so&#39;)
          LOAD(&#39;PREPARE_JIT()&#39;, &#39;jit.so&#39;)
          LOAD(&#39;ALLOCAI_JIT(INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
-         LOAD(&#39;DATA_JIT(INTEGER,INTEGER)&#39;, &#39;jit.so&#39;)
-         LOAD(&#39;FORWARD_JIT()&#39;, &#39;jit.so&#39;)
+         LOAD(&#39;DATA_JIT(INTEGER,INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
+         LOAD(&#39;FORWARD_JIT()INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;LIVE_JIT(INTEGER)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;LINK_JIT()&#39;, &#39;jit.so&#39;)
 <font color="#818181"><i>*</i></font>
@@ -1209,19 +1210,15 @@ JIT_DISASSEMBLE
          DISASSEMBLE_JIT()                                     <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_LABEL
-         LABEL_JIT()
-         JIT_LABEL = GET_P()                                   <b>:(RETURN)</b>
+         JIT_LABEL = LABEL_JIT()                               <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_ELLIPSIS
          ELLIPSIS_JIT()                                        <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
-JIT_EMIT EMIT_JIT()
-         JIT_EMIT = GET_P()                                    <b>:(RETURN)</b>
+JIT_EMIT JIT_EMIT = EMIT_JIT()                                 <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_ADDRESS
-         SET_P(P)
-         ADDRESS_JIT()
-         JIT_ADDRESS = GET_P()                                 <b>:(RETURN)</b>
+         JIT_ADDRESS = ADDRESS_JIT(P)                          <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_RETR RETR_JIT(R)                                           <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
@@ -1232,16 +1229,13 @@ JIT_RETR_D
          RETR_D_JIT(R)                                         <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_GET_STATE
-         GET_STATE_JIT()
-         JIT_GET_STATE = GET_P()                               <b>:(RETURN)</b>
+         JIT_GET_STATE = GET_STATE_JIT()                       <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_SET_STATE
-         SET_P(JIT)
-         SET_STATE_JIT()                                       <b>:(RETURN)</b>
+         SET_STATE_JIT(JIT)                                    <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_NEW_STATE
-         NEW_STATE_JIT()
-         JIT_NEW_STATE = GET_P()                               <b>:(RETURN)</b>
+         JIT_NEW_STATE = NEW_STATE_JIT()                       <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_DESTROY_STATE
          DESTROY_STATE_JIT()                                   <b>:(RETURN)</b>
@@ -1263,11 +1257,9 @@ JIT_CALLI
          CALLI_JIT()
          JIT_CALLI = GET_P()                                   <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
-JIT_NOTE NOTE_JIT(S, N)
-         JIT_NOTE = GET_P()                                    <b>:(RETURN)</b>
+JIT_NOTE JIT_NOTE = NOTE_JIT(S, N)                             <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
-JIT_NAME NAME_JIT(S)
-         JIT_NAME = GET_P()                                    <b>:(RETURN)</b>
+JIT_NAME JIT_NAME = NAME_JIT(S)                                <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_PREPARE
          PREPARE_JIT()                                         <b>:(RETURN)</b>
@@ -1513,134 +1505,103 @@ JIT_STXR_F
 JIT_STXR_D
          STXR_D_JIT(R1, R2, R3)                                <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
-JIT_BLTR BLTR_JIT(R1, R2)
-         JIT_BLTR = GET_P()                                    <b>:(RETURN)</b>
+JIT_BLTR JIT_BLTR = BLTR_JIT(R1, R2)                           <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BLTR_U
-         BLTR_U_JIT(R1, R2)
-         JIT_BLTR_U = GET_P()                                  <b>:(RETURN)</b>
+         JIT_BLTR_U = BLTR_U_JIT(R1, R2)                       <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
-JIT_BLER BLER_JIT(R1, R2)
-         JIT_BLER = GET_P()                                    <b>:(RETURN)</b>
+JIT_BLER JIT_BLER = BLER_JIT(R1, R2)                           <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BLER_U
-         BLER_U_JIT(R1, R2)
-         JIT_BLER_U = GET_P()                                  <b>:(RETURN)</b>
+         BLER_U_JIT = BLER_U_JIT(R1, R2)                       <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
-JIT_BGTR BGTR_JIT(R1, R2)
-         JIT_BGTR = GET_P()                                    <b>:(RETURN)</b>
+JIT_BGTR JIT_BGTR = BGTR_JIT(R1, R2)                           <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BGTR_U
-         BGTR_U_JIT(R1, R2)
-         JIT_BGTR_U = GET_P()                                  <b>:(RETURN)</b>
+         JIT_BGTR_U = BGTR_U_JIT(R1, R2)                       <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
-JIT_BGER BGER_JIT(R1, R2)
-         JIT_BGER = GET_P()                                    <b>:(RETURN)</b>
+JIT_BGER JIT_BGER = BGER_JIT(R1, R2)                           <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BGER_U
-         BGER_U_JIT(R1, R2)
-         JIT_BGER_U = GET_P()                                  <b>:(RETURN)</b>
+         JIT_BGER_U = BGER_U_JIT(R1, R2)                       <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
-JIT_BEQR BEQR_JIT(R1, R2)
-         JIT_BEQR = GET_P()                                    <b>:(RETURN)</b>
+JIT_BEQR JIT_BEQR = BEQR_JIT(R1, R2)                           <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
-JIT_BNER BNER_JIT(R1, R2)
-         JIT_BNER = GET_P()                                    <b>:(RETURN)</b>
+JIT_BNER JIT_BNER = BNER_JIT(R1, R2)                           <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
-JIT_BMSR BMSR_JIT(R1, R2)
-         JIT_BMSR = GET_P()                                    <b>:(RETURN)</b>
+JIT_BMSR JIT_BMSR = BMSR_JIT(R1, R2)                           <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
-JIT_BMCR BMCR_JIT(R1, R2)
-         JIT_BMCR = GET_P()                                    <b>:(RETURN)</b>
+JIT_BMCR JIT_BMCR = BMCR_JIT(R1, R2)                           <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BOADDR
-         BOADDR_JIT(R1, R2)
-         JIT_BOADDR = GET_P()                                  <b>:(RETURN)</b>
+         JIT_BOADDR = BOADDR_JIT(R1, R2)                       <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BXADDR
-         BXADDR_JIT(R1, R2)
-         JIT_BXADDR = GET_P()                                  <b>:(RETURN)</b>
+         JIT_BXADDR = BXADDR_JIT(R1, R2)                       <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BOSUBR
-         BOSUBR_JIT(R1, R2)
-         JIT_BOSUBR = GET_P()                                  <b>:(RETURN)</b>
+         JIT_BOSUBR = BOSUBR_JIT(R1, R2)                       <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BXSUBR
-         BXSUBR_JIT(R1, R2)
-         JIT_BXSUBR = GET_P()                                  <b>:(RETURN)</b>
+         JIT_BXSUBR = BXSUBR_JIT(R1, R2)                       <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BOADDR_U
-         BOADDR_U_JIT(R1, R2)
-         JIT_BOADDR_U = GET_P()                                <b>:(RETURN)</b>
+         JIT_BOADDR_U = BOADDR_U_JIT(R1, R2)                   <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BXADDR_U
-         BXADDR_U_JIT(R1, R2)
-         JIT_BXADDR_U = GET_P()                                <b>:(RETURN)</b>
+         JIT_BXADDR_U = BXADDR_U_JIT(R1, R2)                   <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BOSUBR_U
-         BOSUBR_U_JIT(R1, R2)
-         JIT_BOSUBR_U = GET_P()                                <b>:(RETURN)</b>
+         JIT_BOSUBR_U = BOSUBR_U_JIT(R1, R2)                   <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BXSUBR_U
-         BXSUBR_U_JIT(R1, R2)
-         JIT_BXSUBR_U = GET_P()                                <b>:(RETURN)</b>
+         JIT_BXSUBR_U = BXSUBR_U_JIT(R1, R2)                   <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BLTR_F
-         BLTR_F_JIT(R1, R2)
-         JIT_BLTR_F = GET_P()                                  <b>:(RETURN)</b>
+         JIT_BLTR_F = BLTR_F_JIT(R1, R2)                       <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BLER_F
-         BLER_F_JIT(R1, R2)
-         JIT_BLER_F = GET_P()                                  <b>:(RETURN)</b>
+         JIT_BLER_F = BLER_F_JIT(R1, R2)                       <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BGTR_F
-         BGTR_F_JIT(R1, R2)
-         JIT_BGTR_F = GET_P()                                  <b>:(RETURN)</b>
+         JIT_BGTR_F = BGTR_F_JIT(R1, R2)                       <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BGER_F
-         BGER_F_JIT(R1, R2)
-         JIT_BGER_F = GET_P()                                  <b>:(RETURN)</b>
+         JIT_BGER_F = BGER_F_JIT(R1, R2)                       <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BEQR_F
-         BEQR_F_JIT(R1, R2)
-         JIT_BEQR_F = GET_P()                                  <b>:(RETURN)</b>
+         JIT_BEQR_F = BEQR_F_JIT(R1, R2)                       <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BNER_R
-         BNER_R_JIT(R1, R2)
-         JIT_BNER_R = GET_P()                                  <b>:(RETURN)</b>
+         JIT_BNER_R = BNER_R_JIT(R1, R2)                       <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BUNLTR_F
-         BUNLTR_F_JIT(R1, R2)
-         JIT_BUNLTR_F = GET_P()                                <b>:(RETURN)</b>
+         JIT_BUNLTR_F = BUNLTR_F_JIT(R1, R2)                   <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BUNLER_F
-         BUNLER_F_JIT(R1, R2)
-         JIT_BUNLER_F = GET_P()                                <b>:(RETURN)</b>
+         JIT_BUNLER_F = BUNLER_F_JIT(R1, R2)                   <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BUNEQR_F
-         BUNEQR_F_JIT(R1, R2)
-         JIT_BUNEQR_F = GET_P()                                <b>:(RETURN)</b>
+         JIT_BUNEQR_F = BUNEQR_F_JIT(R1, R2)                   <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BUNGER_F
-         BUNGER_F_JIT(R1, R2)
-         JIT_BUNGER_F = GET_P()                                <b>:(RETURN)</b>
+         JIT_BUNGER_F = BUNGER_F_JIT(R1, R2)                   <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BUNGTR_F
-         BUNGTR_F_JIT(R1, R2)
-         JIT_BUNGTR_F = GET_P()                                <b>:(RETURN)</b>
+         JIT_BUNGTR_F = BUNGTR_F_JIT(R1, R2)                   <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BLTGTR_F
-         BLTGTR_F_JIT(R1, R2)
-         JIT_BLTGTR_F = GET_P()                                <b>:(RETURN)</b>
+         JIT_BLTGTR_F = BLTGTR_F_JIT(R1, R2)                   <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BORDR_F
-         BORDR_F_JIT(R1, R2)
-         JIT_BORDR_F = GET_P()                                 <b>:(RETURN)</b>
+         JIT_BORDR_F = BORDR_F_JIT(R1, R2)                     <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BUNORDR_F
-         BUNORDR_F_JIT(R1, R2)
-         JIT_BUNORDR_F = GET_P()                               <b>:(RETURN)</b>
+         JIT_BUNORDR_F = BUNORDR_F_JIT(R1, R2)                 <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
+            &#39;bltr_d bler_d bgtr_d bger_d beqr_d bner_d &#39;               +
+            &#39;bunltr_d bunler_d buneqr_d bunger_d bungtr_d &#39;            +
+            &#39;bltgtr_d bordr_d bunordr_d &#39;
 JIT_BLTR_D
          BLTR_D_JIT(R1, R2)
          JIT_BLTR_D = GET_P()                                  <b>:(RETURN)</b>
@@ -2255,7 +2216,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 20:00:07 EDT 2014</p></td><td><p align=right>
+Mon Jun  9 19:00:09 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

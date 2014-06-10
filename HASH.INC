@@ -1,10 +1,10 @@
--LINE 57 "HASH.lss"
+-LINE 58 "HASH.lss"
 -INCLUDE 'BRKREM.INC'
 -INCLUDE 'SEQ.INC'
 -INCLUDE 'VDIFFER.INC'
 -STITL HASH
 -EJECT
--LINE 140 "HASH.lss"
+-LINE 149 "HASH.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -23,15 +23,23 @@
 *
 * HASH.lss
 *
--LINE 63 "HASH.lss"
+-LINE 64 "HASH.lss"
 -MODULE HASH
 -PUBLIC HASH(), COPY_TABLE(), MERGE_TABLE(), KEYS_IN_TABLE(), #1
+-PUBLIC PRUNE_TABLE()
+*
          DEFINE('HASH(S,E,P,TS,TI,FK,FV,SP)K,V,C')
          DEFINE('HASH_3(S)')
          DEFINE('COPY_TABLE(T)')
          DEFINE('MERGE_TABLE(T1,T2)A,I')
          DEFINE('KEYS_IN_TABLE(T)A,N,I')
+         DEFINE('PRUNE_TABLE(T)A,I')
          OPSYN('#', 'HASH', 1)                               :(HASH_END)
+*
+PRUNE_TABLE
+         PRUNE_TABLE = TABLE()
+         A = KEYS_IN_TABLE(T)                                 :F(RETURN)
+         SEQ( ' PRUNE_TABLE<A<I>> = VDIFFER(T<A<I>>)', .I)     :(RETURN)
 *
 HASH     HASH = TABLE(TS, TI)
          E = IDENT(E) '='
