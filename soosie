@@ -116,7 +116,7 @@ top      p = (differ(lbr) lbr<'LIBRARY'>, 'NO LIBRARY')
 
 * major command, go to handler
 
-         l fence ('ls' | 'LS' | 'seed' | 'SEED' | 'load' | 'load' |
+         l fence ('ls' | 'LS' | 'seedall' | 'SEEDALL' | 'load' | 'load' |
 +                 'save' | 'save' | 'quit' | 'QUIT' |
 +                 'export' | 'EXPORT' | 'help' | 'HELP' |
 +                 'info' | 'INFO' | 'build' | 'BUILD' |
