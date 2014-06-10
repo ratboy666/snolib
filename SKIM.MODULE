@@ -51,28 +51,36 @@
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012751",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "f78cdfe3631103088d9ec24bf842e568",
+      "SIZE": 1944
     },
     {
       "NAME": "SKIM.INC",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012776",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "a0ee961b628d655916105a63420fc64f",
+      "SIZE": 1564
     },
     {
       "NAME": "SKIM.html",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012823",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "52d683b382e4a1f90f28827ad84fc37e",
+      "SIZE": 4243
     },
     {
       "NAME": "SKIM.tst",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012780",
       "ACCESS": "775",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "67eb1d29b040bc6c1d6570ac5d3b8895",
+      "SIZE": 137
     }
   ]
 }

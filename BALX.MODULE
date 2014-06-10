@@ -51,28 +51,36 @@
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012716",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "bf4d364e56e3931d528edadb5917817d",
+      "SIZE": 2336
     },
     {
       "NAME": "BALX.INC",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012768",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "bb56f3edc4a6d7be2372bb88e2391e01",
+      "SIZE": 1702
     },
     {
       "NAME": "BALX.html",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012787",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "269c26db9160887b2a47ec0f3459d059",
+      "SIZE": 4736
     },
     {
       "NAME": "BALX.tst",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012778",
       "ACCESS": "775",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "73c34a6d85bf7a45dd5f67a8d479ed94",
+      "SIZE": 137
     }
   ]
 }

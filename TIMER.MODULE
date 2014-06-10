@@ -52,28 +52,36 @@
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012755",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "5f8829b78a6b8d9471b4eea5036732ac",
+      "SIZE": 3469
     },
     {
       "NAME": "TIMER.INC",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012776",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "a309691ed7cb6afd07954de679a6a224",
+      "SIZE": 3045
     },
     {
       "NAME": "TIMER.html",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012830",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "0e01628f28dfba498a23ec42a1caecbb",
+      "SIZE": 6186
     },
     {
       "NAME": "TIMER.tst",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012781",
       "ACCESS": "775",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "733a7ee3c12554b26ee1f04d16c6dc29",
+      "SIZE": 139
     }
   ]
 }

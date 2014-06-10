@@ -52,28 +52,36 @@
       "TYPE": "TEXT",
       "TIMESTAMP": "1402394204",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "99e6e90b2223fdb840652377965b86d2",
+      "SIZE": 2063
     },
     {
       "NAME": "DEDUPA.INC",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402394511",
       "ACCESS": "600",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "d271ba0e681211b79b7dc13cea4abc3b",
+      "SIZE": 1535
     },
     {
       "NAME": "DEDUPA.html",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402397365",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "6bddd73090c42ff3ff280bdbecd811da",
+      "SIZE": 4304
     },
     {
       "NAME": "DEDUPA.tst",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402394511",
       "ACCESS": "775",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "e737018818e4d6278357b93872aa9fb7",
+      "SIZE": 141
     }
   ]
 }

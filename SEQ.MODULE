@@ -50,28 +50,36 @@
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012750",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "562834fa81924b0471798856354bb962",
+      "SIZE": 2519
     },
     {
       "NAME": "SEQ.INC",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402174985",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "41be8f4578a592ff63c3e29bf48f9d2c",
+      "SIZE": 1506
     },
     {
       "NAME": "SEQ.html",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012822",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "bbd0fb8c575efc732624f24598412495",
+      "SIZE": 5541
     },
     {
       "NAME": "SEQ.tst",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012780",
       "ACCESS": "775",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "732370197352c4c4a98f61f128acf145",
+      "SIZE": 135
     }
   ]
 }

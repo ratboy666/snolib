@@ -53,28 +53,36 @@
       "TYPE": "TEXT",
       "TIMESTAMP": "1402396889",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "617779fd9b4ea24e69e612d0bd42c7e2",
+      "SIZE": 1715
     },
     {
       "NAME": "ATOL.INC",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402397362",
       "ACCESS": "600",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "9641dd6ca6d685541246d43783e815dc",
+      "SIZE": 1376
     },
     {
       "NAME": "ATOL.html",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402397366",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "6ac5aa6a32c71e506fc06eec595fe7b3",
+      "SIZE": 3958
     },
     {
       "NAME": "ATOL.tst",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402397362",
       "ACCESS": "775",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "9e215eda376adf04d61ad108618e1f81",
+      "SIZE": 137
     }
   ]
 }

@@ -56,28 +56,36 @@
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012727",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "d35bcff33b24a131015d1f51a2ed823f",
+      "SIZE": 6070
     },
     {
       "NAME": "DSERVE.INC",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402394875",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "0087ee71ab9fc8d0a66ebea32e006d82",
+      "SIZE": 5090
     },
     {
       "NAME": "DSERVE.html",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012846",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "23321f0d30c226ea573aaafc0f285a33",
+      "SIZE": 10019
     },
     {
       "NAME": "DSERVE.tst",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012782",
       "ACCESS": "775",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "2d33f14d5abfb31575a03ccae69b9f8b",
+      "SIZE": 376
     }
   ]
 }

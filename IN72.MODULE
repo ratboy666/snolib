@@ -39,21 +39,27 @@
       "TYPE": "TEXT",
       "TIMESTAMP": "1402360856",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "654826f3006dc27150970e7b0961637a",
+      "SIZE": 1615
     },
     {
       "NAME": "in72",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402360858",
       "ACCESS": "775",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "06ccf34780df0fc0b1c14f70140e8b67",
+      "SIZE": 1501
     },
     {
       "NAME": "in72.html",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402360858",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "a37a78152ede895cf81cd40fa0c59851",
+      "SIZE": 3641
     }
   ]
 }

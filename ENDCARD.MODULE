@@ -50,28 +50,36 @@
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012728",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "6d6408a22226ec049ab8bac6cbc55aa6",
+      "SIZE": 1317
     },
     {
       "NAME": "ENDCARD.INC",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012771",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "c083616f96842b66bfe7784ae45c6c0f",
+      "SIZE": 1074
     },
     {
       "NAME": "ENDCARD.html",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012800",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "8681e8888b9bfb0a9c9d4ebd10d9b4db",
+      "SIZE": 3340
     },
     {
       "NAME": "ENDCARD.tst",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012779",
       "ACCESS": "775",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "7bb83f06cbde5efddb430b4d66f00d9d",
+      "SIZE": 139
     }
   ]
 }

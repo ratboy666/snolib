@@ -52,28 +52,36 @@
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012732",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "87d08f221f594b30ca80da09c873ffb8",
+      "SIZE": 5750
     },
     {
       "NAME": "GETKEY.INC",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012772",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "7d5289cc679f2589ad442a2dabc7d019",
+      "SIZE": 4048
     },
     {
       "NAME": "GETKEY.html",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012804",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "5593128ef54fa7a25dc6f098f0cb177a",
+      "SIZE": 9819
     },
     {
       "NAME": "GETKEY.tst",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012779",
       "ACCESS": "775",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "6568bb873b5be2163cb6a35a4eabb9b2",
+      "SIZE": 142
     }
   ]
 }

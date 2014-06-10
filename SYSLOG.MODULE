@@ -52,28 +52,36 @@
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012754",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "bc8abf2a4520a67293ccbdd1bc2e1e0b",
+      "SIZE": 4032
     },
     {
       "NAME": "SYSLOG.INC",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402394875",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "f57fcc395dace08c18f2def2e1cab341",
+      "SIZE": 3709
     },
     {
       "NAME": "SYSLOG.html",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012828",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "4469e2f0981524fd553aa0384d9f9f98",
+      "SIZE": 6732
     },
     {
       "NAME": "SYSLOG.tst",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012781",
       "ACCESS": "775",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "f0074107ea1263799c580f141c345ff6",
+      "SIZE": 141
     }
   ]
 }

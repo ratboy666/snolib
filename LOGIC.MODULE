@@ -50,28 +50,36 @@
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012742",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "113e5bb1a4534da2698999a8e3a9f95c",
+      "SIZE": 4219
     },
     {
       "NAME": "LOGIC.INC",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012775",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "f88c348edb986b633df82e2bb04aeb48",
+      "SIZE": 3945
     },
     {
       "NAME": "LOGIC.html",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012810",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "e409473adc8eef11e6b9a7a0e59a2be0",
+      "SIZE": 7004
     },
     {
       "NAME": "LOGIC.tst",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012780",
       "ACCESS": "775",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "481e0308b926bdf0bac1c33cebcc67ae",
+      "SIZE": 139
     }
   ]
 }

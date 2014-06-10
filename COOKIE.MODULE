@@ -55,28 +55,36 @@
       "TYPE": "TEXT",
       "TIMESTAMP": "1402394148",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "17fe37fa90f271825984563b5a0f7101",
+      "SIZE": 8229
     },
     {
       "NAME": "COOKIE.INC",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402394511",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "d215d69200bf6f5f93b93b95e725356a",
+      "SIZE": 5575
     },
     {
       "NAME": "COOKIE.html",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402394512",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "5213a62b75bf4c12cc9faca18ad42fa7",
+      "SIZE": 13319
     },
     {
       "NAME": "COOKIE.tst",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402394511",
       "ACCESS": "775",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "78a4530e563b59acbe1ec211ad4c3d71",
+      "SIZE": 999
     }
   ]
 }

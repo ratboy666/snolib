@@ -51,28 +51,36 @@
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012724",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "44631d04881d640dbb4b137d9cb588d7",
+      "SIZE": 1427
     },
     {
       "NAME": "DDTCARD.INC",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012771",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "71d45564fe450c53e54c6b73c9aee50f",
+      "SIZE": 1087
     },
     {
       "NAME": "DDTCARD.html",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012795",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "89e7faf34fb13e32c468b21d12725d6a",
+      "SIZE": 3526
     },
     {
       "NAME": "DDTCARD.tst",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012779",
       "ACCESS": "775",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "6e7b59494ef966d1318dfcd4913ea943",
+      "SIZE": 149
     }
   ]
 }

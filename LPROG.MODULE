@@ -50,28 +50,36 @@
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012742",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "10a1ae5dc454edf73c0a33bb63360c15",
+      "SIZE": 1970
     },
     {
       "NAME": "LPROG.INC",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012775",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "98bd4b1ca9b91bcb8acbc6fa9ed809a8",
+      "SIZE": 1238
     },
     {
       "NAME": "LPROG.html",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012811",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "5c3baf4c6aa2212eaf70be7333af01b4",
+      "SIZE": 4241
     },
     {
       "NAME": "LPROG.tst",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012780",
       "ACCESS": "775",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "f9bd6910249e184202059703eff3ea08",
+      "SIZE": 212
     }
   ]
 }

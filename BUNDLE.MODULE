@@ -42,21 +42,27 @@
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012718",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "0758bedc8e42ae87cda4538f07618d84",
+      "SIZE": 3459
     },
     {
       "NAME": "bundle",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402394875",
       "ACCESS": "775",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "47e2ba6c42a47dbd55d723e89720ff7d",
+      "SIZE": 3287
     },
     {
       "NAME": "bundle.html",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012788",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "8a542119ab333255871c59778e093bd2",
+      "SIZE": 5983
     }
   ]
 }

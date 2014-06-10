@@ -50,28 +50,36 @@
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012748",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "bd083e201d99b9b1e2aaa07c3448cacd",
+      "SIZE": 2500
     },
     {
       "NAME": "ROMAN.INC",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012775",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "0b9540121a0272bdbdb3b0f2b8dd2a48",
+      "SIZE": 1846
     },
     {
       "NAME": "ROMAN.html",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012820",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "e816533302bc089d216e3c113cf3ad5a",
+      "SIZE": 5054
     },
     {
       "NAME": "ROMAN.tst",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012780",
       "ACCESS": "775",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "49626f98395397e8a339be9919da5c38",
+      "SIZE": 399
     }
   ]
 }

@@ -55,28 +55,36 @@
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012733",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "ad19f00abccdd716e774c63551adaa16",
+      "SIZE": 4420
     },
     {
       "NAME": "HTMLESC.INC",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012777",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "51b7f3628bce6897896e3d369e9353f8",
+      "SIZE": 3079
     },
     {
       "NAME": "HTMLESC.html",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012835",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "e9b3b111a81f67ab4bf825e0a2c3bf3c",
+      "SIZE": 7911
     },
     {
       "NAME": "HTMLESC.tst",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012781",
       "ACCESS": "775",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "9a93ac7ed31da5fab86050444527c6e7",
+      "SIZE": 560
     }
   ]
 }

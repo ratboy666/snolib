@@ -51,28 +51,36 @@
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012722",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "db27ef6d16cc2bead58e630fe0992109",
+      "SIZE": 2005
     },
     {
       "NAME": "COPYL.INC",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012769",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "f822edb34d499d1e2cecf9a05912e8b0",
+      "SIZE": 1715
     },
     {
       "NAME": "COPYL.html",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012792",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "f5c1673905551090f9c2516e6c15fd4d",
+      "SIZE": 4248
     },
     {
       "NAME": "COPYL.tst",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012778",
       "ACCESS": "775",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "51b8f04cf4e456d91c801d0bf02dc7c1",
+      "SIZE": 139
     }
   ]
 }

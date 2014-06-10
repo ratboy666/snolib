@@ -50,28 +50,36 @@
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012747",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "5fd97271000eab8bba3d670de87eccb5",
+      "SIZE": 2596
     },
     {
       "NAME": "REDEFINE.INC",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012772",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "008a309dc8783dcb047618b4590cd9de",
+      "SIZE": 2017
     },
     {
       "NAME": "REDEFINE.html",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012818",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "07bdd36c5368db711fd41994160653a6",
+      "SIZE": 5355
     },
     {
       "NAME": "REDEFINE.tst",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012780",
       "ACCESS": "775",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "d3a006ef8e38d4b3685d29c2259ef763",
+      "SIZE": 145
     }
   ]
 }

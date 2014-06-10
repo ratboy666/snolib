@@ -50,28 +50,36 @@
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012717",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "96a32428fbc9b40122b3f642e933a889",
+      "SIZE": 2401
     },
     {
       "NAME": "BLEND.INC",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012768",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "3147c17d58813bbc4b4f8889cb6b1c41",
+      "SIZE": 1943
     },
     {
       "NAME": "BLEND.html",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012787",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "daae7f078ac5cb702b0241c025790150",
+      "SIZE": 4721
     },
     {
       "NAME": "BLEND.tst",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012778",
       "ACCESS": "775",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "b1c9e95659f3cc84f69f902426688d5d",
+      "SIZE": 212
     }
   ]
 }

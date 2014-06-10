@@ -51,28 +51,36 @@
       "TYPE": "TEXT",
       "TIMESTAMP": "1402394323",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "43fc45027c4a2e369cab917789c1c111",
+      "SIZE": 1628
     },
     {
       "NAME": "SIZET.INC",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402394511",
       "ACCESS": "600",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "612bae366ce31468e9b152174320852b",
+      "SIZE": 1308
     },
     {
       "NAME": "SIZET.html",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402397367",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "5848fe1688a8badf86e81c4cb6601ffc",
+      "SIZE": 3849
     },
     {
       "NAME": "SIZET.tst",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402394511",
       "ACCESS": "775",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "04d46184a2effaed5b5a1895cc057e96",
+      "SIZE": 139
     }
   ]
 }

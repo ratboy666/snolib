@@ -51,28 +51,36 @@
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012756",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "f2737481170f9dd39fba0a689989d8e0",
+      "SIZE": 1762
     },
     {
       "NAME": "TRUNC.INC",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402195044",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "b02978850dc210047bf1cd90d03db927",
+      "SIZE": 1331
     },
     {
       "NAME": "TRUNC.html",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012831",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "eb11da785064af2c95c4f4fe15d4c6d1",
+      "SIZE": 3992
     },
     {
       "NAME": "TRUNC.tst",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012781",
       "ACCESS": "775",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "bc2c099efab9148c492e8b8ac23e633b",
+      "SIZE": 139
     }
   ]
 }

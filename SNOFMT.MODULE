@@ -42,21 +42,27 @@
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012752",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "1826ee976a00c6220a85a3a27af204a3",
+      "SIZE": 4410
     },
     {
       "NAME": "snofmt",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012783",
       "ACCESS": "775",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "29bfb0b4f56c4312ae2c030d4d2a0345",
+      "SIZE": 4104
     },
     {
       "NAME": "snofmt.html",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012824",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "5fd197a035cbe678622a27cfa7781394",
+      "SIZE": 8483
     }
   ]
 }

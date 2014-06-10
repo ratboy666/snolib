@@ -39,21 +39,27 @@
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012742",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "6121a0890236620dc0deac30305e8915",
+      "SIZE": 1567
     },
     {
       "NAME": "lseq",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012783",
       "ACCESS": "775",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "9e1536f49d2822899acd842249242d38",
+      "SIZE": 1531
     },
     {
       "NAME": "lseq.html",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012811",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "221d7e0a31f2de9aecc6915edd12f38e",
+      "SIZE": 3425
     }
   ]
 }

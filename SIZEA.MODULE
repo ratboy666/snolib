@@ -53,28 +53,36 @@
       "TYPE": "TEXT",
       "TIMESTAMP": "1402204730",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "f065b9046b183ed4b45416c7c9f09904",
+      "SIZE": 3936
     },
     {
       "NAME": "SIZEA.INC",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402204873",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "c0f2c45b15432031ea514b41a9d6160e",
+      "SIZE": 2532
     },
     {
       "NAME": "SIZEA.html",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402204874",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "1471ffca85683b79ff7d45c3c8dc88e9",
+      "SIZE": 6821
     },
     {
       "NAME": "SIZEA.tst",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402204874",
       "ACCESS": "775",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "e6287cbae4d491658ea7d869ee49852e",
+      "SIZE": 584
     }
   ]
 }

@@ -56,28 +56,36 @@
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012729",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "6d79f3b9e9272eab3c500738bd84d948",
+      "SIZE": 11693
     },
     {
       "NAME": "FCGI.INC",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402394875",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "676d0b68b501f31351892ee60bfb2db6",
+      "SIZE": 10466
     },
     {
       "NAME": "FCGI.html",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012845",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "eb376681fc02d59f313fc075b74f0d9e",
+      "SIZE": 17254
     },
     {
       "NAME": "FCGI.tst",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012782",
       "ACCESS": "775",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "0f157af9fcd8f2e4a7c69250b5a8e40f",
+      "SIZE": 262
     }
   ]
 }

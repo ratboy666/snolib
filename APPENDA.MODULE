@@ -52,28 +52,36 @@
       "TYPE": "TEXT",
       "TIMESTAMP": "1402396869",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "25aafa7e74bd7d7ed225ffea95cdf509",
+      "SIZE": 1747
     },
     {
       "NAME": "APPENDA.INC",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402397362",
       "ACCESS": "600",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "397e313ccf5b57596604d594fb2cdcb9",
+      "SIZE": 1394
     },
     {
       "NAME": "APPENDA.html",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402397367",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "f4ec27cf2063e6e2ab2ce6372acf5961",
+      "SIZE": 3930
     },
     {
       "NAME": "APPENDA.tst",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402397362",
       "ACCESS": "775",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "340557f9350ffb231eb2b58f45f8ce46",
+      "SIZE": 143
     }
   ]
 }

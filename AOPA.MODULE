@@ -51,28 +51,36 @@
       "TYPE": "TEXT",
       "TIMESTAMP": "1402396862",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "70aad4e1b7febf89d6f8e61aae715d71",
+      "SIZE": 3326
     },
     {
       "NAME": "AOPA.INC",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402397362",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "a8028a69139cf4aa54fd24dd72bf5e56",
+      "SIZE": 1757
     },
     {
       "NAME": "AOPA.html",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402397364",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "a307a3f448b9b9a166c09915663cb875",
+      "SIZE": 6318
     },
     {
       "NAME": "AOPA.tst",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402397362",
       "ACCESS": "775",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "6c2e8ab2334cb7f97d07ea8274419d06",
+      "SIZE": 1123
     }
   ]
 }

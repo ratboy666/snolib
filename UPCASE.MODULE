@@ -41,21 +41,27 @@
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012757",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "759c9b22a989d83c97c3e523bd50e7aa",
+      "SIZE": 2239
     },
     {
       "NAME": "upcase",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012783",
       "ACCESS": "775",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "49bc31ea05427e3052f809caedb2c6a0",
+      "SIZE": 2018
     },
     {
       "NAME": "upcase.html",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012833",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "b56c8cd78030ef2447ba027ffe8f58a8",
+      "SIZE": 4429
     }
   ]
 }

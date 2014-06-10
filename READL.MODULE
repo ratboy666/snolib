@@ -51,28 +51,36 @@
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012747",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "2053ddec17e6c03f48ad3a40a33d7e56",
+      "SIZE": 2042
     },
     {
       "NAME": "READL.INC",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012777",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "74b912d87e84357bd48c914e75137c2f",
+      "SIZE": 1526
     },
     {
       "NAME": "READL.html",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012838",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "13483417ae39d154ed04a59b1460633c",
+      "SIZE": 4295
     },
     {
       "NAME": "READL.tst",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012781",
       "ACCESS": "775",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "7c10f06f808cc7809986ae106a8a05c3",
+      "SIZE": 139
     }
   ]
 }

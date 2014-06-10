@@ -50,28 +50,36 @@
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012748",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "185b74dec2da801920cca811eb15b351",
+      "SIZE": 1745
     },
     {
       "NAME": "ROTATER.INC",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012776",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "9a0e7fb7db1cc8d80cbb571c66d87495",
+      "SIZE": 1430
     },
     {
       "NAME": "ROTATER.html",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012821",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "c537a222c13e0b109c2a3bac8427911e",
+      "SIZE": 3969
     },
     {
       "NAME": "ROTATER.tst",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012780",
       "ACCESS": "775",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "dc7f4a06f6bdd806d08423d1de356d54",
+      "SIZE": 143
     }
   ]
 }

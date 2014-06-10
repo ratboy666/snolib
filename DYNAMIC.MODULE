@@ -53,28 +53,36 @@
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012727",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "7600b06d1c0f3aee8cc1ebab181e86d9",
+      "SIZE": 7552
     },
     {
       "NAME": "DYNAMIC.INC",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012769",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "4fa5da3b1a2b0378e37710d99ef5f74e",
+      "SIZE": 6275
     },
     {
       "NAME": "DYNAMIC.html",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012799",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "9d511b7854c359dc18b0cc55b2e99136",
+      "SIZE": 13357
     },
     {
       "NAME": "DYNAMIC.tst",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012779",
       "ACCESS": "775",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "a4841855263d82a3cf91b6bc63756589",
+      "SIZE": 144
     }
   ]
 }

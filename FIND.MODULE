@@ -50,28 +50,36 @@
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012730",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "bb8044d669b8d1f01347562b28deee35",
+      "SIZE": 1917
     },
     {
       "NAME": "FIND.INC",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012772",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "c0d3487f83864e2813a51a153d1c022e",
+      "SIZE": 1527
     },
     {
       "NAME": "FIND.html",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012803",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "92e6956ed66d8ce927348935f2a96192",
+      "SIZE": 4263
     },
     {
       "NAME": "FIND.tst",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012779",
       "ACCESS": "775",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "ca1b133a54129fc231fc0aa2ee537d32",
+      "SIZE": 137
     }
   ]
 }

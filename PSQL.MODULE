@@ -58,28 +58,36 @@
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012745",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "6faf23c51ea0b67d673a1a7ffb3968db",
+      "SIZE": 15751
     },
     {
       "NAME": "PSQL.INC",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402195044",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "7ec811c705abd8487c8af9326c8eb58d",
+      "SIZE": 6189
     },
     {
       "NAME": "PSQL.html",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012836",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "d0c1993cf75f09f132f8abef3a86d6bb",
+      "SIZE": 25544
     },
     {
       "NAME": "PSQL.tst",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012781",
       "ACCESS": "775",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "ff63ddc922e31c6d8585cb32e4a749c3",
+      "SIZE": 4318
     }
   ]
 }

@@ -51,28 +51,36 @@
       "TYPE": "TEXT",
       "TIMESTAMP": "1402336573",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "b123ad120519b2df302cd7667c7a19ce",
+      "SIZE": 15429
     },
     {
       "NAME": "CSNOBOL4.INC",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402394872",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "59008bdc2e17c09fcc9e57fc6f914318",
+      "SIZE": 4530
     },
     {
       "NAME": "CSNOBOL4.html",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402336577",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "1caa3be8de0d241db8c66abf9a50a499",
+      "SIZE": 23325
     },
     {
       "NAME": "CSNOBOL4.tst",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402336576",
       "ACCESS": "775",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "450480c2c8ba819b21ab45602e65ce38",
+      "SIZE": 413
     }
   ]
 }

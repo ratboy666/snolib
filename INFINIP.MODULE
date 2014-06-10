@@ -52,28 +52,36 @@
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012735",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "9a3e6cec342309dc07a95728147abdb5",
+      "SIZE": 8383
     },
     {
       "NAME": "INFINIP.INC",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012772",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "f761b8a89d2941dc3f7aa6396cf27485",
+      "SIZE": 8074
     },
     {
       "NAME": "INFINIP.html",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012807",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "e084c4e8c7099aa73197d5dd4fbb13c4",
+      "SIZE": 12842
     },
     {
       "NAME": "INFINIP.tst",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402012779",
       "ACCESS": "775",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "0a6ff5cac57f47f45b5d1c1424cbdc64",
+      "SIZE": 144
     }
   ]
 }

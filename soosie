@@ -77,7 +77,7 @@
          define('readlbr(nm)lbr,data,mi,m,fi,f,s,b,l')
          define('writelbr(lbr)data,mi,m,fi,f,n,s')
          define('createlbr(nm,lnm,dt,lc)')
-         define('rfile(f,fn)s')
+         define('rfile(f,fn)s,md5')
          define('create_file(fn)')
          define('create_module(src,cmnt,artifacts,depends)'
 +               'install,build,files,m,s,n,i')
@@ -208,6 +208,7 @@ me2      lbr<'CONTENTS'><mod><var> = destring(var, val)        :(fresh2)
 * FIXME: need a freshen all
 
 module_freshen
+         ddt()
          mod = replace(trimb(args), &lcase, &ucase)
          ident(lbr<'CONTENTS'><mod>)                             :s(nom)
 
@@ -242,6 +243,7 @@ fresh2
 
          f = table()
          seq(' f<c<mod><"FILES"><i><"NAME">> = c<mod><"FILES"><i>', .i)
+         seq(' terminal = ident(f<a<i>>) "CREATE FILE " a<i>', .i)
          seq(' f<a<i>> = (vdiffer(f<a<i>>), create_file(a<i>))', .i)
 
 * Convert f table back to array
@@ -259,6 +261,8 @@ fresh2
 * recent, replace the file record.
 
          seq(' f = create_file(a<i><"NAME">);'
++            ' terminal = gt(f<"TIMESTAMP">, a<i><"TIMESTAMP">) '
++            '    "FRESHENING FILE " a<i><"NAME">;'
 +            ' a<i> = gt(f<"TIMESTAMP">, a<i><"TIMESTAMP">) f', .i)
 
 * Now, adjust build and install vectors (to artifacts order). Add new
@@ -531,7 +535,8 @@ cntf_5
 info2    args fence ('file ' | 'FILE ') =                      :s(info3)
          args = replace(args, &lcase, &ucase)
          m = args
-         m = vdiffer(lbr<'CONTENTS'><m>)                         :f(top)
+         m = lbr<'CONTENTS'><m>
+         terminal = ident(m) 'NO SUCH MODULE'                    :s(top)
          terminal = 'NAME:      ' m<'NAME'>
          terminal = 'TYPE:      ' m<'TYPE'>
          terminal = 'SOURCE:    ' m<'SOURCE'>
@@ -560,6 +565,8 @@ info3    filest = filest(lbr)
          terminal = 'ACCESS:    ' f<'ACCESS'>
 * location should always be DIRECT
 *        terminal = 'LOCATION:  ' f<'LOCATION'>
+         terminal = 'FS:        ' (file(f<'NAME'>) 'IN FILESYSTEM',
++                                                  'NOT IN FILESYSTEM')
          terminal = 'CONTENTS:  ' size(f<'CONTENTS'>) ' BYTES'    :(top)
 
 
@@ -579,7 +586,7 @@ nom      terminal = 'MODULE ' args ' NOT FOUND'                   :(top)
 
 * New library. Seed in '*.lss' as modules.
 
-seed.    args = trimb(args)
+seedall. args = trimb(args)
          args = ident(args) 'LBR'
          lbr = createlbr(args, 'SNOLIB', args '.DAT', 'SNOLIB library')
          differ(args, 'LBR')                                     :s(top)
@@ -665,7 +672,10 @@ export.  ident(lbr)                                              :s(nol)
          writefiles(lbr, args)
 
 * Copy the module, deep copy FILES, change LOCATION to FILE, remove
-* contents
+* contents. Should use the iter_files iterator, but doesn't because
+* we are dealing with a deep copy. This means that the files iterator
+* isn't general enough. It should key to a module, and not reference
+* lbr at all (FIXME).
 
          t = copyt(t)
          t<'FILES'> = copya(t<'FILES'>)
@@ -681,8 +691,31 @@ export.  ident(lbr)                                              :s(nol)
 
 import.  ident(lbr)                                              :s(nol)
          args = trimb(args)
+         args = replace(args, &lcase, &ucase)
          differ(lbr<'CONTENTS'><args>)                        :s(mexist)
+         terminal = 'IMPORTING ' args
+         mn = args '.MODULE'
+         file(mn)                                               :f(nomd)
+         s = json_decode(readfile(mn))
+         lbr<'CONTENTS'><args> = s
+         fi = iter_files(lbr, args)
+import2    f = mfile(fi)                                     :f(import3)
+           terminal = 'ADDING FILE ' f<'NAME'>
+           terminal = ~file(f<'NAME'>) 'NO FILE ' f<'NAME'>  :f(import4)
+           s =
+           s = readfile(f<'NAME'>)
+           f<'LOCATION'> = 'DIRECT'
+           md5 = bq('md5sum ' f<'NAME'>)
+           md5 break(' ') . md5
+           terminal = differ(md5, f<'MD5'>) 'MD5 FAILS'
+           terminal = ne(f<'SIZE'>, size(s)) 'NOT CORRECT SIZE'
+           f<'CONTENTS'> = s
+import4    fi = next_file(fi)                                 :(import2)
+import3                                                           :(top)
+
  :(top)
+
+nomd     terminal = 'NO MODULE FILE ' mn                          :(top)
 
 
 * Functions for soosie
@@ -734,6 +767,7 @@ rdlbr_4      f = mfile(fi)                                   :f(rdlbr_5)
              data fence tab(b) len(l) . s                       :f(what)
              f<'CONTENTS'> = s
              f<'LOCATION'> = 'DIRECT'
+* FIME - CHECK LENGTH AND MD5
 rdlbr_6    fi = next_file(fi)                                 :(rdlbr_4)
 rdlbr_5  mi = next_module(mi)                                 :(rdlbr_3)
 rdlbr_2  readlbr = lbr                                         :(return)
@@ -787,7 +821,17 @@ rfile    fn = ident(fn) f<'NAME'>
          f<'TIMESTAMP'> = (file(fn) bq('stat -c %Y ' fn), 0)
          f<'ACCESS'> = (file(fn) bq('stat -c %a ' fn), '644')
          f<'LOCATION'> = 'DIRECT'
-         f<'CONTENTS'> =(file(fn) readfile(fn), '')            :(return)
+         s = (file(fn) readfile(fn), '')
+
+* The md5 for an empty file
+
+         md5 = 'd41d8cd98f00b204e9800998ecf8427e -'
+         md5 = file(fn) bq('md5sum ' fn)
+         md5 break(' ') . md5
+
+         f<'MD5'> = md5
+         f<'SIZE'> = size(s)
+         f<'CONTENTS'> = s                                     :(return)
 
 
 * Create a module for the library

@@ -52,28 +52,36 @@
       "TYPE": "TEXT",
       "TIMESTAMP": "1402394865",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "4e72a43e1848580c59d0b441893c0e8f",
+      "SIZE": 2827
     },
     {
       "NAME": "CRACK.INC",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402394871",
       "ACCESS": "644",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "2629a0f863e5bf036c835847eca1524f",
+      "SIZE": 2344
     },
     {
       "NAME": "CRACK.html",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402394876",
       "ACCESS": "664",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "21457d6e6d91c55a2131deecbbc81000",
+      "SIZE": 5467
     },
     {
       "NAME": "CRACK.tst",
       "TYPE": "TEXT",
       "TIMESTAMP": "1402394875",
       "ACCESS": "775",
-      "LOCATION": "FILE"
+      "LOCATION": "FILE",
+      "MD5": "5c17011ad0b75eb62015f198277f2d0f",
+      "SIZE": 139
     }
   ]
 }
