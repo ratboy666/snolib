@@ -27,7 +27,7 @@
 * FIXME - edit the build and install commands associated with module:
 * need to identify base from RECIPES -- fill it in, and edit that.
 *
-* Implement EXPORT and IMPORT to allow testing of MODULE EDIT.
+* Implement IMPORT.
 *
 * Implement library edit.
 *
