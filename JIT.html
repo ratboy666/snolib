@@ -7,7 +7,13 @@
 </head><body><font face="Sorts Mill Goudy">
 <p align="justify"><font face="Sorts Mill Goudy">
 <h1>JIT - Just In Time Code Generation</h1>
-1580
+</font></p>
+<div style="width:15em;margin-left:0.5em;float:right;background-image:url(blutextb.gif)">
+<font face="Dijkstra"><p align="left">
+This is broken until all set_p() get_p() calls are replaced with
+long/pointer code. The process will take several days.
+</p></font></div>
+<p align="justify"><font face="Sorts Mill Goudy">
 Interface to the GNU Lightning library to allow dynamic code production
 at run-time for: ARM, HPPA, IA64, MIPS, PPC, S390, SPARC, Intel X86
 (32 bit) and X86_64.
@@ -290,7 +296,7 @@ static int f_num_jit(void) { return jit_f_num(); }
 -SNOBOL LU = REPLACE(L, &amp;LCASE, &amp;UCASE)
 -SNOBOL A = CRACK(L, &#39; &#39;)
 -SNOBOL AU = CRACK(LU, &#39; &#39;)
--SNOBOL SEQ(&quot; EMBED = &#39;static void &#39; A&lt;I&gt; &#39;_jit(int r1, int r2) { &#39;; &quot; +
+-SNOBOL SEQ(&quot; EMBED = &#39;static long &#39; A&lt;I&gt; &#39;_jit(int r1, int r2) { &#39;; &quot; +
             &quot; EMBED = &#39;    return (long)jit_&#39; A&lt;I&gt; &#39;(r1, r2);&#39;; &quot;      +
             &quot; EMBED = DIFFER(A&lt;I&gt;) &#39;}&#39;; &quot;                              +
             &quot; C_WRAPPER_PROTO(AU&lt;I&gt; &#39;_JIT(INTEGER,INTEGER)LONG&#39;, &quot;     +
@@ -328,12 +334,12 @@ static int f_num_jit(void) { return jit_f_num(); }
             &quot; C_WRAPPER_PROTO(AU&lt;I&gt; &#39;_JIT(INTEGER,INTEGER,INTEGER)&#39;, &quot; +
             &quot; .EMBED) &quot;, .I)
 
-static void movi_jit(int r1)
+static long movi_jit(int r1)
 {
-    set_p_(jit_movi(r1, (jit_word_t)get_p_()));
+    return (long)jit_movi(r1, (jit_word_t)get_p_());
 }
 
--SNOBOL C_WRAPPER_PROTO(&#39;MOVI_JIT(INTEGER)&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;MOVI_JIT(INTEGER)LONG&#39;, .EMBED)
 
 static void movi_f_jit(int r1)
 {
@@ -445,9 +451,9 @@ static void jmpr_jit(int r) { jit_jmpr(r); }
 
 -SNOBOL C_WRAPPER_PROTO(&#39;JMPR_JIT(INTEGER)&#39;, .EMBED)
 
-static void jmpi_jit(void) { set_p_(jit_jmpi()); }
+static long jmpi_jit(void) { return (long)jit_jmpi(); }
 
--SNOBOL C_WRAPPER_PROTO(&#39;JMPI_JIT()&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;JMPI_JIT()LONG&#39;, .EMBED)
 
 static void callr_jit(int r) { jit_callr(r); }
 
@@ -607,7 +613,7 @@ static void reti_d_jit(void) { jit_reti_d(get_d_()); }
          SEQ(&quot; LOAD(A&lt;I&gt; &#39;_JIT(INTEGER,INTEGER,INTEGER)&#39;, &#39;jit.so&#39;) &quot;
 +            , .I)
 <font color="#818181"><i>*</i></font>
-         LOAD(&#39;MOVI_JIT(INTEGER)&#39;, &#39;jit.so&#39;)
+         LOAD(&#39;MOVI_JIT(INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;MOVI_F_JIT(INTEGER)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;MOVI_D_JIT(INTEGER)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;MOVI_F_W_JIT(INTEGER,INTEGER)&#39;, &#39;jit.so&#39;)
@@ -639,7 +645,7 @@ static void reti_d_jit(void) { jit_reti_d(get_d_()); }
          LOAD(&#39;PUSHARGI_D_JIT()&#39;, &#39;jit.so&#39;)
 <font color="#818181"><i>*</i></font>
          LOAD(&#39;JMPR_JIT(INTEGER)&#39;, &#39;jit.so&#39;)
-         LOAD(&#39;JMPI_JIT()&#39;, &#39;jit.so&#39;)
+         LOAD(&#39;JMPI_JIT()INTEGER&#39;, &#39;jit.so&#39;)
 <font color="#818181"><i>*</i></font>
          LOAD(&#39;CALLR_JIT(INTEGER)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;CALLI_JIT()&#39;, &#39;jit.so&#39;)
@@ -1146,8 +1152,7 @@ JIT_FINISH
          FINISH_JIT()                                          <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_MOVI SET_P(P)
-         MOVI_JIT(R)
-         JIT_MOVI = GET_P()                                    <b>:(RETURN)</b>
+         JIT_MOVI = MOVI_JIT(R)                                <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_MOVI_F
          SET_F(F)
@@ -1246,8 +1251,7 @@ JIT_CLEAR_STATE
 JIT_JMPR JMPR_JIT(R)                                           <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_JMPI SET_P(P)
-         JMPI_JIT()
-         JIT_JMPI = GET_P()                                    <b>:(RETURN)</b>
+         JIT_JMPI = JMPI_JIT()                                 <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_CALLR
          CALLR_JIT(R)                                          <b>:(RETURN)</b>
@@ -1599,60 +1603,47 @@ JIT_BORDR_F
 JIT_BUNORDR_F
          JIT_BUNORDR_F = BUNORDR_F_JIT(R1, R2)                 <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
-            &#39;bltr_d bler_d bgtr_d bger_d beqr_d bner_d &#39;               +
-            &#39;bunltr_d bunler_d buneqr_d bunger_d bungtr_d &#39;            +
-            &#39;bltgtr_d bordr_d bunordr_d &#39;
 JIT_BLTR_D
-         BLTR_D_JIT(R1, R2)
-         JIT_BLTR_D = GET_P()                                  <b>:(RETURN)</b>
+         JIT_BLTR_D = BLTR_D_JIT(R1, R2)                       <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BLER_D
-         BLER_D_JIT(R1, R2)
-         JIT_BLER_D = GET_P()                                  <b>:(RETURN)</b>
+         JIT_BLER_D = BLER_D_JIT(R1, R2)                       <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BGTR_D
-         BGTR_D_JIT(R1, R2)
-         JIT_BGTR_D = GET_P()                                  <b>:(RETURN)</b>
+         JIT_BGTR_D = BGTR_D_JIT(R1, R2)                       <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+JIT_BGER_D
+         JIT_BGER_D = BGER_D_JIT(R1, R2)                       <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BEQR_D
-         BEQR_D_JIT(R1, R2)
-         JIT_BEQR_D = GET_P()                                  <b>:(RETURN)</b>
+         JIT_BEQR_D = BEQR_D_JIT(R1, R2)                       <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BNER_D
-         BNER_D_JIT(R1, R2)
-         JIT_BNER_D = GET_P()                                  <b>:(RETURN)</b>
+         JIT_BNER_D = BNER_D_JIT(R1, R2)                       <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BUNLTR_D
-         BUNLTR_D_JIT(R1, R2)
-         JIT_BUNLTR_D = GET_P()                                <b>:(RETURN)</b>
+         JIT_BUNLTR_D = BUNLTR_D_JIT(R1, R2)                   <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BUNLER_D
-         BUNLER_D_JIT(R1, R2)
-         JIT_BUNLER_D = GET_P()                                <b>:(RETURN)</b>
+         JIT_BUNLER_D = BUNLER_D_JIT(R1, R2)                   <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BUNEQR_D
-         BUNEQR_D_JIT(R1, R2)
-         JIT_BUNEQR_D = GET_P()                                <b>:(RETURN)</b>
+         JIT_BUNEQR_D = BUNEQR_D_JIT(R1, R2)                   <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BUNGER_D
-         BUNGER_D_JIT(R1, R2)
-         JIT_BUNGER_D = GET_P()                                <b>:(RETURN)</b>
+         JIT_BUNGER_D = BUNGER_D_JIT(R1, R2)                   <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BUNGTR_D
-         BUNGTR_D_JIT(R1, R2)
-         JIT_BUNGTR_D = GET_P()                                <b>:(RETURN)</b>
+         JIT_BUNGTR_D = BUNGTR_D_JIT(R1, R2)                   <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BLTGTR_D
-         BLTGTR_D_JIT(R1, R2)
-         JIT_BLTGTR_D = GET_P()                                <b>:(RETURN)</b>
+         JIT_BLTGTR_D = BLTGTR_D_JIT(R1, R2)                   <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BORDR_D
-         BORDR_D_JIT(R1, R2)
-         JIT_BORDR_D = GET_P()                                 <b>:(RETURN)</b>
+         JIT_BORDR_D = BORDR_D_JIT(R1, R2)                     <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BUNORDR_D
-         BUNORDR_D_JIT(R1, R2)
-         JIT_BUNORDR_D = GET_P()                               <b>:(RETURN)</b>
+         JIT_BUNORDR_D = BUNORDR_D_JIT(R1, R2)                 <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_ADDI SET_P(P)
          ADDI_JIT(R1, R2)                                      <b>:(RETURN)</b>
@@ -2216,7 +2207,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Mon Jun  9 19:00:09 EDT 2014</p></td><td><p align=right>
+Mon Jun  9 22:44:43 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

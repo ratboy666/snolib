@@ -1,8 +1,10 @@
 -LINE 16 "AOPA.lss"
 -INCLUDE 'SEQ.INC'
+-MODULE AOPA
+-IN72
+-LINE 71 "AOPA.lss"
 -STITL AOPA
 -EJECT
--LINE 72 "AOPA.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -21,7 +23,6 @@
 * AOPA.lss
 *
 -LINE 20 "AOPA.lss"
--MODULE AOPA
 -PUBLIC AOPA()
          DEFINE('AOPA(A1,OP,A2)S1,I,S2,S')                   :(AOPA_END)
 *

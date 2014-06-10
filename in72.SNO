@@ -1,0 +1,38 @@
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-PROGRAM IN72
+-LINE 29 "in72.lss"
+-TITLE IN72
+START
+*
+************************************************************************
+*                                                                      *
+*                      ###  #     #  #####   ###                       *
+*                       #   ##    #      #  #   #                      *
+*                       #   # #   #     #   #   #                      *
+*                       #   #  #  #    #       #                       *
+*                       #   #   # #   #       #                        *
+*                       #   #    ##   #      #                         *
+*                      ###  #     #   #     #####                      *
+*                                                                      *
+* IN72                   HANDLE -IN DIRECTIVES                         *
+*                                                                      *
+************************************************************************
+*
+* in72.lss
+*
+-LINE 11 "in72.lss"
+         TERMINAL = 'IN72 (SUN JUN 16 14:13:20 EDT 2013)'
+*
+         N = 1024
+         P = DUPL(' ', N)
+*
+TOP      S = INPUT                                               :F(END)
+         S FENCE '-' ANY('iI') ANY('nN') SPAN(&DIGITS) . N     :F(NOTIN)
+         P = DUPL(' ', N)
+NOTIN    (S P) LEN(N) . L
+         OUTPUT = TRIM(L)                                         :(TOP)
+*
+END START
+*
+* CE: .MSNOBOL4;

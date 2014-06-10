@@ -17,7 +17,6 @@ scalar, scalar operation array, and finally scalar operation scalar.
 @
 
 <<AOPA>>=
--MODULE AOPA
 -PUBLIC AOPA()
          DEFINE('AOPA(A1,OP,A2)S1,I,S2,S')                   :(AOPA_END)
 *
@@ -67,6 +66,8 @@ END
 
 <<>>=
 <<INCLUDES>>
+-MODULE AOPA
+-IN72
 -STITL AOPA
 -EJECT
 *

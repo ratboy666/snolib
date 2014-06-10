@@ -1,4 +1,5 @@
 -MODULE ALL
+-IN72
 -LINE 60 "ALL.lss"
 -INCLUDE 'AGT.INC'
 -INCLUDE 'AI.INC'
@@ -100,8 +101,8 @@
 -INCLUDE 'UTF8.INC'
 -INCLUDE 'VDIFFER.INC'
 -INCLUDE 'WRAPPER.INC'
--STITL ALL
 -LINE 166 "ALL.lss"
+-STITL ALL
 -EJECT
 *
 ************************************************************************

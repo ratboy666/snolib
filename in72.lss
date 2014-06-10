@@ -1,0 +1,51 @@
+<h1>in72 - Process source with -INn directives</h1>
+
+Prune source lines to -INn directives
+
+<h2>Uses</h2>
+
+<<INCLUDES>>=
+@
+
+<<in72>>=
+         TERMINAL = 'IN72 (SUN JUN 16 14:13:20 EDT 2013)'
+*
+         N = 1024
+         P = DUPL(' ', N)
+*
+TOP      S = INPUT                                               :F(END)
+         S FENCE '-' ANY('iI') ANY('nN') SPAN(&DIGITS) . N     :F(NOTIN)
+         P = DUPL(' ', N)
+NOTIN    (S P) LEN(N) . L
+         OUTPUT = TRIM(L)                                         :(TOP)
+*
+END START
+@
+
+<<>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-PROGRAM IN72
+-TITLE IN72
+START
+*
+************************************************************************
+*                                                                      *
+*                      ###  #     #  #####   ###                       *
+*                       #   ##    #      #  #   #                      *
+*                       #   # #   #     #   #   #                      *
+*                       #   #  #  #    #       #                       *
+*                       #   #   # #   #       #                        *
+*                       #   #    ##   #      #                         *
+*                      ###  #     #   #     #####                      *
+*                                                                      *
+* IN72                   HANDLE -IN DIRECTIVES                         *
+*                                                                      *
+************************************************************************
+*
+* in72.lss
+*
+<<in72>>
+*
+* CE: .MSNOBOL4;
+@

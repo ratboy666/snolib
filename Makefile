@@ -49,7 +49,7 @@ P = bundle       code         compile      deretn       deseq        \
     lseq         lsinc        rseq         snofmt       stangle      \
     sweave       uban         upcase       g360         scan         \
     snocone      cpmed        ED4          bldidx       uses         \
-    upinc
+    upinc        in72
 
 all: $(L) $(T) ALL.INC $(P) docs
 
@@ -199,12 +199,14 @@ list:         list.SNO     CHARS.INC    DISPLAY.INC  GETKEY.INC   \
 cgi:          cgi.SNO      BQ.INC       CHARS.INC    CRACK.INC    \
                            SEQ.INC
 scan:         scan.SNO     HOST.INC
-bldidx:       CHARS.INC    BQ.INC       CRACK.INC    JSON.INC     \
-              SEQ.INC      VDIFFER.INC
-uses:         HASH.INC     JSON.INC     READFILE.INC SDIFF.INC
-upinc:        HOST.INC     READFILE.INC BQ.INC       JSON.INC     \
-              CHARS.INC    SEQ.INC      REPL.INC
-
+bldidx:       CHARS.INC    BQ.INC       CRACK.INC    \
+              JSON.INC     SEQ.INC      VDIFFER.INC
+# fixme - uses, upinc, bldidx have no lss file
+uses:         HASH.INC     JSON.INC     READFILE.INC \
+              SDIFF.INC
+upinc:        HOST.INC     READFILE.INC BQ.INC       \
+              JSON.INC     CHARS.INC    SEQ.INC      REPL.INC
+in72:         in72.SNO
 
 # Doesn't clean *.so for now
 
@@ -297,7 +299,7 @@ docs:         AGT.html      AI.html       ALL.html      AOPA.html     \
               stangle       sweave        greenbar.gif  index.html    \
               utility.html  snocone.html  cpmed.html    ED4           \
               FCGI.html     DSERVE.html   VDIFFER.html  FOR.html      \
-              FREEZE.html   ROUTING.html
+              FREEZE.html   ROUTING.html  in72.html              
 	touch docs
 
 snocone.html: snocone.htm

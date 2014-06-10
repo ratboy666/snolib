@@ -19,7 +19,6 @@ If [[I]] is not an array, simply returns [[A&lt;I&gt;]].
 @
 
 <<AI>>=
--MODULE AI
 -PUBLIC AI()
          DEFINE('AI(A,I)J')                                    :(AI_END)
 *
@@ -51,6 +50,8 @@ END
 
 <<>>=
 <<INCLUDES>>
+-MODULE AI
+-IN72
 -STITL AI
 -EJECT
 *

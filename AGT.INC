@@ -1,7 +1,10 @@
+-LINE 13 "AGT.lss"
+-MODULE AGT
+-IN72
+-LINE 41 "AGT.lss"
 -STITL AGT
 -EJECT
 *
--LINE 42 "AGT.lss"
 ************************************************************************
 *                                                                      *
 *                         #      #####   #######                       *
@@ -19,7 +22,6 @@
 * AGT.lss
 *
 -LINE 16 "AGT.lss"
--MODULE AGT
 -PUBLIC AGT()
          DEFINE('AGT(S1,S2)')
          AGT_TT = REPLACE(&ALPHABET, &UCASE, &LCASE)          :(AGT_END)

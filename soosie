@@ -119,33 +119,21 @@ help.    terminal = 'SOOSIE'
 quit.     write_history('.SOOSIE')                       :s(end)f(tryls)
 
 
-* module commands
-* module add,rem mod
+* Module commands
 
 module.  ident(lbr)                                              :s(nol)
          a = trimb(args) ' '
          a fence ('add' | 'ADD' | 'rem' | 'REM' |
-+                 'edit' | 'EDIT') . s ' '
++                 'edit' | 'EDIT' | 'freshen' | 'FRESHEN') . s ' '
 +             rem . args =                            :s($('module_' s))
 
          terminal = 'UNKNOWN MODULE SUBCOMMAND'                   :(top)
 
-
-* Adds an empty module to the library
-* module edit module key remainder is value
-* if its not an array, use editline() to edit it.
-* need to edit the arrays. -
-*
-* module edit name,source,comment,type,artifacts,depends,files
-*
 * notes: build and install arrays should always be ordered
 * in artifact order. build and install arrays have entries
 * added and removed with artifact edit. files gets entries
 * added when artifact is added.
-* need to reorder artifacts. editline() can be exploited
-* so, add artifacts and depends to 'edit' subcommand
-* changing source removes old source from files, adds new
-* source. files tracks source and artifacts, with possibly
+* files tracks source and artifacts, with possibly
 * extra.
 *
 * ident('TYPE') means this module will never be built. It
@@ -158,8 +146,8 @@ module.  ident(lbr)                                              :s(nol)
 * deep copy semantics - the elements will still refer to each other
 
 module_edit
- define('stringize(n,v)s')
- define('destring(n,v)s,i')
+         define('stringize(n,v)s,i')
+         define('destring(n,v)s,i,f')
          args = trimb(args) ' '
          args break(' ') . mod ' ' rem . a
          mod = replace(mod, &lcase, &ucase)
@@ -169,47 +157,94 @@ module_edit
 +                    'comment' | 'COMMENT' | 'type' | 'TYPE' |
 +                    'artifacts' | 'ARTIFACTS' | 'depends' | 'DEPENDS' |
 +                    'files' | 'FILES') . var ' '
-+            rem . val :f(mesyn)
-* need artifacts depends files. These require conversion to string
-* format and back again. type must be MODULE, PROGRAM, or empty.
++             rem . val                                        :f(mesyn)
          var = replace(var, &lcase, &ucase)
          val = trimb(val)
-         differ(val) :s(me2)
+         differ(val)                                             :s(me2)
          val = stringize(var, lbr<'CONTENTS'><mod><var>)         :f(top)
          val = editline(mod ':' var ': ', val)
-me2      lbr<'CONTENTS'><mod><var> = destring(var, val)           :(top)
+         var 'TYPE'                                              :f(me2)
+         val = trimb(replace(val, &lcase, &ucase))
+         val 'MODULE' | 'PROGRAM' | ''                           :s(me2)
+         terminal = 'TYPE MUST BE MODULE, PROGRAM OR EMPTY'       :(top)
+me2      lbr<'CONTENTS'><mod><var> = destring(var, val)        :(fresh2)
+*
+* fixme: should adjust files for artifacts and source. note that there
+*        may be extra files in files -- don't touch. just add. also,
+*        try loading any files in files (freshen) do this on all
+*        these edits (just in case).
+*
+* reorder build/install into artifacts order. make sure there is an
+* entry in build/install for each artifact.
+*
+* what about circular dependency? blows up now in build.
 
+module_freshen
+
+fresh2
+
+* Warn if module dependency doesn't exist
+   
+         c = lbr<'CONTENTS'>
+         a = c<mod><'DEPENDS'>
+         seq(' terminal = ' 
++            'ident(c<a<i>>) '
++            '"WARNING: MODULE DEPENDENCY " a<i> " NOT IN LIBRARY";'
++            ' a<i>', .i)
+
+* Spin though SOURCE and ARTIFACTS, ensuring we have a FILES record
+* for each.
+
+* Convert lbr<'CONTENTS'><mod><'FILES'> to a table keyed by 'NAME'
+
+         f = table()
+         fl = c<mod><'FILES'>
+         seq(' f<fl<i><"NAME">> = 1', .i)
+
+* Create array a, containing SOURCE and ARTIFACTS.
+
+         n = (differ(c<mod><'SOURCE'>) 1, 0)
+ terminal = sizea(c<mod><'ARTIFACTS'>)
+
+* Spin through and freshen the FILES
+
+ :(top)
 
 stringize
-  stringize = v
-  n 'ARTIFACTS' | 'DEPENDS' | 'FILES' :f(return)
-  s =
-  n 'FILES' :f(str2)
-  s = table()
-  seq(' s<v<i><"NAME">> = 1', .i)
-  v = keys_in_table(s)
-str2
-  s = stringout(v, CHARS_NUL)
-  s = repl(s, '\', '\\')
-  s = repl(s, ' ', '\ ')
-  s = replace(s, CHARS_NUL, ' ')
-  stringize = s :(return)
+         stringize = v
+         n 'ARTIFACTS' | 'DEPENDS' | 'FILES'                  :f(return)
+         s =
+         n 'FILES'                                              :f(str2)
+         s = table()
+         seq(' s<v<i><"NAME">> = 1', .i)
+         v = keys_in_table(s)
+str2     s = stringout(v, CHARS_NUL)
+         s = repl(s, '\', '\\')
+         s = repl(s, ' ', '\ ')
+         s = replace(s, CHARS_NUL, ' ')
+         stringize = s                                         :(return)
 
-destring
-  destring = v
-  n 'ARTIFACTS' | 'DEPENDS' | 'FILES' :f(return)
-  s = repl(v, '\\', CHARS_NUL)
-  s = repl(s, '\ ', CHARS_SOH)
-  s = repl(s, CHARS_NUL, '\')
-  s = crack(s, ' ')
-  seq(' s<i> = repl(s<i>, CHARS_SOH, " ")', .i)
-  destring = s
-  n 'FILES' :f(return)
-  terminal = 'destring FILES'
-  f = filest(lbr)
-*  seq(' output = s<i>', .i)
-  seq(' s<i> = (vdiffer(filest<s<i>>), create_file(s<i>))', .i)
-  destring = s :(return)
+destring v = trimb(v)
+         destring = v
+         v = ?(n 'DEPENDS') replace(v, &lcase, &ucase)
+         n 'ARTIFACTS' | 'DEPENDS' | 'FILES'                  :f(return)
+         s = repl(v, '\\', CHARS_NUL)
+         s = repl(s, '\ ', CHARS_SOH)
+         s = repl(s, CHARS_NUL, '\')
+         s = crack(s, ' ')
+
+* crack will try appending a terminator to ensure that the array has
+* at least one element. we detect this, and replace with array0 if
+* it happened. this should be in the usage notes for crack.
+
+         s = eq(sizea(s), 1) ident(s<1>) array0
+
+         seq(' s<i> = repl(s<i>, CHARS_SOH, " ")', .i)
+         destring = s
+         n 'FILES'                                            :f(return)
+         f = filest(lbr)
+         seq(' s<i> = (vdiffer(filest<s<i>>), create_file(s<i>))', .i)
+         destring = s                                          :(return)
 
 mesyn    terminal = 'MODULE M_NAME EDIT ITEM VALUE'
          terminal = 'ITEM - NAME, SOURCE, COMMENT, ARTIFACTS,'
@@ -235,10 +270,6 @@ module_add
 msyn     terminal = 'MODULE ADD|REM NAME'                         :(top)
 mexist   terminal = 'MODULE ' args ' ALREADY IN LIBRARY'          :(top)
 mnexist  terminal = 'MODULE ' args ' NOT IN LIBRARY'              :(top)
-
-* we need an "undo" operation. to do this, we can copy_table() of the
-* loaded lbr, and restore that back to lbr. Also, any "deep edit" needs
-* to keep a copy of the deep edit entry and how to restore it.
 
 module_rem
          args = trimb(args)

@@ -7,8 +7,10 @@
   ".lss.INC": [
     "IFSLC=@ LSS=SNOBOL4 ifs {{src}} |",
     "        LSS=SNOBOL4 stangle     |",
+    "                    g360        |",
     "        LSS=SNOBOL4 ifs         |",
-    "                    embed >{{tgt}}"
+    "                    embed       |",
+    "                    in72 >{{tgt}}"
   ],
 
   ".lss.html": [
@@ -19,14 +21,18 @@
   ".lss.tst": [
     "IFSLC=@                LSS=SNOBOL4 ifs {{src}} |",
     "STANGLE_ROOT=unit_test LSS=SNOBOL4 stangle     |",
+    "                                   g360        |",
     "                       LSS=SNOBOL4 ifs         |",
-    "                                   embed >{{tgt}}"
+    "                                   embed       |",
+    "                                   in72 >{{tgt}}"
   ],
 
   ".lss": [
     "IFSLC=@ LSS=SNOBOL4 ifs {{src}} |",
     "        LSS=SNOBOL4 stangle     |",
+    "                    g360        |",
     "        LSS=SNOBOL4 ifs         |",
-    "                    embed >{{tgt}}"
+    "                    embed       |",
+    "                    in72 >{{tgt}}"
   ]
 }

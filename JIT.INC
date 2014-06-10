@@ -1,10 +1,10 @@
 -MODULE JIT
--LINE 16 "JIT.lss"
+-LINE 21 "JIT.lss"
 -INCLUDE 'CRACK.INC'
 -INCLUDE 'P64.INC'
 -INCLUDE 'SEQ.INC'
 -STITL JIT
--LINE 2164 "JIT.lss"
+-LINE 2154 "JIT.lss"
 -EJECT
 *
 ************************************************************************
@@ -25,23 +25,23 @@
 *
 * JIT.lss
 *
--LINE 22 "JIT.lss"
+-LINE 27 "JIT.lss"
 -CASE 1
 -PLUSOPS 1
--LINE 25 "JIT.lss"
--LINE 26 "JIT.lss"
--LINE 27 "JIT.lss"
--LINE 28 "JIT.lss"
--LINE 29 "JIT.lss"
+-LINE 30 "JIT.lss"
+-LINE 31 "JIT.lss"
 -LINE 32 "JIT.lss"
+-LINE 33 "JIT.lss"
+-LINE 34 "JIT.lss"
+-LINE 37 "JIT.lss"
          jit = 'jit.c'
--LINE 470 "JIT.lss"
--LINE 471 "JIT.lss"
--LINE 472 "JIT.lss"
--LINE 473 "JIT.lss"
--LINE 474 "JIT.lss"
 -LINE 475 "JIT.lss"
--LINE 483 "JIT.lss"
+-LINE 476 "JIT.lss"
+-LINE 477 "JIT.lss"
+-LINE 478 "JIT.lss"
+-LINE 479 "JIT.lss"
+-LINE 480 "JIT.lss"
+-LINE 488 "JIT.lss"
          LOAD('INIT_JIT(STRING)', 'jit.so')
          LOAD('R_NUM_JIT()INTEGER', 'jit.so')
          LOAD('V_NUM_JIT()INTEGER', 'jit.so')
@@ -147,7 +147,7 @@
          SEQ(" LOAD(A<I> '_JIT(INTEGER,INTEGER,INTEGER)', 'jit.so') "
 +            , .I)
 *
-         LOAD('MOVI_JIT(INTEGER)', 'jit.so')
+         LOAD('MOVI_JIT(INTEGER)INTEGER', 'jit.so')
          LOAD('MOVI_F_JIT(INTEGER)', 'jit.so')
          LOAD('MOVI_D_JIT(INTEGER)', 'jit.so')
          LOAD('MOVI_F_W_JIT(INTEGER,INTEGER)', 'jit.so')
@@ -179,7 +179,7 @@
          LOAD('PUSHARGI_D_JIT()', 'jit.so')
 *
          LOAD('JMPR_JIT(INTEGER)', 'jit.so')
-         LOAD('JMPI_JIT()', 'jit.so')
+         LOAD('JMPI_JIT()INTEGER', 'jit.so')
 *
          LOAD('CALLR_JIT(INTEGER)', 'jit.so')
          LOAD('CALLI_JIT()', 'jit.so')
@@ -686,8 +686,7 @@ JIT_FINISH
          FINISH_JIT()                                          :(RETURN)
 *
 JIT_MOVI SET_P(P)
-         MOVI_JIT(R)
-         JIT_MOVI = GET_P()                                    :(RETURN)
+         JIT_MOVI = MOVI_JIT(R)                                :(RETURN)
 *
 JIT_MOVI_F
          SET_F(F)
@@ -786,8 +785,7 @@ JIT_CLEAR_STATE
 JIT_JMPR JMPR_JIT(R)                                           :(RETURN)
 *
 JIT_JMPI SET_P(P)
-         JMPI_JIT()
-         JIT_JMPI = GET_P()                                    :(RETURN)
+         JIT_JMPI = JMPI_JIT()                                 :(RETURN)
 *
 JIT_CALLR
          CALLR_JIT(R)                                          :(RETURN)
@@ -1139,60 +1137,47 @@ JIT_BORDR_F
 JIT_BUNORDR_F
          JIT_BUNORDR_F = BUNORDR_F_JIT(R1, R2)                 :(RETURN)
 *
-            'bltr_d bler_d bgtr_d bger_d beqr_d bner_d '               +
-            'bunltr_d bunler_d buneqr_d bunger_d bungtr_d '            +
-            'bltgtr_d bordr_d bunordr_d '
 JIT_BLTR_D
-         BLTR_D_JIT(R1, R2)
-         JIT_BLTR_D = GET_P()                                  :(RETURN)
+         JIT_BLTR_D = BLTR_D_JIT(R1, R2)                       :(RETURN)
 *
 JIT_BLER_D
-         BLER_D_JIT(R1, R2)
-         JIT_BLER_D = GET_P()                                  :(RETURN)
+         JIT_BLER_D = BLER_D_JIT(R1, R2)                       :(RETURN)
 *
 JIT_BGTR_D
-         BGTR_D_JIT(R1, R2)
-         JIT_BGTR_D = GET_P()                                  :(RETURN)
+         JIT_BGTR_D = BGTR_D_JIT(R1, R2)                       :(RETURN)
+*
+JIT_BGER_D
+         JIT_BGER_D = BGER_D_JIT(R1, R2)                       :(RETURN)
 *
 JIT_BEQR_D
-         BEQR_D_JIT(R1, R2)
-         JIT_BEQR_D = GET_P()                                  :(RETURN)
+         JIT_BEQR_D = BEQR_D_JIT(R1, R2)                       :(RETURN)
 *
 JIT_BNER_D
-         BNER_D_JIT(R1, R2)
-         JIT_BNER_D = GET_P()                                  :(RETURN)
+         JIT_BNER_D = BNER_D_JIT(R1, R2)                       :(RETURN)
 *
 JIT_BUNLTR_D
-         BUNLTR_D_JIT(R1, R2)
-         JIT_BUNLTR_D = GET_P()                                :(RETURN)
+         JIT_BUNLTR_D = BUNLTR_D_JIT(R1, R2)                   :(RETURN)
 *
 JIT_BUNLER_D
-         BUNLER_D_JIT(R1, R2)
-         JIT_BUNLER_D = GET_P()                                :(RETURN)
+         JIT_BUNLER_D = BUNLER_D_JIT(R1, R2)                   :(RETURN)
 *
 JIT_BUNEQR_D
-         BUNEQR_D_JIT(R1, R2)
-         JIT_BUNEQR_D = GET_P()                                :(RETURN)
+         JIT_BUNEQR_D = BUNEQR_D_JIT(R1, R2)                   :(RETURN)
 *
 JIT_BUNGER_D
-         BUNGER_D_JIT(R1, R2)
-         JIT_BUNGER_D = GET_P()                                :(RETURN)
+         JIT_BUNGER_D = BUNGER_D_JIT(R1, R2)                   :(RETURN)
 *
 JIT_BUNGTR_D
-         BUNGTR_D_JIT(R1, R2)
-         JIT_BUNGTR_D = GET_P()                                :(RETURN)
+         JIT_BUNGTR_D = BUNGTR_D_JIT(R1, R2)                   :(RETURN)
 *
 JIT_BLTGTR_D
-         BLTGTR_D_JIT(R1, R2)
-         JIT_BLTGTR_D = GET_P()                                :(RETURN)
+         JIT_BLTGTR_D = BLTGTR_D_JIT(R1, R2)                   :(RETURN)
 *
 JIT_BORDR_D
-         BORDR_D_JIT(R1, R2)
-         JIT_BORDR_D = GET_P()                                 :(RETURN)
+         JIT_BORDR_D = BORDR_D_JIT(R1, R2)                     :(RETURN)
 *
 JIT_BUNORDR_D
-         BUNORDR_D_JIT(R1, R2)
-         JIT_BUNORDR_D = GET_P()                               :(RETURN)
+         JIT_BUNORDR_D = BUNORDR_D_JIT(R1, R2)                 :(RETURN)
 *
 JIT_ADDI SET_P(P)
          ADDI_JIT(R1, R2)                                      :(RETURN)
