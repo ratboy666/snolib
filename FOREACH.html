@@ -27,8 +27,7 @@ produces a sequence of values.
 <font color="#818181"><i># Apply procedure proc to each element of x, where x may be an array,</i></font>
 <font color="#818181"><i># table, or expression that produces a sequence of values.</i></font>
 <font color="#818181"><i>#</i></font>
-//-MODULE FOREACH
-//-PUBLIC FOREACH()
+-PUBLIC FOREACH()
 procedure foreach(x, proc) a, i {
    i = datatype(x)
    if (i :: &#39;ARRAY&#39;) {
@@ -85,6 +84,8 @@ END
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
 -SNOCONE
+-MODULE FOREACH
+<b>&laquo;INCLUDES&raquo;</b>
 -STITL FOREACH
 -EJECT
 <font color="#818181"><i>#</i></font>
@@ -115,7 +116,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 20:00:39 EDT 2014</p></td><td><p align=right>
+Wed Jun 11 08:16:41 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

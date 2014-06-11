@@ -1,16 +1,29 @@
 # RECIPES
 #
 # Default recipes
-# FIXME need to add snocone awareness and better ditaa
-
+# FIXME need to add better ditaa
+# need to catch snocone errors || echo snocone >> .fail
 {
   ".lss.INC": [
-    "IFSLC=@ LSS=SNOBOL4 {{IFS}} {{src}} |",
-    "        LSS=SNOBOL4 {{STANGLE}}     |",
-    "                    {{G360}}        |",
-    "        LSS=SNOBOL4 {{IFS}}         |",
-    "                    {{EMBED}}       |",
-    "                    {{IN72}} >{{tgt}}"
+    "t=`mktemp /tmp/fileXXXXXXXXXX`;",
+    "export LSS=SNOBOL4;            ",
+    "export LABEL={{base}}.;        ",
+    "IFSLC=@ {{IFS}} <{{src}} |     ",
+    "        {{STANGLE}}      |     ",
+    "        {{G360}}         |     ",
+    "        {{IFS}}          |     ",
+    "        {{EMBED}}        |     ",
+    "        {{IN72}} >$t;          ",
+    "grep -q -- ^-SNOCONE $t && (   ",
+    "  cp $t {{base}}.sc;           ",
+    "  {{SNOCONE}} -m {{base}}.sc;  ",
+    "  cp {{base}}.sno {{tgt}};     ",
+    "  rm {{base}}.sno;             ",
+    ");                             ",
+    "grep -q -- ^-SNOCONE $t || (   ",
+    "  cp $t {{tgt}};               ",
+    ");                             ",
+    "rm $t;                         "
   ],
 
   ".lss.html": [

@@ -1,8 +1,9 @@
+-MODULE FLOOR
 -LINE 11 "FLOOR.lss"
 -INCLUDE 'DEXP.INC'
 -STITL FLOOR
--EJECT
 -LINE 40 "FLOOR.lss"
+-EJECT
 *
 ************************************************************************
 *                                                                      *
@@ -21,8 +22,8 @@
 * FLOOR.lss
 *
 -LINE 15 "FLOOR.lss"
--MODULE FLOOR
 -PUBLIC FLOOR(), CEIL()
+*
          DEFINE('FLOOR(X)')
          DEXP('CEIL(X) = -FLOOR(-X)')                       :(FLOOR_END)
 *

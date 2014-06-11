@@ -62,6 +62,142 @@ END
 *
 * CE: .MSNOBOL4;
 @
+-MODULE AGT
+-IN72
+-LINE 13 "AGT.lss"
+-LINE 42 "AGT.lss"
+-STITL AGT
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                         #      #####   #######                       *
+*                        # #    #     #     #                          *
+*                       #   #   #           #                          *
+*                      #     #  #  ####     #                          *
+*                      #######  #     #     #                          *
+*                      #     #  #     #     #                          *
+*                      #     #   #####      #                          *
+*                                                                      *
+* AGT        ALPHABETIC COMPARISION WITH UPPER AND LOWER EQUAL         *
+*                                                                      *
+************************************************************************
+*
+* AGT.lss
+*
+-LINE 16 "AGT.lss"
+-PUBLIC AGT()
+*
+         DEFINE('AGT(S1,S2)')
+         AGT_TT = REPLACE(&ALPHABET, &UCASE, &LCASE)          :(AGT_END)
+*
+AGT      LGT(REPLACE(S1, &ALPHABET, AGT_TT),
++            REPLACE(S2, &ALPHABET, AGT_TT))        :S(RETURN)F(FRETURN)
+*
+AGT_END
+*
+* CE: .MSNOBOL4;
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>AGT - Alphabetic comparision with upper and lower equal</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">AGT(S1,S2)</font> is the same as <font face="Source Code Pro">LGT(S1,S2)</font> but considers upper and
+lower case identical. <font face="Source Code Pro">AGT</font> converts both strings to lowercase.
+This is done by creating a translation table based on <font face="Source Code Pro">&ALPHABET</font>.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+After the strings have been translated, <font face="Source Code Pro">LGT</font> is used for the
+comparision.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;AGT&raquo;&equiv;</b>
+-PUBLIC AGT()
+<font color="#818181"><i>*</i></font>
+         DEFINE(&#39;AGT(S1,S2)&#39;)
+         AGT_TT = REPLACE(&amp;ALPHABET, &amp;UCASE, &amp;LCASE)          <b>:(AGT_END)</b>
+<font color="#818181"><i>*</i></font>
+AGT      LGT(REPLACE(S1, &amp;ALPHABET, AGT_TT),
++            REPLACE(S2, &amp;ALPHABET, AGT_TT))        <b>:S(RETURN)F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+AGT_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;AGT.INC&#39;
+         &amp;CODE = 1
+         AGT(&#39;abd&#39;, &#39;ABC&#39;)                                       <b>:F(END)</b>
+         AGT(&#39;abc&#39;, &#39;ABC&#39;)                                       <b>:S(END)</b>
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+-MODULE AGT
+-IN72
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL AGT
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                         #      #####   #######                       *</i></font>
+<font color="#818181"><i>*                        # #    #     #     #                          *</i></font>
+<font color="#818181"><i>*                       #   #   #           #                          *</i></font>
+<font color="#818181"><i>*                      #     #  #  ####     #                          *</i></font>
+<font color="#818181"><i>*                      #######  #     #     #                          *</i></font>
+<font color="#818181"><i>*                      #     #  #     #     #                          *</i></font>
+<font color="#818181"><i>*                      #     #   #####      #                          *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* AGT        ALPHABETIC COMPARISION WITH UPPER AND LOWER EQUAL         *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* AGT.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;AGT&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Wed Jun 11 07:29:15 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'AGT.INC'
+-LINE 31 "AGT.lss"
+         &CODE = 1
+         AGT('abd', 'ABC')                                       :F(END)
+         AGT('abc', 'ABC')                                       :S(END)
+         &CODE = 0
+END
 <h1>AI - Apply Index</h1>
 
 [[AI(A,I)]] where [[A]] and [[I]] are arrays will regard [[I]] as a
@@ -20513,8 +20649,8 @@ END
 @
 
 <<FLOOR>>=
--MODULE FLOOR
 -PUBLIC FLOOR(), CEIL()
+*
          DEFINE('FLOOR(X)')
          DEXP('CEIL(X) = -FLOOR(-X)')                       :(FLOOR_END)
 *
@@ -20535,6 +20671,7 @@ END
 @
 
 <<>>=
+-MODULE FLOOR
 <<INCLUDES>>
 -STITL FLOOR
 -EJECT
@@ -20559,11 +20696,12 @@ END
 *
 * CE: .MSNOBOL4;
 @
+-MODULE FLOOR
 -LINE 11 "FLOOR.lss"
 -INCLUDE 'DEXP.INC'
 -STITL FLOOR
--EJECT
 -LINE 40 "FLOOR.lss"
+-EJECT
 *
 ************************************************************************
 *                                                                      *
@@ -20582,8 +20720,8 @@ END
 * FLOOR.lss
 *
 -LINE 15 "FLOOR.lss"
--MODULE FLOOR
 -PUBLIC FLOOR(), CEIL()
+*
          DEFINE('FLOOR(X)')
          DEXP('CEIL(X) = -FLOOR(-X)')                       :(FLOOR_END)
 *
@@ -20623,8 +20761,8 @@ FLOOR_END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;FLOOR&raquo;&equiv;</b>
--MODULE FLOOR
 -PUBLIC FLOOR(), CEIL()
+<font color="#818181"><i>*</i></font>
          DEFINE(&#39;FLOOR(X)&#39;)
          DEXP(&#39;CEIL(X) = -FLOOR(-X)&#39;)                       <b>:(FLOOR_END)</b>
 <font color="#818181"><i>*</i></font>
@@ -20649,6 +20787,7 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+-MODULE FLOOR
 <b>&laquo;INCLUDES&raquo;</b>
 -STITL FLOOR
 -EJECT
@@ -20678,7 +20817,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 20:00:03 EDT 2014</p></td><td><p align=right>
+Wed Jun 11 11:10:46 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>
@@ -20704,8 +20843,7 @@ produces a sequence of values.
 # Apply procedure proc to each element of x, where x may be an array,
 # table, or expression that produces a sequence of values.
 #
-//-MODULE FOREACH
-//-PUBLIC FOREACH()
+-PUBLIC FOREACH()
 procedure foreach(x, proc) a, i {
    i = datatype(x)
    if (i :: 'ARRAY') {
@@ -20758,6 +20896,8 @@ END
 
 <<>>=
 -SNOCONE
+-MODULE FOREACH
+<<INCLUDES>>
 -STITL FOREACH
 -EJECT
 #
@@ -20786,65 +20926,66 @@ END
 -PLUSOPS 1 
   :(FOREACH.1)
 -SNOCONE 
+-MODULE FOREACH 
+-LINE 10 "FOREACH.lss" 
+-LINE 71 "FOREACH.lss" 
 -STITL FOREACH 
 -EJECT 
--LINE 72 "FOREACH.lss" 
 -LINE 13 "FOREACH.lss" 
--LINE 19 "FOREACH.lss"
+-PUBLIC FOREACH() 
+-LINE 18 "FOREACH.lss"
   :(foreach.END)
--LINE 20
+-LINE 19
 foreach i = datatype(x)
--LINE 21
+-LINE 20
  IDENT(i,'ARRAY') :F(FOREACH.2)
--LINE 22
+-LINE 21
  i = 1
--LINE 23
+-LINE 22
  prototype(x) ? fence break(':') . i
--LINE 24
+-LINE 23
 FOREACH.3 a = x<i> :F(FOREACH.4)
--LINE 25
+-LINE 24
  apply(proc,a) :S(FOREACH.5)F(FRETURN)
--LINE 27
+-LINE 26
 FOREACH.5 i = i + 1 :(FOREACH.3)
--LINE 29
+-LINE 28
 FOREACH.4  :(FOREACH.6)
 FOREACH.2 IDENT(i,'TABLE') :F(FOREACH.7)
--LINE 30
+-LINE 29
  x = convert(x,'ARRAY') :S(FOREACH.8)F(FRETURN)
--LINE 32
+-LINE 31
 FOREACH.8 x = sort(x)
--LINE 33
+-LINE 32
  i = 1
--LINE 34
+-LINE 33
 FOREACH.9 a = x<i,2> :F(FOREACH.10)
--LINE 35
+-LINE 34
  apply(proc,a,x<i,1>) :S(FOREACH.11)F(FRETURN)
--LINE 37
+-LINE 36
 FOREACH.11 i = i + 1 :(FOREACH.9)
--LINE 39
+-LINE 38
 FOREACH.10  :(FOREACH.12)
 FOREACH.7 IDENT(i,'EXPRESSION') :F(FOREACH.13)
--LINE 40
+-LINE 39
 FOREACH.14 a = eval(x) :F(FOREACH.15)
--LINE 41
+-LINE 40
  apply(proc,a) :S(FOREACH.16)F(FRETURN)
--LINE 43
+-LINE 42
 FOREACH.16  :(FOREACH.14)
--LINE 44
+-LINE 43
 FOREACH.15  :(FOREACH.17)
--LINE 45
+-LINE 44
 FOREACH.13 apply(proc,x) :S(RETURN)F(FOREACH.18)
--LINE 48
+-LINE 47
 FOREACH.18  :(FRETURN)
 FOREACH.19 
 FOREACH.17 
 FOREACH.12 
--LINE 50
+-LINE 49
 FOREACH.6  :(RETURN)
 foreach.END 
 FOREACH.1 
--MODULE FOREACH 
--PUBLIC FOREACH() 
  DEFINE('foreach(x,proc)a,i')
 <!DOCTYPE html>
 <html><head>
@@ -20875,8 +21016,7 @@ produces a sequence of values.
 <font color="#818181"><i># Apply procedure proc to each element of x, where x may be an array,</i></font>
 <font color="#818181"><i># table, or expression that produces a sequence of values.</i></font>
 <font color="#818181"><i>#</i></font>
-//-MODULE FOREACH
-//-PUBLIC FOREACH()
+-PUBLIC FOREACH()
 procedure foreach(x, proc) a, i {
    i = datatype(x)
    if (i :: &#39;ARRAY&#39;) {
@@ -20933,6 +21073,8 @@ END
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
 -SNOCONE
+-MODULE FOREACH
+<b>&laquo;INCLUDES&raquo;</b>
 -STITL FOREACH
 -EJECT
 <font color="#818181"><i>#</i></font>
@@ -20963,14 +21105,14 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 20:00:39 EDT 2014</p></td><td><p align=right>
+Wed Jun 11 08:16:41 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -INCLUDE 'FOREACH.INC'
--LINE 56 "FOREACH.lss"
+-LINE 55 "FOREACH.lss"
 -INCLUDE 'DEXP.INC'
 -INCLUDE 'CRACK.INC'
          &CODE = 1
@@ -23575,17 +23717,15 @@ Symbolic defines for [[HOST]] functions.
 @
 
 <<HOST>>=
--MODULE HOST
 HOST
-@
-
-<<HOST>>=
+*
 %SET(NONEED,0)
 %SET(CSNOBOL4,(?(SYSTEM ? 'CSNOBOL4') 1))
 *
 * MACRO SPITBOL
 *
 -PUBLIC HOST_SYSINFO, HOST_PARAMS
+*
 * ARCH:OS:SNOBOL_VERSION
          HOST_SYSINFO = ''
 * ARGUMENT FROM -u OR ENTIRE COMMAND LINE
@@ -23594,6 +23734,7 @@ HOST
 * CATSPAW SPITBOL
 *
 -PUBLIC HOST_SYSCMD, HOST_ARGN, HOST_FIRSTARG, HOST_GETENV
+*
 * EXEC ARG AS SHELL COMMAND, RETURN STATUS
          HOST_SYSCMD = 1
 * N'TH TOKEN ON COMMAND LINE (INTEGER)
@@ -23609,6 +23750,7 @@ HOST
 *
 -PUBLIC HOST_CONFIG_HOST, HOST_CONFIG_DATE, HOST_BUILD_DATE
 -PUBIC HOST_BUILD_DIR, HOST_BUILD_FILES
+*
 * HOST WHERE CONFIGURE SCRIPT WAS RUN
          HOST_CONFIG_HOST = 2001
 * DATE WHEN CONFIGURE SCRIPT WAS RUN
@@ -23622,16 +23764,19 @@ HOST
 %ENDIF
 *
 -PUBLIC HOST_SNOLIB_DIR
+*
 * DEFAULT SNOLIB DIR (-INCLUDE, LOAD())
          HOST_SNOLIB_DIR = 2200
 %IF(NONEED)
 *
 -PUBLIC HOST_SNOLIB_FILE
+*
 * DEFAULT FILE FOR LOAD()
          HOST_SNOLIB_FILE = 2201
 %ENDIF
 *
 -PUBLIC HOST_CC, HOST_COPT
+*
 * C COMPILER USED TO BUILD CSNOBOL4
          HOST_CC = 2202
 * C OPTIMIZER FLAGS USED TO BUILD CSNOBOL4
@@ -23639,6 +23784,7 @@ HOST
 %IF(NONEED)
 *
 -PUBLIC HOST_SO_EXT, HOST_SO_CFLAGS, HOST_SO_LD, HOST_SO_LDFLAGS
+*
 * SHARED OBJECT LIBRARY EXTENSION
          HOST_SO_EXT = 2204
 * C COMPILER FLAGS FOR SHARED OBJECTS
@@ -23650,6 +23796,7 @@ HOST
 %ENDIF
 *
 -PUBLIC HOST_DL_EXT, HOST_DL_CFLAGS, HOST_DL_LD,HOST_DL_LDFLAGS
+*
 * DYNAMIC LOADABLE LIBRARY EXTENSION
          HOST_DL_EXT = 2208
 * C COMPILER FLAGS FOR DYNAMIC LOADABLES
@@ -23660,6 +23807,7 @@ HOST
          HOST_DL_LDFLAGS = 2211
 *
 -PUBLIC HOST_DIR_SEP, HOST_PATH_SEP
+*
 * DIRECTORY SEPARATOR CHAR (MAY BE EMPTY)
          HOST_DIR_SEP = 2212
 * PATH SEPARATOR CHARACTER
@@ -23668,6 +23816,7 @@ HOST
 * CSNOBOL4 1.5
 *
 -PUBLIC HOST_DEF_SNOPATH, HOST_INCUDE_DIR
+*
 * DEFAULT LIBRARY SEARCH PATH
          HOST_DEF_SNOPATH = 2214
 * PATH FOR C HEADERS
@@ -23675,6 +23824,7 @@ HOST
 *
 -PUBLIC HOST_INTEGER_BITS, HOST_REAL_BITS, HOST_POINTER_BITS
 -PUBLIC HOST_LONG_BITS, HOST_DESCR_BITS, HOST_SPEC_BITS, HOST_CHAR_BITS
+*
 * NUMBER OF BITS FOR SNOBOL4 INTEGER TYPE
          HOST_INTEGER_BITS = 2300
 * NUMBER OF BITS FOR SNOBOL4 REAL TYPE
@@ -23691,6 +23841,7 @@ HOST
          HOST_CHAR_BITS = 2306
 *
 -PUBLIC HOST_DYNAMIC_SIZE, HOST_PMSTACK_SIZE, HOST_ISTACK_SIZE
+*
 * SIZE OF 'DYNAMIC' STORAGE IN DESCRIPTORS
          HOST_DYNAMIC_SIZE = 2400
 * SIZE OF PATTERN MATCH STACK IN DESCRS
@@ -23714,6 +23865,8 @@ END
 @
 
 <<>>=
+-MODULE HOST
+<<INCLUDES>>
 -STITL HOST
 -EJECT
 *
@@ -23737,10 +23890,12 @@ END
 *
 * CE: .MSNOBOL4;
 @
+-MODULE HOST
+-LINE 8 "HOST.lss"
 -STITL HOST
+-LINE 162 "HOST.lss"
 -EJECT
 *
--LINE 153 "HOST.lss"
 ************************************************************************
 *                                                                      *
 *                 #     #  #######   #####   #######                   *
@@ -23758,13 +23913,13 @@ END
 * HOST.lss
 *
 -LINE 11 "HOST.lss"
--MODULE HOST
 HOST
--LINE 16 "HOST.lss"
+*
 *
 * MACRO SPITBOL
 *
 -PUBLIC HOST_SYSINFO, HOST_PARAMS
+*
 * ARCH:OS:SNOBOL_VERSION
          HOST_SYSINFO = ''
 * ARGUMENT FROM -u OR ENTIRE COMMAND LINE
@@ -23773,6 +23928,7 @@ HOST
 * CATSPAW SPITBOL
 *
 -PUBLIC HOST_SYSCMD, HOST_ARGN, HOST_FIRSTARG, HOST_GETENV
+*
 * EXEC ARG AS SHELL COMMAND, RETURN STATUS
          HOST_SYSCMD = 1
 * N'TH TOKEN ON COMMAND LINE (INTEGER)
@@ -23783,16 +23939,19 @@ HOST
          HOST_GETENV = 4
 *
 -PUBLIC HOST_SNOLIB_DIR
+*
 * DEFAULT SNOLIB DIR (-INCLUDE, LOAD())
          HOST_SNOLIB_DIR = 2200
 *
 -PUBLIC HOST_CC, HOST_COPT
+*
 * C COMPILER USED TO BUILD CSNOBOL4
          HOST_CC = 2202
 * C OPTIMIZER FLAGS USED TO BUILD CSNOBOL4
          HOST_COPT = 2203
 *
 -PUBLIC HOST_DL_EXT, HOST_DL_CFLAGS, HOST_DL_LD,HOST_DL_LDFLAGS
+*
 * DYNAMIC LOADABLE LIBRARY EXTENSION
          HOST_DL_EXT = 2208
 * C COMPILER FLAGS FOR DYNAMIC LOADABLES
@@ -23803,6 +23962,7 @@ HOST
          HOST_DL_LDFLAGS = 2211
 *
 -PUBLIC HOST_DIR_SEP, HOST_PATH_SEP
+*
 * DIRECTORY SEPARATOR CHAR (MAY BE EMPTY)
          HOST_DIR_SEP = 2212
 * PATH SEPARATOR CHARACTER
@@ -23811,6 +23971,7 @@ HOST
 * CSNOBOL4 1.5
 *
 -PUBLIC HOST_DEF_SNOPATH, HOST_INCUDE_DIR
+*
 * DEFAULT LIBRARY SEARCH PATH
          HOST_DEF_SNOPATH = 2214
 * PATH FOR C HEADERS
@@ -23818,6 +23979,7 @@ HOST
 *
 -PUBLIC HOST_INTEGER_BITS, HOST_REAL_BITS, HOST_POINTER_BITS
 -PUBLIC HOST_LONG_BITS, HOST_DESCR_BITS, HOST_SPEC_BITS, HOST_CHAR_BITS
+*
 * NUMBER OF BITS FOR SNOBOL4 INTEGER TYPE
          HOST_INTEGER_BITS = 2300
 * NUMBER OF BITS FOR SNOBOL4 REAL TYPE
@@ -23834,6 +23996,7 @@ HOST
          HOST_CHAR_BITS = 2306
 *
 -PUBLIC HOST_DYNAMIC_SIZE, HOST_PMSTACK_SIZE, HOST_ISTACK_SIZE
+*
 * SIZE OF 'DYNAMIC' STORAGE IN DESCRIPTORS
          HOST_DYNAMIC_SIZE = 2400
 * SIZE OF PATTERN MATCH STACK IN DESCRS
@@ -23870,19 +24033,15 @@ Symbolic defines for <font face="Source Code Pro">HOST</font> functions.
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;HOST&raquo;&equiv;</b>
--MODULE HOST
 HOST
-<b>@</b>
-</font></pre></div>
-<div style="background-image: url(greenbar.gif)">
-<pre><font face="Source Code Pro">
-<b>&laquo;HOST&raquo;&equiv;</b>
+<font color="#818181"><i>*</i></font>
 %SET(NONEED,0)
 %SET(CSNOBOL4,(?(SYSTEM ? &#39;CSNOBOL4&#39;) 1))
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* MACRO SPITBOL</i></font>
 <font color="#818181"><i>*</i></font>
 -PUBLIC HOST_SYSINFO, HOST_PARAMS
+<font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* ARCH:OS:SNOBOL_VERSION</i></font>
          HOST_SYSINFO = &#39;&#39;
 <font color="#818181"><i>* ARGUMENT FROM -u OR ENTIRE COMMAND LINE</i></font>
@@ -23891,6 +24050,7 @@ HOST
 <font color="#818181"><i>* CATSPAW SPITBOL</i></font>
 <font color="#818181"><i>*</i></font>
 -PUBLIC HOST_SYSCMD, HOST_ARGN, HOST_FIRSTARG, HOST_GETENV
+<font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* EXEC ARG AS SHELL COMMAND, RETURN STATUS</i></font>
          HOST_SYSCMD = 1
 <font color="#818181"><i>* N&#39;TH TOKEN ON COMMAND LINE (INTEGER)</i></font>
@@ -23906,6 +24066,7 @@ HOST
 <font color="#818181"><i>*</i></font>
 -PUBLIC HOST_CONFIG_HOST, HOST_CONFIG_DATE, HOST_BUILD_DATE
 -PUBIC HOST_BUILD_DIR, HOST_BUILD_FILES
+<font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* HOST WHERE CONFIGURE SCRIPT WAS RUN</i></font>
          HOST_CONFIG_HOST = 2001
 <font color="#818181"><i>* DATE WHEN CONFIGURE SCRIPT WAS RUN</i></font>
@@ -23919,16 +24080,19 @@ HOST
 %ENDIF
 <font color="#818181"><i>*</i></font>
 -PUBLIC HOST_SNOLIB_DIR
+<font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* DEFAULT SNOLIB DIR (-INCLUDE, LOAD())</i></font>
          HOST_SNOLIB_DIR = 2200
 %IF(NONEED)
 <font color="#818181"><i>*</i></font>
 -PUBLIC HOST_SNOLIB_FILE
+<font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* DEFAULT FILE FOR LOAD()</i></font>
          HOST_SNOLIB_FILE = 2201
 %ENDIF
 <font color="#818181"><i>*</i></font>
 -PUBLIC HOST_CC, HOST_COPT
+<font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* C COMPILER USED TO BUILD CSNOBOL4</i></font>
          HOST_CC = 2202
 <font color="#818181"><i>* C OPTIMIZER FLAGS USED TO BUILD CSNOBOL4</i></font>
@@ -23936,6 +24100,7 @@ HOST
 %IF(NONEED)
 <font color="#818181"><i>*</i></font>
 -PUBLIC HOST_SO_EXT, HOST_SO_CFLAGS, HOST_SO_LD, HOST_SO_LDFLAGS
+<font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* SHARED OBJECT LIBRARY EXTENSION</i></font>
          HOST_SO_EXT = 2204
 <font color="#818181"><i>* C COMPILER FLAGS FOR SHARED OBJECTS</i></font>
@@ -23947,6 +24112,7 @@ HOST
 %ENDIF
 <font color="#818181"><i>*</i></font>
 -PUBLIC HOST_DL_EXT, HOST_DL_CFLAGS, HOST_DL_LD,HOST_DL_LDFLAGS
+<font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* DYNAMIC LOADABLE LIBRARY EXTENSION</i></font>
          HOST_DL_EXT = 2208
 <font color="#818181"><i>* C COMPILER FLAGS FOR DYNAMIC LOADABLES</i></font>
@@ -23957,6 +24123,7 @@ HOST
          HOST_DL_LDFLAGS = 2211
 <font color="#818181"><i>*</i></font>
 -PUBLIC HOST_DIR_SEP, HOST_PATH_SEP
+<font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* DIRECTORY SEPARATOR CHAR (MAY BE EMPTY)</i></font>
          HOST_DIR_SEP = 2212
 <font color="#818181"><i>* PATH SEPARATOR CHARACTER</i></font>
@@ -23965,6 +24132,7 @@ HOST
 <font color="#818181"><i>* CSNOBOL4 1.5</i></font>
 <font color="#818181"><i>*</i></font>
 -PUBLIC HOST_DEF_SNOPATH, HOST_INCUDE_DIR
+<font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* DEFAULT LIBRARY SEARCH PATH</i></font>
          HOST_DEF_SNOPATH = 2214
 <font color="#818181"><i>* PATH FOR C HEADERS</i></font>
@@ -23972,6 +24140,7 @@ HOST
 <font color="#818181"><i>*</i></font>
 -PUBLIC HOST_INTEGER_BITS, HOST_REAL_BITS, HOST_POINTER_BITS
 -PUBLIC HOST_LONG_BITS, HOST_DESCR_BITS, HOST_SPEC_BITS, HOST_CHAR_BITS
+<font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* NUMBER OF BITS FOR SNOBOL4 INTEGER TYPE</i></font>
          HOST_INTEGER_BITS = 2300
 <font color="#818181"><i>* NUMBER OF BITS FOR SNOBOL4 REAL TYPE</i></font>
@@ -23988,6 +24157,7 @@ HOST
          HOST_CHAR_BITS = 2306
 <font color="#818181"><i>*</i></font>
 -PUBLIC HOST_DYNAMIC_SIZE, HOST_PMSTACK_SIZE, HOST_ISTACK_SIZE
+<font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* SIZE OF &#39;DYNAMIC&#39; STORAGE IN DESCRIPTORS</i></font>
          HOST_DYNAMIC_SIZE = 2400
 <font color="#818181"><i>* SIZE OF PATTERN MATCH STACK IN DESCRS</i></font>
@@ -24015,6 +24185,8 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+-MODULE HOST
+<b>&laquo;INCLUDES&raquo;</b>
 -STITL HOST
 -EJECT
 <font color="#818181"><i>*</i></font>
@@ -24043,14 +24215,14 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 20:00:05 EDT 2014</p></td><td><p align=right>
+Wed Jun 11 11:10:47 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -INCLUDE 'HOST.INC'
--LINE 144 "HOST.lss"
+-LINE 153 "HOST.lss"
          &CODE = 1
          &CODE = 0
 END
@@ -27552,7 +27724,6 @@ btm
 @
 
 <<ITERDIR>>=
--MODULE ITERDIR
 -PUBLIC `VALUE_DIR(), ITER_DIR(), NEXT_DIR()
 *
          DEFINE('ITER_DIR(W)')
@@ -27562,8 +27733,8 @@ btm
 VALUE_DIR
          VALUE_DIR = DIFFER(D) VALUE(D)             :S(RETURN)F(FRETURN)
 *
-ITER_DIR ITER_DIR = ATOL(CRACK(BQ('ls ' W, CHARS_NL), CHARS_NL))
-+                                                   :S(RETURN)F(FRETURN)
+ITER_DIR ITER_DIR = ATOL(CRACK(BQ('ls 2>/dev/null ' W, CHARS_NL),
++           CHARS_NL))                              :S(RETURN)F(FRETURN)
 *
 NEXT_DIR NEXT_DIR = DIFFER(D) NEXT(D)               :S(RETURN)F(FRETURN)
 *
@@ -27580,6 +27751,7 @@ END
 @
 
 <<>>=
+-MODULE ITERDIR
 <<INCLUDES>>
 -STITL ITERDIR
 -EJECT
@@ -27604,14 +27776,15 @@ END
 *
 * CE: .MSNOBOL4;
 @
+-MODULE ITERDIR
 -LINE 32 "ITERDIR.lss"
 -INCLUDE 'BQ.INC'
 -INCLUDE 'CRACK.INC'
 -INCLUDE 'ATOL.INC'
 -INCLUDE 'CHARS.INC'
 -STITL ITERDIR
+-LINE 69 "ITERDIR.lss"
 -EJECT
--LINE 70 "ITERDIR.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -27630,7 +27803,6 @@ END
 * ITERDIR.lss
 *
 -LINE 39 "ITERDIR.lss"
--MODULE ITERDIR
 -PUBLIC `VALUE_DIR(), ITER_DIR(), NEXT_DIR()
 *
          DEFINE('ITER_DIR(W)')
@@ -27640,8 +27812,8 @@ END
 VALUE_DIR
          VALUE_DIR = DIFFER(D) VALUE(D)             :S(RETURN)F(FRETURN)
 *
-ITER_DIR ITER_DIR = ATOL(CRACK(BQ('ls ' W, CHARS_NL), CHARS_NL))
-+                                                   :S(RETURN)F(FRETURN)
+ITER_DIR ITER_DIR = ATOL(CRACK(BQ('ls 2>/dev/null ' W, CHARS_NL),
++           CHARS_NL))                              :S(RETURN)F(FRETURN)
 *
 NEXT_DIR NEXT_DIR = DIFFER(D) NEXT(D)               :S(RETURN)F(FRETURN)
 *
@@ -27702,7 +27874,6 @@ expected.
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;ITERDIR&raquo;&equiv;</b>
--MODULE ITERDIR
 -PUBLIC `VALUE_DIR(), ITER_DIR(), NEXT_DIR()
 <font color="#818181"><i>*</i></font>
          DEFINE(&#39;ITER_DIR(W)&#39;)
@@ -27712,8 +27883,8 @@ expected.
 VALUE_DIR
          VALUE_DIR = DIFFER(D) VALUE(D)             <b>:S(RETURN)F(FRETURN)</b>
 <font color="#818181"><i>*</i></font>
-ITER_DIR ITER_DIR = ATOL(CRACK(BQ(&#39;ls &#39; W, CHARS_NL), CHARS_NL))
-+                                                   <b>:S(RETURN)F(FRETURN)</b>
+ITER_DIR ITER_DIR = ATOL(CRACK(BQ(&#39;ls 2&gt;/dev/null &#39; W, CHARS_NL),
++           CHARS_NL))                              <b>:S(RETURN)F(FRETURN)</b>
 <font color="#818181"><i>*</i></font>
 NEXT_DIR NEXT_DIR = DIFFER(D) NEXT(D)               <b>:S(RETURN)F(FRETURN)</b>
 <font color="#818181"><i>*</i></font>
@@ -27734,6 +27905,7 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+-MODULE ITERDIR
 <b>&laquo;INCLUDES&raquo;</b>
 -STITL ITERDIR
 -EJECT
@@ -27763,14 +27935,14 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Sun Jun  8 20:28:11 EDT 2014</p></td><td><p align=right>
+Wed Jun 11 11:10:48 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -INCLUDE 'ITERDIR.INC'
--LINE 61 "ITERDIR.lss"
+-LINE 60 "ITERDIR.lss"
          &CODE = 1
          &CODE = 0
 END
@@ -28138,10 +28310,10 @@ static void movi_d_ww_jit(int r1, int r2)
 -SNOBOL LU = REPLACE(L, &LCASE, &UCASE)
 -SNOBOL A = CRACK(L, ' ')
 -SNOBOL AU = CRACK(LU, ' ')
--SNOBOL SEQ(" EMBED = 'static void ' A<I> '_jit(void) { '; "           +
-            " EMBED = '    set_p_(jit_' A<I> '());'; "                 +
+-SNOBOL SEQ(" EMBED = 'static long ' A<I> '_jit(void) { '; "           +
+            " EMBED = '    return (long)jit_' A<I> '();'; "            +
             " EMBED = DIFFER(A<I>) '}'; "                              +
-            " C_WRAPPER_PROTO(AU<I> '_JIT()', "                        +
+            " C_WRAPPER_PROTO(AU<I> '_JIT()LONG', "                    +
             " .EMBED) ", .I)
 
 -SNOBOL L = 'getarg getarg_c getarg_uc getarg_s getarg_us getarg_i '   +
@@ -28163,10 +28335,10 @@ static void movi_d_ww_jit(int r1, int r2)
 -SNOBOL LU = REPLACE(L, &LCASE, &UCASE)
 -SNOBOL A = CRACK(L, ' ')
 -SNOBOL AU = CRACK(LU, ' ')
--SNOBOL SEQ(" EMBED = 'static void ' A<I> '_jit(int r) { '; "          +
-        " EMBED = ' set_p_(jit_' A<I> '(r, (jit_word_t)get_p_()));'; " +
+-SNOBOL SEQ(" EMBED = 'static long ' A<I> '_jit(int r) { '; "          +
+   " EMBED = ' return (long)jit_' A<I> '(r, (jit_word_t)get_p_());'; " +
             " EMBED = DIFFER(A<I>) '}'; "                              +
-            " C_WRAPPER_PROTO(AU<I> '_JIT(INTEGER)', "                 +
+            " C_WRAPPER_PROTO(AU<I> '_JIT(INTEGER)LONG', "             +
             " .EMBED) ", .I)
 
 -SNOBOL L = 'sti_c sti_s sti_i sti sti_l sti_f sti_d '
@@ -28216,17 +28388,17 @@ static void callr_jit(int r) { jit_callr(r); }
 
 -SNOBOL C_WRAPPER_PROTO('CALLR_JIT(INTEGER)', .EMBED)
 
-static void calli_jit(void) { set_p_(jit_calli(get_p_())); }
+static long calli_jit(void) { return (long)jit_calli(get_p_()); }
 
--SNOBOL C_WRAPPER_PROTO('CAllI_JIT()', .EMBED)
+-SNOBOL C_WRAPPER_PROTO('CALLI_JIT()LONG', .EMBED)
 
 static void finishr_jit(int r) { jit_finishr(r); }
 
 -SNOBOL C_WRAPPER_PROTO('FINISHR_JIT(INTEGER)', .EMBED)
 
-static void finishi_jit(void) { set_p_(jit_finishi(get_p_())); }
+static long finishi_jit(void) { return (long)jit_finishi(get_p_()); }
 
--SNOBOL C_WRAPPER_PROTO('FINISHI_JIT()', .EMBED)
+-SNOBOL C_WRAPPER_PROTO('FINISHI_JIT()LONG', .EMBED)
 
 static void ret_jit(void) { jit_ret(); }
 
@@ -28375,15 +28547,18 @@ static void reti_d_jit(void) { jit_reti_d(get_d_()); }
 *
          L = 'ARG ARG_F ARG_D'
          A = CRACK(L, ' ')
-         SEQ(" LOAD(A<I> '_JIT()', 'jit.so') ", .I)
+         SEQ(" LOAD(A<I> '_JIT()INTEGER', 'jit.so') ", .I)
+*
+         L = 'BLTI BLTI_U BLEI BLEI_U BEQI BGEI BGEI_U BGTI BGTI_U '
++            'BNEI BMSI BMCI BOADDI BOADDI_U BXADDI BXADDI_U '
++            'BOSUBI BOSUBI_U BXSUBI BXSUBI_U '
+         A = CRACK(L, ' ')
+         SEQ(" LOAD(A<I> '_JIT(INTEGER)INTEGER', 'jit.so') ", .I)
 *
          L = 'GETARG GETARG_C GETARG_UC GETARG_S GETARG_US GETARG_I '
 +            'GETARG_UI GETARG_L GETARG_F GETARG_D '
 +            'LDI_C LDI_UC LDI_S LDI_US LDI_I LDI LDI_UI LDI_L LDI_F '
 +            'LDI_D STI_C STI_S STI_I STI STI_L STI_F STI_D '
-+            'BLTI BLTI_U BLEI BLEI_U BEQI BGEI BGEI_U BGTI BGTI_U '
-+            'BNEI BMSI BMCI BOADDI BOADDI_U BXADDI BXADDI_U '
-+            'BOSUBI BOSUBI_U BXSUBI BXSUBI_U '
          A = CRACK(L, ' ')
          SEQ(" LOAD(A<I> '_JIT(INTEGER)', 'jit.so') ", .I)
 *
@@ -28401,10 +28576,10 @@ static void reti_d_jit(void) { jit_reti_d(get_d_()); }
          LOAD('JMPI_JIT()INTEGER', 'jit.so')
 *
          LOAD('CALLR_JIT(INTEGER)', 'jit.so')
-         LOAD('CALLI_JIT()', 'jit.so')
+         LOAD('CALLI_JIT()INTEGER', 'jit.so')
 *
          LOAD('FINISHR_JIT(INTEGER)', 'jit.so')
-         LOAD('FINISHI_JIT()', 'jit.so')
+         LOAD('FINISHI_JIT()INTEGER', 'jit.so')
 *
          LOAD('RET_JIT()', 'jit.so')
          LOAD('RETI_JIT()', 'jit.so')
@@ -28868,16 +29043,13 @@ JIT_V_NUM
 JIT_F_NUM
          JIT_F_NUM = F_NUM_JIT()                               :(RETURN)
 *
-JIT_ARG  ARG_JIT()
-         JIT_ARG = GET_P()                                     :(RETURN)
+JIT_ARG  JIT_ARG = ARG_JIT()                                   :(RETURN)
 *
 JIT_ARG_F
-         ARG_F_JIT()
-         JIT_ARG_F = GET_P()                                   :(RETURN)
+         JIT_ARG_F = ARG_F_JIT()                               :(RETURN)
 *
 JIT_ARG_D
-         ARG_D_JIT()
-         JIT_ARG_D = GET_P()                                   :(RETURN)
+         JIT_ARG_D = ARG_D_JIT()                               :(RETURN)
 *
 JIT_RET  RET_JIT()                                             :(RETURN)
 *
@@ -28897,7 +29069,7 @@ JIT_FINISHR
 *
 JIT_FINISHI
          SET_P(P)
-         FINISHI_JIT()                                         :(RETURN)
+         JIT_FINISHI = FINISHI_JIT()                           :(RETURN)
 *
 JIT_INIT INIT_JIT(S)                                           :(RETURN)
 *
@@ -29011,8 +29183,7 @@ JIT_CALLR
 *
 JIT_CALLI
          SET_P(P)
-         CALLI_JIT()
-         JIT_CALLI = GET_P()                                   :(RETURN)
+         JIT_CALLI = CALLI_JIT()                               :(RETURN)
 *
 JIT_NOTE JIT_NOTE = NOTE_JIT(S, N)                             :(RETURN)
 *
@@ -29774,36 +29945,39 @@ JIT_PUSHARGI_D
          PUSHARGI_D_JIT()                                      :(RETURN)
 *
 JIT_BLTI SET_P(P)
-         BLTI_JIT(R)                                           :(RETURN)
+         JIT_BLTI = BLTI_JIT(R)                                :(RETURN)
 *
 JIT_BLTI_U
          SET_P(P)
-         BLTI_U_JIT(R)                                         :(RETURN)
+         JIT_BLTI_U = BLTI_U_JIT(R)                            :(RETURN)
 *
 JIT_BLEI SET_P(P)
-         BLEI_JIT(R)                                           :(RETURN)
+         JIT_BLEI = BLEI_JIT(R)                                :(RETURN)
 *
 JIT_BLEI_U
          SET_P(P)
-         BLEI_U_JIT(R)                                         :(RETURN)
+         JIT_BLEI_U = BLEI_U_JIT(R)                            :(RETURN)
 *
 JIT_BEQI SET_P(P)
-         BEQI_JIT(R)                                           :(RETURN)
+         JIT_BEQI = BEQI_JIT(R)                                :(RETURN)
 *
 JIT_BGEI SET_P(P)
-         BGEI_JIT(R)                                           :(RETURN)
+         JIT_BGEI = BGEI_JIT(R)                                :(RETURN)
 *
 JIT_BGEI_U
          SET_P(P)
-         BGEI_U_JIT(R)                                         :(RETURN)
+         JIT_BGEI_U = BGEI_U_JIT(R)                            :(RETURN)
 *
 JIT_BGTI SET_P(P)
-         BGTI_JIT(R)                                           :(RETURN)
+         JIT_BGTI = BGTI_JIT(R)                                :(RETURN)
 *
 JIT_BGTI_U
          SET_P(P)
-         BGTI_U_JIT(R)                                         :(RETURN)
+         JIT_BGTI_U = BGTI_U_JIT(R)                            :(RETURN)
 *
+*******======== BLTI_JIT
+**            'bnei bmsi bmci boaddi boaddi_u bxaddi bxaddi_u '          +
+**            'bosubi bosubi_u bxsubi bxsubi_u '
 JIT_BNEI SET_P(P)
          BNEI_JIT(R)                                           :(RETURN)
 *
@@ -29957,7 +30131,7 @@ END
 -INCLUDE 'P64.INC'
 -INCLUDE 'SEQ.INC'
 -STITL JIT
--LINE 2154 "JIT.lss"
+-LINE 2156 "JIT.lss"
 -EJECT
 *
 ************************************************************************
@@ -30109,15 +30283,18 @@ END
 *
          L = 'ARG ARG_F ARG_D'
          A = CRACK(L, ' ')
-         SEQ(" LOAD(A<I> '_JIT()', 'jit.so') ", .I)
+         SEQ(" LOAD(A<I> '_JIT()INTEGER', 'jit.so') ", .I)
+*
+         L = 'BLTI BLTI_U BLEI BLEI_U BEQI BGEI BGEI_U BGTI BGTI_U '
++            'BNEI BMSI BMCI BOADDI BOADDI_U BXADDI BXADDI_U '
++            'BOSUBI BOSUBI_U BXSUBI BXSUBI_U '
+         A = CRACK(L, ' ')
+         SEQ(" LOAD(A<I> '_JIT(INTEGER)INTEGER', 'jit.so') ", .I)
 *
          L = 'GETARG GETARG_C GETARG_UC GETARG_S GETARG_US GETARG_I '
 +            'GETARG_UI GETARG_L GETARG_F GETARG_D '
 +            'LDI_C LDI_UC LDI_S LDI_US LDI_I LDI LDI_UI LDI_L LDI_F '
 +            'LDI_D STI_C STI_S STI_I STI STI_L STI_F STI_D '
-+            'BLTI BLTI_U BLEI BLEI_U BEQI BGEI BGEI_U BGTI BGTI_U '
-+            'BNEI BMSI BMCI BOADDI BOADDI_U BXADDI BXADDI_U '
-+            'BOSUBI BOSUBI_U BXSUBI BXSUBI_U '
          A = CRACK(L, ' ')
          SEQ(" LOAD(A<I> '_JIT(INTEGER)', 'jit.so') ", .I)
 *
@@ -30135,10 +30312,10 @@ END
          LOAD('JMPI_JIT()INTEGER', 'jit.so')
 *
          LOAD('CALLR_JIT(INTEGER)', 'jit.so')
-         LOAD('CALLI_JIT()', 'jit.so')
+         LOAD('CALLI_JIT()INTEGER', 'jit.so')
 *
          LOAD('FINISHR_JIT(INTEGER)', 'jit.so')
-         LOAD('FINISHI_JIT()', 'jit.so')
+         LOAD('FINISHI_JIT()INTEGER', 'jit.so')
 *
          LOAD('RET_JIT()', 'jit.so')
          LOAD('RETI_JIT()', 'jit.so')
@@ -30602,16 +30779,13 @@ JIT_V_NUM
 JIT_F_NUM
          JIT_F_NUM = F_NUM_JIT()                               :(RETURN)
 *
-JIT_ARG  ARG_JIT()
-         JIT_ARG = GET_P()                                     :(RETURN)
+JIT_ARG  JIT_ARG = ARG_JIT()                                   :(RETURN)
 *
 JIT_ARG_F
-         ARG_F_JIT()
-         JIT_ARG_F = GET_P()                                   :(RETURN)
+         JIT_ARG_F = ARG_F_JIT()                               :(RETURN)
 *
 JIT_ARG_D
-         ARG_D_JIT()
-         JIT_ARG_D = GET_P()                                   :(RETURN)
+         JIT_ARG_D = ARG_D_JIT()                               :(RETURN)
 *
 JIT_RET  RET_JIT()                                             :(RETURN)
 *
@@ -30631,7 +30805,7 @@ JIT_FINISHR
 *
 JIT_FINISHI
          SET_P(P)
-         FINISHI_JIT()                                         :(RETURN)
+         JIT_FINISHI = FINISHI_JIT()                           :(RETURN)
 *
 JIT_INIT INIT_JIT(S)                                           :(RETURN)
 *
@@ -30745,8 +30919,7 @@ JIT_CALLR
 *
 JIT_CALLI
          SET_P(P)
-         CALLI_JIT()
-         JIT_CALLI = GET_P()                                   :(RETURN)
+         JIT_CALLI = CALLI_JIT()                               :(RETURN)
 *
 JIT_NOTE JIT_NOTE = NOTE_JIT(S, N)                             :(RETURN)
 *
@@ -31508,36 +31681,39 @@ JIT_PUSHARGI_D
          PUSHARGI_D_JIT()                                      :(RETURN)
 *
 JIT_BLTI SET_P(P)
-         BLTI_JIT(R)                                           :(RETURN)
+         JIT_BLTI = BLTI_JIT(R)                                :(RETURN)
 *
 JIT_BLTI_U
          SET_P(P)
-         BLTI_U_JIT(R)                                         :(RETURN)
+         JIT_BLTI_U = BLTI_U_JIT(R)                            :(RETURN)
 *
 JIT_BLEI SET_P(P)
-         BLEI_JIT(R)                                           :(RETURN)
+         JIT_BLEI = BLEI_JIT(R)                                :(RETURN)
 *
 JIT_BLEI_U
          SET_P(P)
-         BLEI_U_JIT(R)                                         :(RETURN)
+         JIT_BLEI_U = BLEI_U_JIT(R)                            :(RETURN)
 *
 JIT_BEQI SET_P(P)
-         BEQI_JIT(R)                                           :(RETURN)
+         JIT_BEQI = BEQI_JIT(R)                                :(RETURN)
 *
 JIT_BGEI SET_P(P)
-         BGEI_JIT(R)                                           :(RETURN)
+         JIT_BGEI = BGEI_JIT(R)                                :(RETURN)
 *
 JIT_BGEI_U
          SET_P(P)
-         BGEI_U_JIT(R)                                         :(RETURN)
+         JIT_BGEI_U = BGEI_U_JIT(R)                            :(RETURN)
 *
 JIT_BGTI SET_P(P)
-         BGTI_JIT(R)                                           :(RETURN)
+         JIT_BGTI = BGTI_JIT(R)                                :(RETURN)
 *
 JIT_BGTI_U
          SET_P(P)
-         BGTI_U_JIT(R)                                         :(RETURN)
+         JIT_BGTI_U = BGTI_U_JIT(R)                            :(RETURN)
 *
+*******======== BLTI_JIT
+**            'bnei bmsi bmci boaddi boaddi_u bxaddi bxaddi_u '          +
+**            'bosubi bosubi_u bxsubi bxsubi_u '
 JIT_BNEI SET_P(P)
          BNEI_JIT(R)                                           :(RETURN)
 *
@@ -32031,10 +32207,10 @@ static void movi_d_ww_jit(int r1, int r2)
 -SNOBOL LU = REPLACE(L, &amp;LCASE, &amp;UCASE)
 -SNOBOL A = CRACK(L, &#39; &#39;)
 -SNOBOL AU = CRACK(LU, &#39; &#39;)
--SNOBOL SEQ(&quot; EMBED = &#39;static void &#39; A&lt;I&gt; &#39;_jit(void) { &#39;; &quot;           +
-            &quot; EMBED = &#39;    set_p_(jit_&#39; A&lt;I&gt; &#39;());&#39;; &quot;                 +
+-SNOBOL SEQ(&quot; EMBED = &#39;static long &#39; A&lt;I&gt; &#39;_jit(void) { &#39;; &quot;           +
+            &quot; EMBED = &#39;    return (long)jit_&#39; A&lt;I&gt; &#39;();&#39;; &quot;            +
             &quot; EMBED = DIFFER(A&lt;I&gt;) &#39;}&#39;; &quot;                              +
-            &quot; C_WRAPPER_PROTO(AU&lt;I&gt; &#39;_JIT()&#39;, &quot;                        +
+            &quot; C_WRAPPER_PROTO(AU&lt;I&gt; &#39;_JIT()LONG&#39;, &quot;                    +
             &quot; .EMBED) &quot;, .I)
 
 -SNOBOL L = &#39;getarg getarg_c getarg_uc getarg_s getarg_us getarg_i &#39;   +
@@ -32056,10 +32232,10 @@ static void movi_d_ww_jit(int r1, int r2)
 -SNOBOL LU = REPLACE(L, &amp;LCASE, &amp;UCASE)
 -SNOBOL A = CRACK(L, &#39; &#39;)
 -SNOBOL AU = CRACK(LU, &#39; &#39;)
--SNOBOL SEQ(&quot; EMBED = &#39;static void &#39; A&lt;I&gt; &#39;_jit(int r) { &#39;; &quot;          +
-        &quot; EMBED = &#39; set_p_(jit_&#39; A&lt;I&gt; &#39;(r, (jit_word_t)get_p_()));&#39;; &quot; +
+-SNOBOL SEQ(&quot; EMBED = &#39;static long &#39; A&lt;I&gt; &#39;_jit(int r) { &#39;; &quot;          +
+   &quot; EMBED = &#39; return (long)jit_&#39; A&lt;I&gt; &#39;(r, (jit_word_t)get_p_());&#39;; &quot; +
             &quot; EMBED = DIFFER(A&lt;I&gt;) &#39;}&#39;; &quot;                              +
-            &quot; C_WRAPPER_PROTO(AU&lt;I&gt; &#39;_JIT(INTEGER)&#39;, &quot;                 +
+            &quot; C_WRAPPER_PROTO(AU&lt;I&gt; &#39;_JIT(INTEGER)LONG&#39;, &quot;             +
             &quot; .EMBED) &quot;, .I)
 
 -SNOBOL L = &#39;sti_c sti_s sti_i sti sti_l sti_f sti_d &#39;
@@ -32109,17 +32285,17 @@ static void callr_jit(int r) { jit_callr(r); }
 
 -SNOBOL C_WRAPPER_PROTO(&#39;CALLR_JIT(INTEGER)&#39;, .EMBED)
 
-static void calli_jit(void) { set_p_(jit_calli(get_p_())); }
+static long calli_jit(void) { return (long)jit_calli(get_p_()); }
 
--SNOBOL C_WRAPPER_PROTO(&#39;CAllI_JIT()&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;CALLI_JIT()LONG&#39;, .EMBED)
 
 static void finishr_jit(int r) { jit_finishr(r); }
 
 -SNOBOL C_WRAPPER_PROTO(&#39;FINISHR_JIT(INTEGER)&#39;, .EMBED)
 
-static void finishi_jit(void) { set_p_(jit_finishi(get_p_())); }
+static long finishi_jit(void) { return (long)jit_finishi(get_p_()); }
 
--SNOBOL C_WRAPPER_PROTO(&#39;FINISHI_JIT()&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;FINISHI_JIT()LONG&#39;, .EMBED)
 
 static void ret_jit(void) { jit_ret(); }
 
@@ -32272,15 +32448,18 @@ static void reti_d_jit(void) { jit_reti_d(get_d_()); }
 <font color="#818181"><i>*</i></font>
          L = &#39;ARG ARG_F ARG_D&#39;
          A = CRACK(L, &#39; &#39;)
-         SEQ(&quot; LOAD(A&lt;I&gt; &#39;_JIT()&#39;, &#39;jit.so&#39;) &quot;, .I)
+         SEQ(&quot; LOAD(A&lt;I&gt; &#39;_JIT()INTEGER&#39;, &#39;jit.so&#39;) &quot;, .I)
+<font color="#818181"><i>*</i></font>
+         L = &#39;BLTI BLTI_U BLEI BLEI_U BEQI BGEI BGEI_U BGTI BGTI_U &#39;
++            &#39;BNEI BMSI BMCI BOADDI BOADDI_U BXADDI BXADDI_U &#39;
++            &#39;BOSUBI BOSUBI_U BXSUBI BXSUBI_U &#39;
+         A = CRACK(L, &#39; &#39;)
+         SEQ(&quot; LOAD(A&lt;I&gt; &#39;_JIT(INTEGER)INTEGER&#39;, &#39;jit.so&#39;) &quot;, .I)
 <font color="#818181"><i>*</i></font>
          L = &#39;GETARG GETARG_C GETARG_UC GETARG_S GETARG_US GETARG_I &#39;
 +            &#39;GETARG_UI GETARG_L GETARG_F GETARG_D &#39;
 +            &#39;LDI_C LDI_UC LDI_S LDI_US LDI_I LDI LDI_UI LDI_L LDI_F &#39;
 +            &#39;LDI_D STI_C STI_S STI_I STI STI_L STI_F STI_D &#39;
-+            &#39;BLTI BLTI_U BLEI BLEI_U BEQI BGEI BGEI_U BGTI BGTI_U &#39;
-+            &#39;BNEI BMSI BMCI BOADDI BOADDI_U BXADDI BXADDI_U &#39;
-+            &#39;BOSUBI BOSUBI_U BXSUBI BXSUBI_U &#39;
          A = CRACK(L, &#39; &#39;)
          SEQ(&quot; LOAD(A&lt;I&gt; &#39;_JIT(INTEGER)&#39;, &#39;jit.so&#39;) &quot;, .I)
 <font color="#818181"><i>*</i></font>
@@ -32298,10 +32477,10 @@ static void reti_d_jit(void) { jit_reti_d(get_d_()); }
          LOAD(&#39;JMPI_JIT()INTEGER&#39;, &#39;jit.so&#39;)
 <font color="#818181"><i>*</i></font>
          LOAD(&#39;CALLR_JIT(INTEGER)&#39;, &#39;jit.so&#39;)
-         LOAD(&#39;CALLI_JIT()&#39;, &#39;jit.so&#39;)
+         LOAD(&#39;CALLI_JIT()INTEGER&#39;, &#39;jit.so&#39;)
 <font color="#818181"><i>*</i></font>
          LOAD(&#39;FINISHR_JIT(INTEGER)&#39;, &#39;jit.so&#39;)
-         LOAD(&#39;FINISHI_JIT()&#39;, &#39;jit.so&#39;)
+         LOAD(&#39;FINISHI_JIT()INTEGER&#39;, &#39;jit.so&#39;)
 <font color="#818181"><i>*</i></font>
          LOAD(&#39;RET_JIT()&#39;, &#39;jit.so&#39;)
          LOAD(&#39;RETI_JIT()&#39;, &#39;jit.so&#39;)
@@ -32765,16 +32944,13 @@ JIT_V_NUM
 JIT_F_NUM
          JIT_F_NUM = F_NUM_JIT()                               <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
-JIT_ARG  ARG_JIT()
-         JIT_ARG = GET_P()                                     <b>:(RETURN)</b>
+JIT_ARG  JIT_ARG = ARG_JIT()                                   <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_ARG_F
-         ARG_F_JIT()
-         JIT_ARG_F = GET_P()                                   <b>:(RETURN)</b>
+         JIT_ARG_F = ARG_F_JIT()                               <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_ARG_D
-         ARG_D_JIT()
-         JIT_ARG_D = GET_P()                                   <b>:(RETURN)</b>
+         JIT_ARG_D = ARG_D_JIT()                               <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_RET  RET_JIT()                                             <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
@@ -32794,7 +32970,7 @@ JIT_FINISHR
 <font color="#818181"><i>*</i></font>
 JIT_FINISHI
          SET_P(P)
-         FINISHI_JIT()                                         <b>:(RETURN)</b>
+         JIT_FINISHI = FINISHI_JIT()                           <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_INIT INIT_JIT(S)                                           <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
@@ -32908,8 +33084,7 @@ JIT_CALLR
 <font color="#818181"><i>*</i></font>
 JIT_CALLI
          SET_P(P)
-         CALLI_JIT()
-         JIT_CALLI = GET_P()                                   <b>:(RETURN)</b>
+         JIT_CALLI = CALLI_JIT()                               <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_NOTE JIT_NOTE = NOTE_JIT(S, N)                             <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
@@ -33671,36 +33846,39 @@ JIT_PUSHARGI_D
          PUSHARGI_D_JIT()                                      <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BLTI SET_P(P)
-         BLTI_JIT(R)                                           <b>:(RETURN)</b>
+         JIT_BLTI = BLTI_JIT(R)                                <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BLTI_U
          SET_P(P)
-         BLTI_U_JIT(R)                                         <b>:(RETURN)</b>
+         JIT_BLTI_U = BLTI_U_JIT(R)                            <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BLEI SET_P(P)
-         BLEI_JIT(R)                                           <b>:(RETURN)</b>
+         JIT_BLEI = BLEI_JIT(R)                                <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BLEI_U
          SET_P(P)
-         BLEI_U_JIT(R)                                         <b>:(RETURN)</b>
+         JIT_BLEI_U = BLEI_U_JIT(R)                            <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BEQI SET_P(P)
-         BEQI_JIT(R)                                           <b>:(RETURN)</b>
+         JIT_BEQI = BEQI_JIT(R)                                <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BGEI SET_P(P)
-         BGEI_JIT(R)                                           <b>:(RETURN)</b>
+         JIT_BGEI = BGEI_JIT(R)                                <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BGEI_U
          SET_P(P)
-         BGEI_U_JIT(R)                                         <b>:(RETURN)</b>
+         JIT_BGEI_U = BGEI_U_JIT(R)                            <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BGTI SET_P(P)
-         BGTI_JIT(R)                                           <b>:(RETURN)</b>
+         JIT_BGTI = BGTI_JIT(R)                                <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BGTI_U
          SET_P(P)
-         BGTI_U_JIT(R)                                         <b>:(RETURN)</b>
+         JIT_BGTI_U = BGTI_U_JIT(R)                            <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
+<font color="#818181"><i>*******======== BLTI_JIT</i></font>
+<font color="#818181"><i>**            &#39;bnei bmsi bmci boaddi boaddi_u bxaddi bxaddi_u &#39;          +</i></font>
+<font color="#818181"><i>**            &#39;bosubi bosubi_u bxsubi bxsubi_u &#39;</i></font>
 JIT_BNEI SET_P(P)
          BNEI_JIT(R)                                           <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
@@ -33857,14 +34035,14 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Mon Jun  9 22:44:43 EDT 2014</p></td><td><p align=right>
+Wed Jun 11 07:29:15 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -INCLUDE 'JIT.INC'
--LINE 2145 "JIT.lss"
+-LINE 2147 "JIT.lss"
          &CODE = 1
          &CODE = 0
 END
@@ -41717,8 +41895,8 @@ to but not including the first string having 'STOP' in column 1.
 @
 
 <<READL>>=
--MODULE READL
 -PUBLIC READL()
+*
          DEFINE('READL(P,IN)N,S')                           :(READL_END)
 *
 READL    P = IDENT(P) ABORT
@@ -41742,6 +41920,7 @@ END
 @
 
 <<>>=
+-MODULE READL
 <<INCLUDES>>
 -STITL READL
 -EJECT
@@ -41766,11 +41945,12 @@ END
 *
 * CE: .MSNOBOL4;
 @
+-MODULE READL
 -LINE 14 "READL.lss"
 -INCLUDE 'LINK.INC'
 -STITL READL
--EJECT
 -LINE 46 "READL.lss"
+-EJECT
 *
 ************************************************************************
 *                                                                      *
@@ -41789,8 +41969,8 @@ END
 * READL.lss
 *
 -LINE 18 "READL.lss"
--MODULE READL
 -PUBLIC READL()
+*
          DEFINE('READL(P,IN)N,S')                           :(READL_END)
 *
 READL    P = IDENT(P) ABORT
@@ -41836,8 +42016,8 @@ to but not including the first string having 'STOP' in column 1.
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;READL&raquo;&equiv;</b>
--MODULE READL
 -PUBLIC READL()
+<font color="#818181"><i>*</i></font>
          DEFINE(&#39;READL(P,IN)N,S&#39;)                           <b>:(READL_END)</b>
 <font color="#818181"><i>*</i></font>
 READL    P = IDENT(P) ABORT
@@ -41865,6 +42045,7 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+-MODULE READL
 <b>&laquo;INCLUDES&raquo;</b>
 -STITL READL
 -EJECT
@@ -41894,7 +42075,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 20:00:38 EDT 2014</p></td><td><p align=right>
+Wed Jun 11 11:10:47 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>
@@ -53460,7 +53641,6 @@ an external function to be used with [[LOAD()]].
 @
 
 <<WRAPPER>>=
--MODULE WRAPPER
          WPMAXSTR = 1024
          WPSTRTYPE = 'STRING'
          WPSTRFREE = 'STRING_FREE'
@@ -53733,6 +53913,8 @@ END
 @
 
 <<>>=
+-MODULE WRAPPER
+<<INCLUDES>>
 -STITL WRAPPER
 -EJECT
 *
@@ -53764,10 +53946,12 @@ END
 *
 * CE: .MSNOBOL4;
 @
+-MODULE WRAPPER
+-LINE 9 "WRAPPER.lss"
 -STITL WRAPPER
+-LINE 287 "WRAPPER.lss"
 -EJECT
 *
--LINE 288 "WRAPPER.lss"
 ************************************************************************
 *                                                                      *
 *    #     #  ######      #     ######   ######   #######  ######      *
@@ -53793,7 +53977,6 @@ END
 *     REMOVE HANDLE TYPE COMPLETELY
 *
 -LINE 12 "WRAPPER.lss"
--MODULE WRAPPER
          WPMAXSTR = 1024
          WPSTRTYPE = 'STRING'
          WPSTRFREE = 'STRING_FREE'
@@ -54081,7 +54264,6 @@ an external function to be used with <font face="Source Code Pro">LOAD()</font>.
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;WRAPPER&raquo;&equiv;</b>
--MODULE WRAPPER
          WPMAXSTR = 1024
          WPSTRTYPE = &#39;STRING&#39;
          WPSTRFREE = &#39;STRING_FREE&#39;
@@ -54358,6 +54540,8 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+-MODULE WRAPPER
+<b>&laquo;INCLUDES&raquo;</b>
 -STITL WRAPPER
 -EJECT
 <font color="#818181"><i>*</i></font>
@@ -54394,14 +54578,32 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Sun Jun  8 20:38:06 EDT 2014</p></td><td><p align=right>
+Wed Jun 11 10:57:48 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -INCLUDE 'WRAPPER.INC'
--LINE 279 "WRAPPER.lss"
+-LINE 278 "WRAPPER.lss"
          &CODE = 1
          &CODE = 0
 END
+-include 'BQ.INC'
+-include 'READFILE.INC'
+-include 'HOST.INC'
+
+* ce: .msnobol4;
+
+         define('md5(s)b,t,u,f')                              :(md5_end)
+
+md5      t = bq('mktemp')
+         writefile(t, s)
+         md5 = bq('md5sum ' t)
+         md5 break(' ') . md5
+         delete(t)                                             :(return)
+md5_end
+
+*         output = md5('hello, world')
+*end
+

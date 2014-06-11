@@ -1,8 +1,9 @@
+-MODULE READL
 -LINE 14 "READL.lss"
 -INCLUDE 'LINK.INC'
 -STITL READL
--EJECT
 -LINE 46 "READL.lss"
+-EJECT
 *
 ************************************************************************
 *                                                                      *
@@ -21,8 +22,8 @@
 * READL.lss
 *
 -LINE 18 "READL.lss"
--MODULE READL
 -PUBLIC READL()
+*
          DEFINE('READL(P,IN)N,S')                           :(READL_END)
 *
 READL    P = IDENT(P) ABORT

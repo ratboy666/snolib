@@ -1,11 +1,12 @@
+-MODULE ITERDIR
 -LINE 32 "ITERDIR.lss"
 -INCLUDE 'BQ.INC'
 -INCLUDE 'CRACK.INC'
 -INCLUDE 'ATOL.INC'
 -INCLUDE 'CHARS.INC'
 -STITL ITERDIR
+-LINE 69 "ITERDIR.lss"
 -EJECT
--LINE 70 "ITERDIR.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -24,7 +25,6 @@
 * ITERDIR.lss
 *
 -LINE 39 "ITERDIR.lss"
--MODULE ITERDIR
 -PUBLIC `VALUE_DIR(), ITER_DIR(), NEXT_DIR()
 *
          DEFINE('ITER_DIR(W)')
@@ -34,8 +34,8 @@
 VALUE_DIR
          VALUE_DIR = DIFFER(D) VALUE(D)             :S(RETURN)F(FRETURN)
 *
-ITER_DIR ITER_DIR = ATOL(CRACK(BQ('ls ' W, CHARS_NL), CHARS_NL))
-+                                                   :S(RETURN)F(FRETURN)
+ITER_DIR ITER_DIR = ATOL(CRACK(BQ('ls 2>/dev/null ' W, CHARS_NL),
++           CHARS_NL))                              :S(RETURN)F(FRETURN)
 *
 NEXT_DIR NEXT_DIR = DIFFER(D) NEXT(D)               :S(RETURN)F(FRETURN)
 *

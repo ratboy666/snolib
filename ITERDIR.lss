@@ -36,7 +36,6 @@ btm
 @
 
 <<ITERDIR>>=
--MODULE ITERDIR
 -PUBLIC `VALUE_DIR(), ITER_DIR(), NEXT_DIR()
 *
          DEFINE('ITER_DIR(W)')
@@ -46,8 +45,8 @@ btm
 VALUE_DIR
          VALUE_DIR = DIFFER(D) VALUE(D)             :S(RETURN)F(FRETURN)
 *
-ITER_DIR ITER_DIR = ATOL(CRACK(BQ('ls ' W, CHARS_NL), CHARS_NL))
-+                                                   :S(RETURN)F(FRETURN)
+ITER_DIR ITER_DIR = ATOL(CRACK(BQ('ls 2>/dev/null ' W, CHARS_NL),
++           CHARS_NL))                              :S(RETURN)F(FRETURN)
 *
 NEXT_DIR NEXT_DIR = DIFFER(D) NEXT(D)               :S(RETURN)F(FRETURN)
 *
@@ -64,6 +63,7 @@ END
 @
 
 <<>>=
+-MODULE ITERDIR
 <<INCLUDES>>
 -STITL ITERDIR
 -EJECT

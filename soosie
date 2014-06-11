@@ -57,6 +57,7 @@
 -include 'STROUT.INC'
 -include 'REPL.INC'
 -include 'APPENDA.INC'
+-include 'MD5.INC'
 
 
          define('iter_artifacts(lbr,m)')
@@ -133,7 +134,7 @@ file.    ident(lbr)                                              :s(nol)
 
 library. a = trimb(args) ' '
          a fence ('edit' | 'EDIT' | 'info' | 'INFO' |
-+                 'new' | 'NEW') . s ' '
++                 'new' | 'NEW' | 'check' | 'CHECK') . s ' '
 +             rem . args =                           :s($('library_' s))
 
          terminal = 'UNKNOWN LIBRARY SUBCOMMAND'                  :(top)
@@ -145,6 +146,27 @@ all.     ident(lbr)                                              :s(nol)
 +             rem . args =                               :s($('all_' s))
 
          terminal = 'UNKNOWN ALL SUBCOMMAND'                      :(top)
+
+
+* Make sure the files in the library are sane.
+
+library_check
+         mi = iter_modules(lbr)
+check2     m = module(mi)                                     :f(check5)
+           fi = iter_files(lbr, m)
+check3       f = mfile(fi)                                    :f(check4)
+             r =
+             term = rpad(f<'NAME'>, 16)
+             s = md5(f<'CONTENTS'>)
+             term = differ(s, f<'MD5'>) (r = 'MD5 MISMATCH  ')
+             fs = file(f<'NAME'>) create_file(f<'NAME'>)
+             term = lt(f<'TIMESTAMP'>, fs<'TIMESTAMP'>)
++               (r = 'FS MORE RECENT')
+             terminal = differ(r)
+             term = ident(r) CHARS_CR
+           fi = next_file(fi)                                  :(check3)
+check4   mi = next_module(mi)                                  :(check2)
+check5                                                            :(top)
 
 
 library_new
@@ -317,7 +339,6 @@ me2      lbr<'CONTENTS'><mod><var> = destring(var, val)        :(fresh2)
 * FIXME: need a freshen all
 
 module_freshen
-         ddt()
          mod = replace(trimb(args), &lcase, &ucase)
          ident(lbr<'CONTENTS'><mod>)                             :s(nom)
 
@@ -382,7 +403,7 @@ fresh2
          c = lbr<'CONTENTS'><mod><'BUILD'>
          seq(' t<c<i><"TARGET">> = c<i>', .i)
          ar = lbr<'CONTENTS'><mod><'ARTIFACTS'>
-         a = array(sizea(ar))
+         a = (ne(sizea(ar)) array(sizea(ar)), array0)
          seq(' a<i> = t<ar<i>>', .i)
          seq(' bt = table();'
 +            ' bt<"COMMANDS"> = array0;'
@@ -394,7 +415,7 @@ fresh2
          c = lbr<'CONTENTS'><mod><'INSTALL'>
          seq(' t<c<i><"TARGET">> = c<i>', .i)
          ar = lbr<'CONTENTS'><mod><'ARTIFACTS'>
-         a = array(sizea(ar))
+         a = (ne(sizea(ar)) array(sizea(ar)), array0)
          seq(' a<i> = t<ar<i>>', .i)
          seq(' bt = table();'
 +            ' bt<"COMMANDS"> = array0;'
@@ -578,6 +599,8 @@ bu_1         b<i>                                               :f(bu_2)
              sext = extension(src)
              tgt = b<i><'TARGET'>
              text = extension(tgt)
+             base = tgt
+             base text rpos(0) =
              terminal = 'MAKING ' tgt ' FROM ' src ' IN MODULE ' m
              terminal = ne(sizea(c))                            :s(bu_3)
              c = recipes<sext text>
@@ -591,7 +614,7 @@ bu_5         s = stringout(c, CHARS_NL)
 
 * Replacements in the recipe
 
-             s = crepl(s, 'src=', src, 'tgt=', tgt)
+             s = crepl(s, 'src=', src, 'tgt=', tgt, 'base=', base)
 
 * Display the complete recipe
 
@@ -792,6 +815,7 @@ xall3    terminal =                                               :(top)
 
 export.  ident(lbr)                                              :s(nol)
          args = trimb(args)
+         args = replace(args, &lcase, &ucase)
          t = lbr<'CONTENTS'><args>
          ident(t)                                                :s(nom)
          writefiles(lbr, args)
@@ -823,7 +847,6 @@ import5    mn = value_dir(di)                                :f(import3)
            file(mn)                                             :f(nomd)
            s = json_decode(readfile(mn))
            args = s<'NAME'>
- terminal = '**' args '**'
            differ(lbr<'CONTENTS'><args>)                        :s(mdex)
            lbr<'CONTENTS'><args> = s
            fi = iter_files(lbr, args)
@@ -1037,6 +1060,7 @@ create_module
 
          files<1> = create_file(src, dat)
          seq(' files<i + 1> = create_file(artifacts<i>)', .i, 1)
+         files = dedupa(files)
 
 * Return the new module.
 

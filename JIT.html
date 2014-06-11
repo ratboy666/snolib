@@ -381,10 +381,10 @@ static void movi_d_ww_jit(int r1, int r2)
 -SNOBOL LU = REPLACE(L, &amp;LCASE, &amp;UCASE)
 -SNOBOL A = CRACK(L, &#39; &#39;)
 -SNOBOL AU = CRACK(LU, &#39; &#39;)
--SNOBOL SEQ(&quot; EMBED = &#39;static void &#39; A&lt;I&gt; &#39;_jit(void) { &#39;; &quot;           +
-            &quot; EMBED = &#39;    set_p_(jit_&#39; A&lt;I&gt; &#39;());&#39;; &quot;                 +
+-SNOBOL SEQ(&quot; EMBED = &#39;static long &#39; A&lt;I&gt; &#39;_jit(void) { &#39;; &quot;           +
+            &quot; EMBED = &#39;    return (long)jit_&#39; A&lt;I&gt; &#39;();&#39;; &quot;            +
             &quot; EMBED = DIFFER(A&lt;I&gt;) &#39;}&#39;; &quot;                              +
-            &quot; C_WRAPPER_PROTO(AU&lt;I&gt; &#39;_JIT()&#39;, &quot;                        +
+            &quot; C_WRAPPER_PROTO(AU&lt;I&gt; &#39;_JIT()LONG&#39;, &quot;                    +
             &quot; .EMBED) &quot;, .I)
 
 -SNOBOL L = &#39;getarg getarg_c getarg_uc getarg_s getarg_us getarg_i &#39;   +
@@ -406,10 +406,10 @@ static void movi_d_ww_jit(int r1, int r2)
 -SNOBOL LU = REPLACE(L, &amp;LCASE, &amp;UCASE)
 -SNOBOL A = CRACK(L, &#39; &#39;)
 -SNOBOL AU = CRACK(LU, &#39; &#39;)
--SNOBOL SEQ(&quot; EMBED = &#39;static void &#39; A&lt;I&gt; &#39;_jit(int r) { &#39;; &quot;          +
-        &quot; EMBED = &#39; set_p_(jit_&#39; A&lt;I&gt; &#39;(r, (jit_word_t)get_p_()));&#39;; &quot; +
+-SNOBOL SEQ(&quot; EMBED = &#39;static long &#39; A&lt;I&gt; &#39;_jit(int r) { &#39;; &quot;          +
+   &quot; EMBED = &#39; return (long)jit_&#39; A&lt;I&gt; &#39;(r, (jit_word_t)get_p_());&#39;; &quot; +
             &quot; EMBED = DIFFER(A&lt;I&gt;) &#39;}&#39;; &quot;                              +
-            &quot; C_WRAPPER_PROTO(AU&lt;I&gt; &#39;_JIT(INTEGER)&#39;, &quot;                 +
+            &quot; C_WRAPPER_PROTO(AU&lt;I&gt; &#39;_JIT(INTEGER)LONG&#39;, &quot;             +
             &quot; .EMBED) &quot;, .I)
 
 -SNOBOL L = &#39;sti_c sti_s sti_i sti sti_l sti_f sti_d &#39;
@@ -459,17 +459,17 @@ static void callr_jit(int r) { jit_callr(r); }
 
 -SNOBOL C_WRAPPER_PROTO(&#39;CALLR_JIT(INTEGER)&#39;, .EMBED)
 
-static void calli_jit(void) { set_p_(jit_calli(get_p_())); }
+static long calli_jit(void) { return (long)jit_calli(get_p_()); }
 
--SNOBOL C_WRAPPER_PROTO(&#39;CAllI_JIT()&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;CALLI_JIT()LONG&#39;, .EMBED)
 
 static void finishr_jit(int r) { jit_finishr(r); }
 
 -SNOBOL C_WRAPPER_PROTO(&#39;FINISHR_JIT(INTEGER)&#39;, .EMBED)
 
-static void finishi_jit(void) { set_p_(jit_finishi(get_p_())); }
+static long finishi_jit(void) { return (long)jit_finishi(get_p_()); }
 
--SNOBOL C_WRAPPER_PROTO(&#39;FINISHI_JIT()&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;FINISHI_JIT()LONG&#39;, .EMBED)
 
 static void ret_jit(void) { jit_ret(); }
 
@@ -622,15 +622,18 @@ static void reti_d_jit(void) { jit_reti_d(get_d_()); }
 <font color="#818181"><i>*</i></font>
          L = &#39;ARG ARG_F ARG_D&#39;
          A = CRACK(L, &#39; &#39;)
-         SEQ(&quot; LOAD(A&lt;I&gt; &#39;_JIT()&#39;, &#39;jit.so&#39;) &quot;, .I)
+         SEQ(&quot; LOAD(A&lt;I&gt; &#39;_JIT()INTEGER&#39;, &#39;jit.so&#39;) &quot;, .I)
+<font color="#818181"><i>*</i></font>
+         L = &#39;BLTI BLTI_U BLEI BLEI_U BEQI BGEI BGEI_U BGTI BGTI_U &#39;
++            &#39;BNEI BMSI BMCI BOADDI BOADDI_U BXADDI BXADDI_U &#39;
++            &#39;BOSUBI BOSUBI_U BXSUBI BXSUBI_U &#39;
+         A = CRACK(L, &#39; &#39;)
+         SEQ(&quot; LOAD(A&lt;I&gt; &#39;_JIT(INTEGER)INTEGER&#39;, &#39;jit.so&#39;) &quot;, .I)
 <font color="#818181"><i>*</i></font>
          L = &#39;GETARG GETARG_C GETARG_UC GETARG_S GETARG_US GETARG_I &#39;
 +            &#39;GETARG_UI GETARG_L GETARG_F GETARG_D &#39;
 +            &#39;LDI_C LDI_UC LDI_S LDI_US LDI_I LDI LDI_UI LDI_L LDI_F &#39;
 +            &#39;LDI_D STI_C STI_S STI_I STI STI_L STI_F STI_D &#39;
-+            &#39;BLTI BLTI_U BLEI BLEI_U BEQI BGEI BGEI_U BGTI BGTI_U &#39;
-+            &#39;BNEI BMSI BMCI BOADDI BOADDI_U BXADDI BXADDI_U &#39;
-+            &#39;BOSUBI BOSUBI_U BXSUBI BXSUBI_U &#39;
          A = CRACK(L, &#39; &#39;)
          SEQ(&quot; LOAD(A&lt;I&gt; &#39;_JIT(INTEGER)&#39;, &#39;jit.so&#39;) &quot;, .I)
 <font color="#818181"><i>*</i></font>
@@ -648,10 +651,10 @@ static void reti_d_jit(void) { jit_reti_d(get_d_()); }
          LOAD(&#39;JMPI_JIT()INTEGER&#39;, &#39;jit.so&#39;)
 <font color="#818181"><i>*</i></font>
          LOAD(&#39;CALLR_JIT(INTEGER)&#39;, &#39;jit.so&#39;)
-         LOAD(&#39;CALLI_JIT()&#39;, &#39;jit.so&#39;)
+         LOAD(&#39;CALLI_JIT()INTEGER&#39;, &#39;jit.so&#39;)
 <font color="#818181"><i>*</i></font>
          LOAD(&#39;FINISHR_JIT(INTEGER)&#39;, &#39;jit.so&#39;)
-         LOAD(&#39;FINISHI_JIT()&#39;, &#39;jit.so&#39;)
+         LOAD(&#39;FINISHI_JIT()INTEGER&#39;, &#39;jit.so&#39;)
 <font color="#818181"><i>*</i></font>
          LOAD(&#39;RET_JIT()&#39;, &#39;jit.so&#39;)
          LOAD(&#39;RETI_JIT()&#39;, &#39;jit.so&#39;)
@@ -1115,16 +1118,13 @@ JIT_V_NUM
 JIT_F_NUM
          JIT_F_NUM = F_NUM_JIT()                               <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
-JIT_ARG  ARG_JIT()
-         JIT_ARG = GET_P()                                     <b>:(RETURN)</b>
+JIT_ARG  JIT_ARG = ARG_JIT()                                   <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_ARG_F
-         ARG_F_JIT()
-         JIT_ARG_F = GET_P()                                   <b>:(RETURN)</b>
+         JIT_ARG_F = ARG_F_JIT()                               <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_ARG_D
-         ARG_D_JIT()
-         JIT_ARG_D = GET_P()                                   <b>:(RETURN)</b>
+         JIT_ARG_D = ARG_D_JIT()                               <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_RET  RET_JIT()                                             <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
@@ -1144,7 +1144,7 @@ JIT_FINISHR
 <font color="#818181"><i>*</i></font>
 JIT_FINISHI
          SET_P(P)
-         FINISHI_JIT()                                         <b>:(RETURN)</b>
+         JIT_FINISHI = FINISHI_JIT()                           <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_INIT INIT_JIT(S)                                           <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
@@ -1258,8 +1258,7 @@ JIT_CALLR
 <font color="#818181"><i>*</i></font>
 JIT_CALLI
          SET_P(P)
-         CALLI_JIT()
-         JIT_CALLI = GET_P()                                   <b>:(RETURN)</b>
+         JIT_CALLI = CALLI_JIT()                               <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_NOTE JIT_NOTE = NOTE_JIT(S, N)                             <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
@@ -2021,36 +2020,39 @@ JIT_PUSHARGI_D
          PUSHARGI_D_JIT()                                      <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BLTI SET_P(P)
-         BLTI_JIT(R)                                           <b>:(RETURN)</b>
+         JIT_BLTI = BLTI_JIT(R)                                <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BLTI_U
          SET_P(P)
-         BLTI_U_JIT(R)                                         <b>:(RETURN)</b>
+         JIT_BLTI_U = BLTI_U_JIT(R)                            <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BLEI SET_P(P)
-         BLEI_JIT(R)                                           <b>:(RETURN)</b>
+         JIT_BLEI = BLEI_JIT(R)                                <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BLEI_U
          SET_P(P)
-         BLEI_U_JIT(R)                                         <b>:(RETURN)</b>
+         JIT_BLEI_U = BLEI_U_JIT(R)                            <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BEQI SET_P(P)
-         BEQI_JIT(R)                                           <b>:(RETURN)</b>
+         JIT_BEQI = BEQI_JIT(R)                                <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BGEI SET_P(P)
-         BGEI_JIT(R)                                           <b>:(RETURN)</b>
+         JIT_BGEI = BGEI_JIT(R)                                <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BGEI_U
          SET_P(P)
-         BGEI_U_JIT(R)                                         <b>:(RETURN)</b>
+         JIT_BGEI_U = BGEI_U_JIT(R)                            <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BGTI SET_P(P)
-         BGTI_JIT(R)                                           <b>:(RETURN)</b>
+         JIT_BGTI = BGTI_JIT(R)                                <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_BGTI_U
          SET_P(P)
-         BGTI_U_JIT(R)                                         <b>:(RETURN)</b>
+         JIT_BGTI_U = BGTI_U_JIT(R)                            <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
+<font color="#818181"><i>*******======== BLTI_JIT</i></font>
+<font color="#818181"><i>**            &#39;bnei bmsi bmci boaddi boaddi_u bxaddi bxaddi_u &#39;          +</i></font>
+<font color="#818181"><i>**            &#39;bosubi bosubi_u bxsubi bxsubi_u &#39;</i></font>
 JIT_BNEI SET_P(P)
          BNEI_JIT(R)                                           <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
@@ -2207,7 +2209,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Mon Jun  9 22:44:43 EDT 2014</p></td><td><p align=right>
+Wed Jun 11 07:29:15 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

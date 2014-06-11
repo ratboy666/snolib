@@ -6,7 +6,7 @@
     "FOREACH.html",
     "FOREACH.tst"
   ],
-  "TYPE": "MODULE",
+  "TYPE": "PROGRAM",
   "NAME": "FOREACH",
   "DEPENDS": [
   ],
@@ -48,37 +48,37 @@
     {
       "NAME": "FOREACH.lss",
       "TYPE": "TEXT",
-      "TIMESTAMP": "1402012730",
+      "TIMESTAMP": "1402487472",
       "ACCESS": "644",
       "LOCATION": "FILE",
-      "MD5": "0ab16b99462dbe85c9d1d91e6ec4ffbb",
-      "SIZE": 2540
+      "MD5": "0b998b0c3ab6f0a540178cb9dd8e4e1b",
+      "SIZE": 2617
     },
     {
       "NAME": "FOREACH.INC",
       "TYPE": "TEXT",
-      "TIMESTAMP": "1402012777",
+      "TIMESTAMP": "1402487480",
       "ACCESS": "664",
       "LOCATION": "FILE",
-      "MD5": "5b031910b24dc01b79c4df0c5093cd1d",
-      "SIZE": 1233
+      "MD5": "10f846365e7092e09ee13fa9d6c51fca",
+      "SIZE": 1214
     },
     {
       "NAME": "FOREACH.html",
       "TYPE": "TEXT",
-      "TIMESTAMP": "1402012839",
+      "TIMESTAMP": "1402487480",
       "ACCESS": "664",
       "LOCATION": "FILE",
-      "MD5": "9d98a04eb2128465cc28ef781a5fa5a9",
-      "SIZE": 4865
+      "MD5": "343fe0f1e9be5e197425a21444610b9d",
+      "SIZE": 5020
     },
     {
       "NAME": "FOREACH.tst",
       "TYPE": "TEXT",
-      "TIMESTAMP": "1402012782",
+      "TIMESTAMP": "1402487481",
       "ACCESS": "775",
       "LOCATION": "FILE",
-      "MD5": "7cd6165fd842d81df0a548ebd4718f49",
+      "MD5": "3923fcc353a6d9a0da2fa550265a5990",
       "SIZE": 408
     }
   ]

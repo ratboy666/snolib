@@ -1,7 +1,9 @@
+-MODULE WRAPPER
+-LINE 9 "WRAPPER.lss"
 -STITL WRAPPER
+-LINE 287 "WRAPPER.lss"
 -EJECT
 *
--LINE 288 "WRAPPER.lss"
 ************************************************************************
 *                                                                      *
 *    #     #  ######      #     ######   ######   #######  ######      *
@@ -27,7 +29,6 @@
 *     REMOVE HANDLE TYPE COMPLETELY
 *
 -LINE 12 "WRAPPER.lss"
--MODULE WRAPPER
          WPMAXSTR = 1024
          WPSTRTYPE = 'STRING'
          WPSTRFREE = 'STRING_FREE'

@@ -22,19 +22,15 @@ Symbolic defines for <font face="Source Code Pro">HOST</font> functions.
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;HOST&raquo;&equiv;</b>
--MODULE HOST
 HOST
-<b>@</b>
-</font></pre></div>
-<div style="background-image: url(greenbar.gif)">
-<pre><font face="Source Code Pro">
-<b>&laquo;HOST&raquo;&equiv;</b>
+<font color="#818181"><i>*</i></font>
 %SET(NONEED,0)
 %SET(CSNOBOL4,(?(SYSTEM ? &#39;CSNOBOL4&#39;) 1))
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* MACRO SPITBOL</i></font>
 <font color="#818181"><i>*</i></font>
 -PUBLIC HOST_SYSINFO, HOST_PARAMS
+<font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* ARCH:OS:SNOBOL_VERSION</i></font>
          HOST_SYSINFO = &#39;&#39;
 <font color="#818181"><i>* ARGUMENT FROM -u OR ENTIRE COMMAND LINE</i></font>
@@ -43,6 +39,7 @@ HOST
 <font color="#818181"><i>* CATSPAW SPITBOL</i></font>
 <font color="#818181"><i>*</i></font>
 -PUBLIC HOST_SYSCMD, HOST_ARGN, HOST_FIRSTARG, HOST_GETENV
+<font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* EXEC ARG AS SHELL COMMAND, RETURN STATUS</i></font>
          HOST_SYSCMD = 1
 <font color="#818181"><i>* N&#39;TH TOKEN ON COMMAND LINE (INTEGER)</i></font>
@@ -58,6 +55,7 @@ HOST
 <font color="#818181"><i>*</i></font>
 -PUBLIC HOST_CONFIG_HOST, HOST_CONFIG_DATE, HOST_BUILD_DATE
 -PUBIC HOST_BUILD_DIR, HOST_BUILD_FILES
+<font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* HOST WHERE CONFIGURE SCRIPT WAS RUN</i></font>
          HOST_CONFIG_HOST = 2001
 <font color="#818181"><i>* DATE WHEN CONFIGURE SCRIPT WAS RUN</i></font>
@@ -71,16 +69,19 @@ HOST
 %ENDIF
 <font color="#818181"><i>*</i></font>
 -PUBLIC HOST_SNOLIB_DIR
+<font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* DEFAULT SNOLIB DIR (-INCLUDE, LOAD())</i></font>
          HOST_SNOLIB_DIR = 2200
 %IF(NONEED)
 <font color="#818181"><i>*</i></font>
 -PUBLIC HOST_SNOLIB_FILE
+<font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* DEFAULT FILE FOR LOAD()</i></font>
          HOST_SNOLIB_FILE = 2201
 %ENDIF
 <font color="#818181"><i>*</i></font>
 -PUBLIC HOST_CC, HOST_COPT
+<font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* C COMPILER USED TO BUILD CSNOBOL4</i></font>
          HOST_CC = 2202
 <font color="#818181"><i>* C OPTIMIZER FLAGS USED TO BUILD CSNOBOL4</i></font>
@@ -88,6 +89,7 @@ HOST
 %IF(NONEED)
 <font color="#818181"><i>*</i></font>
 -PUBLIC HOST_SO_EXT, HOST_SO_CFLAGS, HOST_SO_LD, HOST_SO_LDFLAGS
+<font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* SHARED OBJECT LIBRARY EXTENSION</i></font>
          HOST_SO_EXT = 2204
 <font color="#818181"><i>* C COMPILER FLAGS FOR SHARED OBJECTS</i></font>
@@ -99,6 +101,7 @@ HOST
 %ENDIF
 <font color="#818181"><i>*</i></font>
 -PUBLIC HOST_DL_EXT, HOST_DL_CFLAGS, HOST_DL_LD,HOST_DL_LDFLAGS
+<font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* DYNAMIC LOADABLE LIBRARY EXTENSION</i></font>
          HOST_DL_EXT = 2208
 <font color="#818181"><i>* C COMPILER FLAGS FOR DYNAMIC LOADABLES</i></font>
@@ -109,6 +112,7 @@ HOST
          HOST_DL_LDFLAGS = 2211
 <font color="#818181"><i>*</i></font>
 -PUBLIC HOST_DIR_SEP, HOST_PATH_SEP
+<font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* DIRECTORY SEPARATOR CHAR (MAY BE EMPTY)</i></font>
          HOST_DIR_SEP = 2212
 <font color="#818181"><i>* PATH SEPARATOR CHARACTER</i></font>
@@ -117,6 +121,7 @@ HOST
 <font color="#818181"><i>* CSNOBOL4 1.5</i></font>
 <font color="#818181"><i>*</i></font>
 -PUBLIC HOST_DEF_SNOPATH, HOST_INCUDE_DIR
+<font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* DEFAULT LIBRARY SEARCH PATH</i></font>
          HOST_DEF_SNOPATH = 2214
 <font color="#818181"><i>* PATH FOR C HEADERS</i></font>
@@ -124,6 +129,7 @@ HOST
 <font color="#818181"><i>*</i></font>
 -PUBLIC HOST_INTEGER_BITS, HOST_REAL_BITS, HOST_POINTER_BITS
 -PUBLIC HOST_LONG_BITS, HOST_DESCR_BITS, HOST_SPEC_BITS, HOST_CHAR_BITS
+<font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* NUMBER OF BITS FOR SNOBOL4 INTEGER TYPE</i></font>
          HOST_INTEGER_BITS = 2300
 <font color="#818181"><i>* NUMBER OF BITS FOR SNOBOL4 REAL TYPE</i></font>
@@ -140,6 +146,7 @@ HOST
          HOST_CHAR_BITS = 2306
 <font color="#818181"><i>*</i></font>
 -PUBLIC HOST_DYNAMIC_SIZE, HOST_PMSTACK_SIZE, HOST_ISTACK_SIZE
+<font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* SIZE OF &#39;DYNAMIC&#39; STORAGE IN DESCRIPTORS</i></font>
          HOST_DYNAMIC_SIZE = 2400
 <font color="#818181"><i>* SIZE OF PATTERN MATCH STACK IN DESCRS</i></font>
@@ -167,6 +174,8 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+-MODULE HOST
+<b>&laquo;INCLUDES&raquo;</b>
 -STITL HOST
 -EJECT
 <font color="#818181"><i>*</i></font>
@@ -195,7 +204,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 20:00:05 EDT 2014</p></td><td><p align=right>
+Wed Jun 11 11:10:47 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

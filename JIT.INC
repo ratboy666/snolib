@@ -4,7 +4,7 @@
 -INCLUDE 'P64.INC'
 -INCLUDE 'SEQ.INC'
 -STITL JIT
--LINE 2154 "JIT.lss"
+-LINE 2156 "JIT.lss"
 -EJECT
 *
 ************************************************************************
@@ -156,15 +156,18 @@
 *
          L = 'ARG ARG_F ARG_D'
          A = CRACK(L, ' ')
-         SEQ(" LOAD(A<I> '_JIT()', 'jit.so') ", .I)
+         SEQ(" LOAD(A<I> '_JIT()INTEGER', 'jit.so') ", .I)
+*
+         L = 'BLTI BLTI_U BLEI BLEI_U BEQI BGEI BGEI_U BGTI BGTI_U '
++            'BNEI BMSI BMCI BOADDI BOADDI_U BXADDI BXADDI_U '
++            'BOSUBI BOSUBI_U BXSUBI BXSUBI_U '
+         A = CRACK(L, ' ')
+         SEQ(" LOAD(A<I> '_JIT(INTEGER)INTEGER', 'jit.so') ", .I)
 *
          L = 'GETARG GETARG_C GETARG_UC GETARG_S GETARG_US GETARG_I '
 +            'GETARG_UI GETARG_L GETARG_F GETARG_D '
 +            'LDI_C LDI_UC LDI_S LDI_US LDI_I LDI LDI_UI LDI_L LDI_F '
 +            'LDI_D STI_C STI_S STI_I STI STI_L STI_F STI_D '
-+            'BLTI BLTI_U BLEI BLEI_U BEQI BGEI BGEI_U BGTI BGTI_U '
-+            'BNEI BMSI BMCI BOADDI BOADDI_U BXADDI BXADDI_U '
-+            'BOSUBI BOSUBI_U BXSUBI BXSUBI_U '
          A = CRACK(L, ' ')
          SEQ(" LOAD(A<I> '_JIT(INTEGER)', 'jit.so') ", .I)
 *
@@ -182,10 +185,10 @@
          LOAD('JMPI_JIT()INTEGER', 'jit.so')
 *
          LOAD('CALLR_JIT(INTEGER)', 'jit.so')
-         LOAD('CALLI_JIT()', 'jit.so')
+         LOAD('CALLI_JIT()INTEGER', 'jit.so')
 *
          LOAD('FINISHR_JIT(INTEGER)', 'jit.so')
-         LOAD('FINISHI_JIT()', 'jit.so')
+         LOAD('FINISHI_JIT()INTEGER', 'jit.so')
 *
          LOAD('RET_JIT()', 'jit.so')
          LOAD('RETI_JIT()', 'jit.so')
@@ -649,16 +652,13 @@ JIT_V_NUM
 JIT_F_NUM
          JIT_F_NUM = F_NUM_JIT()                               :(RETURN)
 *
-JIT_ARG  ARG_JIT()
-         JIT_ARG = GET_P()                                     :(RETURN)
+JIT_ARG  JIT_ARG = ARG_JIT()                                   :(RETURN)
 *
 JIT_ARG_F
-         ARG_F_JIT()
-         JIT_ARG_F = GET_P()                                   :(RETURN)
+         JIT_ARG_F = ARG_F_JIT()                               :(RETURN)
 *
 JIT_ARG_D
-         ARG_D_JIT()
-         JIT_ARG_D = GET_P()                                   :(RETURN)
+         JIT_ARG_D = ARG_D_JIT()                               :(RETURN)
 *
 JIT_RET  RET_JIT()                                             :(RETURN)
 *
@@ -678,7 +678,7 @@ JIT_FINISHR
 *
 JIT_FINISHI
          SET_P(P)
-         FINISHI_JIT()                                         :(RETURN)
+         JIT_FINISHI = FINISHI_JIT()                           :(RETURN)
 *
 JIT_INIT INIT_JIT(S)                                           :(RETURN)
 *
@@ -792,8 +792,7 @@ JIT_CALLR
 *
 JIT_CALLI
          SET_P(P)
-         CALLI_JIT()
-         JIT_CALLI = GET_P()                                   :(RETURN)
+         JIT_CALLI = CALLI_JIT()                               :(RETURN)
 *
 JIT_NOTE JIT_NOTE = NOTE_JIT(S, N)                             :(RETURN)
 *
@@ -1555,36 +1554,39 @@ JIT_PUSHARGI_D
          PUSHARGI_D_JIT()                                      :(RETURN)
 *
 JIT_BLTI SET_P(P)
-         BLTI_JIT(R)                                           :(RETURN)
+         JIT_BLTI = BLTI_JIT(R)                                :(RETURN)
 *
 JIT_BLTI_U
          SET_P(P)
-         BLTI_U_JIT(R)                                         :(RETURN)
+         JIT_BLTI_U = BLTI_U_JIT(R)                            :(RETURN)
 *
 JIT_BLEI SET_P(P)
-         BLEI_JIT(R)                                           :(RETURN)
+         JIT_BLEI = BLEI_JIT(R)                                :(RETURN)
 *
 JIT_BLEI_U
          SET_P(P)
-         BLEI_U_JIT(R)                                         :(RETURN)
+         JIT_BLEI_U = BLEI_U_JIT(R)                            :(RETURN)
 *
 JIT_BEQI SET_P(P)
-         BEQI_JIT(R)                                           :(RETURN)
+         JIT_BEQI = BEQI_JIT(R)                                :(RETURN)
 *
 JIT_BGEI SET_P(P)
-         BGEI_JIT(R)                                           :(RETURN)
+         JIT_BGEI = BGEI_JIT(R)                                :(RETURN)
 *
 JIT_BGEI_U
          SET_P(P)
-         BGEI_U_JIT(R)                                         :(RETURN)
+         JIT_BGEI_U = BGEI_U_JIT(R)                            :(RETURN)
 *
 JIT_BGTI SET_P(P)
-         BGTI_JIT(R)                                           :(RETURN)
+         JIT_BGTI = BGTI_JIT(R)                                :(RETURN)
 *
 JIT_BGTI_U
          SET_P(P)
-         BGTI_U_JIT(R)                                         :(RETURN)
+         JIT_BGTI_U = BGTI_U_JIT(R)                            :(RETURN)
 *
+*******======== BLTI_JIT
+**            'bnei bmsi bmci boaddi boaddi_u bxaddi bxaddi_u '          +
+**            'bosubi bosubi_u bxsubi bxsubi_u '
 JIT_BNEI SET_P(P)
          BNEI_JIT(R)                                           :(RETURN)
 *

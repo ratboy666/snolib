@@ -1,0 +1,34 @@
+{
+  "SOURCE": "MD5.INC",
+  "COMMENT": "MD5.INC module",
+  "ARTIFACTS": [
+  ],
+  "TYPE": "PROGRAM",
+  "NAME": "MD5",
+  "DEPENDS": [
+    "BQ.INC",
+    "READFILE.INC"
+  ],
+  "INSTALL": [
+    {
+      "TARGET": "MD5.INC",
+      "COMMANDS": [
+      ]
+    }
+  ],
+  "BUILD": [
+  ],
+  "FILES": [
+    {
+      "NAME": "MD5.INC",
+      "TYPE": "TEXT",
+      "TIMESTAMP": "1402497506",
+      "ACCESS": "664",
+      "LOCATION": "FILE",
+      "MD5": "dd6e55c1ee215b19f97e39a8a28b5516",
+      "SIZE": 394
+    }
+  ],
+  "CONTENTS": [
+  ]
+}

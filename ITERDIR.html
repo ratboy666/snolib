@@ -52,7 +52,6 @@ expected.
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;ITERDIR&raquo;&equiv;</b>
--MODULE ITERDIR
 -PUBLIC `VALUE_DIR(), ITER_DIR(), NEXT_DIR()
 <font color="#818181"><i>*</i></font>
          DEFINE(&#39;ITER_DIR(W)&#39;)
@@ -62,8 +61,8 @@ expected.
 VALUE_DIR
          VALUE_DIR = DIFFER(D) VALUE(D)             <b>:S(RETURN)F(FRETURN)</b>
 <font color="#818181"><i>*</i></font>
-ITER_DIR ITER_DIR = ATOL(CRACK(BQ(&#39;ls &#39; W, CHARS_NL), CHARS_NL))
-+                                                   <b>:S(RETURN)F(FRETURN)</b>
+ITER_DIR ITER_DIR = ATOL(CRACK(BQ(&#39;ls 2&gt;/dev/null &#39; W, CHARS_NL),
++           CHARS_NL))                              <b>:S(RETURN)F(FRETURN)</b>
 <font color="#818181"><i>*</i></font>
 NEXT_DIR NEXT_DIR = DIFFER(D) NEXT(D)               <b>:S(RETURN)F(FRETURN)</b>
 <font color="#818181"><i>*</i></font>
@@ -84,6 +83,7 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+-MODULE ITERDIR
 <b>&laquo;INCLUDES&raquo;</b>
 -STITL ITERDIR
 -EJECT
@@ -113,7 +113,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Sun Jun  8 20:28:11 EDT 2014</p></td><td><p align=right>
+Wed Jun 11 11:10:48 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

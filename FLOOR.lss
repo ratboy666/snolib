@@ -12,8 +12,8 @@
 @
 
 <<FLOOR>>=
--MODULE FLOOR
 -PUBLIC FLOOR(), CEIL()
+*
          DEFINE('FLOOR(X)')
          DEXP('CEIL(X) = -FLOOR(-X)')                       :(FLOOR_END)
 *
@@ -34,6 +34,7 @@ END
 @
 
 <<>>=
+-MODULE FLOOR
 <<INCLUDES>>
 -STITL FLOOR
 -EJECT

@@ -1,7 +1,9 @@
 -SNOCONE
+-MODULE FOREACH
+-LINE 10 "FOREACH.lss"
+-LINE 71 "FOREACH.lss"
 -STITL FOREACH
 -EJECT
--LINE 72 "FOREACH.lss"
 #
 ########################################################################
 #                                                                      #
@@ -25,8 +27,7 @@
 # Apply procedure proc to each element of x, where x may be an array,
 # table, or expression that produces a sequence of values.
 #
-//-MODULE FOREACH
-//-PUBLIC FOREACH()
+-PUBLIC FOREACH()
 procedure foreach(x, proc) a, i {
    i = datatype(x)
    if (i :: 'ARRAY') {

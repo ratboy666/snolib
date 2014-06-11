@@ -9,7 +9,6 @@ an external function to be used with [[LOAD()]].
 @
 
 <<WRAPPER>>=
--MODULE WRAPPER
          WPMAXSTR = 1024
          WPSTRTYPE = 'STRING'
          WPSTRFREE = 'STRING_FREE'
@@ -282,6 +281,8 @@ END
 @
 
 <<>>=
+-MODULE WRAPPER
+<<INCLUDES>>
 -STITL WRAPPER
 -EJECT
 *
