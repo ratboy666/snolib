@@ -8,12 +8,13 @@ Basic arithmetic on complex numbers. Not complete yet.
 @
 
 <<COMPLEX>>=
--MODULE COMPLEX
 -PUBLIC COMPLEX(), R(), I()
+*
          DATA('COMPLEX(R,I)')
 *
 -PUBLIC ADD_COMPLEX(), MUL_COMPLEX(), NEG_COMPLEX(), INV_COMPLEX()
 -PUBLIC PRINT_COMPLEX()
+*
          DEFINE('ADD_COMPLEX(X,Y)')
          DEFINE('MUL_COMPLEX(X,Y)A,B,C,D')
          DEFINE('NEG_COMPLEX(X)')
@@ -52,6 +53,9 @@ END
 @
 
 <<>>=
+-MODULE COMPLEX
+-IN72
+<<INCLUDES>>
 -STITL COMPLEX
 -EJECT
 *

@@ -9,8 +9,8 @@ taken [[M]] at a time.
 @
 
 <<COMB>>=
--MODULE COMB
 -PUBLIC COMB()
+*
          DEFINE('COMB(N,M)')                                 :(COMB_END)
 *
 COMB     COMB = EQ(M, 0) 1                                    :S(RETURN)
@@ -29,6 +29,8 @@ END
 @
 
 <<>>=
+-MODULE COMB
+<<INCLUDES>>
 -STITL COMB
 -EJECT
 *

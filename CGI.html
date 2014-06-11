@@ -81,40 +81,61 @@ Still need: Response codes, Headers/Responses
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;CGI&raquo;&equiv;</b>
--MODULE CGI
 -USES CRACK(), HOST(), URL_DECODE(), COOKIE_FIX_NAME()
 -WEAK USE_FCGI, FCGI_ENV, FCGI_IN, FCGI_REQUEST_COMPLETE
 -WEAK FCGI_SEND(), FCGI_END()
+<font color="#818181"><i>*</i></font>
 -PUBLIC CLASS:CGI_CLASS
+<font color="#818181"><i>*</i></font>
          CGI_CLASS = SEND(CLASS, &#39;NEW_CLASS&#39;, &#39;CGI_CLASS&#39;)
          DEFINE(&#39;CGI_INIT()A,C&#39;)
+<font color="#818181"><i>*</i></font>
 -PUBLIC CGI_CLASS:&#39;INIT&#39;
+<font color="#818181"><i>*</i></font>
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;INIT&#39;, &#39;CGI_INIT&#39;)
+<font color="#818181"><i>*</i></font>
 -PUBLIC CGI_CLASS:&#39;GET_COOKIE_JAR&#39;
+<font color="#818181"><i>*</i></font>
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;GET_COOKIE_JAR&#39;, CODE(
 +           &#39; SEND = |.COOKIE_JAR :(RETURN)&#39;))
+<font color="#818181"><i>*</i></font>
 -PUBLIC CGI_CLASS:&#39;GET_HEADER&#39;
+<font color="#818181"><i>*</i></font>
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;GET_HEADER&#39;, CODE(
 +           &#39; SEND = |.HEADER :(RETURN)&#39;))
          DEFINE(&#39;CGI_SEND()S&#39;)
+<font color="#818181"><i>*</i></font>
 -PUBLIC CGI_CLASS:&#39;SEND&#39;
+<font color="#818181"><i>*</i></font>
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;SEND&#39;, &#39;CGI_SEND&#39;)
+<font color="#818181"><i>*</i></font>
 -PUBLIC CGI_CLASS:&#39;GET_LOG&#39;
+<font color="#818181"><i>*</i></font>
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;GET_LOG&#39;, CODE(
 +           &#39; SEND = |.LOG :(RETURN)&#39;))
+<font color="#818181"><i>*</i></font>
 -PUBLIC CGI_CLASS:&#39;GET_CONTENT&#39;
+<font color="#818181"><i>*</i></font>
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;GET_CONTENT&#39;, CODE(
 +           &#39; SEND = |.CONTENT :(RETURN)&#39;))
+<font color="#818181"><i>*</i></font>
 -PUBLIC CGI_CLASS:&#39;SET_CONTENT&#39;
+<font color="#818181"><i>*</i></font>
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;SET_CONTENT&#39;, CODE(
 +           &#39; |.CONTENT = A1 :(RETURN)&#39;))
          DEFINE(&#39;CGI_CLOSE()A&#39;)
+<font color="#818181"><i>*</i></font>
 -PUBLIC CGI_CLASS:&#39;CLOSE&#39;
+<font color="#818181"><i>*</i></font>
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;CLOSE&#39;, &#39;CGI_CLOSE&#39;)
+<font color="#818181"><i>*</i></font>
 -PUBLIC CGI_CLASS:&#39;GET_ENV&#39;
+<font color="#818181"><i>*</i></font>
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;GET_ENV&#39;, CODE(
 +           &#39; SEND = |.ENV :(RETURN)&#39;))
+<font color="#818181"><i>*</i></font>
 -PUBLIC CGI_CLASS:&#39;GET_QUERY&#39;
+<font color="#818181"><i>*</i></font>
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;GET_QUERY&#39;, CODE(
 +           &#39; SEND = |.QUERY :(RETURN)&#39;))
 <font color="#818181"><i>*</i></font>
@@ -600,6 +621,8 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+-MODULE CGI
+-IN72
 <b>&laquo;INCLUDES&raquo;</b>
 -STITL CGI
 -EJECT
@@ -630,7 +653,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 20:00:40 EDT 2014</p></td><td><p align=right>
+Wed Jun 11 11:50:31 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

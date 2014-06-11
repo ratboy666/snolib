@@ -11,8 +11,8 @@ interchanged. [[BALREV('F(X)')]] returns [['(X)F']] instead of
 @
 
 <<BALREV>>=
--MODULE BALREV
 -PUBLIC BALREV()
+*
          DEFINE('BALREV(S)')                               :(BALREV_END)
 *
 BALREV   BALREV = REPLACE(REVERSE(S), ')(', '()')              :(RETURN)
@@ -31,6 +31,9 @@ END
 @
 
 <<>>=
+-MODULE BALREV
+<<INCLUDES>>
+-IN72
 -STITL BALREV
 -EJECT
 *

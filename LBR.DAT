@@ -1656,8 +1656,8 @@ interchanged. [[BALREV('F(X)')]] returns [['(X)F']] instead of
 @
 
 <<BALREV>>=
--MODULE BALREV
 -PUBLIC BALREV()
+*
          DEFINE('BALREV(S)')                               :(BALREV_END)
 *
 BALREV   BALREV = REPLACE(REVERSE(S), ')(', '()')              :(RETURN)
@@ -1676,6 +1676,9 @@ END
 @
 
 <<>>=
+-MODULE BALREV
+<<INCLUDES>>
+-IN72
 -STITL BALREV
 -EJECT
 *
@@ -1699,10 +1702,13 @@ END
 *
 * CE: .MSNOBOL4;
 @
+-MODULE BALREV
+-LINE 11 "BALREV.lss"
+-IN72
+-LINE 37 "BALREV.lss"
 -STITL BALREV
 -EJECT
 *
--LINE 37 "BALREV.lss"
 ************************************************************************
 *                                                                      *
 *           ######      #     #        ######   #######  #     #       *
@@ -1720,8 +1726,8 @@ END
 * BALREV.lss
 *
 -LINE 14 "BALREV.lss"
--MODULE BALREV
 -PUBLIC BALREV()
+*
          DEFINE('BALREV(S)')                               :(BALREV_END)
 *
 BALREV   BALREV = REPLACE(REVERSE(S), ')(', '()')              :(RETURN)
@@ -1756,8 +1762,8 @@ interchanged. <font face="Source Code Pro">BALREV('F(X)')</font> returns <font f
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;BALREV&raquo;&equiv;</b>
--MODULE BALREV
 -PUBLIC BALREV()
+<font color="#818181"><i>*</i></font>
          DEFINE(&#39;BALREV(S)&#39;)                               <b>:(BALREV_END)</b>
 <font color="#818181"><i>*</i></font>
 BALREV   BALREV = REPLACE(REVERSE(S), &#39;)(&#39;, &#39;()&#39;)              <b>:(RETURN)</b>
@@ -1780,6 +1786,9 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+-MODULE BALREV
+<b>&laquo;INCLUDES&raquo;</b>
+-IN72
 -STITL BALREV
 -EJECT
 <font color="#818181"><i>*</i></font>
@@ -1808,7 +1817,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 19:59:46 EDT 2014</p></td><td><p align=right>
+Wed Jun 11 11:50:27 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>
@@ -1842,8 +1851,8 @@ source.
 @
 
 <<BALX>>=
--MODULE BALX
 -PUBLIC BALX()
+*
          DEFINE('BALX(PARENS,QTS)Q,GBAL,NAME,STAR,LP,RP')    :(BALX_END)
 *
 BALX     NAME = UNIQUE()
@@ -1869,6 +1878,8 @@ END
 @
 
 <<>>=
+-MODULE BALX
+-IN72
 <<INCLUDES>>
 -STITL BALX
 -EJECT
@@ -1893,11 +1904,13 @@ END
 *
 * CE: .MSNOBOL4;
 @
+-MODULE BALX
+-IN72
 -LINE 19 "BALX.lss"
 -INCLUDE 'UNIQUE.INC'
+-LINE 53 "BALX.lss"
 -STITL BALX
 -EJECT
--LINE 53 "BALX.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -1916,8 +1929,8 @@ END
 * BALX.lss
 *
 -LINE 23 "BALX.lss"
--MODULE BALX
 -PUBLIC BALX()
+*
          DEFINE('BALX(PARENS,QTS)Q,GBAL,NAME,STAR,LP,RP')    :(BALX_END)
 *
 BALX     NAME = UNIQUE()
@@ -1971,8 +1984,8 @@ source.
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;BALX&raquo;&equiv;</b>
--MODULE BALX
 -PUBLIC BALX()
+<font color="#818181"><i>*</i></font>
          DEFINE(&#39;BALX(PARENS,QTS)Q,GBAL,NAME,STAR,LP,RP&#39;)    <b>:(BALX_END)</b>
 <font color="#818181"><i>*</i></font>
 BALX     NAME = UNIQUE()
@@ -2002,6 +2015,8 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+-MODULE BALX
+-IN72
 <b>&laquo;INCLUDES&raquo;</b>
 -STITL BALX
 -EJECT
@@ -2031,7 +2046,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 19:59:46 EDT 2014</p></td><td><p align=right>
+Wed Jun 11 11:50:27 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>
@@ -2054,8 +2069,8 @@ END
 @
 
 <<BLEND>>=
--MODULE BLEND
 -PUBLIC BLEND()
+*
          DEFINE('BLEND(S1,S2)T1,T2,ABC,XYZ,L1,L2')
          &ALPHABET LEN(128) . ABC LEN(128) . XYZ
 BLE_1    ABC LEN(1) . T1 =                                 :F(BLEND_END)
@@ -2088,6 +2103,9 @@ END
 @
 
 <<>>=
+-MODULE BLEND
+-IN72
+<<INCLUDES>>
 -STITL BLEND
 -EJECT
 *
@@ -2111,10 +2129,13 @@ END
 *
 * CE: .MSNOBOL4;
 @
+-MODULE BLEND
+-IN72
+-LINE 10 "BLEND.lss"
+-LINE 50 "BLEND.lss"
 -STITL BLEND
 -EJECT
 *
--LINE 50 "BLEND.lss"
 ************************************************************************
 *                                                                      *
 *              ######   #        #######  #     #  ######              *
@@ -2132,8 +2153,8 @@ END
 * BLEND.lss
 *
 -LINE 13 "BLEND.lss"
--MODULE BLEND
 -PUBLIC BLEND()
+*
          DEFINE('BLEND(S1,S2)T1,T2,ABC,XYZ,L1,L2')
          &ALPHABET LEN(128) . ABC LEN(128) . XYZ
 BLE_1    ABC LEN(1) . T1 =                                 :F(BLEND_END)
@@ -2181,8 +2202,8 @@ BLEND_END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;BLEND&raquo;&equiv;</b>
--MODULE BLEND
 -PUBLIC BLEND()
+<font color="#818181"><i>*</i></font>
          DEFINE(&#39;BLEND(S1,S2)T1,T2,ABC,XYZ,L1,L2&#39;)
          &amp;ALPHABET LEN(128) . ABC LEN(128) . XYZ
 BLE_1    ABC LEN(1) . T1 =                                 <b>:F(BLEND_END)</b>
@@ -2219,6 +2240,9 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+-MODULE BLEND
+-IN72
+<b>&laquo;INCLUDES&raquo;</b>
 -STITL BLEND
 -EJECT
 <font color="#818181"><i>*</i></font>
@@ -2247,7 +2271,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 19:59:47 EDT 2014</p></td><td><p align=right>
+Wed Jun 11 11:50:28 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>
@@ -2278,9 +2302,9 @@ disables [[DDT()]] and then calls the 'real' function [[BQ2()]].
 @
 
 <<BQ>>=
--MODULE BQ
 -WEAK DDT_ACTIVE, DDT_SUSPEND(), DDT_RESUME()
 -PUBLIC BQ()
+*
          DEFINE('BQ(COMMAND,OFS)DDTF')
          DEFINE('BQ2(COMMAND,OFS)X,UNIT')                      :(BQ_END)
 *
@@ -2330,6 +2354,9 @@ END
 @
 
 <<>>=
+-MODULE BQ
+-IN72
+<<INCLUDES>>
 -STITL BQ
 -EJECT
 *
@@ -2355,10 +2382,13 @@ END
 *
 * CE: .MSNOBOL4;
 @
+-MODULE BQ
+-IN72
+-LINE 17 "BQ.lss"
+-LINE 75 "BQ.lss"
 -STITL BQ
 -EJECT
 *
--LINE 75 "BQ.lss"
 ************************************************************************
 *                                                                      *
 *                          ######    #####                             *
@@ -2378,9 +2408,9 @@ END
 * BQ.lss
 *
 -LINE 20 "BQ.lss"
--MODULE BQ
 -WEAK DDT_ACTIVE, DDT_SUSPEND(), DDT_RESUME()
 -PUBLIC BQ()
+*
          DEFINE('BQ(COMMAND,OFS)DDTF')
          DEFINE('BQ2(COMMAND,OFS)X,UNIT')                      :(BQ_END)
 *
@@ -2439,9 +2469,9 @@ disables <font face="Source Code Pro">DDT()</font> and then calls the 'real' fun
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;BQ&raquo;&equiv;</b>
--MODULE BQ
 -WEAK DDT_ACTIVE, DDT_SUSPEND(), DDT_RESUME()
 -PUBLIC BQ()
+<font color="#818181"><i>*</i></font>
          DEFINE(&#39;BQ(COMMAND,OFS)DDTF&#39;)
          DEFINE(&#39;BQ2(COMMAND,OFS)X,UNIT&#39;)                      <b>:(BQ_END)</b>
 <font color="#818181"><i>*</i></font>
@@ -2501,6 +2531,9 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+-MODULE BQ
+-IN72
+<b>&laquo;INCLUDES&raquo;</b>
 -STITL BQ
 -EJECT
 <font color="#818181"><i>*</i></font>
@@ -2531,7 +2564,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 19:59:47 EDT 2014</p></td><td><p align=right>
+Wed Jun 11 11:50:28 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>
@@ -2556,8 +2589,8 @@ subject otherwise.
 @
 
 <<BRKREM>>=
--MODULE BRKREM
 -PUBLIC BRKREM()
+*
          DEFINE('BRKREM(S)CS')                             :(BRKREM_END)
 *
 BRKREM   BRKREM = IDENT(S) REM                                :S(RETURN)
@@ -2579,6 +2612,8 @@ END
 @
 
 <<>>=
+-MODULE BRKREM
+-IN72
 <<INCLUDES>>
 -STITL BRKREM
 -EJECT
@@ -2604,11 +2639,13 @@ END
 *
 * CE: .MSNOBOL4;
 @
+-MODULE BRKREM
+-IN72
 -LINE 11 "BRKREM.lss"
 -INCLUDE 'SDIFF.INC'
+-LINE 41 "BRKREM.lss"
 -STITL BRKREM
 -EJECT
--LINE 41 "BRKREM.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -2628,8 +2665,8 @@ END
 * BRKREM.lss
 *
 -LINE 15 "BRKREM.lss"
--MODULE BRKREM
 -PUBLIC BRKREM()
+*
          DEFINE('BRKREM(S)CS')                             :(BRKREM_END)
 *
 BRKREM   BRKREM = IDENT(S) REM                                :S(RETURN)
@@ -2669,8 +2706,8 @@ subject otherwise.
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;BRKREM&raquo;&equiv;</b>
--MODULE BRKREM
 -PUBLIC BRKREM()
+<font color="#818181"><i>*</i></font>
          DEFINE(&#39;BRKREM(S)CS&#39;)                             <b>:(BRKREM_END)</b>
 <font color="#818181"><i>*</i></font>
 BRKREM   BRKREM = IDENT(S) REM                                <b>:S(RETURN)</b>
@@ -2696,6 +2733,8 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+-MODULE BRKREM
+-IN72
 <b>&laquo;INCLUDES&raquo;</b>
 -STITL BRKREM
 -EJECT
@@ -2726,7 +2765,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 20:00:36 EDT 2014</p></td><td><p align=right>
+Wed Jun 11 11:50:31 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>
@@ -3054,8 +3093,8 @@ Return to <a href="index.html">index</a>
 @
 
 <<CATA>>=
--MODULE CATA
 -PUBLIC CATA()
+*
          DEFINE('CATA(A1,A2)I,N1')                           :(CATA_END)
 *
 CATA     N1 = PROTOTYPE(A1)
@@ -3086,6 +3125,8 @@ END
 @
 
 <<>>=
+-MODULE CATA
+-IN72
 <<INCLUDES>>
 -STITL CATA
 -EJECT
@@ -3110,11 +3151,13 @@ END
 *
 * CE: .MSNOBOL4;
 @
+-MODULE CATA
+-IN72
 -LINE 11 "CATA.lss"
 -INCLUDE 'SEQ.INC'
+-LINE 50 "CATA.lss"
 -STITL CATA
 -EJECT
--LINE 50 "CATA.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -3133,8 +3176,8 @@ END
 * CATA.lss
 *
 -LINE 15 "CATA.lss"
--MODULE CATA
 -PUBLIC CATA()
+*
          DEFINE('CATA(A1,A2)I,N1')                           :(CATA_END)
 *
 CATA     N1 = PROTOTYPE(A1)
@@ -3173,8 +3216,8 @@ CATA_END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;CATA&raquo;&equiv;</b>
--MODULE CATA
 -PUBLIC CATA()
+<font color="#818181"><i>*</i></font>
          DEFINE(&#39;CATA(A1,A2)I,N1&#39;)                           <b>:(CATA_END)</b>
 <font color="#818181"><i>*</i></font>
 CATA     N1 = PROTOTYPE(A1)
@@ -3209,6 +3252,8 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+-MODULE CATA
+-IN72
 <b>&laquo;INCLUDES&raquo;</b>
 -STITL CATA
 -EJECT
@@ -3238,7 +3283,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 19:59:48 EDT 2014</p></td><td><p align=right>
+Wed Jun 11 11:50:29 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>
@@ -3323,40 +3368,61 @@ with doc, respond 302 Location and doc returned
 @
 
 <<CGI>>=
--MODULE CGI
 -USES CRACK(), HOST(), URL_DECODE(), COOKIE_FIX_NAME()
 -WEAK USE_FCGI, FCGI_ENV, FCGI_IN, FCGI_REQUEST_COMPLETE
 -WEAK FCGI_SEND(), FCGI_END()
+*
 -PUBLIC CLASS:CGI_CLASS
+*
          CGI_CLASS = SEND(CLASS, 'NEW_CLASS', 'CGI_CLASS')
          DEFINE('CGI_INIT()A,C')
+*
 -PUBLIC CGI_CLASS:'INIT'
+*
          SEND(CGI_CLASS, 'ADD_METHOD', 'INIT', 'CGI_INIT')
+*
 -PUBLIC CGI_CLASS:'GET_COOKIE_JAR'
+*
          SEND(CGI_CLASS, 'ADD_METHOD', 'GET_COOKIE_JAR', CODE(
 +           ' SEND = |.COOKIE_JAR :(RETURN)'))
+*
 -PUBLIC CGI_CLASS:'GET_HEADER'
+*
          SEND(CGI_CLASS, 'ADD_METHOD', 'GET_HEADER', CODE(
 +           ' SEND = |.HEADER :(RETURN)'))
          DEFINE('CGI_SEND()S')
+*
 -PUBLIC CGI_CLASS:'SEND'
+*
          SEND(CGI_CLASS, 'ADD_METHOD', 'SEND', 'CGI_SEND')
+*
 -PUBLIC CGI_CLASS:'GET_LOG'
+*
          SEND(CGI_CLASS, 'ADD_METHOD', 'GET_LOG', CODE(
 +           ' SEND = |.LOG :(RETURN)'))
+*
 -PUBLIC CGI_CLASS:'GET_CONTENT'
+*
          SEND(CGI_CLASS, 'ADD_METHOD', 'GET_CONTENT', CODE(
 +           ' SEND = |.CONTENT :(RETURN)')) 
+*
 -PUBLIC CGI_CLASS:'SET_CONTENT'
+*
          SEND(CGI_CLASS, 'ADD_METHOD', 'SET_CONTENT', CODE(
 +           ' |.CONTENT = A1 :(RETURN)')) 
          DEFINE('CGI_CLOSE()A')
+*
 -PUBLIC CGI_CLASS:'CLOSE'
+*
          SEND(CGI_CLASS, 'ADD_METHOD', 'CLOSE', 'CGI_CLOSE')
+*
 -PUBLIC CGI_CLASS:'GET_ENV'
+*
          SEND(CGI_CLASS, 'ADD_METHOD', 'GET_ENV', CODE(
 +           ' SEND = |.ENV :(RETURN)'))
+*
 -PUBLIC CGI_CLASS:'GET_QUERY'
+*
          SEND(CGI_CLASS, 'ADD_METHOD', 'GET_QUERY', CODE(
 +           ' SEND = |.QUERY :(RETURN)'))
 *
@@ -3830,6 +3896,8 @@ END
 @
 
 <<>>=
+-MODULE CGI
+-IN72
 <<INCLUDES>>
 -STITL CGI
 -EJECT
@@ -3855,6 +3923,8 @@ END
 *
 * CE: .F.MSNOBOL4;
 @
+-MODULE CGI
+-IN72
 -LINE 52 "CGI.lss"
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'COOKIE.INC'
@@ -3866,9 +3936,9 @@ END
 -INCLUDE 'SEQ.INC'
 -INCLUDE 'UNIQUE.INC'
 -INCLUDE 'VDIFFER.INC'
+-LINE 596 "CGI.lss"
 -STITL CGI
 -EJECT
--LINE 575 "CGI.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -3888,40 +3958,61 @@ END
 * CGI.lss
 *
 -LINE 65 "CGI.lss"
--MODULE CGI
 -USES CRACK(), HOST(), URL_DECODE(), COOKIE_FIX_NAME()
 -WEAK USE_FCGI, FCGI_ENV, FCGI_IN, FCGI_REQUEST_COMPLETE
 -WEAK FCGI_SEND(), FCGI_END()
+*
 -PUBLIC CLASS:CGI_CLASS
+*
          CGI_CLASS = SEND(CLASS, 'NEW_CLASS', 'CGI_CLASS')
          DEFINE('CGI_INIT()A,C')
+*
 -PUBLIC CGI_CLASS:'INIT'
+*
          SEND(CGI_CLASS, 'ADD_METHOD', 'INIT', 'CGI_INIT')
+*
 -PUBLIC CGI_CLASS:'GET_COOKIE_JAR'
+*
          SEND(CGI_CLASS, 'ADD_METHOD', 'GET_COOKIE_JAR', CODE(
 +           ' SEND = |.COOKIE_JAR :(RETURN)'))
+*
 -PUBLIC CGI_CLASS:'GET_HEADER'
+*
          SEND(CGI_CLASS, 'ADD_METHOD', 'GET_HEADER', CODE(
 +           ' SEND = |.HEADER :(RETURN)'))
          DEFINE('CGI_SEND()S')
+*
 -PUBLIC CGI_CLASS:'SEND'
+*
          SEND(CGI_CLASS, 'ADD_METHOD', 'SEND', 'CGI_SEND')
+*
 -PUBLIC CGI_CLASS:'GET_LOG'
+*
          SEND(CGI_CLASS, 'ADD_METHOD', 'GET_LOG', CODE(
 +           ' SEND = |.LOG :(RETURN)'))
+*
 -PUBLIC CGI_CLASS:'GET_CONTENT'
+*
          SEND(CGI_CLASS, 'ADD_METHOD', 'GET_CONTENT', CODE(
 +           ' SEND = |.CONTENT :(RETURN)'))
+*
 -PUBLIC CGI_CLASS:'SET_CONTENT'
+*
          SEND(CGI_CLASS, 'ADD_METHOD', 'SET_CONTENT', CODE(
 +           ' |.CONTENT = A1 :(RETURN)'))
          DEFINE('CGI_CLOSE()A')
+*
 -PUBLIC CGI_CLASS:'CLOSE'
+*
          SEND(CGI_CLASS, 'ADD_METHOD', 'CLOSE', 'CGI_CLOSE')
+*
 -PUBLIC CGI_CLASS:'GET_ENV'
+*
          SEND(CGI_CLASS, 'ADD_METHOD', 'GET_ENV', CODE(
 +           ' SEND = |.ENV :(RETURN)'))
+*
 -PUBLIC CGI_CLASS:'GET_QUERY'
+*
          SEND(CGI_CLASS, 'ADD_METHOD', 'GET_QUERY', CODE(
 +           ' SEND = |.QUERY :(RETURN)'))
 *
@@ -4167,40 +4258,61 @@ Still need: Response codes, Headers/Responses
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;CGI&raquo;&equiv;</b>
--MODULE CGI
 -USES CRACK(), HOST(), URL_DECODE(), COOKIE_FIX_NAME()
 -WEAK USE_FCGI, FCGI_ENV, FCGI_IN, FCGI_REQUEST_COMPLETE
 -WEAK FCGI_SEND(), FCGI_END()
+<font color="#818181"><i>*</i></font>
 -PUBLIC CLASS:CGI_CLASS
+<font color="#818181"><i>*</i></font>
          CGI_CLASS = SEND(CLASS, &#39;NEW_CLASS&#39;, &#39;CGI_CLASS&#39;)
          DEFINE(&#39;CGI_INIT()A,C&#39;)
+<font color="#818181"><i>*</i></font>
 -PUBLIC CGI_CLASS:&#39;INIT&#39;
+<font color="#818181"><i>*</i></font>
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;INIT&#39;, &#39;CGI_INIT&#39;)
+<font color="#818181"><i>*</i></font>
 -PUBLIC CGI_CLASS:&#39;GET_COOKIE_JAR&#39;
+<font color="#818181"><i>*</i></font>
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;GET_COOKIE_JAR&#39;, CODE(
 +           &#39; SEND = |.COOKIE_JAR :(RETURN)&#39;))
+<font color="#818181"><i>*</i></font>
 -PUBLIC CGI_CLASS:&#39;GET_HEADER&#39;
+<font color="#818181"><i>*</i></font>
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;GET_HEADER&#39;, CODE(
 +           &#39; SEND = |.HEADER :(RETURN)&#39;))
          DEFINE(&#39;CGI_SEND()S&#39;)
+<font color="#818181"><i>*</i></font>
 -PUBLIC CGI_CLASS:&#39;SEND&#39;
+<font color="#818181"><i>*</i></font>
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;SEND&#39;, &#39;CGI_SEND&#39;)
+<font color="#818181"><i>*</i></font>
 -PUBLIC CGI_CLASS:&#39;GET_LOG&#39;
+<font color="#818181"><i>*</i></font>
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;GET_LOG&#39;, CODE(
 +           &#39; SEND = |.LOG :(RETURN)&#39;))
+<font color="#818181"><i>*</i></font>
 -PUBLIC CGI_CLASS:&#39;GET_CONTENT&#39;
+<font color="#818181"><i>*</i></font>
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;GET_CONTENT&#39;, CODE(
 +           &#39; SEND = |.CONTENT :(RETURN)&#39;))
+<font color="#818181"><i>*</i></font>
 -PUBLIC CGI_CLASS:&#39;SET_CONTENT&#39;
+<font color="#818181"><i>*</i></font>
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;SET_CONTENT&#39;, CODE(
 +           &#39; |.CONTENT = A1 :(RETURN)&#39;))
          DEFINE(&#39;CGI_CLOSE()A&#39;)
+<font color="#818181"><i>*</i></font>
 -PUBLIC CGI_CLASS:&#39;CLOSE&#39;
+<font color="#818181"><i>*</i></font>
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;CLOSE&#39;, &#39;CGI_CLOSE&#39;)
+<font color="#818181"><i>*</i></font>
 -PUBLIC CGI_CLASS:&#39;GET_ENV&#39;
+<font color="#818181"><i>*</i></font>
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;GET_ENV&#39;, CODE(
 +           &#39; SEND = |.ENV :(RETURN)&#39;))
+<font color="#818181"><i>*</i></font>
 -PUBLIC CGI_CLASS:&#39;GET_QUERY&#39;
+<font color="#818181"><i>*</i></font>
          SEND(CGI_CLASS, &#39;ADD_METHOD&#39;, &#39;GET_QUERY&#39;, CODE(
 +           &#39; SEND = |.QUERY :(RETURN)&#39;))
 <font color="#818181"><i>*</i></font>
@@ -4686,6 +4798,8 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+-MODULE CGI
+-IN72
 <b>&laquo;INCLUDES&raquo;</b>
 -STITL CGI
 -EJECT
@@ -4716,14 +4830,14 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 20:00:40 EDT 2014</p></td><td><p align=right>
+Wed Jun 11 11:50:31 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>
 #!/usr/bin/bash
          export "SNOLIB=/home/fred/snolib"; export "SNOPATH=/home/fred/snolib"; export "LD_LIBRARY_PATH=/home/fred/snolib"
          exec "/usr/local/bin/snobol4" "-b" "$0" "$@"
--LINE 289 "CGI.lss"
+-LINE 310 "CGI.lss"
 -INCLUDE 'FCGI.INC'
 -INCLUDE 'CGI.INC'
 -INCLUDE 'READFILE.INC'
@@ -4934,7 +5048,6 @@ defining whitespace, etc.
 @
 
 <<CHARS>>=
--MODULE CHARS
 -PUBLIC CHARS_NUL, CHARS_SOH, CHARS_STX, CHARS_ETX, CHARS_EOT, CHARS_ENQ
 -PUBLIC CHARS_ACK, CHARS_BEL, CHARS_HT, CHARS_BS, CHARS_NL, CHARS_VT
 -PUBLIC CHARS_NP, CHARS_CR, CHARS_SO, CHARS_SI, CHARS_DLE, CHARS_DC1
@@ -5017,6 +5130,9 @@ END
 @
 
 <<>>=
+-MODULE CHARS
+-IN72
+<<INCLUDES>>
 -STITL CHARS
 -EJECT
 *
@@ -5043,10 +5159,13 @@ END
 *
 * CE: .MSNOBOL4;
 @
+-MODULE CHARS
+-IN72
+-LINE 12 "CHARS.lss"
+-LINE 100 "CHARS.lss"
 -STITL CHARS
 -EJECT
 *
--LINE 101 "CHARS.lss"
 ************************************************************************
 *                                                                      *
 *              #####   #     #     #     ######    #####               *
@@ -5067,7 +5186,6 @@ END
 * CHARS.lss
 *
 -LINE 15 "CHARS.lss"
--MODULE CHARS
 -PUBLIC CHARS_NUL, CHARS_SOH, CHARS_STX, CHARS_ETX, CHARS_EOT, CHARS_ENQ
 -PUBLIC CHARS_ACK, CHARS_BEL, CHARS_HT, CHARS_BS, CHARS_NL, CHARS_VT
 -PUBLIC CHARS_NP, CHARS_CR, CHARS_SO, CHARS_SI, CHARS_DLE, CHARS_DC1
@@ -5110,13 +5228,13 @@ CHARS    CHARS_NUL = CHAR( 0)
          CHARS_US  = CHAR(31)
          CHARS_SP  = CHAR(32)
          CHARS_DEL = CHAR(127)
--LINE 69 "CHARS.lss"
+-LINE 68 "CHARS.lss"
 *
          CHARS_TAB   = CHARS_HT
          CHARS_SPACE = CHARS_SP
          CHARS_FF    = CHARS_NP
          CHARS_LF    = CHARS_NL
--LINE 79 "CHARS.lss"
+-LINE 78 "CHARS.lss"
 *
          &ALPHABET LEN(32) .  CHARS_CONTROL
 +                  LEN(95) .  CHARS_PRINTABLE
@@ -5155,7 +5273,6 @@ defining whitespace, etc.
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;CHARS&raquo;&equiv;</b>
--MODULE CHARS
 -PUBLIC CHARS_NUL, CHARS_SOH, CHARS_STX, CHARS_ETX, CHARS_EOT, CHARS_ENQ
 -PUBLIC CHARS_ACK, CHARS_BEL, CHARS_HT, CHARS_BS, CHARS_NL, CHARS_VT
 -PUBLIC CHARS_NP, CHARS_CR, CHARS_SO, CHARS_SI, CHARS_DLE, CHARS_DC1
@@ -5249,6 +5366,9 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+-MODULE CHARS
+-IN72
+<b>&laquo;INCLUDES&raquo;</b>
 -STITL CHARS
 -EJECT
 <font color="#818181"><i>*</i></font>
@@ -5280,14 +5400,14 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 19:59:49 EDT 2014</p></td><td><p align=right>
+Wed Jun 11 11:50:29 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -INCLUDE 'CHARS.INC'
--LINE 92 "CHARS.lss"
+-LINE 91 "CHARS.lss"
          &CODE = 1
          &CODE = 0
 END
@@ -5304,8 +5424,8 @@ corresponding character string. [[CH]] is the inverse of [[HEX]].
 @
 
 <<CH>>=
--MODULE CH
 -PUBLIC CH()
+*
          DEFINE('CH(H)C,P')
 *
          CH_H_ = ' ' HEX(&ALPHABET)
@@ -5334,6 +5454,8 @@ END
 @
 
 <<>>=
+-MODULE CH
+-IN72
 <<INCLUDES>>
 -STITL CH
 -EJECT
@@ -5358,11 +5480,13 @@ END
 *
 * CE: .MSNOBOL4;
 @
+-MODULE CH
+-IN72
 -LINE 10 "CH.lss"
 -INCLUDE 'HEX.INC'
+-LINE 47 "CH.lss"
 -STITL CH
 -EJECT
--LINE 47 "CH.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -5381,8 +5505,8 @@ END
 * CH.lss
 *
 -LINE 14 "CH.lss"
--MODULE CH
 -PUBLIC CH()
+*
          DEFINE('CH(H)C,P')
 *
          CH_H_ = ' ' HEX(&ALPHABET)
@@ -5427,8 +5551,8 @@ corresponding character string. <font face="Source Code Pro">CH</font> is the in
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;CH&raquo;&equiv;</b>
--MODULE CH
 -PUBLIC CH()
+<font color="#818181"><i>*</i></font>
          DEFINE(&#39;CH(H)C,P&#39;)
 <font color="#818181"><i>*</i></font>
          CH_H_ = &#39; &#39; HEX(&amp;ALPHABET)
@@ -5461,6 +5585,8 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+-MODULE CH
+-IN72
 <b>&laquo;INCLUDES&raquo;</b>
 -STITL CH
 -EJECT
@@ -5490,7 +5616,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 19:59:49 EDT 2014</p></td><td><p align=right>
+Wed Jun 11 11:50:30 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>
@@ -7324,8 +7450,8 @@ taken [[M]] at a time.
 @
 
 <<COMB>>=
--MODULE COMB
 -PUBLIC COMB()
+*
          DEFINE('COMB(N,M)')                                 :(COMB_END)
 *
 COMB     COMB = EQ(M, 0) 1                                    :S(RETURN)
@@ -7344,6 +7470,8 @@ END
 @
 
 <<>>=
+-MODULE COMB
+<<INCLUDES>>
 -STITL COMB
 -EJECT
 *
@@ -7367,10 +7495,12 @@ END
 *
 * CE: .MSNOBOL4;
 @
+-MODULE COMB
+-LINE 9 "COMB.lss"
 -STITL COMB
+-LINE 35 "COMB.lss"
 -EJECT
 *
--LINE 35 "COMB.lss"
 ************************************************************************
 *                                                                      *
 *                     #####   #######  #     #  ######                 *
@@ -7388,8 +7518,8 @@ END
 * COMB.lss
 *
 -LINE 12 "COMB.lss"
--MODULE COMB
 -PUBLIC COMB()
+*
          DEFINE('COMB(N,M)')                                 :(COMB_END)
 *
 COMB     COMB = EQ(M, 0) 1                                    :S(RETURN)
@@ -7423,8 +7553,8 @@ taken <font face="Source Code Pro">M</font> at a time.
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;COMB&raquo;&equiv;</b>
--MODULE COMB
 -PUBLIC COMB()
+<font color="#818181"><i>*</i></font>
          DEFINE(&#39;COMB(N,M)&#39;)                                 <b>:(COMB_END)</b>
 <font color="#818181"><i>*</i></font>
 COMB     COMB = EQ(M, 0) 1                                    <b>:S(RETURN)</b>
@@ -7447,6 +7577,8 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+-MODULE COMB
+<b>&laquo;INCLUDES&raquo;</b>
 -STITL COMB
 -EJECT
 <font color="#818181"><i>*</i></font>
@@ -7475,7 +7607,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 19:59:51 EDT 2014</p></td><td><p align=right>
+Wed Jun 11 11:50:30 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>
@@ -8021,12 +8153,13 @@ Basic arithmetic on complex numbers. Not complete yet.
 @
 
 <<COMPLEX>>=
--MODULE COMPLEX
 -PUBLIC COMPLEX(), R(), I()
+*
          DATA('COMPLEX(R,I)')
 *
 -PUBLIC ADD_COMPLEX(), MUL_COMPLEX(), NEG_COMPLEX(), INV_COMPLEX()
 -PUBLIC PRINT_COMPLEX()
+*
          DEFINE('ADD_COMPLEX(X,Y)')
          DEFINE('MUL_COMPLEX(X,Y)A,B,C,D')
          DEFINE('NEG_COMPLEX(X)')
@@ -8065,6 +8198,9 @@ END
 @
 
 <<>>=
+-MODULE COMPLEX
+-IN72
+<<INCLUDES>>
 -STITL COMPLEX
 -EJECT
 *
@@ -8090,10 +8226,13 @@ END
 *
 * CE: .MSNOBOL4;
 @
+-MODULE COMPLEX
+-IN72
+-LINE 8 "COMPLEX.lss"
+-LINE 59 "COMPLEX.lss"
 -STITL COMPLEX
 -EJECT
 *
--LINE 58 "COMPLEX.lss"
 ************************************************************************
 *                                                                      *
 *                                                                      *
@@ -8113,12 +8252,13 @@ END
 * COMPLEX.lss
 *
 -LINE 11 "COMPLEX.lss"
--MODULE COMPLEX
 -PUBLIC COMPLEX(), R(), I()
+*
          DATA('COMPLEX(R,I)')
 *
 -PUBLIC ADD_COMPLEX(), MUL_COMPLEX(), NEG_COMPLEX(), INV_COMPLEX()
 -PUBLIC PRINT_COMPLEX()
+*
          DEFINE('ADD_COMPLEX(X,Y)')
          DEFINE('MUL_COMPLEX(X,Y)A,B,C,D')
          DEFINE('NEG_COMPLEX(X)')
@@ -8171,12 +8311,13 @@ Basic arithmetic on complex numbers. Not complete yet.
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;COMPLEX&raquo;&equiv;</b>
--MODULE COMPLEX
 -PUBLIC COMPLEX(), R(), I()
+<font color="#818181"><i>*</i></font>
          DATA(&#39;COMPLEX(R,I)&#39;)
 <font color="#818181"><i>*</i></font>
 -PUBLIC ADD_COMPLEX(), MUL_COMPLEX(), NEG_COMPLEX(), INV_COMPLEX()
 -PUBLIC PRINT_COMPLEX()
+<font color="#818181"><i>*</i></font>
          DEFINE(&#39;ADD_COMPLEX(X,Y)&#39;)
          DEFINE(&#39;MUL_COMPLEX(X,Y)A,B,C,D&#39;)
          DEFINE(&#39;NEG_COMPLEX(X)&#39;)
@@ -8219,6 +8360,9 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+-MODULE COMPLEX
+-IN72
+<b>&laquo;INCLUDES&raquo;</b>
 -STITL COMPLEX
 -EJECT
 <font color="#818181"><i>*</i></font>
@@ -8249,14 +8393,14 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 20:00:42 EDT 2014</p></td><td><p align=right>
+Wed Jun 11 11:50:32 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -INCLUDE 'COMPLEX.INC'
--LINE 49 "COMPLEX.lss"
+-LINE 50 "COMPLEX.lss"
          &CODE = 1
          &CODE = 0
 END
@@ -8915,7 +9059,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Tue Jun 10 06:01:51 EDT 2014</p></td><td><p align=right>
+Wed Jun 11 11:50:32 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

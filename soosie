@@ -134,7 +134,8 @@ file.    ident(lbr)                                              :s(nol)
 
 library. a = trimb(args) ' '
          a fence ('edit' | 'EDIT' | 'info' | 'INFO' |
-+                 'new' | 'NEW' | 'check' | 'CHECK') . s ' '
++                 'new' | 'NEW' | 'check' | 'CHECK' |
++                 'freshen' | 'FRESHEN')                         . s ' '
 +             rem . args =                           :s($('library_' s))
 
          terminal = 'UNKNOWN LIBRARY SUBCOMMAND'                  :(top)
@@ -146,6 +147,32 @@ all.     ident(lbr)                                              :s(nol)
 +             rem . args =                               :s($('all_' s))
 
          terminal = 'UNKNOWN ALL SUBCOMMAND'                      :(top)
+
+
+* Freshen all files in the library.
+
+library_freshen
+         mi = iter_modules(lbr)
+fresh2     m = module(mi)                                     :f(fresh5)
+           fi = iter_files(lbr, m)
+fresh3       f = mfile(fi)                                    :f(fresh4)
+             r =
+             term = rpad(f<'NAME'>, 16)
+             fs = file(f<'NAME'>) create_file(f<'NAME'>)
+             term = lt(f<'TIMESTAMP'>, fs<'TIMESTAMP'>)
++               (r = 'FS MORE RECENT')
+             f<'NAME'> = fs<'NAME'>
+             f<'TIMESTAMP'> = fs<'TIMESTAMP'>
+             f<'ACCESS'> = fs<'ACCESS'>
+             f<'MD5'> = fs<'MD5'>
+             f<'SIZE'> = fs<'SIZE'>
+             f<'CONTENTS'> = fs<'CONTENTS'>
+             terminal = differ(r)
+             term = ident(r) CHARS_CR
+           fi = next_file(fi)                                  :(fresh3)
+fresh4   mi = next_module(mi)                                  :(fresh2)
+fresh5                                                            :(top)
+
 
 
 * Make sure the files in the library are sane.
@@ -162,6 +189,7 @@ check3       f = mfile(fi)                                    :f(check4)
              fs = file(f<'NAME'>) create_file(f<'NAME'>)
              term = lt(f<'TIMESTAMP'>, fs<'TIMESTAMP'>)
 +               (r = 'FS MORE RECENT')
+             term = ident(f<'CONTENTS'>) (r = 'CONTENTS EMPTY')
              terminal = differ(r)
              term = ident(r) CHARS_CR
            fi = next_file(fi)                                  :(check3)
@@ -201,6 +229,7 @@ help.    terminal = 'SOOSIE COMMANDS'
          terminal = 'LIBRARY INFO'
          terminal = '        EDIT VERSION|COMMENT'
          terminal = '        NEW [LBR [LBR.DAT]]'
+         terminal = '        FRESHEN'
          terminal = 'FILE INFO <FILE>'
          terminal = '     EDIT <FILE>'
          terminal = 'LOAD [LIBRARY]'
@@ -331,7 +360,7 @@ module_edit
          val = trimb(replace(val, &lcase, &ucase))
          val 'MODULE' | 'PROGRAM' | ''                           :s(me2)
          terminal = 'TYPE MUST BE MODULE, PROGRAM OR EMPTY'       :(top)
-me2      lbr<'CONTENTS'><mod><var> = destring(var, val)        :(fresh2)
+me2      lbr<'CONTENTS'><mod><var> = destring(var, val)       :(mfresh2)
 
 
 * FIXME: what about circular dependency? blows up now in build.
@@ -342,7 +371,7 @@ module_freshen
          mod = replace(trimb(args), &lcase, &ucase)
          ident(lbr<'CONTENTS'><mod>)                             :s(nom)
 
-fresh2
+mfresh2
 
 * Warn if module dependency doesn't exist
    
@@ -641,6 +670,8 @@ cook2        newf = create_file(tgt)
 +                                                               :s(bu_4)
              oldf<'TIMESTAMP'> = newf<'TIMESTAMP'>
              oldf<'ACCESS'> = newf<'ACCESS'>
+             oldf<'MD5'> = newf<'MD5'>
+             oldf<'SIZE'> = newf<'SIZE'>
              oldf<'CONTENTS'> = newf<'CONTENTS'>
 bu_4       i = i + 1                                             :(bu_1)
 bu_2

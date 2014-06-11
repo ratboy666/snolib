@@ -11,8 +11,8 @@ corresponding character string. [[CH]] is the inverse of [[HEX]].
 @
 
 <<CH>>=
--MODULE CH
 -PUBLIC CH()
+*
          DEFINE('CH(H)C,P')
 *
          CH_H_ = ' ' HEX(&ALPHABET)
@@ -41,6 +41,8 @@ END
 @
 
 <<>>=
+-MODULE CH
+-IN72
 <<INCLUDES>>
 -STITL CH
 -EJECT

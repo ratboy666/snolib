@@ -33,9 +33,9 @@ disables <font face="Source Code Pro">DDT()</font> and then calls the 'real' fun
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;BQ&raquo;&equiv;</b>
--MODULE BQ
 -WEAK DDT_ACTIVE, DDT_SUSPEND(), DDT_RESUME()
 -PUBLIC BQ()
+<font color="#818181"><i>*</i></font>
          DEFINE(&#39;BQ(COMMAND,OFS)DDTF&#39;)
          DEFINE(&#39;BQ2(COMMAND,OFS)X,UNIT&#39;)                      <b>:(BQ_END)</b>
 <font color="#818181"><i>*</i></font>
@@ -95,6 +95,9 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+-MODULE BQ
+-IN72
+<b>&laquo;INCLUDES&raquo;</b>
 -STITL BQ
 -EJECT
 <font color="#818181"><i>*</i></font>
@@ -125,7 +128,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 19:59:47 EDT 2014</p></td><td><p align=right>
+Wed Jun 11 11:50:28 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

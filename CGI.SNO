@@ -1,3 +1,5 @@
+-MODULE CGI
+-IN72
 -LINE 52 "CGI.lss"
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'COOKIE.INC'
@@ -9,9 +11,9 @@
 -INCLUDE 'SEQ.INC'
 -INCLUDE 'UNIQUE.INC'
 -INCLUDE 'VDIFFER.INC'
+-LINE 596 "CGI.lss"
 -STITL CGI
 -EJECT
--LINE 575 "CGI.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -31,40 +33,61 @@
 * CGI.lss
 *
 -LINE 65 "CGI.lss"
--MODULE CGI
 -USES CRACK(), HOST(), URL_DECODE(), COOKIE_FIX_NAME()
 -WEAK USE_FCGI, FCGI_ENV, FCGI_IN, FCGI_REQUEST_COMPLETE
 -WEAK FCGI_SEND(), FCGI_END()
+*
 -PUBLIC CLASS:CGI_CLASS
+*
          CGI_CLASS = SEND(CLASS, 'NEW_CLASS', 'CGI_CLASS')
          DEFINE('CGI_INIT()A,C')
+*
 -PUBLIC CGI_CLASS:'INIT'
+*
          SEND(CGI_CLASS, 'ADD_METHOD', 'INIT', 'CGI_INIT')
+*
 -PUBLIC CGI_CLASS:'GET_COOKIE_JAR'
+*
          SEND(CGI_CLASS, 'ADD_METHOD', 'GET_COOKIE_JAR', CODE(
 +           ' SEND = |.COOKIE_JAR :(RETURN)'))
+*
 -PUBLIC CGI_CLASS:'GET_HEADER'
+*
          SEND(CGI_CLASS, 'ADD_METHOD', 'GET_HEADER', CODE(
 +           ' SEND = |.HEADER :(RETURN)'))
          DEFINE('CGI_SEND()S')
+*
 -PUBLIC CGI_CLASS:'SEND'
+*
          SEND(CGI_CLASS, 'ADD_METHOD', 'SEND', 'CGI_SEND')
+*
 -PUBLIC CGI_CLASS:'GET_LOG'
+*
          SEND(CGI_CLASS, 'ADD_METHOD', 'GET_LOG', CODE(
 +           ' SEND = |.LOG :(RETURN)'))
+*
 -PUBLIC CGI_CLASS:'GET_CONTENT'
+*
          SEND(CGI_CLASS, 'ADD_METHOD', 'GET_CONTENT', CODE(
 +           ' SEND = |.CONTENT :(RETURN)'))
+*
 -PUBLIC CGI_CLASS:'SET_CONTENT'
+*
          SEND(CGI_CLASS, 'ADD_METHOD', 'SET_CONTENT', CODE(
 +           ' |.CONTENT = A1 :(RETURN)'))
          DEFINE('CGI_CLOSE()A')
+*
 -PUBLIC CGI_CLASS:'CLOSE'
+*
          SEND(CGI_CLASS, 'ADD_METHOD', 'CLOSE', 'CGI_CLOSE')
+*
 -PUBLIC CGI_CLASS:'GET_ENV'
+*
          SEND(CGI_CLASS, 'ADD_METHOD', 'GET_ENV', CODE(
 +           ' SEND = |.ENV :(RETURN)'))
+*
 -PUBLIC CGI_CLASS:'GET_QUERY'
+*
          SEND(CGI_CLASS, 'ADD_METHOD', 'GET_QUERY', CODE(
 +           ' SEND = |.QUERY :(RETURN)'))
 *

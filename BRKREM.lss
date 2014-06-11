@@ -12,8 +12,8 @@ subject otherwise.
 @
 
 <<BRKREM>>=
--MODULE BRKREM
 -PUBLIC BRKREM()
+*
          DEFINE('BRKREM(S)CS')                             :(BRKREM_END)
 *
 BRKREM   BRKREM = IDENT(S) REM                                :S(RETURN)
@@ -35,6 +35,8 @@ END
 @
 
 <<>>=
+-MODULE BRKREM
+-IN72
 <<INCLUDES>>
 -STITL BRKREM
 -EJECT

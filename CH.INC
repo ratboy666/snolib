@@ -1,8 +1,10 @@
+-MODULE CH
+-IN72
 -LINE 10 "CH.lss"
 -INCLUDE 'HEX.INC'
+-LINE 47 "CH.lss"
 -STITL CH
 -EJECT
--LINE 47 "CH.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -21,8 +23,8 @@
 * CH.lss
 *
 -LINE 14 "CH.lss"
--MODULE CH
 -PUBLIC CH()
+*
          DEFINE('CH(H)C,P')
 *
          CH_H_ = ' ' HEX(&ALPHABET)

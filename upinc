@@ -1,5 +1,5 @@
 #!/usr/bin/bash
- exec "snobol4" "-b" "$0" "$@"
+         exec "snobol4" "-b" "$0" "$@"
  
 * upinc
 *
@@ -7,36 +7,96 @@
 * determine includes section and uses commentary to update. The
 * file with the resultant program may be no extension (program)
 * or INC file.
+*
+* Will also update a "no extension" snobol4 program file, or
+* a .INC file, or a "raw" .sc snocone file. Of course, no documentation
+* is updated in these cases.
+*
+* ce: .msnobol4;
 
 -include 'HOST.INC'
 -include 'READFILE.INC'
 -include 'BQ.INC'
 -include 'JSON.INC'
--include 'CHARS.INC'
 -include 'SEQ.INC'
+-include 'CHARS.INC'
 
- fn = host(HOST_ARGN, HOST(HOST_FIRSTARG)) :f(end)
- src = readfile(fn) :f(end)
- on = fn
- on '.lss' =
- obj = (readfile(on), readfile(on = on '.INC')) :f(end)
- inc = json_decode(bq('uses ' on)) :f(end)
- ld = ?(src ? '-' ('snocone' | 'SNOCONE')) '//'
- &fullscan = 1
- src '<H2>Uses</H2>' = '<h2>Uses</h2>'
- src '<h2>Uses</h2>' ((CHARS_NL @bh @eh CHARS_NL) |
-+ (CHARS_NL @bh ARB CHARS_NL @eh CHARS_NL)) :f(tryi)
- dh = 1
-tryi src '<<INCLUDES>>=' CHARS_NL @bi break('@') @ei '@' CHARS_NL
-+ :f(noi)
- di = 1
-noi q = "'"
- qq = '"'
- seq(' ni = ni ld "-INCLUDE " q inc<i> q CHARS_NL', .i)
- seq(' s = inc<i>; s ".INC" = ;'
+* command line argument is file to update
+
+         fn = host(HOST_ARGN, HOST(HOST_FIRSTARG))               :f(end)
+         src = readfile(fn)                                      :f(end)
+
+* if its .lss, strip extension try to open file, or .INC (obj)
+* FIXME - use file() predicate here. if can't open, bail!
+
+         on = fn
+         on '.lss' =
+         obj = (file(on), file(on '.INC') on '.INC',
++               file(on '.sno') on '.sno')                    :s(douses)
+
+         terminal ='needs program, .INC, or .sno file to analyze '
++                  'dependencies with "uses"'                     :(end)
+
+* run 'uses' on the "object" file to determine actual dependencies
+
+douses   inc = json_decode(bq('uses ' on))                      :s(issc)
+
+         terminal = '"uses" did not run correctly'                :(end)
+
+* look at the src file and change include leader to // if its
+* a snocone source
+
+issc     ld = ?(src ? '-' ('snocone' | 'SNOCONE')) '//'
+         &fullscan = 1
+
+         fn '.lss'                                            :f(notlss)
+
+* its lss input (my usual). edit the Uses information and <<INCLUDES>
+* block.
+
+         src '<H2>Uses</H2>' = '<h2>Uses</h2>'
+         src '<h2>Uses</h2>' ((CHARS_NL @bh @eh CHARS_NL) |
++           (CHARS_NL @bh ARB CHARS_NL @eh CHARS_NL))           :f(tryi)
+         dh = 1
+tryi     src '<<INCLUDES>>=' CHARS_NL @bi break('@') @ei '@' CHARS_NL
++                                                                :f(noi)
+         di = 1
+noi                                                             :(dorep)
+
+notlss
+         dh =
+         di = 1
+         bi = 0
+         ei = 0
+
+* not an lss file -- this is an "ordinary" snobol4 or snocone program
+* look for
+* ld -INCLUDE, include, COPY, copy arb chars_nl repeated one or more
+* times. if not found, insert the includes at the top of the file
+* (its fresh)
+
+         p = ld '-' ('include' | 'INCLUDE' | 'copy' | 'COPY')
++            break(CHARS_NL) CHARS_NL
+         p2 = p (*p2 | NULL)
+
+         src @bi p2 @ei
+
+* do replaces
+
+dorep    q = "'"
+         qq = '"'
+         seq(' ni = ni ld "-INCLUDE " q inc<i> q CHARS_NL', .i)
+         seq(' s = inc<i>; s ".INC" = ;'
 + ' nh = differ(inc<i>) nh "<a href=" qq s ".html" qq ">" s "</a><br>" '
 + ' CHARS_NL; inc<i>', .i)
- src differ(di) pos(bi) len(ei - bi) = ni
- src differ(dh) pos(bh) len(eh - bh) = nh
- writefile(fn, src)
+         src differ(di) pos(bi) len(ei - bi) = ni
+         src differ(dh) pos(bh) len(eh - bh) = nh
+
+* make a backup
+
+         host(HOST_SYSCMD, 'cp -p ' fn ' ' fn '.bak')
+
+* update the source file on disk
+
+         writefile(fn, src)
 end

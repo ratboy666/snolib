@@ -1,7 +1,10 @@
+-MODULE BQ
+-IN72
+-LINE 17 "BQ.lss"
+-LINE 75 "BQ.lss"
 -STITL BQ
 -EJECT
 *
--LINE 75 "BQ.lss"
 ************************************************************************
 *                                                                      *
 *                          ######    #####                             *
@@ -21,9 +24,9 @@
 * BQ.lss
 *
 -LINE 20 "BQ.lss"
--MODULE BQ
 -WEAK DDT_ACTIVE, DDT_SUSPEND(), DDT_RESUME()
 -PUBLIC BQ()
+*
          DEFINE('BQ(COMMAND,OFS)DDTF')
          DEFINE('BQ2(COMMAND,OFS)X,UNIT')                      :(BQ_END)
 *

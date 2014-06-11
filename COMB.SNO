@@ -1,7 +1,9 @@
+-MODULE COMB
+-LINE 9 "COMB.lss"
 -STITL COMB
+-LINE 35 "COMB.lss"
 -EJECT
 *
--LINE 35 "COMB.lss"
 ************************************************************************
 *                                                                      *
 *                     #####   #######  #     #  ######                 *
@@ -19,8 +21,8 @@
 * COMB.lss
 *
 -LINE 12 "COMB.lss"
--MODULE COMB
 -PUBLIC COMB()
+*
          DEFINE('COMB(N,M)')                                 :(COMB_END)
 *
 COMB     COMB = EQ(M, 0) 1                                    :S(RETURN)

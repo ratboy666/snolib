@@ -1,7 +1,10 @@
+-MODULE COMPLEX
+-IN72
+-LINE 8 "COMPLEX.lss"
+-LINE 59 "COMPLEX.lss"
 -STITL COMPLEX
 -EJECT
 *
--LINE 58 "COMPLEX.lss"
 ************************************************************************
 *                                                                      *
 *                                                                      *
@@ -21,12 +24,13 @@
 * COMPLEX.lss
 *
 -LINE 11 "COMPLEX.lss"
--MODULE COMPLEX
 -PUBLIC COMPLEX(), R(), I()
+*
          DATA('COMPLEX(R,I)')
 *
 -PUBLIC ADD_COMPLEX(), MUL_COMPLEX(), NEG_COMPLEX(), INV_COMPLEX()
 -PUBLIC PRINT_COMPLEX()
+*
          DEFINE('ADD_COMPLEX(X,Y)')
          DEFINE('MUL_COMPLEX(X,Y)A,B,C,D')
          DEFINE('NEG_COMPLEX(X)')

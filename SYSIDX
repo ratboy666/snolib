@@ -1,0 +1,26 @@
+# The bldidx utility parses the files in one directory for
+# matches. However, there may be a need for "static" or "system"
+# symbols. This file contains the same tables, in the same formats.
+# It can be produced from bldidx by simply copying IDX. This table
+# will be merged with the IDX one in use.
+
+{
+  "#": "FUNCTIONS",
+  "MY.FUNCTION.FOR.TEST()": "MYFILE.INC",
+}
+{
+  "#": "VARIABLES",
+  "MY.VARIABLE.FOR.TEST": "MYFILE.INC",
+}
+{
+  "#": "CLASSES",
+  "CLASS:MY.CLASS.FOR.TEST": "MYFILE.INC",
+}
+{
+  "#": "METHODS",
+  "MY.CLASS.FOR.TEST:'MY.WEIRD.TEST.MESSAGE'": "MYFILE.INC",
+}
+# OPERATORS EG %1, VERY SPARE SPACE, SO NO EXAMPLE",
+{
+  "#": "OPERATORS",
+}

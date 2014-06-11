@@ -13,7 +13,7 @@ convenient.
 @
 
 <<AI>>=
--PUBLIC APPENDA
+-PUBLIC APPENDA()
 *
          DEFINE('APPENDA(A,V)I')                          :(END_APPENDA)
 *

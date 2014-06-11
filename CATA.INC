@@ -1,8 +1,10 @@
+-MODULE CATA
+-IN72
 -LINE 11 "CATA.lss"
 -INCLUDE 'SEQ.INC'
+-LINE 50 "CATA.lss"
 -STITL CATA
 -EJECT
--LINE 50 "CATA.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -21,8 +23,8 @@
 * CATA.lss
 *
 -LINE 15 "CATA.lss"
--MODULE CATA
 -PUBLIC CATA()
+*
          DEFINE('CATA(A1,A2)I,N1')                           :(CATA_END)
 *
 CATA     N1 = PROTOTYPE(A1)

@@ -20,8 +20,8 @@ source.
 @
 
 <<BALX>>=
--MODULE BALX
 -PUBLIC BALX()
+*
          DEFINE('BALX(PARENS,QTS)Q,GBAL,NAME,STAR,LP,RP')    :(BALX_END)
 *
 BALX     NAME = UNIQUE()
@@ -47,6 +47,8 @@ END
 @
 
 <<>>=
+-MODULE BALX
+-IN72
 <<INCLUDES>>
 -STITL BALX
 -EJECT

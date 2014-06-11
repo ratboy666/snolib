@@ -1,5 +1,6 @@
 {
   "#": "FUNCTIONS",
+  "AGT()": "AGT.INC",
   "AI()": "AI.INC",
   "AOPA()": "AOPA.INC",
   "ATOL()": "ATOL.INC",
