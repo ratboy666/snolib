@@ -27,8 +27,6 @@
 * FIXME - edit the build and install commands associated with module:
 * need to identify base from RECIPES -- fill it in, and edit that.
 *
-* Implement IMPORT.
-*
 * Implement library edit.
 *
 * Implement MODULE COPY.
@@ -76,7 +74,7 @@
          define('wfile(f)')
          define('readlbr(nm)lbr,data,mi,m,fi,f,s,b,l')
          define('writelbr(lbr)data,mi,m,fi,f,n,s')
-         define('createlbr(nm,lnm,dt,lc)')
+         define('createlbr(nm,dt,lc)')
          define('rfile(f,fn)s,md5')
          define('create_file(fn)')
          define('create_module(src,cmnt,artifacts,depends)'
@@ -89,6 +87,7 @@
          define('extension(f)s')
          define('crepl(s,n1,v1,n2,v2,n3,v3,n4,v4)a,i,k,r')
 
+         ddt()
 
          terminal = 'SOOSIE (FRI JUN  6 12:22:12 EDT 2014)'
 
@@ -117,39 +116,77 @@ top      p = (differ(lbr) lbr<'LIBRARY'>, 'NO LIBRARY')
 
 * major command, go to handler
 
-         l fence ('ls' | 'LS' | 'seedall' | 'SEEDALL' | 'load' | 'load' |
+         l fence ('ls' | 'LS' | 'load' | 'load' |
 +                 'save' | 'save' | 'quit' | 'QUIT' |
 +                 'export' | 'EXPORT' | 'help' | 'HELP' |
-+                 'info' | 'INFO' | 'build' | 'BUILD' |
-+                 'import' | 'IMPORT' | 'exportall' | 'EXPORTALL' |
-+                 'edit' | 'EDIT' | 'module' | 'MODULE') . cmd ' '
++                 'file' | 'FILE' | 'import' | 'IMPORT' |
++                 'edit' | 'EDIT' | 'module' | 'MODULE' |
++                 'library' | 'LIBRARY' | 'all' | 'ALL') . cmd ' '
 +          rem . args                                     :s($(cmd '.'))
          terminal = '?'                                           :(top)
 
+file.    ident(lbr)                                              :s(nol)
+         a = trimb(args) ' '
+         a fence ('edit' | 'EDIT' | 'info' | 'INFO') . s ' '
++             rem . args =                              :s($('file_' s))
+
+         terminal = 'UNKNOWN FILE SUBCOMMAND'                     :(top)
+
+library. a = trimb(args) ' '
+         a fence ('edit' | 'EDIT' | 'info' | 'INFO' |
++                 'new' | 'NEW') . s ' '
++             rem . args =                           :s($('library_' s))
+
+         terminal = 'UNKNOWN LIBRARY SUBCOMMAND'                  :(top)
+
+all.     ident(lbr)                                              :s(nol)
+         a = trimb(args) ' '
+         a fence ('seed' | 'SEED' | 'export' | 'EXPORT') . s ' '
++             rem . args =                               :s($('all_' s))
+
+         terminal = 'UNKNOWN ALL SUBCOMMAND'                      :(top)
+
+library_new
+         args = trimb(args)
+         nm =
+         args brkrem(' ') . nm rem . args
+         args = trimb(args)
+         nm = ident(nm) 'LBR'
+         args = ident(args) nm '.DAT'
+         lbr = createlbr(nm, args, 'SOOSIE Library')              :(top)
+
+* === resting for commands we haven't gotten around to implementing
+* === library edit is the only one here right now
+
+library_edit
+         ident(lbr)                                              :s(nol)
+         terminal = 'NOT YET IMPLEMENTED' :(top)
 
 * Help
 
-* NOTE: exportall, seed are "hidden" commands
-
 help.    terminal = 'SOOSIE COMMANDS'
          terminal =
-         terminal = 'LOAD <LIBRARY>'
+         terminal = 'ALL SEED [GLOB]'
+         terminal = '    EXPORT'
+         terminal = 'LIBRARY INFO'
+         terminal = '        EDIT VERSION,COMMENT'
+         terminal = '        NEW [LBR [LBR.DAT]]'
+         terminal = 'FILE INFO <FILE>'
+         terminal = '     EDIT <FILE>'
+         terminal = 'LOAD [LIBRARY]'
          terminal = 'SAVE'
          terminal = 'LS'
          terminal = 'EXPORT <MODULE>'
          terminal = 'IMPORT <MODULE>'
-         terminal = 'BUILD <MODULE>'
          terminal = 'QUIT'
-         terminal = 'EDIT <FILE>'
-         terminal = 'INFO'
-         terminal = 'INFO <MODULE>'
-         terminal = 'INFO FILE <FILE>'
+         terminal = 'MODULE BUILD <MODULE>'
+         terminal = '       INFO <MODULE>'
          terminal = 'MODULE ADD <MODULE>'
-         terminal = 'MODULE REM <MODULE>'
-         terminal = 'MODULE EDIT <MODULE> NAME,SOURCE,COMMENT,TYPE,'
+         terminal = '       REM <MODULE>'
+         terminal = '       EDIT <MODULE> NAME,SOURCE,COMMENT,TYPE,'
 +                                                            'ARTIFACTS'
-         terminal = '                     DEPENDS,FILES <NEW VALUE>'
-         terminal = 'MODULE FRESHEN <MODULE>'
+         terminal = '                     DEPENDS,FILES [NEW VALUE]'
+         terminal = '       FRESHEN <MODULE>'
                                                                   :(top)
 
 
@@ -162,8 +199,9 @@ quit.     write_history('.SOOSIE')                       :s(end)f(tryls)
 
 module.  ident(lbr)                                              :s(nol)
          a = trimb(args) ' '
-         a fence ('add' | 'ADD' | 'rem' | 'REM' |
-+                 'edit' | 'EDIT' | 'freshen' | 'FRESHEN') . s ' '
+         a fence ('add' | 'ADD' | 'rem' | 'REM' | 'build' | 'BUILD' |
++                 'edit' | 'EDIT' | 'freshen' | 'FRESHEN' |
++                 'info' | 'INFO') . s ' '
 +             rem . args =                            :s($('module_' s))
 
          terminal = 'UNKNOWN MODULE SUBCOMMAND'                   :(top)
@@ -368,7 +406,8 @@ module_rem
 * have multiple source artifacts. In future, we should determine
 * file collisions -- and deal with that.
 
-edit.    fn = trimb(args)
+file_edit
+         fn = trimb(args)
          filest = filest(lbr)
          differ(f = filest<fn>)                                  :f(unf)
          terminal = 'EDITING ' f<'NAME'>
@@ -379,27 +418,28 @@ edit.    fn = trimb(args)
          terminal = 'FILE NOT CHANGED'                            :(top)
 edit2    rfile(f)                                                 :(top)
 
-unf      terminal = 'UNKNOWN FILE' :(top)
+unf      terminal = 'UNKNOWN FILE'                                :(top)
 
 
 * Build a module
 
-build.   ident(lbr)                                              :s(nol)
+module_build
+         ident(lbr)                                              :s(nol)
          args = trimb(args)
          args = replace(args, &lcase, &ucase)
          m = lbr<'CONTENTS'><args>
          ident(m)                                                :s(nom)
 
-* dependencies of module m
+* Dependencies of module m
 
          dl = dependencies(lbr, m)
 
-* files table
+* Files table
 
          filest = filest(lbr)
 
-* timestamp pruning. each module is checked to see if the main source
-* file timestamp is more recent than any of its artifacts. if all
+* Timestamp pruning. Each module is checked to see if the main source
+* file timestamp is more recent than any of its artifacts. If all
 * artifacts are more recent, the module does not need building.
 
          p = dl
@@ -419,19 +459,22 @@ ts_4     bl = revl(bl)
 
          terminal = ident(bl) 'MODULE IS UP TO DATE'             :s(top)
 
-* we now have a list of modules that is needed for the build of this
+* We now have a list of modules that is needed for the build of this
 * module, pruned by timestamp. We can now walk the list, constructing
 * the needed build commands.
 
-* we need to "check out" the modules in dl, then build any modules
+* We need to "check out" the modules in dl, then build any modules
 * in bl.
 
-* "checking out" a module is easy -- just extract all files in the
+* "Checking out" a module is easy -- just extract all files in the
 * module.
 *
-* we need "freshen" all files in the library. find all modules that
-* need building. "clean" all external files (except, possibly,
-* artifacts). "install" -- which is close to building.
+* We need "freshen" all files in the library. Find all modules that
+* need building. "Clean" all external files (except, possibly,
+* artifacts). "Install" -- which is close to building.
+
+* FIXME: need to determine if build failed!. Create a file FAIL in
+* the tools. If FAIL exists on completion, assume failure.
 
          p = dl
 co_1       ident(p)                                             :s(co_2)
@@ -505,11 +548,10 @@ bl_2
          terminal = 'BUILD COMPLETE'                              :(top)
 
 
-* Information on the library, or a module
+* Information on the library
 
-info.    ident(lbr)                                              :s(nol)
-         args = trimb(args)
-         differ(args)                                          :s(info2)
+library_info
+         ident(lbr)                                              :s(nol)
 
 cntf     n = 0
          mi = iter_modules(lbr)
@@ -528,13 +570,14 @@ cntf_5
          t = (vdiffer(lbr<'TIMESTAMP'>), 0)
          t = bq(crepl('{{DISPLAY_TIMESTAMP}}', 'ts=', t))
          terminal = 'TIMESTAMP: ' lbr<'TIMESTAMP'> ' (' t ')'
-         terminal = 'CONTENTS:  ' sizet(lbr<'CONTENTS'>) ' modules, '
-+                                 n ' files'
-         terminal = '           use "ls" command to list index'   :(top)
+         terminal = 'CONTENTS:  ' sizet(lbr<'CONTENTS'>) ' MODULES, '
++                                 n ' FILES'
+         terminal = '           USE "LS" COMMAND TO LIST INDEX'   :(top)
 
-* build and install commands not shown
+* Build and install commands not shown
 
-info2    args fence ('file ' | 'FILE ') =                      :s(info3)
+module_info
+         args = trimb(args)
          args = replace(args, &lcase, &ucase)
          m = args
          m = lbr<'CONTENTS'><m>
@@ -556,7 +599,8 @@ info2    args fence ('file ' | 'FILE ') =                      :s(info3)
          seq(' term = ?a<i> rpad(a<i><"NAME">, 16)', .i)
          terminal =                                               :(top)
 
-info3    filest = filest(lbr)
+file_info
+         filest = filest(lbr)
          args = trimb(args)
          terminal = ident(f = filest<args>) 'NO FILE'            :s(top)
          terminal = 'NAME:      ' f<'NAME'>
@@ -565,11 +609,10 @@ info3    filest = filest(lbr)
          t = bq(crepl('{{DISPLAY_TIMESTAMP}}', 'ts=', t))
          terminal = 'TIMESTAMP: ' f<'TIMESTAMP'> ' (' t ')'
          terminal = 'ACCESS:    ' f<'ACCESS'>
-* location should always be DIRECT
-*        terminal = 'LOCATION:  ' f<'LOCATION'>
          terminal = 'FS:        ' (file(f<'NAME'>) 'IN FILESYSTEM',
 +                                                  'NOT IN FILESYSTEM')
-         terminal = 'CONTENTS:  ' size(f<'CONTENTS'>) ' BYTES'    :(top)
+         terminal = 'SIZE:      ' f<'SIZE'> ' BYTES'
+         terminal = 'MD5:       ' f<'MD5'>                        :(top)
 
 
 * List the modules in the library
@@ -586,13 +629,11 @@ nol      terminal = 'NO LIBRARY LOADED'                           :(top)
 nom      terminal = 'MODULE ' args ' NOT FOUND'                   :(top)
 
 
-* New library. Seed in '*.lss' as modules.
+* Seed in '*.lss' (or specified pattern) as modules.
 
-seedall. args = trimb(args)
-         args = ident(args) 'LBR'
-         lbr = createlbr(args, 'SNOLIB', args '.DAT', 'SNOLIB library')
-         differ(args, 'LBR')                                     :s(top)
-         files = iter_dir('*.lss')
+all_seed args = trimb(args)
+         args = ident(args) '*.lss'
+         files = iter_dir(args)
 seed1      fn = value_dir(files)                                :f(seed2)
            term = 'SEEDING ' rpad(fn, 16) CHARS_CR
 
@@ -649,7 +690,7 @@ save.    ident(lbr)                                              :s(nol)
 
 * Export all
 
-exportall.
+all_export
          ident(lbr)
          mi = iter_modules(lbr)
 xall2      m = module(mi)                                      :f(xall3)
@@ -729,7 +770,7 @@ nomd     terminal = 'NO MODULE FILE ' mn                          :(top)
 wfile    writefile(f<'NAME'>, f<'CONTENTS'>)                 :f(freturn)
          bq(crepl('{{SET_ACCESS}}',
 +                 'access=', f<'ACCESS'>, 'file=', f<'NAME'>))
-         bq(crepl('{{SET_TIMESTAMP}}'
+         bq(crepl('{{SET_TIMESTAMP}}',
 +                 'ts=', f<'TIMESTAMP'>, 'file=', f<'NAME'>))  :(return)
 
 
@@ -753,10 +794,6 @@ wf2        f = mfile(fi)                                      :f(return)
 *
 * DIRECT is internal representation. DATA is when library is at rest
 * on disk. FILE is the export representation.
-*
-* FIXME - EXTRACT should be EXPORT. Write out files, copy module record
-* adjusting DIRECT to EXTERNAL, write out NAME.MODULE file.
-* This can be the name of IMPORT command.
 
 readlbr  lbr = json_decode(readfile(nm))                     :f(freturn)
          readlbr = lbr
@@ -771,7 +808,6 @@ rdlbr_4      f = mfile(fi)                                   :f(rdlbr_5)
              data fence tab(b) len(l) . s                       :f(what)
              f<'CONTENTS'> = s
              f<'LOCATION'> = 'DIRECT'
-* FIME - CHECK LENGTH AND MD5
 rdlbr_6    fi = next_file(fi)                                 :(rdlbr_4)
 rdlbr_5  mi = next_module(mi)                                 :(rdlbr_3)
 rdlbr_2  readlbr = lbr                                         :(return)
@@ -874,10 +910,10 @@ create_module
          src arb . s '.' arb rpos(0)
          s = file(src)
 + bq(crepl('{{GREP}} {{SED}}', 'pattern=', '^-MODULE', 'file=', src,
-+          'old=', '-MODULE', 'new=', ''))
++          'old=', '-MODULE ', 'new=', ''))
          s = file(src)
 + bq(crepl('{{GREP}} {{SED}}', 'pattern=', '^-PROGRAM', 'file=', src,
-+          'old=', '-PROGRAM', 'new=', ''))
++          'old=', '-PROGRAM ', 'new=', ''))
          m<'NAME'> = s
 
 * Determine depends. This is determine by the first artifact, run
@@ -1056,39 +1092,27 @@ extension
 * will be replaced with INCDIR as defined. There is an entry
 * for each directory needed in build and install recipes, and
 * for each command that is used by SOOSIE.
-*
-*  {{src}} and {{tgt}}
-* are replaced by the source and target in build recipes. {{tgt}}
-* is replaced by the file to be installed in install recipes.
 
 crepl    a = keyst(config<'REPLACE'>)
- terminal = 's: ' s
          seq(' k = ?a<i> "{{" a<i> "}}";'
 +            ' r = ?a<i> config<"REPLACE"><a<i>>;'
 +            ' s = ?a<i> repl(s, k, r)', .i)
- terminal = 's: ' s
-
          ident(n1)                                            :s(crepl2)
          n1 '=' =
          s = repl(s, '{{' n1 '}}', v1)
- terminal = 's: ' s
-
          ident(n2)                                            :s(crepl2)
          n2 '=' =
          s = repl(s, '{{' n2 '}}', v2)
- terminal = 's: ' s
-
          ident(n3)                                            :s(crepl2)
          n3 '=' =
          s = repl(s, '{{' n3 '}}', v3)
- terminal = 's: ' s
-
          ident(n4)                                            :s(crepl2)
          n4 '=' =
          s = repl(s, '{{' n4 '}}', v4)
- terminal = 's: ' s
-
-crepl2   crepl = s                                             :(return)
+crepl2   seq(' k = ?a<i> "{{" a<i> "}}";'
++            ' r = ?a<i> config<"REPLACE"><a<i>>;'
++            ' s = ?a<i> repl(s, k, r)', .i)
+         crepl = s                                             :(return)
 
 
 end
