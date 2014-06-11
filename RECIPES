@@ -1,39 +1,39 @@
 # RECIPES
 #
 # Default recipes
-# need to add snocone awareness and better ditaa
+# FIXME need to add snocone awareness and better ditaa
 
 {
   ".lss.INC": [
-    "IFSLC=@ LSS=SNOBOL4 ifs {{src}} |",
-    "        LSS=SNOBOL4 stangle     |",
-    "                    g360        |",
-    "        LSS=SNOBOL4 ifs         |",
-    "                    embed       |",
-    "                    in72 >{{tgt}}"
+    "IFSLC=@ LSS=SNOBOL4 {{IFS}} {{src}} |",
+    "        LSS=SNOBOL4 {{STANGLE}}     |",
+    "                    {{G360}}        |",
+    "        LSS=SNOBOL4 {{IFS}}         |",
+    "                    {{EMBED}}       |",
+    "                    {{IN72}} >{{tgt}}"
   ],
 
   ".lss.html": [
-    "IFSLC=@ ifs {{src}} | sweave >{{tgt}}",
+    "IFSLC=@ {{IFS}} {{src}} | {{SWEAVE}} >{{tgt}}",
     "echo ditaa {{tgt}} opt html opt overwrite"
   ],
 
   ".lss.tst": [
-    "IFSLC=@                LSS=SNOBOL4 ifs {{src}} |",
-    "STANGLE_ROOT=unit_test LSS=SNOBOL4 stangle     |",
-    "                                   g360        |",
-    "                       LSS=SNOBOL4 ifs         |",
-    "                                   embed       |",
-    "                                   in72 >{{tgt}}"
+    "IFSLC=@                LSS=SNOBOL4 {{IFS}} {{src}} |",
+    "STANGLE_ROOT=unit_test LSS=SNOBOL4 {{STANGLE}}     |",
+    "                                   {{G360}}        |",
+    "                       LSS=SNOBOL4 {{IFS}}         |",
+    "                                   {{EMBED}}       |",
+    "                                   {{IN72}} >{{tgt}}"
   ],
 
   ".lss": [
-    "IFSLC=@ LSS=SNOBOL4 ifs {{src}} |",
-    "        LSS=SNOBOL4 stangle     |",
-    "                    g360        |",
-    "        LSS=SNOBOL4 ifs         |",
-    "                    embed       |",
-    "                    in72 >{{tgt}}"
+    "IFSLC=@ LSS=SNOBOL4 {{IFS}} {{src}} |",
+    "        LSS=SNOBOL4 {{STANGLE}}     |",
+    "                    {{G360}}        |",
+    "        LSS=SNOBOL4 {{IFS}}         |",
+    "                    {{EMBED}}       |",
+    "                    {{IN72}} >{{tgt}}"
   ]
 }
 

@@ -24,8 +24,6 @@
 * program 'sweave', 'stangle', 'g360', 'embed', 'in72' and 'ifs'). It
 * also manages the external editor, and can run 'code'.
 *
-* FIXME - edit the build and install commands associated with module:
-* need to identify base from RECIPES -- fill it in, and edit that.
 *
 * Implement library edit.
 *
@@ -87,7 +85,7 @@
          define('extension(f)s')
          define('crepl(s,n1,v1,n2,v2,n3,v3,n4,v4)a,i,k,r')
 
-         ddt()
+*        ddt()
 
          terminal = 'SOOSIE (FRI JUN  6 12:22:12 EDT 2014)'
 
@@ -132,6 +130,7 @@ file.    ident(lbr)                                              :s(nol)
 
          terminal = 'UNKNOWN FILE SUBCOMMAND'                     :(top)
 
+
 library. a = trimb(args) ' '
          a fence ('edit' | 'EDIT' | 'info' | 'INFO' |
 +                 'new' | 'NEW') . s ' '
@@ -139,12 +138,14 @@ library. a = trimb(args) ' '
 
          terminal = 'UNKNOWN LIBRARY SUBCOMMAND'                  :(top)
 
+
 all.     ident(lbr)                                              :s(nol)
          a = trimb(args) ' '
          a fence ('seed' | 'SEED' | 'export' | 'EXPORT') . s ' '
 +             rem . args =                               :s($('all_' s))
 
          terminal = 'UNKNOWN ALL SUBCOMMAND'                      :(top)
+
 
 library_new
          args = trimb(args)
@@ -155,12 +156,19 @@ library_new
          args = ident(args) nm '.DAT'
          lbr = createlbr(nm, args, 'SOOSIE Library')              :(top)
 
-* === resting for commands we haven't gotten around to implementing
-* === library edit is the only one here right now
 
 library_edit
          ident(lbr)                                              :s(nol)
-         terminal = 'NOT YET IMPLEMENTED' :(top)
+         args = trimb(args) ' '
+         args fence ('version' | 'VERSION' | 'comment' | 'COMMENT')
++                    . var ' '
++             rem . val
+         var = replace(var, &lcase, &ucase)
+         val = trimb(val)
+         differ(val)                                             :s(le2)
+         val = editline(lbr<'LIBRARY'> ':' var ': ', lbr<var>)
+le2      lbr<var> = val                                           :(top)
+
 
 * Help
 
@@ -169,7 +177,7 @@ help.    terminal = 'SOOSIE COMMANDS'
          terminal = 'ALL SEED [GLOB]'
          terminal = '    EXPORT'
          terminal = 'LIBRARY INFO'
-         terminal = '        EDIT VERSION,COMMENT'
+         terminal = '        EDIT VERSION|COMMENT'
          terminal = '        NEW [LBR [LBR.DAT]]'
          terminal = 'FILE INFO <FILE>'
          terminal = '     EDIT <FILE>'
@@ -177,15 +185,16 @@ help.    terminal = 'SOOSIE COMMANDS'
          terminal = 'SAVE'
          terminal = 'LS'
          terminal = 'EXPORT <MODULE>'
-         terminal = 'IMPORT <MODULE>'
+         terminal = 'IMPORT <GLOB>'
          terminal = 'QUIT'
          terminal = 'MODULE BUILD <MODULE>'
          terminal = '       INFO <MODULE>'
          terminal = 'MODULE ADD <MODULE>'
          terminal = '       REM <MODULE>'
-         terminal = '       EDIT <MODULE> NAME,SOURCE,COMMENT,TYPE,'
-+                                                            'ARTIFACTS'
-         terminal = '                     DEPENDS,FILES [NEW VALUE]'
+         terminal = '       EDIT <MODULE> NAME|SOURCE|COMMENT|TYPE|'
++                                                           'ARTIFACTS|'
+         terminal = '                     DEPENDS|FILES [NEW VALUE]'
+         terminal = 'MODULE EDIT <MODULE> BUILD|INSTALL <ARTIFACT>'
          terminal = '       FRESHEN <MODULE>'
                                                                   :(top)
 
@@ -217,6 +226,63 @@ module.  ident(lbr)                                              :s(nol)
 * module rename m or module copy -- copy is problematic due to
 * deep copy semantics - the elements will still refer to each other
 
+
+module_edit_build
+         val = trimb(val)
+         s = lbr<'CONTENTS'><mod><'BUILD'>
+         t =
+         seq(' t = ident(val, s<i><"TARGET">) i', .i)
+         ident(t)                                               :s(meb3)
+         c = s<t><'COMMANDS'>
+         ne(sizea(c))                                           :s(meb4)
+         tgt = s<t><"TARGET">
+         text = extension(tgt)
+         src = lbr<'CONTENTS'><mod><'SOURCE'>
+         sext = extension(src)
+         c = recipes<sext text>
+         ne(sizea(c))                                           :s(meb4)
+         c = array(1)
+         c<1> = crepl('{{TOUCH}}', 'file=', '{{tgt}}')
+meb4     l = stringout(c, CHARS_NL) CHARS_NL
+         tmpfile = '___.TMP'
+         writefile(tmpfile, l)
+         host(HOST_SYSCMD, crepl('{{EDIT}}', 'file=', tmpfile))
+         l2 = readfile(tmpfile)
+         delete(tmpfile)
+         ident(l, l2)                                            :s(top)
+         l2 = crack(l2, CHARS_NL)
+         s<t><'COMMANDS'> = l2                                    :(top)
+meb2     terminal = 'NO BUILD LIST FOR ' mod                      :(top)
+meb3     terminal = val ' NOT AN ARTIFACT IN ' mod                :(top)
+
+
+module_edit_install
+         val = trimb(val)
+         s = lbr<'CONTENTS'><mod><'INSTALL'>
+         t =
+         seq(' t = ident(val, s<i><"TARGET">) i', .i)
+         ident(t)                                               :s(mei3)
+         c = s<t><'COMMANDS'>
+         ne(sizea(c))                                           :s(mei4)
+         tgt = s<t><"TARGET">
+         text = extension(tgt)
+         c = insrules<text>
+         ne(sizea(c))                                           :s(mei4)
+         c = array(1)
+         c<1> = crepl('# empty install list for {{tgt}}')
+mei4     l = stringout(c, CHARS_NL) CHARS_NL
+         tmpfile = '___.TMP'
+         writefile(tmpfile, l)
+         host(HOST_SYSCMD, crepl('{{EDIT}}', 'file=', tmpfile))
+         l2 = readfile(tmpfile)
+         delete(tmpfile)
+         ident(l, l2)                                            :s(top)
+         l2 = crack(l2, CHARS_NL)
+         s<t><'COMMANDS'> = l2                                    :(top)
+mei2     terminal = 'NO INSTALL LIST FOR ' mod                    :(top)
+mei3     terminal = val ' NOT AN ARTIFACT IN ' mod                :(top)
+
+
 module_edit
          define('stringize(n,v)s,i')
          define('destring(n,v)s,i,f')
@@ -225,6 +291,10 @@ module_edit
          mod = replace(mod, &lcase, &ucase)
          ident(lbr<'CONTENTS'><mod>)                         :s(mnexist)
          args = trimb(a) ' '
+         args fence ('build' | 'BUILD') ' ' rem . val
++                                                  :s(module_edit_build)
+         args fence ('install' | 'INSTALL') ' ' rem . val
++                                                :s(module_edit_install)
          args fence ('name' | 'NAME' | 'source' | 'SOURCE' |
 +                    'comment' | 'COMMENT' | 'type' | 'TYPE' |
 +                    'artifacts' | 'ARTIFACTS' | 'depends' | 'DEPENDS' |
@@ -356,7 +426,7 @@ destring v = trimb(v)
          s = repl(s, CHARS_NUL, '\')
          s = crack(s, ' ')
 
-* crack will try appending a terminator to ensure that the array has
+* Crack will try appending a terminator to ensure that the array has
 * at least one element. we detect this, and replace with array0 if
 * it happened. this should be in the usage notes for crack.
 
@@ -369,9 +439,8 @@ destring v = trimb(v)
          seq(' s<i> = (vdiffer(f<s<i>>), create_file(s<i>))', .i)
          destring = s                                          :(return)
 
-mesyn    terminal = 'MODULE M_NAME EDIT ITEM VALUE'
-         terminal = 'ITEM - NAME, SOURCE, COMMENT, ARTIFACTS,'
-         terminal = '       TYPE, DEPENDS, FILES'                 :(top)
+mesyn    terminal = 'SYNTAX ERROR - TRY HELP'                     :(top)
+
  
 module_add
          args = trimb(args)
@@ -394,6 +463,7 @@ msyn     terminal = 'MODULE ADD|REM NAME'                         :(top)
 mexist   terminal = 'MODULE ' args ' ALREADY IN LIBRARY'          :(top)
 mnexist  terminal = 'MODULE ' args ' NOT IN LIBRARY'              :(top)
 
+
 module_rem
          args = trimb(args)
          ident(args)                                            :s(msyn)
@@ -402,9 +472,10 @@ module_rem
          lbr<'CONTENTS'><args> =
          lbr<'CONTENTS'> = prunet(lbr<'CONTENTS'>)                :(top)
 
+
 * Edit a file in the library. We edit by file, because a module may
 * have multiple source artifacts. In future, we should determine
-* file collisions -- and deal with that.
+* file collisions -- and deal with that (FIXME).
 
 file_edit
          fn = trimb(args)
@@ -422,6 +493,8 @@ unf      terminal = 'UNKNOWN FILE'                                :(top)
 
 
 * Build a module
+
+* Use convention of FAIL file created to indicate failure in build.
 
 module_build
          ident(lbr)                                              :s(nol)
@@ -505,7 +578,7 @@ bu_1         b<i>                                               :f(bu_2)
              sext = extension(src)
              tgt = b<i><'TARGET'>
              text = extension(tgt)
-             terminal = 'MAKING ' tgt ' FROM ' src
+             terminal = 'MAKING ' tgt ' FROM ' src ' IN MODULE ' m
              terminal = ne(sizea(c))                            :s(bu_3)
              c = recipes<sext text>
 
@@ -526,12 +599,19 @@ bu_5         s = stringout(c, CHARS_NL)
 
 * And cook
 
+             delete('.fail')
              host(HOST_SYSCMD, s)
+
+* If .fail exists, display it
+             file('.fail')                                     :f(cook2)
+             e = readfile('.fail')
+             terminal = 'BUILD FAILED'
+             terminal = vdiffer(e)                                :(top)
 
 * If this artifact is newer than what we have (and we hope so), replace
 * the library file. If not don't update, but issue a warning message
 
-             newf = create_file(tgt)
+cook2        newf = create_file(tgt)
              oldf = filest<tgt>
              terminal = le(newf<'TIMESTAMP'>, oldf<'TIMESTAMP'>)
 +                     'TARGET ' tgt ' APPEARS NOT TO HAVE BEEN UPDATED?'
@@ -573,6 +653,7 @@ cntf_5
          terminal = 'CONTENTS:  ' sizet(lbr<'CONTENTS'>) ' MODULES, '
 +                                 n ' FILES'
          terminal = '           USE "LS" COMMAND TO LIST INDEX'   :(top)
+
 
 * Build and install commands not shown
 
@@ -691,7 +772,7 @@ save.    ident(lbr)                                              :s(nol)
 * Export all
 
 all_export
-         ident(lbr)
+         ident(lbr)                                              :s(nol)
          mi = iter_modules(lbr)
 xall2      m = module(mi)                                      :f(xall3)
            t = lbr<'CONTENTS'><m>
@@ -705,6 +786,7 @@ xall2      m = module(mi)                                      :f(xall3)
          writefile(t<'NAME'> '.MODULE', json_encode(t))
          mi = next_module(mi)                                   :(xall2)
 xall3    terminal =                                               :(top)
+
 
 * Export files from module
 
@@ -734,32 +816,35 @@ export.  ident(lbr)                                              :s(nol)
 
 import.  ident(lbr)                                              :s(nol)
          args = trimb(args)
-         args = replace(args, &lcase, &ucase)
-         differ(lbr<'CONTENTS'><args>)                        :s(mexist)
-         terminal = 'IMPORTING ' args
-         mn = args '.MODULE'
-         file(mn)                                               :f(nomd)
-         s = json_decode(readfile(mn))
-         lbr<'CONTENTS'><args> = s
-         fi = iter_files(lbr, args)
-import2    f = mfile(fi)                                     :f(import3)
-           terminal = 'ADDING FILE ' f<'NAME'>
-           terminal = ~file(f<'NAME'>) 'NO FILE ' f<'NAME'>  :f(import4)
-           s =
-           s = readfile(f<'NAME'>)
-           f<'LOCATION'> = 'DIRECT'
-           md5 = bq(crepl('{{MD5}}', 'file=',  f<'NAME'>))
-           md5 break(' ') . md5
-           terminal = differ(md5, f<'MD5'>) 'MD5 FAILS'
-           terminal = ne(f<'SIZE'>, size(s)) 'NOT CORRECT SIZE'
-           f<'CONTENTS'> = s
+         args '.MODULE' rpos(0) =
+         di = iter_dir(args '.MODULE')
+import5    mn = value_dir(di)                                :f(import3)
+           terminal = 'IMPORTING ' mn
+           file(mn)                                             :f(nomd)
+           s = json_decode(readfile(mn))
+           args = s<'NAME'>
+ terminal = '**' args '**'
+           differ(lbr<'CONTENTS'><args>)                        :s(mdex)
+           lbr<'CONTENTS'><args> = s
+           fi = iter_files(lbr, args)
+import2      f = mfile(fi)                                   :f(import7)
+             terminal = 'ADDING FILE ' f<'NAME'>
+             terminal = ~file(f<'NAME'>) 'NO FILE ' f<'NAME'>
++                                                            :f(import4)
+             s =
+             s = readfile(f<'NAME'>)
+             f<'LOCATION'> = 'DIRECT'
+             md5 = bq(crepl('{{MD5}}', 'file=',  f<'NAME'>))
+             md5 break(' ') . md5
+             terminal = differ(md5, f<'MD5'>) 'MD5 FAILS'
+             terminal = ne(f<'SIZE'>, size(s)) 'NOT CORRECT SIZE'
+             f<'CONTENTS'> = s
 import4    fi = next_file(fi)                                 :(import2)
+import7  di = next_dir(di)                                    :(import5)
 import3                                                           :(top)
 
- :(top)
-
-nomd     terminal = 'NO MODULE FILE ' mn                          :(top)
-
+nomd     terminal = 'NO MODULE FILE ' mn                      :(import7)
+mdex     terminal = 'MODULE ' mn ' ALREADY IN LIBRARY'        :(import7)
 
 * Functions for soosie
 
