@@ -1,4 +1,7 @@
 -MODULE DDT
+-WEAK DSERVE_APPNAME
+-USES SLOAD()
+-LINE 705 "DDT.lss"
 -LINE 65 "DDT.lss"
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'FREEZE.INC'
@@ -9,7 +12,6 @@
 -INCLUDE 'TRIMB.INC'
 -INCLUDE 'VDIFFER.INC'
 -STITL DDT
--LINE 705 "DDT.lss"
 -EJECT
 *
 ************************************************************************
@@ -29,9 +31,8 @@
 * DDT.lss
 *
 -LINE 76 "DDT.lss"
--WEAK DSERVE_APPNAME
--USES SLOAD()
 -PUBLIC DDT(), DEBUG(), DDT_LOADED, DDT_ACTIVE
+*
          DEFINE('DDT(S)')
          DEFINE('DEBUG(S)', 'DDT')
 *
@@ -45,6 +46,7 @@
 * BE USED FOR COMMANDS AND INPUT.
 *
 -PUBLIC DDT_T, DDT_USE_R, DDT_R
+*
          DDT_T_UNIT = IO_FINDUNIT()
          OUTPUT(.DDT_T, DDT_T_UNIT, 'W', '/dev/stderr')
          DDT_USE_R =

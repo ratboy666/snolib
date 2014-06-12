@@ -1,3 +1,5 @@
+-MODULE DSERVE
+-IN72
 -LINE 20 "DSERVE.lss"
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'REPL.INC'
@@ -5,9 +7,9 @@
 -INCLUDE 'TRIMB.INC'
 -INCLUDE 'P64.INC'
 -INCLUDE 'DDT.INC'
+-LINE 153 "DSERVE.lss"
 -STITL DSERVE
 -EJECT
--LINE 153 "DSERVE.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -26,9 +28,9 @@
 * DSERVE.lss
 *
 -LINE 29 "DSERVE.lss"
--MODULE DSERVE
 -PUBLIC DSERVE_INIT(), DSERVE()
 -PUBLIC DSERVE_PORT, DSERVE_APPNAME
+*
          DEFINE('DSERVE_INIT(APPNAME,PORT,KEY)')      :(DSERVE_INIT_END)
 *
 DSERVE_INIT

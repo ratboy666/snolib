@@ -96,17 +96,16 @@ HASH_4   S POS(0) BRKREM(P) . V (P | RPOS(0)) =               :F(RETURN)
 *
 HASH_3   HASH_3 = S                                            :(RETURN)
 *
-COPYT
+COPYT    COPYT = TABLE()
          COPYT = CONVERT(CONVERT(T, 'ARRAY'), 'TABLE')         :(RETURN)
 *
-MERGET
-         MERGET = COPYT(T1)
+MERGET   MERGET = COPYT(T1)
          A = CONVERT(T2, 'ARRAY')
          SEQ(' MERGET<A<I, 1>> = A<I, 2> ', .I)                :(RETURN)
 *
-KEYST    A = CONVERT(T, 'ARRAY')                             :F(FRETURN)
+KEYST    A = (CONVERT(T, 'ARRAY'), ARRAY0)                   :F(FRETURN)
          PROTOTYPE(A) BREAK(',') . N                         :F(FRETURN)
-         KEYST = ARRAY(N)
+         KEYST = (NE(N) ARRAY(N), ARRAY0)
          SEQ(' KEYST<I> = A<I,1> ', .I)                        :(RETURN)
 *
 HASH_END

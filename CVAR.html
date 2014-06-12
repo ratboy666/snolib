@@ -100,13 +100,14 @@ Example declarations:
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;CVAR&raquo;&equiv;</b>
--MODULE CVAR
--USES HASH()
 %SET (BITS, HOST(HOST_POINTER_BITS))
+<font color="#818181"><i>*</i></font>
 -PUBLIC CVART(), CV_OFFSET(), CV_SIZE(), CV_DIM(), CV_SIGN(), CV_ISINT()
+<font color="#818181"><i>*</i></font>
          DATA(&#39;CVART(CV_OFFSET,CV_SIZE,CV_DIM,CV_SIGN,CV_ISINT)&#39;)
 <font color="#818181"><i>*</i></font>
 -PUBLIC PTRV(), LOADV(), STOREV(), NEWDECLV(), DECLAREV()
+<font color="#818181"><i>*</i></font>
          DEFINE(&#39;PTRV(B,V,I)&#39;)
          DEFINE(&#39;LOADV(B,V,I)&#39;)
          DEFINE(&#39;STOREV(B,V,I,X)&#39;)
@@ -249,6 +250,9 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+-MODULE CVAR
+-USES HASH()
+-IN72
 <b>&laquo;INCLUDES&raquo;</b>
 -STITL CVAR
 -EJECT
@@ -279,7 +283,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 19:59:54 EDT 2014</p></td><td><p align=right>
+Wed Jun 11 22:45:10 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

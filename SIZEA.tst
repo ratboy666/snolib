@@ -1,7 +1,7 @@
 #!/usr/bin/bash
          exec "/usr/local/bin/snobol4" "-b" "$0" "$@"
 -INCLUDE 'SIZEA.INC'
--LINE 65 "SIZEA.lss"
+-LINE 40 "SIZEA.lss"
 *
          &CODE = 1
          OUTPUT = 'SIZEA/LOWA ARRAY(10)'

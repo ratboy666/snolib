@@ -1,7 +1,9 @@
 -MODULE DDTCARD
+-IN72
+* NOTE THAT WE DON'T BRING IN THE INCLUDES SECTION
+-LINE 30 "DDTCARD.lss"
 -STITL DDTCARD
 -EJECT
--LINE 30 "DDTCARD.lss"
 *
 ************************************************************************
 *                                                                      *

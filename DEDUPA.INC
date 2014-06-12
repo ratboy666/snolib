@@ -4,7 +4,8 @@
 -INCLUDE 'SIZEA.INC'
 -INCLUDE 'HASH.INC'
 -INCLUDE 'SEQ.INC'
--LINE 45 "DEDUPA.lss"
+-INCLUDE 'ARRAY0.INC'
+-LINE 46 "DEDUPA.lss"
 -STITL DEDUPA
 -EJECT
 *
@@ -25,7 +26,7 @@
 *
 * DEDUPA.lss
 *
--LINE 20 "DEDUPA.lss"
+-LINE 21 "DEDUPA.lss"
 -PUBLIC DEDUPA()
 *
          DEFINE('DEDUPA(A)T,I')                            :(END_DEDUPA)

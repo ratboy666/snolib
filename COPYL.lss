@@ -11,8 +11,8 @@ have loops.
 @
 
 <<COPYL>>=
--MODULE COPYL
 -PUBLIC COPYL()
+*
          DEFINE('COPYL(L)T')                                :(COPYL_END)
 *
 COPYL    DEFINE('COPYL(L)', 'COPYL_1')
@@ -41,6 +41,8 @@ END
 @
 
 <<>>=
+-MODULE COPYL
+-IN72
 <<INCLUDES>>
 -STITL COPYL
 -EJECT

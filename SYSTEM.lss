@@ -8,6 +8,17 @@ different operating systems, and different hardware platforms
 (WINDOWS, LINUX, SOLARIS, AIX, HP-UX and more; INTEL, SPARC, POWER,
 and more).
 
+HOST() output for SPITBOL/CSNOBOL4 gives (for example):
+
+[[
+x86_64:Linux 3.14.5-200.fc20.x86_64:CSNOBOL4B 1.5+
+80386:WinNT:Macro SPITBOL 3.7(ver 1.30.22) #20361
+x86:Linux:Macro SPITBOL 13.01  
+x86:Linux:Macro SPITBOL 13  
+]]
+
+Results of SYSTEM() can be:
+
 [[
 HONEYWELL MAINBOL
 IBM MAINBOL
@@ -15,12 +26,17 @@ IBM MAINBOL WITH BLOCKS
 PDP-10 MAINBOL
 CDC MAINBOL
 UNIVAC MAINBOL
-CSNOBOL4
-CSNOBOL4 WITH BLOCKS
+CSNOBOL4 MAINBOL
+CSNOBOL4 MAINBOL WITH BLOCKS
 FASBOL
 SITBOL
 SPITBOL
 ]]
+
+All MAINBOL implementations have the word "MAINBOL" included. Note
+that most of these implementatiions are completely obsolete. The
+only implementations currently in use are CSNOBOL4 MAINBOL, CSNOBOL4
+MAINBOL WITH BLOCKS and SPITBOL.
 
 If source could be in CDC display code, test that first, before
 ISASCII() -- '()' is ordered the same in both of these character sets.
@@ -31,9 +47,9 @@ ISASCII() -- '()' is ordered the same in both of these character sets.
 @
 
 <<SYSTEM>>=
--MODULE SYSTEM
 -PUBLIC SYSTEM(), ISSPITBOL(), ISSNOBOL4()
 -PUBLIC ISASCII(), ISEBCDIC(), ISCDC_DISPLAY_CODE()
+*
          DEFINE('SYSTEM()K,E,T')
          DEFINE('ISSPITBOL()')
          DEFINE('ISSNOBOL4()')
@@ -79,7 +95,7 @@ SYSTEM   IDENT(DATATYPE(.X), 'STRING')                      :F(SYSTEM_2)
 * -B COMMAND LINE SWITCH AND -BLOCKS/-NOBLOCKS
 *
 SYSTEM_0 ISASCII()                                          :F(SYSTEM_1)
-         SYSTEM = 'CSNOBOL4'
+         SYSTEM = 'CSNOBOL4 MAINBOL'
 *
 SYSTEM_1 E = &ERRLIMIT
          &ERRLIMIT = 1
@@ -105,6 +121,9 @@ END
 @
 
 <<>>=
+-MODULE SYSTEM
+-IN72
+<<INCLUDES>>
 -STITL SYSTEM
 -EJECT
 *

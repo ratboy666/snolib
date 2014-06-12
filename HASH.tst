@@ -1,7 +1,7 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -INCLUDE 'HASH.INC'
--LINE 119 "HASH.lss"
+-LINE 118 "HASH.lss"
          &CODE = 1
          H = #'FIRST=BOB,LAST=LOBLAW'
          IDENT(H<'FIRST'>, 'BOB')                                :F(END)

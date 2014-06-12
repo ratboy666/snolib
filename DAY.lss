@@ -10,8 +10,8 @@ specified, this year is used. If year is two digits, interpret as 20XX.
 @
 
 <<DAY>>=
--MODULE DAY
 -PUBLIC DAY()
+*
          DEFINE('DAY(DATE)M,Y,CD')
          YEAR_ = 365
          YEAR_4 = 4 * YEAR_ + 1
@@ -53,6 +53,9 @@ END
 @
 
 <<>>=
+-MODULE DAY
+-IN72
+<<INCLUDES>>
 -STITL DAY
 -EJECT
 *

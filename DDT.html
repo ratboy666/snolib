@@ -100,9 +100,8 @@ additional tools to be incorporated while debugging.
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;DDT&raquo;&equiv;</b>
--WEAK DSERVE_APPNAME
--USES SLOAD()
 -PUBLIC DDT(), DEBUG(), DDT_LOADED, DDT_ACTIVE
+<font color="#818181"><i>*</i></font>
          DEFINE(&#39;DDT(S)&#39;)
          DEFINE(&#39;DEBUG(S)&#39;, &#39;DDT&#39;)
 <font color="#818181"><i>*</i></font>
@@ -116,6 +115,7 @@ additional tools to be incorporated while debugging.
 <font color="#818181"><i>* BE USED FOR COMMANDS AND INPUT.</i></font>
 <font color="#818181"><i>*</i></font>
 -PUBLIC DDT_T, DDT_USE_R, DDT_R
+<font color="#818181"><i>*</i></font>
          DDT_T_UNIT = IO_FINDUNIT()
          OUTPUT(.DDT_T, DDT_T_UNIT, &#39;W&#39;, &#39;/dev/stderr&#39;)
          DDT_USE_R =
@@ -764,6 +764,8 @@ END
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
 -MODULE DDT
+-WEAK DSERVE_APPNAME
+-USES SLOAD()
 <b>&laquo;INCLUDES&raquo;</b>
 -STITL DDT
 -EJECT
@@ -793,7 +795,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 19:59:55 EDT 2014</p></td><td><p align=right>
+Wed Jun 11 22:45:11 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

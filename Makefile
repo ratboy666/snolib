@@ -36,7 +36,7 @@ T = AGT.tst      AI.tst       AOPA.tst     BALREV.tst   BALX.tst     \
     COOKIE.tst   HTMLTMPL.tst JSON.tst     FCGI.tst     MAX.tst      \
     DSERVE.tst   VDIFFER.tst  FOR.tst      FREEZE.tst   ROUTING.tst  \
     GDDT.tst     DEDUPA.tst   ATOL.tst     ITERDIR.tst  SIZEL.tst    \
-    SIZET.tst    APPENDA.tst
+    SIZET.tst    APPENDA.tst  ARRAY0.tst   LOWA.tst
 
 # Library files FIXME: TRIAL should be removed.
 
@@ -112,7 +112,9 @@ HTMLTMPL.INC: LINK.INC     CHARS.INC    LAST.INC     REVL.INC     \
               SWAP.INC     READFILE.INC HTMLESC.INC
 JSON.INC:     CHARS.INC    HASH.INC     SIZEA.INC    HEX.INC      \
               CH.INC       SEQ.INC
-SIZEA.INC:    BRKREM.INC   SWAP.INC
+SIZEA.INC:    BRKREM.INC   SWAP.INC     ARRAY0.INC
+ARRAY0.INC:   SYSTEM.INC
+LOWA.INC:     ARRAY0.INC
 UNIQUE.INC:   REPL.INC
 FCGI.INC:     FFI.INC      P64.INC      BQ.INC       CSNOBOL4.INC \
               LOGIC.INC    HASH.INC     SEQ.INC      TIME.INC     \
@@ -302,7 +304,7 @@ docs:         AGT.html      AI.html       ALL.html      AOPA.html     \
               FCGI.html     DSERVE.html   VDIFFER.html  FOR.html      \
               FREEZE.html   ROUTING.html  in72.html     DEDUPA.html   \
               ATOL.html     ITERDIR.html  SIZEL.html    SIZET.html    \
-              APPENDA.html
+              APPENDA.html  SIZEA.html
 	touch docs
 
 snocone.html: snocone.htm
@@ -430,3 +432,5 @@ ITERDIR.INC: ITERDIR.SNO
 SIZEL.INC: SIZEL.SNO
 SIZET.INC: SIZET.SNO
 APPENDA.INC: APPENDA.SNO
+ARRAY0.INC: ARRAY0.SNO
+LOWA.INC: LOWA.SNO

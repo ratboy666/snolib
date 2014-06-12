@@ -28,9 +28,9 @@ Create dynamic modules for <font face="Source Code Pro">CSNOBOL4</font>.
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;DYNAMIC&raquo;&equiv;</b>
--MODULE DYNAMIC
 -PUBLIC COMPILE_COBOL(), COMPILE_FORTRAN(), COMPILE_SCHEME()
 -PUBLIC COMPILE_DYNAMIC(), LIBS_FORTRAN(), LIBS_COBOL(), LIBS_SCHEME()
+<font color="#818181"><i>*</i></font>
 DYNAMIC  DEFINE(&#39;COMPILE_COBOL(SRC)CMD,COBC&#39;)
          DEFINE(&#39;COMPILE_FORTRAN(SRC)CMD&#39;)
          DEFINE(&#39;COMPILE_SCHEME(SRC)CMD,CC,DL_CFLAGS,COPT&#39;)
@@ -180,6 +180,7 @@ COMPILE_DYNAMIC
 COMPILE_DYNAMIC_END
 <font color="#818181"><i>*</i></font>
 -PUBLIC LINK_DYNAMIC()
+
          DEFINE(&#39;LINK_DYNAMIC(OUT,OBJ,LIBS)&#39;
 +               &#39;CMD,DL_LD,DL_EXT,DL_LDFLAGS,DSEP&#39;)  <b>:(LINK_DYNAMIC_END)</b>
 <font color="#818181"><i>*</i></font>
@@ -202,6 +203,7 @@ LINK_DYNAMIC_END
 <font color="#818181"><i>* LIBS MAY CONTAIN BOTH OBJECTS AND LIBRARIES</i></font>
 <font color="#818181"><i>*</i></font>
 -PUBLIC MAKE_DYNAMIC_MODULE()
+<font color="#818181"><i>*</i></font>
          DEFINE(&#39;MAKE_DYNAMIC_MODULE(OUT,SRC,LIBS)OBJ&#39;)
                                               <b>:(MAKE_DYNAMIC_MODULE_END)</b>
 MAKE_DYNAMIC_MODULE
@@ -230,6 +232,8 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+-MODULE DYNAMIC
+-IN72
 <b>&laquo;INCLUDES&raquo;</b>
 -STITL DYNAMIC
 -EJECT
@@ -261,7 +265,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 19:59:59 EDT 2014</p></td><td><p align=right>
+Wed Jun 11 22:45:13 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

@@ -10,55 +10,27 @@
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 <font face="Source Code Pro">SIZEA(A)</font> returns the number of elements in array <font face="Source Code Pro">A</font>. The number
-of elements in the first (leftmost) dimension is returned. <font face="Source Code Pro">ARRAY0</font>
-is the array with no elements.
-</font></p>
-<p align="justify"><font face="Sorts Mill Goudy">
-Warning: this doesn't work with SPITBOL. We do accomodate SPITBOL by
-defining a specific legal array as ARRAY0, and checking for that
-object is <font face="Source Code Pro">SIZEA()</font> and <font face="Source Code Pro">LOWA()</font>.
-</font></p>
-<p align="justify"><font face="Sorts Mill Goudy">
-The null string is assumed to be an array with no elements. Otherwise,
-if the datatype is not array, <font face="Source Code Pro">SIZEA()</font> fails. The prototype is
-analyzed to determine the single size, or upper:lower, the number of
-elements is computed and returned.
-</font></p>
-<p align="justify"><font face="Sorts Mill Goudy">
-<font face="Source Code Pro">LOWA(A)</font> returns the index of the first element of array <font face="Source Code Pro">A</font>.
+of elements in the first (leftmost) dimension is returned.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 <h2>Uses</h2>
 <a href="BRKREM.html">BRKREM</a><br>
 <a href="SWAP.html">SWAP</a><br>
-<a href="SYSTEM.html">SYSTEM</a><br>
 </font></p>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;INCLUDES&raquo;&equiv;</b>
 -INCLUDE &#39;BRKREM.INC&#39;
 -INCLUDE &#39;SWAP.INC&#39;
--INCLUDE &#39;SYSTEM.INC&#39;
+-INCLUDE &#39;ARRAY0.INC&#39;
 <b>@</b>
 </font></pre></div>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;SIZEA&raquo;&equiv;</b>
--MODULE SIZEA
--PUBLIC SIZEA(), LOWA(), ARRAY0
-         DEFINE(&#39;SIZEA(A)L,U&#39;)
-         DEFINE(&#39;LOWA(A)L,U&#39;)
-         ARRAY0 = ?(SYSTEM() ? &#39;SPITBOL&#39;)
-+                                   ARRAY(&#39;-10000:-10000&#39;) <b>:S(SIZEA_END)</b>
-         ARRAY0 = ARRAY(&#39;0:-1&#39;)                             <b>:(SIZEA_END)</b>
+-PUBLIC SIZEA()
 <font color="#818181"><i>*</i></font>
-LOWA     LOWA = IDENT(A) 0                                    <b>:S(RETURN)</b>
-         LOWA = IDENT(A, ARRAY0) 0                            <b>:S(RETURN)</b>
-         IDENT(DATATYPE(A), &#39;ARRAY&#39;)                         <b>:F(FRETURN)</b>
-         PROTOTYPE(A) (BRKREM(&#39;:,&#39;) . L) ((&#39;:&#39; BRKREM(&#39;,&#39;) . U) | NULL)
-         IDENT(L)                                            <b>:S(FRETURN)</b>
-         LOWA = L
-         LOWA = IDENT(U) 1                                     <b>:(RETURN)</b>
+         DEFINE(&#39;SIZEA(A)L,U&#39;)                              <b>:(SIZEA_END)</b>
 <font color="#818181"><i>*</i></font>
 SIZEA    SIZEA = IDENT(A) 0                                   <b>:S(RETURN)</b>
          SIZEA = IDENT(A, ARRAY0) 0                           <b>:S(RETURN)</b>
@@ -102,6 +74,8 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+-MODULE SIZEA
+-IN72
 <b>&laquo;INCLUDES&raquo;</b>
 -STITL SIZEA
 -EJECT
@@ -131,7 +105,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Sun Jun  8 01:21:14 EDT 2014</p></td><td><p align=right>
+Wed Jun 11 23:52:40 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

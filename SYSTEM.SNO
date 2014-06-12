@@ -1,7 +1,10 @@
+-MODULE SYSTEM
+-IN72
+-LINE 47 "SYSTEM.lss"
+-LINE 127 "SYSTEM.lss"
 -STITL SYSTEM
 -EJECT
 *
--LINE 111 "SYSTEM.lss"
 ************************************************************************
 *                                                                      *
 *          #####   #     #   #####   #######  #######  #     #         *
@@ -18,10 +21,10 @@
 *
 * SYSTEM.lss
 *
--LINE 34 "SYSTEM.lss"
--MODULE SYSTEM
+-LINE 50 "SYSTEM.lss"
 -PUBLIC SYSTEM(), ISSPITBOL(), ISSNOBOL4()
 -PUBLIC ISASCII(), ISEBCDIC(), ISCDC_DISPLAY_CODE()
+*
          DEFINE('SYSTEM()K,E,T')
          DEFINE('ISSPITBOL()')
          DEFINE('ISSNOBOL4()')
@@ -67,7 +70,7 @@ SYSTEM   IDENT(DATATYPE(.X), 'STRING')                      :F(SYSTEM_2)
 * -B COMMAND LINE SWITCH AND -BLOCKS/-NOBLOCKS
 *
 SYSTEM_0 ISASCII()                                          :F(SYSTEM_1)
-         SYSTEM = 'CSNOBOL4'
+         SYSTEM = 'CSNOBOL4 MAINBOL'
 *
 SYSTEM_1 E = &ERRLIMIT
          &ERRLIMIT = 1

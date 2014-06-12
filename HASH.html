@@ -118,17 +118,16 @@ HASH_4   S POS(0) BRKREM(P) . V (P | RPOS(0)) =               <b>:F(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 HASH_3   HASH_3 = S                                            <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
-COPYT
+COPYT    COPYT = TABLE()
          COPYT = CONVERT(CONVERT(T, &#39;ARRAY&#39;), &#39;TABLE&#39;)         <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
-MERGET
-         MERGET = COPYT(T1)
+MERGET   MERGET = COPYT(T1)
          A = CONVERT(T2, &#39;ARRAY&#39;)
          SEQ(&#39; MERGET&lt;A&lt;I, 1&gt;&gt; = A&lt;I, 2&gt; &#39;, .I)                <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
-KEYST    A = CONVERT(T, &#39;ARRAY&#39;)                             <b>:F(FRETURN)</b>
+KEYST    A = (CONVERT(T, &#39;ARRAY&#39;), ARRAY0)                   <b>:F(FRETURN)</b>
          PROTOTYPE(A) BREAK(&#39;,&#39;) . N                         <b>:F(FRETURN)</b>
-         KEYST = ARRAY(N)
+         KEYST = (NE(N) ARRAY(N), ARRAY0)
          SEQ(&#39; KEYST&lt;I&gt; = A&lt;I,1&gt; &#39;, .I)                        <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 HASH_END
@@ -198,7 +197,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Tue Jun 10 05:53:30 EDT 2014</p></td><td><p align=right>
+Thu Jun 12 11:54:33 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

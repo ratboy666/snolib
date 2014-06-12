@@ -1,9 +1,10 @@
 -MODULE CSNOBOL4
+-IN72
 -LINE 24 "CSNOBOL4.lss"
 -INCLUDE 'FFI.INC'
 -INCLUDE 'P64.INC'
--STITL CSNOBOL4
 -LINE 604 "CSNOBOL4.lss"
+-STITL CSNOBOL4
 -EJECT
 *
 ************************************************************************

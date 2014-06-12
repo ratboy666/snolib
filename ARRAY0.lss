@@ -1,0 +1,57 @@
+<h1>ARRAY0 - Array with no elements</h1>
+
+[[ARRAY0]] is a variable that has an empty array. Since this is a
+a language processor specific definition it is isolated into this
+module.
+
+<h2>Uses</h2>
+<a href="SYSTEM.html">SYSTEM</a><br>
+
+<<INCLUDES>>=
+-INCLUDE 'SYSTEM.INC'
+@
+
+<<ARRAY0>>=
+-PUBLIC ARRAY0
+*
+         ARRAY0 = ARRAY('-10000:-10000')
+         ARRAY0 = ?(SYSTEM() ? 'CSNOBOL4') ARRAY('0:-1')
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "/usr/local/bin/snobol4" "-b" "$0" "$@"
+-INCLUDE 'ARRAY0.INC'
+*
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+-MODULE ARRAY0
+-IN72
+<<INCLUDES>>
+-STITL ARRAY0
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*            #     ######   ######      #     #     #   ####           *
+*           # #    #     #  #     #    # #     #   #   #   ##          *
+*          #   #   #     #  #     #   #   #     # #    #  # #          *
+*         #     #  ######   ######   #     #     #     # #  #          *
+*         #######  #   #    #   #    #######     #     ##   #          *
+*         #     #  #    #   #    #   #     #     #     #    #          *
+*         #     #  #     #  #     #  #     #     #      ####           *
+*                                                                      *
+* ARRAY0                      ARRAY OF SIZE 0                          *
+*                                                                      *
+************************************************************************
+*
+* ARRAY0.lss
+*
+<<ARRAY0>>
+*
+* CE: .F.MSNOBOL4;
+@

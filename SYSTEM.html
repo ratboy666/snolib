@@ -19,6 +19,20 @@ different operating systems, and different hardware platforms
 and more).
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
+HOST() output for SPITBOL/CSNOBOL4 gives (for example):
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+| x86_64:Linux 3.14.5-200.fc20.x86_64:CSNOBOL4B 1.5+
+| 80386:WinNT:Macro SPITBOL 3.7(ver 1.30.22) #20361
+| x86:Linux:Macro SPITBOL 13.01
+| x86:Linux:Macro SPITBOL 13
+</font></pre>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Results of SYSTEM() can be:
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
 </font></p><pre><font face="Source Code Pro">
 | HONEYWELL MAINBOL
 | IBM MAINBOL
@@ -26,12 +40,18 @@ and more).
 | PDP-10 MAINBOL
 | CDC MAINBOL
 | UNIVAC MAINBOL
-| CSNOBOL4
-| CSNOBOL4 WITH BLOCKS
+| CSNOBOL4 MAINBOL
+| CSNOBOL4 MAINBOL WITH BLOCKS
 | FASBOL
 | SITBOL
 | SPITBOL
 </font></pre>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+All MAINBOL implementations have the word "MAINBOL" included. Note
+that most of these implementatiions are completely obsolete. The
+only implementations currently in use are CSNOBOL4 MAINBOL, CSNOBOL4
+MAINBOL WITH BLOCKS and SPITBOL.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 If source could be in CDC display code, test that first, before
@@ -48,9 +68,9 @@ ISASCII() -- '()' is ordered the same in both of these character sets.
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;SYSTEM&raquo;&equiv;</b>
--MODULE SYSTEM
 -PUBLIC SYSTEM(), ISSPITBOL(), ISSNOBOL4()
 -PUBLIC ISASCII(), ISEBCDIC(), ISCDC_DISPLAY_CODE()
+<font color="#818181"><i>*</i></font>
          DEFINE(&#39;SYSTEM()K,E,T&#39;)
          DEFINE(&#39;ISSPITBOL()&#39;)
          DEFINE(&#39;ISSNOBOL4()&#39;)
@@ -96,7 +116,7 @@ SYSTEM   IDENT(DATATYPE(.X), &#39;STRING&#39;)                      <b>:F(SYSTEM
 <font color="#818181"><i>* -B COMMAND LINE SWITCH AND -BLOCKS/-NOBLOCKS</i></font>
 <font color="#818181"><i>*</i></font>
 SYSTEM_0 ISASCII()                                          <b>:F(SYSTEM_1)</b>
-         SYSTEM = &#39;CSNOBOL4&#39;
+         SYSTEM = &#39;CSNOBOL4 MAINBOL&#39;
 <font color="#818181"><i>*</i></font>
 SYSTEM_1 E = &amp;ERRLIMIT
          &amp;ERRLIMIT = 1
@@ -126,6 +146,9 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+-MODULE SYSTEM
+-IN72
+<b>&laquo;INCLUDES&raquo;</b>
 -STITL SYSTEM
 -EJECT
 <font color="#818181"><i>*</i></font>
@@ -154,7 +177,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 20:00:28 EDT 2014</p></td><td><p align=right>
+Wed Jun 11 22:45:14 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

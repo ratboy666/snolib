@@ -1,10 +1,12 @@
--LINE 24 "SIZEA.lss"
+-MODULE SIZEA
+-IN72
+-LINE 11 "SIZEA.lss"
 -INCLUDE 'BRKREM.INC'
 -INCLUDE 'SWAP.INC'
--INCLUDE 'SYSTEM.INC'
+-INCLUDE 'ARRAY0.INC'
+-LINE 62 "SIZEA.lss"
 -STITL SIZEA
 -EJECT
--LINE 87 "SIZEA.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -22,22 +24,10 @@
 *
 * SIZEA.lss
 *
--LINE 30 "SIZEA.lss"
--MODULE SIZEA
--PUBLIC SIZEA(), LOWA(), ARRAY0
-         DEFINE('SIZEA(A)L,U')
-         DEFINE('LOWA(A)L,U')
-         ARRAY0 = ?(SYSTEM() ? 'SPITBOL')
-+                                   ARRAY('-10000:-10000') :S(SIZEA_END)
-         ARRAY0 = ARRAY('0:-1')                             :(SIZEA_END)
+-LINE 17 "SIZEA.lss"
+-PUBLIC SIZEA()
 *
-LOWA     LOWA = IDENT(A) 0                                    :S(RETURN)
-         LOWA = IDENT(A, ARRAY0) 0                            :S(RETURN)
-         IDENT(DATATYPE(A), 'ARRAY')                         :F(FRETURN)
-         PROTOTYPE(A) (BRKREM(':,') . L) ((':' BRKREM(',') . U) | NULL)
-         IDENT(L)                                            :S(FRETURN)
-         LOWA = L
-         LOWA = IDENT(U) 1                                     :(RETURN)
+         DEFINE('SIZEA(A)L,U')                              :(SIZEA_END)
 *
 SIZEA    SIZEA = IDENT(A) 0                                   :S(RETURN)
          SIZEA = IDENT(A, ARRAY0) 0                           :S(RETURN)

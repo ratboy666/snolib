@@ -1,47 +1,22 @@
 <h1>SIZEA - Array size, first dimension</h1>
 
 [[SIZEA(A)]] returns the number of elements in array [[A]]. The number
-of elements in the first (leftmost) dimension is returned. [[ARRAY0]]
-is the array with no elements.
-
-Warning: this doesn't work with SPITBOL. We do accomodate SPITBOL by
-defining a specific legal array as ARRAY0, and checking for that
-object is [[SIZEA()]] and [[LOWA()]].
-
-The null string is assumed to be an array with no elements. Otherwise,
-if the datatype is not array, [[SIZEA()]] fails. The prototype is
-analyzed to determine the single size, or upper:lower, the number of
-elements is computed and returned.
-
-[[LOWA(A)]] returns the index of the first element of array [[A]].
+of elements in the first (leftmost) dimension is returned.
 
 <h2>Uses</h2>
 <a href="BRKREM.html">BRKREM</a><br>
 <a href="SWAP.html">SWAP</a><br>
-<a href="SYSTEM.html">SYSTEM</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'BRKREM.INC'
 -INCLUDE 'SWAP.INC'
--INCLUDE 'SYSTEM.INC'
+-INCLUDE 'ARRAY0.INC'
 @
 
 <<SIZEA>>=
--MODULE SIZEA
--PUBLIC SIZEA(), LOWA(), ARRAY0
-         DEFINE('SIZEA(A)L,U')
-         DEFINE('LOWA(A)L,U')
-         ARRAY0 = ?(SYSTEM() ? 'SPITBOL')
-+                                   ARRAY('-10000:-10000') :S(SIZEA_END)
-         ARRAY0 = ARRAY('0:-1')                             :(SIZEA_END)
+-PUBLIC SIZEA()
 *
-LOWA     LOWA = IDENT(A) 0                                    :S(RETURN)
-         LOWA = IDENT(A, ARRAY0) 0                            :S(RETURN)
-         IDENT(DATATYPE(A), 'ARRAY')                         :F(FRETURN)
-         PROTOTYPE(A) (BRKREM(':,') . L) ((':' BRKREM(',') . U) | NULL)
-         IDENT(L)                                            :S(FRETURN)
-         LOWA = L
-         LOWA = IDENT(U) 1                                     :(RETURN)
+         DEFINE('SIZEA(A)L,U')                              :(SIZEA_END)
 *
 SIZEA    SIZEA = IDENT(A) 0                                   :S(RETURN)
          SIZEA = IDENT(A, ARRAY0) 0                           :S(RETURN)
@@ -81,6 +56,8 @@ END
 @
 
 <<>>=
+-MODULE SIZEA
+-IN72
 <<INCLUDES>>
 -STITL SIZEA
 -EJECT

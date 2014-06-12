@@ -24,7 +24,7 @@
 * APPENDA.lss
 *
 -LINE 16 "APPENDA.lss"
--PUBLIC APPENDA
+-PUBLIC APPENDA()
 *
          DEFINE('APPENDA(A,V)I')                          :(END_APPENDA)
 *

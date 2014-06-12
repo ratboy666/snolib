@@ -8,8 +8,8 @@
 @
 
 <<COUNT>>=
--MODULE COUNT
 -PUBLIC COUNT()
+*
          DEFINE('COUNT(S1,S2)FIRST,REST,P')                 :(COUNT_END)
 *
 COUNT    COUNT = 0
@@ -32,6 +32,9 @@ END
 @
 
 <<>>=
+-MODULE COUNT
+-IN72
+<<INCLUDES>>
 -STITL COUNT
 -EJECT
 *

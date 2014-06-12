@@ -13,8 +13,8 @@ terms of a simple, one-line expression, such as
 @
 
 <<DEXP>>=
--MODULE DEXP
 -PUBLIC DEXP()
+*
          DEFINE('DEXP(PROTO)NAME,ARGS')                      :(DEXP_END)
 *
 DEXP     PROTO POS(0) SPAN(' ') =
@@ -35,6 +35,9 @@ END
 @
 
 <<>>=
+-MODULE DEXP
+-IN72
+<<INCLUDES>>
 -STITL DEXP
 -EJECT
 *

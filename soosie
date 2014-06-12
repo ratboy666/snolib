@@ -58,6 +58,7 @@
 -include 'REPL.INC'
 -include 'APPENDA.INC'
 -include 'MD5.INC'
+-include 'ARRAY0.INC'
 
 
          define('iter_artifacts(lbr,m)')
@@ -115,7 +116,7 @@ top      p = (differ(lbr) lbr<'LIBRARY'>, 'NO LIBRARY')
 
 * major command, go to handler
 
-         l fence ('ls' | 'LS' | 'load' | 'load' |
+         l fence ('ls' | 'LS' | 'load' | 'load' | 'seed' | 'SEED' |
 +                 'save' | 'save' | 'quit' | 'QUIT' |
 +                 'export' | 'EXPORT' | 'help' | 'HELP' |
 +                 'file' | 'FILE' | 'import' | 'IMPORT' |
@@ -143,7 +144,7 @@ library. a = trimb(args) ' '
 
 all.     ident(lbr)                                              :s(nol)
          a = trimb(args) ' '
-         a fence ('seed' | 'SEED' | 'export' | 'EXPORT') . s ' '
+         a fence ('export' | 'EXPORT') . s ' '
 +             rem . args =                               :s($('all_' s))
 
          terminal = 'UNKNOWN ALL SUBCOMMAND'                      :(top)
@@ -172,7 +173,6 @@ fresh3       f = mfile(fi)                                    :f(fresh4)
            fi = next_file(fi)                                  :(fresh3)
 fresh4   mi = next_module(mi)                                  :(fresh2)
 fresh5                                                            :(top)
-
 
 
 * Make sure the files in the library are sane.
@@ -224,8 +224,8 @@ le2      lbr<var> = val                                           :(top)
 
 help.    terminal = 'SOOSIE COMMANDS'
          terminal =
-         terminal = 'ALL SEED [GLOB]'
-         terminal = '    EXPORT'
+         terminal = 'ALL EXPORT'
+         terminal = 'SEED [GLOB]'
          terminal = 'LIBRARY INFO'
          terminal = '        EDIT VERSION|COMMENT'
          terminal = '        NEW [LBR [LBR.DAT]]'
@@ -596,9 +596,6 @@ ts_4     bl = revl(bl)
 * need building. "Clean" all external files (except, possibly,
 * artifacts). "Install" -- which is close to building.
 
-* FIXME: need to determine if build failed!. Create a file FAIL in
-* the tools. If FAIL exists on completion, assume failure.
-
          p = dl
 co_1       ident(p)                                             :s(co_2)
            m = value(p)
@@ -766,7 +763,8 @@ nom      terminal = 'MODULE ' args ' NOT FOUND'                   :(top)
 
 * Seed in '*.lss' (or specified pattern) as modules.
 
-all_seed args = trimb(args)
+seed.    ddt()
+         args = trimb(args)
          args = ident(args) '*.lss'
          files = iter_dir(args)
 seed1      fn = value_dir(files)                                :f(seed2)
@@ -836,7 +834,7 @@ xall2      m = module(mi)                                      :f(xall3)
          t<'FILES'> = copya(t<'FILES'>)
          seq(' t<"FILES"><i> = copyt(t<"FILES"><i>)', .i)
          seq(' t<"FILES"><i><"LOCATION"> = "FILE"', .i)
-         seq(' t<"FILES"><i><"CONTENTS"> = ', .i)
+         seq(' t<"FILES"><i><"CONTENTS"> = t<"FILES"><i><"NAME">', .i)
          writefile(t<'NAME'> '.MODULE', json_encode(t))
          mi = next_module(mi)                                   :(xall2)
 xall3    terminal =                                               :(top)
@@ -861,7 +859,7 @@ export.  ident(lbr)                                              :s(nol)
          t<'FILES'> = copya(t<'FILES'>)
          seq(' t<"FILES"><i> = copyt(t<"FILES"><i>)', .i)
          seq(' t<"FILES"><i><"LOCATION"> = "FILE"', .i)
-         seq(' t<"FILES"><i><"CONTENTS"> = ', .i)
+         seq(' t<"FILES"><i><"CONTENTS"> = t<"FILES"><i><"NAME">', .i)
 
          writefile(t<'NAME'> '.MODULE', json_encode(t))
                                                                   :(top)
