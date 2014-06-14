@@ -2,12 +2,12 @@
          exec "snobol4" "-b" "$0" "$@"
 -TITLE SWEAVE
 START
--INCLUDE 'REPL.INC'
+-INCLUDE 'BALX.INC'
 -INCLUDE 'BQ.INC'
+-INCLUDE 'CHARS.INC'
 -INCLUDE 'HOST.INC'
 -INCLUDE 'HTMLESC.INC'
--INCLUDE 'CHARS.INC'
--INCLUDE 'BALX.INC'
+-INCLUDE 'VDIFFER.INC'
 *
 ************************************************************************
 *                                                                      *

@@ -3,6 +3,7 @@
 -TITLE STANGLE
 START
 -INCLUDE 'HOST.INC'
+-INCLUDE 'VDIFFER.INC'
 *
 ************************************************************************
 *                                                                      *

@@ -1,5 +1,15 @@
 -MODULE HTMLTMPL
 -SNOCONE
+-LINE 28 "HTMLTMPL.lss"
+//-INCLUDE 'CHARS.INC'
+//-INCLUDE 'LAST.INC'
+//-INCLUDE 'LINK.INC'
+//-INCLUDE 'READFILE.INC'
+//-INCLUDE 'REVL.INC'
+//-INCLUDE 'SWAP.INC'
+//-INCLUDE 'TIMER.INC'
+-LINE 293 "HTMLTMPL.lss"
+-IN1024
 -LINE 72 "HTMLTMPL.lss"
 
 # A compiled template is a list of template tokens
@@ -216,6 +226,5 @@ procedure tmpl_parse_args(s) n v {
 }
 
 // tmpl_init()
--LINE 293 "HTMLTMPL.lss"
 
 # ce: .f.msnocone;

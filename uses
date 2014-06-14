@@ -3,15 +3,17 @@
 
 * uses
 *
-* build includes necessary
+* build includes necessary. it is preferred to do this on the .INC
+* file instead of the .lss file, but, with care, the .lss will work
+* as well.
 
--INCLUDE 'HASH.INC'
--INCLUDE 'JSON.INC'
--INCLUDE 'SDIFF.INC'
--INCLUDE 'READFILE.INC'
--INCLUDE 'HOST.INC'
--INCLUDE 'SIZEA.INC'
 -INCLUDE 'ARRAY0.INC'
+-INCLUDE 'HOST.INC'
+-INCLUDE 'JSON.INC'
+-INCLUDE 'KEYST.INC'
+-INCLUDE 'MERGET.INC'
+-INCLUDE 'READFILE.INC'
+-INCLUDE 'SDIFF.INC'
 
 * ce: .msnobol4;
 
@@ -83,10 +85,11 @@ endf     fp = (pos(0) | any(ss)) @bp fp @ep
          qq = '"'
 
 top      r = input                                            :f(incout)
-*
+
 * If its a -WEAK declaration, add the functions and variables to
 * the weak() table. This table is used to filter potential include
 * additions
+
          r fence '-' ('weak' | 'WEAK') rem . r                  :f(uses)
          fc = &ucase &lcase
          sc = fc '0123456789_.'
@@ -114,13 +117,13 @@ loop     r arb . l (q | qq) $ delim arb *delim rem . r          :f(done)
 done     process(r)                                               :(top)
 
 * output the includes
-incout   output =
+incout   incs<fn> =
+         fn '.'                                              :f(incout2)
+         fn '.lss' rpos(0) =
+         fn '.INC' rpos(0) =
+         incs<fn '.INC'> = differ(fn)
+incout2  output =
 +           json_encode((sort(keyst(incs)), array0))             :s(end)
-*        a = sort(incs) :f(end)
-*        i = 1
-*inco2   a<i,1> :f(end)
-*        output = '-INCLUDE ' q a<i,1> q
-*        i = i + 1 :(inco2)
 
 * process string s looking for functions/variables
 process  &fullscan = 1
@@ -135,13 +138,9 @@ process  &fullscan = 1
 * 'xxx)' won't match anything in fp.
 proc_1   s vp                                                 :f(proc_2)
          s pos(bp) len(ep - bp) =
-*        output = 'vp: f = ' f  ' e = ' e
          differ(weak<e>)                                      :s(proc_1)
-         ident(f, fn)                                         :s(proc_1)
          incs<f> = 1                                           :(proc_1)
 proc_2   s fp =                                               :f(return)
-*        output = 'fp f = ' f  ' e = ' e
          differ(weak<e>)                                      :s(proc_2)
-         ident(f, fn)                                         :s(proc_2)
          incs<f> = 1                                           :(proc_2)
 end

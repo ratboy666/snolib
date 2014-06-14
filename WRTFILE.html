@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>WRTFILE - Write file from string</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Implements WRITEFILE(). Note that SPITBOL will form lines and
+thus can only read or write text. CSNOBOL4 will read and write an
+arbitrary binary string.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="BRKREM.html">BRKREM</a><br>
+<a href="CHARS.html">CHARS</a><br>
+<a href="SYSTEM.html">SYSTEM</a><br>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;BRKREM.INC&#39;
+-INCLUDE &#39;CHARS.INC&#39;
+-INCLUDE &#39;SYSTEM.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;WRTFILE&raquo;&equiv;</b>
+         DEFINE(&#39;WRITEFILE(FILE,S)F,U,E,T&#39;)               <b>:(WRTFILE_END)</b>
+<font color="#818181"><i>*</i></font>
+WRITEFILE
+         SYSTEM() &#39;CSNOBOL4&#39;                              <b>:S(WRITEFILE3)</b>
+         U = 20
+         OUTPUT(.F, U, FILE)                                 <b>:F(FRETURN)</b>
+WRITEFILE2
+         S BRKREM(CHARS_NL) . T (CHARS_NL | NULL) =
+         F = T
+         IDENT(S)                             <b>:S(READFILE4)F(WRITEFILE2)</b>
+WRITEFILE3
+         U = IO_FINDUNIT()
+         OUTPUT(.F, U, &#39;B,65536&#39;, FILE)
+WRITEFILE4
+         T = LT(SIZE(S), 65536) S                         <b>:F(WRITEFILE6)</b>
+         S =
+WRITEFILE5
+         F = T
+         IDENT(S)                             <b>:S(READFILE4)F(WRITEFILE4)</b>
+WRITEFILE6
+         S LEN(65536) . T REM . S                          <b>:(WRITEFILE5)</b>
+<font color="#818181"><i>*</i></font>
+WRTFILE_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;WRTFILE.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+-MODULE WRTFILE
+<b>&laquo;INCLUDES&raquo;</b>
+-IN72
+-STITL WRTFILE
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*      #     #  ######   #######  #######  ###  #        #######       *</i></font>
+<font color="#818181"><i>*      #  #  #  #     #     #     #         #   #        #             *</i></font>
+<font color="#818181"><i>*      #  #  #  #     #     #     #         #   #        #             *</i></font>
+<font color="#818181"><i>*      #  #  #  ######      #     #####     #   #        #####         *</i></font>
+<font color="#818181"><i>*      #  #  #  #   #       #     #         #   #        #             *</i></font>
+<font color="#818181"><i>*      #  #  #  #    #      #     #         #   #        #             *</i></font>
+<font color="#818181"><i>*       ## ##   #     #     #     #        ###  #######  #######       *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* WRTFILE          WRITE COMPLETE FILE FROM STRING                     *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* WRTFILE.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;WRTFILE&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .F.MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Sat Jun 14 14:38:47 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

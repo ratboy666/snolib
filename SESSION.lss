@@ -84,6 +84,7 @@ useful, and -v1 is the default in this code.
 -INCLUDE 'JSON.INC'
 -INCLUDE 'NDBM.INC'
 -INCLUDE 'READFILE.INC'
+-INCLUDE 'WRTFILE.INC'
 -INCLUDE 'REPL.INC'
 -INCLUDE 'TIME.INC'
 @

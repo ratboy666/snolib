@@ -1,10 +1,12 @@
--LINE 24 "READFILE.lss"
+-MODULE READFILE
+-LINE 15 "READFILE.lss"
 -INCLUDE 'BRKREM.INC'
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'SYSTEM.INC'
+-IN72
+-LINE 55 "READFILE.lss"
 -STITL READLINE
 -EJECT
--LINE 85 "READFILE.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -22,31 +24,10 @@
 *
 * READFILE.lss
 *
--LINE 30 "READFILE.lss"
--MODULE READFILE
--PUBLIC WRITEFILE(), READFILE()
-         DEFINE('WRITEFILE(FILE,S)F,U,E,T')
-         DEFINE('READFILE(FILE)F,U,E')                   :(READFILE_END)
+-LINE 21 "READFILE.lss"
+-PUBLIC READFILE()
 *
-WRITEFILE
-         SYSTEM() 'CSNOBOL4'                              :S(WRITEFILE3)
-         U = 20
-         OUTPUT(.F, U, FILE)                                 :F(FRETURN)
-WRITEFILE2
-         S BRKREM(CHARS_NL) . T (CHARS_NL | NULL) =
-         F = T
-         IDENT(S)                             :S(READFILE4)F(WRITEFILE2)
-WRITEFILE3
-         U = IO_FINDUNIT()
-         OUTPUT(.F, U, 'B,65536', FILE)
-WRITEFILE4
-         T = LT(SIZE(S), 65536) S                         :F(WRITEFILE6)
-         S =
-WRITEFILE5
-         F = T
-         IDENT(S)                             :S(READFILE4)F(WRITEFILE4)
-WRITEFILE6
-         S LEN(65536) . T REM . S                          :(WRITEFILE5)
+         DEFINE('READFILE(FILE)F,U,E')                   :(READFILE_END)
 *
 READFILE SYSTEM() 'CSNOBOL4'                               :S(READFILE3)
          U = 20

@@ -4,16 +4,7 @@ Reads a complete file into a string. No conversions are done. Uses
 'B,65536' (binary, 64k byte buffer) for the INPUT() function. This
 is specific to CSNOBOL4.
 
-This is used to bring in content from disk (say, images, templates
-or html). This content can then be left in memory if needed.
-
-Tested w/ 1024..256K buffer size. Default 64K buffer.
-
 If used with SPITBOL, reads a line at a time, adding newlines.
-
-Also implements WRITEFILE(). Note that SPITBOL will form lines and
-thus can only read or write text. CSNOBOL4 will read and write an
-arbitrary binary string.
 
 <h2>Uses</h2>
 <a href="BRKREM.html">BRKREM</a><br>
@@ -27,30 +18,9 @@ arbitrary binary string.
 @
 
 <<READFILE>>=
--MODULE READFILE
--PUBLIC WRITEFILE(), READFILE()
-         DEFINE('WRITEFILE(FILE,S)F,U,E,T')
-         DEFINE('READFILE(FILE)F,U,E')                   :(READFILE_END)
+-PUBLIC READFILE()
 *
-WRITEFILE
-         SYSTEM() 'CSNOBOL4'                              :S(WRITEFILE3)
-         U = 20
-         OUTPUT(.F, U, FILE)                                 :F(FRETURN)
-WRITEFILE2
-         S BRKREM(CHARS_NL) . T (CHARS_NL | NULL) =
-         F = T
-         IDENT(S)                             :S(READFILE4)F(WRITEFILE2)
-WRITEFILE3
-         U = IO_FINDUNIT()
-         OUTPUT(.F, U, 'B,65536', FILE)
-WRITEFILE4
-         T = LT(SIZE(S), 65536) S                         :F(WRITEFILE6)
-         S =
-WRITEFILE5
-         F = T
-         IDENT(S)                             :S(READFILE4)F(WRITEFILE4)
-WRITEFILE6
-         S LEN(65536) . T REM . S                          :(WRITEFILE5)
+         DEFINE('READFILE(FILE)F,U,E')                   :(READFILE_END)
 *
 READFILE SYSTEM() 'CSNOBOL4'                               :S(READFILE3)
          U = 20
@@ -79,7 +49,9 @@ END
 @
 
 <<>>=
+-MODULE READFILE
 <<INCLUDES>>
+-IN72
 -STITL READLINE
 -EJECT
 *

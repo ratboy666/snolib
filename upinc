@@ -14,12 +14,13 @@
 *
 * ce: .msnobol4;
 
--include 'HOST.INC'
--include 'READFILE.INC'
--include 'BQ.INC'
--include 'JSON.INC'
--include 'SEQ.INC'
--include 'CHARS.INC'
+-INCLUDE 'BQ.INC'
+-INCLUDE 'CHARS.INC'
+-INCLUDE 'HOST.INC'
+-INCLUDE 'JSON.INC'
+-INCLUDE 'READFILE.INC'
+-INCLUDE 'SEQ.INC'
+-INCLUDE 'WRTFILE.INC
 
 * command line argument is file to update
 
@@ -39,7 +40,7 @@
 
 * run 'uses' on the "object" file to determine actual dependencies
 
-douses   inc = json_decode(bq('uses ' on))                      :s(issc)
+douses   inc = json_decode(bq('uses ' fn))                      :s(issc)
 
          terminal = '"uses" did not run correctly'                :(end)
 
@@ -51,8 +52,7 @@ issc     ld = ?(src ? '-' ('snocone' | 'SNOCONE')) '//'
 
          fn '.lss'                                            :f(notlss)
 
-* its lss input (my usual). edit the Uses information and <<INCLUDES>
-* block.
+* its lss input. edit the Uses information and <<INCLUDES> block.
 
          src '<H2>Uses</H2>' = '<h2>Uses</h2>'
          src '<h2>Uses</h2>' ((CHARS_NL @bh @eh CHARS_NL) |
@@ -63,8 +63,7 @@ tryi     src '<<INCLUDES>>=' CHARS_NL @bi break('@') @ei '@' CHARS_NL
          di = 1
 noi                                                             :(dorep)
 
-notlss
-         dh =
+notlss   dh =
          di = 1
          bi = 0
          ei = 0

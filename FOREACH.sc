@@ -1,7 +1,9 @@
 -SNOCONE
 -MODULE FOREACH
--LINE 10 "FOREACH.lss"
--LINE 71 "FOREACH.lss"
+-LINE 11 "FOREACH.lss"
+//-INCLUDE 'DEXP.INC'
+-LINE 73 "FOREACH.lss"
+-IN1024
 -STITL FOREACH
 -EJECT
 #
@@ -23,7 +25,7 @@
 # FOREACH.lss
 #
 
--LINE 13 "FOREACH.lss"
+-LINE 15 "FOREACH.lss"
 # Apply procedure proc to each element of x, where x may be an array,
 # table, or expression that produces a sequence of values.
 #

@@ -12,8 +12,8 @@ a list that needs reversing.
 @
 
 <<REVL>>=
--MODULE REVL
 -PUBLIC REVL()
+*
          DEFINE('REVL(L)T')                                  :(REVL_END)
 *
 REVL     REVL = L
@@ -39,7 +39,9 @@ END
 @
 
 <<>>=
+-MODULE REVL
 <<INCLUDES>>
+-IN72
 -STITL REVL
 -EJECT
 *

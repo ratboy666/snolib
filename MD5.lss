@@ -11,6 +11,7 @@
 -INCLUDE 'BQ.INC'
 -INCLUDE 'MKTEMP.INC'
 -INCLUDE 'READFILE.INC'
+-INCLUDE 'WRTFILE.INC'
 @
 
 <<MD5>>=
@@ -20,7 +21,7 @@
 *
 MD5      T = MKTEMP()
          WRITEFILE(T, S)
-         MD5 = BQ('MD5SUM ' T)
+         MD5 = BQ('md5sum ' T)
          MD5 BREAK(' ') . MD5
          DELETE(T)                                             :(RETURN)
 *
@@ -30,7 +31,7 @@ MD5_END
 <<unit_test>>=
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
--INCLUDE 'AGT.INC'
+-INCLUDE 'MD5.INC'
          &CODE = 1
          OUTPUT = MD5('hello, world')
          &CODE = 0

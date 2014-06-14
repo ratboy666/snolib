@@ -5,11 +5,12 @@
 -INCLUDE 'JSON.INC'
 -INCLUDE 'NDBM.INC'
 -INCLUDE 'READFILE.INC'
+-INCLUDE 'WRTFILE.INC'
 -INCLUDE 'REPL.INC'
 -INCLUDE 'TIME.INC'
 -STITL SESSION
 -EJECT
--LINE 232 "SESSION.lss"
+-LINE 233 "SESSION.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -27,7 +28,7 @@
 *
 * SESSION.lss
 *
--LINE 92 "SESSION.lss"
+-LINE 93 "SESSION.lss"
 -MODULE SESSION
 -PUBLIC SESSION_CREATE(), SESSION_DELETE(), SESSION_TOUCH()
 -PUBLIC SESSION_PERSIST(), SESSION_LOAD(), SESSION_EXPIRE()

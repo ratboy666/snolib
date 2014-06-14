@@ -1,7 +1,7 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -PROGRAM LIST
--LINE 204 "list.lss"
+-LINE 205 "list.lss"
 -TITLE LIST
 START
 -LINE 19 "list.lss"
@@ -11,6 +11,7 @@ START
 -INCLUDE 'HOST.INC'
 -INCLUDE 'LOGIC.INC'
 -INCLUDE 'READLINE.INC'
+-INCLUDE 'EDITLINE.INC'
 -INCLUDE 'REPL.INC'
 -INCLUDE 'SEQ.INC'
 -STITL
@@ -32,7 +33,7 @@ START
 *
 * list.lss
 *
--LINE 30 "list.lss"
+-LINE 31 "list.lss"
          TERMINAL = 'LIST (MON DEC 16 18:48:12 EST 2013)'
          RLAPPNAME('LIST')
          READ_HISTORY('.LIST')

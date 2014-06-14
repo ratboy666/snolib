@@ -1,13 +1,14 @@
 #!/usr/bin/bash
          exec "snobol4" "-B" "-s" "-S 40000" "$0" "$@"
 *
--LINE 639 "code.lss"
+-LINE 641 "code.lss"
 -PROGRAM CODE
 -TITLE CODE
 START_
--LINE 16 "code.lss"
+-LINE 17 "code.lss"
 -INCLUDE 'BQ.INC'
 -INCLUDE 'CHARS.INC'
+-INCLUDE 'DDT.INC'
 -INCLUDE 'HOST.INC'
 -INCLUDE 'READLINE.INC'
 -INCLUDE 'SEQ.INC'
@@ -40,18 +41,18 @@ START_
 *
 * code.lss
 *
--LINE 26 "code.lss"
--LINE 608 "code.lss"
+-LINE 28 "code.lss"
+-LINE 610 "code.lss"
          TERMINAL = 'CODE (TUE NOV 26 12:25:23 EST 2013)'
          TERMINAL = 'ENTER SNOBOL4 STATEMENTS (TRY ? FOR HELP)'
--LINE 613 "code.lss"
+-LINE 615 "code.lss"
          NMAX_ = 9999
          EDITOR = 'ED'
--LINE 618 "code.lss"
+-LINE 620 "code.lss"
          RLAPPNAME('CODE')
          READ_HISTORY('.CODE')
          STIFLE_HISTORY(50)
--LINE 42 "code.lss"
+-LINE 44 "code.lss"
          QQ_ = '"'
          Q_  = "'"
          WHITE_SPACE_ = CHARS_HT ' '
@@ -97,25 +98,25 @@ START_
          EVALPAT_  = FENCE '=' REM . CODE
          EXECPAT_  = FENCE '!' REM . CODE
          HELPPAT_  = FENCE '?'
--LINE 582 "code.lss"
+-LINE 584 "code.lss"
 *
          DEFINE('ERRFUN_()')
          DEFINE('PRSLIN_()')
          DEFINE('CHECKLN_(N)')
          DEFINE('CLEAR_()')                                   :(FN_END_)
 *
--LINE 595 "code.lss"
+-LINE 597 "code.lss"
 CHECKLN_ GT(N) LE(N, NMAX_)                                   :S(RETURN)
          TERMINAL = 'LINE NUMBER MUST BE 1 TO ' NMAX_         :(FRETURN)
--LINE 103 "code.lss"
+-LINE 105 "code.lss"
 CLEAR_   FN_ = 'SCRATCH'
          CODE('L__' NMAX_ + 1 ' :(E)')
          SRC_ = ARRAY(NMAX_)
          SEQ(" CODE(SRC_<N> 'L__' N ' :(L__' N + 1 ')')", .N)  :(RETURN)
 *
 FN_END_
--LINE 542 "code.lss"
--LINE 602 "code.lss"
+-LINE 544 "code.lss"
+-LINE 604 "code.lss"
          &TRACE = 999999999
          TRACE('ERRTYPE', 'KEYWORD',, 'ERRFUN_')
          CLEAR_()
@@ -131,7 +132,7 @@ NEWL3_   INPT_ = TRIM(INPT_)
          ADD_HISTORY(VDIFFER(INPT_))
          FL_ = &FNCLEVEL
          PRSLIN_()                                            :(NEWLIN_)
--LINE 560 "code.lss"
+-LINE 562 "code.lss"
 PRSLIN_  N1_ =
          N2_ =
          CODE =
@@ -151,8 +152,8 @@ PRSLIN_  N1_ =
          INPT_ NAMEPAT_                                        :S(NAME_)
          INPT_ DDTPAT_                                         :S(DDT__)
          INPT_ RETNPAT_                                        :S(RETN_)
--LINE 114 "code.lss"
--LINE 137 "code.lss"
+-LINE 116 "code.lss"
+-LINE 139 "code.lss"
          INPT_ SF_PAT_                                       :S(SF_ERR_)
          CODE = CODE(INPT_ ' :S(S) F(F)')                       :S<CODE>
 CPLERR_  TERMINAL = 'COMPILATION ERROR: ' &ERRTEXT
@@ -161,7 +162,7 @@ S        TERMINAL = 'SUCCESS'                                  :(RETURN)
 F        TERMINAL = 'FAILURE'                                  :(RETURN)
 SF_ERR_  TERMINAL = "CANNOT USE 'S', 'F', OR 'E' AS A LABEL WITH CODE"
 +                                                              :(RETURN)
--LINE 195 "code.lss"
+-LINE 197 "code.lss"
 RETN_    CHECKLN_(LN_)                                        :F(RETURN)
          SRC_<LN_> = CODE
          CODE CMNT_PAT_                                        :S(CMNT_)
@@ -170,7 +171,7 @@ RETN_    CHECKLN_(LN_)                                        :F(RETURN)
 CMNT_    CODE INPAT_                                          :F(CMNT2_)
          SLOAD(X)
 CMNT2_   CODE('L__' LN_ ' :(L__' LN_ + 1 ')')                  :(RETURN)
--LINE 224 "code.lss"
+-LINE 226 "code.lss"
 EDIT_    DIFFER(LN_)                                          :S(EDIT2_)
          TEMP_ = BQ('mktemp')
          UNIT = IO_FINDUNIT()
@@ -194,7 +195,7 @@ EDIT4_   ENDFILE(UNIT)
 EDIT2_   CHECKLN_(LN_)                                        :F(RETURN)
          INPT_ = EDITLINE('EDIT: ', LPAD(LN_, 4, '0') ' ' SRC_<LN_>)
 +                                                             :(PRSLIN_)
--LINE 272 "code.lss"
+-LINE 274 "code.lss"
 DDT__    TERMINAL = 'STARTING DDT'
          TEMPSRC_ = BQ('mktemp')
          TEMPLST_ = BQ('mktemp')
@@ -214,15 +215,15 @@ DDT__    TERMINAL = 'STARTING DDT'
          TERMINAL = 'DDT COMPLETED'
          DELETE(TEMPSRC_)
          DELETE(TEMPLST_)                                      :(RETURN)
--LINE 302 "code.lss"
+-LINE 304 "code.lss"
 RUN_     LN_ = IDENT(LN_) 1
          CHECKLN_(LN_)                                        :F(RETURN)
          &TRACE = 0                                      :($('L__' LN_))
--LINE 317 "code.lss"
+-LINE 319 "code.lss"
 LIST_    N2_ = IDENT(N2_) VDIFFER(N1_)
          SEQ(' TERMINAL = LPAD(N, 4, "0") " " VDIFFER(SRC_<N>); '
 +            ' SRC_<N> ', .N, N1_, N2_)                        :(RETURN)
--LINE 330 "code.lss"
+-LINE 332 "code.lss"
 SAVE_    TERMINAL = 'SAVING TO ' FN_
          UNIT = IO_FINDUNIT()
          OUTPUT(.F, UNIT,, FN_)                              :F(FILERR_)
@@ -230,7 +231,7 @@ SAVE_    TERMINAL = 'SAVING TO ' FN_
 +            ' SRC_<N> ', .N)
          ENDFILE(UNIT)
          DETACH(.F)                                            :(RETURN)
--LINE 350 "code.lss"
+-LINE 352 "code.lss"
 LOAD_    TERMINAL = 'LOADING FROM ' FN_
          UNIT = IO_FINDUNIT()
          INPUT(.F, UNIT,, FN_)                               :F(FILERR_)
@@ -239,10 +240,10 @@ LOAD2_   INPT_ = F                                            :F(LOAD3_)
 LOAD3_   ENDFILE(UNIT)
          DETACH(.F)                                            :(RETURN)
 FILERR_  TERMINAL = 'CANNOT OPEN FILE'                         :(RETURN)
--LINE 368 "code.lss"
+-LINE 370 "code.lss"
 NAME_    TERMINAL = IDENT(FN2_) 'FILE: ' FN_                  :S(RETURN)
          FN_ = FN2_                                            :(RETURN)
--LINE 382 "code.lss"
+-LINE 384 "code.lss"
 RENUM_   LN_ = IDENT(LN_) 10
          CHECKLN_(LN_)                                        :F(RETURN)
          SC = 0
@@ -268,13 +269,13 @@ RENUM2_  INPT_ = IN                                          :F(RENUM3_)
 RENUM3_  ENDFILE(UNIT)
          DETACH(.OUT)
          DETACH(.IN)                                           :(RETURN)
--LINE 412 "code.lss"
+-LINE 414 "code.lss"
 E        TERMINAL = 'PROGRAM COMPLETE'                         :(RETURN)
--LINE 422 "code.lss"
+-LINE 424 "code.lss"
 EVAL_    TERMINAL = EVAL(CODE)                                 :S(S)F(F)
--LINE 432 "code.lss"
+-LINE 434 "code.lss"
 EXEC_    HOST(HOST_SYSCMD, CODE)                               :(RETURN)
--LINE 442 "code.lss"
+-LINE 444 "code.lss"
 HELP_    TERMINAL = '=EXPRESSION    DISPLAY VALUE OF EXPRESSION'
          TERMINAL = '!COMMAND       SHELL OUT TO COMMAND'
          TERMINAL = '?              THIS HELP'
@@ -299,17 +300,17 @@ HELP_    TERMINAL = '=EXPRESSION    DISPLAY VALUE OF EXPRESSION'
          TERMINAL =
          TERMINAL = 'S, F, AND E LABELS AVAILABLE'
          TERMINAL = 'SLOAD(' Q_ 'FILE' Q_ ') AVAILABLE'        :(RETURN)
--LINE 473 "code.lss"
+-LINE 475 "code.lss"
 ERRFUN_
          (NE(&ERRTYPE, 34) SETEXIT())
          EQ(&ERRTYPE, 34)                                     :S(RETURN)
          TERMINAL = 'EXECUTION ERROR #' &ERRTYPE ', ' &ERRTEXT
          TERMINAL = 'RETAINED PROGRAM LINE:' DIFFER(LN_)
          TERMINAL = LPAD(VDIFFER(LN_), 4, 0) ' ' SRC_<LN_>     :(RETURN)
--LINE 503 "code.lss"
+-LINE 505 "code.lss"
 BRKFUN_  ERRTYPE_ = &ERRTYPE
          ERRTEXT_ = &ERRTEXT
--LINE 521 "code.lss"
+-LINE 523 "code.lss"
          EQ(ERRTYPE_, 0) EQ(&FNCLEVEL, FL_ + 1)               :S(RETURN)
          EQ(ERRTYPE_, 0)                                     :S(NEWLIN_)
          SETEXIT('BRKFUN_')
@@ -319,7 +320,7 @@ BRKFUN_  ERRTYPE_ = &ERRTYPE
          TERMINAL = 'RETAINED PROGRAM LINE:' DIFFER(LN_)
          TERMINAL = LPAD(VDIFFER(LN_), 4, 0) ' ' SRC_<LN_>
          EQ(&FNCLEVEL, FL_ + 1)                     :S(RETURN)F(NEWLIN_)
--LINE 624 "code.lss"
+-LINE 626 "code.lss"
 EXIT_    WRITE_HISTORY('.CODE')
          SETEXIT()
 END START_

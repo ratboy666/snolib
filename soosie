@@ -3,6 +3,36 @@
 
 * ce: .msnobol4;
 
+-INCLUDE 'ARRAY0.INC'
+-INCLUDE 'ATOL.INC'
+-INCLUDE 'BQ.INC'
+-INCLUDE 'BRKREM.INC'
+-INCLUDE 'CHARS.INC'
+-INCLUDE 'COPYA.INC'
+-INCLUDE 'COPYT.INC'
+-INCLUDE 'CRACK.INC'
+-INCLUDE 'DDT.INC'
+-INCLUDE 'DEDUPA.INC'
+-INCLUDE 'HOST.INC'
+-INCLUDE 'ITERDIR.INC'
+-INCLUDE 'JSON.INC'
+-INCLUDE 'KEYST.INC'
+-INCLUDE 'LINK.INC'
+-INCLUDE 'MD5.INC'
+-INCLUDE 'PRUNET.INC'
+-INCLUDE 'READFILE.INC'
+-INCLUDE 'READLINE.INC'
+-INCLUDE 'REPL.INC'
+-INCLUDE 'REVL.INC'
+-INCLUDE 'SEQ.INC'
+-INCLUDE 'SIZEA.INC'
+-INCLUDE 'SIZET.INC'
+-INCLUDE 'STROUT.INC'
+-INCLUDE 'TIME.INC'
+-INCLUDE 'TRIMB.INC'
+-INCLUDE 'VDIFFER.INC'
+-INCLUDE 'WRTFILE.INC'
+
 * soosie
 *
 * The SNOBOL4 librarian
@@ -15,7 +45,7 @@
 * the image, which includes all source code and "object" files.
 *
 * However, SOOSIE must be much more aware of the filesystem. The
-* only thing available to running programs is "-include" which can only
+* only thing available to running programs is "-INCLUDE 'APPENDA.INC'
 * bring in files from the filesystem. Therefore, SOOSIE also manages
 * files in the filesystem (only those related to SOOSIE).
 *
@@ -33,33 +63,6 @@
 *
 * "Super commands" - build modules out of date. Generate Makefile.
 * Generate listing, test compile of PROGRAM.
-
--include 'JSON.INC'
--include 'READFILE.INC'
--include 'BQ.INC'
--include 'SIZEA.INC'
--include 'CRACK.INC'
--include 'TIMER.INC'
--include 'TIME.INC'
--include 'HASH.INC'
--include 'READLINE.INC'
--include 'VDIFFER.INC'
--include 'TRIMB.INC'
--include 'LINK.INC'
--include 'REVL.INC'
--include 'HOST.INC'
--include 'DEDUPA.INC'
--include 'ATOL.INC'
--include 'ITERDIR.INC'
--include 'DDT.INC'
--include 'SIZEL.INC'
--include 'SIZET.INC'
--include 'STROUT.INC'
--include 'REPL.INC'
--include 'APPENDA.INC'
--include 'MD5.INC'
--include 'ARRAY0.INC'
-
 
          define('iter_artifacts(lbr,m)')
          define('martifact(a)')
@@ -225,7 +228,7 @@ le2      lbr<var> = val                                           :(top)
 help.    terminal = 'SOOSIE COMMANDS'
          terminal =
          terminal = 'ALL EXPORT'
-         terminal = 'SEED [GLOB]'
+         terminal = 'SEED [FILE PATTERN]'
          terminal = 'LIBRARY INFO'
          terminal = '        EDIT VERSION|COMMENT'
          terminal = '        NEW [LBR [LBR.DAT]]'
@@ -236,7 +239,7 @@ help.    terminal = 'SOOSIE COMMANDS'
          terminal = 'SAVE'
          terminal = 'LS'
          terminal = 'EXPORT <MODULE>'
-         terminal = 'IMPORT <GLOB>'
+         terminal = 'IMPORT <FILE PATTERN>'
          terminal = 'QUIT'
          terminal = 'MODULE BUILD <MODULE>'
          terminal = '       INFO <MODULE>'
@@ -455,7 +458,7 @@ mfresh2
 
 stringize
          stringize = v
-         n 'ARTIFACTS' | 'DEPENDS' | 'FILES'                  :f(return)
+         n 'LIBRARIES' | 'ARTIFACTS' | 'DEPENDS' | 'FILES'    :f(return)
          s =
          n 'FILES'                                              :f(str2)
          s = table()
@@ -470,7 +473,7 @@ str2     s = stringout(v, CHARS_NUL)
 destring v = trimb(v)
          destring = v
          v = ?(n ? 'DEPENDS') replace(v, &lcase, &ucase)
-         n 'ARTIFACTS' | 'DEPENDS' | 'FILES'                  :f(return)
+         n 'LBRARIES' | 'ARTIFACTS' | 'DEPENDS' | 'FILES'     :f(return)
          s = repl(v, '\\', CHARS_NUL)
          s = repl(s, '\ ', CHARS_SOH)
          s = repl(s, CHARS_NUL, '\')
@@ -502,6 +505,7 @@ module_add
          m<'SOURCE'> =
          m<'COMMENT'> =
          m<'ARTIFACTS'> = array0
+         m<'LIBRARIES'> = array0
          m<'TYPE'> =
          m<'DEPENDS'> = array0
          m<'INSTALL'> = array0
@@ -718,6 +722,10 @@ module_info
          terminal = 'TYPE:      ' m<'TYPE'>
          terminal = 'SOURCE:    ' m<'SOURCE'>
          terminal = 'COMMENT:   ' m<'COMMENT'>
+         term     = 'LIBRARIES: '
+         a = m<'LIBRARIES'>
+         seq(' term = rpad(a<i>, 16)', .i)
+         terminal =
          term     = 'ARTIFACTS: '
          a = m<'ARTIFACTS'>
          seq(' term = rpad(a<i>, 16)', .i)
@@ -765,10 +773,12 @@ nom      terminal = 'MODULE ' args ' NOT FOUND'                   :(top)
 
 seed.    ddt()
          args = trimb(args)
-         args = ident(args) '*.lss'
-         files = iter_dir(args)
+         args = ident(args) "'.lss' rpos(0)"
+         args = convert(args, 'PATTERN')
+         files = iter_dir(len(0) args, 1)
 seed1      fn = value_dir(files)                                :f(seed2)
-           term = 'SEEDING ' rpad(fn, 16) CHARS_CR
+           terminal = 'SEEDING ' rpad(fn, 16) CHARS_CR
+*           term = 'SEEDING ' rpad(fn, 16) CHARS_CR
 
 * Guess at artifacts from the .lss (or other passed in filename)
 
@@ -869,8 +879,9 @@ export.  ident(lbr)                                              :s(nol)
 
 import.  ident(lbr)                                              :s(nol)
          args = trimb(args)
-         args '.MODULE' rpos(0) =
-         di = iter_dir(args '.MODULE')
+         args = ident(args) "'.MODULE' rpos(0)"
+         args = convert(args, 'PATTERN')
+         di = iter_dir(len(0) args, 1)
 import5    mn = value_dir(di)                                :f(import3)
            terminal = 'IMPORTING ' mn
            file(mn)                                             :f(nomd)
@@ -1025,6 +1036,7 @@ create_module
          m<'SOURCE'> = src
          m<'COMMENT'> = cmnt
          m<'ARTIFACTS'> = artifacts
+         m<'LIBRARIES'> = array0
 
 * Find -MODULE or -PROGRAM directive in the source file to determine
 * the module type. If a -MODULE is not seen, we assume -PROGRAM to

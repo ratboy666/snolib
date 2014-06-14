@@ -1,7 +1,7 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -INCLUDE 'SESSION.INC'
--LINE 187 "SESSION.lss"
+-LINE 188 "SESSION.lss"
          &CODE = 1
 * REMOVE ALL SESSIONS
          BQ('rm -f ' SESSION_PERSIST_DIR 'session_*.db')

@@ -22,6 +22,7 @@ list knows to use terminal hardware scrolling if available.
 -INCLUDE 'HOST.INC'
 -INCLUDE 'LOGIC.INC'
 -INCLUDE 'READLINE.INC'
+-INCLUDE 'EDITLINE.INC'
 -INCLUDE 'REPL.INC'
 -INCLUDE 'SEQ.INC'
 @

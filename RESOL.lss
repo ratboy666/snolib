@@ -9,9 +9,8 @@ REAL number of milliseconds.
 @
 
 <<RESOL>>=
--MODULE RESOL
-%SET(CSNOBOL4,(?(SYSTEM ? 'CSNOBOL4') 1))
 -PUBLIC RESOLUTION()
+*
          DEFINE('RESOLUTION()T,N,R,T2')                :(RESOLUTION_END)
 *
 RESOLUTION
@@ -45,6 +44,10 @@ END
 @
 
 <<>>=
+-MODULE RESOL
+%SET(CSNOBOL4,(?(SYSTEM ? 'CSNOBOL4') 1))
+<<INCLUDES>>
+-IN72
 -STITL RESOL
 -EJECT
 *
