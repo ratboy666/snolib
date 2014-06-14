@@ -1,4 +1,4 @@
-<h1>DEDUPA - "Dedup" a vector</h1>
+<h1>DEDUPA - "Dedup" array - remove duplicates</h1>
 
 Removes identical elements frome a one-dimension array (vector) [[A]]
 by making it into a table, and then making an array from from the keys.
@@ -6,8 +6,8 @@ An empty array dedups to itself, and if keys_in_table fails, no update
 is made.                   
 
 <h2>Uses</h2>
-<a href="SIZEA.html">SIZEA</a><br>
-<a href="HASH.html">HASH</a><br>
+<a href="ARRAY0.html">ARRAY0</a><br>
+<a href="KEYST.html">KEYST</a><br>
 <a href="SEQ.html">SEQ</a><br>
 
 <<INCLUDES>>= 
@@ -41,8 +41,8 @@ END
 
 <<>>=
 -MODULE DEDUPA
--IN72
 <<INCLUDES>>
+-IN72
 -STITL DEDUPA
 -EJECT
 *

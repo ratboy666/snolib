@@ -3,9 +3,12 @@
 [[LOWA(A)]] returns the index of the first element of array [[A]].
 
 <h2>Uses</h2>
+<a href="ARRAY0.html">ARRAY0</a><br>
+<a href="BRKREM.html">BRKREM</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'ARRAY0.INC'
+-INCLUDE 'BRKREM.INC'
 @
 
 <<LOWA>>=

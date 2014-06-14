@@ -77,12 +77,13 @@ driven by its using programs.
 <b>&laquo;INCLUDES&raquo;&equiv;</b>
 -INCLUDE &#39;CHARS.INC&#39;
 -INCLUDE &#39;SLOAD.INC&#39;
+-INCLUDE &#39;HOST.INC&#39;
+-INCLUDE &#39;DDT.INC&#39;
 <b>@</b>
 </font></pre></div>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;embed&raquo;&equiv;</b>
--USES SLOAD()
          TERMINAL = &#39;EMBED (SUN DEC  1 16:15:39 EST 2013)&#39;
 <font color="#818181"><i>*</i></font>
          WHITE_ = SPAN(&#39; &#39; CHARS_TAB) | &#39;&#39;
@@ -90,6 +91,10 @@ driven by its using programs.
          QQ_ = &#39;&quot;&#39;
          LEAD = DUPL(&#39; &#39;, 9)
 <font color="#818181"><i>*</i></font>
+         FN = HOST(HOST_ARGN, HOST(HOST_FIRSTARG))             <b>:F(STDIN)</b>
+         IDENT(FN)                                             <b>:S(STDIN)</b>
+         INPUT(.INPUT, 20,, FN)
+STDIN
 TOP      LINE = INPUT                                            <b>:F(END)</b>
 <font color="#818181"><i>*</i></font>
          LINE FENCE &#39;-&#39; (&#39;snobol&#39; | &#39;SNOBOL&#39;) (ANY(&#39;xX&#39;) | &#39;&#39;) WHITE_
@@ -142,6 +147,7 @@ END START
          exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
 -PROGRAM EMBED
 -TITLE EMBED
+-USES SLOAD()
 START
 <b>&laquo;INCLUDES&raquo;</b>
 -STITL
@@ -172,7 +178,7 @@ START
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 19:59:59 EDT 2014</p></td><td><p align=right>
+Fri Jun 13 16:40:56 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

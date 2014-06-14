@@ -1,7 +1,9 @@
 -MODULE ENDCARD
+-LINE 8 "ENDCARD.lss"
+-IN72
+-LINE 26 "ENDCARD.lss"
 -STITL ENDCARD
 -EJECT
--LINE 26 "ENDCARD.lss"
 ************************************************************************
 *                                                                      *
 *    #######  #     #  ######    #####      #     ######   ######      *

@@ -1,7 +1,7 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -INCLUDE 'FOR.INC'
--LINE 159 "FOR.lss"
+-LINE 163 "FOR.lss"
 -INCLUDE 'TIMER.INC'
 -INCLUDE 'DDT.INC'
          &CODE = 1

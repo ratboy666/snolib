@@ -1,8 +1,9 @@
 -MODULE FLOOR
 -LINE 11 "FLOOR.lss"
 -INCLUDE 'DEXP.INC'
--STITL FLOOR
+-IN72
 -LINE 40 "FLOOR.lss"
+-STITL FLOOR
 -EJECT
 *
 ************************************************************************

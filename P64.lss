@@ -19,11 +19,6 @@ Defines interface to malloc(), free(), strdup() and strlen().
 @
 
 <<P64>>=
--MODULE P64
--CASE 1
-@
-
-<<P64>>=
 -SNOBOL TERMINAL = 'P64 (SUN NOV 10 03:57:08 EST 2013)'
 -SNOBOL SLOAD('CRACK.INC')
 -SNOBOL SLOAD('DYNAMIC.INC')
@@ -189,6 +184,10 @@ END
 @
 
 <<>>=
+-MODULE P64
+<<INCLUDES>>
+-IN72
+-CASE 1
 -STITL P64
 -EJECT
 *

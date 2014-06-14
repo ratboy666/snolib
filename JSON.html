@@ -42,31 +42,33 @@ JSON_NULL, JSON_TRUE and JSON_FALSE.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 <h2>Uses</h2>
+<a href="ARRAY0.html">ARRAY0</a><br>
 <a href="CH.html">CH</a><br>
 <a href="CHARS.html">CHARS</a><br>
-<a href="HASH.html">HASH</a><br>
 <a href="HEX.html">HEX</a><br>
+<a href="KEYST.html">KEYST</a><br>
+<a href="LOG.html">LOG</a><br>
 <a href="SDIFF.html">SDIFF</a><br>
 <a href="SEQ.html">SEQ</a><br>
-<a href="SIZEA.html">SIZEA</a><br>
 </font></p>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;ARRAY0.INC&#39;
 -INCLUDE &#39;CH.INC&#39;
 -INCLUDE &#39;CHARS.INC&#39;
--INCLUDE &#39;HASH.INC&#39;
 -INCLUDE &#39;HEX.INC&#39;
+-INCLUDE &#39;KEYST.INC&#39;
+-INCLUDE &#39;LOG.INC&#39;
 -INCLUDE &#39;SDIFF.INC&#39;
 -INCLUDE &#39;SEQ.INC&#39;
--INCLUDE &#39;SIZEA.INC&#39;
--INCLUDE &#39;ARRAY0.INC&#39;
 <b>@</b>
 </font></pre></div>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;JSON&raquo;&equiv;</b>
 -PUBLIC JSON_ENCODE(), JSON_DECODE()
+<font color="#818181"><i>*</i></font>
          DEFINE(&#39;JSON_ENCODE(X)L&#39;)
          DEFINE(&#39;JSON_DECODE(X)&#39;)
 <font color="#818181"><i>*</i></font>
@@ -112,6 +114,7 @@ JSON_NULL, JSON_TRUE and JSON_FALSE.
 <font color="#818181"><i>* CREATE A TYPE THAT REPRESENT THESE VALUES UNIQUELY.</i></font>
 <font color="#818181"><i>*</i></font>
 -PUBLIC JSON_NULL, JSON_TRUE, JSON_FALSE
+<font color="#818181"><i>*</i></font>
          DATA(&#39;JSON_CONSTANT(VALUE)&#39;)
          JSON_NULL = JSON_CONSTANT(&#39;null&#39;)
          JSON_TRUE = JSON_CONSTANT(&#39;true&#39;)
@@ -122,6 +125,7 @@ JSON_NULL, JSON_TRUE and JSON_FALSE.
 <font color="#818181"><i>* WITH NULL.</i></font>
 <font color="#818181"><i>*</i></font>
 -PUBLIC JSON_NL, JSON_IN
+<font color="#818181"><i>*</i></font>
          JSON_NL = CHARS_NL
          JSON_IN = &#39;  &#39;
 <font color="#818181"><i>*</i></font>
@@ -130,6 +134,7 @@ JSON_NULL, JSON_TRUE and JSON_FALSE.
 <font color="#818181"><i>* DOCUMENTS.</i></font>
 <font color="#818181"><i>*</i></font>
 -PUBLIC JSON_REST
+<font color="#818181"><i>*</i></font>
          JSON_REST =
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* JSON_HEX IS A HEX DIGIT USED BY THE \u CHARACTER IS A JSON STRING.</i></font>
@@ -399,8 +404,8 @@ END
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
 -MODULE JSON
--IN72
 <b>&laquo;INCLUDES&raquo;</b>
+-IN72
 -STITL JSON
 -EJECT
 <font color="#818181"><i>*</i></font>
@@ -429,7 +434,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Wed Jun 11 23:03:03 EDT 2014</p></td><td><p align=right>
+Fri Jun 13 15:13:34 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

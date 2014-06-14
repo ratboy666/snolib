@@ -1,9 +1,10 @@
-<h1>FFI - Foreign Function Interface</h1>
+<h1>FFI - Foreign function interface</h1>
 
 An interface to [[libffi]] providing a Foreign Function Interface
 (FFI) for SNOBOL4.
 
 <h2>Uses</h2>
+<a href="P64.html">P64</a><br>
 
 When building, the following INCLUDEs are also needed:
 
@@ -14,12 +15,7 @@ When building, the following INCLUDEs are also needed:
 <a href="SEQ.html">SEQ</a>
 
 <<INCLUDES>>=
-@
-
-<<FFI>>=
--MODULE FFI
--CASE 1
--PLUSOPS 1
+-INCLUDE 'P64.INC'
 @
 
 When building ffi.so the following INCLUDES are needed.
@@ -641,7 +637,11 @@ END
 @
 
 <<>>=
+-MODULE FFI
+-CASE 1
+-PLUSOPS 1
 <<INCLUDES>>
+-IN72
 -STITL FFI
 -EJECT
 *

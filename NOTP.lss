@@ -12,8 +12,8 @@ will also abort.
 @
 
 <<NOTP>>=
--MODULE NOTP
 -PUBLIC NOTP()
+*
          DEFINE('NOTP(P)')                                   :(NOTP_END)
 *
 @
@@ -40,7 +40,9 @@ END
 @
 
 <<>>=
+-MODULE NOTP
 <<INCLUDES>>
+-IN72
 -STITL NOTP
 -EJECT
 *

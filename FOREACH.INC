@@ -2,63 +2,65 @@
   :(FOREACH.1)
 -SNOCONE 
 -MODULE FOREACH 
--LINE 10 "FOREACH.lss" 
--LINE 71 "FOREACH.lss" 
+-LINE 11 "FOREACH.lss" 
+-LINE 73 "FOREACH.lss" 
+-IN1024 
 -STITL FOREACH 
 -EJECT 
--LINE 13 "FOREACH.lss" 
+-LINE 15 "FOREACH.lss" 
 -PUBLIC FOREACH() 
--LINE 18 "FOREACH.lss"
+-LINE 20 "FOREACH.lss"
   :(foreach.END)
--LINE 19
-foreach i = datatype(x)
--LINE 20
- IDENT(i,'ARRAY') :F(FOREACH.2)
 -LINE 21
- i = 1
+foreach i = datatype(x)
 -LINE 22
- prototype(x) ? fence break(':') . i
+ IDENT(i,'ARRAY') :F(FOREACH.2)
 -LINE 23
-FOREACH.3 a = x<i> :F(FOREACH.4)
+ i = 1
 -LINE 24
- apply(proc,a) :S(FOREACH.5)F(FRETURN)
+ prototype(x) ? fence break(':') . i
+-LINE 25
+FOREACH.3 a = x<i> :F(FOREACH.4)
 -LINE 26
-FOREACH.5 i = i + 1 :(FOREACH.3)
+ apply(proc,a) :S(FOREACH.5)F(FRETURN)
 -LINE 28
+FOREACH.5 i = i + 1 :(FOREACH.3)
+-LINE 30
 FOREACH.4  :(FOREACH.6)
 FOREACH.2 IDENT(i,'TABLE') :F(FOREACH.7)
--LINE 29
- x = convert(x,'ARRAY') :S(FOREACH.8)F(FRETURN)
 -LINE 31
-FOREACH.8 x = sort(x)
--LINE 32
- i = 1
+ x = convert(x,'ARRAY') :S(FOREACH.8)F(FRETURN)
 -LINE 33
-FOREACH.9 a = x<i,2> :F(FOREACH.10)
+FOREACH.8 x = sort(x)
 -LINE 34
- apply(proc,a,x<i,1>) :S(FOREACH.11)F(FRETURN)
+ i = 1
+-LINE 35
+FOREACH.9 a = x<i,2> :F(FOREACH.10)
 -LINE 36
-FOREACH.11 i = i + 1 :(FOREACH.9)
+ apply(proc,a,x<i,1>) :S(FOREACH.11)F(FRETURN)
 -LINE 38
+FOREACH.11 i = i + 1 :(FOREACH.9)
+-LINE 40
 FOREACH.10  :(FOREACH.12)
 FOREACH.7 IDENT(i,'EXPRESSION') :F(FOREACH.13)
--LINE 39
+-LINE 41
 FOREACH.14 a = eval(x) :F(FOREACH.15)
--LINE 40
- apply(proc,a) :S(FOREACH.16)F(FRETURN)
 -LINE 42
-FOREACH.16  :(FOREACH.14)
--LINE 43
-FOREACH.15  :(FOREACH.17)
+ apply(proc,a) :S(FOREACH.16)F(FRETURN)
 -LINE 44
+FOREACH.16  :(FOREACH.14)
+-LINE 45
+FOREACH.15  :(FOREACH.17)
+-LINE 46
 FOREACH.13 apply(proc,x) :S(RETURN)F(FOREACH.18)
--LINE 47
+-LINE 49
 FOREACH.18  :(FRETURN)
 FOREACH.19 
 FOREACH.17 
 FOREACH.12 
--LINE 49
+-LINE 51
 FOREACH.6  :(RETURN)
 foreach.END 
 FOREACH.1 
+-INCLUDE 'DEXP.INC' 
  DEFINE('foreach(x,proc)a,i')

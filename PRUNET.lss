@@ -1,0 +1,65 @@
+<h1>PRUNET - Prune table removing empty entries</h1>
+
+[[PRUNET(T)]] returns a pruned table. This is a new table with only
+non-IDENT elements inserted.
+
+<h2>Uses</h2>
+<a href="KEYST.html">KEYST</a><br>
+<a href="SEQ.html">SEQ</a><br>
+
+<h2>See Also</h2>
+<a href="PSQL.html">PSQL</a>
+
+<<INCLUDES>>=
+-INCLUDE 'KEYST.INC'
+-INCLUDE 'SEQ.INC'
+@
+
+<<PRUNET>>=
+-PUBLIC PRUNET()
+*
+         DEFINE('PRUNET(T)A,I')                            :(PRUNET_END)
+*
+PRUNET   PRUNET = TABLE()
+         A = KEYST(T)                                         :F(RETURN)
+         SEQ(' PRUNET<A<I>> = VDIFFER(T<A<I>>)', .I)           :(RETURN)
+*
+PRUNET_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'PRUNET.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+-MODULE PRUNET
+<<INCLUDES>>
+-IN72
+-STITL PRUNET
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*         ######   ######   #     #  #     #  #######  #######         *
+*         #     #  #     #  #     #  ##    #  #           #            *
+*         #     #  #     #  #     #  # #   #  #           #            *
+*         ######   ######   #     #  #  #  #  #####       #            *
+*         #        #   #    #     #  #   # #  #           #            *
+*         #        #    #   #     #  #    ##  #           #            *
+*         #        #     #   #####   #     #  #######     #            *
+*                                                                      *
+* PRUNET                       PRUNE TABLE                             *
+*                                                                      *
+************************************************************************
+*
+* PRUNET.lss
+*
+<<PRUNET>>
+*
+* CE: .MSNOBOL4;
+@

@@ -1,8 +1,10 @@
+-MODULE LAST
 -LINE 11 "LAST.lss"
 -INCLUDE 'LINK.INC'
+-IN72
+-LINE 39 "LAST.lss"
 -STITL LAST
 -EJECT
--LINE 39 "LAST.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -21,8 +23,8 @@
 * LAST.lss
 *
 -LINE 15 "LAST.lss"
--MODULE LAST
 -PUBLIC LAST()
+*
          DEFINE('LAST(L)')                                   :(LAST_END)
 *
 LAST     IDENT(L)                                            :S(FRETURN)

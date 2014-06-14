@@ -59,6 +59,9 @@ END
 @
 
 <<>>=
+-MODULE GOTOS
+<<INCLUDES>>
+-IN72
 -STITL GOTOS
 -EJECT
 *

@@ -1,4 +1,4 @@
-<h1>DSERVE - DDT Server</h1>
+<h1>DSERVE - DDT Server (telnet)</h1>
 
 [[DSERVE]] provides a method to allow debugging applications that
 cannot normally be debugged. The application will call [[DSERVE_INIT()]]
@@ -148,8 +148,8 @@ END
 
 <<>>=
 -MODULE DSERVE
--IN72
 <<INCLUDES>>
+-IN72
 -STITL DSERVE
 -EJECT
 *

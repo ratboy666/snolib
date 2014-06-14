@@ -21,8 +21,8 @@ function call in SNOBOL4 source.
 @
 
 <<FASTBAL>>=
--MODULE FASTBAL
 -PUBLIC FASTBAL()
+*
          DEFINE('FASTBAL(PARENS,QTS,S)NAME,IBAL,SPCHARS,ELEM'
 +               ',LPS,Q,LP,RP')                           :(FASTBAL_END)
 *
@@ -93,7 +93,9 @@ END
 @
 
 <<>>=
+-MODULE FASTBAL
 <<INCLUDES>>
+-IN72
 -STITL FASTBAL
 -EJECT
 *

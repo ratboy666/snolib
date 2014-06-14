@@ -5,8 +5,10 @@
 produces a sequence of values.
 
 <h2>Uses</h2>
+<a href="DEXP.html">DEXP</a><br>
 
 <<INCLUDES>>=
+//-INCLUDE 'DEXP.INC'
 @
 
 <<foreach>>=
@@ -68,6 +70,7 @@ END
 -SNOCONE
 -MODULE FOREACH
 <<INCLUDES>>
+-IN1024
 -STITL FOREACH
 -EJECT
 #

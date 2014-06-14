@@ -13,10 +13,10 @@ Like <font face="Source Code Pro">SHELL</font> backquotes (hence the name).  Opt
 string to use to separate lines.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
-This doesn't work when <font face="Source Code Pro">DDT()</font> is used. The <font face="Source Code Pro">INPUT()</font> fails
+This doesn't work when <font face="Source Code Pro">DDT</font> is used. The <font face="Source Code Pro">INPUT()</font> fails
 when traced.  Previously, it failed when garbage collect occurred,
 but that has been fixed. To fix this, <font face="Source Code Pro">BQ()</font> is a wrapper which
-disables <font face="Source Code Pro">DDT()</font> and then calls the 'real' function <font face="Source Code Pro">BQ2()</font>.
+disables <font face="Source Code Pro">DDT</font> and then calls the 'real' function <font face="Source Code Pro">BQ2()</font>.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 <h2>Uses</h2>
@@ -42,12 +42,12 @@ disables <font face="Source Code Pro">DDT()</font> and then calls the 'real' fun
 <b>@</b>
 </font></pre></div>
 <p align="justify"><font face="Sorts Mill Goudy">
-<font face="Source Code Pro">DDT_ACTIVE</font> is set if <font face="Source Code Pro">DDT()</font> is active. If <font face="Source Code Pro">DDT()</font> is not
+<font face="Source Code Pro">DDT_ACTIVE</font> is set if <font face="Source Code Pro">DDT</font> is active. If <font face="Source Code Pro">DDT</font> is not
 active, or hasn't been loaded at all, <font face="Source Code Pro">DDT_ACTIVE</font> will evaluate to
 <font face="Source Code Pro">NULL</font>.  Note that SNOBOL4 will not complain about a missing function
 unless we actually try to execute it. Thus, this works whether or not
-<font face="Source Code Pro">DDT()</font> is actually in use. <font face="Source Code Pro">BQ2()</font> may succeed or fail. In both
-cases, we want to re-enable <font face="Source Code Pro">DDT()</font> if it was loaded and active,
+<font face="Source Code Pro">DDT</font> is actually in use. <font face="Source Code Pro">BQ2()</font> may succeed or fail. In both
+cases, we want to re-enable <font face="Source Code Pro">DDT</font> if it was loaded and active,
 and pass the success or failure to the caller of <font face="Source Code Pro">BQ()</font>.
 </font></p>
 <div style="background-image: url(greenbar.gif)">
@@ -96,8 +96,8 @@ END
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
 -MODULE BQ
--IN72
 <b>&laquo;INCLUDES&raquo;</b>
+-IN72
 -STITL BQ
 -EJECT
 <font color="#818181"><i>*</i></font>
@@ -128,7 +128,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Wed Jun 11 11:50:28 EDT 2014</p></td><td><p align=right>
+Fri Jun 13 16:40:55 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

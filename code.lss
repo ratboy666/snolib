@@ -6,6 +6,7 @@ primitive programming environment with line numbered statements.
 <h2>Uses</h2>
 <a href="BQ.html">BQ</a><br>
 <a href="CHARS.html">CHARS</a><br>
+<a href="DDT.html">DDT</a><br>
 <a href="HOST.html">HOST</a><br>
 <a href="READLINE.html">READLINE</a><br>
 <a href="SEQ.html">SEQ</a><br>
@@ -15,6 +16,7 @@ primitive programming environment with line numbered statements.
 <<INCLUDES>>=
 -INCLUDE 'BQ.INC'
 -INCLUDE 'CHARS.INC'
+-INCLUDE 'DDT.INC'
 -INCLUDE 'HOST.INC'
 -INCLUDE 'READLINE.INC'
 -INCLUDE 'SEQ.INC'

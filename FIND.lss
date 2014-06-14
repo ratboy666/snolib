@@ -14,8 +14,8 @@ type of extreme element will be determined by the predicate [[PRED]].
 @
 
 <<FIND>>=
--MODULE FIND
 -PUBLIC FIND()
+*
          DEFINE('FIND(A,PRED)EX,I,MAX,TEST')                 :(FIND_END)
 *
 FIND     EX = CONVERT(PRED '(MAX,TEST)', 'EXPRESSION')
@@ -41,6 +41,9 @@ END
 @
 
 <<>>=
+-MODULE FIND
+<<INCLUDES>>
+-IN72
 -STITL FIND
 -EJECT
 *

@@ -1,7 +1,8 @@
 -MODULE HOST
 -LINE 8 "HOST.lss"
--STITL HOST
+-IN72
 -LINE 162 "HOST.lss"
+-STITL HOST
 -EJECT
 *
 ************************************************************************

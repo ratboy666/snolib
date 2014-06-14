@@ -16,8 +16,8 @@ the argument by
 @
 
 <<LIKE>>=
--MODULE LIKE
 -PUBLIC LIKE()
+*
          DEFINE('LIKE(S)C,T1,T2,N')                          :(LIKE_END)
 *
 LIKE     LIKE = S
@@ -45,6 +45,9 @@ END
 @
 
 <<>>=
+-MODULE LIKE
+<<INCLUDES>>
+-IN72
 -STITL LIKE
 -EJECT
 *

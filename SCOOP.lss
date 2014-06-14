@@ -94,12 +94,14 @@ a pointer compare. This means that representing messages by strings
 is a reasonable choice.
 
 <h2>Uses</h2>
+<a href="TIMER.html">TIMER</a><br>
 <a href="VDIFFER.html">VDIFFER</a><br>
 
 <h2>See Also</h2>
 <a href="STACK.html">STACK</a>
 
 <<INCLUDES>>=
+-INCLUDE 'TIMER.INC'
 -INCLUDE 'VDIFFER.INC'
 @
 

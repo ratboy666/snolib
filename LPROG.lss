@@ -15,8 +15,8 @@ will increase this number, so call this early during execution.
 @
 
 <<LPROG>>=
--MODULE LPROG
 -PUBLIC LPROG()
+*
          DEFINE('LPROG()')                                  :(LPROG_END)
 *
 LPROG                                :<CODE(' LPROG = &STNO :(RETURN)')>
@@ -35,6 +35,9 @@ END
 @
 
 <<>>=
+-MODULE LPROG
+<<INCLUDES>>
+-IN72
 -STITL LPROG
 -EJECT
 *

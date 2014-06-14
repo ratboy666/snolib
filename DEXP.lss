@@ -1,4 +1,4 @@
-<h1>DEXP - Simple Function Definition</h1>
+<h1>DEXP - Simple function definition</h1>
 
 Simple function definition. [[DEXP(PROTO)]] defines functions in
 terms of a simple, one-line expression, such as
@@ -36,8 +36,8 @@ END
 
 <<>>=
 -MODULE DEXP
--IN72
 <<INCLUDES>>
+-IN72
 -STITL DEXP
 -EJECT
 *

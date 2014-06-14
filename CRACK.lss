@@ -14,21 +14,15 @@ from strings: <code>%'A,B,C'</code> creates a three-element array.
 
 <<INCLUDES>>=
 -INCLUDE 'COUNT.INC'
--INCLUDE 'SEQ.INC'
 @
 
 <<CRACK>>=
 -PUBLIC CRACK(), %1
--PUBLIC COPYA()
 *
-         DEFINE('COPYA(A)I')
          DEFINE('CRACK_1(S)P')
          DEFINE('CRACK(S,B,F)I,PAT,N')
          DEFINE('CRACK_4(S)')
          OPSYN('%', 'CRACK_1', 1)                           :(CRACK_END)
-*
-COPYA    COPYA = ARRAY(PROTOTYPE(A))
-         SEQ(' COPYA<I> = A<I>', .I)                           :(RETURN)
 *
 CRACK_1  P = IDENT(P) ','
          CRACK_1 = CRACK(S, P)                                 :(RETURN)
@@ -64,8 +58,8 @@ END
 
 <<>>=
 -MODULE CRACK
--IN72
 <<INCLUDES>>
+-IN72
 -STITL CRACK
 -EJECT
 *

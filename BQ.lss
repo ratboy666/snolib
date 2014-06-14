@@ -3,10 +3,10 @@
 Like [[SHELL]] backquotes (hence the name).  Optional second arg is
 string to use to separate lines.
 
-This doesn't work when [[DDT()]] is used. The [[INPUT()]] fails
+This doesn't work when [[DDT]] is used. The [[INPUT()]] fails
 when traced.  Previously, it failed when garbage collect occurred,
 but that has been fixed. To fix this, [[BQ()]] is a wrapper which
-disables [[DDT()]] and then calls the 'real' function [[BQ2()]].
+disables [[DDT]] and then calls the 'real' function [[BQ2()]].
 
 <h2>Uses</h2>
 
@@ -25,12 +25,12 @@ disables [[DDT()]] and then calls the 'real' function [[BQ2()]].
 *
 @
 
-[[DDT_ACTIVE]] is set if [[DDT()]] is active. If [[DDT()]] is not
+[[DDT_ACTIVE]] is set if [[DDT]] is active. If [[DDT]] is not
 active, or hasn't been loaded at all, [[DDT_ACTIVE]] will evaluate to
 [[NULL]].  Note that SNOBOL4 will not complain about a missing function
 unless we actually try to execute it. Thus, this works whether or not
-[[DDT()]] is actually in use. [[BQ2()]] may succeed or fail. In both
-cases, we want to re-enable [[DDT()]] if it was loaded and active,
+[[DDT]] is actually in use. [[BQ2()]] may succeed or fail. In both
+cases, we want to re-enable [[DDT]] if it was loaded and active,
 and pass the success or failure to the caller of [[BQ()]].
 
 <<BQ>>=
@@ -70,8 +70,8 @@ END
 
 <<>>=
 -MODULE BQ
--IN72
 <<INCLUDES>>
+-IN72
 -STITL BQ
 -EJECT
 *

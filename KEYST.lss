@@ -1,0 +1,62 @@
+<h1>KEYST - Return array of keys in table</h1>
+
+[[KEYST(T)]] returns an array of the keys in table [[T]].
+
+<h2>Uses</h2>
+<a href="ARRAY0.html">ARRAY0</a><br>
+<a href="SEQ.html">SEQ</a><br>
+
+<<INCLUDES>>=
+-INCLUDE 'ARRAY0.INC'
+-INCLUDE 'SEQ.INC'
+@
+
+<<KEYST>>=
+-PUBLIC KEYST()
+*
+         DEFINE('KEYST(T)A,N,I')                            :(KEYST_END)
+*
+KEYST    A = (CONVERT(T, 'ARRAY'), ARRAY0)                   :F(FRETURN)
+         PROTOTYPE(A) BREAK(',') . N                         :F(FRETURN)
+         KEYST = (NE(N) ARRAY(N), ARRAY0)
+         SEQ(' KEYST<I> = A<I,1> ', .I)                        :(RETURN)
+*
+KEYST_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'HASH.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+-MODULE KEYST
+<<INCLUDES>>
+-IN72
+-STITL KEYST
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*              #    #  #######  #     #   #####   #######              *
+*              #   #   #         #   #   #     #     #                 *
+*              #  #    #          # #    #           #                 *
+*              ###     #####       #      #####      #                 *
+*              #  #    #           #           #     #                 *
+*              #   #   #           #     #     #     #                 *
+*              #    #  #######     #      #####      #                 *
+*                                                                      *
+* KEYST                      KEYS IN TABLE                             *
+*                                                                      *
+************************************************************************
+*
+* KEYST.lss
+*
+<<KEYST>>
+*
+* CE: .MSNOBOL4;
+@

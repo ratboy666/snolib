@@ -6,6 +6,7 @@ convenient.
 
 <h2>Uses</h2>
 <a href="SEQ.html">SEQ</a><br>
+<a href="SIZEA.html">SIZEA</a><br>
 
 <<INCLUDES>>= 
 -INCLUDE 'SEQ.INC'
@@ -35,8 +36,8 @@ END
 
 <<>>=
 -MODULE APPENDA
--IN72
 <<INCLUDES>>
+-IN72
 -STITL AI
 -EJECT
 *

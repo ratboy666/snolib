@@ -1,7 +1,10 @@
+-MODULE ORDER
+-LINE 9 "ORDER.lss"
+-IN72
+-LINE 37 "ORDER.lss"
 -STITL ORDER
 -EJECT
 *
--LINE 37 "ORDER.lss"
 ************************************************************************
 *                                                                      *
 *                #######  ######   ######   #######  ######            *
@@ -19,8 +22,8 @@
 * ORDER.lss
 *
 -LINE 12 "ORDER.lss"
--MODULE ORDER
 -PUBLIC ORDER()
+*
          DEFINE('ORDER(S)T,HIGHS,S1')                       :(ORDER_END)
 *
 ORDER    S LEN(1) . T =                                       :F(RETURN)

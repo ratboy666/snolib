@@ -14,12 +14,10 @@ all of the platforms that I would want.
 
 <h2>Uses</h2>
 <a href="CRACK.html">CRACK</a><br>
-<a href="P64.html">P64</a><br>
 <a href="SEQ.html">SEQ</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'CRACK.INC'
--INCLUDE 'P64.INC'
 -INCLUDE 'SEQ.INC'
 @
 
@@ -2152,6 +2150,7 @@ END
 <<>>=
 -MODULE JIT
 <<INCLUDES>>
+-IN72
 -STITL JIT
 -EJECT
 *

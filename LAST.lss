@@ -12,8 +12,8 @@ concatenate the two lists. [[LAST(L) = L]] creates a circular list.
 @
 
 <<LAST>>=
--MODULE LAST
 -PUBLIC LAST()
+*
          DEFINE('LAST(L)')                                   :(LAST_END)
 *
 LAST     IDENT(L)                                            :S(FRETURN)
@@ -33,7 +33,9 @@ END
 @
 
 <<>>=
+-MODULE LAST
 <<INCLUDES>>
+-IN72
 -STITL LAST
 -EJECT
 *

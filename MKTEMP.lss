@@ -1,0 +1,61 @@
+<h1>MKTEMP - Create temporary file</h1>
+
+[[MKTEMP()]] creates a temporary file. Remember to delete the file
+when finished with it.
+
+<h2>Uses</h2>
+<a href="BQ.html">BQ</a><br>
+
+<<INCLUDES>>=
+-INCLUDE 'BQ.INC'
+@
+
+<<MKTEMP>>=
+-PUBLIC MKTEMP()
+*
+         DEFINE('MKTEMP()')                                :(MKTEMP_END)
+*
+MKTEMP   MKTEMP = BQ('mktemp')                                 :(RETURN)
+
+MKTEMP_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'MKTEMP.INC'
+         &CODE = 1
+         F = MKTEMP()
+         FILE(F)                                                 :F(END)
+         DELETE(F)
+         &CODE = 0
+END
+@
+
+<<>>=
+-MODULE MKTEMP
+<<INCLUDES>>
+-IN72
+-STITL MKTEMP
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*         #     #  #    #  #######  #######  #     #  ######           *
+*         ##   ##  #   #      #     #        ##   ##  #     #          *
+*         # # # #  #  #       #     #        # # # #  #     #          *
+*         #  #  #  ###        #     #####    #  #  #  ######           *
+*         #     #  #  #       #     #        #     #  #                *
+*         #     #  #   #      #     #        #     #  #                *
+*         #     #  #    #     #     #######  #     #  #                *
+*                                                                      *
+* MKTEMP               CREATE TEMPORARY FILE                           *
+*                                                                      *
+************************************************************************
+*
+* MKTEMP.lss
+*
+<<MKTEMP>>
+*
+* CE: .MSNOBOL4;
+@

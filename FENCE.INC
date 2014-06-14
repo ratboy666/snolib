@@ -1,8 +1,10 @@
+-MODULE FENCE
 -LINE 34 "FENCE.lss"
 -INCLUDE 'UNIQUE.INC'
+-IN72
+-LINE 64 "FENCE.lss"
 -STITL FENCE
 -EJECT
--LINE 64 "FENCE.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -19,8 +21,8 @@
 * FENCE.lss
 *
 -LINE 38 "FENCE.lss"
--MODULE FENCE
 -PUBLIC FENCE()
+*
         DEFINE('FENCE(P)N')                                 :(FENCE_END)
 *
 FENCE   N = UNIQUE()

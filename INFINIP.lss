@@ -12,7 +12,6 @@ Infinite precision integer math.
 @
 
 <<INFINIP>>=
--MODULE INFINIP
          SIGN_OFF  = POS(0) '-'
          LDG_ZEROS = BREAK('123456789') | RTAB(1)
          NO_DIGITS = 4
@@ -185,7 +184,9 @@ END
 @
 
 <<>>=
+-MODULE INFINIP
 <<INCLUDES>>
+-IN72
 -STITL INFINIP
 -EJECT
 *

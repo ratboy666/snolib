@@ -1,4 +1,4 @@
-<h1>DYNAMIC - Create Dynamic Modules for CSNOBOL4</h1>
+<h1>DYNAMIC - Create dynamic modules for CSNOBOL4</h1>
 
 Create dynamic modules for [[CSNOBOL4]].
 
@@ -194,8 +194,8 @@ END
 
 <<>>=
 -MODULE DYNAMIC
--IN72
 <<INCLUDES>>
+-IN72
 -STITL DYNAMIC
 -EJECT
 *

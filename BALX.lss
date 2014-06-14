@@ -1,4 +1,4 @@
-<h1>BALX - BAL Extended</h1>
+<h1>BALX - BAL extended</h1>
 
 [[BALX(PARENS,QTS)]] will return a pattern which will match all
 non-null balanced strings where [[PARENS]] is used to specify paired
@@ -48,8 +48,8 @@ END
 
 <<>>=
 -MODULE BALX
--IN72
 <<INCLUDES>>
+-IN72
 -STITL BALX
 -EJECT
 *

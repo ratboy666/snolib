@@ -24,20 +24,26 @@ as synonyms. <font face="Source Code Pro">CAAR()</font> through <font face="Sour
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;LINK&raquo;&equiv;</b>
--MODULE LINK
 -PUBLIC LINK(), NEXT()
+<font color="#818181"><i>*</i></font>
          DATA(&#39;LINK(VALUE,NEXT)&#39;)
+<font color="#818181"><i>*</i></font>
 -PUBLIC CONS(), CAR(), CDR()
+<font color="#818181"><i>*</i></font>
          OPSYN(&#39;CONS&#39;, &#39;LINK&#39;)
          OPSYN(&#39;CAR&#39;, &#39;VALUE&#39;)
          OPSYN(&#39;CDR&#39;, &#39;NEXT&#39;)
+<font color="#818181"><i>*</i></font>
 -PUBLIC CAAR(), CDAR(), CADR(), CDDR()
+<font color="#818181"><i>*</i></font>
          DEFINE(&#39;CAAR(L)&#39;)
          DEFINE(&#39;CDAR(l)&#39;)
          DEFINE(&#39;CADR(L)&#39;)
          DEFINE(&#39;CDDR(L)&#39;)
+<font color="#818181"><i>*</i></font>
 -PUBLIC CAAAR(), CAADR(), CADAR(), CADDR()
 -PUBLIC CDAAR(), CDADR(), CDDAR(), CDDDR()
+<font color="#818181"><i>*</i></font>
          DEFINE(&#39;CAAAR(L)&#39;)
          DEFINE(&#39;CAADR(L)&#39;)
          DEFINE(&#39;CADAR(L)&#39;)
@@ -79,6 +85,9 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+-MODULE LINK
+<b>&laquo;INCLUDES&raquo;</b>
+-IN72
 -STITL LINK
 -EJECT
 <font color="#818181"><i>*</i></font>
@@ -107,7 +116,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 20:00:34 EDT 2014</p></td><td><p align=right>
+Fri Jun 13 15:13:24 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

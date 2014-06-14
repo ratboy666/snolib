@@ -6,7 +6,7 @@
       content="sweave generated">
 </head><body><font face="Sorts Mill Goudy">
 <p align="justify"><font face="Sorts Mill Goudy">
-<h1>COOKIE - COOKIE Support Functions</h1>
+<h1>COOKIE - CGI COOKIE Support</h1>
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 Cookie support functions. Cookies are saved in a cookie jar, which is
@@ -59,7 +59,7 @@ be returned (probably as a session cookie).
 <h2>Uses</h2>
 <a href="CHARS.html">CHARS</a><br>
 <a href="DEXP.html">DEXP</a><br>
-<a href="HASH.html">HASH</a><br>
+<a href="KEYST.html">KEYST</a><br>
 <a href="TIME.html">TIME</a><br>
 <a href="TRIMB.html">TRIMB</a><br>
 <a href="VDIFFER.html">VDIFFER</a><br>
@@ -69,7 +69,7 @@ be returned (probably as a session cookie).
 <b>&laquo;INCLUDES&raquo;&equiv;</b>
 -INCLUDE &#39;CHARS.INC&#39;
 -INCLUDE &#39;DEXP.INC&#39;
--INCLUDE &#39;HASH.INC&#39;
+-INCLUDE &#39;KEYST.INC&#39;
 -INCLUDE &#39;TIME.INC&#39;
 -INCLUDE &#39;TRIMB.INC&#39;
 -INCLUDE &#39;VDIFFER.INC&#39;
@@ -82,7 +82,7 @@ be returned (probably as a session cookie).
 -PUBLIC COOKIE_VALUE(), COOKIE_SET_CRUMB(), COOKIE_GET_CRUMB()
 -PUBLIC PUT_COOKIE_IN_JAR(), GET_COOKIE_FROM_JAR(), COOKIES_IN_JAR()
 -PUBLIC CRUMBS_IN_COOKIE(), COOKIE_EXPIRY(), COOKIE_STRING()
--PuBLIC COOKIE_FIX_NAME()
+-PUBLIC COOKIE_FIX_NAME()
 <font color="#818181"><i>*</i></font>
          DEFINE(&#39;NEW_COOKIE_JAR()&#39;)
          DEFINE(&#39;NEW_COOKIE(VALUE)&#39;)
@@ -234,8 +234,8 @@ END
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
 -MODULE COOKIE
--IN72
 <b>&laquo;INCLUDES&raquo;</b>
+-IN72
 -STITL COOKIE
 -EJECT
 <font color="#818181"><i>*</i></font>
@@ -264,7 +264,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Wed Jun 11 11:50:32 EDT 2014</p></td><td><p align=right>
+Fri Jun 13 15:13:33 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

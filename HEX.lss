@@ -14,8 +14,8 @@ the string [[S]].
 @
 
 <<HEX>>=
--MODULE HEX
 -PUBLIC HEX()
+*
          DEFINE('HEX(S)S2')
 *
          H = '0123456789ABCDEF'
@@ -45,7 +45,9 @@ END
 @
 
 <<>>=
+-MODULE HEX
 <<INCLUDES>>
+-IN72
 -STITL HEX
 -EJECT
 *

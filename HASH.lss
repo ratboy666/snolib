@@ -12,13 +12,6 @@ may not contain the item separator.
 to make it easier to construct simple tables. It is [[OPSYN]]'d to
 [[#]] to make it's use more convenient.
 
-[[COPYT(T)]] returns a copy of table [[T]]. [[MERGET(T1,T2)]]
-merges two tables together. Entries in [[T2]] override entries in
-[[T1]]. The returned table is a new table. Neither [[T1]] nor [[T2]]
-are changed. [[KEYST(T)]] returns an array of the keys in
-table [[T]]. [[PRUNET(T)]] returns a pruned table. This is a new
-table with only non-IDENT elements inserted.
-
 The full call to [[HASH()]]is
 [[
 HASH(S,E,P,TS,TI,FK,FD,SP) where
@@ -48,7 +41,10 @@ a value of [['YYY']].  [[#'']] is pretty much the same as [[TABLE()]].
 
 <h2>Uses</h2>
 <a href="BRKREM.html">BRKREM</a><br>
-<a href="SEQ.html">SEQ</a><br>
+<a href="COPYT.html">COPYT</a><br>
+<a href="KEYST.html">KEYST</a><br>
+<a href="MERGET.html">MERGET</a><br>
+<a href="TRIMB.html">TRIMB</a><br>
 <a href="VDIFFER.html">VDIFFER</a><br>
 
 <h2>See Also</h2>
@@ -56,27 +52,19 @@ a value of [['YYY']].  [[#'']] is pretty much the same as [[TABLE()]].
 
 <<INCLUDES>>=
 -INCLUDE 'BRKREM.INC'
--INCLUDE 'SEQ.INC'
+-INCLUDE 'COPYT.INC'
+-INCLUDE 'KEYST.INC'
+-INCLUDE 'MERGET.INC'
+-INCLUDE 'TRIMB.INC'
 -INCLUDE 'VDIFFER.INC'
 @
 
 <<HASH>>=
--MODULE HASH
--PUBLIC HASH(), COPYT(), MERGET(), KEYST(), #1
--PUBLIC PRUNET()
+-PUBLIC HASH(), #1
 *
          DEFINE('HASH(S,E,P,TS,TI,FK,FV,SP)K,V,C')
          DEFINE('HASH_3(S)')
-         DEFINE('COPYT(T)')
-         DEFINE('MERGET(T1,T2)A,I')
-         DEFINE('KEYST(T)A,N,I')
-         DEFINE('PRUNET(T)A,I')
          OPSYN('#', 'HASH', 1)                               :(HASH_END)
-*
-PRUNET
-         PRUNET = TABLE()
-         A = KEYST(T)                                         :F(RETURN)
-         SEQ( ' PRUNET<A<I>> = VDIFFER(T<A<I>>)', .I)          :(RETURN)
 *
 HASH     HASH = TABLE(TS, TI)
          E = IDENT(E) '='
@@ -96,18 +84,6 @@ HASH_4   S POS(0) BRKREM(P) . V (P | RPOS(0)) =               :F(RETURN)
 *
 HASH_3   HASH_3 = S                                            :(RETURN)
 *
-COPYT    COPYT = TABLE()
-         COPYT = CONVERT(CONVERT(T, 'ARRAY'), 'TABLE')         :(RETURN)
-*
-MERGET   MERGET = COPYT(T1)
-         A = CONVERT(T2, 'ARRAY')
-         SEQ(' MERGET<A<I, 1>> = A<I, 2> ', .I)                :(RETURN)
-*
-KEYST    A = (CONVERT(T, 'ARRAY'), ARRAY0)                   :F(FRETURN)
-         PROTOTYPE(A) BREAK(',') . N                         :F(FRETURN)
-         KEYST = (NE(N) ARRAY(N), ARRAY0)
-         SEQ(' KEYST<I> = A<I,1> ', .I)                        :(RETURN)
-*
 HASH_END
 @
 
@@ -115,6 +91,9 @@ HASH_END
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -INCLUDE 'HASH.INC'
+-INCLUDE 'MERGET.INC'
+-INCLUDE 'COPYT.INC'
+-INCLUDE 'KEYST.INC'
          &CODE = 1
          H = #'FIRST=BOB,LAST=LOBLAW'
          IDENT(H<'FIRST'>, 'BOB')                                :F(END)
@@ -141,7 +120,9 @@ END
 @
 
 <<>>=
+-MODULE HASH
 <<INCLUDES>>
+-IN72
 -STITL HASH
 -EJECT
 *

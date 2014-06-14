@@ -32,14 +32,20 @@ with doc, respond 302 Location and doc returned
 ]]
 
 <h2>Uses</h2>
+<a href="BQ.html">BQ</a><br>
 <a href="CHARS.html">CHARS</a><br>
 <a href="COOKIE.html">COOKIE</a><br>
 <a href="CRACK.html">CRACK</a><br>
+<a href="DSERVE.html">DSERVE</a><br>
+<a href="FCGI.html">FCGI</a><br>
 <a href="HASH.html">HASH</a><br>
 <a href="HTMLESC.html">HTMLESC</a><br>
+<a href="HTMLTMPL.html">HTMLTMPL</a><br>
 <a href="JSON.html">JSON</a><br>
+<a href="READFILE.html">READFILE</a><br>
 <a href="SCOOP.html">SCOOP</a><br>
 <a href="SEQ.html">SEQ</a><br>
+<a href="SESSION.html">SESSION</a><br>
 <a href="UNIQUE.html">UNIQUE</a><br>
 <a href="VDIFFER.html">VDIFFER</a><br>
 
@@ -49,22 +55,25 @@ with doc, respond 302 Location and doc returned
 <a href="PSQL.html">PSQL</a>
 
 <<INCLUDES>>=
+-INCLUDE 'BQ.INC'
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'COOKIE.INC'
 -INCLUDE 'CRACK.INC'
+-INCLUDE 'DSERVE.INC'
+-INCLUDE 'FCGI.INC'
 -INCLUDE 'HASH.INC'
 -INCLUDE 'HTMLESC.INC'
+-INCLUDE 'HTMLTMPL.INC'
 -INCLUDE 'JSON.INC'
+-INCLUDE 'READFILE.INC'
 -INCLUDE 'SCOOP.INC'
 -INCLUDE 'SEQ.INC'
+-INCLUDE 'SESSION.INC'
 -INCLUDE 'UNIQUE.INC'
 -INCLUDE 'VDIFFER.INC'
 @
 
 <<CGI>>=
--USES CRACK(), HOST(), URL_DECODE(), COOKIE_FIX_NAME()
--WEAK USE_FCGI, FCGI_ENV, FCGI_IN, FCGI_REQUEST_COMPLETE
--WEAK FCGI_SEND(), FCGI_END()
 *
 -PUBLIC CLASS:CGI_CLASS
 *
@@ -591,8 +600,11 @@ END
 
 <<>>=
 -MODULE CGI
--IN72
+-USES CRACK(), HOST(), URL_DECODE(), COOKIE_FIX_NAME()
+-WEAK USE_FCGI, FCGI_ENV, FCGI_IN, FCGI_REQUEST_COMPLETE
+-WEAK FCGI_SEND(), FCGI_END()
 <<INCLUDES>>
+-IN72
 -STITL CGI
 -EJECT
 *

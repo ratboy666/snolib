@@ -1,0 +1,64 @@
+<h1>MERGET - Return new table which is two tables merged</h1>
+
+[[MERGET(T1,T2)]]
+merges two tables together. Entries in [[T2]] override entries in
+[[T1]]. The returned table is a new table. Neither [[T1]] nor [[T2]]
+are changed.
+
+<h2>Uses</h2>
+<a href="COPYT.html">COPYT</a><br>
+<a href="SEQ.html">SEQ</a><br>
+
+<<INCLUDES>>=
+-INCLUDE 'COPYT.INC'
+-INCLUDE 'SEQ.INC'
+@
+
+<<MERGET>>=
+-PUBLIC MERGET()
+*
+         DEFINE('MERGET(T1,T2)A,I')                        :(MERGET_END)
+*
+MERGET   MERGET = COPYT(T1)
+         A = CONVERT(T2, 'ARRAY')
+         SEQ(' MERGET<A<I, 1>> = A<I, 2> ', .I)                :(RETURN)
+*
+MERGET_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'MERGET.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+-MODULE MERGET
+<<INCLUDES>>
+-IN72
+-STITL MERGET
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*         #     #  #######  ######    #####   #######  #######         *
+*         ##   ##  #        #     #  #     #  #           #            *
+*         # # # #  #        #     #  #        #           #            *
+*         #  #  #  #####    ######   #  ####  #####       #            *
+*         #     #  #        #   #    #     #  #           #            *
+*         #     #  #        #    #   #     #  #           #            *
+*         #     #  #######  #     #   #####   #######     #            *
+*                                                                      *
+* MERGET                     MERGE TABLES                              *
+*                                                                      *
+************************************************************************
+*
+* MERGET.lss
+*
+<<MERGET>>
+*
+* CE: .MSNOBOL4;
+@

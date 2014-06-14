@@ -35,8 +35,8 @@ value assignment.
 @
 
 <<FENCE>>=
--MODULE FENCE
 -PUBLIC FENCE()
+*
         DEFINE('FENCE(P)N')                                 :(FENCE_END)
 *
 FENCE   N = UNIQUE()
@@ -58,7 +58,9 @@ END
 @
 
 <<>>=
+-MODULE FENCE
 <<INCLUDES>>
+-IN72
 -STITL FENCE
 -EJECT
 *

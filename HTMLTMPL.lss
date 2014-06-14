@@ -17,21 +17,21 @@ of template caching will be done.
 
 <h2>Uses</h2>
 <a href="CHARS.html">CHARS</a><br>
-<a href="HTMLESC.html">HTMLESC</a><br>
 <a href="LAST.html">LAST</a><br>
 <a href="LINK.html">LINK</a><br>
 <a href="READFILE.html">READFILE</a><br>
 <a href="REVL.html">REVL</a><br>
 <a href="SWAP.html">SWAP</a><br>
+<a href="TIMER.html">TIMER</a><br>
 
 <<INCLUDES>>=
 //-INCLUDE 'CHARS.INC'
-//-INCLUDE 'HTMLESC.INC'
 //-INCLUDE 'LAST.INC'
 //-INCLUDE 'LINK.INC'
 //-INCLUDE 'READFILE.INC'
 //-INCLUDE 'REVL.INC'
 //-INCLUDE 'SWAP.INC'
+//-INCLUDE 'TIMER.INC'
 @
 
 <<unit_test>>=
@@ -289,6 +289,8 @@ procedure tmpl_parse_args(s) n v {
 <<>>=
 -MODULE HTMLTMPL
 -SNOCONE
+<<INCLUDES>>
+-IN1024
 <<htmltmpl>>
 
 # ce: .f.msnocone;

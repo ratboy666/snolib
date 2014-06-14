@@ -14,6 +14,18 @@ the string into an array of lines. atol to produce a linked list,
 and return that list as the directory iterator.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
+We want to be able to specify directory patterns as either SNOBOL4
+pattern or as OS globs. If the incoming <font face="Source Code Pro">W</font> is a string, it will
+be used as an OS glob match. If <font face="Source Code Pro">DATATYPE(W)</font> is PATTERN, it will
+be used to filter the OS directory list. A list of all files is
+constructed. The list is walked, and entries that do not match the
+pattern are discarded. To delete a node, we keep a trailing list
+item <font face="Source Code Pro">L</font>. <font face="Source Code Pro">NEXT(L) = NEXT(P)</font> will then delete node <font face="Source Code Pro">P</font>. Of
+course, this doesn't work for the first element of the list. To
+delete the first element, we simply forward step <font face="Source Code Pro">ITER_DIR</font>.
+<font face="Source Code Pro">ITER_DIR = NEXT(ITER_DIR)</font> will delete the first element.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
 General note on iterators. The iter_() function returns an iterator
 This iterator is passed to a value function v() which returns the
 next thing being iterated. v() should fail if the end of iteration
@@ -35,10 +47,12 @@ expected.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 <h2>Uses</h2>
-<a href="BQ.html">BQ</a><br>
-<a href="CRACK.html">CRACK</a><br>
 <a href="ATOL.html">ATOL</a><br>
+<a href="BQ.html">BQ</a><br>
 <a href="CHARS.html">CHARS</a><br>
+<a href="CRACK.html">CRACK</a><br>
+<a href="LINK.html">LINK</a><br>
+<a href="VDIFFER.html">VDIFFER</a><br>
 </font></p>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
@@ -52,17 +66,31 @@ expected.
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;ITERDIR&raquo;&equiv;</b>
--PUBLIC `VALUE_DIR(), ITER_DIR(), NEXT_DIR()
+-PUBLIC VALUE_DIR(), ITER_DIR(), NEXT_DIR()
 <font color="#818181"><i>*</i></font>
-         DEFINE(&#39;ITER_DIR(W)&#39;)
+         DEFINE(&#39;ITER_DIR(W)P,L&#39;)
          DEFINE(&#39;VALUE_DIR(D)&#39;)
          DEFINE(&#39;NEXT_DIR(D)&#39;)                           <b>:(END_ITER_DIR)</b>
 <font color="#818181"><i>*</i></font>
 VALUE_DIR
          VALUE_DIR = DIFFER(D) VALUE(D)             <b>:S(RETURN)F(FRETURN)</b>
 <font color="#818181"><i>*</i></font>
-ITER_DIR ITER_DIR = ATOL(CRACK(BQ(&#39;ls 2&gt;/dev/null &#39; W, CHARS_NL),
+ITER_DIR DIFFER(FORCEPATTERN)                               <b>:S(ITERDIR2)</b>
+         DATATYPE(W) &#39;PATTERN&#39;                              <b>:S(ITERDIR2)</b>
+<font color="#818181"><i>*</i></font>
+         ITER_DIR = ATOL(CRACK(BQ(&#39;ls 2&gt;/dev/null &#39; W, CHARS_NL),
 +           CHARS_NL))                              <b>:S(RETURN)F(FRETURN)</b>
+<font color="#818181"><i>*</i></font>
+ITERDIR2 ITER_DIR =
++           ATOL(CRACK(BQ(&#39;ls 2&gt;/dev/null&#39;, CHARS_NL), CHARS_NL))
+         P = ITER_DIR
+ITERDIR3 IDENT(P)                                             <b>:S(RETURN)</b>
+         VALUE(P) W                                         <b>:S(ITERDIR4)</b>
+         NEXT(VDIFFER(L)) = NEXT(P)
+         ITER_DIR = IDENT(L) NEXT(ITER_DIR)
+         P = IDENT(L) ITER_DIR                              <b>:S(ITERDIR3)</b>
+         P = NEXT(P)                                         <b>:(ITERDIR3)</b>
+ITERDIR4 L = P; P = NEXT(P)                                  <b>:(ITERDIR3)</b>
 <font color="#818181"><i>*</i></font>
 NEXT_DIR NEXT_DIR = DIFFER(D) NEXT(D)               <b>:S(RETURN)F(FRETURN)</b>
 <font color="#818181"><i>*</i></font>
@@ -76,6 +104,15 @@ END_ITER_DIR
          exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
 -INCLUDE &#39;ITERDIR.INC&#39;
          &amp;CODE = 1
+         DI = ITER_DIR(FENCE &#39;W&#39;)
+TOP1       OUTPUT = VALUE_DIR(DI)                               <b>:F(BTM1)</b>
+         DI = NEXT_DIR(DI)                                       <b>:(TOP1)</b>
+BTM1
+<font color="#818181"><i>*</i></font>
+         DI = ITER_DIR(&#39;c*&#39;)
+TOP2       OUTPUT = VALUE_DIR(DI)                               <b>:F(BTM2)</b>
+         DI = NEXT_DIR(DI)                                       <b>:(TOP2)</b>
+BTM2
          &amp;CODE = 0
 END
 <b>@</b>
@@ -85,6 +122,7 @@ END
 <b>&laquo;&raquo;&equiv;</b>
 -MODULE ITERDIR
 <b>&laquo;INCLUDES&raquo;</b>
+-IN72
 -STITL ITERDIR
 -EJECT
 <font color="#818181"><i>*</i></font>
@@ -113,7 +151,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Wed Jun 11 11:10:48 EDT 2014</p></td><td><p align=right>
+Fri Jun 13 15:13:40 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

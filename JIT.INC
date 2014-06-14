@@ -1,10 +1,10 @@
 -MODULE JIT
--LINE 21 "JIT.lss"
+-LINE 20 "JIT.lss"
 -INCLUDE 'CRACK.INC'
--INCLUDE 'P64.INC'
 -INCLUDE 'SEQ.INC'
+-IN72
+-LINE 2154 "JIT.lss"
 -STITL JIT
--LINE 2156 "JIT.lss"
 -EJECT
 *
 ************************************************************************
@@ -25,23 +25,23 @@
 *
 * JIT.lss
 *
--LINE 27 "JIT.lss"
+-LINE 25 "JIT.lss"
 -CASE 1
 -PLUSOPS 1
+-LINE 28 "JIT.lss"
+-LINE 29 "JIT.lss"
 -LINE 30 "JIT.lss"
 -LINE 31 "JIT.lss"
 -LINE 32 "JIT.lss"
--LINE 33 "JIT.lss"
--LINE 34 "JIT.lss"
--LINE 37 "JIT.lss"
+-LINE 35 "JIT.lss"
          jit = 'jit.c'
+-LINE 473 "JIT.lss"
+-LINE 474 "JIT.lss"
 -LINE 475 "JIT.lss"
 -LINE 476 "JIT.lss"
 -LINE 477 "JIT.lss"
 -LINE 478 "JIT.lss"
--LINE 479 "JIT.lss"
--LINE 480 "JIT.lss"
--LINE 488 "JIT.lss"
+-LINE 486 "JIT.lss"
          LOAD('INIT_JIT(STRING)', 'jit.so')
          LOAD('R_NUM_JIT()INTEGER', 'jit.so')
          LOAD('V_NUM_JIT()INTEGER', 'jit.so')
@@ -1585,7 +1585,7 @@ JIT_BGTI_U
          JIT_BGTI_U = BGTI_U_JIT(R)                            :(RETURN)
 *
 *******======== BLTI_JIT
-**            'bnei bmsi bmci boaddi boaddi_u bxaddi bxaddi_u '          +
+**            'bnei bmsi bmci boaddi boaddi_u bxaddi bxaddi_u '
 **            'bosubi bosubi_u bxsubi bxsubi_u '
 JIT_BNEI SET_P(P)
          BNEI_JIT(R)                                           :(RETURN)

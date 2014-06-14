@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>PRUNET - Prune table removing empty entries</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">PRUNET(T)</font> returns a pruned table. This is a new table with only
+non-IDENT elements inserted.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="KEYST.html">KEYST</a><br>
+<a href="SEQ.html">SEQ</a><br>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>See Also</h2>
+<a href="PSQL.html">PSQL</a>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;KEYST.INC&#39;
+-INCLUDE &#39;SEQ.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;PRUNET&raquo;&equiv;</b>
+-PUBLIC PRUNET()
+<font color="#818181"><i>*</i></font>
+         DEFINE(&#39;PRUNET(T)A,I&#39;)                            <b>:(PRUNET_END)</b>
+<font color="#818181"><i>*</i></font>
+PRUNET   PRUNET = TABLE()
+         A = KEYST(T)                                         <b>:F(RETURN)</b>
+         SEQ(&#39; PRUNET&lt;A&lt;I&gt;&gt; = VDIFFER(T&lt;A&lt;I&gt;&gt;)&#39;, .I)           <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+PRUNET_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;PRUNET.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+-MODULE PRUNET
+<b>&laquo;INCLUDES&raquo;</b>
+-IN72
+-STITL PRUNET
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*         ######   ######   #     #  #     #  #######  #######         *</i></font>
+<font color="#818181"><i>*         #     #  #     #  #     #  ##    #  #           #            *</i></font>
+<font color="#818181"><i>*         #     #  #     #  #     #  # #   #  #           #            *</i></font>
+<font color="#818181"><i>*         ######   ######   #     #  #  #  #  #####       #            *</i></font>
+<font color="#818181"><i>*         #        #   #    #     #  #   # #  #           #            *</i></font>
+<font color="#818181"><i>*         #        #    #   #     #  #    ##  #           #            *</i></font>
+<font color="#818181"><i>*         #        #     #   #####   #     #  #######     #            *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* PRUNET                       PRUNE TABLE                             *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* PRUNET.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;PRUNET&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri Jun 13 15:13:44 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

@@ -1,7 +1,12 @@
--LINE 17 "FFI.lss"
+-MODULE FFI
+-CASE 1
+-PLUSOPS 1
+-LINE 643 "FFI.lss"
+-LINE 18 "FFI.lss"
+-INCLUDE 'P64.INC'
+-IN72
 -STITL FFI
 -EJECT
--LINE 647 "FFI.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -19,28 +24,24 @@
 *
 * FFI.lss
 *
--LINE 20 "FFI.lss"
--MODULE FFI
--CASE 1
--PLUSOPS 1
--LINE 28 "FFI.lss"
+-LINE 24 "FFI.lss"
 -SNOBOL SLOAD('BQ.INC')
--LINE 29 "FFI.lss"
+-LINE 25 "FFI.lss"
 -SNOBOL SLOAD('DYNAMIC.INC')
--LINE 30 "FFI.lss"
+-LINE 26 "FFI.lss"
 -SNOBOL SLOAD('WRAPPER.INC')
--LINE 31 "FFI.lss"
+-LINE 27 "FFI.lss"
 -SNOBOL SLOAD('CRACK.INC')
--LINE 32 "FFI.lss"
+-LINE 28 "FFI.lss"
 -SNOBOL SLOAD('SEQ.INC')
--LINE 33 "FFI.lss"
+-LINE 29 "FFI.lss"
 -SNOBOL TERMINAL = 'FFI (MON NOV 11 12:50:40 EST 2013)'
--LINE 34 "FFI.lss"
--LINE 37 "FFI.lss"
+-LINE 30 "FFI.lss"
+-LINE 33 "FFI.lss"
 -EMBED C 'ffi'
-#line 41 "FFI.lss"
+#line 37 "FFI.lss"
 -SNOBOL WRAPPER_STARTFILE(.EMBED)
-#line 42 "FFI.lss"
+#line 38 "FFI.lss"
 
 #include <ffi.h>
 #include <stdio.h>
@@ -51,7 +52,7 @@
 static int errors;
 static ffi_status ffi_error;
 
-#line 69 "FFI.lss"
+#line 65 "FFI.lss"
 
 static void *interpret_ptype(char **s)
 {
@@ -119,7 +120,7 @@ static void *interpret_ptype(char **s)
     return NULL;
 }
 
-#line 145 "FFI.lss"
+#line 141 "FFI.lss"
 
 typedef struct {
     ffi_cif *cif;
@@ -133,7 +134,7 @@ typedef struct {
     void *callp;
 } ffi_t;
 
-#line 164 "FFI.lss"
+#line 160 "FFI.lss"
 
 static long ffi_new(char *r, char *s)
 {
@@ -187,9 +188,9 @@ static long ffi_new(char *r, char *s)
 }
 
 -SNOBOL C_WRAPPER_PROTO('FFI_NEW(STRING,STRING)LONG', .EMBED)
-#line 217 "FFI.lss"
+#line 213 "FFI.lss"
 
-#line 224 "FFI.lss"
+#line 220 "FFI.lss"
 
 static void ffi_clear(long p)
 {
@@ -204,9 +205,9 @@ static void ffi_clear(long p)
 }
 
 -SNOBOL C_WRAPPER_PROTO('FFI_CLEAR(LONG)', .EMBED)
-#line 238 "FFI.lss"
+#line 234 "FFI.lss"
 
-#line 244 "FFI.lss"
+#line 240 "FFI.lss"
 
 static void ffi_free(long p)
 {
@@ -219,9 +220,9 @@ static void ffi_free(long p)
 }
 
 -SNOBOL C_WRAPPER_PROTO('FFI_FREE(LONG)', .EMBED)
-#line 256 "FFI.lss"
+#line 252 "FFI.lss"
 
-#line 263 "FFI.lss"
+#line 259 "FFI.lss"
 
 static int ffi_par_n_needfree(long p,int n)
 {
@@ -234,9 +235,9 @@ static int ffi_par_n_needfree(long p,int n)
 
 -SNOBOL C_WRAPPER_PROTO('FFI_PAR_N_NEEDFREE(LONG,INTEGER)PREDICATE',   +
            .EMBED)
-#line 275 "FFI.lss"
+#line 271 "FFI.lss"
 
-#line 281 "FFI.lss"
+#line 277 "FFI.lss"
 
 static int ffi_par_n_integer(long p, int n, int v)
 {
@@ -249,9 +250,9 @@ static int ffi_par_n_integer(long p, int n, int v)
 
 -SNOBOL C_WRAPPER_PROTO('FFI_PAR_N_INTEGER('                       +
                         'LONG,INTEGER,INTEGER)PREDICATE', .EMBED)
-#line 293 "FFI.lss"
+#line 289 "FFI.lss"
 
-#line 300 "FFI.lss"
+#line 296 "FFI.lss"
 
 static int ffi_par_n_real(long p, int n, double v)
 {
@@ -264,9 +265,9 @@ static int ffi_par_n_real(long p, int n, double v)
 
 -SNOBOL C_WRAPPER_PROTO('FFI_PAR_N_REAL('                              +
                         'LONG,INTEGER,REAL)PREDICATE', .EMBED)
-#line 312 "FFI.lss"
+#line 308 "FFI.lss"
 
-#line 319 "FFI.lss"
+#line 315 "FFI.lss"
 
 static int ffi_par_n_ptr(long p, int n, long p2)
 {
@@ -279,9 +280,9 @@ static int ffi_par_n_ptr(long p, int n, long p2)
 
 -SNOBOL C_WRAPPER_PROTO('FFI_PAR_N_PTR(LONG,INTEGER,LONG)PREDICATE',   +
                         .EMBED)
-#line 331 "FFI.lss"
+#line 327 "FFI.lss"
 
-#line 337 "FFI.lss"
+#line 333 "FFI.lss"
 
 static int ffi_par_n_f(long p, int n, double f)
 {
@@ -294,9 +295,9 @@ static int ffi_par_n_f(long p, int n, double f)
 
 -SNOBOL C_WRAPPER_PROTO('FFI_PAR_N_F(LONG,INTEGER,REAL)PREDICATE',     +
                         .EMBED)
-#line 349 "FFI.lss"
+#line 345 "FFI.lss"
 
-#line 355 "FFI.lss"
+#line 351 "FFI.lss"
 
 static int ffi_par_n_d(long p, int n, double d)
 {
@@ -309,9 +310,9 @@ static int ffi_par_n_d(long p, int n, double d)
 
 -SNOBOL C_WRAPPER_PROTO('FFI_PAR_N_D(LONG,INTEGER,REAL)PREDICATE',     +
                         .EMBED)
-#line 367 "FFI.lss"
+#line 363 "FFI.lss"
 
-#line 373 "FFI.lss"
+#line 369 "FFI.lss"
 
 static int ffi_par_n_ld(long p, int n, double d)
 {
@@ -324,9 +325,9 @@ static int ffi_par_n_ld(long p, int n, double d)
 
 -SNOBOL C_WRAPPER_PROTO('FFI_PAR_N_LD(LONG,INTEGER,REAL)PREDICATE',    +
                         .EMBED)
-#line 385 "FFI.lss"
+#line 381 "FFI.lss"
 
-#line 392 "FFI.lss"
+#line 388 "FFI.lss"
 
 static int ffi_par_n_string(long p, int n, char *s)
 {
@@ -342,9 +343,9 @@ static int ffi_par_n_string(long p, int n, char *s)
 
 -SNOBOL C_WRAPPER_PROTO('FFI_PAR_N_STRING('                            +
                         'LONG,INTEGER,STRING)PREDICATE', .EMBED)
-#line 407 "FFI.lss"
+#line 403 "FFI.lss"
 
-#line 413 "FFI.lss"
+#line 409 "FFI.lss"
 
 /* CIF in P2, FN in P */
 static void ffi_set_callp(long p2, long p)
@@ -354,9 +355,9 @@ static void ffi_set_callp(long p2, long p)
 }
 
 -SNOBOL C_WRAPPER_PROTO('FFI_SET_CALLP(LONG,LONG)', .EMBED)
-#line 422 "FFI.lss"
+#line 418 "FFI.lss"
 
-#line 428 "FFI.lss"
+#line 424 "FFI.lss"
 
 static void call_ffi(long p)
 {
@@ -366,7 +367,7 @@ static void call_ffi(long p)
 }
 
 -SNOBOL C_WRAPPER_PROTO('CALL_FFI(LONG)', .EMBED)
-#line 437 "FFI.lss"
+#line 433 "FFI.lss"
 
 /* Return address of call result, use peek_() function to retrieve */
 static long ffi_resultp(long p)
@@ -376,9 +377,9 @@ static long ffi_resultp(long p)
 }
 
 -SNOBOL C_WRAPPER_PROTO('FFI_RESULTP(LONG)LONG', .EMBED)
-#line 446 "FFI.lss"
+#line 442 "FFI.lss"
 
-#line 453 "FFI.lss"
+#line 449 "FFI.lss"
 
 static int call_integer_ffi(long p)
 {
@@ -389,7 +390,7 @@ static int call_integer_ffi(long p)
 }
 
 -SNOBOL C_WRAPPER_PROTO('CALL_INTEGER_FFI(LONG)INTEGER', .EMBED)
-#line 463 "FFI.lss"
+#line 459 "FFI.lss"
 
 static long call_ptr_ffi(long p)
 {
@@ -400,7 +401,7 @@ static long call_ptr_ffi(long p)
 }
 
 -SNOBOL C_WRAPPER_PROTO('CALL_PTR_FFI(LONG)LONG', .EMBED)
-#line 473 "FFI.lss"
+#line 469 "FFI.lss"
 
 static double call_real_ffi(long p)
 {
@@ -411,7 +412,7 @@ static double call_real_ffi(long p)
 }
 
 -SNOBOL C_WRAPPER_PROTO('CALL_REAL_FFI(LONG)REAL', .EMBED)
-#line 483 "FFI.lss"
+#line 479 "FFI.lss"
 
 static char *call_string_ffi(long p)
 {
@@ -422,16 +423,16 @@ static char *call_string_ffi(long p)
 }
 
 -SNOBOL C_WRAPPER_PROTO('CALL_STRING_FFI(LONG)STRING', .EMBED)
-#line 493 "FFI.lss"
+#line 489 "FFI.lss"
 
-#line 501 "FFI.lss"
+#line 497 "FFI.lss"
 
 /* DL functions
  */
 static long dlopen_(char *s, int n) { return (long)dlopen(s, n); }
 
 -SNOBOL C_WRAPPER_PROTO('DLOPEN_(STRING,INTEGER)LONG', .EMBED)
-#line 507 "FFI.lss"
+#line 503 "FFI.lss"
 
 static char *dlerror_(void)
 {
@@ -441,7 +442,7 @@ static char *dlerror_(void)
 }
 
 -SNOBOL C_WRAPPER_PROTO('DLERROR_()STRING', .EMBED)
-#line 516 "FFI.lss"
+#line 512 "FFI.lss"
 
 static long dlsym_(long p, char *s)
 {
@@ -449,31 +450,31 @@ static long dlsym_(long p, char *s)
 }
 
 -SNOBOL C_WRAPPER_PROTO('DLSYM_(LONG,STRING)LONG', .EMBED)
-#line 523 "FFI.lss"
+#line 519 "FFI.lss"
 
 static int dlclose_(long p) { return dlclose((void *)p); }
 
 -SNOBOL C_WRAPPER_PROTO('DLCLOSE_(LONG)INTEGER', .EMBED)
-#line 527 "FFI.lss"
+#line 523 "FFI.lss"
 
 -END
--LINE 534 "FFI.lss"
+-LINE 530 "FFI.lss"
 -SNOBOL DYNAMIC_DEBUG = 1
--LINE 535 "FFI.lss"
+-LINE 531 "FFI.lss"
 -SNOBOL COMPILE_DYNAMIC(ffi) :F(ERROR) ;
--LINE 536 "FFI.lss"
+-LINE 532 "FFI.lss"
 -SNOBOL LIBS = '-lffi -ldl'
--LINE 537 "FFI.lss"
+-LINE 533 "FFI.lss"
 -SNOBOL OBJECTS = ffi ; OBJECTS '.c' = '.o'
--LINE 538 "FFI.lss"
+-LINE 534 "FFI.lss"
 -SNOBOL LINK_DYNAMIC('./ffi', OBJECTS, LIBS) :F(ERROR) ;
--LINE 539 "FFI.lss"
+-LINE 535 "FFI.lss"
 -CMNT ERASE TEMPORARY FILES
 -CMNT     WE DON'T NEED THE C BITS, OR THE OBJECT FILES ANYMORE.
 -CMNT     ALL WE REQUIRE IS FFI.SO
 -CMNT -SNOBOL A = CRACK(ffi ' ' OBJECTS, ' ')
 -CMNT -SNOBOL SEQ(' DELETE(A<K>) ', .K)
--LINE 549 "FFI.lss"
+-LINE 545 "FFI.lss"
          LOAD('FFI_FREE(INTEGER)', 'ffi.so')
          LOAD('FFI_CLEAR(INTEGER)', 'ffi.so')
          LOAD('FFI_NEW(STRING,STRING)INTEGER', 'ffi.so')
@@ -504,7 +505,7 @@ static int dlclose_(long p) { return dlclose((void *)p); }
          LOAD('DLSYM_(INTEGER,STRING)', 'ffi.so')
          LOAD('DLCLOSE_(INTEGER)INTEGER', 'ffi.so')
 *
--LINE 584 "FFI.lss"
+-LINE 580 "FFI.lss"
 -PUBLIC DLOPEN(), DLERROR(), DLSYM(), DLCLOSE()
 *
          DEFINE('DLOPEN(S,I)')

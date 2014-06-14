@@ -8,8 +8,8 @@
 @
 
 <<GCD>>=
--MODULE GCD
 -PUBLIC GCD()
+*
          DEFINE('GCD(I,J)')                                   :(GCD_END)
 *
 GCD      EQ(I)                                               :S(FRETURN)
@@ -33,7 +33,10 @@ END
 @
 
 <<>>=
--STITL AGT
+-MODULE GCD
+<<INCLUDES>>
+-IN72
+-STITL GCD
 -EJECT
 *
 ************************************************************************

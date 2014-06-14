@@ -536,6 +536,7 @@ involved.
 
 <<CSNOBOL4>>=
 -PUBLIC CLOSE(), SELECT(), IO_GETFP(), FILENO()
+*
          CLOSE_FFI = FFI_NEW('I', 'I')
          FFI_SET_CALLP(CLOSE_FFI, DLSYM(0, 'close'))
          DEFINE('CLOSE(FD)')
@@ -599,8 +600,8 @@ END
 
 <<>>=
 -MODULE CSNOBOL4
--IN72
 <<INCLUDES>>
+-IN72
 -STITL CSNOBOL4
 -EJECT
 *

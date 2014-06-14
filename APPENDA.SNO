@@ -1,9 +1,9 @@
 -MODULE APPENDA
--IN72
--LINE 11 "APPENDA.lss"
+-LINE 12 "APPENDA.lss"
 -INCLUDE 'SEQ.INC'
 -INCLUDE 'SIZEA.INC'
--LINE 40 "APPENDA.lss"
+-IN72
+-LINE 41 "APPENDA.lss"
 -STITL AI
 -EJECT
 *
@@ -23,7 +23,7 @@
 *
 * APPENDA.lss
 *
--LINE 16 "APPENDA.lss"
+-LINE 17 "APPENDA.lss"
 -PUBLIC APPENDA()
 *
          DEFINE('APPENDA(A,V)I')                          :(END_APPENDA)

@@ -1,7 +1,7 @@
 -STITL SEQ
 -EJECT
 *
--LINE 64 "SEQ.lss"
+-LINE 68 "SEQ.lss"
 ************************************************************************
 *                                                                      *
 *                       #####   #######   #####                        *
@@ -18,7 +18,7 @@
 *
 * SEQ.lss
 *
--LINE 37 "SEQ.lss"
+-LINE 41 "SEQ.lss"
 -MODULE SEQ
 -PUBLIC SEQ()
          DEFINE('SEQ(ARG_S,ARG_NAME,START,END)')              :(SEQ_END)

@@ -1,8 +1,10 @@
+-MODULE HEX
 -LINE 13 "HEX.lss"
 -INCLUDE 'BLEND.INC'
+-IN72
+-LINE 51 "HEX.lss"
 -STITL HEX
 -EJECT
--LINE 51 "HEX.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -21,8 +23,8 @@
 * HEX.lss
 *
 -LINE 17 "HEX.lss"
--MODULE HEX
 -PUBLIC HEX()
+*
          DEFINE('HEX(S)S2')
 *
          H = '0123456789ABCDEF'

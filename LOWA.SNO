@@ -1,8 +1,9 @@
 -MODULE LOWA
 -IN72
--LINE 8 "LOWA.lss"
+-LINE 10 "LOWA.lss"
 -INCLUDE 'ARRAY0.INC'
--LINE 41 "LOWA.lss"
+-INCLUDE 'BRKREM.INC'
+-LINE 44 "LOWA.lss"
 -STITL LOWA
 -EJECT
 *
@@ -22,7 +23,7 @@
 *
 * LOWA.lss
 *
--LINE 12 "LOWA.lss"
+-LINE 15 "LOWA.lss"
 -PUBLIC LOWA()
 *
          DEFINE('LOWA(A)L,U')                                :(LOWA_END)

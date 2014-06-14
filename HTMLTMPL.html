@@ -29,23 +29,23 @@ of template caching will be done.
 <p align="justify"><font face="Sorts Mill Goudy">
 <h2>Uses</h2>
 <a href="CHARS.html">CHARS</a><br>
-<a href="HTMLESC.html">HTMLESC</a><br>
 <a href="LAST.html">LAST</a><br>
 <a href="LINK.html">LINK</a><br>
 <a href="READFILE.html">READFILE</a><br>
 <a href="REVL.html">REVL</a><br>
 <a href="SWAP.html">SWAP</a><br>
+<a href="TIMER.html">TIMER</a><br>
 </font></p>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;INCLUDES&raquo;&equiv;</b>
 //-INCLUDE &#39;CHARS.INC&#39;
-//-INCLUDE &#39;HTMLESC.INC&#39;
 //-INCLUDE &#39;LAST.INC&#39;
 //-INCLUDE &#39;LINK.INC&#39;
 //-INCLUDE &#39;READFILE.INC&#39;
 //-INCLUDE &#39;REVL.INC&#39;
 //-INCLUDE &#39;SWAP.INC&#39;
+//-INCLUDE &#39;TIMER.INC&#39;
 <b>@</b>
 </font></pre></div>
 <div style="background-image: url(greenbar.gif)">
@@ -309,6 +309,8 @@ procedure tmpl_parse_args(s) n v {
 <b>&laquo;&raquo;&equiv;</b>
 -MODULE HTMLTMPL
 -SNOCONE
+<b>&laquo;INCLUDES&raquo;</b>
+-IN1024
 <b>&laquo;htmltmpl&raquo;</b>
 
 <font color="#818181"><i># ce: .f.msnocone;</i></font>
@@ -318,7 +320,7 @@ procedure tmpl_parse_args(s) n v {
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 20:00:43 EDT 2014</p></td><td><p align=right>
+Fri Jun 13 15:13:34 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

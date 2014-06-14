@@ -4,6 +4,17 @@ Use bq to gather directory data matching pattern. crack to crack
 the string into an array of lines. atol to produce a linked list,
 and return that list as the directory iterator.
 
+We want to be able to specify directory patterns as either SNOBOL4
+pattern or as OS globs. If the incoming [[W]] is a string, it will
+be used as an OS glob match. If [[DATATYPE(W)]] is PATTERN, it will
+be used to filter the OS directory list. A list of all files is
+constructed. The list is walked, and entries that do not match the
+pattern are discarded. To delete a node, we keep a trailing list
+item [[L]]. [[NEXT(L) = NEXT(P)]] will then delete node [[P]]. Of
+course, this doesn't work for the first element of the list. To
+delete the first element, we simply forward step [[ITER_DIR]].
+[[ITER_DIR = NEXT(ITER_DIR)]] will delete the first element.
+
 General note on iterators. The iter_() function returns an iterator
 This iterator is passed to a value function v() which returns the
 next thing being iterated. v() should fail if the end of iteration
@@ -23,10 +34,12 @@ btm
 ]]
 
 <h2>Uses</h2>
-<a href="BQ.html">BQ</a><br>
-<a href="CRACK.html">CRACK</a><br>
 <a href="ATOL.html">ATOL</a><br>
+<a href="BQ.html">BQ</a><br>
 <a href="CHARS.html">CHARS</a><br>
+<a href="CRACK.html">CRACK</a><br>
+<a href="LINK.html">LINK</a><br>
+<a href="VDIFFER.html">VDIFFER</a><br>
 
 <<INCLUDES>>= 
 -INCLUDE 'BQ.INC'
@@ -36,17 +49,31 @@ btm
 @
 
 <<ITERDIR>>=
--PUBLIC `VALUE_DIR(), ITER_DIR(), NEXT_DIR()
+-PUBLIC VALUE_DIR(), ITER_DIR(), NEXT_DIR()
 *
-         DEFINE('ITER_DIR(W)')
+         DEFINE('ITER_DIR(W)P,L')
          DEFINE('VALUE_DIR(D)')
          DEFINE('NEXT_DIR(D)')                           :(END_ITER_DIR)
 *
 VALUE_DIR
          VALUE_DIR = DIFFER(D) VALUE(D)             :S(RETURN)F(FRETURN)
 *
-ITER_DIR ITER_DIR = ATOL(CRACK(BQ('ls 2>/dev/null ' W, CHARS_NL),
+ITER_DIR DIFFER(FORCEPATTERN)                               :S(ITERDIR2)
+         DATATYPE(W) 'PATTERN'                              :S(ITERDIR2)
+*
+         ITER_DIR = ATOL(CRACK(BQ('ls 2>/dev/null ' W, CHARS_NL),
 +           CHARS_NL))                              :S(RETURN)F(FRETURN)
+*
+ITERDIR2 ITER_DIR =
++           ATOL(CRACK(BQ('ls 2>/dev/null', CHARS_NL), CHARS_NL))
+         P = ITER_DIR
+ITERDIR3 IDENT(P)                                             :S(RETURN)
+         VALUE(P) W                                         :S(ITERDIR4)
+         NEXT(VDIFFER(L)) = NEXT(P)
+         ITER_DIR = IDENT(L) NEXT(ITER_DIR)
+         P = IDENT(L) ITER_DIR                              :S(ITERDIR3)
+         P = NEXT(P)                                         :(ITERDIR3)
+ITERDIR4 L = P; P = NEXT(P)                                  :(ITERDIR3)
 *
 NEXT_DIR NEXT_DIR = DIFFER(D) NEXT(D)               :S(RETURN)F(FRETURN)
 *
@@ -58,6 +85,15 @@ END_ITER_DIR
          exec "snobol4" "-b" "$0" "$@"
 -INCLUDE 'ITERDIR.INC'
          &CODE = 1
+         DI = ITER_DIR(FENCE 'W')
+TOP1       OUTPUT = VALUE_DIR(DI)                               :F(BTM1)
+         DI = NEXT_DIR(DI)                                       :(TOP1)
+BTM1
+*
+         DI = ITER_DIR('c*')
+TOP2       OUTPUT = VALUE_DIR(DI)                               :F(BTM2)
+         DI = NEXT_DIR(DI)                                       :(TOP2)
+BTM2
          &CODE = 0
 END
 @
@@ -65,6 +101,7 @@ END
 <<>>=
 -MODULE ITERDIR
 <<INCLUDES>>
+-IN72
 -STITL ITERDIR
 -EJECT
 *

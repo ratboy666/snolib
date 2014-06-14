@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>LOWA - Low index of array</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">LOWA(A)</font> returns the index of the first element of array <font face="Source Code Pro">A</font>.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="ARRAY0.html">ARRAY0</a><br>
+<a href="BRKREM.html">BRKREM</a><br>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;ARRAY0.INC&#39;
+-INCLUDE &#39;BRKREM.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;LOWA&raquo;&equiv;</b>
+-PUBLIC LOWA()
+<font color="#818181"><i>*</i></font>
+         DEFINE(&#39;LOWA(A)L,U&#39;)                                <b>:(LOWA_END)</b>
+<font color="#818181"><i>*</i></font>
+LOWA     LOWA = IDENT(A) 0                                    <b>:S(RETURN)</b>
+         LOWA = IDENT(A, ARRAY0) 0                            <b>:S(RETURN)</b>
+         IDENT(DATATYPE(A), &#39;ARRAY&#39;)                         <b>:F(FRETURN)</b>
+         PROTOTYPE(A) (BRKREM(&#39;:,&#39;) . L) ((&#39;:&#39; BRKREM(&#39;,&#39;) . U) | NULL)
+         IDENT(L)                                            <b>:S(FRETURN)</b>
+         LOWA = L
+         LOWA = IDENT(U) 1                                     <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+LOWA_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;/usr/local/bin/snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;LOWA.INC&#39;
+<font color="#818181"><i>*</i></font>
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+-MODULE LOWA
+-IN72
+<b>&laquo;INCLUDES&raquo;</b>
+-STITL LOWA
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*                  #        #######  #     #     #                     *</i></font>
+<font color="#818181"><i>*                  #        #     #  #  #  #    # #                    *</i></font>
+<font color="#818181"><i>*                  #        #     #  #  #  #   #   #                   *</i></font>
+<font color="#818181"><i>*                  #        #     #  #  #  #  #     #                  *</i></font>
+<font color="#818181"><i>*                  #        #     #  #  #  #  #######                  *</i></font>
+<font color="#818181"><i>*                  #        #     #  #  #  #  #     #                  *</i></font>
+<font color="#818181"><i>*                  #######  #######   ## ##   #     #                  *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* LOWA                       LOW INDEX OF ARRAY                        *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* LOWA.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;LOWA&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .F.MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri Jun 13 15:13:42 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

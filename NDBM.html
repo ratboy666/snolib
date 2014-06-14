@@ -24,27 +24,31 @@ on disk.  Hashed, so performance may be better than TABLE usage
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;NDBM&raquo;&equiv;</b>
--MODULE NDBM
 NDBM_LOAD
 <font color="#818181"><i>*</i></font>
 -PUBLIC DBM_INSERT, DBM_REPLACE
+<font color="#818181"><i>*</i></font>
          DBM_INSERT = 0
          DBM_REPLACE = 1
 <font color="#818181"><i>*</i></font>
 -PUBLIC DBM_OPEN(), DBM_CLOSE()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;DBM_OPEN(STRING,STRING,STRING)INTEGER&#39;)
          LOAD(&#39;DBM_CLOSE(INTEGER)STRING&#39;)
 <font color="#818181"><i>*</i></font>
 -PUBLIC DBM_STORE(), DBM_FETCH(), DBM_DELETE()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;DBM_STORE(INTEGER,STRING,STRING,INTEGER)INTEGER&#39;)
          LOAD(&#39;DBM_FETCH(INTEGER,STRING)STRING&#39;)
          LOAD(&#39;DBM_DELETE(INTEGER,STRING)INTEGER&#39;)
 <font color="#818181"><i>*</i></font>
 -PUBLIC DBM_FIRSTKEY(), DBM_NEXTKEY()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;DBM_FIRSTKEY(INTEGER)STRING&#39;)
          LOAD(&#39;DBM_NEXTKEY(INTEGER)STRING&#39;)
 <font color="#818181"><i>*</i></font>
 -PUBLIC DBM_ERROR(), DBM_CLEARERR()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;DBM_ERROR(INTEGER)STRING&#39;)
          LOAD(&#39;DBM_CLEARERR(INTEGER)STRING&#39;)
 <font color="#818181"><i>*</i></font>
@@ -78,6 +82,9 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+-MODULE NDBM
+<b>&laquo;INCLUDES&raquo;</b>
+-IN72
 -STITL NDBM
 -EJECT
 <font color="#818181"><i>*</i></font>
@@ -109,7 +116,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 20:00:13 EDT 2014</p></td><td><p align=right>
+Fri Jun 13 15:13:04 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

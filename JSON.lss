@@ -27,27 +27,29 @@ for null, true or false. These three constants are defined as
 JSON_NULL, JSON_TRUE and JSON_FALSE.
 
 <h2>Uses</h2>
+<a href="ARRAY0.html">ARRAY0</a><br>
 <a href="CH.html">CH</a><br>
 <a href="CHARS.html">CHARS</a><br>
-<a href="HASH.html">HASH</a><br>
 <a href="HEX.html">HEX</a><br>
+<a href="KEYST.html">KEYST</a><br>
+<a href="LOG.html">LOG</a><br>
 <a href="SDIFF.html">SDIFF</a><br>
 <a href="SEQ.html">SEQ</a><br>
-<a href="SIZEA.html">SIZEA</a><br>
 
 <<INCLUDES>>=
+-INCLUDE 'ARRAY0.INC'
 -INCLUDE 'CH.INC'
 -INCLUDE 'CHARS.INC'
--INCLUDE 'HASH.INC'
 -INCLUDE 'HEX.INC'
+-INCLUDE 'KEYST.INC'
+-INCLUDE 'LOG.INC'
 -INCLUDE 'SDIFF.INC'
 -INCLUDE 'SEQ.INC'
--INCLUDE 'SIZEA.INC'
--INCLUDE 'ARRAY0.INC'
 @
 
 <<JSON>>=
 -PUBLIC JSON_ENCODE(), JSON_DECODE()
+*
          DEFINE('JSON_ENCODE(X)L')
          DEFINE('JSON_DECODE(X)')
 *
@@ -93,6 +95,7 @@ JSON_NULL, JSON_TRUE and JSON_FALSE.
 * CREATE A TYPE THAT REPRESENT THESE VALUES UNIQUELY.
 *
 -PUBLIC JSON_NULL, JSON_TRUE, JSON_FALSE
+*
          DATA('JSON_CONSTANT(VALUE)')
          JSON_NULL = JSON_CONSTANT('null')
          JSON_TRUE = JSON_CONSTANT('true')
@@ -103,6 +106,7 @@ JSON_NULL, JSON_TRUE and JSON_FALSE.
 * WITH NULL.
 *
 -PUBLIC JSON_NL, JSON_IN
+*
          JSON_NL = CHARS_NL
          JSON_IN = '  '
 *
@@ -111,6 +115,7 @@ JSON_NULL, JSON_TRUE and JSON_FALSE.
 * DOCUMENTS.
 *
 -PUBLIC JSON_REST
+*
          JSON_REST =
 *
 * JSON_HEX IS A HEX DIGIT USED BY THE \u CHARACTER IS A JSON STRING.
@@ -376,8 +381,8 @@ END
 
 <<>>=
 -MODULE JSON
--IN72
 <<INCLUDES>>
+-IN72
 -STITL JSON
 -EJECT
 *

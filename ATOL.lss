@@ -4,8 +4,8 @@
 
 <h2>Uses</h2>
 <a href="LINK.html">LINK</a><br>
-<a href="SEQ.html">SEQ</a><br>
 <a href="REVL.html">REVL</a><br>
+<a href="SEQ.html">SEQ</a><br>
 
 <<INCLUDES>>= 
 -INCLUDE 'LINK.INC'

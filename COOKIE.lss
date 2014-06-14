@@ -1,4 +1,4 @@
-<h1>COOKIE - COOKIE Support Functions</h1>
+<h1>COOKIE - CGI COOKIE Support</h1>
 
 Cookie support functions. Cookies are saved in a cookie jar, which is
 a table. In turn, each cookie has a value, and may have attributes
@@ -40,7 +40,7 @@ be returned (probably as a session cookie).
 <h2>Uses</h2>
 <a href="CHARS.html">CHARS</a><br>
 <a href="DEXP.html">DEXP</a><br>
-<a href="HASH.html">HASH</a><br>
+<a href="KEYST.html">KEYST</a><br>
 <a href="TIME.html">TIME</a><br>
 <a href="TRIMB.html">TRIMB</a><br>
 <a href="VDIFFER.html">VDIFFER</a><br>
@@ -48,7 +48,7 @@ be returned (probably as a session cookie).
 <<INCLUDES>>=
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'DEXP.INC'
--INCLUDE 'HASH.INC'
+-INCLUDE 'KEYST.INC'
 -INCLUDE 'TIME.INC'
 -INCLUDE 'TRIMB.INC'
 -INCLUDE 'VDIFFER.INC'
@@ -59,7 +59,7 @@ be returned (probably as a session cookie).
 -PUBLIC COOKIE_VALUE(), COOKIE_SET_CRUMB(), COOKIE_GET_CRUMB()
 -PUBLIC PUT_COOKIE_IN_JAR(), GET_COOKIE_FROM_JAR(), COOKIES_IN_JAR()
 -PUBLIC CRUMBS_IN_COOKIE(), COOKIE_EXPIRY(), COOKIE_STRING()
--PuBLIC COOKIE_FIX_NAME()
+-PUBLIC COOKIE_FIX_NAME()
 *
          DEFINE('NEW_COOKIE_JAR()')
          DEFINE('NEW_COOKIE(VALUE)')
@@ -207,8 +207,8 @@ END
 
 <<>>=
 -MODULE COOKIE
--IN72
 <<INCLUDES>>
+-IN72
 -STITL COOKIE
 -EJECT
 *

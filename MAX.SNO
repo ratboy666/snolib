@@ -1,7 +1,8 @@
 -MODULE MAX
 -LINE 9 "MAX.lss"
--STITL MAX
+-IN72
 -LINE 24 "MAX.lss"
+-STITL MAX
 -EJECT
 *
 ************************************************************************
@@ -21,6 +22,7 @@
 * MAX.lss
 *
 -PUBLIC MAX(), MIN()
+*
          DEFINE('MAX(X,Y)')
          DEFINE('MIN(X,Y)')                                   :(MAX_END)
 *

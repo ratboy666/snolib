@@ -1,7 +1,7 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -INCLUDE 'TIMER.INC'
--LINE 259 "PSQL.lss"
+-LINE 273 "PSQL.lss"
 -INCLUDE 'PSQL.INC'
 -INCLUDE 'HASH.INC'
 -INCLUDE 'BQ.INC'

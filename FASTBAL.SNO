@@ -1,8 +1,10 @@
+-MODULE FASTBAL
 -LINE 20 "FASTBAL.lss"
 -INCLUDE 'UNIQUE.INC'
+-IN72
+-LINE 99 "FASTBAL.lss"
 -STITL FASTBAL
 -EJECT
--LINE 99 "FASTBAL.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -21,8 +23,8 @@
 * FASTBAL.lss
 *
 -LINE 24 "FASTBAL.lss"
--MODULE FASTBAL
 -PUBLIC FASTBAL()
+*
          DEFINE('FASTBAL(PARENS,QTS,S)NAME,IBAL,SPCHARS,ELEM'
 +               ',LPS,Q,LP,RP')                           :(FASTBAL_END)
 *

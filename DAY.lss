@@ -1,4 +1,4 @@
-<h1>DAY - Day of Week</h1>
+<h1>DAY - Day of week</h1>
 
 Returns current day of the week (SUNDAY..SATURDAY). If no argument
 is supplied, use today. Date is specified as M/D/Y. If year is not
@@ -54,8 +54,8 @@ END
 
 <<>>=
 -MODULE DAY
--IN72
 <<INCLUDES>>
+-IN72
 -STITL DAY
 -EJECT
 *

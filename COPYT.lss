@@ -1,0 +1,56 @@
+<h1>COPYT - Return copy of table</h1>
+
+[[COPYT(T)]] returns a copy of table [[T]].
+
+<h2>Uses</h2>
+
+<<INCLUDES>>=
+@
+
+<<COPYT>>=
+-PUBLIC COPYT()
+*
+         DEFINE('COPYT(T)')                                 :(COPYT_END)
+*
+COPYT    COPYT = TABLE()
+         COPYT = CONVERT(CONVERT(T, 'ARRAY'), 'TABLE')         :(RETURN)
+*
+COPYT_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'COPYT.INC'
+         &CODE = 1
+         &CODE = 0
+END
+@
+
+<<>>=
+-MODULE COPYT
+<<INCLUDES>>
+-IN72
+-STITL COPYT
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*              #####   #######  ######   #     #  #######              *
+*             #     #  #     #  #     #   #   #      #                 *
+*             #        #     #  #     #    # #       #                 *
+*             #        #     #  ######      #        #                 *
+*             #        #     #  #           #        #                 *
+*             #     #  #     #  #           #        #                 *
+*              #####   #######  #           #        #                 *
+*                                                                      *
+* COPYT                      COPY A TABLE                              *
+*                                                                      *
+************************************************************************
+*
+* COPYT.lss
+*
+<<COPYT>>
+*
+* CE: .MSNOBOL4;
+@

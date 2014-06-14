@@ -1,12 +1,15 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -PROGRAM EMBED
--LINE 120 "embed.lss"
+-LINE 125 "embed.lss"
 -TITLE EMBED
+-USES SLOAD()
 START
 -LINE 58 "embed.lss"
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'SLOAD.INC'
+-INCLUDE 'HOST.INC'
+-INCLUDE 'DDT.INC'
 -STITL
 -EJECT
 *
@@ -26,8 +29,7 @@ START
 *
 * embed.lss
 *
--LINE 63 "embed.lss"
--USES SLOAD()
+-LINE 65 "embed.lss"
          TERMINAL = 'EMBED (SUN DEC  1 16:15:39 EST 2013)'
 *
          WHITE_ = SPAN(' ' CHARS_TAB) | ''
@@ -35,6 +37,10 @@ START
          QQ_ = '"'
          LEAD = DUPL(' ', 9)
 *
+         FN = HOST(HOST_ARGN, HOST(HOST_FIRSTARG))             :F(STDIN)
+         IDENT(FN)                                             :S(STDIN)
+         INPUT(.INPUT, 20,, FN)
+STDIN
 TOP      LINE = INPUT                                            :F(END)
 *
          LINE FENCE '-' ('snobol' | 'SNOBOL') (ANY('xX') | '') WHITE_

@@ -1,4 +1,4 @@
-<h1>BALREV - Balanced Reverse</h1>
+<h1>BALREV - Balanced reverse</h1>
 
 [[BALREV(S)]] returns the balanced reversal of the string
 [[S]]: characters of [[S]] are reversed and parentheses are

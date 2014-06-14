@@ -1,8 +1,10 @@
+-MODULE FREEZE
 -LINE 7 "FREEZE.lss"
 -INCLUDE 'SYSTEM.INC'
+-IN72
+-LINE 36 "FREEZE.lss"
 -STITL FREEZE
 -EJECT
--LINE 36 "FREEZE.lss"
 *
 ************************************************************************
 *                                                                      *

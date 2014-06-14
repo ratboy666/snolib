@@ -1,4 +1,4 @@
-<h1>DDT - An Interactive SNOBOL4 Debugger</h1>
+<h1>DDT - An interactive SNOBOL4 debugger</h1>
 
 <i>DDT</i> is a source level debugger for CSNOBOL4.
 
@@ -53,6 +53,7 @@ additional tools to be incorporated while debugging.
 
 <h2>Uses</h2>
 <a href="CHARS.html">CHARS</a><br>
+<a href="DSERVE.html">DSERVE</a><br>
 <a href="FREEZE.html">FREEZE</a><br>
 <a href="HOST.html">HOST</a><br>
 <a href="QUOTE.html">QUOTE</a><br>
@@ -63,6 +64,7 @@ additional tools to be incorporated while debugging.
 
 <<INCLUDES>>=
 -INCLUDE 'CHARS.INC'
+-INCLUDE 'DSERVE.INC'
 -INCLUDE 'FREEZE.INC'
 -INCLUDE 'HOST.INC'
 -INCLUDE 'QUOTE.INC'
@@ -703,6 +705,7 @@ END
 -WEAK DSERVE_APPNAME
 -USES SLOAD()
 <<INCLUDES>>
+-IN72
 -STITL DDT
 -EJECT
 *

@@ -7,9 +7,11 @@
 
 <h2>Uses</h2>
 <a href="DEXP.html">DEXP</a><br>
+<a href="FLOOR.html">FLOOR</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'DEXP.INC'
+-INCLUDE 'FLOOR.INC'
 @
 
 <<unit_test>>=
@@ -28,6 +30,7 @@ END
 <<>>=
 -MODULE LOG
 <<INCLUDES>>
+-IN72
 -STITL LOG
 -EJECT
 *
@@ -61,6 +64,7 @@ END
 +                   3.14159265358979323846264338327950288419716939937510
 *
 -PUBLIC CLOG(), LOGB()
+*
          DEXP('CLOG(X) = LN(X) / LN_10')
          DEXP('LOGB(X,B) = NE(B, 0) LN(X) / LN(B) ;'
 +             'LOGB      = EQ(B, 0) LN(X)         ;')

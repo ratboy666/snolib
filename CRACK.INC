@@ -1,9 +1,8 @@
 -MODULE CRACK
--IN72
 -LINE 16 "CRACK.lss"
 -INCLUDE 'COUNT.INC'
--INCLUDE 'SEQ.INC'
--LINE 69 "CRACK.lss"
+-IN72
+-LINE 63 "CRACK.lss"
 -STITL CRACK
 -EJECT
 *
@@ -23,18 +22,13 @@
 *
 * CRACK.lss
 *
--LINE 21 "CRACK.lss"
+-LINE 20 "CRACK.lss"
 -PUBLIC CRACK(), %1
--PUBLIC COPYA()
 *
-         DEFINE('COPYA(A)I')
          DEFINE('CRACK_1(S)P')
          DEFINE('CRACK(S,B,F)I,PAT,N')
          DEFINE('CRACK_4(S)')
          OPSYN('%', 'CRACK_1', 1)                           :(CRACK_END)
-*
-COPYA    COPYA = ARRAY(PROTOTYPE(A))
-         SEQ(' COPYA<I> = A<I>', .I)                           :(RETURN)
 *
 CRACK_1  P = IDENT(P) ','
          CRACK_1 = CRACK(S, P)                                 :(RETURN)

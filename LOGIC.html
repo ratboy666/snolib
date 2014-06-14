@@ -22,18 +22,19 @@
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;LOGIC&raquo;&equiv;</b>
--MODULE LOGIC
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* NOTE! BASE ARGUMENT MUST BE PASSED A EXPLICIT NULL STRING FOR DEFAULT</i></font>
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* INTEGER/INTEGER, STRING/INTEGER, STRING/STRING</i></font>
 <font color="#818181"><i>*</i></font>
 -PUBLIC LOGIC()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;LOGIC(INTEGER,,)&#39;)
 <font color="#818181"><i>*</i></font>
 -PUBLIC NOT(), AND(), OR(), XOR(), NAND(), NOR(), UPLUS(), UMINUS()
 -PUBLIC  UMUL(), UDIV(), SHL(), SHR(), SAR(), ROL(), ROR()
 -PUBLIC HI(), IH(), DIB(), IDB()
+<font color="#818181"><i>*</i></font>
          DEFINE(&#39;NOT(ARG)&#39;)
          DEFINE(&#39;AND(ARG1,ARG2)&#39;)
          DEFINE(&#39;OR(ARG1,ARG2)&#39;)
@@ -96,6 +97,9 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+-MODULE LOGIC
+<b>&laquo;INCLUDES&raquo;</b>
+-IN72
 -STITL LOGIC
 -EJECT
 <font color="#818181"><i>*</i></font>
@@ -127,7 +131,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 20:00:09 EDT 2014</p></td><td><p align=right>
+Fri Jun 13 15:13:00 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

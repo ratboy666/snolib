@@ -1,7 +1,10 @@
+-MODULE FIND
+-LINE 14 "FIND.lss"
+-IN72
+-LINE 47 "FIND.lss"
 -STITL FIND
 -EJECT
 *
--LINE 47 "FIND.lss"
 ************************************************************************
 *                                                                      *
 *                    #######  ###  #     #  ######                     *
@@ -19,8 +22,8 @@
 * FIND.lss
 *
 -LINE 17 "FIND.lss"
--MODULE FIND
 -PUBLIC FIND()
+*
          DEFINE('FIND(A,PRED)EX,I,MAX,TEST')                 :(FIND_END)
 *
 FIND     EX = CONVERT(PRED '(MAX,TEST)', 'EXPRESSION')

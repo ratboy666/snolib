@@ -3,7 +3,7 @@
 [[SIZET(T)]] returns the number of items in table [[T]].
 
 <h2>Uses</h2>
-<a href="HASH.html">HASH</a><br>
+<a href="KEYST.html">KEYST</a><br>
 <a href="SIZEA.html">SIZEA</a><br>
 
 <<INCLUDES>>= 

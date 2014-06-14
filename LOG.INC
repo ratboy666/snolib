@@ -1,8 +1,10 @@
 -MODULE LOG
--LINE 12 "LOG.lss"
+-LINE 13 "LOG.lss"
 -INCLUDE 'DEXP.INC'
+-INCLUDE 'FLOOR.INC'
+-IN72
+-LINE 34 "LOG.lss"
 -STITL LOG
--LINE 32 "LOG.lss"
 -EJECT
 *
 ************************************************************************
@@ -35,6 +37,7 @@
 +                   3.14159265358979323846264338327950288419716939937510
 *
 -PUBLIC CLOG(), LOGB()
+*
          DEXP('CLOG(X) = LN(X) / LN_10')
          DEXP('LOGB(X,B) = NE(B, 0) LN(X) / LN(B) ;'
 +             'LOGB      = EQ(B, 0) LN(X)         ;')

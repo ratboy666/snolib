@@ -1,9 +1,11 @@
+-MODULE INFINIP
 -LINE 10 "INFINIP.lss"
 -INCLUDE 'REDEFINE.INC'
 -INCLUDE 'SWAP.INC'
+-IN72
+-LINE 190 "INFINIP.lss"
 -STITL INFINIP
 -EJECT
--LINE 191 "INFINIP.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -22,7 +24,6 @@
 * INFINIP.lss
 *
 -LINE 15 "INFINIP.lss"
--MODULE INFINIP
          SIGN_OFF  = POS(0) '-'
          LDG_ZEROS = BREAK('123456789') | RTAB(1)
          NO_DIGITS = 4

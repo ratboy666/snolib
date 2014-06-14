@@ -5,8 +5,9 @@
 -INCLUDE 'HEX.INC'
 -INCLUDE 'REPL.INC'
 -INCLUDE 'SDIFF.INC'
--STITL HTMLESC
+-IN72
 -LINE 110 "HTMLESC.lss"
+-STITL HTMLESC
 -EJECT
 *
 ************************************************************************

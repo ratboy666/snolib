@@ -57,10 +57,11 @@ driven by its using programs.
 <<INCLUDES>>=
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'SLOAD.INC'
+-INCLUDE 'HOST.INC'
+-INCLUDE 'DDT.INC'
 @
 
 <<embed>>=
--USES SLOAD()
          TERMINAL = 'EMBED (SUN DEC  1 16:15:39 EST 2013)'
 *
          WHITE_ = SPAN(' ' CHARS_TAB) | ''
@@ -68,6 +69,10 @@ driven by its using programs.
          QQ_ = '"'
          LEAD = DUPL(' ', 9)
 *
+         FN = HOST(HOST_ARGN, HOST(HOST_FIRSTARG))             :F(STDIN)
+         IDENT(FN)                                             :S(STDIN)
+         INPUT(.INPUT, 20,, FN)
+STDIN
 TOP      LINE = INPUT                                            :F(END)
 *
          LINE FENCE '-' ('snobol' | 'SNOBOL') (ANY('xX') | '') WHITE_
@@ -118,6 +123,7 @@ END START
          exec "snobol4" "-b" "$0" "$@"
 -PROGRAM EMBED
 -TITLE EMBED
+-USES SLOAD()
 START
 <<INCLUDES>>
 -STITL

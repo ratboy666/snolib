@@ -37,8 +37,8 @@ END
 
 <<>>=
 -MODULE AGT
--IN72
 <<INCLUDES>>
+-IN72
 -STITL AGT
 -EJECT
 *

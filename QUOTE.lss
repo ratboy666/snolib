@@ -12,8 +12,8 @@ string [[S]].
 @
 
 <<QUOTE>>=
--MODULE QUOTE
 -PUBLIC QUOTE()
+*
          DEFINE('QUOTE(S)Q,QQ')                             :(QUOTE_END)
 *
 QUOTE    Q = "'"; QQ = '"'
@@ -32,7 +32,9 @@ END
 @
 
 <<>>=
+-MODULE QUOTE
 <<INCLUDES>>
+-IN72
 -STITL QUOTE
 -EJECT
 *

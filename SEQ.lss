@@ -26,11 +26,15 @@ Sample usage:
 ]]
 
 <h2>Uses</h2>
+<a href="ARRAY0.html">ARRAY0</a><br>
+<a href="LOWA.html">LOWA</a><br>
 
 <h2>See Also</h2>
 <a href="SIZEA.html">SIZEA</a>
 
 <<INCLUDES>>=
+-INCLUDE 'ARRAY0.INC'
+-INCLUDE 'LOWA.INC'
 @
 
 <<SEQ>>=

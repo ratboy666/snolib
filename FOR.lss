@@ -1,4 +1,4 @@
-<H1>FOR - Sequence statement</H1>
+<H1>FOR - Generalized SQL, C for loop, CODE_ support</H1>
 
 [[F = FOR_COMPILE(INIT,TEST,INCR,STMT); FOR(F)]] is a generalization
 of [[SEQ()]].  This implements the [[C]] [[for]] loop
@@ -51,18 +51,22 @@ failure of TEST, resulting in a RETURN.
 This component also implements [[WHILE]] and [[IF]].
 
 <h2>Uses</h2>
+<a href="SEQ.html">SEQ</a><br>
+<a href="TIMER.html">TIMER</a><br>
 
 <h2>See Also</h2>
 <a href="SEQ.html">SEQ</a>
 
 <<INCLUDES>>=
+-INCLUDE 'SEQ.INC'
+-INCLUDE 'TIMER.INC'
 @
 
 <<FOR>>=
--MODULE FOR
 -PUBLIC CODE_(), WHILE_COMPILE(), IF_COMPILE(), FOR_COMPILE()
 -PUBLIC STMT_COMPILE(), PROG2_COMPILE(), SET_RVAL(), EVAL_CODE_()
 -PUBLIC FOR(), WHILE()
+*
          DATA('CODE_(TYPE,INIT,TEST,INCR,STMT,ELSE,'
 +                        'INIT_,TEST_,INCR_,STMT_,ELSE_)')
          DEFINE('WHILE_COMPILE(TEST_,STMT_)')
@@ -250,6 +254,9 @@ END
 @
 
 <<>>=
+-MODULE FOR
+<<INCLUDES>>
+-IN72
 -STITL FOR
 -EJECT
 *

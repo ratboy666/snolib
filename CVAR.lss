@@ -66,11 +66,13 @@ Example declarations:
 <h2>Uses</h2>
 <a href="CHARS.html">CHARS</a><br>
 <a href="HASH.html">HASH</a><br>
+<a href="HOST.html">HOST</a><br>
 <a href="P64.html">P64</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'HASH.INC'
+-INCLUDE 'HOST.INC'
 -INCLUDE 'P64.INC'
 @
 
@@ -220,8 +222,8 @@ END
 <<>>=
 -MODULE CVAR
 -USES HASH()
--IN72
 <<INCLUDES>>
+-IN72
 -STITL CVAR
 -EJECT
 *

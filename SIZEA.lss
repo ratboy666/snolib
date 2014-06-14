@@ -4,13 +4,16 @@
 of elements in the first (leftmost) dimension is returned.
 
 <h2>Uses</h2>
+<a href="ARRAY0.html">ARRAY0</a><br>
 <a href="BRKREM.html">BRKREM</a><br>
+<a href="LOWA.html">LOWA</a><br>
 <a href="SWAP.html">SWAP</a><br>
 
 <<INCLUDES>>=
--INCLUDE 'BRKREM.INC'
--INCLUDE 'SWAP.INC'
 -INCLUDE 'ARRAY0.INC'
+-INCLUDE 'BRKREM.INC'
+-INCLUDE 'LOWA.INC'
+-INCLUDE 'SWAP.INC'
 @
 
 <<SIZEA>>=

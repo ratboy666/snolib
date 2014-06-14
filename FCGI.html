@@ -6,7 +6,7 @@
       content="sweave generated">
 </head><body><font face="Sorts Mill Goudy">
 <p align="justify"><font face="Sorts Mill Goudy">
-<h1>FCGI - FCGI (Fast CGI) Support Functions</h1>
+<h1>FCGI - FCGI (Fast CGI) support</h1>
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 <font face="Source Code Pro">FCGI</font> support functions. Need to suck in CGI to actually handle
@@ -51,7 +51,6 @@ When this is functional, we will work on performance.
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;FCGI&raquo;&equiv;</b>
--MODULE FCGI
          FCGI_LOGUNIT = IO_FINDUNIT()
          OUTPUT(.FCGI_LOG, FCGI_LOGUNIT, &#39;W&#39;,
 +               &#39;|/usr/bin/logger -n localhost -t FCGI&#39;)
@@ -321,7 +320,9 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+-MODULE FCGI
 <b>&laquo;INCLUDES&raquo;</b>
+-IN72
 -STITL FCGI
 -EJECT
 <font color="#818181"><i>*</i></font>
@@ -350,7 +351,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 20:00:44 EDT 2014</p></td><td><p align=right>
+Fri Jun 13 15:13:35 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

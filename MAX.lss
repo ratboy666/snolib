@@ -20,6 +20,7 @@ END
 <<>>=
 -MODULE MAX
 <<INCLUDES>>
+-IN72
 -STITL MAX
 -EJECT
 *
@@ -40,6 +41,7 @@ END
 * MAX.lss
 *
 -PUBLIC MAX(), MIN()
+*
          DEFINE('MAX(X,Y)')
          DEFINE('MIN(X,Y)')                                   :(MAX_END)
 *

@@ -1,7 +1,10 @@
--STITL AGT
+-MODULE GCD
+-LINE 8 "GCD.lss"
+-IN72
+-LINE 39 "GCD.lss"
+-STITL GCD
 -EJECT
 *
--LINE 39 "GCD.lss"
 ************************************************************************
 *                                                                      *
 *                       #####    #####   ######                        *
@@ -19,8 +22,8 @@
 * GCD.lss
 *
 -LINE 11 "GCD.lss"
--MODULE GCD
 -PUBLIC GCD()
+*
          DEFINE('GCD(I,J)')                                   :(GCD_END)
 *
 GCD      EQ(I)                                               :S(FRETURN)

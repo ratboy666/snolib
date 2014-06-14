@@ -38,21 +38,24 @@ applications.
 <h2>Uses</h2>
 <a href="BQ.html">BQ</a><br>
 <a href="CHARS.html">CHARS</a><br>
+<a href="HOST.html">HOST</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'BQ.INC'
 -INCLUDE 'CHARS.INC'
+-INCLUDE 'HOST.INC'
 @
 
 <<GETKEY>>=
--MODULE GETKEY
 -PUBLIC GETKEY()
+*
          DEFINE('GETKEY(IN)KEY,M')
 *
 GETKEY_INIT
 *
 -PUBLIC KEY_ESC, KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN, KEY_PAGEDN
 -PUBLIC KEY_PAGEUP, KEY_HOME, KEY_END, KEY_INS
+*
          KEY_ESC    = CHARS_ESC CHARS_ESC
          KEY_LEFT   = BQ('tput kcub1')
          KEY_RIGHT  = BQ('tput kcuf1')
@@ -141,7 +144,9 @@ END
 @
 
 <<>>=
+-MODULE GETKEY
 <<INCLUDES>>
+-IN72
 -STITL GETKEY
 -EJECT
 *

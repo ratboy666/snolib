@@ -1,7 +1,8 @@
 -MODULE COMB
 -LINE 9 "COMB.lss"
--STITL COMB
+-IN72
 -LINE 35 "COMB.lss"
+-STITL COMB
 -EJECT
 *
 ************************************************************************

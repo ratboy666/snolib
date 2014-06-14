@@ -1,10 +1,15 @@
--LINE 58 "HASH.lss"
+-MODULE HASH
+-LINE 54 "HASH.lss"
 -INCLUDE 'BRKREM.INC'
--INCLUDE 'SEQ.INC'
+-INCLUDE 'COPYT.INC'
+-INCLUDE 'KEYST.INC'
+-INCLUDE 'MERGET.INC'
+-INCLUDE 'TRIMB.INC'
 -INCLUDE 'VDIFFER.INC'
+-IN72
+-LINE 126 "HASH.lss"
 -STITL HASH
 -EJECT
--LINE 147 "HASH.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -23,23 +28,12 @@
 *
 * HASH.lss
 *
--LINE 64 "HASH.lss"
--MODULE HASH
--PUBLIC HASH(), COPYT(), MERGET(), KEYST(), #1
--PUBLIC PRUNET()
+-LINE 63 "HASH.lss"
+-PUBLIC HASH(), #1
 *
          DEFINE('HASH(S,E,P,TS,TI,FK,FV,SP)K,V,C')
          DEFINE('HASH_3(S)')
-         DEFINE('COPYT(T)')
-         DEFINE('MERGET(T1,T2)A,I')
-         DEFINE('KEYST(T)A,N,I')
-         DEFINE('PRUNET(T)A,I')
          OPSYN('#', 'HASH', 1)                               :(HASH_END)
-*
-PRUNET
-         PRUNET = TABLE()
-         A = KEYST(T)                                         :F(RETURN)
-         SEQ( ' PRUNET<A<I>> = VDIFFER(T<A<I>>)', .I)          :(RETURN)
 *
 HASH     HASH = TABLE(TS, TI)
          E = IDENT(E) '='
@@ -58,18 +52,6 @@ HASH_4   S POS(0) BRKREM(P) . V (P | RPOS(0)) =               :F(RETURN)
          HASH<K> = V                                           :(HASH_2)
 *
 HASH_3   HASH_3 = S                                            :(RETURN)
-*
-COPYT    COPYT = TABLE()
-         COPYT = CONVERT(CONVERT(T, 'ARRAY'), 'TABLE')         :(RETURN)
-*
-MERGET   MERGET = COPYT(T1)
-         A = CONVERT(T2, 'ARRAY')
-         SEQ(' MERGET<A<I, 1>> = A<I, 2> ', .I)                :(RETURN)
-*
-KEYST    A = (CONVERT(T, 'ARRAY'), ARRAY0)                   :F(FRETURN)
-         PROTOTYPE(A) BREAK(',') . N                         :F(FRETURN)
-         KEYST = (NE(N) ARRAY(N), ARRAY0)
-         SEQ(' KEYST<I> = A<I,1> ', .I)                        :(RETURN)
 *
 HASH_END
 *

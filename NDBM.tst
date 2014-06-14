@@ -1,7 +1,7 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -INCLUDE 'NDBM.INC'
--LINE 44 "NDBM.lss"
+-LINE 48 "NDBM.lss"
          &CODE = 1
          HANDLE = DBM_OPEN('db', 'CW', '0660')                   :F(END)
          OUTPUT = HANDLE

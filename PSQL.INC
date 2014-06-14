@@ -1,4 +1,6 @@
--LINE 69 "PSQL.lss"
+-MODULE PSQL
+-LINE 71 "PSQL.lss"
+-INCLUDE 'BQ.INC'
 -INCLUDE 'BRKREM.INC'
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'COUNT.INC'
@@ -6,10 +8,12 @@
 -INCLUDE 'REPL.INC'
 -INCLUDE 'SCOOP.INC'
 -INCLUDE 'SEQ.INC'
+-INCLUDE 'TIMER.INC'
 -INCLUDE 'UNIQUE.INC'
+-LINE 396 "PSQL.lss"
+-IN72
 -STITL PSQL
 -EJECT
--LINE 382 "PSQL.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -27,12 +31,12 @@
 *
 * PSQL.lss
 *
--LINE 116 "PSQL.lss"
--MODULE PSQL
+-LINE 120 "PSQL.lss"
 *
 * THESE THREE ARE FUNCTIONS -- SIMPLY EASIER THAT WAY.
 *
 -PUBLIC PSQL_INSERT(), PSQL_RESULT(), PSQL_ESCAPE()
+*
          DEFINE('PSQL_INSERT(T)N,V,I')
          DEFINE('PSQL_RESULT(S)I,N,R,T,KEY,DAT')
          DEFINE('PSQL_ESCAPE(S)')
@@ -40,21 +44,32 @@
 * CREATE CLASS PSQL_CLASS AND POPULATE ITS METHODS
 *
 -PUBLIC CLASS:PSQL_CLASS
+*
          PSQL_CLASS = SEND(CLASS, 'NEW_CLASS', 'PSQL_CLASS')
          DEFINE('PSQL_OPEN()L')
+*
 -PUBLIC PSQL_CLASS:'OPEN'
+*
          SEND(PSQL_CLASS, 'ADD_METHOD', 'OPEN', 'PSQL_OPEN')
          DEFINE('PSQL_CLOSE()PID')
+*
 -PUBLIC PSQL_CLASS:'CLOSE'
+*
          SEND(PSQL_CLASS, 'ADD_METHOD', 'CLOSE', 'PSQL_CLOSE')
+*
 -PUBLIC PSQL_CLASS:'GET_PIPE'
+*
          SEND(PSQL_CLASS, 'ADD_METHOD', 'GET_PIPE', CODE(
 +           ' SEND = |.PIPE :(RETURN)'))
          DEFINE('PSQL_DISCARD()L')
+*
 -PUBLIC PSQL_CLASS:'DISCARD'
+*
          SEND(PSQL_CLASS, 'ADD_METHOD', 'DISCARD', 'PSQL_DISCARD')
          DEFINE('PSQL_OUTPUT()L')
+*
 -PUBLIC PSQL_CLASS:'OUTPUT'
+*
          SEND(PSQL_CLASS, 'ADD_METHOD', 'OUTPUT', 'PSQL_OUTPUT')
 *
                                                              :(PSQL_END)

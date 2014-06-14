@@ -1,6 +1,6 @@
 -MODULE BQ
--IN72
 -LINE 17 "BQ.lss"
+-IN72
 -LINE 75 "BQ.lss"
 -STITL BQ
 -EJECT

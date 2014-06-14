@@ -1,4 +1,4 @@
-<h1>CH - Hex to String</h1>
+<h1>CH - Hex to string</h1>
 
 CH(H) will convert the sequence of hexadecimal digits into the
 corresponding character string. [[CH]] is the inverse of [[HEX]].
@@ -42,8 +42,8 @@ END
 
 <<>>=
 -MODULE CH
--IN72
 <<INCLUDES>>
+-IN72
 -STITL CH
 -EJECT
 *

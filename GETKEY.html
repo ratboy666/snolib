@@ -54,25 +54,28 @@ applications.
 <h2>Uses</h2>
 <a href="BQ.html">BQ</a><br>
 <a href="CHARS.html">CHARS</a><br>
+<a href="HOST.html">HOST</a><br>
 </font></p>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;INCLUDES&raquo;&equiv;</b>
 -INCLUDE &#39;BQ.INC&#39;
 -INCLUDE &#39;CHARS.INC&#39;
+-INCLUDE &#39;HOST.INC&#39;
 <b>@</b>
 </font></pre></div>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;GETKEY&raquo;&equiv;</b>
--MODULE GETKEY
 -PUBLIC GETKEY()
+<font color="#818181"><i>*</i></font>
          DEFINE(&#39;GETKEY(IN)KEY,M&#39;)
 <font color="#818181"><i>*</i></font>
 GETKEY_INIT
 <font color="#818181"><i>*</i></font>
 -PUBLIC KEY_ESC, KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN, KEY_PAGEDN
 -PUBLIC KEY_PAGEUP, KEY_HOME, KEY_END, KEY_INS
+<font color="#818181"><i>*</i></font>
          KEY_ESC    = CHARS_ESC CHARS_ESC
          KEY_LEFT   = BQ(&#39;tput kcub1&#39;)
          KEY_RIGHT  = BQ(&#39;tput kcuf1&#39;)
@@ -172,7 +175,9 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+-MODULE GETKEY
 <b>&laquo;INCLUDES&raquo;</b>
+-IN72
 -STITL GETKEY
 -EJECT
 <font color="#818181"><i>*</i></font>
@@ -201,7 +206,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun  5 20:00:03 EDT 2014</p></td><td><p align=right>
+Fri Jun 13 15:12:54 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

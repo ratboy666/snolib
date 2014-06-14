@@ -1,7 +1,10 @@
+-MODULE LINK
+-LINE 10 "LINK.lss"
+-IN72
+-LINE 73 "LINK.lss"
 -STITL LINK
 -EJECT
 *
--LINE 67 "LINK.lss"
 ************************************************************************
 *                                                                      *
 *                    #        ###  #     #  #    #                     *
@@ -19,20 +22,26 @@
 * LINK.lss
 *
 -LINE 13 "LINK.lss"
--MODULE LINK
 -PUBLIC LINK(), NEXT()
+*
          DATA('LINK(VALUE,NEXT)')
+*
 -PUBLIC CONS(), CAR(), CDR()
+*
          OPSYN('CONS', 'LINK')
          OPSYN('CAR', 'VALUE')
          OPSYN('CDR', 'NEXT')
+*
 -PUBLIC CAAR(), CDAR(), CADR(), CDDR()
+*
          DEFINE('CAAR(L)')
          DEFINE('CDAR(l)')
          DEFINE('CADR(L)')
          DEFINE('CDDR(L)')
+*
 -PUBLIC CAAAR(), CAADR(), CADAR(), CADDR()
 -PUBLIC CDAAR(), CDADR(), CDDAR(), CDDDR()
+*
          DEFINE('CAAAR(L)')
          DEFINE('CAADR(L)')
          DEFINE('CADAR(L)')

@@ -1,7 +1,10 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -INCLUDE 'HASH.INC'
--LINE 118 "HASH.lss"
+-LINE 94 "HASH.lss"
+-INCLUDE 'MERGET.INC'
+-INCLUDE 'COPYT.INC'
+-INCLUDE 'KEYST.INC'
          &CODE = 1
          H = #'FIRST=BOB,LAST=LOBLAW'
          IDENT(H<'FIRST'>, 'BOB')                                :F(END)

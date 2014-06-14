@@ -1,7 +1,10 @@
+-MODULE LOGIC
+-LINE 8 "LOGIC.lss"
+-IN72
+-LINE 85 "LOGIC.lss"
 -STITL LOGIC
 -EJECT
 *
--LINE 84 "LOGIC.lss"
 ************************************************************************
 *                                                                      *
 *             #        #######   #####   ###   #####                   *
@@ -22,18 +25,19 @@
 * LOGIC.lss
 *
 -LINE 11 "LOGIC.lss"
--MODULE LOGIC
 *
 * NOTE! BASE ARGUMENT MUST BE PASSED A EXPLICIT NULL STRING FOR DEFAULT
 *
 * INTEGER/INTEGER, STRING/INTEGER, STRING/STRING
 *
 -PUBLIC LOGIC()
+*
          LOAD('LOGIC(INTEGER,,)')
 *
 -PUBLIC NOT(), AND(), OR(), XOR(), NAND(), NOR(), UPLUS(), UMINUS()
 -PUBLIC  UMUL(), UDIV(), SHL(), SHR(), SAR(), ROL(), ROR()
 -PUBLIC HI(), IH(), DIB(), IDB()
+*
          DEFINE('NOT(ARG)')
          DEFINE('AND(ARG1,ARG2)')
          DEFINE('OR(ARG1,ARG2)')

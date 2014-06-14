@@ -1,0 +1,66 @@
+<h1>MD5 - Return MD5 hash of string</h1>
+
+[[MD5(S)]] returns the MD5 hash of the string [[S]].
+
+<h2>Uses</h2>
+<a href="BQ.html">BQ</a><br>
+<a href="MKTEMP.html">MKTEMP</a><br>
+<a href="READFILE.html">READFILE</a><br>
+
+<<INCLUDES>>=
+-INCLUDE 'BQ.INC'
+-INCLUDE 'MKTEMP.INC'
+-INCLUDE 'READFILE.INC'
+@
+
+<<MD5>>=
+-PUBLIC MD5()
+*
+         DEFINE('MD5(S)T')                                    :(MD5_END)
+*
+MD5      T = MKTEMP()
+         WRITEFILE(T, S)
+         MD5 = BQ('MD5SUM ' T)
+         MD5 BREAK(' ') . MD5
+         DELETE(T)                                             :(RETURN)
+*
+MD5_END
+@
+
+<<unit_test>>=
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-INCLUDE 'AGT.INC'
+         &CODE = 1
+         OUTPUT = MD5('hello, world')
+         &CODE = 0
+END
+@
+
+<<>>=
+-MODULE MD5
+<<INCLUDES>>
+-IN72
+-STITL MD5
+-EJECT
+*
+************************************************************************
+*                                                                      *
+*                       #     #  ######   #####                        *
+*                       ##   ##  #     #  #                            *
+*                       # # # #  #     #  #                            *
+*                       #  #  #  #     #  #####                        *
+*                       #     #  #     #      #                        *
+*                       #     #  #     #      #                        *
+*                       #     #  ######   #####                        *
+*                                                                      *
+* MD5                           MD5 HASH                               *
+*                                                                      *
+************************************************************************
+*
+* MD5.lss
+*
+<<MD5>>
+*
+* CE: .MSNOBOL4;
+@

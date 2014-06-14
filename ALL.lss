@@ -161,8 +161,8 @@ the html documentation (mostly in the <i>ditaa</i> utility.
 
 <<>>=
 -MODULE ALL
--IN72
 <<INCS>>
+-IN72
 -STITL ALL
 -EJECT
 *

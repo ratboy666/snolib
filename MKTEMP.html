@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>MKTEMP - Create temporary file</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">MKTEMP()</font> creates a temporary file. Remember to delete the file
+when finished with it.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+<a href="BQ.html">BQ</a><br>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;BQ.INC&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;MKTEMP&raquo;&equiv;</b>
+-PUBLIC MKTEMP()
+<font color="#818181"><i>*</i></font>
+         DEFINE(&#39;MKTEMP()&#39;)                                <b>:(MKTEMP_END)</b>
+<font color="#818181"><i>*</i></font>
+MKTEMP   MKTEMP = BQ(&#39;mktemp&#39;)                                 <b>:(RETURN)</b>
+
+MKTEMP_END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;MKTEMP.INC&#39;
+         &amp;CODE = 1
+         F = MKTEMP()
+         FILE(F)                                                 <b>:F(END)</b>
+         DELETE(F)
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+-MODULE MKTEMP
+<b>&laquo;INCLUDES&raquo;</b>
+-IN72
+-STITL MKTEMP
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*         #     #  #    #  #######  #######  #     #  ######           *</i></font>
+<font color="#818181"><i>*         ##   ##  #   #      #     #        ##   ##  #     #          *</i></font>
+<font color="#818181"><i>*         # # # #  #  #       #     #        # # # #  #     #          *</i></font>
+<font color="#818181"><i>*         #  #  #  ###        #     #####    #  #  #  ######           *</i></font>
+<font color="#818181"><i>*         #     #  #  #       #     #        #     #  #                *</i></font>
+<font color="#818181"><i>*         #     #  #   #      #     #        #     #  #                *</i></font>
+<font color="#818181"><i>*         #     #  #    #     #     #######  #     #  #                *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* MKTEMP               CREATE TEMPORARY FILE                           *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* MKTEMP.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;MKTEMP&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Fri Jun 13 15:13:42 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

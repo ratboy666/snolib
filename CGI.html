@@ -46,14 +46,20 @@ Still need: Response codes, Headers/Responses
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 <h2>Uses</h2>
+<a href="BQ.html">BQ</a><br>
 <a href="CHARS.html">CHARS</a><br>
 <a href="COOKIE.html">COOKIE</a><br>
 <a href="CRACK.html">CRACK</a><br>
+<a href="DSERVE.html">DSERVE</a><br>
+<a href="FCGI.html">FCGI</a><br>
 <a href="HASH.html">HASH</a><br>
 <a href="HTMLESC.html">HTMLESC</a><br>
+<a href="HTMLTMPL.html">HTMLTMPL</a><br>
 <a href="JSON.html">JSON</a><br>
+<a href="READFILE.html">READFILE</a><br>
 <a href="SCOOP.html">SCOOP</a><br>
 <a href="SEQ.html">SEQ</a><br>
+<a href="SESSION.html">SESSION</a><br>
 <a href="UNIQUE.html">UNIQUE</a><br>
 <a href="VDIFFER.html">VDIFFER</a><br>
 </font></p>
@@ -66,14 +72,20 @@ Still need: Response codes, Headers/Responses
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;INCLUDES&raquo;&equiv;</b>
+-INCLUDE &#39;BQ.INC&#39;
 -INCLUDE &#39;CHARS.INC&#39;
 -INCLUDE &#39;COOKIE.INC&#39;
 -INCLUDE &#39;CRACK.INC&#39;
+-INCLUDE &#39;DSERVE.INC&#39;
+-INCLUDE &#39;FCGI.INC&#39;
 -INCLUDE &#39;HASH.INC&#39;
 -INCLUDE &#39;HTMLESC.INC&#39;
+-INCLUDE &#39;HTMLTMPL.INC&#39;
 -INCLUDE &#39;JSON.INC&#39;
+-INCLUDE &#39;READFILE.INC&#39;
 -INCLUDE &#39;SCOOP.INC&#39;
 -INCLUDE &#39;SEQ.INC&#39;
+-INCLUDE &#39;SESSION.INC&#39;
 -INCLUDE &#39;UNIQUE.INC&#39;
 -INCLUDE &#39;VDIFFER.INC&#39;
 <b>@</b>
@@ -81,9 +93,6 @@ Still need: Response codes, Headers/Responses
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;CGI&raquo;&equiv;</b>
--USES CRACK(), HOST(), URL_DECODE(), COOKIE_FIX_NAME()
--WEAK USE_FCGI, FCGI_ENV, FCGI_IN, FCGI_REQUEST_COMPLETE
--WEAK FCGI_SEND(), FCGI_END()
 <font color="#818181"><i>*</i></font>
 -PUBLIC CLASS:CGI_CLASS
 <font color="#818181"><i>*</i></font>
@@ -622,8 +631,11 @@ END
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
 -MODULE CGI
--IN72
+-USES CRACK(), HOST(), URL_DECODE(), COOKIE_FIX_NAME()
+-WEAK USE_FCGI, FCGI_ENV, FCGI_IN, FCGI_REQUEST_COMPLETE
+-WEAK FCGI_SEND(), FCGI_END()
 <b>&laquo;INCLUDES&raquo;</b>
+-IN72
 -STITL CGI
 -EJECT
 <font color="#818181"><i>*</i></font>
@@ -653,7 +665,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Wed Jun 11 11:50:31 EDT 2014</p></td><td><p align=right>
+Fri Jun 13 15:13:30 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

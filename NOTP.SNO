@@ -1,8 +1,10 @@
+-MODULE NOTP
 -LINE 11 "NOTP.lss"
 -INCLUDE 'STACK.INC'
+-IN72
+-LINE 46 "NOTP.lss"
 -STITL NOTP
 -EJECT
--LINE 46 "NOTP.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -21,8 +23,8 @@
 * NOTP.lss
 *
 -LINE 15 "NOTP.lss"
--MODULE NOTP
 -PUBLIC NOTP()
+*
          DEFINE('NOTP(P)')                                   :(NOTP_END)
 *
 -LINE 27 "NOTP.lss"

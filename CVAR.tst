@@ -1,7 +1,7 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -INCLUDE 'CVAR.INC'
--LINE 215 "CVAR.lss"
+-LINE 217 "CVAR.lss"
          &CODE = 1
          &CODE = 0
 END

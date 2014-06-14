@@ -1,4 +1,4 @@
-<h1>FCGI - FCGI (Fast CGI) Support Functions</h1>
+<h1>FCGI - FCGI (Fast CGI) support</h1>
 
 [[FCGI]] support functions. Need to suck in CGI to actually handle
 requests. This should be a wrapper for CGI. Note that logging, header
@@ -34,7 +34,6 @@ When this is functional, we will work on performance.
 @
 
 <<FCGI>>=
--MODULE FCGI
          FCGI_LOGUNIT = IO_FINDUNIT()
          OUTPUT(.FCGI_LOG, FCGI_LOGUNIT, 'W', 
 +               '|/usr/bin/logger -n localhost -t FCGI')
@@ -300,7 +299,9 @@ END
 @
 
 <<>>=
+-MODULE FCGI
 <<INCLUDES>>
+-IN72
 -STITL FCGI
 -EJECT
 *

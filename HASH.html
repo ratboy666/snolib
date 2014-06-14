@@ -24,14 +24,6 @@ to make it easier to construct simple tables. It is <font face="Source Code Pro"
 <font face="Source Code Pro">#</font> to make it's use more convenient.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
-<font face="Source Code Pro">COPYT(T)</font> returns a copy of table <font face="Source Code Pro">T</font>. <font face="Source Code Pro">MERGET(T1,T2)</font>
-merges two tables together. Entries in <font face="Source Code Pro">T2</font> override entries in
-<font face="Source Code Pro">T1</font>. The returned table is a new table. Neither <font face="Source Code Pro">T1</font> nor <font face="Source Code Pro">T2</font>
-are changed. <font face="Source Code Pro">KEYST(T)</font> returns an array of the keys in
-table <font face="Source Code Pro">T</font>. <font face="Source Code Pro">PRUNET(T)</font> returns a pruned table. This is a new
-table with only non-IDENT elements inserted.
-</font></p>
-<p align="justify"><font face="Sorts Mill Goudy">
 The full call to <font face="Source Code Pro">HASH()</font>is
 </font></p><pre><font face="Source Code Pro">
 | HASH(S,E,P,TS,TI,FK,FD,SP) where
@@ -65,7 +57,10 @@ a value of <font face="Source Code Pro">'YYY'</font>.  <font face="Source Code P
 <p align="justify"><font face="Sorts Mill Goudy">
 <h2>Uses</h2>
 <a href="BRKREM.html">BRKREM</a><br>
-<a href="SEQ.html">SEQ</a><br>
+<a href="COPYT.html">COPYT</a><br>
+<a href="KEYST.html">KEYST</a><br>
+<a href="MERGET.html">MERGET</a><br>
+<a href="TRIMB.html">TRIMB</a><br>
 <a href="VDIFFER.html">VDIFFER</a><br>
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
@@ -76,29 +71,21 @@ a value of <font face="Source Code Pro">'YYY'</font>.  <font face="Source Code P
 <pre><font face="Source Code Pro">
 <b>&laquo;INCLUDES&raquo;&equiv;</b>
 -INCLUDE &#39;BRKREM.INC&#39;
--INCLUDE &#39;SEQ.INC&#39;
+-INCLUDE &#39;COPYT.INC&#39;
+-INCLUDE &#39;KEYST.INC&#39;
+-INCLUDE &#39;MERGET.INC&#39;
+-INCLUDE &#39;TRIMB.INC&#39;
 -INCLUDE &#39;VDIFFER.INC&#39;
 <b>@</b>
 </font></pre></div>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;HASH&raquo;&equiv;</b>
--MODULE HASH
--PUBLIC HASH(), COPYT(), MERGET(), KEYST(), #1
--PUBLIC PRUNET()
+-PUBLIC HASH(), #1
 <font color="#818181"><i>*</i></font>
          DEFINE(&#39;HASH(S,E,P,TS,TI,FK,FV,SP)K,V,C&#39;)
          DEFINE(&#39;HASH_3(S)&#39;)
-         DEFINE(&#39;COPYT(T)&#39;)
-         DEFINE(&#39;MERGET(T1,T2)A,I&#39;)
-         DEFINE(&#39;KEYST(T)A,N,I&#39;)
-         DEFINE(&#39;PRUNET(T)A,I&#39;)
          OPSYN(&#39;#&#39;, &#39;HASH&#39;, 1)                               <b>:(HASH_END)</b>
-<font color="#818181"><i>*</i></font>
-PRUNET
-         PRUNET = TABLE()
-         A = KEYST(T)                                         <b>:F(RETURN)</b>
-         SEQ( &#39; PRUNET&lt;A&lt;I&gt;&gt; = VDIFFER(T&lt;A&lt;I&gt;&gt;)&#39;, .I)          <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 HASH     HASH = TABLE(TS, TI)
          E = IDENT(E) &#39;=&#39;
@@ -118,18 +105,6 @@ HASH_4   S POS(0) BRKREM(P) . V (P | RPOS(0)) =               <b>:F(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 HASH_3   HASH_3 = S                                            <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
-COPYT    COPYT = TABLE()
-         COPYT = CONVERT(CONVERT(T, &#39;ARRAY&#39;), &#39;TABLE&#39;)         <b>:(RETURN)</b>
-<font color="#818181"><i>*</i></font>
-MERGET   MERGET = COPYT(T1)
-         A = CONVERT(T2, &#39;ARRAY&#39;)
-         SEQ(&#39; MERGET&lt;A&lt;I, 1&gt;&gt; = A&lt;I, 2&gt; &#39;, .I)                <b>:(RETURN)</b>
-<font color="#818181"><i>*</i></font>
-KEYST    A = (CONVERT(T, &#39;ARRAY&#39;), ARRAY0)                   <b>:F(FRETURN)</b>
-         PROTOTYPE(A) BREAK(&#39;,&#39;) . N                         <b>:F(FRETURN)</b>
-         KEYST = (NE(N) ARRAY(N), ARRAY0)
-         SEQ(&#39; KEYST&lt;I&gt; = A&lt;I,1&gt; &#39;, .I)                        <b>:(RETURN)</b>
-<font color="#818181"><i>*</i></font>
 HASH_END
 <b>@</b>
 </font></pre></div>
@@ -139,6 +114,9 @@ HASH_END
 <font color="#818181"><i>#!/usr/bin/bash</i></font>
          exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
 -INCLUDE &#39;HASH.INC&#39;
+-INCLUDE &#39;MERGET.INC&#39;
+-INCLUDE &#39;COPYT.INC&#39;
+-INCLUDE &#39;KEYST.INC&#39;
          &amp;CODE = 1
          H = #&#39;FIRST=BOB,LAST=LOBLAW&#39;
          IDENT(H&lt;&#39;FIRST&#39;&gt;, &#39;BOB&#39;)                                <b>:F(END)</b>
@@ -167,7 +145,9 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+-MODULE HASH
 <b>&laquo;INCLUDES&raquo;</b>
+-IN72
 -STITL HASH
 -EJECT
 <font color="#818181"><i>*</i></font>
@@ -197,7 +177,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Thu Jun 12 11:54:33 EDT 2014</p></td><td><p align=right>
+Fri Jun 13 15:13:27 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>
