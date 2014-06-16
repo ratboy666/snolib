@@ -4,7 +4,6 @@ An interface to [[libffi]] providing a Foreign Function Interface
 (FFI) for SNOBOL4.
 
 <h2>Uses</h2>
-<a href="P64.html">P64</a><br>
 
 When building, the following INCLUDEs are also needed:
 
@@ -15,7 +14,6 @@ When building, the following INCLUDEs are also needed:
 <a href="SEQ.html">SEQ</a>
 
 <<INCLUDES>>=
--INCLUDE 'P64.INC'
 @
 
 When building ffi.so the following INCLUDES are needed.

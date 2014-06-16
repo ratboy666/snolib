@@ -106,8 +106,8 @@ is a reasonable choice.
 @
 
 <<SCOOP>>=
--MODULE SCOOP
 -PUBLIC OBJECT()
+*
          DATA('OBJECT(CLASS,IVARS,METHODS)')
 *
 -PUBLIC SEND(), SUPER(), SELF(), IVAR(), CVAR(), CLASS_OF(), |1
@@ -293,7 +293,9 @@ END
 @
 
 <<>>=
+-MODULE SCOOP
 <<INCLUDES>>
+-IN72
 -EJECT
 -STITL SCOOP
 -EJECT

@@ -1,8 +1,9 @@
 -MODULE READL
 -LINE 14 "READL.lss"
 -INCLUDE 'LINK.INC'
--STITL READL
+-IN72
 -LINE 46 "READL.lss"
+-STITL READL
 -EJECT
 *
 ************************************************************************

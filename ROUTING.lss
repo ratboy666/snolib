@@ -19,8 +19,8 @@ in the table passed in to ROUTING(), and sets ACTION.
 @
 
 <<ROUTING>>=
--MODULE ROUTING
 -PUBLIC ROUTING_INIT(), ROUTING_ADD(), ROUTING()
+*
          DEFINE('ROUTING_INIT()')
          DEFINE('ROUTING_ADD(ROUTE,PATTERN,ACTION_)NAME,P')
          DEFINE('ROUTING(METHOD,ROUTE,VARS_)P,S')
@@ -69,8 +69,6 @@ ROUTING_END
 #!/usr/bin/bash
          exec "/usr/local/bin/snobol4" "-b" "$0" "$@"
 -INCLUDE 'ROUTING.INC'
--INCLUDE 'DDT.INC'
-*
          &CODE = 1
          ROUTING = ROUTING_INIT()
          ROUTING = ROUTING_ADD(ROUTING, 'A', 'ACTION 1')
@@ -88,7 +86,6 @@ ROUTING_END
 * V IS A TABLE THAT WILL STORE THE VARIABLES. METHOD WILL BE SEPARATED
 * FROM PATH_INFO WITH A '\'.
 *
-***         DDT()
          V = TABLE()
          P = ROUTING('', '/A/B', .V)
          V = TABLE()
@@ -118,7 +115,9 @@ END
 @
 
 <<>>=
+-MODULE ROUTING
 <<INCLUDES>>
+-IN72
 -STITL ROUTING
 -EJECT
 *

@@ -1,9 +1,8 @@
 -MODULE FFI
 -CASE 1
 -PLUSOPS 1
--LINE 643 "FFI.lss"
--LINE 18 "FFI.lss"
--INCLUDE 'P64.INC'
+-LINE 641 "FFI.lss"
+-LINE 17 "FFI.lss"
 -IN72
 -STITL FFI
 -EJECT
@@ -24,22 +23,22 @@
 *
 * FFI.lss
 *
+-LINE 22 "FFI.lss"
+-LINE 23 "FFI.lss"
 -LINE 24 "FFI.lss"
 -LINE 25 "FFI.lss"
 -LINE 26 "FFI.lss"
 -LINE 27 "FFI.lss"
 -LINE 28 "FFI.lss"
--LINE 29 "FFI.lss"
--LINE 30 "FFI.lss"
--LINE 33 "FFI.lss"
+-LINE 31 "FFI.lss"
          ffi = 'ffi.c'
+-LINE 528 "FFI.lss"
+-LINE 529 "FFI.lss"
 -LINE 530 "FFI.lss"
 -LINE 531 "FFI.lss"
 -LINE 532 "FFI.lss"
 -LINE 533 "FFI.lss"
--LINE 534 "FFI.lss"
--LINE 535 "FFI.lss"
--LINE 545 "FFI.lss"
+-LINE 543 "FFI.lss"
          LOAD('FFI_FREE(INTEGER)', 'ffi.so')
          LOAD('FFI_CLEAR(INTEGER)', 'ffi.so')
          LOAD('FFI_NEW(STRING,STRING)INTEGER', 'ffi.so')
@@ -70,7 +69,7 @@
          LOAD('DLSYM_(INTEGER,STRING)', 'ffi.so')
          LOAD('DLCLOSE_(INTEGER)INTEGER', 'ffi.so')
 *
--LINE 580 "FFI.lss"
+-LINE 578 "FFI.lss"
 -PUBLIC DLOPEN(), DLERROR(), DLSYM(), DLCLOSE()
 *
          DEFINE('DLOPEN(S,I)')

@@ -16,8 +16,8 @@ which does not permit the redefinition of built-in operators.
 @
 
 <<REDEFINE>>=
--MODULE REDEFINE
 -PUBLIC REDEFINE(), REDEFINERESTORE()
+*
          DEFINE('REDEFINE(OP,DEF,LBL)NAME,N,FLAG')
          DEFINE('REDEFINERESTORE(OP,DEF)NAME,N,FLAG')
          DEFINE('REDEFINECOMMON()')                      :(REDEFINE_END)
@@ -52,6 +52,9 @@ END
 @
 
 <<>>=
+-MODULE REDEFINE
+<<INCLUDES>>
+-IN72
 -STITL REDEFINE
 -EJECT
 *

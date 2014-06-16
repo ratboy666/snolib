@@ -23,6 +23,7 @@
 -INCLUDE &#39;BQ.INC&#39;
 -INCLUDE &#39;MKTEMP.INC&#39;
 -INCLUDE &#39;READFILE.INC&#39;
+-INCLUDE &#39;WRTFILE.INC&#39;
 <b>@</b>
 </font></pre></div>
 <div style="background-image: url(greenbar.gif)">
@@ -34,7 +35,7 @@
 <font color="#818181"><i>*</i></font>
 MD5      T = MKTEMP()
          WRITEFILE(T, S)
-         MD5 = BQ(&#39;MD5SUM &#39; T)
+         MD5 = BQ(&#39;md5sum &#39; T)
          MD5 BREAK(&#39; &#39;) . MD5
          DELETE(T)                                             <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
@@ -46,9 +47,10 @@ MD5_END
 <b>&laquo;unit_test&raquo;&equiv;</b>
 <font color="#818181"><i>#!/usr/bin/bash</i></font>
          exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
--INCLUDE &#39;AGT.INC&#39;
+-INCLUDE &#39;MD5.INC&#39;
          &amp;CODE = 1
-         OUTPUT = MD5(&#39;hello, world&#39;)
+         R = &#39;e4d7f1b4ed2e42d15898f4b27b019da4&#39;
+         IDENT(R, MD5(&#39;hello, world&#39;))                           <b>:F(END)</b>
          &amp;CODE = 0
 END
 <b>@</b>
@@ -87,7 +89,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Fri Jun 13 15:13:43 EDT 2014</p></td><td><p align=right>
+Sun Jun 15 23:01:00 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

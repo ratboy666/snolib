@@ -9,8 +9,8 @@ from 1 to n. If an empty argument is supplied, 0 to 1 (real).
 @
 
 <<RANDOM>>=
--MODULE RANDOM
 -PUBLIC RANDOM(), SRANDOM(), SRANDOMDEV() RANDOMI()
+*
          LOAD('RANDOM()INTEGER')
          LOAD('SRANDOM(INTEGER)STRING')
          LOAD('SRANDOMDEV()STRING')
@@ -36,6 +36,9 @@ END
 @
 
 <<>>=
+-MODULE RANDOM
+<<INCLUDES>>
+-IN72
 -STITL RANDOM
 -EJECT
 *

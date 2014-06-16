@@ -10,8 +10,8 @@ is a string containing all those characters that are in [[S1]] and not
 @
 
 <<SDIFF>>=
--MODULE SDIFF
 -PUBLIC SDIFF()
+*
          DEFINE('SDIFF(S1,S2)')                             :(SDIFF_END)
 *
 SDIFF    SDIFF = S1
@@ -32,6 +32,9 @@ END
 @
 
 <<>>=
+-MODULE SDIFF
+<<INCLUDES>>
+-IN72
 -STITL SDIFF
 -EJECT
 *

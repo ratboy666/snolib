@@ -34,8 +34,8 @@ in the table passed in to ROUTING(), and sets ACTION.
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;ROUTING&raquo;&equiv;</b>
--MODULE ROUTING
 -PUBLIC ROUTING_INIT(), ROUTING_ADD(), ROUTING()
+<font color="#818181"><i>*</i></font>
          DEFINE(&#39;ROUTING_INIT()&#39;)
          DEFINE(&#39;ROUTING_ADD(ROUTE,PATTERN,ACTION_)NAME,P&#39;)
          DEFINE(&#39;ROUTING(METHOD,ROUTE,VARS_)P,S&#39;)
@@ -86,8 +86,6 @@ ROUTING_END
 <font color="#818181"><i>#!/usr/bin/bash</i></font>
          exec &quot;/usr/local/bin/snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
 -INCLUDE &#39;ROUTING.INC&#39;
--INCLUDE &#39;DDT.INC&#39;
-<font color="#818181"><i>*</i></font>
          &amp;CODE = 1
          ROUTING = ROUTING_INIT()
          ROUTING = ROUTING_ADD(ROUTING, &#39;A&#39;, &#39;ACTION 1&#39;)
@@ -105,7 +103,6 @@ ROUTING_END
 <font color="#818181"><i>* V IS A TABLE THAT WILL STORE THE VARIABLES. METHOD WILL BE SEPARATED</i></font>
 <font color="#818181"><i>* FROM PATH_INFO WITH A &#39;\&#39;.</i></font>
 <font color="#818181"><i>*</i></font>
-<font color="#818181"><i>***         DDT()</i></font>
          V = TABLE()
          P = ROUTING(&#39;&#39;, &#39;/A/B&#39;, .V)
          V = TABLE()
@@ -137,7 +134,9 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+-MODULE ROUTING
 <b>&laquo;INCLUDES&raquo;</b>
+-IN72
 -STITL ROUTING
 -EJECT
 <font color="#818181"><i>*</i></font>
@@ -166,7 +165,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Fri Jun 13 15:13:38 EDT 2014</p></td><td><p align=right>
+Sun Jun 15 22:04:39 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

@@ -2,8 +2,6 @@
          exec "/usr/local/bin/snobol4" "-b" "$0" "$@"
 -INCLUDE 'ROUTING.INC'
 -LINE 72 "ROUTING.lss"
--INCLUDE 'DDT.INC'
-*
          &CODE = 1
          ROUTING = ROUTING_INIT()
          ROUTING = ROUTING_ADD(ROUTING, 'A', 'ACTION 1')
@@ -21,7 +19,6 @@
 * V IS A TABLE THAT WILL STORE THE VARIABLES. METHOD WILL BE SEPARATED
 * FROM PATH_INFO WITH A '\'.
 *
-***         DDT()
          V = TABLE()
          P = ROUTING('', '/A/B', .V)
          V = TABLE()

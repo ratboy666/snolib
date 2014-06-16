@@ -37,7 +37,10 @@ end_merge_idx
 
          fn = host(HOST_ARGN, HOST(HOST_FIRSTARG))             :f(stdin)
          ident(fn)                                             :s(stdin)
-         input(.input, 20,, fn)                                  :f(end)
+         s = fn
+         s '.lss' rpos(0) =                                     :f(inp2)
+         fn = file(s '.INC') s '.INC'
+inp2     input(.input, 20,, fn)                                  :f(end)
 stdin
 
          fc = &ucase

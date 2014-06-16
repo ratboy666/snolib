@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type"
+      content="text/html; charset=UTF-8">
+<meta name="description"
+      content="sweave generated">
+</head><body><font face="Sorts Mill Goudy">
+<p align="justify"><font face="Sorts Mill Goudy">
+<h1>FORMAT - FORTRAN IV FORMAT() Support</h1>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">FTN_FORMAT(F,D)</font>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<h2>Uses</h2>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;INCLUDES&raquo;&equiv;</b>
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;FORMAT&raquo;&equiv;</b>
+-SNOBOL SLOAD(&#39;BQ.INC&#39;)
+-SNOBOL SLOAD(&#39;DYNAMIC.INC&#39;)
+-SNOBOL SLOAD(&#39;WRAPPER.INC&#39;)
+-SNOBOL SLOAD(&#39;CRACK.INC&#39;)
+-SNOBOL SLOAD(&#39;SEQ.INC&#39;)
+-SNOBOL TERMINAL = &#39;FORMAT (MON NOV 11 12:50:40 EST 2013)&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;FORMAT&raquo;&equiv;</b>
+-EMBED C &#39;format&#39;
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;FORMAT,TYPE=C&raquo;&equiv;</b>
+-SNOBOL WRAPPER_STARTFILE(.EMBED)
+
+/* Adds FORTRAN IV FORMAT to CSNOBOL4 */
+
+<font color="#818181"><i>#include &lt;stdio.h&gt;</i></font>
+<font color="#818181"><i>#include &lt;stdlib.h&gt;</i></font>
+<font color="#818181"><i>#include &lt;ctype.h&gt;</i></font>
+
+static int format(char **in_s, char **fmt, char **buf, char **limit,
+           char **base, int reps, int level)
+{
+    int w, r;
+    char *bfmt = *fmt;
+    char c;
+    int aseen = 0;
+
+    for (; reps; --reps) {
+	for (*fmt = bfmt; **fmt;) {
+	    while ((**fmt == &#39;,&#39;) || (**fmt == &#39; &#39;)) {
+		++*fmt;
+	    }
+	    if (isdigit(**fmt)) {
+		r = 0;
+		while (isdigit(**fmt)) {
+		    r = r * 10 + **fmt - &#39;0&#39;;
+		    ++*fmt;
+		}
+		r &amp;= 0xff;
+	    } else {
+		r = -1;
+	    }
+	    c = **fmt;
+	    ++*fmt;
+	    switch (c) {
+		case &#39;,&#39;: break;
+		case &#39;X&#39;:
+		    if (r &lt; 0) {
+			r = 1;
+		    }
+		    for (; r; --r) {
+			**buf = &#39; &#39;;
+			++*buf;
+		    }
+		    break;
+		case &#39;A&#39;:
+		    ++aseen;
+		    if (isdigit(**fmt)) {
+			w = 0;
+			while (isdigit(**fmt)) {
+			    w = w * 10 + **fmt - &#39;0&#39;;
+			    ++*fmt;
+			}
+		    } else {
+			w = 1;
+		    }
+		    if (r &lt; 0) {
+			r = 1;
+		    }
+		    r *= w;
+		    for (; r; --r) {
+			if (**in_s == 0) {
+			    break;
+			}
+			**buf = **in_s;
+			++*buf;
+			++*in_s;
+		    }
+		    for (; r; --r) {
+			**buf = &#39; &#39;;
+			++*buf;
+		    }
+		    break;
+		case &#39;/&#39;:
+		    if (r &lt; 0) {
+			r = 1;
+		    }
+		    for (; r; --r) {
+			**buf = &#39;\n&#39;;
+			++*buf;
+			*base = *buf;
+		    }
+		    break;
+		case &#39;\&#39;&#39;:
+		    for (;;) {
+			if (**fmt == 0) {
+			    fprintf(stderr,
+                   &quot;ftn_format: missing close \&#39; in string constant\n&quot;);
+			    return 1;
+			}
+			if (**fmt == &#39;\&#39;&#39;) {
+			    ++*fmt;
+			    if (**fmt == &#39;\&#39;&#39;) {
+				**buf = &#39;\&#39;&#39;;
+				++*buf;
+				++*fmt;
+			    } else {
+				break;
+			    }
+			} else {
+			    **buf = **fmt;
+			    ++*buf;
+			    ++*fmt;
+			}
+		    }
+		    break;
+		case &#39;H&#39;:
+		    if (r == 0) {
+			break;
+		    }
+		    for (; r; --r) {
+			if (**fmt == 0) {
+			    fprintf(stderr,
+                          &quot;ftn_format: Hollerith constant too short\n&quot;);
+			    return 1;
+			}
+			**buf = **fmt;
+			++*buf;
+			++*fmt;
+		    }
+		    break;
+		case &#39;T&#39;: /* T TL TR */
+		    if (**fmt == &#39;R&#39;) {
+			c = &#39;R&#39;;
+			++*fmt;
+		    } else if (**fmt == &#39;L&#39;) {
+			c = &#39;L&#39;;
+			++*fmt;
+		    }
+		    if (isdigit(**fmt)) {
+			w = 0;
+			while (isdigit(**fmt)) {
+			    w = w * 10 + **fmt - &#39;0&#39;;
+			    ++*fmt;
+			}
+		    } else {
+			w = 1;
+		    }
+		    if (c == &#39;L&#39;) {
+			*buf -= w;
+		    } else if (c == &#39;R&#39;) {
+			*buf += w;
+		    } else {
+			*buf = *base + w - 1;
+		    }
+		    break;
+		case &#39;)&#39;:
+		    if (**in_s == 0) {
+			return 0;
+		    }
+		    if ((level == 1) &amp;&amp; **in_s) {
+			reps = 2;
+			goto btm;
+		    }
+		    if ((level &gt; 1) &amp;&amp; (reps &gt; 1)) {
+			goto btm;
+		    }
+		    if ((level &gt; 1) &amp;&amp; (reps &lt; 0) &amp;&amp; (aseen == 0)) {
+			return 0;
+		    }
+		    goto btm;
+		    return 0;
+		case &#39;(&#39;:
+		    r = format(in_s, fmt, buf, limit, base,
+			       r, level + 1);
+		    if (r) {
+			return r;
+		    }
+		    break;
+		default:
+		    if (c == 0) {
+			fprintf(stderr,
+                               &quot;ftn_format: premature end of format\n&quot;);
+		    } else {
+			fprintf(stderr,
+                           &quot;ftn_format: bad format character: %c\n&quot;, c);
+		    }
+		    return 1;
+	    }
+	    if (*limit &lt; *buf) {
+		*limit = *buf;
+	    }
+	}
+btm: ;
+    }
+    return 0;
+}
+
+static char *ftn_format(char *s, char *f)
+{
+    char *in_s, *fmt, *buf, *limit, *base, *b;
+    int r;
+
+    /* format state */
+    base = malloc(16384);
+    fmt = f;
+    in_s = s;
+    buf = base;
+    limit = base;
+    b = base;
+
+    for (r = 0; r &lt; 16384; ++r) {
+	base[r] = &#39; &#39;;
+    }
+    if (*fmt != &#39;(&#39;) {
+	fprintf(stderr, &quot;ftn_format: missing begin (\n&quot;);
+	goto err;
+    }
+    if (*(fmt + strlen(fmt) - 1)  != &#39;)&#39;) {
+	fprintf(stderr, &quot;ftn_format: missing end )\n&quot;);
+	goto err;
+    }
+
+    ++fmt;
+    r = format(&amp;in_s, &amp;fmt, &amp;buf, &amp;limit, &amp;b, 1, 1);
+    if (r == 0) {
+	*limit = 0;
+	return base;
+    }
+err:
+    free(base);
+    return NULL;
+}
+
+/* FTN_FORMAT(STRING,STRING)STRING_FREE
+ *
+ * First STRING is the FORMAT, second is the DATA
+ */
+FTN_FORMAT( LA_ALIST ) LA_DCL
+{
+    char *result;
+    char data[4096];
+    char format[1024];
+    getstring(LA_PTR(0), format, sizeof(format));
+    getstring(LA_PTR(1), data, sizeof(data));
+    result = ftn_format(data, format);
+    if (result == NULL)
+	RETFAIL;
+    RETSTR_FREE(result);
+}
+-END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;FORMAT&raquo;&equiv;</b>
+-SNOBOL DYNAMIC_DEBUG = 1
+-SNOBOL COMPILE_DYNAMIC(format) :F(ERROR) ;
+-SNOBOL LIBS =
+-SNOBOL OBJECTS = format ; OBJECTS &#39;.c&#39; = &#39;.o&#39;
+-SNOBOL LINK_DYNAMIC(&#39;./format&#39;, OBJECTS, LIBS) :F(ERROR) ;
+-CMNT ERASE TEMPORARY FILES
+-CMNT     WE DON&#39;T NEED THE C BITS, OR THE OBJECT FILES ANYMORE.
+-CMNT     ALL WE REQUIRE IS format.so
+-CMNT -SNOBOL A = CRACK(format &#39; &#39; OBJECTS, &#39; &#39;)
+-CMNT -SNOBOL SEQ(&#39; DELETE(A&lt;K&gt;) &#39;, .K)
+<b>@</b>
+</font></pre></div>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">FTN_FORMAT(F, S)</font> formats string <font face="Source Code Pro">S</font> using <font face="Source Code Pro">FORTRAN IV FORMAT</font>
+<font face="Source Code Pro">F</font> and returns the result as a string. <font face="Source Code Pro">CSNOBOL4</font> doesn't
+(natively) support <font face="Source Code Pro">FORTRAN IV FORMAT</font> but this function provides
+the missing support.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+FORMAT codes supported are
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+|     N H        Hollerith
+|     N A M      Alphanumeric
+|     N X        Spacing
+|     T N        Tab to column N
+|     TL N       Tab left by N
+|     TR N       Tab right by N
+|     N /        Record end
+|     'TEXT'     Use '' for single '
+|     N ( ... )  Grouping with repetition
+</font></pre>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Other <font face="Source Code Pro">FORTRAN IV</font> conversion (I, F, etc.) not supported. FORMAT and
+DATA limited to 1023 characters. Z conversion is not supported.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+When outputing to a printer, FORTRAN convention is that the first
+character of the line controls line spacing and paging.The <font face="Source Code Pro">asa</font>
+and <font face="Source Code Pro">asapdf</font> utilities interpret such print files. Generally, a
+printer page is 132 columns by 60 lines. <font face="Source Code Pro">asa</font> specifies 4 characters
+for control:
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+|     ' '   Single line space
+|     '0'   Double line space
+|     '1'   New page
+|     '+'   Overprint line
+</font></pre>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+The <font face="Source Code Pro">asapdf</font> utility takes an <font face="Source Code Pro">ASA</font> file, and encodes to <font face="Source Code Pro">PDF</font>.
+<font face="Source Code Pro">asapdf</font> adds the following line controls:
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+|     '-'   Triple line space (IBM extension)
+|     'H'   Half line adance
+|     'R'   No line advance, print RED
+|     'G'   No line advance, print GREEN
+|     'B'   No line advance, print BLUE
+|     'r'   Advance, print RED
+|     'g'   Advance, print GREEN
+|     'b'   Advance, print BLUE
+|     '^'   Overprint line, adding 127 to characters
+</font></pre>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+MAINBOL default formats
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+|     OUTPUT  (1X,132A1)
+|     CARD    (80A1)
+</font></pre>
+</font></p>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;FORMAT&raquo;&equiv;</b>
+-PUBLIC FTN_FORMAT()
+<font color="#818181"><i>*</i></font>
+         LOAD(&#39;FTN_FORMAT(STRING,STRING)STRING&#39;, &#39;format.so&#39;)
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;unit_test&raquo;&equiv;</b>
+<font color="#818181"><i>#!/usr/bin/bash</i></font>
+         exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
+-INCLUDE &#39;FORMAT.INC&#39;
+         &amp;CODE = 1
+         &amp;CODE = 0
+END
+<b>@</b>
+</font></pre></div>
+<div style="background-image: url(greenbar.gif)">
+<pre><font face="Source Code Pro">
+<b>&laquo;&raquo;&equiv;</b>
+-MODULE FORMAT
+<b>&laquo;INCLUDES&raquo;</b>
+-IN72
+-STITL FORMAT
+-EJECT
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>*         #######  #######  ######   #     #     #     #######         *</i></font>
+<font color="#818181"><i>*         #        #     #  #     #  ##   ##    # #       #            *</i></font>
+<font color="#818181"><i>*         #        #     #  #     #  # # # #   #   #      #            *</i></font>
+<font color="#818181"><i>*         #####    #     #  ######   #  #  #  #     #     #            *</i></font>
+<font color="#818181"><i>*         #        #     #  #   #    #     #  #######     #            *</i></font>
+<font color="#818181"><i>*         #        #     #  #    #   #     #  #     #     #            *</i></font>
+<font color="#818181"><i>*         #        #######  #     #  #     #  #     #     #            *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>* FORMAT                 FORTRAN IV FORMAT()                           *</i></font>
+<font color="#818181"><i>*                                                                      *</i></font>
+<font color="#818181"><i>************************************************************************</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* FORMAT.lss</i></font>
+<font color="#818181"><i>*</i></font>
+<b>&laquo;FORMAT&raquo;</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CE: .MSNOBOL4;</i></font>
+<b>@</b>
+</font></pre></div>
+<footer><hr><table width="100%" border="0">
+<tr><td><p align=left>
+Produced by <code>sweave</code>
+</p></td><td><p align=center>
+Mon Jun 16 01:49:18 EDT 2014</p></td><td><p align=right>
+Return to <a href="index.html">index</a>
+</p></td></table></footer>
+</font></body></html>

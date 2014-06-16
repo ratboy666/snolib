@@ -38,7 +38,7 @@ T = AGT.tst      AI.tst       AOPA.tst     BALREV.tst   BALX.tst     \
     GDDT.tst     DEDUPA.tst   ATOL.tst     ITERDIR.tst  SIZEL.tst    \
     SIZET.tst    APPENDA.tst  ARRAY0.tst   LOWA.tst     MKTEMP.tst   \
     MD5.tst      COPYA.tst    PRUNET.tst   COPYT.tst    MERGET.tst   \
-    KEYST.tst    EDITLINE.tst WRTFILE.tst
+    KEYST.tst    EDITLINE.tst WRTFILE.tst  FORMAT.tst
 
 # Library files FIXME: TRIAL should be removed.
 
@@ -313,7 +313,7 @@ docs:         AGT.html      AI.html       ALL.html      AOPA.html     \
               APPENDA.html  SIZEA.html    LOWA.html     MKTEMP.html   \
               ARRAY0.html   MD5.html      COPYA.html    PRUNET.html   \
               COPYT.html    MERGET.html   KEYST.html    EDITLINE.html \
-              WRTFILE.html
+              WRTFILE.html  FORMAT.html
 	touch docs
 
 snocone.html: snocone.htm
@@ -452,3 +452,4 @@ MERGET.INC: MERGET.SNO
 KEYST.INC: KEYST.SNO
 EDITLINE.INC: EDITLINE.SNO
 WRTFILE.INC: WRTFILE.SNO
+FORMAT.INC: FORMAT.SNO

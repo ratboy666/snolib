@@ -1,7 +1,10 @@
+-MODULE SDIFF
+-LINE 10 "SDIFF.lss"
+-IN72
+-LINE 38 "SDIFF.lss"
 -STITL SDIFF
 -EJECT
 *
--LINE 38 "SDIFF.lss"
 ************************************************************************
 *                                                                      *
 *                #####   ######   ###  #######  #######                *
@@ -19,8 +22,8 @@
 * SDIFF.lss
 *
 -LINE 13 "SDIFF.lss"
--MODULE SDIFF
 -PUBLIC SDIFF()
+*
          DEFINE('SDIFF(S1,S2)')                             :(SDIFF_END)
 *
 SDIFF    SDIFF = S1

@@ -3,7 +3,7 @@
 -INCLUDE 'CRACK.INC'
 -INCLUDE 'SEQ.INC'
 -IN72
--LINE 2154 "JIT.lss"
+-LINE 2153 "JIT.lss"
 -STITL JIT
 -EJECT
 *
@@ -65,17 +65,17 @@
          LOAD('LABEL_JIT()INTEGER', 'jit.so')
          LOAD('ELLIPSIS_JIT()', 'jit.so')
 *        LOAD('GET_NOTE_JIT()INTEGER', 'jit.so')
-         LOAD('POINTER_P_JIT()', 'jit.so')
+         LOAD('POINTER_P_JIT(INTEGER)', 'jit.so')
          LOAD('CALLEE_SAVE_P_JIT(INTEGER)', 'jit.so')
          LOAD('PATCH_AT_JIT()', 'jit.so')
          LOAD('PATCH_ABS_JIT()', 'jit.so')
-         LOAD('PATCH_JIT()', 'jit.so')
+         LOAD('PATCH_JIT(INTEGER)', 'jit.so')
          LOAD('PREPARE_JIT()', 'jit.so')
          LOAD('ALLOCAI_JIT(INTEGER)INTEGER', 'jit.so')
          LOAD('DATA_JIT(INTEGER,INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('FORWARD_JIT()INTEGER', 'jit.so')
          LOAD('LIVE_JIT(INTEGER)', 'jit.so')
-         LOAD('LINK_JIT()', 'jit.so')
+         LOAD('LINK_JIT(INTEGER)', 'jit.so')
 *
 * WE DO R0..R3, V0..V3, F0..F7 AND FP, EVEN THOUGH NOT ALL OF THESE
 * REGISTERS MAY EXIST. THE ONES THAT DON'T WILL BE -1. USE JIT_R_NUM(),
@@ -817,8 +817,7 @@ JIT_PATCH_ABS
          PATCH_ABS_JIT()                                       :(RETURN)
 *
 JIT_PATCH
-         SET_P(P)
-         PATCH_JIT()                                           :(RETURN)
+         PATCH_JIT(P)                                          :(RETURN)
 *
 JIT_ADDR ADDR_JIT(R1, R2, R3)                                  :(RETURN)
 *

@@ -137,9 +137,9 @@ static void ellipsis_jit(void) { jit_ellipsis(); }
 
 -CMNT -SNOBOL C_WRAPPER_PROTO(&#39;GET_NOTE_JIT()INTEGER&#39;, .EMBED)
 
-static int pointer_p_jit(void) { return jit_pointer_p(get_p_()); }
+static int pointer_p_jit(long p) { return jit_pointer_p((void *)p); }
 
--SNOBOL C_WRAPPER_PROTO(&#39;POINTER_P_JIT()PREDICATE&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;POINTER_P_JIT(LONG)PREDICATE&#39;, .EMBED)
 
 static int callee_save_p(int r) { return jit_callee_save_p(r); }
 
@@ -153,9 +153,9 @@ static void patch_abs_jit(void) { jit_patch_abs(get_p_(), get_p2_()); }
 
 -SNOBOL C_WRAPPER_PROTO(&#39;PATCH_ABS_JIT()&#39;, .EMBED)
 
-static void patch_jit(void) { jit_patch(get_p_()); }
+static void patch_jit(long p) { jit_patch((void *)p); }
 
--SNOBOL C_WRAPPER_PROTO(&#39;PATCH_JIT()&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;PATCH_JIT(LONG)&#39;, .EMBED)
 
 static void prepare_jit(void) { jit_prepare(); }
 
@@ -181,9 +181,9 @@ static void live_jit(int r) { jit_live(r); }
 
 -SNOBOL C_WRAPPER_PROTO(&#39;LIVE_JIT(INTEGER)&#39;, .EMBED)
 
-static void link_jit(void) { jit_link(get_p_()); }
+static void link_jit(long p) { jit_link((void *)p); }
 
--SNOBOL C_WRAPPER_PROTO(&#39;LINK_JIT()&#39;, .EMBED)
+-SNOBOL C_WRAPPER_PROTO(&#39;LINK_JIT(LONG)&#39;, .EMBED)
 
 /* REGISTERS */
 static int r_num_jit(void) { return jit_r_num(); }
@@ -529,17 +529,17 @@ static void reti_d_jit(void) { jit_reti_d(get_d_()); }
          LOAD(&#39;LABEL_JIT()INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;ELLIPSIS_JIT()&#39;, &#39;jit.so&#39;)
 <font color="#818181"><i>*        LOAD(&#39;GET_NOTE_JIT()INTEGER&#39;, &#39;jit.so&#39;)</i></font>
-         LOAD(&#39;POINTER_P_JIT()&#39;, &#39;jit.so&#39;)
+         LOAD(&#39;POINTER_P_JIT(INTEGER)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;CALLEE_SAVE_P_JIT(INTEGER)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;PATCH_AT_JIT()&#39;, &#39;jit.so&#39;)
          LOAD(&#39;PATCH_ABS_JIT()&#39;, &#39;jit.so&#39;)
-         LOAD(&#39;PATCH_JIT()&#39;, &#39;jit.so&#39;)
+         LOAD(&#39;PATCH_JIT(INTEGER)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;PREPARE_JIT()&#39;, &#39;jit.so&#39;)
          LOAD(&#39;ALLOCAI_JIT(INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;DATA_JIT(INTEGER,INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;FORWARD_JIT()INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;LIVE_JIT(INTEGER)&#39;, &#39;jit.so&#39;)
-         LOAD(&#39;LINK_JIT()&#39;, &#39;jit.so&#39;)
+         LOAD(&#39;LINK_JIT(INTEGER)&#39;, &#39;jit.so&#39;)
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* WE DO R0..R3, V0..V3, F0..F7 AND FP, EVEN THOUGH NOT ALL OF THESE</i></font>
 <font color="#818181"><i>* REGISTERS MAY EXIST. THE ONES THAT DON&#39;T WILL BE -1. USE JIT_R_NUM(),</i></font>
@@ -1281,8 +1281,7 @@ JIT_PATCH_ABS
          PATCH_ABS_JIT()                                       <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_PATCH
-         SET_P(P)
-         PATCH_JIT()                                           <b>:(RETURN)</b>
+         PATCH_JIT(P)                                          <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 JIT_ADDR ADDR_JIT(R1, R2, R3)                                  <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
@@ -2208,7 +2207,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Fri Jun 13 15:12:58 EDT 2014</p></td><td><p align=right>
+Sun Jun 15 23:32:13 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

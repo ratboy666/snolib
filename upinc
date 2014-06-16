@@ -20,7 +20,7 @@
 -INCLUDE 'JSON.INC'
 -INCLUDE 'READFILE.INC'
 -INCLUDE 'SEQ.INC'
--INCLUDE 'WRTFILE.INC
+-INCLUDE 'WRTFILE.INC'
 
 * command line argument is file to update
 

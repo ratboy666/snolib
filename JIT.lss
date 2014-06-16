@@ -118,9 +118,9 @@ static void ellipsis_jit(void) { jit_ellipsis(); }
 
 -CMNT -SNOBOL C_WRAPPER_PROTO('GET_NOTE_JIT()INTEGER', .EMBED)
 
-static int pointer_p_jit(void) { return jit_pointer_p(get_p_()); }
+static int pointer_p_jit(long p) { return jit_pointer_p((void *)p); }
 
--SNOBOL C_WRAPPER_PROTO('POINTER_P_JIT()PREDICATE', .EMBED)
+-SNOBOL C_WRAPPER_PROTO('POINTER_P_JIT(LONG)PREDICATE', .EMBED)
 
 static int callee_save_p(int r) { return jit_callee_save_p(r); }
 
@@ -134,9 +134,9 @@ static void patch_abs_jit(void) { jit_patch_abs(get_p_(), get_p2_()); }
 
 -SNOBOL C_WRAPPER_PROTO('PATCH_ABS_JIT()', .EMBED)
 
-static void patch_jit(void) { jit_patch(get_p_()); }
+static void patch_jit(long p) { jit_patch((void *)p); }
 
--SNOBOL C_WRAPPER_PROTO('PATCH_JIT()', .EMBED)
+-SNOBOL C_WRAPPER_PROTO('PATCH_JIT(LONG)', .EMBED)
 
 static void prepare_jit(void) { jit_prepare(); }
 
@@ -162,9 +162,9 @@ static void live_jit(int r) { jit_live(r); }
 
 -SNOBOL C_WRAPPER_PROTO('LIVE_JIT(INTEGER)', .EMBED)
 
-static void link_jit(void) { jit_link(get_p_()); }
+static void link_jit(long p) { jit_link((void *)p); }
 
--SNOBOL C_WRAPPER_PROTO('LINK_JIT()', .EMBED)
+-SNOBOL C_WRAPPER_PROTO('LINK_JIT(LONG)', .EMBED)
 
 /* REGISTERS */
 static int r_num_jit(void) { return jit_r_num(); }
@@ -506,17 +506,17 @@ static void reti_d_jit(void) { jit_reti_d(get_d_()); }
          LOAD('LABEL_JIT()INTEGER', 'jit.so')
          LOAD('ELLIPSIS_JIT()', 'jit.so')
 *        LOAD('GET_NOTE_JIT()INTEGER', 'jit.so')
-         LOAD('POINTER_P_JIT()', 'jit.so')
+         LOAD('POINTER_P_JIT(INTEGER)', 'jit.so')
          LOAD('CALLEE_SAVE_P_JIT(INTEGER)', 'jit.so')
          LOAD('PATCH_AT_JIT()', 'jit.so')
          LOAD('PATCH_ABS_JIT()', 'jit.so')
-         LOAD('PATCH_JIT()', 'jit.so')
+         LOAD('PATCH_JIT(INTEGER)', 'jit.so')
          LOAD('PREPARE_JIT()', 'jit.so')
          LOAD('ALLOCAI_JIT(INTEGER)INTEGER', 'jit.so')
          LOAD('DATA_JIT(INTEGER,INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('FORWARD_JIT()INTEGER', 'jit.so')
          LOAD('LIVE_JIT(INTEGER)', 'jit.so')
-         LOAD('LINK_JIT()', 'jit.so')
+         LOAD('LINK_JIT(INTEGER)', 'jit.so')
 *
 * WE DO R0..R3, V0..V3, F0..F7 AND FP, EVEN THOUGH NOT ALL OF THESE
 * REGISTERS MAY EXIST. THE ONES THAT DON'T WILL BE -1. USE JIT_R_NUM(),
@@ -1258,8 +1258,7 @@ JIT_PATCH_ABS
          PATCH_ABS_JIT()                                       :(RETURN)
 *
 JIT_PATCH
-         SET_P(P)
-         PATCH_JIT()                                           :(RETURN)
+         PATCH_JIT(P)                                          :(RETURN)
 *
 JIT_ADDR ADDR_JIT(R1, R2, R3)                                  :(RETURN)
 *

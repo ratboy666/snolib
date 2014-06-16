@@ -8,8 +8,8 @@ This allows proper implementation of pipe i/o where CSNOBOL4 1.5
 has problems.
 
 [[FORK()]], [[WAIT()]], and [[SPRINTF()]] are in the CSNOBOL4 image.
-[[FTN_FORMAT()]] is in an external module. [[IO_GETFP()]] is also in
-the image, and [[FILENO()]] is available in [[clib]].
+[[IO_GETFP()]] is also in the image, and [[FILENO()]] is available in
+[[clib]].
 
 Added more functions here to create pipes, close file handles,
 handle fd sets -- these should be in a [[UNIX]] component. fileno()
@@ -35,7 +35,7 @@ MALLOC, FREE, STRDUP and STRLEN should be there too.
 @
 
 <<CSNOBOL4>>=
--EMBED C 'format'
+-EMBED C 'csnobol4'
 @
 
 <<CSNOBOL4,TYPE=C>>=
@@ -157,250 +157,19 @@ static int get_status(void)
 
 -SNOBOL C_WRAPPER_PROTO('GET_STATUS()INTEGER', .EMBED)
 
-static int format(char **in_s, char **fmt, char **buf, char **limit,
-           char **base, int reps, int level)
-{
-    int w, r;
-    char *bfmt = *fmt;
-    char c;
-    int aseen = 0;
-
-    for (; reps; --reps) {
-	for (*fmt = bfmt; **fmt;) {
-	    while ((**fmt == ',') || (**fmt == ' ')) {
-		++*fmt;
-	    }
-	    if (isdigit(**fmt)) {
-		r = 0;
-		while (isdigit(**fmt)) {
-		    r = r * 10 + **fmt - '0';
-		    ++*fmt;
-		}
-		r &= 0xff;
-	    } else {
-		r = -1;
-	    }
-	    c = **fmt;
-	    ++*fmt;
-	    switch (c) {
-		case ',': break;
-		case 'X':
-		    if (r < 0) {
-			r = 1;
-		    }
-		    for (; r; --r) {
-			**buf = ' ';
-			++*buf;
-		    }
-		    break;
-		case 'A':
-		    ++aseen;
-		    if (isdigit(**fmt)) {
-			w = 0;
-			while (isdigit(**fmt)) {
-			    w = w * 10 + **fmt - '0';
-			    ++*fmt;
-			}
-		    } else {
-			w = 1;
-		    }
-		    if (r < 0) {
-			r = 1;
-		    }
-		    r *= w;
-		    for (; r; --r) {
-			if (**in_s == 0) {
-			    break;
-			}
-			**buf = **in_s;
-			++*buf;
-			++*in_s;
-		    }
-		    for (; r; --r) {
-			**buf = ' ';
-			++*buf;
-		    }
-		    break;
-		case '/':
-		    if (r < 0) {
-			r = 1;
-		    }
-		    for (; r; --r) {
-			**buf = '\n';
-			++*buf;
-			*base = *buf;
-		    }
-		    break;
-		case '\'':
-		    for (;;) {
-			if (**fmt == 0) {
-			    fprintf(stderr,
-                   "ftn_format: missing close \' in string constant\n");
-			    return 1;
-			}
-			if (**fmt == '\'') {
-			    ++*fmt;
-			    if (**fmt == '\'') {
-				**buf = '\'';
-				++*buf;
-				++*fmt;
-			    } else {
-				break;
-			    }
-			} else {
-			    **buf = **fmt;
-			    ++*buf;
-			    ++*fmt;
-			}
-		    }
-		    break;
-		case 'H':
-		    if (r == 0) {
-			break;
-		    }
-		    for (; r; --r) {
-			if (**fmt == 0) {
-			    fprintf(stderr,
-                          "ftn_format: Hollerith constant too short\n");
-			    return 1;
-			}
-			**buf = **fmt;
-			++*buf;
-			++*fmt;
-		    }
-		    break;
-		case 'T': /* T TL TR */
-		    if (**fmt == 'R') {
-			c = 'R';
-			++*fmt;
-		    } else if (**fmt == 'L') {
-			c = 'L';
-			++*fmt;
-		    }
-		    if (isdigit(**fmt)) {
-			w = 0;
-			while (isdigit(**fmt)) {
-			    w = w * 10 + **fmt - '0';
-			    ++*fmt;
-			}
-		    } else {
-			w = 1;
-		    }
-		    if (c == 'L') {
-			*buf -= w;
-		    } else if (c == 'R') {
-			*buf += w;
-		    } else {
-			*buf = *base + w - 1;
-		    }
-		    break;
-		case ')':
-		    if (**in_s == 0) {
-			return 0;
-		    }
-		    if ((level == 1) && **in_s) {
-			reps = 2;
-			goto btm;
-		    }
-		    if ((level > 1) && (reps > 1)) {
-			goto btm;
-		    }
-		    if ((level > 1) && (reps < 0) && (aseen == 0)) {
-			return 0;
-		    }
-		    goto btm;
-		    return 0;
-		case '(':
-		    r = format(in_s, fmt, buf, limit, base,
-			       r, level + 1);
-		    if (r) {
-			return r;
-		    }
-		    break;
-		default:
-		    if (c == 0) {
-			fprintf(stderr,
-                               "ftn_format: premature end of format\n");
-		    } else {
-			fprintf(stderr,
-                           "ftn_format: bad format character: %c\n", c);
-		    }
-		    return 1;
-	    }
-	    if (*limit < *buf) {
-		*limit = *buf;
-	    }
-	}
-btm: ;
-    }
-    return 0;
-}
-
-static char *ftn_format(char *s, char *f)
-{
-    char *in_s, *fmt, *buf, *limit, *base, *b;
-    int r;
-
-    /* format state */
-    base = malloc(4096);
-    fmt = f;
-    in_s = s;
-    buf = base;
-    limit = base;
-    b = base;
-
-    for (r = 0; r < 4096; ++r) {
-	base[r] = ' ';
-    }
-    if (*fmt != '(') {
-	fprintf(stderr, "ftn_format: missing begin (\n");
-	goto err;
-    }
-    if (*(fmt + strlen(fmt) - 1)  != ')') {
-	fprintf(stderr, "ftn_format: missing end )\n");
-	goto err;
-    }
-
-    ++fmt;
-    r = format(&in_s, &fmt, &buf, &limit, &b, 1, 1);
-    if (r == 0) {
-	*limit = 0;
-	return base;
-    }
-err:
-    free(base);
-    return NULL;
-}
-
-/* FTN_FORMAT(STRING,STRING)STRING_FREE
- *
- * First STRING is the FORMAT, second is the FORMAT
- */
-FTN_FORMAT( LA_ALIST ) LA_DCL
-{
-    char *result;
-    char data[4096];
-    char format[1024];
-    getstring(LA_PTR(0), format, sizeof(format));
-    getstring(LA_PTR(1), data, sizeof(data));
-    result = ftn_format(data, format);
-    if (result == NULL)
-	RETFAIL;
-    RETSTR_FREE(result);
-}
 -END
 @
 
 <<CSNOBOL4>>=
 -SNOBOL DYNAMIC_DEBUG = 1
--SNOBOL COMPILE_DYNAMIC(format) :F(ERROR) ;
--SNOBOL LIBS = '-L. -lp64'
--SNOBOL OBJECTS = format ; OBJECTS '.c' = '.o'
--SNOBOL LINK_DYNAMIC('./format', OBJECTS, LIBS) :F(ERROR) ;
+-SNOBOL COMPILE_DYNAMIC(csnobol4) :F(ERROR) ;
+-SNOBOL LIBS =
+-SNOBOL OBJECTS = csnobol4; OBJECTS '.c' = '.o'
+-SNOBOL LINK_DYNAMIC('./csnobol4', OBJECTS, LIBS) :F(ERROR) ;
 -CMNT ERASE TEMPORARY FILES
 -CMNT     WE DON'T NEED THE C BITS, OR THE OBJECT FILES ANYMORE.
--CMNT     ALL WE REQUIRE IS format.so
--CMNT -SNOBOL A = CRACK(format ' ' OBJECTS, ' ')
+-CMNT     ALL WE REQUIRE IS csnobol4.so
+-CMNT -SNOBOL A = CRACK(csnobol4 ' ' OBJECTS, ' ')
 -CMNT -SNOBOL SEQ(' DELETE(A<K>) ', .K)
 @
 
@@ -441,83 +210,25 @@ the [[C]] format [[F]] and returns the result as a string. For example:
          LOAD('SPRINTF(STRING,)STRING')
 @
 
-[[FTN_FORMAT(F, S)]] formats string [[S]] using [[FORTRAN IV FORMAT]]
-[[F]] and returns the result as a string. [[CSNOBOL4]] doesn't (natively)
-support [[FORTRAN IV FORMAT]] but this function provides the missing
-support.
-
-FORMAT codes supported are
-
-[[
-    N H        Hollerith
-    N A M      Alphanumeric
-    N X        Spacing
-    T N        Tab to column N
-    TL N       Tab left by N
-    TR N       Tab right by N
-    N /        Record end
-    'TEXT'     Use '' for single '
-    N ( ... )  Grouping with repetition
-]]
-
-Other [[FORTRAN IV]] conversion (I, F, etc.) not supported. FORMAT and
-DATA limited to 1023 characters. Z conversion is not supported.
-
-When outputing to a printer, FORTRAN convention is that the first
-character of the line controls line spacing and paging.The [[asa]]
-and [[asapdf]] utilities interpret such print files. Generally, a
-printer page is 132 columns by 60 lines. [[asa]] specifies 4 characters
-for control:
-
-[[
-    ' '   Single line space
-    '0'   Double line space
-    '1'   New page
-    '+'   Overprint line
-]]
-
-The [[asapdf]] utility takes an [[ASA]] file, and encodes to [[PDF]].
-[[asapdf]] adds the following line controls:
-
-[[
-    '-'   Triple line space (IBM extension)
-    'H'   Half line adance
-    'R'   No line advance, print RED
-    'G'   No line advance, print GREEN
-    'B'   No line advance, print BLUE
-    'r'   Advance, print RED
-    'g'   Advance, print GREEN
-    'b'   Advance, print BLUE
-    '^'   Overprint line, adding 127 to characters
-]]
-
-MAINBOL default formats
-
-[[
-    OUTPUT  (1X,132A1)
-    CARD    (80A1)
-]]
-
 <<CSNOBOL4>>=
--PUBLIC FTN_FORMAT(), CREATEPIPE(), GETPIPEFD(), GET_ERRNO()
+-PUBLIC CREATEPIPE(), GETPIPEFD(), GET_ERRNO()
 -PUBLIC CLEAR_ERRNO(), WAITPID(), GET_STATUS(), SIZEOF_TIMEVAL()
 -PUBLIC SET_TIMEVAL(), SIZEOF_FD_SET(), FD_ZERO(), FD_CLR(), FD_SET()
 -PUBLIC FD_ISSET()
 *
-         LOAD('FTN_FORMAT(STRING,STRING)STRING', 'format.so')
-         LOAD('CREATEPIPE()INTEGER', 'format.so')
-         LOAD('GETPIPEFD(INTEGER)INTEGER', 'format.so')
-         LOAD('GET_ERRNO()INTEGER', 'format.so')
-         LOAD('CLEAR_ERRNO()', 'format.so')
-         LOAD('WAITPID_(INTEGER,INTEGER)INTEGER', 'format.so')
-         LOAD('GET_STATUS()INTEGER', 'format.so')
-         LOAD('SIZEOF_TIMEVAL()INTEGER', 'format.so')
-         LOAD('SET_TIMEVAL(INTEGER,INTEGER,INTEGER)', 'format.so')
-         LOAD('SIZEOF_FD_SET()INTEGER', 'format.so')
-         LOAD('FD_ZERO_(INTEGER)', 'format.so')
-         LOAD('FD_CLR_(INTEGER,INTEGER)', 'format.so')
-         LOAD('FD_SET_(INTEGER,INTEGER)', 'format.so')
-         LOAD('FD_ISSET_(INTEGER,INTEGER)INTEGER', 'format.so')
+         LOAD('CREATEPIPE()INTEGER', 'csnobol4.so')
+         LOAD('GETPIPEFD(INTEGER)INTEGER', 'csnobol4.so')
+         LOAD('GET_ERRNO()INTEGER', 'csnobol4.so')
+         LOAD('CLEAR_ERRNO()', 'csnobol4.so')
+         LOAD('WAITPID_(INTEGER,INTEGER)INTEGER', 'csnobol4.so')
+         LOAD('GET_STATUS()INTEGER', 'csnobol4.so')
+         LOAD('SIZEOF_TIMEVAL()INTEGER', 'csnobol4.so')
+         LOAD('SET_TIMEVAL(INTEGER,INTEGER,INTEGER)', 'csnobol4.so')
+         LOAD('SIZEOF_FD_SET()INTEGER', 'csnobol4.so')
+         LOAD('FD_ZERO_(INTEGER)', 'csnobol4.so')
+         LOAD('FD_CLR_(INTEGER,INTEGER)', 'csnobol4.so')
+         LOAD('FD_SET_(INTEGER,INTEGER)', 'csnobol4.so')
+         LOAD('FD_ISSET_(INTEGER,INTEGER)INTEGER', 'csnobol4.so')
          DEFINE('FD_ZERO(FD_SET)')
          DEFINE('FD_CLR(FD,FD_SET)')
          DEFINE('FD_ISSET(FD,FD_SET)')

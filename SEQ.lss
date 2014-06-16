@@ -26,20 +26,16 @@ Sample usage:
 ]]
 
 <h2>Uses</h2>
-<a href="ARRAY0.html">ARRAY0</a><br>
-<a href="LOWA.html">LOWA</a><br>
 
 <h2>See Also</h2>
 <a href="SIZEA.html">SIZEA</a>
 
 <<INCLUDES>>=
--INCLUDE 'ARRAY0.INC'
--INCLUDE 'LOWA.INC'
 @
 
 <<SEQ>>=
--MODULE SEQ
 -PUBLIC SEQ()
+*
          DEFINE('SEQ(ARG_S,ARG_NAME,START,END)')              :(SEQ_END)
 *
 SEQ      START = IDENT(START) 1
@@ -62,6 +58,9 @@ END
 @
 
 <<>>=
+-MODULE SEQ
+<<INCLUDES>>
+-IN72
 -STITL SEQ
 -EJECT
 *

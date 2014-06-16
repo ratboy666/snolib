@@ -9,8 +9,8 @@ characters. If [[N]] is negative, rotation is to the left.
 @
 
 <<ROTATER>>=
--MODULE ROTATER
 -PUBLIC ROTATER()
+*
          DEFINE('ROTATER(S,N)S1')                         :(ROTATER_END)
 *
 ROTATER  IDENT(S)                                             :S(RETURN)
@@ -32,6 +32,9 @@ END
 @
 
 <<>>=
+-MODULE ROTATER
+<<INCLUDES>>
+-IN72
 -STITL ROTATER
 -EJECT
 *

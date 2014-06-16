@@ -1,7 +1,10 @@
+-MODULE ROMAN
+-LINE 12 "ROMAN.lss"
+-IN72
+-LINE 57 "ROMAN.lss"
 -STITL ROMAN
 -EJECT
 *
--LINE 57 "ROMAN.lss"
 ************************************************************************
 *                                                                      *
 *             ######   #######  #     #     #     #     #              *
@@ -19,8 +22,8 @@
 * ROMAN.lss
 *
 -LINE 15 "ROMAN.lss"
--MODULE ROMAN
 -PUBLIC ROMAN()
+*
          DEFINE('ROMAN(N)T')                                :(ROMAN_END)
 *
 ROMAN    N RPOS(1) LEN(1) . T =                               :F(RETURN)

@@ -14,19 +14,7 @@ Reads a complete file into a string. No conversions are done. Uses
 is specific to CSNOBOL4.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
-This is used to bring in content from disk (say, images, templates
-or html). This content can then be left in memory if needed.
-</font></p>
-<p align="justify"><font face="Sorts Mill Goudy">
-Tested w/ 1024..256K buffer size. Default 64K buffer.
-</font></p>
-<p align="justify"><font face="Sorts Mill Goudy">
 If used with SPITBOL, reads a line at a time, adding newlines.
-</font></p>
-<p align="justify"><font face="Sorts Mill Goudy">
-Also implements WRITEFILE(). Note that SPITBOL will form lines and
-thus can only read or write text. CSNOBOL4 will read and write an
-arbitrary binary string.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 <h2>Uses</h2>
@@ -45,30 +33,9 @@ arbitrary binary string.
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;READFILE&raquo;&equiv;</b>
--MODULE READFILE
--PUBLIC WRITEFILE(), READFILE()
-         DEFINE(&#39;WRITEFILE(FILE,S)F,U,E,T&#39;)
-         DEFINE(&#39;READFILE(FILE)F,U,E&#39;)                   <b>:(READFILE_END)</b>
+-PUBLIC READFILE()
 <font color="#818181"><i>*</i></font>
-WRITEFILE
-         SYSTEM() &#39;CSNOBOL4&#39;                              <b>:S(WRITEFILE3)</b>
-         U = 20
-         OUTPUT(.F, U, FILE)                                 <b>:F(FRETURN)</b>
-WRITEFILE2
-         S BRKREM(CHARS_NL) . T (CHARS_NL | NULL) =
-         F = T
-         IDENT(S)                             <b>:S(READFILE4)F(WRITEFILE2)</b>
-WRITEFILE3
-         U = IO_FINDUNIT()
-         OUTPUT(.F, U, &#39;B,65536&#39;, FILE)
-WRITEFILE4
-         T = LT(SIZE(S), 65536) S                         <b>:F(WRITEFILE6)</b>
-         S =
-WRITEFILE5
-         F = T
-         IDENT(S)                             <b>:S(READFILE4)F(WRITEFILE4)</b>
-WRITEFILE6
-         S LEN(65536) . T REM . S                          <b>:(WRITEFILE5)</b>
+         DEFINE(&#39;READFILE(FILE)F,U,E&#39;)                   <b>:(READFILE_END)</b>
 <font color="#818181"><i>*</i></font>
 READFILE SYSTEM() &#39;CSNOBOL4&#39;                               <b>:S(READFILE3)</b>
          U = 20
@@ -101,7 +68,9 @@ END
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;&raquo;&equiv;</b>
+-MODULE READFILE
 <b>&laquo;INCLUDES&raquo;</b>
+-IN72
 -STITL READLINE
 -EJECT
 <font color="#818181"><i>*</i></font>
@@ -130,7 +99,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Fri Jun 13 16:40:57 EDT 2014</p></td><td><p align=right>
+Sun Jun 15 22:04:38 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

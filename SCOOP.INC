@@ -1,9 +1,11 @@
+-MODULE SCOOP
 -LINE 104 "SCOOP.lss"
 -INCLUDE 'TIMER.INC'
 -INCLUDE 'VDIFFER.INC'
+-IN72
+-LINE 299 "SCOOP.lss"
 -EJECT
 -STITL SCOOP
--LINE 299 "SCOOP.lss"
 -EJECT
 *
 ************************************************************************
@@ -26,8 +28,8 @@
 * THAT IT ALWAYS BE ENABLED.
 *
 -LINE 109 "SCOOP.lss"
--MODULE SCOOP
 -PUBLIC OBJECT()
+*
          DATA('OBJECT(CLASS,IVARS,METHODS)')
 *
 -PUBLIC SEND(), SUPER(), SELF(), IVAR(), CVAR(), CLASS_OF(), |1
