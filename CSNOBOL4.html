@@ -9,8 +9,7 @@
 <h1>CSNOBOL4 - Functions specific to CSNOBOL4</h1>
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
-These are functions specific to <font face="Source Code Pro">CSNOBOL4</font> and Unix or Unix-like
-systems.
+These are functions specific to <font face="Source Code Pro">CSNOBOL4</font>.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 We use FFI to access io_getfp() to retrieve the FILE * for a unit.
@@ -18,216 +17,18 @@ This allows proper implementation of pipe i/o where CSNOBOL4 1.5
 has problems.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
-<font face="Source Code Pro">FORK()</font>, <font face="Source Code Pro">WAIT()</font>, and <font face="Source Code Pro">SPRINTF()</font> are in the CSNOBOL4 image.
-<font face="Source Code Pro">IO_GETFP()</font> is also in the image, and <font face="Source Code Pro">FILENO()</font> is available in
-<font face="Source Code Pro">clib</font>.
-</font></p>
-<p align="justify"><font face="Sorts Mill Goudy">
-Added more functions here to create pipes, close file handles,
-handle fd sets -- these should be in a <font face="Source Code Pro">UNIX</font> component. fileno()
-actually belongs there as well, as does fork() and wait(). Arguably
-MALLOC, FREE, STRDUP and STRLEN should be there too.
+Should pull SPRINTF() into UNIX.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 <h2>Uses</h2>
 <a href="FFI.html">FFI</a><br>
-<a href="P64.html">P64</a><br>
 </font></p>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;INCLUDES&raquo;&equiv;</b>
 -INCLUDE &#39;FFI.INC&#39;
--INCLUDE &#39;P64.INC&#39;
 <b>@</b>
 </font></pre></div>
-<div style="background-image: url(greenbar.gif)">
-<pre><font face="Source Code Pro">
-<b>&laquo;CSNOBOL4&raquo;&equiv;</b>
--SNOBOL SLOAD(&#39;BQ.INC&#39;)
--SNOBOL SLOAD(&#39;DYNAMIC.INC&#39;)
--SNOBOL SLOAD(&#39;WRAPPER.INC&#39;)
--SNOBOL SLOAD(&#39;CRACK.INC&#39;)
--SNOBOL SLOAD(&#39;SEQ.INC&#39;)
--SNOBOL TERMINAL = &#39;CSNOBOL4 (MON NOV 11 12:50:40 EST 2013)&#39;
-<b>@</b>
-</font></pre></div>
-<div style="background-image: url(greenbar.gif)">
-<pre><font face="Source Code Pro">
-<b>&laquo;CSNOBOL4&raquo;&equiv;</b>
--EMBED C &#39;csnobol4&#39;
-<b>@</b>
-</font></pre></div>
-<div style="background-image: url(greenbar.gif)">
-<pre><font face="Source Code Pro">
-<b>&laquo;CSNOBOL4,TYPE=C&raquo;&equiv;</b>
--SNOBOL WRAPPER_STARTFILE(.EMBED)
-
-/* Adds FORTRAN IV FORMAT to CSNOBOL4 */
-
-<font color="#818181"><i>#include &lt;stdio.h&gt;</i></font>
-<font color="#818181"><i>#include &lt;stdlib.h&gt;</i></font>
-<font color="#818181"><i>#include &lt;ctype.h&gt;</i></font>
-<font color="#818181"><i>#include &lt;errno.h&gt;</i></font>
-<font color="#818181"><i>#include &lt;time.h&gt;</i></font>
-<font color="#818181"><i>#include &lt;sys/select.h&gt;</i></font>
-<font color="#818181"><i>#include &lt;sys/time.h&gt;</i></font>
-<font color="#818181"><i>#include &lt;sys/types.h&gt;</i></font>
-<font color="#818181"><i>#include &lt;unistd.h&gt;</i></font>
-
-static int status;
-
-static int pipefds[2];
-
-static int createpipe(void)
-{
-    return pipe(pipefds);
-}
-
--SNOBOL C_WRAPPER_PROTO(&#39;CREATEPIPE()INTEGER&#39;, .EMBED)
-
-static int getpipefd(int n)
-{
-    if ((n &lt; 0) || (n &gt; 1))
-        return -1;
-    return pipefds[n];
-}
-
--SNOBOL C_WRAPPER_PROTO(&#39;GETPIPEFD(INTEGER)INTEGER&#39;, .EMBED)
-
-static int get_errno(void)
-{
-    return errno;
-}
-
--SNOBOL C_WRAPPER_PROTO(&#39;GET_ERRNO()INTEGER&#39;, .EMBED)
-
-/* fd_set holds a set of file descriptors. On 64 bit Linux, this is
- * a 128 byte object. This may be as little as 4 bytes on some systems
- * (which would limit the number of fd&#39;s to 32).
- */
-
-static int sizeof_timeval(void)
-{
-    return sizeof (struct timeval);
-}
-
--SNOBOL C_WRAPPER_PROTO(&#39;SIZEOF_TIMEVAL()INTEGER&#39;, .EMBED)
-
-static int set_timeval(long p, int sec, int usec)
-{
-    struct timeval *tv = (void *)p;
-    tv-&gt;tv_sec = sec;
-    tv-&gt;tv_usec = usec;
-}
-
--SNOBOL C_WRAPPER_PROTO(&#39;SET_TIMEVAL(LONG,INTEGER,INTEGER)&#39;, .EMBED)
-
-static int sizeof_fd_set(void)
-{
-    return sizeof (fd_set);
-}
-
--SNOBOL C_WRAPPER_PROTO(&#39;SIZEOF_FD_SET()INTEGER&#39;, .EMBED)
-
-static int fd_isset_(int fd, long p)
-{
-    return FD_ISSET(fd, (fd_set *)p);
-}
-
--SNOBOL C_WRAPPER_PROTO(&#39;FD_ISSET_(INTEGER,LONG)INTEGER&#39;, .EMBED)
-
-static void fd_zero_(long p)
-{
-    FD_ZERO((fd_set *)p);
-}
-
--SNOBOL C_WRAPPER_PROTO(&#39;FD_ZERO_(LONG)&#39;, .EMBED)
-
-static void fd_clr(int fd, long p)
-{
-    FD_ClR(fd, (fd_set *)p);
-}
-
--SNOBOL C_WRAPPER_PROTO(&#39;FD_CLR_(INTEGER,LONG)&#39;, .EMBED)
-
-static void fd_set_(int fd, long p)
-{
-    FD_SET(fd, (fd_set *)p);
-}
-
--SNOBOL C_WRAPPER_PROTO(&#39;FD_SET_(INTEGER,LONG)&#39;, .EMBED)
-
-static int clear_errno(void)
-{
-    errno = 0;
-}
-
--SNOBOL C_WRAPPER_PROTO(&#39;CLEAR_ERRNO()&#39;, .EMBED)
-
-static int waitpid_(int pid, int options)
-{
-    return waitpid(pid, &amp;status, options);
-}
-
--SNOBOL C_WRAPPER_PROTO(&#39;WAITPID_(INTEGER,INTEGER)INTEGER&#39;, .EMBED)
-
-static int get_status(void)
-{
-    return status;
-}
-
--SNOBOL C_WRAPPER_PROTO(&#39;GET_STATUS()INTEGER&#39;, .EMBED)
-
--END
-<b>@</b>
-</font></pre></div>
-<div style="background-image: url(greenbar.gif)">
-<pre><font face="Source Code Pro">
-<b>&laquo;CSNOBOL4&raquo;&equiv;</b>
--SNOBOL DYNAMIC_DEBUG = 1
--SNOBOL COMPILE_DYNAMIC(csnobol4) :F(ERROR) ;
--SNOBOL LIBS =
--SNOBOL OBJECTS = csnobol4; OBJECTS &#39;.c&#39; = &#39;.o&#39;
--SNOBOL LINK_DYNAMIC(&#39;./csnobol4&#39;, OBJECTS, LIBS) :F(ERROR) ;
--CMNT ERASE TEMPORARY FILES
--CMNT     WE DON&#39;T NEED THE C BITS, OR THE OBJECT FILES ANYMORE.
--CMNT     ALL WE REQUIRE IS csnobol4.so
--CMNT -SNOBOL A = CRACK(csnobol4 &#39; &#39; OBJECTS, &#39; &#39;)
--CMNT -SNOBOL SEQ(&#39; DELETE(A&lt;K&gt;) &#39;, .K)
-<b>@</b>
-</font></pre></div>
-<p align="justify"><font face="Sorts Mill Goudy">
-<font face="Source Code Pro">FORK()</font> copies the current process, and returns the pid (process
-identifier) of the new process. In the child, it returns 0.
-</font></p>
-<div style="background-image: url(greenbar.gif)">
-<pre><font face="Source Code Pro">
-<b>&laquo;CSNOBOL4&raquo;&equiv;</b>
--PUBLIC FORK()
-         LOAD(&#39;FORK()INTEGER&#39;)
-<b>@</b>
-</font></pre></div>
-<p align="justify"><font face="Sorts Mill Goudy">
-<font face="Source Code Pro">WAIT()</font> waits for the completion of a child process. It returns the
-pid of the child process that has terminated, or negative on error.
-</font></p>
-<div style="background-image: url(greenbar.gif)">
-<pre><font face="Source Code Pro">
-<b>&laquo;CSNOBOL4&raquo;&equiv;</b>
--PUBLIC WAIT()
-         LOAD(&#39;WAIT()INTEGER&#39;)
-<b>@</b>
-</font></pre></div>
-<p align="justify"><font face="Sorts Mill Goudy">
-To exit a child process, Unix supplies <font face="Source Code Pro">exit()</font>. However, <font face="Source Code Pro">EXIT()</font>
-causes execution of new image in <font face="Source Code Pro">CSNOBOL4</font>. To exit a process,
-assign the result status to <font face="Source Code Pro">&amp;CODE</font> and branch to <font face="Source Code Pro">END</font>.
-</font></p>
-<p align="justify"><font face="Sorts Mill Goudy">
-</font></p><pre><font face="Source Code Pro">
-|     &amp;CODE = 0  :(END)
-</font></pre>
-</font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 <font face="Source Code Pro">SPRINTF(F,V)</font> formats an <font face="Source Code Pro">INTEGER</font> or <font face="Source Code Pro">REAL</font> value <font face="Source Code Pro">V</font> using
 the <font face="Source Code Pro">C</font> format <font face="Source Code Pro">F</font> and returns the result as a string. For example:
@@ -242,88 +43,32 @@ the <font face="Source Code Pro">C</font> format <font face="Source Code Pro">F<
 <pre><font face="Source Code Pro">
 <b>&laquo;CSNOBOL4&raquo;&equiv;</b>
 -PUBLIC SPRINTF()
-         LOAD(&#39;SPRINTF(STRING,)STRING&#39;)
-<b>@</b>
-</font></pre></div>
-<div style="background-image: url(greenbar.gif)">
-<pre><font face="Source Code Pro">
-<b>&laquo;CSNOBOL4&raquo;&equiv;</b>
--PUBLIC CREATEPIPE(), GETPIPEFD(), GET_ERRNO()
--PUBLIC CLEAR_ERRNO(), WAITPID(), GET_STATUS(), SIZEOF_TIMEVAL()
--PUBLIC SET_TIMEVAL(), SIZEOF_FD_SET(), FD_ZERO(), FD_CLR(), FD_SET()
--PUBLIC FD_ISSET()
 <font color="#818181"><i>*</i></font>
-         LOAD(&#39;CREATEPIPE()INTEGER&#39;, &#39;csnobol4.so&#39;)
-         LOAD(&#39;GETPIPEFD(INTEGER)INTEGER&#39;, &#39;csnobol4.so&#39;)
-         LOAD(&#39;GET_ERRNO()INTEGER&#39;, &#39;csnobol4.so&#39;)
-         LOAD(&#39;CLEAR_ERRNO()&#39;, &#39;csnobol4.so&#39;)
-         LOAD(&#39;WAITPID_(INTEGER,INTEGER)INTEGER&#39;, &#39;csnobol4.so&#39;)
-         LOAD(&#39;GET_STATUS()INTEGER&#39;, &#39;csnobol4.so&#39;)
-         LOAD(&#39;SIZEOF_TIMEVAL()INTEGER&#39;, &#39;csnobol4.so&#39;)
-         LOAD(&#39;SET_TIMEVAL(INTEGER,INTEGER,INTEGER)&#39;, &#39;csnobol4.so&#39;)
-         LOAD(&#39;SIZEOF_FD_SET()INTEGER&#39;, &#39;csnobol4.so&#39;)
-         LOAD(&#39;FD_ZERO_(INTEGER)&#39;, &#39;csnobol4.so&#39;)
-         LOAD(&#39;FD_CLR_(INTEGER,INTEGER)&#39;, &#39;csnobol4.so&#39;)
-         LOAD(&#39;FD_SET_(INTEGER,INTEGER)&#39;, &#39;csnobol4.so&#39;)
-         LOAD(&#39;FD_ISSET_(INTEGER,INTEGER)INTEGER&#39;, &#39;csnobol4.so&#39;)
-         DEFINE(&#39;FD_ZERO(FD_SET)&#39;)
-         DEFINE(&#39;FD_CLR(FD,FD_SET)&#39;)
-         DEFINE(&#39;FD_ISSET(FD,FD_SET)&#39;)
-         DEFINE(&#39;FD_SET(FD,FD_SET)&#39;)
+         LOAD(&#39;SPRINTF(STRING,)STRING&#39;)
 <b>@</b>
 </font></pre></div>
 <p align="justify"><font face="Sorts Mill Goudy">
 We want to retrieve the FILE * for a unit. This can be used to perform
 other forms of i/o, or to retrieve the underlying file descriptor.
-Use FFI to access <font face="Source Code Pro">io_getfp()</font> and <font face="Source Code Pro">fileno()</font>. There may be a
-bug in CSNOBOL4 1.5. When doing I/O using <font face="Source Code Pro">fgets()</font> (normal line
-oriented) to a bi-direction pipe, we get errno 29 (ESPIPE) errors,
-indicating that seek on the pipe failed. Of course, we can't seek
-on the pipe; this is done solely to separate read and write. But,
-there may be a timing issue because there are two separate processes
-involved.
+Use FFI to access <font face="Source Code Pro">io_getfp()</font>. There may be a bug in CSNOBOL4
+1.5. When doing I/O using <font face="Source Code Pro">fgets()</font> (normal line oriented) to a
+bi-direction pipe, we get errno 29 (ESPIPE) errors, indicating that
+seek on the pipe failed. Of course, we can't seek on the pipe; this
+is done solely to separate read and write. But, there may be a timing
+issue because there are two separate processes involved.
 </font></p>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;CSNOBOL4&raquo;&equiv;</b>
--PUBLIC CLOSE(), SELECT(), IO_GETFP(), FILENO()
 <font color="#818181"><i>*</i></font>
-         CLOSE_FFI = FFI_NEW(&#39;I&#39;, &#39;I&#39;)
-         FFI_SET_CALLP(CLOSE_FFI, DLSYM(0, &#39;close&#39;))
-         DEFINE(&#39;CLOSE(FD)&#39;)
-         SELECT_FFI = FFI_NEW(&#39;I&#39;, &#39;I,P,P,P,P&#39;)
-         FFI_SET_CALLP(SELECT_FFI, DLSYM(0, &#39;select&#39;))
-         DEFINE(&#39;SELECT(NFDS,READFDS,WRITEFDS,EXCEPTFDS,TIMEOUT)&#39;)
+-PUBLIC IO_GETFP()
+<font color="#818181"><i>*</i></font>
          IO_GETFP_FFI = FFI_NEW(&#39;P&#39;, &#39;I&#39;)
          FFI_SET_CALLP(IO_GETFP_FFI, DLSYM(0, &#39;io_getfp&#39;))
-         FILENO_FFI = FFI_NEW(&#39;I&#39;, &#39;P&#39;)
-         FFI_SET_CALLP(FILENO_FFI, DLSYM(0, &#39;fileno&#39;))
-         DEFINE(&#39;IO_GETFP(UNIT)&#39;)
-         DEFINE(&#39;FILENO(FP)&#39;)                            <b>:(CSNOBOL4_END)</b>
-<font color="#818181"><i>*</i></font>
-CLOSE    FFI_PAR_N_INTEGER(CLOSE_FFI, 1, FD)
-         CLOSE = FFI_CALL_INTEGER(CLOSE_FFI)                   <b>:(RETURN)</b>
-<font color="#818181"><i>*</i></font>
-FD_CLR   FD_CLR_(FD, FD_SET)                                   <b>:(RETURN)</b>
-<font color="#818181"><i>*</i></font>
-FD_ISSET FD_ISSET = FD_ISSET_(FD, FD_SET)                      <b>:(RETURN)</b>
-<font color="#818181"><i>*</i></font>
-FD_SET   FD_SET_(FD, FD_SET)                                   <b>:(RETURN)</b>
-<font color="#818181"><i>*</i></font>
-FD_ZERO  FD_ZERO_(FD_SET)                                      <b>:(RETURN)</b>
+         DEFINE(&#39;IO_GETFP(UNIT)&#39;)                        <b>:(CSNOBOL4_END)</b>
 <font color="#818181"><i>*</i></font>
 IO_GETFP FFI_PAR_N_INTEGER(IO_GETFP_FFI, 1, UNIT)
          IO_GETFP = FFI_CALL_PTR(IO_GETFP_FFI)                 <b>:(RETURN)</b>
-<font color="#818181"><i>*</i></font>
-FILENO   FFI_PAR_N_PTR(FILENO_FFI, 1, FP)
-         FILENO = FFI_CALL_INTEGER(FILENO_FFI)                 <b>:(RETURN)</b>
-<font color="#818181"><i>*</i></font>
-SELECT   FFI_PAR_N_INTEGER(SELECT_FFI, 1, NFDS)
-         FFI_PAR_N_PTR(SELECT_FFI, 2, READFDS)
-         FFI_PAR_N_PTR(SELECT_FFI, 3, WRITEFDS)
-         FFI_PAR_N_PTR(SELECT_FFI, 4, EXCEPTFDS)
-         FFI_PAR_N_PTR(SELECT_FFI, 5, TIMEOUT)
-         SELECT = FFI_CALL_INTEGER(SELECT_FFI)                 <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 CSNOBOL4_END
 <b>@</b>
@@ -340,6 +85,7 @@ and confirm that FD is 1.
 <font color="#818181"><i>#!/usr/bin/bash</i></font>
          exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
 -INCLUDE &#39;CSNOBOL4.INC&#39;
+-INCLUDE &#39;UNIX.INC&#39;
          &amp;CODE = 1
          OUTPUT(.T_OUT, 10,, &#39;/dev/stdout&#39;)
          T_OUT = &#39;HELLO, WORLD&#39;
@@ -386,7 +132,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Mon Jun 16 01:49:17 EDT 2014</p></td><td><p align=right>
+Mon Jun 16 21:11:27 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

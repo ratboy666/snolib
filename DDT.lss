@@ -72,6 +72,7 @@ additional tools to be incorporated while debugging.
 -INCLUDE 'SLOAD.INC'
 -INCLUDE 'TRIMB.INC'
 -INCLUDE 'VDIFFER.INC'
+-INCLUDE 'EDITLINE.INC'
 @
 
 <<DDT>>=

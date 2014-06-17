@@ -4,8 +4,6 @@ Pointer utilities Includes peek and poke of various types (_p = pointer,
 _c = char, _s = short, _i = int, _f = float, _d = double, _ld = long
 double). Note that long long is excluded.
 
-Defines interface to malloc(), free(), strdup() and strlen().
-
 [[INCLUDE]]s used while building p64.so are:
 
 <a href="CRACK.html">CRACK</a><br>
@@ -94,22 +92,6 @@ static void poke_ld(long p, double v) { *(long double *)p = v; }
 
 -SNOBOL C_WRAPPER_PROTO('POKE_LD(LONG,REAL)', .EMBED)
 
-static long malloc_(int n) { return (long)malloc(n); }
-
--SNOBOL C_WRAPPER_PROTO('MALLOC_(INTEGER)LONG', .EMBED)
-
-static void free_(long p) { free((void *)p); }
-
--SNOBOL C_WRAPPER_PROTO('FREE_(LONG)', .EMBED)
-
-static long strdup_(char *s) { return (long)strdup(s); }
-
--SNOBOL C_WRAPPER_PROTO('STRDUP_(STRING)LONG', .EMBED)
-
-static long strlen_(long p) { return strlen((char *)p); }
-
--SNOBOL C_WRAPPER_PROTO('STRLEN_(LONG)INTEGER', .EMBED)
-
 -END
 @
 
@@ -147,31 +129,6 @@ Build [[p64.so]] shared library.
          LOAD('POKE_D(INTEGER,REAL)', 'p64.so')
          LOAD('POKE_F(INTEGER,REAL)', 'p64.so')
          LOAD('POKE_LD(INTEGER,REAL)', 'p64.so')
-         LOAD('MALLOC_(INTEGER)INTEGER', 'p64.so')
-         LOAD('FREE_(INTEGER)', 'p64.so')
-         LOAD('STRDUP_(STRING)INTEGER', 'p64.so')
-         LOAD('STRLEN_(INTEGER)INTEGER', 'p64.so')
-*
-@
-
-Define the actual “API” for the P64 module.
-
-<<P64>>=
--PUBLIC MALLOC(), FREE(), STRDUP(), STRLEN()
-         DEFINE('MALLOC(N)')
-         DEFINE('FREE(P)')
-         DEFINE('STRDUP(S)')
-         DEFINE('STRLEN(P)')                                  :(P64_END)
-*
-MALLOC   MALLOC = MALLOC_(N)                                   :(RETURN)
-*
-FREE     FREE_(P)                                              :(RETURN)
-*
-STRDUP   STRDUP = STRDUP_(S)                                   :(RETURN)
-*
-STRLEN   STRLEN = STRLEN_(P)                                   :(RETURN)
-*
-P64_END
 @
 
 <<unit_test>>=

@@ -56,6 +56,7 @@ static int format(char **in_s, char **fmt, char **buf, char **limit,
 	    ++*fmt;
 	    switch (c) {
 		case ',': break;
+		case 'x':
 		case 'X':
 		    if (r < 0) {
 			r = 1;
@@ -65,6 +66,7 @@ static int format(char **in_s, char **fmt, char **buf, char **limit,
 			++*buf;
 		    }
 		    break;
+		case 'a':
 		case 'A':
 		    ++aseen;
 		    if (isdigit(**fmt)) {
@@ -107,7 +109,7 @@ static int format(char **in_s, char **fmt, char **buf, char **limit,
 		    for (;;) {
 			if (**fmt == 0) {
 			    fprintf(stderr,
-                   "ftn_format: missing close \' in string constant\n");
+                   "FTN_FORMAT: MISSING CLOSE \' IN STRING CONSTANT\n");
 			    return 1;
 			}
 			if (**fmt == '\'') {
@@ -126,6 +128,7 @@ static int format(char **in_s, char **fmt, char **buf, char **limit,
 			}
 		    }
 		    break;
+		case 'h':
 		case 'H':
 		    if (r == 0) {
 			break;
@@ -133,7 +136,7 @@ static int format(char **in_s, char **fmt, char **buf, char **limit,
 		    for (; r; --r) {
 			if (**fmt == 0) {
 			    fprintf(stderr,
-                          "ftn_format: Hollerith constant too short\n");
+                          "FTN_FORMAT: HOLLERITH CONSTANT TOO SHORT\n");
 			    return 1;
 			}
 			**buf = **fmt;
@@ -141,11 +144,12 @@ static int format(char **in_s, char **fmt, char **buf, char **limit,
 			++*fmt;
 		    }
 		    break;
+		case 't':
 		case 'T': /* T TL TR */
-		    if (**fmt == 'R') {
+		    if ((**fmt == 'R') || (**fmt =='r')) {
 			c = 'R';
 			++*fmt;
-		    } else if (**fmt == 'L') {
+		    } else if ((**fmt == 'L') || (**fmt =='l')) {
 			c = 'L';
 			++*fmt;
 		    }
@@ -192,10 +196,10 @@ static int format(char **in_s, char **fmt, char **buf, char **limit,
 		default:
 		    if (c == 0) {
 			fprintf(stderr,
-                               "ftn_format: premature end of format\n");
+                               "FTN_FORMAT: PREMATURE END OF FORMAT\n");
 		    } else {
 			fprintf(stderr,
-                           "ftn_format: bad format character: %c\n", c);
+                           "FTN_FORMAT: BAD FORMAT CHARACTER: %c\n", c);
 		    }
 		    return 1;
 	    }

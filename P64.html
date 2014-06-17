@@ -14,9 +14,6 @@ _c = char, _s = short, _i = int, _f = float, _d = double, _ld = long
 double). Note that long long is excluded.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
-Defines interface to malloc(), free(), strdup() and strlen().
-</font></p>
-<p align="justify"><font face="Sorts Mill Goudy">
 <font face="Source Code Pro">INCLUDE</font>s used while building p64.so are:
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
@@ -116,22 +113,6 @@ static void poke_ld(long p, double v) { *(long double *)p = v; }
 
 -SNOBOL C_WRAPPER_PROTO(&#39;POKE_LD(LONG,REAL)&#39;, .EMBED)
 
-static long malloc_(int n) { return (long)malloc(n); }
-
--SNOBOL C_WRAPPER_PROTO(&#39;MALLOC_(INTEGER)LONG&#39;, .EMBED)
-
-static void free_(long p) { free((void *)p); }
-
--SNOBOL C_WRAPPER_PROTO(&#39;FREE_(LONG)&#39;, .EMBED)
-
-static long strdup_(char *s) { return (long)strdup(s); }
-
--SNOBOL C_WRAPPER_PROTO(&#39;STRDUP_(STRING)LONG&#39;, .EMBED)
-
-static long strlen_(long p) { return strlen((char *)p); }
-
--SNOBOL C_WRAPPER_PROTO(&#39;STRLEN_(LONG)INTEGER&#39;, .EMBED)
-
 -END
 <b>@</b>
 </font></pre></div>
@@ -174,34 +155,6 @@ Build <font face="Source Code Pro">p64.so</font> shared library.
          LOAD(&#39;POKE_D(INTEGER,REAL)&#39;, &#39;p64.so&#39;)
          LOAD(&#39;POKE_F(INTEGER,REAL)&#39;, &#39;p64.so&#39;)
          LOAD(&#39;POKE_LD(INTEGER,REAL)&#39;, &#39;p64.so&#39;)
-         LOAD(&#39;MALLOC_(INTEGER)INTEGER&#39;, &#39;p64.so&#39;)
-         LOAD(&#39;FREE_(INTEGER)&#39;, &#39;p64.so&#39;)
-         LOAD(&#39;STRDUP_(STRING)INTEGER&#39;, &#39;p64.so&#39;)
-         LOAD(&#39;STRLEN_(INTEGER)INTEGER&#39;, &#39;p64.so&#39;)
-<font color="#818181"><i>*</i></font>
-<b>@</b>
-</font></pre></div>
-<p align="justify"><font face="Sorts Mill Goudy">
-Define the actual “API” for the P64 module.
-</font></p>
-<div style="background-image: url(greenbar.gif)">
-<pre><font face="Source Code Pro">
-<b>&laquo;P64&raquo;&equiv;</b>
--PUBLIC MALLOC(), FREE(), STRDUP(), STRLEN()
-         DEFINE(&#39;MALLOC(N)&#39;)
-         DEFINE(&#39;FREE(P)&#39;)
-         DEFINE(&#39;STRDUP(S)&#39;)
-         DEFINE(&#39;STRLEN(P)&#39;)                                  <b>:(P64_END)</b>
-<font color="#818181"><i>*</i></font>
-MALLOC   MALLOC = MALLOC_(N)                                   <b>:(RETURN)</b>
-<font color="#818181"><i>*</i></font>
-FREE     FREE_(P)                                              <b>:(RETURN)</b>
-<font color="#818181"><i>*</i></font>
-STRDUP   STRDUP = STRDUP_(S)                                   <b>:(RETURN)</b>
-<font color="#818181"><i>*</i></font>
-STRLEN   STRLEN = STRLEN_(P)                                   <b>:(RETURN)</b>
-<font color="#818181"><i>*</i></font>
-P64_END
 <b>@</b>
 </font></pre></div>
 <div style="background-image: url(greenbar.gif)">
@@ -250,7 +203,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Fri Jun 13 15:13:06 EDT 2014</p></td><td><p align=right>
+Mon Jun 16 04:53:20 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

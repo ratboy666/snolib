@@ -9,23 +9,53 @@
 <h1>DSERVE - DDT Server (telnet)</h1>
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
-<font face="Source Code Pro">DSERVE</font> provides a method to allow debugging applications that
-cannot normally be debugged. The application will call <font face="Source Code Pro">DSERVE_INIT()</font>
-to initialize. This creates a listener process that waits for telnet
-connections. When a connection is made, two processes will shuttle
-data between telnet and <font face="Source Code Pro">DDT</font>.
+<font face="Source Code Pro">DSERVE</font> provides a method to allow debugging applications
+that cannot normally be debugged. The application will call
+<font face="Source Code Pro">DSERVE_INIT()</font> to initialize. This creates a listener process
+that waits for telnet connections. When a connection is made, two
+processes will shuttle data between telnet and <font face="Source Code Pro">DDT</font>.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
-Not very good at cleaning up, but this does work.
+Runs in four physical processes: the primordial process which
+creates two pipes, and returns to the application. The application
+calls <font face="Source Code Pro">DSERVE()</font> on a polling basis. The primordial processes
+forks duing <font face="Source Code Pro">DSERVE_INIT()</font>, and the child process waits for
+connection from telnet using <font face="Source Code Pro">SERV_LISTEN()</font>. Once <font face="Source Code Pro">SERV_LISTEN()</font>
+returns with a new connection, it requests a login verification
+(using the credential supplied to <font face="Source Code Pro">DSERVE_INIT()</font>). If successful,
+it writes a message to the primordial process. Remember that the
+primordial process is polling for this message. When received, the
+primordial process can enter <font face="Source Code Pro">DDT</font> and resume the application in
+debug state. When the message has been sent to primordial (from
+the server handler process), the server handler forks. One side
+handles copying from primordial to net, and the other handles copying
+from net to primordial. So, the processes are:
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+</font></p><pre><font face="Source Code Pro">
+| PRIMORDIAL
+| SERV_LISTEN
+| SERVER (BECOMES PRIMORDIAL -> NET COPY)
+| NET -> PRIMORDIAL COPY
+</font></pre>
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+The primordial process communicates to the copy processes by means
+of two pipes: one for each data flow.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+Not very good at cleaning up the processes, but this does work.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+This same idea can be used to gather logging data, or interact with
+the running program in various ways. Using the debugger to "front-end"
+these things is actually not a bad idea. It is be possible to send
+the primordial process a SIGINT (error 34), which can be captured
+with SETEXIT(). Note that this is currently the only signal which
+can be used in this manner by CSNOBOL4 (1.5 and greater).
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 <h2>Uses</h2>
-<a href="CHARS.html">CHARS</a><br>
-<a href="CSNOBOL4.html">CSNOBOL4</a><br>
-<a href="DDT.html">DDT</a><br>
-<a href="P64.html">P64</a><br>
-<a href="REPL.html">REPL</a><br>
-<a href="TRIMB.html">TRIMB</a><br>
 </font></p>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
@@ -35,6 +65,7 @@ Not very good at cleaning up, but this does work.
 -INCLUDE &#39;CSNOBOL4.INC&#39;
 -INCLUDE &#39;TRIMB.INC&#39;
 -INCLUDE &#39;P64.INC&#39;
+-INCLUDE &#39;UNIX.INC&#39;
 -INCLUDE &#39;DDT.INC&#39;
 <b>@</b>
 </font></pre></div>
@@ -51,12 +82,12 @@ DSERVE_INIT
          DSERVE_PORT = PORT
          DSERVE_APPNAME = APPNAME
 <font color="#818181"><i>*</i></font>
-         LT(CREATEPIPE())                                    <b>:S(DSERVE9)</b>
-         DSERVE_P1_RFD = GETPIPEFD(0)
-         DSERVE_P1_WFD = GETPIPEFD(1)
-         LT(CREATEPIPE())                                    <b>:S(DSERVE9)</b>
-         DSERVE_P2_RFD = GETPIPEFD(0)
-         DSERVE_P2_WFD = GETPIPEFD(1)
+         P1 = PIPE()                                         <b>:F(DSERVE9)</b>
+         DSERVE_P1_RFD = P1&lt;1&gt;
+         DSERVE_P1_WFD = P1&lt;2&gt;
+         P2 = PIPE()                                         <b>:F(DSERVE9)</b>
+         DSERVE_P2_RFD = P2&lt;1&gt;
+         DSERVE_P2_WFD = P2&lt;2&gt;
          PID = FORK()                                        <b>:F(DSERVE9)</b>
          LT(PID)                                             <b>:S(DSERVE9)</b>
          EQ(PID)                                             <b>:S(DSERVE2)</b>
@@ -64,44 +95,75 @@ DSERVE_INIT
 <font color="#818181"><i>* PRIMORDIAL PROCESS - POLLS WITH DSERVE() WAITING FOR CONNECTION AND</i></font>
 <font color="#818181"><i>* DEBUGGER ENTRY</i></font>
 <font color="#818181"><i>*</i></font>
-         DSERVE_FDS = MALLOC(SIZEOF_FD_SET())
-         DSERVE_TV = MALLOC(SIZEOF_TIMEVAL())                  <b>:(RETURN)</b>
+<font color="#818181"><i>* NEEDS FD SET AND TIMEVAL FOR SELECT</i></font>
+<font color="#818181"><i>*</i></font>
+         DSERVE_FDS = NEW_FD_SET()
+         DSERVE_TV = NEW_TIMEVAL()                             <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 DSERVE_INIT_END
 <font color="#818181"><i>*</i></font>
          DEFINE(&#39;DSERVE()N,S&#39;)                             <b>:(DSERVE_END)</b>
-DSERVE   NE(DDT_ACTIVE)                                        <b>:(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* IF DDT IS ALREADY ACTIVE, WE ARE DEBUGGING THROUGH A DSERVE() POLL,</i></font>
+<font color="#818181"><i>* JUST RETURN. IF DSERVE_APPNAME IS NULL, RETURN, DSERVE HAS NOT</i></font>
+<font color="#818181"><i>* BEEN SET UP CORRECTLY YET.</i></font>
+<font color="#818181"><i>*</i></font>
+DSERVE   NE(DDT_ACTIVE)                                       <b>:S(RETURN)</b>
+         IDENT(DSERVE_APPNAME)                                <b>:S(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* SEE IF THERE IS INPUT AVAILABLE FROM THE NET. USE SELECT() TO POLL</i></font>
+<font color="#818181"><i>* THE READ FILE DESCRIPTOR, WITH A TIMEOUT OF 0 (NO WAIT)</i></font>
+<font color="#818181"><i>*</i></font>
          SET_TIMEVAL(DSERVE_TV, 0, 0)
          FD_ZERO(DSERVE_FDS)
          FD_SET(DSERVE_P2_RFD, DSERVE_FDS)
          N = SELECT(DSERVE_P2_RFD + 1, DSERVE_FDS, 0, 0, DSERVE_TV)
          EQ(N)                                                <b>:S(RETURN)</b>
 <font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* WE HAVE DATA ON THE READ FD. CREATE I/O CHANNELS TO TELNET I/O</i></font>
+<font color="#818181"><i>* PROCESSES.</i></font>
+<font color="#818181"><i>*</i></font>
          OUTPUT(.DDT_T, 10, &#39;W&#39;, &#39;/dev/fd/&#39; DSERVE_P1_WFD)   <b>:F(DSERVE9)</b>
          INPUT(.DDT_R, 11,, &#39;/dev/fd/&#39; DSERVE_P2_RFD)        <b>:F(DSERVE9)</b>
 <font color="#818181"><i>*</i></font>
-<font color="#818181"><i>* WAIT FOR MESSAGE FROM NET PROCESS</i></font>
+<font color="#818181"><i>* READ MESSAGE FROM NET PROCESS. WE HAVE A MESSAGE TO BE READ</i></font>
+<font color="#818181"><i>* (BUT IT MAY NOT BE COMPLETE YET). WE RELY ON NORMAL I/O MECHANISM</i></font>
+<font color="#818181"><i>* TO DELIVER COMPLETE MESSAGE LINE.</i></font>
 <font color="#818181"><i>*</i></font>
          S = DDT_R
          IDENT(S, &#39;DDT&#39;)                                     <b>:S(DSERVE7)</b>
-         DDT_T = &#39;OPTION &#39; S &#39; NOT AVAILABLE&#39;                  <b>:(RETURN)</b>
+         DSERVE = S                                            <b>:(RETURN)</b>
 DSERVE7  DDT_T = NE(DDT_ACTIVE) &#39;APP ALREADY IN DDT&#39;          <b>:S(RETURN)</b>
          DDT_USE_R = 1
          DSERVE = &#39;DDT&#39;
-         DDT()
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* THE MESSAGE IS &#39;DDT&#39; WHICH MEANS ENTER DEBUGGER. THE DEBUGGER IS</i></font>
+<font color="#818181"><i>* NOT YET ACTIVE. WHEN DSERVE() RETURNS, IT WILL BE UNDER DDT CONTROL.</i></font>
+<font color="#818181"><i>* WE SET DDT_USE_R TO 1 TO INFORM DDT OF THE I/O NEEDED (READLINE</i></font>
+<font color="#818181"><i>* CANNOT BE USED).</i></font>
+<font color="#818181"><i>*</i></font>
+         DDT(DSERVE_APPNAME)
                                                                <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* CONNECTION LISTENER PROCESS</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CREATE I/O CHANNELS TO PRIMORDIAL PROCESS. THE PRIMORDIAL PROCESS</i></font>
+<font color="#818181"><i>* WILL POLL WAITING FOR A MESSAGE TO BE WRITTEN TO TO_PRIMORDIAL.</i></font>
 <font color="#818181"><i>*</i></font>
 DSERVE2  INPUT(.FROM_PRIMORDIAL, 12,, &#39;/dev/fd/&#39; DSERVE_P1_RFD)
 +                                                            <b>:F(DSERVE9)</b>
          OUTPUT(.TO_PRIMORDIAL, 13, &#39;W&#39;, &#39;/dev/fd/&#39; DSERVE_P2_WFD)
 +                                                            <b>:F(DSERVE9)</b>
 <font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* WAIT FOR A CONNECTION ON DSERVE_PORT</i></font>
+<font color="#818181"><i>*</i></font>
 DSERVE3  FDN = SERV_LISTEN(&#39;inet&#39;, &#39;stream&#39;, DSERVE_PORT)    <b>:F(DSERVE9)</b>
          INPUT(.NET, 9, &#39;UWT&#39;, &#39;/dev/fd/&#39; FDN)               <b>:F(DSERVE9)</b>
          OUTPUT(.NET, 9)                                     <b>:F(DSERVE9)</b>
          CRLF = CHARS_CR CHARS_LF
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* WE HAVE A CONNECTION. DISPLAY SIGNON, AND REQUEST LOGIN. THE LOGIN</i></font>
+<font color="#818181"><i>* IS A SIMPLE STRING PASSED AS DSERVE_KEY</i></font>
 <font color="#818181"><i>*</i></font>
          NET = &#39;DSERVE &#39; DSERVE_APPNAME CRLF
          NET = CRLF
@@ -116,9 +178,11 @@ DSERVE3  FDN = SERV_LISTEN(&#39;inet&#39;, &#39;stream&#39;, DSERVE_PORT)    <b>
 <font color="#818181"><i>*</i></font>
          IDENT(S, DSERVE_KEY)                                <b>:S(DSERVE8)</b>
          NET = &#39;BAD LOGIN&#39; CRLF                                   <b>:(END)</b>
-DSERVE8  NET = &#39;LOGIN CONFIRM&#39; CRLF
+DSERVE8  NET = &#39;LOGIN CONFIRMED&#39; CRLF
+         NET = &#39;REDIRECT TO /dev/fd/&#39; DSERVE_P1_WFD &#39; TO SEND OUTPUT &#39;
++              &#39;TO TELNET USING X (EG ls)&#39;
 <font color="#818181"><i>*</i></font>
-<font color="#818181"><i>* SEND MESSAGE TO PRIMORDIAL.</i></font>
+<font color="#818181"><i>* THE CORRECT KEY WAS SUPPLIED. SEND MESSAGE TO PRIMORDIAL.</i></font>
 <font color="#818181"><i>*</i></font>
          TO_PRIMORDIAL = &#39;DDT&#39;
 <font color="#818181"><i>*</i></font>
@@ -152,7 +216,14 @@ DSERVE_END
          exec &quot;snobol4&quot; &quot;-b&quot; &quot;$0&quot; &quot;$@&quot;
 -INCLUDE &#39;DSERVE.INC&#39;
          &amp;CODE = 1
-         DSERVE_INIT(&#39;TEST&#39;, 54321, &#39;magic&#39;)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* INITIALIZE DSERVE WITH APPLICATION NAME, PORT, AND SIGNON KEY</i></font>
+<font color="#818181"><i>*</i></font>
+         DSERVE_INIT(&#39;DSERVE TEST&#39;, 54321, &#39;magic&#39;)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* THE APPLICATION. A SIMPLE COUNTING LOOP. AT THE BEGINNING OF EACH</i></font>
+<font color="#818181"><i>* MAJOR LOOP, POLL DSERVE(), WHICH POSSIBLY ENTERS THE DEBUGGER.</i></font>
+<font color="#818181"><i>*</i></font>
 LUP      DSERVE()
          MAJOR = MAJOR + 1
          TERMINAL = &#39;MAJOR = &#39; MAJOR
@@ -182,7 +253,7 @@ END
 <font color="#818181"><i>*         #     #  #     #  #        #    #     # #    #               *</i></font>
 <font color="#818181"><i>*         ######    #####   #######  #     #     #     #######         *</i></font>
 <font color="#818181"><i>*                                                                      *</i></font>
-<font color="#818181"><i>* DSERVE                     DDT SERVER                                *</i></font>
+<font color="#818181"><i>* DSERVE                  DDT TELNET SERVER                            *</i></font>
 <font color="#818181"><i>*                                                                      *</i></font>
 <font color="#818181"><i>************************************************************************</i></font>
 <font color="#818181"><i>*</i></font>
@@ -197,7 +268,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Fri Jun 13 15:13:35 EDT 2014</p></td><td><p align=right>
+Tue Jun 17 01:39:00 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

@@ -1,7 +1,7 @@
 -MODULE P64
--LINE 19 "P64.lss"
+-LINE 17 "P64.lss"
 -IN72
--LINE 190 "P64.lss"
+-LINE 147 "P64.lss"
 -CASE 1
 -STITL P64
 -EJECT
@@ -22,20 +22,20 @@
 *
 * P64.lss
 *
+-LINE 20 "P64.lss"
+-LINE 21 "P64.lss"
 -LINE 22 "P64.lss"
 -LINE 23 "P64.lss"
 -LINE 24 "P64.lss"
 -LINE 25 "P64.lss"
--LINE 26 "P64.lss"
--LINE 27 "P64.lss"
--LINE 32 "P64.lss"
+-LINE 30 "P64.lss"
          p64 = 'p64.c'
--LINE 119 "P64.lss"
--LINE 120 "P64.lss"
--LINE 121 "P64.lss"
--LINE 122 "P64.lss"
--LINE 123 "P64.lss"
--LINE 131 "P64.lss"
+-LINE 101 "P64.lss"
+-LINE 102 "P64.lss"
+-LINE 103 "P64.lss"
+-LINE 104 "P64.lss"
+-LINE 105 "P64.lss"
+-LINE 113 "P64.lss"
 -PUBLIC PEEK_P(), PEEK_C(), PEEK_S(), PEEK_I(), PEEK_D(), PEEK_F()
 -PUBLIC PEEK_LD()
 -PUBLIC POKE_P(), POKE_C(), POKE_S(), POKE_I(), POKE_D(), POKE_F()
@@ -55,26 +55,5 @@
          LOAD('POKE_D(INTEGER,REAL)', 'p64.so')
          LOAD('POKE_F(INTEGER,REAL)', 'p64.so')
          LOAD('POKE_LD(INTEGER,REAL)', 'p64.so')
-         LOAD('MALLOC_(INTEGER)INTEGER', 'p64.so')
-         LOAD('FREE_(INTEGER)', 'p64.so')
-         LOAD('STRDUP_(STRING)INTEGER', 'p64.so')
-         LOAD('STRLEN_(INTEGER)INTEGER', 'p64.so')
-*
--LINE 160 "P64.lss"
--PUBLIC MALLOC(), FREE(), STRDUP(), STRLEN()
-         DEFINE('MALLOC(N)')
-         DEFINE('FREE(P)')
-         DEFINE('STRDUP(S)')
-         DEFINE('STRLEN(P)')                                  :(P64_END)
-*
-MALLOC   MALLOC = MALLOC_(N)                                   :(RETURN)
-*
-FREE     FREE_(P)                                              :(RETURN)
-*
-STRDUP   STRDUP = STRDUP_(S)                                   :(RETURN)
-*
-STRLEN   STRLEN = STRLEN_(P)                                   :(RETURN)
-*
-P64_END
 *
 * CE: .F.MSNOBOL4;

@@ -1,7 +1,8 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -INCLUDE 'CSNOBOL4.INC'
--LINE 300 "CSNOBOL4.lss"
+-LINE 64 "CSNOBOL4.lss"
+-INCLUDE 'UNIX.INC'
          &CODE = 1
          OUTPUT(.T_OUT, 10,, '/dev/stdout')
          T_OUT = 'HELLO, WORLD'

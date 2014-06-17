@@ -1,13 +1,14 @@
 -MODULE DSERVE
--LINE 20 "DSERVE.lss"
+-LINE 46 "DSERVE.lss"
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'REPL.INC'
 -INCLUDE 'CSNOBOL4.INC'
 -INCLUDE 'TRIMB.INC'
 -INCLUDE 'P64.INC'
+-INCLUDE 'UNIX.INC'
 -INCLUDE 'DDT.INC'
 -IN72
--LINE 153 "DSERVE.lss"
+-LINE 220 "DSERVE.lss"
 -STITL DSERVE
 -EJECT
 *
@@ -21,13 +22,13 @@
 *         #     #  #     #  #        #    #     # #    #               *
 *         ######    #####   #######  #     #     #     #######         *
 *                                                                      *
-* DSERVE                     DDT SERVER                                *
+* DSERVE                  DDT TELNET SERVER                            *
 *                                                                      *
 ************************************************************************
 *
 * DSERVE.lss
 *
--LINE 29 "DSERVE.lss"
+-LINE 56 "DSERVE.lss"
 -PUBLIC DSERVE_INIT(), DSERVE()
 -PUBLIC DSERVE_PORT, DSERVE_APPNAME
 *
@@ -38,12 +39,12 @@ DSERVE_INIT
          DSERVE_PORT = PORT
          DSERVE_APPNAME = APPNAME
 *
-         LT(CREATEPIPE())                                    :S(DSERVE9)
-         DSERVE_P1_RFD = GETPIPEFD(0)
-         DSERVE_P1_WFD = GETPIPEFD(1)
-         LT(CREATEPIPE())                                    :S(DSERVE9)
-         DSERVE_P2_RFD = GETPIPEFD(0)
-         DSERVE_P2_WFD = GETPIPEFD(1)
+         P1 = PIPE()                                         :F(DSERVE9)
+         DSERVE_P1_RFD = P1<1>
+         DSERVE_P1_WFD = P1<2>
+         P2 = PIPE()                                         :F(DSERVE9)
+         DSERVE_P2_RFD = P2<1>
+         DSERVE_P2_WFD = P2<2>
          PID = FORK()                                        :F(DSERVE9)
          LT(PID)                                             :S(DSERVE9)
          EQ(PID)                                             :S(DSERVE2)
@@ -51,44 +52,75 @@ DSERVE_INIT
 * PRIMORDIAL PROCESS - POLLS WITH DSERVE() WAITING FOR CONNECTION AND
 * DEBUGGER ENTRY
 *
-         DSERVE_FDS = MALLOC(SIZEOF_FD_SET())
-         DSERVE_TV = MALLOC(SIZEOF_TIMEVAL())                  :(RETURN)
+* NEEDS FD SET AND TIMEVAL FOR SELECT
+*
+         DSERVE_FDS = NEW_FD_SET()
+         DSERVE_TV = NEW_TIMEVAL()                             :(RETURN)
 *
 DSERVE_INIT_END
 *
          DEFINE('DSERVE()N,S')                             :(DSERVE_END)
-DSERVE   NE(DDT_ACTIVE)                                        :(RETURN)
+*
+* IF DDT IS ALREADY ACTIVE, WE ARE DEBUGGING THROUGH A DSERVE() POLL,
+* JUST RETURN. IF DSERVE_APPNAME IS NULL, RETURN, DSERVE HAS NOT
+* BEEN SET UP CORRECTLY YET.
+*
+DSERVE   NE(DDT_ACTIVE)                                       :S(RETURN)
+         IDENT(DSERVE_APPNAME)                                :S(RETURN)
+*
+* SEE IF THERE IS INPUT AVAILABLE FROM THE NET. USE SELECT() TO POLL
+* THE READ FILE DESCRIPTOR, WITH A TIMEOUT OF 0 (NO WAIT)
+*
          SET_TIMEVAL(DSERVE_TV, 0, 0)
          FD_ZERO(DSERVE_FDS)
          FD_SET(DSERVE_P2_RFD, DSERVE_FDS)
          N = SELECT(DSERVE_P2_RFD + 1, DSERVE_FDS, 0, 0, DSERVE_TV)
          EQ(N)                                                :S(RETURN)
 *
+* WE HAVE DATA ON THE READ FD. CREATE I/O CHANNELS TO TELNET I/O
+* PROCESSES.
+*
          OUTPUT(.DDT_T, 10, 'W', '/dev/fd/' DSERVE_P1_WFD)   :F(DSERVE9)
          INPUT(.DDT_R, 11,, '/dev/fd/' DSERVE_P2_RFD)        :F(DSERVE9)
 *
-* WAIT FOR MESSAGE FROM NET PROCESS
+* READ MESSAGE FROM NET PROCESS. WE HAVE A MESSAGE TO BE READ
+* (BUT IT MAY NOT BE COMPLETE YET). WE RELY ON NORMAL I/O MECHANISM
+* TO DELIVER COMPLETE MESSAGE LINE.
 *
          S = DDT_R
          IDENT(S, 'DDT')                                     :S(DSERVE7)
-         DDT_T = 'OPTION ' S ' NOT AVAILABLE'                  :(RETURN)
+         DSERVE = S                                            :(RETURN)
 DSERVE7  DDT_T = NE(DDT_ACTIVE) 'APP ALREADY IN DDT'          :S(RETURN)
          DDT_USE_R = 1
          DSERVE = 'DDT'
-         DDT()
+*
+* THE MESSAGE IS 'DDT' WHICH MEANS ENTER DEBUGGER. THE DEBUGGER IS
+* NOT YET ACTIVE. WHEN DSERVE() RETURNS, IT WILL BE UNDER DDT CONTROL.
+* WE SET DDT_USE_R TO 1 TO INFORM DDT OF THE I/O NEEDED (READLINE
+* CANNOT BE USED).
+*
+         DDT(DSERVE_APPNAME)
                                                                :(RETURN)
 *
 * CONNECTION LISTENER PROCESS
+*
+* CREATE I/O CHANNELS TO PRIMORDIAL PROCESS. THE PRIMORDIAL PROCESS
+* WILL POLL WAITING FOR A MESSAGE TO BE WRITTEN TO TO_PRIMORDIAL.
 *
 DSERVE2  INPUT(.FROM_PRIMORDIAL, 12,, '/dev/fd/' DSERVE_P1_RFD)
 +                                                            :F(DSERVE9)
          OUTPUT(.TO_PRIMORDIAL, 13, 'W', '/dev/fd/' DSERVE_P2_WFD)
 +                                                            :F(DSERVE9)
 *
+* WAIT FOR A CONNECTION ON DSERVE_PORT
+*
 DSERVE3  FDN = SERV_LISTEN('inet', 'stream', DSERVE_PORT)    :F(DSERVE9)
          INPUT(.NET, 9, 'UWT', '/dev/fd/' FDN)               :F(DSERVE9)
          OUTPUT(.NET, 9)                                     :F(DSERVE9)
          CRLF = CHARS_CR CHARS_LF
+*
+* WE HAVE A CONNECTION. DISPLAY SIGNON, AND REQUEST LOGIN. THE LOGIN
+* IS A SIMPLE STRING PASSED AS DSERVE_KEY
 *
          NET = 'DSERVE ' DSERVE_APPNAME CRLF
          NET = CRLF
@@ -103,9 +135,11 @@ DSERVE3  FDN = SERV_LISTEN('inet', 'stream', DSERVE_PORT)    :F(DSERVE9)
 *
          IDENT(S, DSERVE_KEY)                                :S(DSERVE8)
          NET = 'BAD LOGIN' CRLF                                   :(END)
-DSERVE8  NET = 'LOGIN CONFIRM' CRLF
+DSERVE8  NET = 'LOGIN CONFIRMED' CRLF
+         NET = 'REDIRECT TO /dev/fd/' DSERVE_P1_WFD ' TO SEND OUTPUT '
++              'TO TELNET USING X (EG ls)'
 *
-* SEND MESSAGE TO PRIMORDIAL.
+* THE CORRECT KEY WAS SUPPLIED. SEND MESSAGE TO PRIMORDIAL.
 *
          TO_PRIMORDIAL = 'DDT'
 *

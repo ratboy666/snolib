@@ -1,7 +1,7 @@
 -MODULE P64
--LINE 19 "P64.lss"
+-LINE 17 "P64.lss"
 -IN72
--LINE 190 "P64.lss"
+-LINE 147 "P64.lss"
 -CASE 1
 -STITL P64
 -EJECT
@@ -22,22 +22,22 @@
 *
 * P64.lss
 *
--LINE 22 "P64.lss"
+-LINE 20 "P64.lss"
 -SNOBOL TERMINAL = 'P64 (SUN NOV 10 03:57:08 EST 2013)'
--LINE 23 "P64.lss"
+-LINE 21 "P64.lss"
 -SNOBOL SLOAD('CRACK.INC')
--LINE 24 "P64.lss"
+-LINE 22 "P64.lss"
 -SNOBOL SLOAD('DYNAMIC.INC')
--LINE 25 "P64.lss"
+-LINE 23 "P64.lss"
 -SNOBOL SLOAD('SEQ.INC')
--LINE 26 "P64.lss"
+-LINE 24 "P64.lss"
 -SNOBOL SLOAD('WRAPPER.INC')
--LINE 27 "P64.lss"
--LINE 32 "P64.lss"
+-LINE 25 "P64.lss"
+-LINE 30 "P64.lss"
 -EMBED C 'p64'
-#line 36 "P64.lss"
+#line 34 "P64.lss"
 -SNOBOL WRAPPER_STARTFILE(.EMBED)
-#line 37 "P64.lss"
+#line 35 "P64.lss"
 
 #include <stdlib.h>
 #include <string.h>
@@ -45,109 +45,89 @@
 static long peek_p(long p) { return (long)*(void **)p; }
 
 -SNOBOL C_WRAPPER_PROTO('PEEK_P(LONG)LONG', .EMBED)
-#line 44 "P64.lss"
+#line 42 "P64.lss"
 
 static long peek_c(long p) { return *(char *)p; }
 
 -SNOBOL C_WRAPPER_PROTO('PEEK_C(LONG)INTEGER', .EMBED)
-#line 48 "P64.lss"
+#line 46 "P64.lss"
 
 static long peek_s(long p) { return *(short *)p; }
 
 -SNOBOL C_WRAPPER_PROTO('PEEK_S(LONG)INTEGER', .EMBED)
-#line 52 "P64.lss"
+#line 50 "P64.lss"
 
 static long peek_i(long p) { return *(int *)p; }
 
 -SNOBOL C_WRAPPER_PROTO('PEEK_I(LONG)INTEGER', .EMBED)
-#line 56 "P64.lss"
+#line 54 "P64.lss"
 
 static double peek_d(long p) { return *(double *)p; }
 
 -SNOBOL C_WRAPPER_PROTO('PEEK_D(LONG)REAL', .EMBED)
-#line 60 "P64.lss"
+#line 58 "P64.lss"
 
 static double peek_f(long p) { return *(float *)p; }
 
 -SNOBOL C_WRAPPER_PROTO('PEEK_F(LONG)REAL', .EMBED)
-#line 64 "P64.lss"
+#line 62 "P64.lss"
 
 static double peek_ld(long p) { return *(long double *)p; }
 
 -SNOBOL C_WRAPPER_PROTO('PEEK_LD(LONG)REAL', .EMBED)
-#line 68 "P64.lss"
+#line 66 "P64.lss"
 
 static void poke_p(long p, long v) { *(void **)p = (void *)v; }
 
 -SNOBOL C_WRAPPER_PROTO('POKE_P(LONG,LONG)', .EMBED)
-#line 72 "P64.lss"
+#line 70 "P64.lss"
 
 static void poke_c(long p, int c) { *(char *)p = (char)c; }
 
 -SNOBOL C_WRAPPER_PROTO('POKE_C(LONG,INTEGER)', .EMBED)
-#line 76 "P64.lss"
+#line 74 "P64.lss"
 
 static void poke_s(long p, int s) { *(short *)p = (short)s; }
 
 -SNOBOL C_WRAPPER_PROTO('POKE_S(LONG,INTEGER)', .EMBED)
-#line 80 "P64.lss"
+#line 78 "P64.lss"
 
 static void poke_i(long p, int i) { *(int *)p = (int)i; }
 
 -SNOBOL C_WRAPPER_PROTO('POKE_I(LONG,INTEGER)', .EMBED)
-#line 84 "P64.lss"
+#line 82 "P64.lss"
 
 static void poke_d(long p, double v) { *(double *)p = v; }
 
 -SNOBOL C_WRAPPER_PROTO('POKE_D(LONG,REAL)', .EMBED)
-#line 88 "P64.lss"
+#line 86 "P64.lss"
 
 static void poke_f(long p, double v) { *(float *)p = v; }
 
 -SNOBOL C_WRAPPER_PROTO('POKE_F(LONG,REAL)', .EMBED)
-#line 92 "P64.lss"
+#line 90 "P64.lss"
 
 static void poke_ld(long p, double v) { *(long double *)p = v; }
 
 -SNOBOL C_WRAPPER_PROTO('POKE_LD(LONG,REAL)', .EMBED)
-#line 96 "P64.lss"
-
-static long malloc_(int n) { return (long)malloc(n); }
-
--SNOBOL C_WRAPPER_PROTO('MALLOC_(INTEGER)LONG', .EMBED)
-#line 100 "P64.lss"
-
-static void free_(long p) { free((void *)p); }
-
--SNOBOL C_WRAPPER_PROTO('FREE_(LONG)', .EMBED)
-#line 104 "P64.lss"
-
-static long strdup_(char *s) { return (long)strdup(s); }
-
--SNOBOL C_WRAPPER_PROTO('STRDUP_(STRING)LONG', .EMBED)
-#line 108 "P64.lss"
-
-static long strlen_(long p) { return strlen((char *)p); }
-
--SNOBOL C_WRAPPER_PROTO('STRLEN_(LONG)INTEGER', .EMBED)
-#line 112 "P64.lss"
+#line 94 "P64.lss"
 
 -END
--LINE 119 "P64.lss"
+-LINE 101 "P64.lss"
 -SNOBOL DYNAMIC_DEBUG = 1
--LINE 120 "P64.lss"
+-LINE 102 "P64.lss"
 -SNOBOL COMPILE_DYNAMIC(p64) :F(ERROR) ;
--LINE 121 "P64.lss"
+-LINE 103 "P64.lss"
 -SNOBOL OBJECTS = p64; OBJECTS '.c' = '.o'
--LINE 122 "P64.lss"
+-LINE 104 "P64.lss"
 -SNOBOL LINK_DYNAMIC('./p64', OBJECTS) :F(ERROR) ;
--LINE 123 "P64.lss"
+-LINE 105 "P64.lss"
 -CMNT ERASE TEMPORARY FILES
 -CMNT     WE DON'T NEED THE C BITS, OR THE OBJECT FILES ANYMORE.
 -CMNT     ALL WE REQUIRE IS p64.so
 -CMNT -SNOBOL A = CRACK(p64 ' ' OBJECTS, ' ')
 -CMNT -SNOBOL SEQ(' DELETE(A<K>) ', .K)
--LINE 131 "P64.lss"
+-LINE 113 "P64.lss"
 -PUBLIC PEEK_P(), PEEK_C(), PEEK_S(), PEEK_I(), PEEK_D(), PEEK_F()
 -PUBLIC PEEK_LD()
 -PUBLIC POKE_P(), POKE_C(), POKE_S(), POKE_I(), POKE_D(), POKE_F()
@@ -167,26 +147,5 @@ static long strlen_(long p) { return strlen((char *)p); }
          LOAD('POKE_D(INTEGER,REAL)', 'p64.so')
          LOAD('POKE_F(INTEGER,REAL)', 'p64.so')
          LOAD('POKE_LD(INTEGER,REAL)', 'p64.so')
-         LOAD('MALLOC_(INTEGER)INTEGER', 'p64.so')
-         LOAD('FREE_(INTEGER)', 'p64.so')
-         LOAD('STRDUP_(STRING)INTEGER', 'p64.so')
-         LOAD('STRLEN_(INTEGER)INTEGER', 'p64.so')
-*
--LINE 160 "P64.lss"
--PUBLIC MALLOC(), FREE(), STRDUP(), STRLEN()
-         DEFINE('MALLOC(N)')
-         DEFINE('FREE(P)')
-         DEFINE('STRDUP(S)')
-         DEFINE('STRLEN(P)')                                  :(P64_END)
-*
-MALLOC   MALLOC = MALLOC_(N)                                   :(RETURN)
-*
-FREE     FREE_(P)                                              :(RETURN)
-*
-STRDUP   STRDUP = STRDUP_(S)                                   :(RETURN)
-*
-STRLEN   STRLEN = STRLEN_(P)                                   :(RETURN)
-*
-P64_END
 *
 * CE: .F.MSNOBOL4;

@@ -1,201 +1,19 @@
 <h1>CSNOBOL4 - Functions specific to CSNOBOL4</h1>
 
-These are functions specific to [[CSNOBOL4]] and Unix or Unix-like
-systems.
+These are functions specific to [[CSNOBOL4]].
 
 We use FFI to access io_getfp() to retrieve the FILE * for a unit.
 This allows proper implementation of pipe i/o where CSNOBOL4 1.5
 has problems.
 
-[[FORK()]], [[WAIT()]], and [[SPRINTF()]] are in the CSNOBOL4 image.
-[[IO_GETFP()]] is also in the image, and [[FILENO()]] is available in
-[[clib]].
-
-Added more functions here to create pipes, close file handles,
-handle fd sets -- these should be in a [[UNIX]] component. fileno()
-actually belongs there as well, as does fork() and wait(). Arguably
-MALLOC, FREE, STRDUP and STRLEN should be there too.
+Should pull SPRINTF() into UNIX.
 
 <h2>Uses</h2>
 <a href="FFI.html">FFI</a><br>
-<a href="P64.html">P64</a><br>
 
 <<INCLUDES>>=
 -INCLUDE 'FFI.INC'
--INCLUDE 'P64.INC'
 @
-
-<<CSNOBOL4>>=
--SNOBOL SLOAD('BQ.INC')
--SNOBOL SLOAD('DYNAMIC.INC')
--SNOBOL SLOAD('WRAPPER.INC')
--SNOBOL SLOAD('CRACK.INC')
--SNOBOL SLOAD('SEQ.INC')
--SNOBOL TERMINAL = 'CSNOBOL4 (MON NOV 11 12:50:40 EST 2013)'
-@
-
-<<CSNOBOL4>>=
--EMBED C 'csnobol4'
-@
-
-<<CSNOBOL4,TYPE=C>>=
--SNOBOL WRAPPER_STARTFILE(.EMBED)
-
-/* Adds FORTRAN IV FORMAT to CSNOBOL4 */
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
-#include <errno.h>
-#include <time.h>
-#include <sys/select.h>
-#include <sys/time.h>
-#include <sys/types.h>
-#include <unistd.h>
-
-static int status;
-
-static int pipefds[2];
-
-static int createpipe(void)
-{
-    return pipe(pipefds);
-}
-
--SNOBOL C_WRAPPER_PROTO('CREATEPIPE()INTEGER', .EMBED)
-
-static int getpipefd(int n)
-{
-    if ((n < 0) || (n > 1))
-        return -1;
-    return pipefds[n];
-}
-
--SNOBOL C_WRAPPER_PROTO('GETPIPEFD(INTEGER)INTEGER', .EMBED)
-
-static int get_errno(void)
-{
-    return errno;
-}
-
--SNOBOL C_WRAPPER_PROTO('GET_ERRNO()INTEGER', .EMBED)
-
-/* fd_set holds a set of file descriptors. On 64 bit Linux, this is
- * a 128 byte object. This may be as little as 4 bytes on some systems
- * (which would limit the number of fd's to 32).
- */
-
-static int sizeof_timeval(void)
-{
-    return sizeof (struct timeval);
-}
-
--SNOBOL C_WRAPPER_PROTO('SIZEOF_TIMEVAL()INTEGER', .EMBED)
-
-static int set_timeval(long p, int sec, int usec)
-{
-    struct timeval *tv = (void *)p;
-    tv->tv_sec = sec;
-    tv->tv_usec = usec;
-}
-
--SNOBOL C_WRAPPER_PROTO('SET_TIMEVAL(LONG,INTEGER,INTEGER)', .EMBED)
-
-static int sizeof_fd_set(void)
-{
-    return sizeof (fd_set);
-}
-
--SNOBOL C_WRAPPER_PROTO('SIZEOF_FD_SET()INTEGER', .EMBED)
-
-static int fd_isset_(int fd, long p)
-{
-    return FD_ISSET(fd, (fd_set *)p);
-}
-
--SNOBOL C_WRAPPER_PROTO('FD_ISSET_(INTEGER,LONG)INTEGER', .EMBED)
-
-static void fd_zero_(long p)
-{
-    FD_ZERO((fd_set *)p);
-}
-
--SNOBOL C_WRAPPER_PROTO('FD_ZERO_(LONG)', .EMBED)
-
-static void fd_clr(int fd, long p)
-{
-    FD_ClR(fd, (fd_set *)p);
-}
-
--SNOBOL C_WRAPPER_PROTO('FD_CLR_(INTEGER,LONG)', .EMBED)
-
-static void fd_set_(int fd, long p)
-{
-    FD_SET(fd, (fd_set *)p);
-}
-
--SNOBOL C_WRAPPER_PROTO('FD_SET_(INTEGER,LONG)', .EMBED)
-
-static int clear_errno(void)
-{
-    errno = 0;
-}
-
--SNOBOL C_WRAPPER_PROTO('CLEAR_ERRNO()', .EMBED)
-
-static int waitpid_(int pid, int options)
-{
-    return waitpid(pid, &status, options);
-}
-
--SNOBOL C_WRAPPER_PROTO('WAITPID_(INTEGER,INTEGER)INTEGER', .EMBED)
-
-static int get_status(void)
-{
-    return status;
-}
-
--SNOBOL C_WRAPPER_PROTO('GET_STATUS()INTEGER', .EMBED)
-
--END
-@
-
-<<CSNOBOL4>>=
--SNOBOL DYNAMIC_DEBUG = 1
--SNOBOL COMPILE_DYNAMIC(csnobol4) :F(ERROR) ;
--SNOBOL LIBS =
--SNOBOL OBJECTS = csnobol4; OBJECTS '.c' = '.o'
--SNOBOL LINK_DYNAMIC('./csnobol4', OBJECTS, LIBS) :F(ERROR) ;
--CMNT ERASE TEMPORARY FILES
--CMNT     WE DON'T NEED THE C BITS, OR THE OBJECT FILES ANYMORE.
--CMNT     ALL WE REQUIRE IS csnobol4.so
--CMNT -SNOBOL A = CRACK(csnobol4 ' ' OBJECTS, ' ')
--CMNT -SNOBOL SEQ(' DELETE(A<K>) ', .K)
-@
-
-[[FORK()]] copies the current process, and returns the pid (process
-identifier) of the new process. In the child, it returns 0.
-
-<<CSNOBOL4>>=
--PUBLIC FORK()
-         LOAD('FORK()INTEGER')
-@
-
-[[WAIT()]] waits for the completion of a child process. It returns the
-pid of the child process that has terminated, or negative on error.
-
-<<CSNOBOL4>>=
--PUBLIC WAIT()
-         LOAD('WAIT()INTEGER')
-@
-
-To exit a child process, Unix supplies [[exit()]]. However, [[EXIT()]]
-causes execution of new image in [[CSNOBOL4]]. To exit a process,
-assign the result status to [[&amp;CODE]] and branch to [[END]].
-
-[[
-    &amp;CODE = 0  :(END)
-]]
 
 [[SPRINTF(F,V)]] formats an [[INTEGER]] or [[REAL]] value [[V]] using
 the [[C]] format [[F]] and returns the result as a string. For example:
@@ -207,83 +25,29 @@ the [[C]] format [[F]] and returns the result as a string. For example:
 
 <<CSNOBOL4>>=
 -PUBLIC SPRINTF()
-         LOAD('SPRINTF(STRING,)STRING')
-@
-
-<<CSNOBOL4>>=
--PUBLIC CREATEPIPE(), GETPIPEFD(), GET_ERRNO()
--PUBLIC CLEAR_ERRNO(), WAITPID(), GET_STATUS(), SIZEOF_TIMEVAL()
--PUBLIC SET_TIMEVAL(), SIZEOF_FD_SET(), FD_ZERO(), FD_CLR(), FD_SET()
--PUBLIC FD_ISSET()
 *
-         LOAD('CREATEPIPE()INTEGER', 'csnobol4.so')
-         LOAD('GETPIPEFD(INTEGER)INTEGER', 'csnobol4.so')
-         LOAD('GET_ERRNO()INTEGER', 'csnobol4.so')
-         LOAD('CLEAR_ERRNO()', 'csnobol4.so')
-         LOAD('WAITPID_(INTEGER,INTEGER)INTEGER', 'csnobol4.so')
-         LOAD('GET_STATUS()INTEGER', 'csnobol4.so')
-         LOAD('SIZEOF_TIMEVAL()INTEGER', 'csnobol4.so')
-         LOAD('SET_TIMEVAL(INTEGER,INTEGER,INTEGER)', 'csnobol4.so')
-         LOAD('SIZEOF_FD_SET()INTEGER', 'csnobol4.so')
-         LOAD('FD_ZERO_(INTEGER)', 'csnobol4.so')
-         LOAD('FD_CLR_(INTEGER,INTEGER)', 'csnobol4.so')
-         LOAD('FD_SET_(INTEGER,INTEGER)', 'csnobol4.so')
-         LOAD('FD_ISSET_(INTEGER,INTEGER)INTEGER', 'csnobol4.so')
-         DEFINE('FD_ZERO(FD_SET)')
-         DEFINE('FD_CLR(FD,FD_SET)')
-         DEFINE('FD_ISSET(FD,FD_SET)')
-         DEFINE('FD_SET(FD,FD_SET)')
+         LOAD('SPRINTF(STRING,)STRING')
 @
 
 We want to retrieve the FILE * for a unit. This can be used to perform
 other forms of i/o, or to retrieve the underlying file descriptor.
-Use FFI to access [[io_getfp()]] and [[fileno()]]. There may be a
-bug in CSNOBOL4 1.5. When doing I/O using [[fgets()]] (normal line
-oriented) to a bi-direction pipe, we get errno 29 (ESPIPE) errors,
-indicating that seek on the pipe failed. Of course, we can't seek
-on the pipe; this is done solely to separate read and write. But,
-there may be a timing issue because there are two separate processes
-involved.
+Use FFI to access [[io_getfp()]]. There may be a bug in CSNOBOL4
+1.5. When doing I/O using [[fgets()]] (normal line oriented) to a
+bi-direction pipe, we get errno 29 (ESPIPE) errors, indicating that
+seek on the pipe failed. Of course, we can't seek on the pipe; this
+is done solely to separate read and write. But, there may be a timing
+issue because there are two separate processes involved.
 
 <<CSNOBOL4>>=
--PUBLIC CLOSE(), SELECT(), IO_GETFP(), FILENO()
 *
-         CLOSE_FFI = FFI_NEW('I', 'I')
-         FFI_SET_CALLP(CLOSE_FFI, DLSYM(0, 'close'))
-         DEFINE('CLOSE(FD)')
-         SELECT_FFI = FFI_NEW('I', 'I,P,P,P,P')
-         FFI_SET_CALLP(SELECT_FFI, DLSYM(0, 'select'))
-         DEFINE('SELECT(NFDS,READFDS,WRITEFDS,EXCEPTFDS,TIMEOUT)')
+-PUBLIC IO_GETFP()
+*
          IO_GETFP_FFI = FFI_NEW('P', 'I')
          FFI_SET_CALLP(IO_GETFP_FFI, DLSYM(0, 'io_getfp'))
-         FILENO_FFI = FFI_NEW('I', 'P')
-         FFI_SET_CALLP(FILENO_FFI, DLSYM(0, 'fileno'))
-         DEFINE('IO_GETFP(UNIT)')
-         DEFINE('FILENO(FP)')                            :(CSNOBOL4_END)
-*
-CLOSE    FFI_PAR_N_INTEGER(CLOSE_FFI, 1, FD)
-         CLOSE = FFI_CALL_INTEGER(CLOSE_FFI)                   :(RETURN)
-*
-FD_CLR   FD_CLR_(FD, FD_SET)                                   :(RETURN)
-*
-FD_ISSET FD_ISSET = FD_ISSET_(FD, FD_SET)                      :(RETURN)
-*
-FD_SET   FD_SET_(FD, FD_SET)                                   :(RETURN)
-*
-FD_ZERO  FD_ZERO_(FD_SET)                                      :(RETURN)
+         DEFINE('IO_GETFP(UNIT)')                        :(CSNOBOL4_END)
 *
 IO_GETFP FFI_PAR_N_INTEGER(IO_GETFP_FFI, 1, UNIT)
          IO_GETFP = FFI_CALL_PTR(IO_GETFP_FFI)                 :(RETURN)
-*
-FILENO   FFI_PAR_N_PTR(FILENO_FFI, 1, FP)
-         FILENO = FFI_CALL_INTEGER(FILENO_FFI)                 :(RETURN)
-*
-SELECT   FFI_PAR_N_INTEGER(SELECT_FFI, 1, NFDS)
-         FFI_PAR_N_PTR(SELECT_FFI, 2, READFDS)
-         FFI_PAR_N_PTR(SELECT_FFI, 3, WRITEFDS)
-         FFI_PAR_N_PTR(SELECT_FFI, 4, EXCEPTFDS)
-         FFI_PAR_N_PTR(SELECT_FFI, 5, TIMEOUT)
-         SELECT = FFI_CALL_INTEGER(SELECT_FFI)                 :(RETURN)
 *
 CSNOBOL4_END
 @
@@ -297,6 +61,7 @@ and confirm that FD is 1.
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -INCLUDE 'CSNOBOL4.INC'
+-INCLUDE 'UNIX.INC'
          &CODE = 1
          OUTPUT(.T_OUT, 10,, '/dev/stdout')
          T_OUT = 'HELLO, WORLD'
