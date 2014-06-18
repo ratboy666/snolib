@@ -498,9 +498,10 @@ CGI_TOP  FCGI_ACCEPT()
 <font color="#818181"><i>*</i></font>
          DIFFER(PSQL)                                      <b>:S(PSQL_CONN)</b>
          PSQL = SEND(PSQL_CLASS, &#39;NEW&#39;)
+         E = &amp;ERRLIMIT
          &amp;ERRLIMIT = 1
          SEND(PSQL, &#39;OPEN&#39;)
-         &amp;ERRLIMIT = 0
+         &amp;ERRLIMIT = E
          DB = SEND(PSQL, &#39;GET_PIPE&#39;)
 PSQL_CONN
 <font color="#818181"><i>*</i></font>
@@ -665,7 +666,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Fri Jun 13 15:13:30 EDT 2014</p></td><td><p align=right>
+Tue Jun 17 08:53:23 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

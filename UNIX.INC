@@ -1,8 +1,28 @@
+-MODULE UNIX
 -INCLUDE 'FFI.INC'
 -INCLUDE 'P64.INC'
+-IN72
+-STITL UNIX
+*
+************************************************************************
+*                                                                      *
+*                    #     #  #     #  ###  #     #                    *
+*                    #     #  ##    #   #    #   #                     *
+*                    #     #  # #   #   #     # #                      *
+*                    #     #  #  #  #   #      #                       *
+*                    #     #  #   # #   #     # #                      *
+*                    #     #  #    ##   #    #   #                     *
+*                     #####   #     #  ###  #     #                    *
+*                                                                      *
+* UNIX                       UNIX SUPPORT                              *
+*                                                                      *
+************************************************************************
+*
+* UNIX.INC
 *
 * AFTER CSNOBOL4 FUNCTIONS REFACTORED TO UNIX, ADD PEEK_STRING()
 * AND REFACTOR TEMPORARY FILE TO HERE AS WELL.
+* ADD SPRINTF() TO unix.so
 *
 -PUBLIC SIZEOF_INT(), SIZEOF_LONG(), SIZEOF_TIMEVAL(), SIZEOF_FD_SET()
 *
@@ -53,9 +73,23 @@
          FFI_SET_CALLP(FFI_CLOSE, DLSYM(0, 'close'))
          FFI_SELECT = FFI_NEW('I', 'I,P,P,P,P')
          FFI_SET_CALLP(FFI_SELECT, DLSYM(0, 'select'))
+         FFI_READ = FFI_NEW('I', 'I,P,I')
+         FFI_SET_CALLP(FFI_READ, DLSYM(0, 'read'))
+         FFI_WRITE = FFI_NEW('I', 'I,P,I')
+         FFI_SET_CALLP(FFI_WRITE, DLSYM(0, 'write'))
+         FFI_GETPID = FFI_NEW('I', '')
+         FFI_SET_CALLP(FFI_GETPID, DLSYM(0, 'getpid'))
+         FFI_GETPPID = FFI_NEW('I', '')
+         FFI_SET_CALLP(FFI_GETPPID, DLSYM(0, 'getppid'))
+         FFI_KILL = FFI_NEW('I', 'I,I')
+         FFI_SET_CALLP(FFI_KILL, DLSYM(0, 'kill'))
 *
--PUBLIC FILENO()
+-PUBLIC FILENO(), READ(), WRITE(), GETPID(), GETPPID(), KILL()
 *
+         DEFINE('KILL(PID,SIG)')
+         DEFINE('GETPID()')
+         DEFINE('GETPPID()')
+         DEFINE('READ(FD,BUF,NBYTES)')
          DEFINE('CLOSE(FD)')
          DEFINE('SELECT(NFDS,READFDS,WRITEFDS,EXCEPTFDS,TIMEOUT)')
          DEFINE('FILENO(FP)')
@@ -76,6 +110,24 @@
          DEFINE('FREE(P)')
          DEFINE('STRDUP(S)')
          DEFINE('STRLEN(S)')                                 :(UNIX_END)
+*
+KILL     FFI_PAR_N_INTEGER(FFI_KILL, 1, PID)
+         FFI_PAR_N_INTEGER(FFI_KILL, 2, SIG)
+         KILL = FFI_CALL_INTEGER(FFI_KILL)                     :(RETURN)
+*
+GETPID   GETPID = FFI_CALL_INTEGER(FFI_GETPID)                 :(RETURN)
+*
+GETPPID  GETPPID = FFI_CALL_INTEGER(FFI_GETPPID)               :(RETURN)
+*
+WRITE    FFI_PAR_N_INTEGER(FFI_WRITE, 1, FD)
+         FFI_PAR_N_PTR(FFI_WRITE, 2, BUF)
+         FFI_PAR_N_PTR(FFI_WRITE, 3, NBYTES)
+         WRITE = FFI_CALL_INTEGER(FFI_WRITE)                   :(RETURN)
+*
+READ     FFI_PAR_N_INTEGER(FFI_READ, 1, FD)
+         FFI_PAR_N_PTR(FFI_READ, 2, BUF)
+         FFI_PAR_N_PTR(FFI_READ, 3, NBYTES)
+         READ = FFI_CALL_INTEGER(FFI_READ)                     :(RETURN)
 *
 CLOSE    FFI_PAR_N_INTEGER(FFI_CLOSE, 1, FD)
          CLOSE = FFI_CALL_INTEGER(FFI_CLOSE)                   :(RETURN)

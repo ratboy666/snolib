@@ -1,5 +1,5 @@
 -MODULE DSERVE
--LINE 46 "DSERVE.lss"
+-LINE 48 "DSERVE.lss"
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'REPL.INC'
 -INCLUDE 'CSNOBOL4.INC'
@@ -8,7 +8,7 @@
 -INCLUDE 'UNIX.INC'
 -INCLUDE 'DDT.INC'
 -IN72
--LINE 220 "DSERVE.lss"
+-LINE 252 "DSERVE.lss"
 -STITL DSERVE
 -EJECT
 *
@@ -28,17 +28,19 @@
 *
 * DSERVE.lss
 *
--LINE 56 "DSERVE.lss"
+-LINE 58 "DSERVE.lss"
 -PUBLIC DSERVE_INIT(), DSERVE()
 -PUBLIC DSERVE_PORT, DSERVE_APPNAME
 *
-         DEFINE('DSERVE_INIT(APPNAME,PORT,KEY)')      :(DSERVE_INIT_END)
+         DEFINE('DSERVE_INIT(APPNAME,PORT,KEY,INTR)') :(DSERVE_INIT_END)
 *
 DSERVE_INIT
          DSERVE_KEY = KEY
          DSERVE_PORT = PORT
          DSERVE_APPNAME = APPNAME
+         DSERVE_INTR = INTR
 *
+         DSERVE_PID = GETPID()
          P1 = PIPE()                                         :F(DSERVE9)
          DSERVE_P1_RFD = P1<1>
          DSERVE_P1_WFD = P1<2>
@@ -55,7 +57,11 @@ DSERVE_INIT
 * NEEDS FD SET AND TIMEVAL FOR SELECT
 *
          DSERVE_FDS = NEW_FD_SET()
-         DSERVE_TV = NEW_TIMEVAL()                             :(RETURN)
+         DSERVE_TV = NEW_TIMEVAL()
+         IDENT(DSERVE_INTR)                                   :S(RETURN)
+*
+         &ERRLIMIT = 1
+         SETEXIT('DSERVE_TRAP')                                :(RETURN)
 *
 DSERVE_INIT_END
 *
@@ -102,6 +108,23 @@ DSERVE7  DDT_T = NE(DDT_ACTIVE) 'APP ALREADY IN DDT'          :S(RETURN)
          DDT(DSERVE_APPNAME)
                                                                :(RETURN)
 *
+* SETEXIT() TRAP TO ENTER DDT -- NEED DDT() ENTRY THAT DOES ONE STEP
+* COMMAND.
+*
+DSERVE_TRAP
+         OUTPUT(.DDT_T, 10, 'W', '/dev/fd/' DSERVE_P1_WFD)   :F(DSERVE9)
+         INPUT(.DDT_R, 11,, '/dev/fd/' DSERVE_P2_RFD)        :F(DSERVE9)
+         S = DDT_R
+         IDENT(S, 'DDT')                                    :S(DSERVET2)
+         DSERVE = S                                          :(DSERVET3)
+DSERVET2 DDT_T = NE(DDT_ACTIVE) 'APP ALREADY IN DDT'        :S(DSERVET3)
+         DDT_USE_R = 1
+         DSERVE = 'DDT'
+         DDT(DSERVE_APPNAME)
+                                                            :(SCONTINUE)
+DSERVET3 SETEXIT('DSERVE_TRAP')
+         &ERRLIMIT = 1                                      :(SCONTINUE)
+*
 * CONNECTION LISTENER PROCESS
 *
 * CREATE I/O CHANNELS TO PRIMORDIAL PROCESS. THE PRIMORDIAL PROCESS
@@ -137,11 +160,15 @@ DSERVE3  FDN = SERV_LISTEN('inet', 'stream', DSERVE_PORT)    :F(DSERVE9)
          NET = 'BAD LOGIN' CRLF                                   :(END)
 DSERVE8  NET = 'LOGIN CONFIRMED' CRLF
          NET = 'REDIRECT TO /dev/fd/' DSERVE_P1_WFD ' TO SEND OUTPUT '
-+              'TO TELNET USING X (EG ls)'
++              'TO TELNET USING X (EG ls)' CRLF
 *
 * THE CORRECT KEY WAS SUPPLIED. SEND MESSAGE TO PRIMORDIAL.
 *
          TO_PRIMORDIAL = 'DDT'
+*
+* SIGNAL TO ENTER DDT
+*
+         KILL(DIFFER(DSERVE_INTR) DSERVE_PID, 2)
 *
 * FORK TO TWO COPY LOOPS: PRIMORDIAL -> NET AND NET -> PRIMORDIAL
 *

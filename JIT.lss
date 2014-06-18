@@ -106,6 +106,9 @@ static void ellipsis_jit(void) { jit_ellipsis(); }
 
 -SNOBOL C_WRAPPER_PROTO('ELLIPSIS_JIT()', .EMBED)
 
+// This needs helper functions to retrieve p and p2
+// API should return array(3) with p, p2 and i
+
 //static int get_note_jit(void)
 //{
 //    int notei;
@@ -313,12 +316,12 @@ static int f_num_jit(void) { return jit_f_num(); }
             " C_WRAPPER_PROTO(AU<I> '_JIT(INTEGER,INTEGER,INTEGER)', " +
             " .EMBED) ", .I)
 
-static long movi_jit(int r1)
+static long movi_jit(int r1, long p)
 {
-    return (long)jit_movi(r1, (jit_word_t)get_p_());
+    return (long)jit_movi(r1, (jit_word_t)p);
 }
 
--SNOBOL C_WRAPPER_PROTO('MOVI_JIT(INTEGER)LONG', .EMBED)
+-SNOBOL C_WRAPPER_PROTO('MOVI_JIT(INTEGER,LONG)LONG', .EMBED)
 
 static void movi_f_jit(int r1)
 {
@@ -414,9 +417,9 @@ static void movi_d_ww_jit(int r1, int r2)
             " C_WRAPPER_PROTO(AU<I> '_JIT(INTEGER)', "                 +
             " .EMBED) ", .I)
 
-static void pushargi_jit(void) { jit_pushargi((jit_word_t)get_p_()); }
+static void pushargi_jit(long p) { jit_pushargi((jit_word_t)p); }
 
--SNOBOL C_WRAPPER_PROTO('PUSHARGI_JIT()', .EMBED)
+-SNOBOL C_WRAPPER_PROTO('PUSHARGI_JIT(LONG)', .EMBED)
 
 static void pushargi_f_jit(void) { jit_pushargi_f(get_f_()); }
 
@@ -438,17 +441,17 @@ static void callr_jit(int r) { jit_callr(r); }
 
 -SNOBOL C_WRAPPER_PROTO('CALLR_JIT(INTEGER)', .EMBED)
 
-static long calli_jit(void) { return (long)jit_calli(get_p_()); }
+static long calli_jit(long p) { return (long)jit_calli((void *)p); }
 
--SNOBOL C_WRAPPER_PROTO('CALLI_JIT()LONG', .EMBED)
+-SNOBOL C_WRAPPER_PROTO('CALLI_JIT(LONG)LONG', .EMBED)
 
 static void finishr_jit(int r) { jit_finishr(r); }
 
 -SNOBOL C_WRAPPER_PROTO('FINISHR_JIT(INTEGER)', .EMBED)
 
-static long finishi_jit(void) { return (long)jit_finishi(get_p_()); }
+static long finishi_jit(long p) { return (long)jit_finishi((void *)p); }
 
--SNOBOL C_WRAPPER_PROTO('FINISHI_JIT()LONG', .EMBED)
+-SNOBOL C_WRAPPER_PROTO('FINISHI_JIT(LONG)LONG', .EMBED)
 
 static void ret_jit(void) { jit_ret(); }
 
@@ -588,7 +591,7 @@ static void reti_d_jit(void) { jit_reti_d(get_d_()); }
          SEQ(" LOAD(A<I> '_JIT(INTEGER,INTEGER,INTEGER)', 'jit.so') "
 +            , .I)
 *
-         LOAD('MOVI_JIT(INTEGER)INTEGER', 'jit.so')
+         LOAD('MOVI_JIT(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('MOVI_F_JIT(INTEGER)', 'jit.so')
          LOAD('MOVI_D_JIT(INTEGER)', 'jit.so')
          LOAD('MOVI_F_W_JIT(INTEGER,INTEGER)', 'jit.so')
@@ -618,7 +621,7 @@ static void reti_d_jit(void) { jit_reti_d(get_d_()); }
 +            'RETR_D RETVAL_D '
          A = CRACK(L, ' ')
          SEQ(" LOAD(A<I> '_JIT(INTEGER)', 'jit.so') ", .I)
-         LOAD('PUSHARGI_JIT()', 'jit.so')
+         LOAD('PUSHARGI_JIT(INTEGER)', 'jit.so')
          LOAD('PUSHARGI_F_JIT()', 'jit.so')
          LOAD('PUSHARGI_D_JIT()', 'jit.so')
 *
@@ -626,10 +629,10 @@ static void reti_d_jit(void) { jit_reti_d(get_d_()); }
          LOAD('JMPI_JIT()INTEGER', 'jit.so')
 *
          LOAD('CALLR_JIT(INTEGER)', 'jit.so')
-         LOAD('CALLI_JIT()INTEGER', 'jit.so')
+         LOAD('CALLI_JIT(INTEGER)INTEGER', 'jit.so')
 *
          LOAD('FINISHR_JIT(INTEGER)', 'jit.so')
-         LOAD('FINISHI_JIT()INTEGER', 'jit.so')
+         LOAD('FINISHI_JIT(INTEGER)INTEGER', 'jit.so')
 *
          LOAD('RET_JIT()', 'jit.so')
          LOAD('RETI_JIT()', 'jit.so')
@@ -1118,16 +1121,14 @@ JIT_FINISHR
          FINISHR_JIT(R)                                        :(RETURN)
 *
 JIT_FINISHI
-         SET_P(P)
-         JIT_FINISHI = FINISHI_JIT()                           :(RETURN)
+         JIT_FINISHI = FINISHI_JIT(P)                          :(RETURN)
 *
 JIT_INIT INIT_JIT(S)                                           :(RETURN)
 *
 JIT_FINISH
          FINISH_JIT()                                          :(RETURN)
 *
-JIT_MOVI SET_P(P)
-         JIT_MOVI = MOVI_JIT(R)                                :(RETURN)
+JIT_MOVI JIT_MOVI = MOVI_JIT(R, P)                             :(RETURN)
 *
 JIT_MOVI_F
          SET_F(F)
@@ -1232,8 +1233,7 @@ JIT_CALLR
          CALLR_JIT(R)                                          :(RETURN)
 *
 JIT_CALLI
-         SET_P(P)
-         JIT_CALLI = CALLI_JIT()                               :(RETURN)
+         JIT_CALLI = CALLI_JIT(P)                              :(RETURN)
 *
 JIT_NOTE JIT_NOTE = NOTE_JIT(S, N)                             :(RETURN)
 *
@@ -1982,8 +1982,7 @@ JIT_LDI_D
          LDI_D_JIT(R)                                          :(RETURN)
 *
 JIT_PUSHARGI
-         SET_P(P)
-         PUSHARGI_JIT()                                        :(RETURN)
+         PUSHARGI_JIT(P)                                       :(RETURN)
 *
 JIT_PUSHARGI_F
          SET_F(F)
@@ -2024,9 +2023,6 @@ JIT_BGTI_U
          SET_P(P)
          JIT_BGTI_U = BGTI_U_JIT(R)                            :(RETURN)
 *
-*******======== BLTI_JIT
-**            'bnei bmsi bmci boaddi boaddi_u bxaddi bxaddi_u '          +
-**            'bosubi bosubi_u bxsubi bxsubi_u '
 JIT_BNEI SET_P(P)
          BNEI_JIT(R)                                           :(RETURN)
 *

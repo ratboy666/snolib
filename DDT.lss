@@ -53,7 +53,6 @@ additional tools to be incorporated while debugging.
 
 <h2>Uses</h2>
 <a href="CHARS.html">CHARS</a><br>
-<a href="DSERVE.html">DSERVE</a><br>
 <a href="FREEZE.html">FREEZE</a><br>
 <a href="HOST.html">HOST</a><br>
 <a href="QUOTE.html">QUOTE</a><br>
@@ -64,7 +63,6 @@ additional tools to be incorporated while debugging.
 
 <<INCLUDES>>=
 -INCLUDE 'CHARS.INC'
--INCLUDE 'DSERVE.INC'
 -INCLUDE 'FREEZE.INC'
 -INCLUDE 'HOST.INC'
 -INCLUDE 'QUOTE.INC'

@@ -469,9 +469,10 @@ CGI_TOP  FCGI_ACCEPT()
 *
          DIFFER(PSQL)                                      :S(PSQL_CONN)
          PSQL = SEND(PSQL_CLASS, 'NEW')
+         E = &ERRLIMIT
          &ERRLIMIT = 1
          SEND(PSQL, 'OPEN')
-         &ERRLIMIT = 0
+         &ERRLIMIT = E
          DB = SEND(PSQL, 'GET_PIPE')
 PSQL_CONN
 *

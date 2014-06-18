@@ -31,14 +31,16 @@ NET -> PRIMORDIAL COPY
 The primordial process communicates to the copy processes by means
 of two pipes: one for each data flow.
 
-Not very good at cleaning up the processes, but this does work.
+Not very good at cleaning up the processes, but this does work. On
+the O command (DDT OFF), for example, we should get rid of all
+of the data copy processes.
 
 This same idea can be used to gather logging data, or interact with
 the running program in various ways. Using the debugger to "front-end"
 these things is actually not a bad idea. It is be possible to send
-the primordial process a SIGINT (error 34), which can be captured
-with SETEXIT(). Note that this is currently the only signal which
-can be used in this manner by CSNOBOL4 (1.5 and greater).
+the primordial process a SIGINT (signal 2, error 34), which can be
+captured with SETEXIT(). Note that this is currently the only signal
+which can be used in this manner by CSNOBOL4 (1.5 and greater).
 
 <h2>Uses</h2>
 
@@ -56,13 +58,15 @@ can be used in this manner by CSNOBOL4 (1.5 and greater).
 -PUBLIC DSERVE_INIT(), DSERVE()
 -PUBLIC DSERVE_PORT, DSERVE_APPNAME
 *
-         DEFINE('DSERVE_INIT(APPNAME,PORT,KEY)')      :(DSERVE_INIT_END)
+         DEFINE('DSERVE_INIT(APPNAME,PORT,KEY,INTR)') :(DSERVE_INIT_END)
 *
 DSERVE_INIT
          DSERVE_KEY = KEY
          DSERVE_PORT = PORT
          DSERVE_APPNAME = APPNAME
+         DSERVE_INTR = INTR
 *
+         DSERVE_PID = GETPID()
          P1 = PIPE()                                         :F(DSERVE9)
          DSERVE_P1_RFD = P1<1>
          DSERVE_P1_WFD = P1<2>
@@ -79,7 +83,11 @@ DSERVE_INIT
 * NEEDS FD SET AND TIMEVAL FOR SELECT
 *
          DSERVE_FDS = NEW_FD_SET()
-         DSERVE_TV = NEW_TIMEVAL()                             :(RETURN)
+         DSERVE_TV = NEW_TIMEVAL()
+         IDENT(DSERVE_INTR)                                   :S(RETURN)
+*
+         &ERRLIMIT = 1
+         SETEXIT('DSERVE_TRAP')                                :(RETURN)
 *
 DSERVE_INIT_END
 *
@@ -126,6 +134,23 @@ DSERVE7  DDT_T = NE(DDT_ACTIVE) 'APP ALREADY IN DDT'          :S(RETURN)
          DDT(DSERVE_APPNAME)
                                                                :(RETURN)
 *
+* SETEXIT() TRAP TO ENTER DDT -- NEED DDT() ENTRY THAT DOES ONE STEP
+* COMMAND.
+*
+DSERVE_TRAP
+         OUTPUT(.DDT_T, 10, 'W', '/dev/fd/' DSERVE_P1_WFD)   :F(DSERVE9)
+         INPUT(.DDT_R, 11,, '/dev/fd/' DSERVE_P2_RFD)        :F(DSERVE9)
+         S = DDT_R
+         IDENT(S, 'DDT')                                    :S(DSERVET2)
+         DSERVE = S                                          :(DSERVET3)
+DSERVET2 DDT_T = NE(DDT_ACTIVE) 'APP ALREADY IN DDT'        :S(DSERVET3)
+         DDT_USE_R = 1
+         DSERVE = 'DDT'
+         DDT(DSERVE_APPNAME)
+                                                            :(SCONTINUE)
+DSERVET3 SETEXIT('DSERVE_TRAP')
+         &ERRLIMIT = 1                                      :(SCONTINUE)
+*
 * CONNECTION LISTENER PROCESS
 *
 * CREATE I/O CHANNELS TO PRIMORDIAL PROCESS. THE PRIMORDIAL PROCESS
@@ -161,11 +186,15 @@ DSERVE3  FDN = SERV_LISTEN('inet', 'stream', DSERVE_PORT)    :F(DSERVE9)
          NET = 'BAD LOGIN' CRLF                                   :(END)
 DSERVE8  NET = 'LOGIN CONFIRMED' CRLF
          NET = 'REDIRECT TO /dev/fd/' DSERVE_P1_WFD ' TO SEND OUTPUT '
-+              'TO TELNET USING X (EG ls)'
++              'TO TELNET USING X (EG ls)' CRLF
 *
 * THE CORRECT KEY WAS SUPPLIED. SEND MESSAGE TO PRIMORDIAL.
 *
          TO_PRIMORDIAL = 'DDT'
+*
+* SIGNAL TO ENTER DDT
+*
+         KILL(DIFFER(DSERVE_INTR) DSERVE_PID, 2)
 *
 * FORK TO TWO COPY LOOPS: PRIMORDIAL -> NET AND NET -> PRIMORDIAL
 *
@@ -198,13 +227,16 @@ DSERVE_END
 *
 * INITIALIZE DSERVE WITH APPLICATION NAME, PORT, AND SIGNON KEY
 *
-         DSERVE_INIT('DSERVE TEST', 54321, 'magic')
+         DSERVE_INIT('DSERVE TEST', 54321, 'magic', 'INTR')
 *
 * THE APPLICATION. A SIMPLE COUNTING LOOP. AT THE BEGINNING OF EACH
 * MAJOR LOOP, POLL DSERVE(), WHICH POSSIBLY ENTERS THE DEBUGGER.
+* WE CAN ALSO USE THE 'NO POLLING' APPROACH, WHICH WILL USE SIGNAL 2
+* TO INTERRUPT THE CODE INTO DDT.
 *
-LUP      DSERVE()
-         MAJOR = MAJOR + 1
+*LUP     DSERVE()
+*
+LUP      MAJOR = MAJOR + 1
          TERMINAL = 'MAJOR = ' MAJOR
          N = 0
 LUP2     N = N + 1

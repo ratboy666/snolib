@@ -3,7 +3,7 @@
 -INCLUDE 'CRACK.INC'
 -INCLUDE 'SEQ.INC'
 -IN72
--LINE 2153 "JIT.lss"
+-LINE 2149 "JIT.lss"
 -STITL JIT
 -EJECT
 *
@@ -35,13 +35,13 @@
 -LINE 32 "JIT.lss"
 -LINE 35 "JIT.lss"
          jit = 'jit.c'
--LINE 473 "JIT.lss"
--LINE 474 "JIT.lss"
--LINE 475 "JIT.lss"
 -LINE 476 "JIT.lss"
 -LINE 477 "JIT.lss"
 -LINE 478 "JIT.lss"
--LINE 486 "JIT.lss"
+-LINE 479 "JIT.lss"
+-LINE 480 "JIT.lss"
+-LINE 481 "JIT.lss"
+-LINE 489 "JIT.lss"
          LOAD('INIT_JIT(STRING)', 'jit.so')
          LOAD('R_NUM_JIT()INTEGER', 'jit.so')
          LOAD('V_NUM_JIT()INTEGER', 'jit.so')
@@ -147,7 +147,7 @@
          SEQ(" LOAD(A<I> '_JIT(INTEGER,INTEGER,INTEGER)', 'jit.so') "
 +            , .I)
 *
-         LOAD('MOVI_JIT(INTEGER)INTEGER', 'jit.so')
+         LOAD('MOVI_JIT(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('MOVI_F_JIT(INTEGER)', 'jit.so')
          LOAD('MOVI_D_JIT(INTEGER)', 'jit.so')
          LOAD('MOVI_F_W_JIT(INTEGER,INTEGER)', 'jit.so')
@@ -177,7 +177,7 @@
 +            'RETR_D RETVAL_D '
          A = CRACK(L, ' ')
          SEQ(" LOAD(A<I> '_JIT(INTEGER)', 'jit.so') ", .I)
-         LOAD('PUSHARGI_JIT()', 'jit.so')
+         LOAD('PUSHARGI_JIT(INTEGER)', 'jit.so')
          LOAD('PUSHARGI_F_JIT()', 'jit.so')
          LOAD('PUSHARGI_D_JIT()', 'jit.so')
 *
@@ -185,10 +185,10 @@
          LOAD('JMPI_JIT()INTEGER', 'jit.so')
 *
          LOAD('CALLR_JIT(INTEGER)', 'jit.so')
-         LOAD('CALLI_JIT()INTEGER', 'jit.so')
+         LOAD('CALLI_JIT(INTEGER)INTEGER', 'jit.so')
 *
          LOAD('FINISHR_JIT(INTEGER)', 'jit.so')
-         LOAD('FINISHI_JIT()INTEGER', 'jit.so')
+         LOAD('FINISHI_JIT(INTEGER)INTEGER', 'jit.so')
 *
          LOAD('RET_JIT()', 'jit.so')
          LOAD('RETI_JIT()', 'jit.so')
@@ -677,16 +677,14 @@ JIT_FINISHR
          FINISHR_JIT(R)                                        :(RETURN)
 *
 JIT_FINISHI
-         SET_P(P)
-         JIT_FINISHI = FINISHI_JIT()                           :(RETURN)
+         JIT_FINISHI = FINISHI_JIT(P)                          :(RETURN)
 *
 JIT_INIT INIT_JIT(S)                                           :(RETURN)
 *
 JIT_FINISH
          FINISH_JIT()                                          :(RETURN)
 *
-JIT_MOVI SET_P(P)
-         JIT_MOVI = MOVI_JIT(R)                                :(RETURN)
+JIT_MOVI JIT_MOVI = MOVI_JIT(R, P)                             :(RETURN)
 *
 JIT_MOVI_F
          SET_F(F)
@@ -791,8 +789,7 @@ JIT_CALLR
          CALLR_JIT(R)                                          :(RETURN)
 *
 JIT_CALLI
-         SET_P(P)
-         JIT_CALLI = CALLI_JIT()                               :(RETURN)
+         JIT_CALLI = CALLI_JIT(P)                              :(RETURN)
 *
 JIT_NOTE JIT_NOTE = NOTE_JIT(S, N)                             :(RETURN)
 *
@@ -1541,8 +1538,7 @@ JIT_LDI_D
          LDI_D_JIT(R)                                          :(RETURN)
 *
 JIT_PUSHARGI
-         SET_P(P)
-         PUSHARGI_JIT()                                        :(RETURN)
+         PUSHARGI_JIT(P)                                       :(RETURN)
 *
 JIT_PUSHARGI_F
          SET_F(F)
@@ -1583,9 +1579,6 @@ JIT_BGTI_U
          SET_P(P)
          JIT_BGTI_U = BGTI_U_JIT(R)                            :(RETURN)
 *
-*******======== BLTI_JIT
-**            'bnei bmsi bmci boaddi boaddi_u bxaddi bxaddi_u '
-**            'bosubi bosubi_u bxsubi bxsubi_u '
 JIT_BNEI SET_P(P)
          BNEI_JIT(R)                                           :(RETURN)
 *

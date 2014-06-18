@@ -44,15 +44,17 @@ The primordial process communicates to the copy processes by means
 of two pipes: one for each data flow.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
-Not very good at cleaning up the processes, but this does work.
+Not very good at cleaning up the processes, but this does work. On
+the O command (DDT OFF), for example, we should get rid of all
+of the data copy processes.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 This same idea can be used to gather logging data, or interact with
 the running program in various ways. Using the debugger to "front-end"
 these things is actually not a bad idea. It is be possible to send
-the primordial process a SIGINT (error 34), which can be captured
-with SETEXIT(). Note that this is currently the only signal which
-can be used in this manner by CSNOBOL4 (1.5 and greater).
+the primordial process a SIGINT (signal 2, error 34), which can be
+captured with SETEXIT(). Note that this is currently the only signal
+which can be used in this manner by CSNOBOL4 (1.5 and greater).
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 <h2>Uses</h2>
@@ -75,13 +77,15 @@ can be used in this manner by CSNOBOL4 (1.5 and greater).
 -PUBLIC DSERVE_INIT(), DSERVE()
 -PUBLIC DSERVE_PORT, DSERVE_APPNAME
 <font color="#818181"><i>*</i></font>
-         DEFINE(&#39;DSERVE_INIT(APPNAME,PORT,KEY)&#39;)      <b>:(DSERVE_INIT_END)</b>
+         DEFINE(&#39;DSERVE_INIT(APPNAME,PORT,KEY,INTR)&#39;) <b>:(DSERVE_INIT_END)</b>
 <font color="#818181"><i>*</i></font>
 DSERVE_INIT
          DSERVE_KEY = KEY
          DSERVE_PORT = PORT
          DSERVE_APPNAME = APPNAME
+         DSERVE_INTR = INTR
 <font color="#818181"><i>*</i></font>
+         DSERVE_PID = GETPID()
          P1 = PIPE()                                         <b>:F(DSERVE9)</b>
          DSERVE_P1_RFD = P1&lt;1&gt;
          DSERVE_P1_WFD = P1&lt;2&gt;
@@ -98,7 +102,11 @@ DSERVE_INIT
 <font color="#818181"><i>* NEEDS FD SET AND TIMEVAL FOR SELECT</i></font>
 <font color="#818181"><i>*</i></font>
          DSERVE_FDS = NEW_FD_SET()
-         DSERVE_TV = NEW_TIMEVAL()                             <b>:(RETURN)</b>
+         DSERVE_TV = NEW_TIMEVAL()
+         IDENT(DSERVE_INTR)                                   <b>:S(RETURN)</b>
+<font color="#818181"><i>*</i></font>
+         &amp;ERRLIMIT = 1
+         SETEXIT(&#39;DSERVE_TRAP&#39;)                                <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 DSERVE_INIT_END
 <font color="#818181"><i>*</i></font>
@@ -145,6 +153,23 @@ DSERVE7  DDT_T = NE(DDT_ACTIVE) &#39;APP ALREADY IN DDT&#39;          <b>:S(RETU
          DDT(DSERVE_APPNAME)
                                                                <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* SETEXIT() TRAP TO ENTER DDT -- NEED DDT() ENTRY THAT DOES ONE STEP</i></font>
+<font color="#818181"><i>* COMMAND.</i></font>
+<font color="#818181"><i>*</i></font>
+DSERVE_TRAP
+         OUTPUT(.DDT_T, 10, &#39;W&#39;, &#39;/dev/fd/&#39; DSERVE_P1_WFD)   <b>:F(DSERVE9)</b>
+         INPUT(.DDT_R, 11,, &#39;/dev/fd/&#39; DSERVE_P2_RFD)        <b>:F(DSERVE9)</b>
+         S = DDT_R
+         IDENT(S, &#39;DDT&#39;)                                    <b>:S(DSERVET2)</b>
+         DSERVE = S                                          <b>:(DSERVET3)</b>
+DSERVET2 DDT_T = NE(DDT_ACTIVE) &#39;APP ALREADY IN DDT&#39;        <b>:S(DSERVET3)</b>
+         DDT_USE_R = 1
+         DSERVE = &#39;DDT&#39;
+         DDT(DSERVE_APPNAME)
+                                                            <b>:(SCONTINUE)</b>
+DSERVET3 SETEXIT(&#39;DSERVE_TRAP&#39;)
+         &amp;ERRLIMIT = 1                                      <b>:(SCONTINUE)</b>
+<font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* CONNECTION LISTENER PROCESS</i></font>
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* CREATE I/O CHANNELS TO PRIMORDIAL PROCESS. THE PRIMORDIAL PROCESS</i></font>
@@ -180,11 +205,15 @@ DSERVE3  FDN = SERV_LISTEN(&#39;inet&#39;, &#39;stream&#39;, DSERVE_PORT)    <b>
          NET = &#39;BAD LOGIN&#39; CRLF                                   <b>:(END)</b>
 DSERVE8  NET = &#39;LOGIN CONFIRMED&#39; CRLF
          NET = &#39;REDIRECT TO /dev/fd/&#39; DSERVE_P1_WFD &#39; TO SEND OUTPUT &#39;
-+              &#39;TO TELNET USING X (EG ls)&#39;
++              &#39;TO TELNET USING X (EG ls)&#39; CRLF
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* THE CORRECT KEY WAS SUPPLIED. SEND MESSAGE TO PRIMORDIAL.</i></font>
 <font color="#818181"><i>*</i></font>
          TO_PRIMORDIAL = &#39;DDT&#39;
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* SIGNAL TO ENTER DDT</i></font>
+<font color="#818181"><i>*</i></font>
+         KILL(DIFFER(DSERVE_INTR) DSERVE_PID, 2)
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* FORK TO TWO COPY LOOPS: PRIMORDIAL -&gt; NET AND NET -&gt; PRIMORDIAL</i></font>
 <font color="#818181"><i>*</i></font>
@@ -219,13 +248,16 @@ DSERVE_END
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* INITIALIZE DSERVE WITH APPLICATION NAME, PORT, AND SIGNON KEY</i></font>
 <font color="#818181"><i>*</i></font>
-         DSERVE_INIT(&#39;DSERVE TEST&#39;, 54321, &#39;magic&#39;)
+         DSERVE_INIT(&#39;DSERVE TEST&#39;, 54321, &#39;magic&#39;, &#39;INTR&#39;)
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* THE APPLICATION. A SIMPLE COUNTING LOOP. AT THE BEGINNING OF EACH</i></font>
 <font color="#818181"><i>* MAJOR LOOP, POLL DSERVE(), WHICH POSSIBLY ENTERS THE DEBUGGER.</i></font>
+<font color="#818181"><i>* WE CAN ALSO USE THE &#39;NO POLLING&#39; APPROACH, WHICH WILL USE SIGNAL 2</i></font>
+<font color="#818181"><i>* TO INTERRUPT THE CODE INTO DDT.</i></font>
 <font color="#818181"><i>*</i></font>
-LUP      DSERVE()
-         MAJOR = MAJOR + 1
+<font color="#818181"><i>*LUP     DSERVE()</i></font>
+<font color="#818181"><i>*</i></font>
+LUP      MAJOR = MAJOR + 1
          TERMINAL = &#39;MAJOR = &#39; MAJOR
          N = 0
 LUP2     N = N + 1
@@ -268,7 +300,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Tue Jun 17 01:39:00 EDT 2014</p></td><td><p align=right>
+Tue Jun 17 10:18:20 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>
