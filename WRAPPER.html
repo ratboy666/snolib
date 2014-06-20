@@ -28,11 +28,13 @@ an external function to be used with <font face="Source Code Pro">LOAD()</font>.
          WPSTRFREE = &#39;STRING_FREE&#39;
          WPSTRTYP2 = &#39;STRING2&#39;
          WPINTTYPE = &#39;INTEGER&#39;
+         WPPTRTYPE = &#39;POINTER&#39;
          WPLONGTYPE = &#39;LONG&#39;
          WPREALTYPE = &#39;REAL&#39;
          WPREDTYPE = &#39;PREDICATE&#39;
          WPSPREDTYPE = &#39;SYSPRED&#39;
-         WPTYPES = WPLONGTYPE | WPINTTYPE | WPREALTYPE | WPSTRTYPE
+         WPTYPES = WPLONGTYPE | WPINTTYPE | WPREALTYPE | WPSTRTYPE |
++                  WPPTRTYPE
          WPRTYPES = WPTYPES | WPREDTYPE | WPSPREDTYPE | WPSTRFREE |
 +                   WPSTRTYP2 | &#39;&#39;
          WPNAME = ANY(&amp;UCASE &amp;LCASE &#39;_&#39;)
@@ -121,6 +123,7 @@ WPCPY_STRING
 WPCPY_LONG
 WPCPY_INTEGER
 WPCPY_REAL
+WPCPY_POINTER
 WPCPY_
 WPNCOPY  I = I + 1
          LT(I, N)                                             <b>:S(WPCOPY)</b>
@@ -129,6 +132,8 @@ WPNOSTRS CALL = REPLACE(NAME, &amp;UCASE, &amp;LCASE) &#39;(&#39;
          I = 0
 WPCALL   GE(I, N)                                            <b>:S(WPECALL)</b>
          CALL = GT(I, 0) CALL &#39;,&#39;                <b>:($(&#39;WPARG_&#39; TYPES&lt;I&gt;))</b>
+WPARG_POINTER
+         CALL = CALL &#39;(void *)(long)LA_INT(&#39; I &#39;)&#39;            <b>:(WPNCALL)</b>
 WPARG_LONG
          CALL = CALL &#39;(long)LA_INT(&#39; I &#39;)&#39;                    <b>:(WPNCALL)</b>
 WPARG_INTEGER
@@ -146,7 +151,10 @@ WPRET_STRING2
          $FN = WP4SP &#39;RETSTR2((char *)&#39; CALL &#39;,&#39; LEN &#39;);&#39;      <b>:(WPDONE)</b>
 WPRET_STRING_FREE
          $FN = WP4SP &#39;RETSTR_FREE((char *)&#39; CALL &#39;);&#39;          <b>:(WPDONE)</b>
+WPRET_POINTER
+         $FN = WP4SP &#39;RETINT((long)&#39; CALL &#39;);&#39;                 <b>:(WPDONE)</b>
 WPRET_LONG
+         $FN = WP4SP &#39;RETINT((long)&#39; CALL &#39;);&#39;                 <b>:(WPDONE)</b>
 WPRET_INTEGER
          $FN = WP4SP &#39;RETINT(&#39; CALL &#39;);&#39;                       <b>:(WPDONE)</b>
 WPRET_REAL
@@ -337,7 +345,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Fri Jun 13 15:13:24 EDT 2014</p></td><td><p align=right>
+Fri Jun 20 05:57:11 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

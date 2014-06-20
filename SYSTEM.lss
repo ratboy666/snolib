@@ -41,6 +41,8 @@ MAINBOL WITH BLOCKS and SPITBOL.
 If source could be in CDC display code, test that first, before
 ISASCII() -- '()' is ordered the same in both of these character sets.
 
+Note that FASBOL II on the PDP-10 also has an &ALPHABET size of 128.
+
 <h2>Uses</h2>
 
 <<INCLUDES>>=

@@ -1,7 +1,7 @@
 -MODULE WRAPPER
 -LINE 9 "WRAPPER.lss"
 -STITL WRAPPER
--LINE 287 "WRAPPER.lss"
+-LINE 295 "WRAPPER.lss"
 -EJECT
 *
 ************************************************************************
@@ -34,11 +34,13 @@
          WPSTRFREE = 'STRING_FREE'
          WPSTRTYP2 = 'STRING2'
          WPINTTYPE = 'INTEGER'
+         WPPTRTYPE = 'POINTER'
          WPLONGTYPE = 'LONG'
          WPREALTYPE = 'REAL'
          WPREDTYPE = 'PREDICATE'
          WPSPREDTYPE = 'SYSPRED'
-         WPTYPES = WPLONGTYPE | WPINTTYPE | WPREALTYPE | WPSTRTYPE
+         WPTYPES = WPLONGTYPE | WPINTTYPE | WPREALTYPE | WPSTRTYPE |
++                  WPPTRTYPE
          WPRTYPES = WPTYPES | WPREDTYPE | WPSPREDTYPE | WPSTRFREE |
 +                   WPSTRTYP2 | ''
          WPNAME = ANY(&UCASE &LCASE '_')
@@ -127,6 +129,7 @@ WPCPY_STRING
 WPCPY_LONG
 WPCPY_INTEGER
 WPCPY_REAL
+WPCPY_POINTER
 WPCPY_
 WPNCOPY  I = I + 1
          LT(I, N)                                             :S(WPCOPY)
@@ -135,6 +138,8 @@ WPNOSTRS CALL = REPLACE(NAME, &UCASE, &LCASE) '('
          I = 0
 WPCALL   GE(I, N)                                            :S(WPECALL)
          CALL = GT(I, 0) CALL ','                :($('WPARG_' TYPES<I>))
+WPARG_POINTER
+         CALL = CALL '(void *)(long)LA_INT(' I ')'            :(WPNCALL)
 WPARG_LONG
          CALL = CALL '(long)LA_INT(' I ')'                    :(WPNCALL)
 WPARG_INTEGER
@@ -152,7 +157,10 @@ WPRET_STRING2
          $FN = WP4SP 'RETSTR2((char *)' CALL ',' LEN ');'      :(WPDONE)
 WPRET_STRING_FREE
          $FN = WP4SP 'RETSTR_FREE((char *)' CALL ');'          :(WPDONE)
+WPRET_POINTER
+         $FN = WP4SP 'RETINT((long)' CALL ');'                 :(WPDONE)
 WPRET_LONG
+         $FN = WP4SP 'RETINT((long)' CALL ');'                 :(WPDONE)
 WPRET_INTEGER
          $FN = WP4SP 'RETINT(' CALL ');'                       :(WPDONE)
 WPRET_REAL
