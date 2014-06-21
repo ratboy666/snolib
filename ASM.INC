@@ -1,13 +1,13 @@
-#!/usr/bin/bash
-         exec "snobol4" "-r" "-s" "$0" "$@" 
--TITLE ASM
--INCLUDE 'FFI.INC'
+-MODULE ASM
 -INCLUDE 'JIT.INC'
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'KEYST.INC'
--INCLUDE 'FASBOL.INC'
+-INCLUDE 'BREAKQ.INC'
+-INCLUDE 'NSPAN.INC'
 -INCLUDE 'LINK.INC'
 -STITL ASM
+-CASE 1
+-PLUSOPS 1
 -EJECT
 *
 ************************************************************************
@@ -27,31 +27,42 @@
 * ASM.INC
 *
 * A SIMPLE ASSEMBLER/LOADER FOR JIT CODE. THIS IS A BIT BRITTLE.
+*
 * THE BASIC IDEA IS THAT EACH ASSEMBLER LINE IS EXAMINED, AND LABEL,
 * OPCODE AND UP TO THREE PARAMETERS EXTRACTED. THE OPCODE MAY MATCH
 * A FUNCTIION IN THE ASSEMBLER, OR, WITH JIT_ PREPENDED, A JIT
 * GENERATION INSTRUCTION. THE FUNCTION IS THEN CALLED WITH UP TO
 * THREE PARAMETERS. EACH PARAMETER IS A STRING, A NUMBER, A SYMBOL
 * REFERENCE OR A REGISTER. EACH LABEL ON A JIT_ OPCODE IS ENTERED
-* INTO A LOCAL SYMBOL TABLE. CEXTERN WILL ADD LABELS TO THE CSYMTB.
-* AT THE END, THE SYMBOLS REQUIRED ARE WALKED AND FILLED FROM THE
-* TWO SYMBOL TABLES.
+* INTO A LOCAL SYMBOL TABLE.
+*
+* A = ASM_CREATE()
+* ASM(A, SRC) :F(ERROR)
+* S = ASM_LINK(A)
+* IF S IS 'INCOMPLETE', THEN MORE SYMBOLS NEED RESOLVING
+* IF IDENT(S), LINK IS COMPLETE.
+* ASM_LINK(A,T) WILL LINK A WITH SYMBOL TABEL T. T IS A TABLE OF NAMES,
+* EACH OF WHICH IS A VALUE (32 OR 64 BIT).
+* ASM_DESTROY(A)
+*
+* NOTE THAT THIS IS A PART OF A "MACHINE CODE LOADER", AND ENTRY
+* AND USAGE ISSUES ARE MEANT TO BE COVERED ELSEWHERE. THIS MODULE
+* HANDLES INTEPRETING THE FORMAT, AND RESOLVING (MOST) SYMBOLS,
+* PREPARING THE OBJECT FOR EVENTUAL EXECUTION.
+*
+* JIT(A) WILL RETRIEVE THE JIT STATE, WHICH CAN BE USED WITH JIT
+* FUNCTIONS FOR DEBUG, AND TO EMIT CODE WHICH CAN BE PASSED TO
+* OTHER FUNCTIONS LIKE FFI TO PREPARE FOR FINAL EXECUTION.
 *
 * CE: .MSNOBOL4;
 *
--CASE 1
--PLUSOPS 1
+         DATA('ASM_TYPE(JIT,SYMBOLS,REFERENCES)')
 *
-         OUTPUT = 'ASM'
+         DEFINE('ASM_CREATE()')
+         DEFINE('ASM_DESTROY(ASM)')
+         DEFINE('ASM_LINK(ASM,SYMBOLS)A,I,P,R')
+         DEFINE('ASM(ASM,SRC)LINE,ELINE,R,SYMBOL,LAB,OP,P1,P2,P3')
 *
-         DATA('ASM(CODE,PATCHES)')
-         DEFINE('ASM(SRC)'
-+           'ASYMTB,APATCHES,'
-+           'ASET,AWHT,ASM_PAT,APEMPTY,APSYMB,'
-+           'LAB,OP,P1,P2,P3,ASYMB')
-         ASYMTB = TABLE()
-         APATCHES = TABLE()
-         CSYMTB = TABLE()
          ASET = &UCASE &LCASE &DIGITS '_.'
          AWHT = NSPAN(' ' CHARS_TAB)
          ASM_PAT = FENCE NSPAN(ASET) . LAB
@@ -59,108 +70,99 @@
 +                  AWHT ((BREAKQ(',') . P1 ',') | NULL)
 +                  AWHT ((BREAKQ(',') . P2 ',') | NULL)
 +                  AWHT ((BREAKQ(',') . P3 ',') | NULL)
-+                  REM . CMNT
 *
+         DEFINE('ASM_PARM(X)')
          DEFINE('SEXEC(P1)')
          DEFINE('CEXTERN(P1)')
 *
-         APEMPTY = TABLE()
-         APSYMB = TABLE()
-         DEFINE('APARM(X)')                                 :(END_APARM)
+         ASM_PEMPTY = TABLE()
+         ASM_PSYMBOL = TABLE()                                :(END_ASM)
+*
+* STANDARD EXTRA OPERATIONS FOR ASM CODE. OF COURSE, ANY APPLICATION
+* SPECIFICS CAN BE DEFINED IN THE USING CODE AND ARE FREELY AVAILABLE
+* THIS ALLOWS THE CODE GENERATOR O BE EASILY TAILORED FOR SPECIFIC
+* NEEDS. FOR EXAMPLE, MACROS COULD BE DEFINED. ALL THREE OF THE
+* PARAMETERS CAN BE STRINGS, AND ALL PARAMETERS ARE AVAILABLE:
+* P1, P2, P3. THE LABEL IS AVAILABLE AS LAB.
+*
+* BE WARNED THOUGH, THAT THIS IS NOT ONLY AN "ASSEMBLER" FORMAT, IT IS
+* ALSO MEANT TO BE USED AS THE RELOCATING LOADER. SO, KEEP AN EYE
+* ON PERFORMANCE!
 *
 SEXEC    SEXEC = EVAL(P1)                           :S(RETURN)F(FRETURN)
 *
-* FIXME - SHOULD GO INTO LOCAL SYMBOL TABLE
+CEXTERN  SYMBOLS(ASM)<LAB> = DLSYM(0, P1)                      :(RETURN)
 *
-CEXTERN  CSYMTB<LAB> = DLSYM(0, P1)                            :(RETURN)
-*
-APARM    APARM = APEMPTY
+ASM_PARM ASM_PARM = ASM_PEMPTY
          IDENT(X)                                             :S(RETURN)
          X FENCE '.' REM . X                                   :S(ASREG)
          X FENCE ANY('"' "'")                                  :S(ASTRG)
-         APARM = +X                                           :S(RETURN)
-         APARM = APSYMB
-         ASYMB = X                                             :(RETURN)
-ASTRG    APARM = EVAL(X)                            :S(RETURN)F(FRETURN)
+         ASM_PARM = +X                                        :S(RETURN)
+         ASM_PARM = ASM_PSYMBOL
+         SYMBOL = X                                            :(RETURN)
+ASTRG    ASM_PARM = EVAL(X)                         :S(RETURN)F(FRETURN)
 ASREG    FUNCTION(X '_')                                     :F(FRETURN)
-         APARM = APPLY(X '_',)                                 :(RETURN)
-END_APARM
+         ASM_PARM = APPLY(X '_',)                              :(RETURN)
 *
-         INIT_JIT('/usr/local/bin/snobol4')
-         JIT = JIT_NEW_STATE()
-         JIT_SET_STATE(JIT)
-*
-ASTOP    LINE = TRIM(INPUT)                                   :F(APATCH)
-         IDENT(LINE)                                           :S(ASTOP)
+ASM      JIT_SET_STATE(JIT(ASM))
+ASM_2    SRC BREAK(CHARS_NL) . LINE CHARS_NL =                :F(RETURN)
+         LINE FENCE ANY(';*')                                  :S(ASM_2)
+         LINE = TRIM(LINE)
+         IDENT(LINE)                                           :S(ASM_2)
          ELINE = LINE
-         LINE = LINE ',,,'
-         LAB = OP = P1 = P2 = P3 = ASYMB =
-         LINE FENCE ANY(';*')                                  :S(ASTOP)
-         LINE ASM_PAT                                          :S(ASTOK)
-         IDENT(OP, 'END')                                     :S(APATCH)
-ASYNTAX  OUTPUT = 'ERROR IN: ' ELINE                            :(ASTOP)
-ASTOK    OP = FUNCTION('JIT_' OP) 'JIT_' OP                    :S(ASLAB)
-         FUNCTION(OP)                              :S(DOAPARM)F(ASYNTAX)
-ASLAB    IDENT(LAB)                                          :S(DOAPARM)
-         ASYMTB<LAB> = JIT_LABEL()
-DOAPARM  P1 = APARM(P1)                                      :F(ASYNTAX)
-         P1 = IDENT(P1, APSYMB) 0
-         P2 = APARM(P2)                                      :F(ASYNTAX)
-         P2 = IDENT(P2, APSYMB) 0
-         P3 = APARM(P3)                                      :F(ASYNTAX)
-         P3 = IDENT(P3, APSYMB) APEMPTY
+         LINE BREAKQ(';') . LINE
+         LINE = TRIM(LINE) ',,,'
+         LAB = OP = P1 = P2 = P3 = SYMBOL =
+         LINE ASM_PAT                                          :S(ASM_4)
+ASM_3    TERMINAL = 'ASM: ERROR IN: ' ELINE                   :(FRETURN)
+ASM_4    IDENT(OP, 'END')                                     :S(RETURN)
+         FUNCTION(OP)                                          :S(ASM_5)
+         OP = FUNCTION('JIT_' OP) 'JIT_' OP                    :F(ASM_3)
+         SYMBOLS(ASM)<LAB> = DIFFER(LAB) JIT_LABEL()
+ASM_5    P1 = ASM_PARM(P1)                                     :F(ASM_3)
+         P1 = IDENT(P1, ASM_PSYMBOL) 0
+         P2 = ASM_PARM(P2)                                     :F(ASM_3)
+         P2 = IDENT(P2, ASM_PSYMBOL) 0
+         P3 = ASM_PARM(P3)                                     :F(ASM_3)
+         P3 = IDENT(P3, ASM_PSYMBOL) ASM_PEMPTY
          &ERRLIMIT = 1
-         DIFFER(P1, APEMPTY)                                    :S(AAP2)
-         R = APPLY(OP,)                            :S(ASYMRES)F(ASYNTAX)
-AAP2     DIFFER(P2, APEMPTY)                                    :S(AAP3)
-         R = APPLY(OP, P1,)                        :S(ASYMRES)F(ASYNTAX)
-AAP3     DIFFER(P3, APEMPTY)                                    :S(AAP4)
-         R = APPLY(OP, P1, P2,)                    :S(ASYMRES)F(ASYNTAX)
-AAP4     R = APPLY(OP, P1, P2, P3)                 :S(ASYMRES)F(ASYNTAX)
-ASYMRES  IDENT(ASYMB)                                          :S(ASTOP)
-         APATCHES<ASYMB> = LINK(R, APATCHES<ASYMB>)             :(ASTOP)
+         DIFFER(P1, ASM_PEMPTY)                                :S(ASM_6)
+         R = APPLY(OP,)                                :S(ASM_9)F(ASM_3)
+ASM_6    DIFFER(P2, ASM_PEMPTY)                                :S(ASM_7)
+         R = APPLY(OP, P1,)                            :S(ASM_9)F(ASM_3)
+ASM_7    DIFFER(P3, ASM_PEMPTY)                                :S(ASM_8)
+         R = APPLY(OP, P1, P2,)                        :S(ASM_9)F(ASM_3)
+ASM_8    R = APPLY(OP, P1, P2, P3)                     :S(ASM_9)F(ASM_3)
+ASM_9    IDENT(SYMBOL)                                         :S(ASM_2)
+         REFERENCES(ASM)<SYMBOL> =
++           DIFFER(SYMBOL) DIFFER(R) LINK(R, REFERENCES(ASM)<SYMBOL>)
++                                                               :(ASM_2)
 *
-APATCH   A = KEYST(APATCHES)                                 :F(APATCH3)
+ASM_LINK SYMBOLS = IDENT(SYMBOLS) SYMBOLS(ASM)
+         A = KEYST(REFERENCES(ASM))                           :F(RETURN)
          I = 1
-APATCH2  P = APATCHES<A<I>>                                  :F(APATCH3)
-         R = ASYMTB<A<I>>
-         R = IDENT(R) CSYMTB<A<I>>
-         IDENT(R)                                            :S(APATCH5)
-         JIT_PATCH_AT(VALUE(P), R)
-APATCH4  IDENT(P)                                            :S(APATCH5)
-         P = NEXT(P)                                          :(APATCH4)
-APATCH5  I = I + 1                                            :(APATCH2)
-APATCH3
+ASM_L_2  P = REFERENCES(ASM)<A<I>>                           :F(ASM_L_5)
+         R = SYMBOLS(ASM)<A<I>>
+         IDENT(R)                                            :S(ASM_L_4)
+         REFERENCES(ASM)<A<I>> =
+ASM_L_3  JIT_PATCH_AT(VALUE(P), R)
+         IDENT(P)                                            :S(ASM_L_4)
+         P = NEXT(P)                                          :(ASM_L_3)
+ASM_L_4  I = I + 1                                            :(ASM_L_2)
+ASM_L_5  A = KEYST(REFERENCES(ASM))                           :F(RETURN)
+         ASM_LINK = 'INCOMPLETE'                               :(RETURN)
 *
-         JIT_PRINT()
-         PROC = JIT_EMIT()
-         JIT_DISASSEMBLE()
-         JIT_CLEAR_STATE()
-         T = TIME()
-         FFI = FFI_NEW('V', 'V')
-         FFI_SET_CALLP(FFI, PROC)
-         FFI_CALL_VOID(FFI)
-         OUTPUT = 'JIT TIME ' TIME() - T
-         JIT_SET_STATE(JIT)
-         JIT_DESTROY_STATE()
-         FFI_FREE(FFI)
+ASM_CREATE
+         ASM_CREATE = ASM_TYPE()
+         SYMBOLS(ASM_CREATE) = TABLE()
+         REFERENCES(ASM_CREATE) = TABLE()
+         JIT(ASM_CREATE) = JIT_NEW_STATE()
+         JIT_SET_STATE(JIT(ASM_CREATE))                        :(RETURN)
 *
-         FINISH_JIT()
+ASM_DESTROY
+         SYMBOLS(ASM) =
+         REFERENCES(ASM) =
+         JIT_SET_STATE(JIT(ASM))
+         JIT_DESTROY_STATE()                                   :(RETURN)
 *
-END
-;
-; TEST JIT ASM (ASSEMBLER/LOADER)
-;
-; THIS IS THE CODE GENERATOR TARGET FORMAT FOR FASBOL
-;
-         SEXEC     'OUTPUT = "TEST ASM"'
-         NAME      'SPEED'
-PRINTF   CEXTERN   'printf'
-         PROLOG
-         MOVI      .R1, 10000000
-         MOVI      .R2, 0
-L        ADDI      .R2, .R2, 1
-         BLER      .R2, .R1, L
-         RET
-         EPILOG
-         END
+END_ASM

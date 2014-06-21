@@ -1,0 +1,17 @@
+; TEST.JIT
+;
+; TEST JIT ASM (ASSEMBLER/LOADER)
+;
+; THIS IS THE CODE GENERATOR TARGET FORMAT FOR FASBOL
+;
+*        SEXEC     'OUTPUT = "TEST ASM"'
+         NAME      'SPEED'
+PRINTF   CEXTERN   'printf'
+         PROLOG
+         MOVI      .R1, 10000000 ; COMMENTS HERE ARE OK
+         MOVI      .R2, 0
+L        ADDI      .R2, .R2, 1
+         BLER      .R2, .R1, L
+         RET
+         EPILOG
+         END

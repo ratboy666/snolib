@@ -1,6 +1,8 @@
 -MODULE FASBOL
 -INCLUDE 'SYSTEM.INC'
 -INCLUDE 'LOGIC.INC'
+-INCLUDE 'NSPAN.INC'
+-INCLUDE 'BREAKQ.INC'
 -INCLUDE 'UNIQUE.INC'
 -STITL FASBOL
 *
@@ -43,7 +45,6 @@
          DEFINE('EJECT()', 'RETURN.')
          DEFINE('FREEZE()', 'RETURN.')
 *
-         DEFINE('NSPAN(P)')
          DEFINE('BREAKQ(S)NAME,R,P1,P2,P3')
 *
          DEFINE('TABLE(P,P2)')
@@ -65,8 +66,6 @@ BREAKQ   NAME = UNIQUE()
          P3 = '"' BREAK('"') '"' R
          BREAKQ = P1 (P2 | P3 | BREAK(S))
          $NAME = BREAKQ                                        :(RETURN)
-*
-NSPAN    NSPAN = SPAN(P) | ''                                  :(RETURN)
 *
 TABLE    IDENT(DATATYPE(P), 'ARRAY')                         :S(TABLE..)
          TABLE = IDENT(DATATYPE(P), 'TABLE') TABLE()          :S(RETURN)
