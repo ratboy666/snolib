@@ -4,20 +4,21 @@
 -INCLUDE 'FFI.INC'
 -INCLUDE 'ASM.INC'
 -INCLUDE 'READFILE.INC'
-*
-         OUTPUT = 'ASM'
+-INCLUDE 'DDT.INC'
 *
          INIT_JIT('/usr/local/bin/snobol4')
          SRC = READFILE('TEST.JIT')
 *
+         CT = TIME()
          ASM = ASM_CREATE()
          ASM(ASM, SRC)                                           :F(END)
-         OUTPUT = '> ' ASM_LINK(ASM)
+         ASM_LINK(ASM)
+         CT = TIME() - CT
 *
          JIT_SET_STATE(JIT(ASM))
-         JIT_PRINT()
+*        JIT_PRINT()
          PROC = JIT_EMIT()
-         JIT_DISASSEMBLE()
+*        JIT_DISASSEMBLE()
 *
          JIT_CLEAR_STATE()
          T = TIME()
@@ -25,10 +26,11 @@
          FFI_SET_CALLP(FFI, PROC)
          FFI_CALL_VOID(FFI)
          OUTPUT = 'JIT TIME ' TIME() - T
+         OUTPUT = 'ASM TIME ' CT
 *
          ASM_DESTROY(ASM)
          FFI_FREE(FFI)
 *
-         FINISH_JIT() :(END)
+         FINISH_JIT()
 *
 END

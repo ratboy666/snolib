@@ -1,7 +1,7 @@
 -MODULE P64
 -LINE 17 "P64.lss"
 -IN72
--LINE 147 "P64.lss"
+-LINE 150 "P64.lss"
 -CASE 1
 -STITL P64
 -EJECT
@@ -47,7 +47,7 @@ static long peek_p(long p) { return (long)*(void **)p; }
 -SNOBOL C_WRAPPER_PROTO('PEEK_P(LONG)LONG', .EMBED)
 #line 42 "P64.lss"
 
-static long peek_c(long p) { return *(char *)p; }
+static long peek_c(long p) { return *(unsigned char *)p; }
 
 -SNOBOL C_WRAPPER_PROTO('PEEK_C(LONG)INTEGER', .EMBED)
 #line 46 "P64.lss"
@@ -82,52 +82,55 @@ static void poke_p(long p, long v) { *(void **)p = (void *)v; }
 -SNOBOL C_WRAPPER_PROTO('POKE_P(LONG,LONG)', .EMBED)
 #line 70 "P64.lss"
 
-static void poke_c(long p, int c) { *(char *)p = (char)c; }
+static void poke_c(long p, int c)
+{
+    *(unsigned char *)p = (unsigned char)c;
+}
 
 -SNOBOL C_WRAPPER_PROTO('POKE_C(LONG,INTEGER)', .EMBED)
-#line 74 "P64.lss"
+#line 77 "P64.lss"
 
 static void poke_s(long p, int s) { *(short *)p = (short)s; }
 
 -SNOBOL C_WRAPPER_PROTO('POKE_S(LONG,INTEGER)', .EMBED)
-#line 78 "P64.lss"
+#line 81 "P64.lss"
 
 static void poke_i(long p, int i) { *(int *)p = (int)i; }
 
 -SNOBOL C_WRAPPER_PROTO('POKE_I(LONG,INTEGER)', .EMBED)
-#line 82 "P64.lss"
+#line 85 "P64.lss"
 
 static void poke_d(long p, double v) { *(double *)p = v; }
 
 -SNOBOL C_WRAPPER_PROTO('POKE_D(LONG,REAL)', .EMBED)
-#line 86 "P64.lss"
+#line 89 "P64.lss"
 
 static void poke_f(long p, double v) { *(float *)p = v; }
 
 -SNOBOL C_WRAPPER_PROTO('POKE_F(LONG,REAL)', .EMBED)
-#line 90 "P64.lss"
+#line 93 "P64.lss"
 
 static void poke_ld(long p, double v) { *(long double *)p = v; }
 
 -SNOBOL C_WRAPPER_PROTO('POKE_LD(LONG,REAL)', .EMBED)
-#line 94 "P64.lss"
+#line 97 "P64.lss"
 
 -END
--LINE 101 "P64.lss"
--SNOBOL DYNAMIC_DEBUG = 1
--LINE 102 "P64.lss"
--SNOBOL COMPILE_DYNAMIC(p64) :F(ERROR) ;
--LINE 103 "P64.lss"
--SNOBOL OBJECTS = p64; OBJECTS '.c' = '.o'
 -LINE 104 "P64.lss"
--SNOBOL LINK_DYNAMIC('./p64', OBJECTS) :F(ERROR) ;
+-SNOBOL DYNAMIC_DEBUG = 1
 -LINE 105 "P64.lss"
+-SNOBOL COMPILE_DYNAMIC(p64) :F(ERROR) ;
+-LINE 106 "P64.lss"
+-SNOBOL OBJECTS = p64; OBJECTS '.c' = '.o'
+-LINE 107 "P64.lss"
+-SNOBOL LINK_DYNAMIC('./p64', OBJECTS) :F(ERROR) ;
+-LINE 108 "P64.lss"
 -CMNT ERASE TEMPORARY FILES
 -CMNT     WE DON'T NEED THE C BITS, OR THE OBJECT FILES ANYMORE.
 -CMNT     ALL WE REQUIRE IS p64.so
 -CMNT -SNOBOL A = CRACK(p64 ' ' OBJECTS, ' ')
 -CMNT -SNOBOL SEQ(' DELETE(A<K>) ', .K)
--LINE 113 "P64.lss"
+-LINE 116 "P64.lss"
 -PUBLIC PEEK_P(), PEEK_C(), PEEK_S(), PEEK_I(), PEEK_D(), PEEK_F()
 -PUBLIC PEEK_LD()
 -PUBLIC POKE_P(), POKE_C(), POKE_S(), POKE_I(), POKE_D(), POKE_F()

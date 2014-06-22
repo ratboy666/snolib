@@ -40,7 +40,7 @@ static long peek_p(long p) { return (long)*(void **)p; }
 
 -SNOBOL C_WRAPPER_PROTO('PEEK_P(LONG)LONG', .EMBED)
 
-static long peek_c(long p) { return *(char *)p; }
+static long peek_c(long p) { return *(unsigned char *)p; }
 
 -SNOBOL C_WRAPPER_PROTO('PEEK_C(LONG)INTEGER', .EMBED)
 
@@ -68,7 +68,10 @@ static void poke_p(long p, long v) { *(void **)p = (void *)v; }
 
 -SNOBOL C_WRAPPER_PROTO('POKE_P(LONG,LONG)', .EMBED)
 
-static void poke_c(long p, int c) { *(char *)p = (char)c; }
+static void poke_c(long p, int c)
+{
+    *(unsigned char *)p = (unsigned char)c;
+}
 
 -SNOBOL C_WRAPPER_PROTO('POKE_C(LONG,INTEGER)', .EMBED)
 

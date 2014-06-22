@@ -1,7 +1,7 @@
 -MODULE P64
 -LINE 17 "P64.lss"
 -IN72
--LINE 147 "P64.lss"
+-LINE 150 "P64.lss"
 -CASE 1
 -STITL P64
 -EJECT
@@ -30,12 +30,12 @@
 -LINE 25 "P64.lss"
 -LINE 30 "P64.lss"
          p64 = 'p64.c'
--LINE 101 "P64.lss"
--LINE 102 "P64.lss"
--LINE 103 "P64.lss"
 -LINE 104 "P64.lss"
 -LINE 105 "P64.lss"
--LINE 113 "P64.lss"
+-LINE 106 "P64.lss"
+-LINE 107 "P64.lss"
+-LINE 108 "P64.lss"
+-LINE 116 "P64.lss"
 -PUBLIC PEEK_P(), PEEK_C(), PEEK_S(), PEEK_I(), PEEK_D(), PEEK_F()
 -PUBLIC PEEK_LD()
 -PUBLIC POKE_P(), POKE_C(), POKE_S(), POKE_I(), POKE_D(), POKE_F()

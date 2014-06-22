@@ -61,7 +61,7 @@ static long peek_p(long p) { return (long)*(void **)p; }
 
 -SNOBOL C_WRAPPER_PROTO(&#39;PEEK_P(LONG)LONG&#39;, .EMBED)
 
-static long peek_c(long p) { return *(char *)p; }
+static long peek_c(long p) { return *(unsigned char *)p; }
 
 -SNOBOL C_WRAPPER_PROTO(&#39;PEEK_C(LONG)INTEGER&#39;, .EMBED)
 
@@ -89,7 +89,10 @@ static void poke_p(long p, long v) { *(void **)p = (void *)v; }
 
 -SNOBOL C_WRAPPER_PROTO(&#39;POKE_P(LONG,LONG)&#39;, .EMBED)
 
-static void poke_c(long p, int c) { *(char *)p = (char)c; }
+static void poke_c(long p, int c)
+{
+    *(unsigned char *)p = (unsigned char)c;
+}
 
 -SNOBOL C_WRAPPER_PROTO(&#39;POKE_C(LONG,INTEGER)&#39;, .EMBED)
 
@@ -203,7 +206,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Mon Jun 16 04:53:20 EDT 2014</p></td><td><p align=right>
+Sun Jun 22 11:23:43 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

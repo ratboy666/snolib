@@ -7,8 +7,24 @@
 *        SEXEC     'OUTPUT = "TEST ASM"'
          NAME      'SPEED'
 PRINTF   CEXTERN   'printf'
+MALLOC   CEXTERN   'malloc'
+FREE     CEXTERN   'free'
+;
+D        RESQ
+;
+STR      DS        'HELLO, WORLD'
+         DB        10
+         DB        0
+;
+; EQUATES ARE DANGEROUS - THEY GO DIRECTLY INTO VARIABLE SPACE.
+; (EXPRESSION) WILL ACCESS. BUT,THIS MEANS (CHARS_NL) WILL WORK,
+; FOR EXAMPLE! THIS ALSO MEANS THAT (LIMIT + 1) WILL WORK, TOO!
+; HOWEVER, ARITHMETIC ON SYMBOL REFERENCES WILL NOT WORK.
+;
+LIMIT    EQU       10000000
+;
          PROLOG
-         MOVI      .R1, 10000000 ; COMMENTS HERE ARE OK
+         MOVI      .R1, (LIMIT) ; COMMENTS HERE ARE OK
          MOVI      .R2, 0
 L        ADDI      .R2, .R2, 1
          BLER      .R2, .R1, L

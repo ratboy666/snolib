@@ -3,7 +3,7 @@
 -INCLUDE 'LOGIC.INC'
 -INCLUDE 'NSPAN.INC'
 -INCLUDE 'BREAKQ.INC'
--INCLUDE 'UNIQUE.INC'
+-INCLUDE 'REAL.INC'
 -STITL FASBOL
 *
 ************************************************************************
@@ -45,27 +45,16 @@
          DEFINE('EJECT()', 'RETURN.')
          DEFINE('FREEZE()', 'RETURN.')
 *
-         DEFINE('BREAKQ(S)NAME,R,P1,P2,P3')
-*
          DEFINE('TABLE(P,P2)')
          DEFINE('ARRAY(P,P2)')
 *
          DEFINE('DATE()')
          DEFINE('DAYTIM()')
-         DEFINE('REAL(X)')
          DEFINE('EXTIME(PROGNAME)')
          DEFINE('INSERT(SUBSTRING,STRING,LEN,POS)PART1,PART2')
          DEFINE('SUBSTR(STRING,LEN,POS)')
 *
          DEFINE('FASBOL()')                                :(END_FASBOL)
-*
-BREAKQ   NAME = UNIQUE()
-         R = CONVERT(NAME, 'EXPRESSION')
-         P1 = BREAK('"' "'" S)
-         P2 = "'" BREAK("'") "'" R
-         P3 = '"' BREAK('"') '"' R
-         BREAKQ = P1 (P2 | P3 | BREAK(S))
-         $NAME = BREAKQ                                        :(RETURN)
 *
 TABLE    IDENT(DATATYPE(P), 'ARRAY')                         :S(TABLE..)
          TABLE = IDENT(DATATYPE(P), 'TABLE') TABLE()          :S(RETURN)
@@ -75,11 +64,6 @@ TABLE..  TABLE = CONVERT(P, 'TABLE')                :S(RETURN)F(FRETURN)
 ARRAY    IDENT(DATATYPE(P), 'TABLE')                         :S(ARRAY..)
          ARRAY = ARRAY.(P,P2)                       :S(RETURN)F(FRETURN)
 ARRAY..  ARRAY = CONVERT(P, 'ARRAY')                :S(RETURN)F(FRETURN)
-*
-REAL     IDENT(DATATYPE(X), 'REAL')                            :(RETURN)
-         INTEGER(X)                                          :S(FRETURN)
-         (IDENT(DATATYPE(X), 'STRING') CONVERT(X, 'REAL'))
-+                                                   :S(RETURN)F(FRETURN)        
 *
 EXTIME   TERMINAL = 'EXECUTION TIME FOR ' PROGNAME
          TERMINAL = LPAD(CONVERT(&GCTIME, 'STRING'), 16) ' MS IN GC'

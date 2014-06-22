@@ -28,7 +28,7 @@
 *
          DEFINE('KEYST(T)A,N,I')                            :(KEYST_END)
 *
-KEYST    A = (CONVERT(T, 'ARRAY'), ARRAY0)                   :F(FRETURN)
+KEYST    A = (CONVERT(T, 'ARRAY'), ARRAY0)
          PROTOTYPE(A) BREAK(',') . N                         :F(FRETURN)
          KEYST = (NE(N) ARRAY(N), ARRAY0)
          SEQ(' KEYST<I> = A<I,1> ', .I)                        :(RETURN)
