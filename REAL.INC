@@ -17,6 +17,8 @@
 *
 * REAL.INC
 *
+-PUBLIC REAL()
+*
          DEFINE('REAL(X)')                                   :(END_REAL)
 *
 REAL     IDENT(DATATYPE(X), 'REAL')                            :(RETURN)

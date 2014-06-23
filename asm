@@ -6,30 +6,35 @@
 -INCLUDE 'READFILE.INC'
 -INCLUDE 'DDT.INC'
 *
+*        DDT()
+*
+* FOR DISASSEMBLY. REFERENCE TO SNOBOL4 EXECUTABLE, PREFERABLY NOT
+* STRIPPED.
+*
          INIT_JIT('/usr/local/bin/snobol4')
          SRC = READFILE('TEST.JIT')
 *
          CT = TIME()
          ASM = ASM_CREATE()
          ASM(ASM, SRC)                                           :F(END)
-         ASM_LINK(ASM)
          CT = TIME() - CT
 *
          JIT_SET_STATE(JIT(ASM))
-*        JIT_PRINT()
+         JIT_PRINT()
          PROC = JIT_EMIT()
-*        JIT_DISASSEMBLE()
+         JIT_DISASSEMBLE()
 *
          JIT_CLEAR_STATE()
          T = TIME()
-         FFI = FFI_NEW('V', 'V')
+         FFI = FFI_NEW('I', 'V')
          FFI_SET_CALLP(FFI, PROC)
-         FFI_CALL_VOID(FFI)
+         I = FFI_CALL_INTEGER(FFI)
          OUTPUT = 'JIT TIME ' TIME() - T
          OUTPUT = 'ASM TIME ' CT
+         OUTPUT = 'RESULT ' I
 *
-         ASM_DESTROY(ASM)
          FFI_FREE(FFI)
+         ASM_DESTROY(ASM)
 *
          FINISH_JIT()
 *

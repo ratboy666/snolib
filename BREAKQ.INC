@@ -19,6 +19,8 @@
 *
 * BREAKQ.INC
 *
+-PUBLIC BREAKQ()
+*
          DEFINE('BREAKQ(S)NAME,R,P1,P2,P3')                :(END_BREAKQ)
 *
 BREAKQ   NAME = UNIQUE()

@@ -2,32 +2,38 @@
 ;
 ; TEST JIT ASM (ASSEMBLER/LOADER)
 ;
-; THIS IS THE CODE GENERATOR TARGET FORMAT FOR FASBOL
-;
-*        SEXEC     'OUTPUT = "TEST ASM"'
          NAME      'SPEED'
+;
 PRINTF   CEXTERN   'printf'
-MALLOC   CEXTERN   'malloc'
-FREE     CEXTERN   'free'
 ;
 D        RESQ
+D2       DQ        5
 ;
-STR      DS        'HELLO, WORLD'
+STR      DS        'hello, world %d'
          DB        10
          DB        0
-;
-; EQUATES ARE DANGEROUS - THEY GO DIRECTLY INTO VARIABLE SPACE.
-; (EXPRESSION) WILL ACCESS. BUT,THIS MEANS (CHARS_NL) WILL WORK,
-; FOR EXAMPLE! THIS ALSO MEANS THAT (LIMIT + 1) WILL WORK, TOO!
-; HOWEVER, ARITHMETIC ON SYMBOL REFERENCES WILL NOT WORK.
 ;
 LIMIT    EQU       10000000
 ;
          PROLOG
-         MOVI      .R1, (LIMIT) ; COMMENTS HERE ARE OK
+         NOTE      'COUNT 0..LIMIT', 1
+         MOVI      .R1, (LIMIT)        ; LIMIT TO R1
          MOVI      .R2, 0
 L        ADDI      .R2, .R2, 1
          BLER      .R2, .R1, L
-         RET
+;
+         NOTE      'PRINTF(STR, R2)', 2
+         MOVI      .R0, STR            ; PRINTF(STR, R2)
+         PUSHARGR  .R0
+         ELLIPSIS
+         PUSHARGR  .R2
+         FINISHI   PRINTF
+;
+         NOTE      'D = D2', 4
+         LDI       .R1, D2
+         STI       D, .R1
+;
+         NOTE      'RETURN R1', 5
+         RETR      .R1                 ; RETURN R1
          EPILOG
          END

@@ -17,6 +17,8 @@
 *
 * NSPAN.INC
 *
+-PUBLIC NSPAN()
+*
          DEFINE('NSPAN(P)')                                 :(END_NSPAN)
 *
 NSPAN    NSPAN = SPAN(P) | ''                                  :(RETURN)

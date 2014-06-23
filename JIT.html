@@ -714,7 +714,7 @@ static int get_note_jit(void *p)
          LOAD(&#39;JIT_SUBR_F(INTEGER,INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_SUBR_D(INTEGER,INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
 <font color="#818181"><i>*</i></font>
--PUBLIC JI_SUBI(), JIT_SUBI_F(), JIT_SUBI_D()
+-PUBLIC JIT_SUBI(), JIT_SUBI_F(), JIT_SUBI_D()
 <font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_SUBI(INTEGER,INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_SUBI_F(INTEGER,INTEGER,REAL)INTEGER&#39;, &#39;jit.so&#39;)
@@ -936,25 +936,39 @@ static int get_note_jit(void *p)
          LOAD(&#39;JIT_MOVI_F(INTEGER,REAL)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_MOVI_D(INTEGER,REAL)INTEGER&#39;, &#39;jit.so&#39;)
 <font color="#818181"><i>*</i></font>
+-PUBLIC JIT_EXTR_C(), JIT_EXTR_UC(), JIT_EXTR_S(), JIT_EXTR_US()
 <font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_EXTR_C(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_EXTR_UC(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_EXTR_S(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_EXTR_US(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+-PUBLIC JIT_EXTR_I(), JIT_EXTR_UI(), JIT_EXTR_F(), JIT_EXTR_D_F()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_EXTR_I(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_EXTR_UI(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_EXTR_F(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_EXTR_D_F(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+-PUBLIC JIT_EXTR_D(), JIT_EXTR_F_D()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_EXTR_D(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_EXTR_F_D(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_TRUNCR_F_I(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_TRUNCR_F(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_TRUNCR_F_L(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_TRUNCR_D_I(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_TRUNCR_D(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_TRUNCR_D_L(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+-PUBLIC JIT_HTONR(), JIT_NTOHR()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_HTONR(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_NTOHR(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_LDR(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_LDR_C(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_LDR_UC(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
@@ -975,6 +989,8 @@ static int get_note_jit(void *p)
          LOAD(&#39;JIT_LDI_L(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_LDI_F(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_LDI_D(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_LDXR(INTEGER,INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_LDXR_C(INTEGER,INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_LDXR_UC(INTEGER,INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
@@ -985,6 +1001,8 @@ static int get_note_jit(void *p)
          LOAD(&#39;JIT_LDXR_L(INTEGER,INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_LDXR_F(INTEGER,INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_LDXR_D(INTEGER,INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_LDXI(INTEGER,INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_LDXI_C(INTEGER,INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_LDXI_UC(INTEGER,INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
@@ -995,6 +1013,8 @@ static int get_note_jit(void *p)
          LOAD(&#39;JIT_LDXI_L(INTEGER,INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_LDXI_F(INTEGER,INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_LDXI_D(INTEGER,INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_STR(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_STR_C(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_STR_UC(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
@@ -1005,6 +1025,8 @@ static int get_note_jit(void *p)
          LOAD(&#39;JIT_STR_L(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_STR_F(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_STR_D(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_STI(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_STI_C(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_STI_UC(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
@@ -1015,6 +1037,8 @@ static int get_note_jit(void *p)
          LOAD(&#39;JIT_STI_L(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_STI_F(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_STI_D(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_STXR(INTEGER,INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_STXR_C(INTEGER,INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_STXR_UC(INTEGER,INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
@@ -1025,6 +1049,8 @@ static int get_note_jit(void *p)
          LOAD(&#39;JIT_STXR_L(INTEGER,INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_STXR_F(INTEGER,INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_STXR_D(INTEGER,INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_STXI(INTEGER,INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_STXI_C(INTEGER,INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_STXI_UC(INTEGER,INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
@@ -1035,6 +1061,8 @@ static int get_note_jit(void *p)
          LOAD(&#39;JIT_STXI_L(INTEGER,INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_STXI_F(INTEGER,INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_STXI_D(INTEGER,INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_PUSHARGR(INTEGER)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_PUSHARGR_C(INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_PUSHARGR_UC(INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
@@ -1045,6 +1073,8 @@ static int get_note_jit(void *p)
          LOAD(&#39;JIT_PUSHARGR_L(INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_PUSHARGR_F(INTEGER)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_PUSHARGR_D(INTEGER)&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_PUSHARGI(INTEGER)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_PUSHARGI_C(INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_PUSHARGI_UC(INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
@@ -1055,6 +1085,8 @@ static int get_note_jit(void *p)
          LOAD(&#39;JIT_PUSHARGI_L(INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_PUSHARGI_F(REAL)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_PUSHARGI_D(REAL)&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_ARG()INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_ARG_C(INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_ARG_UC(INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
@@ -1065,6 +1097,8 @@ static int get_note_jit(void *p)
          LOAD(&#39;JIT_ARG_L(INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_ARG_F()INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_ARG_D()INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_GETARG(INTEGER,INTEGER)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_GETARG_C(INTEGER,INTEGER)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_GETARG_UC(INTEGER,INTEGER)&#39;, &#39;jit.so&#39;)
@@ -1075,6 +1109,8 @@ static int get_note_jit(void *p)
          LOAD(&#39;JIT_GETARG_L(INTEGER,INTEGER)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_GETARG_F(INTEGER,INTEGER)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_GETARG_D(INTEGER,INTEGER)&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_RET()&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_RETR(INTEGER)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_RETR_C(INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
@@ -1096,6 +1132,8 @@ static int get_note_jit(void *p)
          LOAD(&#39;JIT_RETI_L(INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_RETI_F(REAL)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_RETI_D(REAL)&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_RETVAL(INTEGER)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_RETVAL_C(INTEGER)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_RETVAL_UC(INTEGER)&#39;, &#39;jit.so&#39;)
@@ -1106,6 +1144,8 @@ static int get_note_jit(void *p)
          LOAD(&#39;JIT_RETVAL_L(INTEGER)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_RETVAL_F(INTEGER)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_RETVAL_D(INTEGER)&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_BLTR(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BLTR_U(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BLTR_F(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
@@ -1263,7 +1303,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Sun Jun 22 00:59:30 EDT 2014</p></td><td><p align=right>
+Sun Jun 22 23:26:10 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>
