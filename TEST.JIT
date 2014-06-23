@@ -16,26 +16,23 @@
 ;
 PRINTF   EXTERN      'printf'
 ;
-D        RESQ
-D2       DQ          5
-F2       DD          1.5
-DBL2     DQ          2.1
+D        RESQ                          ; 8 BYTES IN BSS
+D2       DQ          5                 ; DSS - 8 BYTE INTEGER
+F2       DD          1.5               ; DSS - 4 BYTE FLOAT
+DBL2     DQ          2.1               ; DSS - 8 BYTE DOUBLE
+         DA          ENTRY             ; DSS - ADDRESS OF ENTRY
+;
+; C STYLE FORMAT STRING
 ;
 NL       EXTERN      (ORD(CHARS_NL))
 STR      DS          'hello, world %d %g %g %d'
          DB          NL
          DB          0
 ;
-; NOTE THAT THERE ARE TWO DISTINCT PLACES TO PUT 'EQUATES' -
-; THE EXTERN AND EQU. EXTERN IS USED DIRECTLY, BUT CANNOT BE
-; MANIPULATED IN AN EXPRESSION. NL IS PUT THERE. EQU PUTS
-; THE SYMBOL INTO THE SNOBOL4 VARIABLE SPACE. IT IS ACCESSED
-; BY (EXPRESSSION), WHICH FORCES AN EVAL. PUT 'LIMIT' THERE.
-; THIS ALSO MEANS THAT (FOR INSTANCE) '(LIMIT + 1)' IS VALID.
-;
 LIMIT    EQU         10000000
 ;
-ENTRY    ADDRESS
+ENTRY    ADDRESS                       ; ADDRESS IS USED FOR DA
+                                       ; AND ENTRIES
          PROLOG
          NOTE        'COUNT 0..LIMIT', 1
          MOVI        %R1, (LIMIT)      ; LIMIT TO R1
@@ -50,7 +47,7 @@ L        ADDI        %R2, %R2, 1
          PUSHARGR    %R2
          LDI_F       %F0, F2           ; LOAD FLOAT
          EXTR_F_D    %F0, %F0          ; CONVERT TO DOUBLE
-         PUSHARGR_D  %F0
+         PUSHARGR_D  %F0               ; AS ARGUMENT
          LDI_D       %F0, DBL2
          PUSHARGR_D  %F0
          PUSHARGR    %R2

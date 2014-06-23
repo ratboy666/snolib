@@ -51,8 +51,6 @@
 *
 * A = ASM_CREATE()
 * S = ASM(A, SRC) :F(ERROR)
-* IF S IS 'INCOMPLETE', THEN MORE SYMBOLS NEED RESOLVING
-* IF IDENT(S), LINK IS COMPLETE.
 * ASM_DESTROY(A)
 *
 * THIS IS A PART OF A "MACHINE CODE LOADER", AND ENTRY AND USAGE ISSUES
@@ -73,17 +71,22 @@
 *
 * CE: .MSNOBOL4;
 *
--PUBLIC JIT(), ASM_CREATE(), ASM_DESTROY() ASM()
+-PUBLIC JIT(), ENTRIES(), OBJ(), ASM_CREATE(), ASM_DESTROY() ASM()
 *
          DATA('ASM_TYPE(JIT,SYMBOLS1,SYMBOLS,REFERENCES,DSS,BSS,SZBSS,'
-+                      'DINIT,DSSBASE,BSSBASE)')
++                      'DINIT,DSSBASE,BSSBASE,ENTRIES,SRC,OBJ,DAREFS)')
 *
          DEFINE('ASM_CREATE(SYMBOLS1)')
          DEFINE('ASM_DESTROY(ASM)')
-         DEFINE('ASM_LINK(ASM,SYMBOLS)A,I,P,R,S')
          DEFINE('ASM(ASM,SRC)')
-         DEFINE('ASM_PHASE(SRC,ASM_PHASE)'
-+               'LINE,ELINE,R,SYMBOL,LAB,OP,P1,P2,P3')
+*
+         DEFINE('ASM_EMIT()')
+         DEFINE('ASM_BSS()A,I')
+         DEFINE('ASM_DA()A,I,P')
+         DEFINE('ASM_DSS()A,I,S')
+         DEFINE('ASM_LINK()SYMBOLS,A,I,P,R,S')
+         DEFINE('ASM_PHASE(ASM_PHASE)'
++               'SRC,LINE,ELINE,R,SYMBOL,LAB,OP,P1,P2,P3')
 *
          ASET = &UCASE &LCASE &DIGITS '_.'
          AWHT = NSPAN(' ' CHARS_TAB)
@@ -113,6 +116,7 @@
          DEFINE('DW(P1)')
          DEFINE('DD(P1)')
          DEFINE('DQ(P1)')
+         DEFINE('DA(P1)')
          DEFINE('DS(P1)')
 *
 * SET TO NON-NULL TO HAVE ASM GIVE DEBUG OUTPUT
@@ -166,7 +170,8 @@ USES4    TERMINAL = 'REGISTER ' P1<I> ' NOT AVAILABLE'        :(FRETURN)
 * CONSTRUCTING JUMP TABLES. COULD USE NOTE(NULL, 0) HERE AS WELL.
 *
 ADDRESS  NE(ASM_PHASE, 2)                                     :S(RETURN)
-         SYMBOLS(ASM)<LAB> = JIT_INDIRECT()                    :(RETURN)
+         ENTRIES(ASM)<LAB> = SYMBOLS(ASM)<LAB> = JIT_INDIRECT()
++                                                              :(RETURN)
 *
 * PHASE1 EVALUATION ONLY. EVAL P1 DURING PHASE1.
 *
@@ -250,6 +255,17 @@ DQ       NE(ASM_PHASE, 1)                                     :S(RETURN)
          DINIT(ASM) = DINIT(ASM) CHAR(PEEK_C(ASM_P + 6))
          DINIT(ASM) = DINIT(ASM) CHAR(PEEK_C(ASM_P + 7))       :(RETURN)
 *
+* DA IS DEFINE ADDRESS - ADD TO DAREFS TABLE TO BE RESOLVED FROM
+* ENTRIES ON COMPLETION.
+*
+DA       SYMBOL = NE(ASM_PHASE, 1)                            :S(RETURN)
+         TERMINAL = DIFFER(ASM_DEBUG) 'ADDING DA REF '
++           SYMBOL ' DSS OFFSET ' SIZE(DINIT(ASM))
+       DAREFS(ASM)<SYMBOL> = LINK(SIZE(DINIT(ASM)), DAREFS(ASM)<SYMBOL>)
+         SYMBOL =
+         DSS(ASM)<LAB> = DIFFER(LAB) SIZE(DINIT(ASM))
+         DINIT(ASM) = DINIT(ASM) DUPL(' ', 8)                  :(RETURN)
+*
 DS       NE(ASM_PHASE, 1)                                     :S(RETURN)
          DSS(ASM)<LAB> = DIFFER(LAB) SIZE(DINIT(ASM))
          DINIT(ASM) = DINIT(ASM) P1                            :(RETURN)
@@ -308,59 +324,79 @@ ASTRG    ASM_PARM = EVAL(X)                         :S(RETURN)F(FRETURN)
 ASREG    FUNCTION(X '_')                                     :F(FRETURN)
          ASM_PARM = APPLY(X '_',)                              :(RETURN)
 *
-ASM      JIT_SET_STATE(JIT(ASM))
+ASM      SRC(ASM) = SRC
+         JIT_SET_STATE(JIT(ASM))
+         ASM_PHASE(1)                                        :F(FRETURN)
+         ASM_BSS()                                           :F(FRETURN)
+         ASM_DSS()                                           :F(FRETURN)
+         ASM_PHASE(2)                                        :F(FRETURN)
+         ASM_LINK()                                          :F(FRETURN)
+         ASM_EMIT()                                          :F(FRETURN)
+         ASM_DA()                                   :S(RETURN)F(FRETURN)
 *
-         TERMINAL = DIFFER(ASM_DEBUG) '*** PHASE 1 ***'
-         ASM_PHASE(SRC, 1)                                   :F(FRETURN)
+* ENTRIES ADJUST. FIXUP DA REFERENCES (JUMP TABLES, CODE REFERENCES
+* IN DSS)
 *
-* ALLOCATE BSS, TRANSFER ADJUSTED BSS SYMBOLS TO SYMBOLS1
+ASM_DA   TERMINAL = DIFFER(ASM_DEBUG) '*** DA ***'
+         A = KEYST(ENTRIES(ASM))
+         I = 1
+ASM_L_13 ENTRIES(ASM)<A<I>> = JIT_ADDRESS(ENTRIES(ASM)<A<I>>)
++                                                             :F(RETURN)
+         P = DAREFS(ASM)<A<I>>
+ASM_L_16 IDENT(P)                                           :S(ASM_L_15)
+         TERMINAL = DIFFER(ASM_DEBUG)
++           'DA ' VALUE(P) ' TO ' ENTRIES(ASM)<A<I>>
+         POKE_P(DSSBASE(ASM) + VALUE(P), ENTRIES(ASM)<A<I>>)
+         P = NEXT(P)                                         :(ASM_L_16)
+ASM_L_15 I = I + 1                                           :(ASM_L_13)
 *
+* ASM_EMIT: PRODUCE OBJECT CODE
+*
+ASM_EMIT TERMINAL = DIFFER(ASM_DEBUG) '*** EMIT ***'
+         OBJ(ASM) = JIT_EMIT()                                 :(RETURN)
+*
+* ASM_DSS: ALLOCATE AND INITIALIZE DSS SECTION
+*
+ASM_DSS  TERMINAL = DIFFER(ASM_DEBUG) '*** DSS ALLOCATE ***'
+         DSSBASE(ASM) = MALLOC(SIZE(VDIFFER(DINIT(ASM))))
+         S = DINIT(ASM)
+         I = 0
+ASM_L_11 POKE_C(DSSBASE(ASM) + I, ORD(S))                   :F(ASM_L_12)
+         S = SUBSTR(S, 2)
+         I = I + 1                                           :(ASM_L_11)
+ASM_L_12 A = KEYST(DSS(ASM))                                  :F(RETURN)
+         I = 1
+ASM_L_9  SYMBOLS1(ASM)<A<I>> = DSS(ASM)<A<I>> + DSSBASE(ASM)
++                                                             :F(RETURN)
+*
+         TERMINAL = DIFFER(ASM_DEBUG)
++           'PHASE 1 DSS SYMBOL ' A<I> ' = ' IH(SYMBOLS1(ASM)<A<I>>)
+*
+         I = I + 1                                            :(ASM_L_9)
+*
+* ALLOCATE BSS SECTION
+*
+ASM_BSS  TERMINAL = DIFFER(ASM_DEBUG) '*** BSS ALLOCATE ***'
          BSSBASE(ASM) = NE(SZBSS(ASM)) MALLOC(SZBSS(ASM))
          A = KEYST(BSS(ASM))
          I = 1
-ASM_L_7  SYMBOLS1(ASM)<A<I>> = BSS(ASM)<A<I>> + BSSBASE(ASM) :F(ASM_L_8)
+ASM_L_7  SYMBOLS1(ASM)<A<I>> = BSS(ASM)<A<I>> + BSSBASE(ASM)  :F(RETURN)
 *
          TERMINAL = DIFFER(ASM_DEBUG)
 +           'PHASE 1 BSS SYMBOL ' A<I> ' = ' IH(SYMBOLS1(ASM)<A<I>>)
 *
          I = I + 1                                            :(ASM_L_7)
 *
-* ALLOCATE DSS, COPY IN DATA, ADJUST DSS SYMBOLS TO SYMBOLS1
-*
-ASM_L_8  DSSBASE(ASM) = MALLOC(SIZE(VDIFFER(DINIT(ASM))))
-         S = DINIT(ASM)
-         I = 0
-ASM_L_11 POKE_C(DSSBASE(ASM) + I, ORD(S))                   :F(ASM_L_12)
-         S = SUBSTR(S, 2)
-         I = I + 1                                           :(ASM_L_11)
-ASM_L_12 A = KEYST(DSS(ASM))                                :F(ASM_L_10)
-         I = 1
-ASM_L_9  SYMBOLS1(ASM)<A<I>> = DSS(ASM)<A<I>> + DSSBASE(ASM)
-+                                                           :F(ASM_L_10)
-*
-         TERMINAL = DIFFER(ASM_DEBUG)
-+           'PHASE 1 DSS SYMBOL ' A<I> ' = ' IH(SYMBOLS1(ASM)<A<I>>)
-*
-         I = I + 1                                            :(ASM_L_9)
-ASM_L_10
-*
-* ALL NEEDED PHASE 1 SYMBOLS ARE IN SYMBOLS1, RUN PHASE 2 WHICH ACTUALLY
-* GENERATES CODE.
-*
-         TERMINAL = DIFFER(ASM_DEBUG) '*** PHASE 2 ***'
-         ASM_PHASE(SRC, 2)                                   :F(FRETURN)
-*
-         TERMINAL = DIFFER(ASM_DEBUG) '*** LINK ***'
-         ASM = ASM_LINK(ASM)                                   :(RETURN)
-*
 * ASM PHASE 1 OR 2.
 *
 ASM_PHASE
+         TERMINAL = DIFFER(ASM_DEBUG) '*** PHASE ' ASM_PHASE '***'
+         SRC = SRC(ASM)
 ASM_2    SRC BREAK(CHARS_NL) . LINE CHARS_NL =                :F(RETURN)
 *
          TERMINAL = DIFFER(ASM_DEBUG) LINE
 *
-         LINE FENCE ANY(';*')                                  :S(ASM_2)
+         LINE FENCE NSPAN(' ' CHARS_TAB) ANY(';*')             :S(ASM_2)
          LINE = TRIM(LINE)
          IDENT(LINE)                                           :S(ASM_2)
          ELINE = LINE
@@ -399,17 +435,8 @@ ASM_9    IDENT(SYMBOL)                                         :S(ASM_2)
          REFERENCES(ASM)<SYMBOL> = LINK(R, REFERENCES(ASM)<SYMBOL>)
 +                                                               :(ASM_2)
 *
-ASM_LINK SYMBOLS = IDENT(SYMBOLS) SYMBOLS(ASM)
-*
-* PROGRAM RELOCATIONS FROM GIVEN SYMBOL TABLE
-*
-* NOTE - THESE ARE LOCAL ONLY (TYPICALLY). RESOLUTION BETWEEN
-* MODULES SHOULD BE VIA SHARED TABLES. OR EXTERN STATEMENTS.
-* THESE ISSUES WILL BE DEALT WITH AS THE CODE GENERATOR REQUIREMENTS
-* HARDEN -- THIS IS "JUST IN TIME" DEVELOPMENT. WE REALLY DON'T
-* WANT TO OVER-DESIGN THIS STUFF. WORST CASE, WE MAY NEED TO
-* "REASSEMBLE" PARTS (FIXME).
-*
+ASM_LINK TERMINAL = DIFFER(ASM_DEBUG) '*** LINK ***'
+         SYMBOLS = SYMBOLS(ASM)
          A = KEYST(REFERENCES(ASM))                           :F(RETURN)
          I = 1
 ASM_L_2  P = REFERENCES(ASM)<A<I>>                           :F(ASM_L_5)
@@ -427,14 +454,15 @@ ASM_L_3  IDENT(P)                                            :S(ASM_L_4)
          JIT_PATCH_AT(VALUE(P), R)
          P = NEXT(P)                                          :(ASM_L_3)
 ASM_L_4  I = I + 1                                            :(ASM_L_2)
-ASM_L_5  A = KEYST(REFERENCES(ASM))                           :F(RETURN)
-         ASM_LINK = 'INCOMPLETE'                               :(RETURN)
+ASM_L_5  A = KEYST(REFERENCES(ASM))                 :S(FRETURN)F(RETURN)
 *
 ASM_CREATE
          ASM_CREATE = ASM_TYPE()
          SYMBOLS1(ASM_CREATE) =
 +           (DIFFER(SYMBOLS1) COPYT(SYMBOLS1), TABLE())
          SYMBOLS(ASM_CREATE) = TABLE()
+         ENTRIES(ASM_CREATE) = TABLE()
+         DAREFS(ASM_CREATE) = TABLE()
          REFERENCES(ASM_CREATE) = TABLE()
          DSS(ASM_CREATE) = TABLE()
          BSS(ASM_CREATE) = TABLE()
@@ -442,8 +470,7 @@ ASM_CREATE
          DINIT(ASM_CREATE) =
          DSSBASE(ASM_CREATE) = 0
          BSSBASE(ASM_CREATE) = 0
-         JIT(ASM_CREATE) = JIT_NEW_STATE()
-         JIT_SET_STATE(JIT(ASM_CREATE))                        :(RETURN)
+         JIT(ASM_CREATE) = JIT_NEW_STATE()                     :(RETURN)
 *
 ASM_DESTROY
          FREE(DSSBASE(ASM))

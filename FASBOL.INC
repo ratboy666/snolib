@@ -40,6 +40,7 @@
          OPSYN('DATE.', 'DATE')
          OPSYN('TABLE.', 'TABLE')
          OPSYN('ARRAY.', 'ARRAY')
+         OPSYN('FREEZE.', 'FREEZE')
 *
          DEFINE('DECLARE()','RETURN.')
          DEFINE('EJECT()', 'RETURN.')
@@ -53,8 +54,13 @@
          DEFINE('EXTIME(PROGNAME)')
          DEFINE('INSERT(SUBSTRING,STRING,LEN,POS)PART1,PART2')
          DEFINE('SUBSTR(STRING,LEN,POS)')
+         DEFINE('MEMBER(TABLE,ELEMENT)')
 *
          DEFINE('FASBOL()')                                :(END_FASBOL)
+*
+MEMBER   FREEZE.(TABLE)
+         MEMBER = TABLE<MEMBER>
+         THAW(TABLE)                                           :(RETURN)
 *
 TABLE    IDENT(DATATYPE(P), 'ARRAY')                         :S(TABLE..)
          TABLE = IDENT(DATATYPE(P), 'TABLE') TABLE()          :S(RETURN)
