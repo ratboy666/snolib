@@ -1,39 +1,72 @@
 ; TEST.JIT
 ;
-; TEST JIT ASM (ASSEMBLER/LOADER)
+; TEST JIT ASM (ASSEMBLER/LOADER) FORMAT. THIS IS THE TARGET FORMAT
+; FOR PROGRAMS THAT GENERATE "OBJECT CODE" FOR EXECUTION.
 ;
-         NAME      'SPEED'
+; FOR MAXIMUM PORTABILITY, OBJECT FILES SHOULD ONLY REFER TO REGISTERS
+; %R0, %R1, %R2, %V0, %V1, %V2, %F0, %F1, %F2, %F3, %F4, %F5, %FP
 ;
-PRINTF   CEXTERN   'printf'
+; %R3, %V3, %F6, %F7 ARE AVAILABLE ON X86_64 AND MOST OTHER MORE
+; ADVANCED PLATFORMS. THE 'USES' DEFINITION ENSURES THAT REQUIRED
+; REGISTERS ARE AVAILABLE. THIS ALLOWS CROSS-PLATFORM EXCHANGE OF
+; LOADABLE OBJECT FILES.
+; 
+         NAME        'SPEED'
+         USES        '%R1,%R2,%F0,%F1,%V2'
+;
+PRINTF   EXTERN      'printf'
 ;
 D        RESQ
-D2       DQ        5
+D2       DQ          5
+F2       DD          1.5
+DBL2     DQ          2.1
 ;
-STR      DS        'hello, world %d'
-         DB        10
-         DB        0
+NL       EXTERN      (ORD(CHARS_NL))
+STR      DS          'hello, world %d %g %g %d'
+         DB          NL
+         DB          0
 ;
-LIMIT    EQU       10000000
+; NOTE THAT THERE ARE TWO DISTINCT PLACES TO PUT 'EQUATES' -
+; THE EXTERN AND EQU. EXTERN IS USED DIRECTLY, BUT CANNOT BE
+; MANIPULATED IN AN EXPRESSION. NL IS PUT THERE. EQU PUTS
+; THE SYMBOL INTO THE SNOBOL4 VARIABLE SPACE. IT IS ACCESSED
+; BY (EXPRESSSION), WHICH FORCES AN EVAL. PUT 'LIMIT' THERE.
+; THIS ALSO MEANS THAT (FOR INSTANCE) '(LIMIT + 1)' IS VALID.
 ;
+LIMIT    EQU         10000000
+;
+ENTRY    ADDRESS
          PROLOG
-         NOTE      'COUNT 0..LIMIT', 1
-         MOVI      .R1, (LIMIT)        ; LIMIT TO R1
-         MOVI      .R2, 0
-L        ADDI      .R2, .R2, 1
-         BLER      .R2, .R1, L
+         NOTE        'COUNT 0..LIMIT', 1
+         MOVI        %R1, (LIMIT)      ; LIMIT TO R1
+         MOVI        %R2, 0
+L        ADDI        %R2, %R2, 1
+         BLER        %R2, %R1, L
 ;
-         NOTE      'PRINTF(STR, R2)', 2
-         MOVI      .R0, STR            ; PRINTF(STR, R2)
-         PUSHARGR  .R0
+         NOTE        'printf(STR, R2, F2, DBL2, R2)', 2
+         PREPARE                       ; PRINTF(STR, ...)
+         PUSHARGI    STR
          ELLIPSIS
-         PUSHARGR  .R2
-         FINISHI   PRINTF
+         PUSHARGR    %R2
+         LDI_F       %F0, F2           ; LOAD FLOAT
+         EXTR_F_D    %F0, %F0          ; CONVERT TO DOUBLE
+         PUSHARGR_D  %F0
+         LDI_D       %F0, DBL2
+         PUSHARGR_D  %F0
+         PUSHARGR    %R2
+         FINISHI     PRINTF
+         RETVAL      %V2
 ;
-         NOTE      'D = D2', 4
-         LDI       .R1, D2
-         STI       D, .R1
+         NOTE        'D = D2', 3
+         LDI         %R1, D2
+         STI         D, %R1
 ;
-         NOTE      'RETURN R1', 5
-         RETR      .R1                 ; RETURN R1
+         NOTE        'return F0', 4
+;
+         LDI_D       %F0, DBL2         ; F0 = DBL2
+         LDI_F       %F1, F2           ; F1 = F2
+         EXTR_F_D    %F1, %F1          ; CONVERT TO DOUBLE
+         ADDR_D      %F0, %F0, %F1     ; F0 = F0 + F1
+         RETR_D      %F0               ; RETURN F0
          EPILOG
          END

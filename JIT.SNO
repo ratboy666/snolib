@@ -3,7 +3,7 @@
 -INCLUDE 'CRACK.INC'
 -INCLUDE 'SEQ.INC'
 -IN1024
--LINE 1209 "JIT.lss"
+-LINE 1259 "JIT.lss"
 -STITL JIT
 -EJECT
 *
@@ -63,89 +63,89 @@ static int get_note_jit(void *p)
     return jit_get_note(p, &note_s1, &note_s2, &note_i);
 }
 #ifdef JIT_R0
-#define r0_() JIT_R0
+#  define r0_() JIT_R0
 #else
-#define r0() -1
+#  define r0() -1
 #endif
 #ifdef JIT_R1
-#define r1_() JIT_R1
+#  define r1_() JIT_R1
 #else
-#define r1_() -1
+#  define r1_() -1
 #endif
 #ifdef JIT_R2
-#define r2_() JIT_R2
+#  define r2_() JIT_R2
 #else
-#define r2_() -1
+#  define r2_() -1
 #endif
 #ifdef JIT_R3
-#define r3_() JIT_R3
+#  define r3_() JIT_R3
 #else
-#define r3_() -1
+#  define r3_() -1
 #endif
 #ifdef JIT_V0
-#define v0_() JIT_V0
+#  define v0_() JIT_V0
 #else
-#define v0_() -1
+#  define v0_() -1
 #endif
 #ifdef JIT_V1
-#define v1_() JIT_V1
+#  define v1_() JIT_V1
 #else
-#define v1_() -1
+#  define v1_() -1
 #endif
 #ifdef JIT_V2
-#define v2_() JIT_V2
+#  define v2_() JIT_V2
 #else
-#define v2_() -1
+#  define v2_() -1
 #endif
 #ifdef JIT_V3
-#define v3_() JIT_V3
+#  define v3_() JIT_V3
 #else
-#define v3_() -1
+#  define v3_() -1
 #endif
 #ifdef JIT_F0
-#define f0_() JIT_F0
+#  define f0_() JIT_F0
 #else
-#define f0_() -1
+#  define f0_() -1
 #endif
 #ifdef JIT_F1
-#define f1_() JIT_F1
+#  define f1_() JIT_F1
 #else
-#define f1_() -1
+#  define f1_() -1
 #endif
 #ifdef JIT_F2
-#define f2_() JIT_F2
+#  define f2_() JIT_F2
 #else
-#define f2_() -1
+#  define f2_() -1
 #endif
 #ifdef JIT_F3
-#define f3_() JIT_F3
+#  define f3_() JIT_F3
 #else
-#define f3_() -1
+#  define f3_() -1
 #endif
 #ifdef JIT_F4
-#define f4_() JIT_F4
+#  define f4_() JIT_F4
 #else
-#define f4_() -1
+#  define f4_() -1
 #endif
 #ifdef JIT_F5
-#define f5_() JIT_F5
+#  define f5_() JIT_F5
 #else
-#define f5_() -1
+#  define f5_() -1
 #endif
 #ifdef JIT_F6
-#define f6_() JIT_F6
+#  define f6_() JIT_F6
 #else
-#define f6_() -1
+#  define f6_() -1
 #endif
 #ifdef JIT_F7
-#define f7_() JIT_F7
+#  define f7_() JIT_F7
 #else
-#define f7_() -1
+#  define f7_() -1
 #endif
 #ifdef JIT_FP
-#define fp_() JIT_FP
+#  define fp_() JIT_FP
 #else
-#define fp_() -1
+#  define fp_() -1
 #endif
 -SNOBOL OPSYN('DEF', 'C_WRAPPER_PROTO')
 #line 140 "JIT.lss"
@@ -1136,7 +1136,7 @@ static int get_note_jit(void *p)
          LOAD('JIT_SUBR_F(INTEGER,INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_SUBR_D(INTEGER,INTEGER,INTEGER)INTEGER', 'jit.so')
 *
--PUBLIC JI_SUBI(), JIT_SUBI_F(), JIT_SUBI_D()
+-PUBLIC JIT_SUBI(), JIT_SUBI_F(), JIT_SUBI_D()
 *
          LOAD('JIT_SUBI(INTEGER,INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_SUBI_F(INTEGER,INTEGER,REAL)INTEGER', 'jit.so')
@@ -1358,30 +1358,51 @@ static int get_note_jit(void *p)
          LOAD('JIT_MOVI_F(INTEGER,REAL)INTEGER', 'jit.so')
          LOAD('JIT_MOVI_D(INTEGER,REAL)INTEGER', 'jit.so')
 *
+-PUBLIC JIT_EXTR_C(), JIT_EXTR_UC(), JIT_EXTR_S(), JIT_EXTR_US()
 *
          LOAD('JIT_EXTR_C(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_EXTR_UC(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_EXTR_S(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_EXTR_US(INTEGER,INTEGER)INTEGER', 'jit.so')
+*
+-PUBLIC JIT_EXTR_I(), JIT_EXTR_UI(), JIT_EXTR_F(), JIT_EXTR_D_F()
+*
          LOAD('JIT_EXTR_I(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_EXTR_UI(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_EXTR_F(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_EXTR_D_F(INTEGER,INTEGER)INTEGER', 'jit.so')
+*
+-PUBLIC JIT_EXTR_D(), JIT_EXTR_F_D()
+*
          LOAD('JIT_EXTR_D(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_EXTR_F_D(INTEGER,INTEGER)INTEGER', 'jit.so')
+*
+-PUBLIC JIT_TRUNCR_F_I(), JIT_TRUNCR_F(), JIT_TRUNCR_F_L()
+*
          LOAD('JIT_TRUNCR_F_I(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_TRUNCR_F(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_TRUNCR_F_L(INTEGER,INTEGER)INTEGER', 'jit.so')
+*
+-PUBLIC JIT_TRUNCR_D_I(), JIT_TRUNCR_D(), JIT_TRUNCR_D_L()
+*
          LOAD('JIT_TRUNCR_D_I(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_TRUNCR_D(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_TRUNCR_D_L(INTEGER,INTEGER)INTEGER', 'jit.so')
+*
+-PUBLIC JIT_HTONR(), JIT_NTOHR()
+*
          LOAD('JIT_HTONR(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_NTOHR(INTEGER,INTEGER)INTEGER', 'jit.so')
+*
+-PUBLIC JIT_LDR(), JIT_LDR_C(), JIT_LDR_UC(), JIT_LDR_S(), JIT_LDR_US()
+*
          LOAD('JIT_LDR(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_LDR_C(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_LDR_UC(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_LDR_S(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_LDR_US(INTEGER,INTEGER)INTEGER', 'jit.so')
+*
+*
          LOAD('JIT_LDR_I(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_LDR_UI(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_LDR_L(INTEGER,INTEGER)INTEGER', 'jit.so')
@@ -1397,6 +1418,8 @@ static int get_note_jit(void *p)
          LOAD('JIT_LDI_L(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_LDI_F(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_LDI_D(INTEGER,INTEGER)INTEGER', 'jit.so')
+*
+*
          LOAD('JIT_LDXR(INTEGER,INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_LDXR_C(INTEGER,INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_LDXR_UC(INTEGER,INTEGER,INTEGER)INTEGER', 'jit.so')
@@ -1407,6 +1430,8 @@ static int get_note_jit(void *p)
          LOAD('JIT_LDXR_L(INTEGER,INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_LDXR_F(INTEGER,INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_LDXR_D(INTEGER,INTEGER,INTEGER)INTEGER', 'jit.so')
+*
+*
          LOAD('JIT_LDXI(INTEGER,INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_LDXI_C(INTEGER,INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_LDXI_UC(INTEGER,INTEGER,INTEGER)INTEGER', 'jit.so')
@@ -1417,6 +1442,8 @@ static int get_note_jit(void *p)
          LOAD('JIT_LDXI_L(INTEGER,INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_LDXI_F(INTEGER,INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_LDXI_D(INTEGER,INTEGER,INTEGER)INTEGER', 'jit.so')
+*
+*
          LOAD('JIT_STR(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_STR_C(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_STR_UC(INTEGER,INTEGER)INTEGER', 'jit.so')
@@ -1427,6 +1454,8 @@ static int get_note_jit(void *p)
          LOAD('JIT_STR_L(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_STR_F(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_STR_D(INTEGER,INTEGER)INTEGER', 'jit.so')
+*
+*
          LOAD('JIT_STI(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_STI_C(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_STI_UC(INTEGER,INTEGER)INTEGER', 'jit.so')
@@ -1437,6 +1466,8 @@ static int get_note_jit(void *p)
          LOAD('JIT_STI_L(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_STI_F(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_STI_D(INTEGER,INTEGER)INTEGER', 'jit.so')
+*
+*
          LOAD('JIT_STXR(INTEGER,INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_STXR_C(INTEGER,INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_STXR_UC(INTEGER,INTEGER,INTEGER)INTEGER', 'jit.so')
@@ -1447,6 +1478,8 @@ static int get_note_jit(void *p)
          LOAD('JIT_STXR_L(INTEGER,INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_STXR_F(INTEGER,INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_STXR_D(INTEGER,INTEGER,INTEGER)INTEGER', 'jit.so')
+*
+*
          LOAD('JIT_STXI(INTEGER,INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_STXI_C(INTEGER,INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_STXI_UC(INTEGER,INTEGER,INTEGER)INTEGER', 'jit.so')
@@ -1457,6 +1490,8 @@ static int get_note_jit(void *p)
          LOAD('JIT_STXI_L(INTEGER,INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_STXI_F(INTEGER,INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_STXI_D(INTEGER,INTEGER,INTEGER)INTEGER', 'jit.so')
+*
+*
          LOAD('JIT_PUSHARGR(INTEGER)', 'jit.so')
          LOAD('JIT_PUSHARGR_C(INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_PUSHARGR_UC(INTEGER)INTEGER', 'jit.so')
@@ -1467,6 +1502,8 @@ static int get_note_jit(void *p)
          LOAD('JIT_PUSHARGR_L(INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_PUSHARGR_F(INTEGER)', 'jit.so')
          LOAD('JIT_PUSHARGR_D(INTEGER)', 'jit.so')
+*
+*
          LOAD('JIT_PUSHARGI(INTEGER)', 'jit.so')
          LOAD('JIT_PUSHARGI_C(INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_PUSHARGI_UC(INTEGER)INTEGER', 'jit.so')
@@ -1477,6 +1514,8 @@ static int get_note_jit(void *p)
          LOAD('JIT_PUSHARGI_L(INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_PUSHARGI_F(REAL)', 'jit.so')
          LOAD('JIT_PUSHARGI_D(REAL)', 'jit.so')
+*
+*
          LOAD('JIT_ARG()INTEGER', 'jit.so')
          LOAD('JIT_ARG_C(INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_ARG_UC(INTEGER)INTEGER', 'jit.so')
@@ -1487,6 +1526,8 @@ static int get_note_jit(void *p)
          LOAD('JIT_ARG_L(INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_ARG_F()INTEGER', 'jit.so')
          LOAD('JIT_ARG_D()INTEGER', 'jit.so')
+*
+*
          LOAD('JIT_GETARG(INTEGER,INTEGER)', 'jit.so')
          LOAD('JIT_GETARG_C(INTEGER,INTEGER)', 'jit.so')
          LOAD('JIT_GETARG_UC(INTEGER,INTEGER)', 'jit.so')
@@ -1497,6 +1538,8 @@ static int get_note_jit(void *p)
          LOAD('JIT_GETARG_L(INTEGER,INTEGER)', 'jit.so')
          LOAD('JIT_GETARG_F(INTEGER,INTEGER)', 'jit.so')
          LOAD('JIT_GETARG_D(INTEGER,INTEGER)', 'jit.so')
+*
+*
          LOAD('JIT_RET()', 'jit.so')
          LOAD('JIT_RETR(INTEGER)', 'jit.so')
          LOAD('JIT_RETR_C(INTEGER)INTEGER', 'jit.so')
@@ -1518,6 +1561,8 @@ static int get_note_jit(void *p)
          LOAD('JIT_RETI_L(INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_RETI_F(REAL)', 'jit.so')
          LOAD('JIT_RETI_D(REAL)', 'jit.so')
+*
+*
          LOAD('JIT_RETVAL(INTEGER)', 'jit.so')
          LOAD('JIT_RETVAL_C(INTEGER)', 'jit.so')
          LOAD('JIT_RETVAL_UC(INTEGER)', 'jit.so')
@@ -1528,6 +1573,8 @@ static int get_note_jit(void *p)
          LOAD('JIT_RETVAL_L(INTEGER)', 'jit.so')
          LOAD('JIT_RETVAL_F(INTEGER)', 'jit.so')
          LOAD('JIT_RETVAL_D(INTEGER)', 'jit.so')
+*
+*
          LOAD('JIT_BLTR(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_BLTR_U(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_BLTR_F(INTEGER,INTEGER)INTEGER', 'jit.so')
@@ -1604,6 +1651,9 @@ static int get_note_jit(void *p)
          LOAD('JIT_BOSUBR_U(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_BOSUBI(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_BOSUBI_U(INTEGER,INTEGER)INTEGER', 'jit.so')
+*
+-PUBLIC JIT_BXSUBR(), JIT_BXSUBR_U(), JIT_BXSUBI(), JIT_BXSUBI_U()
+*
          LOAD('JIT_BXSUBR(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_BXSUBR_U(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_BXSUBI(INTEGER,INTEGER)INTEGER', 'jit.so')

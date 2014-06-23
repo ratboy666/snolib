@@ -1,7 +1,7 @@
 -MODULE FFI
 -CASE 1
 -PLUSOPS 1
--LINE 641 "FFI.lss"
+-LINE 651 "FFI.lss"
 -LINE 17 "FFI.lss"
 -IN72
 -STITL FFI
@@ -380,12 +380,12 @@ static long ffi_resultp(long p)
 
 #line 447 "FFI.lss"
 
-static int call_integer_ffi(long p)
+static long call_integer_ffi(long p)
 {
     ffi_t *ffip = (void *)p;
     ffi_call(ffip->cif, FFI_FN(ffip->callp),
 	     &ffip->result, ffip->arg_ptrs);
-    return ffip->result;
+    return (long)ffip->result;
 }
 
 -SNOBOL C_WRAPPER_PROTO('CALL_INTEGER_FFI(LONG)INTEGER', .EMBED)
@@ -396,22 +396,32 @@ static long call_ptr_ffi(long p)
     ffi_t *ffip = (void *)p;
     ffi_call(ffip->cif, FFI_FN(ffip->callp),
 	     &ffip->result, ffip->arg_ptrs);
-    return ffip->result;
+    return (long)ffip->result;
 }
 
 -SNOBOL C_WRAPPER_PROTO('CALL_PTR_FFI(LONG)LONG', .EMBED)
 #line 467 "FFI.lss"
 
+/* WARNING - Be careful with floating point calls - assigning through
+ * generic result (ffip->result) doesn't actually work. Instead, we
+ * provide a variable here to hold the result. FIXME. In future,
+ * perhaps provide double and float variables as targets in ffi_t
+ * -- but, this works as a stopgap measure.
+ */
 static double call_real_ffi(long p)
 {
     ffi_t *ffip = (void *)p;
+    double result;
     ffi_call(ffip->cif, FFI_FN(ffip->callp),
-	     &ffip->result, ffip->arg_ptrs);
-    return ffip->result;
+	     &result, ffip->arg_ptrs);
+    return result;
+//    ffi_call(ffip->cif, FFI_FN(ffip->callp),
+//	     &ffip->result, ffip->arg_ptrs);
+//    return (double)ffip->result;
 }
 
 -SNOBOL C_WRAPPER_PROTO('CALL_REAL_FFI(LONG)REAL', .EMBED)
-#line 477 "FFI.lss"
+#line 487 "FFI.lss"
 
 static char *call_string_ffi(long p)
 {
@@ -422,16 +432,16 @@ static char *call_string_ffi(long p)
 }
 
 -SNOBOL C_WRAPPER_PROTO('CALL_STRING_FFI(LONG)STRING', .EMBED)
-#line 487 "FFI.lss"
+#line 497 "FFI.lss"
 
-#line 495 "FFI.lss"
+#line 505 "FFI.lss"
 
 /* DL functions
  */
 static long dlopen_(char *s, int n) { return (long)dlopen(s, n); }
 
 -SNOBOL C_WRAPPER_PROTO('DLOPEN_(STRING,INTEGER)LONG', .EMBED)
-#line 501 "FFI.lss"
+#line 511 "FFI.lss"
 
 static char *dlerror_(void)
 {
@@ -441,7 +451,7 @@ static char *dlerror_(void)
 }
 
 -SNOBOL C_WRAPPER_PROTO('DLERROR_()STRING', .EMBED)
-#line 510 "FFI.lss"
+#line 520 "FFI.lss"
 
 static long dlsym_(long p, char *s)
 {
@@ -449,31 +459,31 @@ static long dlsym_(long p, char *s)
 }
 
 -SNOBOL C_WRAPPER_PROTO('DLSYM_(LONG,STRING)LONG', .EMBED)
-#line 517 "FFI.lss"
+#line 527 "FFI.lss"
 
 static int dlclose_(long p) { return dlclose((void *)p); }
 
 -SNOBOL C_WRAPPER_PROTO('DLCLOSE_(LONG)INTEGER', .EMBED)
-#line 521 "FFI.lss"
+#line 531 "FFI.lss"
 
 -END
--LINE 528 "FFI.lss"
+-LINE 538 "FFI.lss"
 -SNOBOL DYNAMIC_DEBUG = 1
--LINE 529 "FFI.lss"
+-LINE 539 "FFI.lss"
 -SNOBOL COMPILE_DYNAMIC(ffi) :F(ERROR) ;
--LINE 530 "FFI.lss"
+-LINE 540 "FFI.lss"
 -SNOBOL LIBS = '-lffi -ldl'
--LINE 531 "FFI.lss"
+-LINE 541 "FFI.lss"
 -SNOBOL OBJECTS = ffi ; OBJECTS '.c' = '.o'
--LINE 532 "FFI.lss"
+-LINE 542 "FFI.lss"
 -SNOBOL LINK_DYNAMIC('./ffi', OBJECTS, LIBS) :F(ERROR) ;
--LINE 533 "FFI.lss"
+-LINE 543 "FFI.lss"
 -CMNT ERASE TEMPORARY FILES
 -CMNT     WE DON'T NEED THE C BITS, OR THE OBJECT FILES ANYMORE.
 -CMNT     ALL WE REQUIRE IS FFI.SO
 -CMNT -SNOBOL A = CRACK(ffi ' ' OBJECTS, ' ')
 -CMNT -SNOBOL SEQ(' DELETE(A<K>) ', .K)
--LINE 543 "FFI.lss"
+-LINE 553 "FFI.lss"
          LOAD('FFI_FREE(INTEGER)', 'ffi.so')
          LOAD('FFI_CLEAR(INTEGER)', 'ffi.so')
          LOAD('FFI_NEW(STRING,STRING)INTEGER', 'ffi.so')
@@ -504,7 +514,7 @@ static int dlclose_(long p) { return dlclose((void *)p); }
          LOAD('DLSYM_(INTEGER,STRING)', 'ffi.so')
          LOAD('DLCLOSE_(INTEGER)INTEGER', 'ffi.so')
 *
--LINE 578 "FFI.lss"
+-LINE 588 "FFI.lss"
 -PUBLIC DLOPEN(), DLERROR(), DLSYM(), DLCLOSE()
 *
          DEFINE('DLOPEN(S,I)')

@@ -51,8 +51,8 @@ END
 
 <<>>=
 -MODULE AI
--IN72
 <<INCLUDES>>
+-IN72
 -STITL AI
 -EJECT
 *

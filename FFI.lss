@@ -445,12 +445,12 @@ it in the ffi structure).
 
 <<FFI,TYPE=C>>=
 
-static int call_integer_ffi(long p)
+static long call_integer_ffi(long p)
 {
     ffi_t *ffip = (void *)p;
     ffi_call(ffip->cif, FFI_FN(ffip->callp),
 	     &ffip->result, ffip->arg_ptrs);
-    return ffip->result;
+    return (long)ffip->result;
 }
 
 -SNOBOL C_WRAPPER_PROTO('CALL_INTEGER_FFI(LONG)INTEGER', .EMBED)
@@ -460,17 +460,27 @@ static long call_ptr_ffi(long p)
     ffi_t *ffip = (void *)p;
     ffi_call(ffip->cif, FFI_FN(ffip->callp),
 	     &ffip->result, ffip->arg_ptrs);
-    return ffip->result;
+    return (long)ffip->result;
 }
 
 -SNOBOL C_WRAPPER_PROTO('CALL_PTR_FFI(LONG)LONG', .EMBED)
 
+/* WARNING - Be careful with floating point calls - assigning through
+ * generic result (ffip->result) doesn't actually work. Instead, we
+ * provide a variable here to hold the result. FIXME. In future,
+ * perhaps provide double and float variables as targets in ffi_t
+ * -- but, this works as a stopgap measure.
+ */
 static double call_real_ffi(long p)
 {
     ffi_t *ffip = (void *)p;
+    double result;
     ffi_call(ffip->cif, FFI_FN(ffip->callp),
-	     &ffip->result, ffip->arg_ptrs);
-    return ffip->result;
+	     &result, ffip->arg_ptrs);
+    return result;
+//    ffi_call(ffip->cif, FFI_FN(ffip->callp),
+//	     &ffip->result, ffip->arg_ptrs);
+//    return (double)ffip->result;
 }
 
 -SNOBOL C_WRAPPER_PROTO('CALL_REAL_FFI(LONG)REAL', .EMBED)

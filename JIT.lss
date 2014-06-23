@@ -52,89 +52,89 @@ static int get_note_jit(void *p)
     return jit_get_note(p, &note_s1, &note_s2, &note_i);
 }
 #ifdef JIT_R0
-#define r0_() JIT_R0
+#  define r0_() JIT_R0
 #else
-#define r0() -1
+#  define r0() -1
 #endif
 #ifdef JIT_R1
-#define r1_() JIT_R1
+#  define r1_() JIT_R1
 #else
-#define r1_() -1
+#  define r1_() -1
 #endif
 #ifdef JIT_R2
-#define r2_() JIT_R2
+#  define r2_() JIT_R2
 #else
-#define r2_() -1
+#  define r2_() -1
 #endif
 #ifdef JIT_R3
-#define r3_() JIT_R3
+#  define r3_() JIT_R3
 #else
-#define r3_() -1
+#  define r3_() -1
 #endif
 #ifdef JIT_V0
-#define v0_() JIT_V0
+#  define v0_() JIT_V0
 #else
-#define v0_() -1
+#  define v0_() -1
 #endif
 #ifdef JIT_V1
-#define v1_() JIT_V1
+#  define v1_() JIT_V1
 #else
-#define v1_() -1
+#  define v1_() -1
 #endif
 #ifdef JIT_V2
-#define v2_() JIT_V2
+#  define v2_() JIT_V2
 #else
-#define v2_() -1
+#  define v2_() -1
 #endif
 #ifdef JIT_V3
-#define v3_() JIT_V3
+#  define v3_() JIT_V3
 #else
-#define v3_() -1
+#  define v3_() -1
 #endif
 #ifdef JIT_F0
-#define f0_() JIT_F0
+#  define f0_() JIT_F0
 #else
-#define f0_() -1
+#  define f0_() -1
 #endif
 #ifdef JIT_F1
-#define f1_() JIT_F1
+#  define f1_() JIT_F1
 #else
-#define f1_() -1
+#  define f1_() -1
 #endif
 #ifdef JIT_F2
-#define f2_() JIT_F2
+#  define f2_() JIT_F2
 #else
-#define f2_() -1
+#  define f2_() -1
 #endif
 #ifdef JIT_F3
-#define f3_() JIT_F3
+#  define f3_() JIT_F3
 #else
-#define f3_() -1
+#  define f3_() -1
 #endif
 #ifdef JIT_F4
-#define f4_() JIT_F4
+#  define f4_() JIT_F4
 #else
-#define f4_() -1
+#  define f4_() -1
 #endif
 #ifdef JIT_F5
-#define f5_() JIT_F5
+#  define f5_() JIT_F5
 #else
-#define f5_() -1
+#  define f5_() -1
 #endif
 #ifdef JIT_F6
-#define f6_() JIT_F6
+#  define f6_() JIT_F6
 #else
-#define f6_() -1
+#  define f6_() -1
 #endif
 #ifdef JIT_F7
-#define f7_() JIT_F7
+#  define f7_() JIT_F7
 #else
-#define f7_() -1
+#  define f7_() -1
 #endif
 #ifdef JIT_FP
-#define fp_() JIT_FP
+#  define fp_() JIT_FP
 #else
-#define fp_() -1
+#  define fp_() -1
 #endif
 -SNOBOL OPSYN('DEF', 'C_WRAPPER_PROTO')
 -SNOBOL DEF('INIT_JIT(STRING)', .EMBED)
@@ -932,10 +932,14 @@ static int get_note_jit(void *p)
          LOAD('JIT_EXTR_D(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_EXTR_F_D(INTEGER,INTEGER)INTEGER', 'jit.so')
 *
+-PUBLIC JIT_TRUNCR_F_I(), JIT_TRUNCR_F(), JIT_TRUNCR_F_L()
 *
          LOAD('JIT_TRUNCR_F_I(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_TRUNCR_F(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_TRUNCR_F_L(INTEGER,INTEGER)INTEGER', 'jit.so')
+*
+-PUBLIC JIT_TRUNCR_D_I(), JIT_TRUNCR_D(), JIT_TRUNCR_D_L()
+*
          LOAD('JIT_TRUNCR_D_I(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_TRUNCR_D(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_TRUNCR_D_L(INTEGER,INTEGER)INTEGER', 'jit.so')
@@ -945,12 +949,15 @@ static int get_note_jit(void *p)
          LOAD('JIT_HTONR(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_NTOHR(INTEGER,INTEGER)INTEGER', 'jit.so')
 *
+-PUBLIC JIT_LDR(), JIT_LDR_C(), JIT_LDR_UC(), JIT_LDR_S(), JIT_LDR_US()
 *
          LOAD('JIT_LDR(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_LDR_C(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_LDR_UC(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_LDR_S(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_LDR_US(INTEGER,INTEGER)INTEGER', 'jit.so')
+*
+*
          LOAD('JIT_LDR_I(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_LDR_UI(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_LDR_L(INTEGER,INTEGER)INTEGER', 'jit.so')
@@ -1199,6 +1206,9 @@ static int get_note_jit(void *p)
          LOAD('JIT_BOSUBR_U(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_BOSUBI(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_BOSUBI_U(INTEGER,INTEGER)INTEGER', 'jit.so')
+*
+-PUBLIC JIT_BXSUBR(), JIT_BXSUBR_U(), JIT_BXSUBI(), JIT_BXSUBI_U()
+*
          LOAD('JIT_BXSUBR(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_BXSUBR_U(INTEGER,INTEGER)INTEGER', 'jit.so')
          LOAD('JIT_BXSUBI(INTEGER,INTEGER)INTEGER', 'jit.so')

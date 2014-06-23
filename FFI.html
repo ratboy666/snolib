@@ -516,12 +516,12 @@ it in the ffi structure).
 <pre><font face="Source Code Pro">
 <b>&laquo;FFI,TYPE=C&raquo;&equiv;</b>
 
-static int call_integer_ffi(long p)
+static long call_integer_ffi(long p)
 {
     ffi_t *ffip = (void *)p;
     ffi_call(ffip-&gt;cif, FFI_FN(ffip-&gt;callp),
 	     &amp;ffip-&gt;result, ffip-&gt;arg_ptrs);
-    return ffip-&gt;result;
+    return (long)ffip-&gt;result;
 }
 
 -SNOBOL C_WRAPPER_PROTO(&#39;CALL_INTEGER_FFI(LONG)INTEGER&#39;, .EMBED)
@@ -531,17 +531,27 @@ static long call_ptr_ffi(long p)
     ffi_t *ffip = (void *)p;
     ffi_call(ffip-&gt;cif, FFI_FN(ffip-&gt;callp),
 	     &amp;ffip-&gt;result, ffip-&gt;arg_ptrs);
-    return ffip-&gt;result;
+    return (long)ffip-&gt;result;
 }
 
 -SNOBOL C_WRAPPER_PROTO(&#39;CALL_PTR_FFI(LONG)LONG&#39;, .EMBED)
 
+/* WARNING - Be careful with floating point calls - assigning through
+ * generic result (ffip-&gt;result) doesn&#39;t actually work. Instead, we
+ * provide a variable here to hold the result. FIXME. In future,
+ * perhaps provide double and float variables as targets in ffi_t
+ * -- but, this works as a stopgap measure.
+ */
 static double call_real_ffi(long p)
 {
     ffi_t *ffip = (void *)p;
+    double result;
     ffi_call(ffip-&gt;cif, FFI_FN(ffip-&gt;callp),
-	     &amp;ffip-&gt;result, ffip-&gt;arg_ptrs);
-    return ffip-&gt;result;
+	     &amp;result, ffip-&gt;arg_ptrs);
+    return result;
+//    ffi_call(ffip-&gt;cif, FFI_FN(ffip-&gt;callp),
+//	     &amp;ffip-&gt;result, ffip-&gt;arg_ptrs);
+//    return (double)ffip-&gt;result;
 }
 
 -SNOBOL C_WRAPPER_PROTO(&#39;CALL_REAL_FFI(LONG)REAL&#39;, .EMBED)
@@ -755,7 +765,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Sun Jun 15 22:04:31 EDT 2014</p></td><td><p align=right>
+Mon Jun 23 12:39:05 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

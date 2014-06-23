@@ -71,89 +71,89 @@ static int get_note_jit(void *p)
     return jit_get_note(p, &amp;note_s1, &amp;note_s2, &amp;note_i);
 }
 <font color="#818181"><i>#ifdef JIT_R0</i></font>
-<font color="#818181"><i>#define r0_() JIT_R0</i></font>
+<font color="#818181"><i>#  define r0_() JIT_R0</i></font>
 <font color="#818181"><i>#else</i></font>
-<font color="#818181"><i>#define r0() -1</i></font>
+<font color="#818181"><i>#  define r0() -1</i></font>
 <font color="#818181"><i>#endif</i></font>
 <font color="#818181"><i>#ifdef JIT_R1</i></font>
-<font color="#818181"><i>#define r1_() JIT_R1</i></font>
+<font color="#818181"><i>#  define r1_() JIT_R1</i></font>
 <font color="#818181"><i>#else</i></font>
-<font color="#818181"><i>#define r1_() -1</i></font>
+<font color="#818181"><i>#  define r1_() -1</i></font>
 <font color="#818181"><i>#endif</i></font>
 <font color="#818181"><i>#ifdef JIT_R2</i></font>
-<font color="#818181"><i>#define r2_() JIT_R2</i></font>
+<font color="#818181"><i>#  define r2_() JIT_R2</i></font>
 <font color="#818181"><i>#else</i></font>
-<font color="#818181"><i>#define r2_() -1</i></font>
+<font color="#818181"><i>#  define r2_() -1</i></font>
 <font color="#818181"><i>#endif</i></font>
 <font color="#818181"><i>#ifdef JIT_R3</i></font>
-<font color="#818181"><i>#define r3_() JIT_R3</i></font>
+<font color="#818181"><i>#  define r3_() JIT_R3</i></font>
 <font color="#818181"><i>#else</i></font>
-<font color="#818181"><i>#define r3_() -1</i></font>
+<font color="#818181"><i>#  define r3_() -1</i></font>
 <font color="#818181"><i>#endif</i></font>
 <font color="#818181"><i>#ifdef JIT_V0</i></font>
-<font color="#818181"><i>#define v0_() JIT_V0</i></font>
+<font color="#818181"><i>#  define v0_() JIT_V0</i></font>
 <font color="#818181"><i>#else</i></font>
-<font color="#818181"><i>#define v0_() -1</i></font>
+<font color="#818181"><i>#  define v0_() -1</i></font>
 <font color="#818181"><i>#endif</i></font>
 <font color="#818181"><i>#ifdef JIT_V1</i></font>
-<font color="#818181"><i>#define v1_() JIT_V1</i></font>
+<font color="#818181"><i>#  define v1_() JIT_V1</i></font>
 <font color="#818181"><i>#else</i></font>
-<font color="#818181"><i>#define v1_() -1</i></font>
+<font color="#818181"><i>#  define v1_() -1</i></font>
 <font color="#818181"><i>#endif</i></font>
 <font color="#818181"><i>#ifdef JIT_V2</i></font>
-<font color="#818181"><i>#define v2_() JIT_V2</i></font>
+<font color="#818181"><i>#  define v2_() JIT_V2</i></font>
 <font color="#818181"><i>#else</i></font>
-<font color="#818181"><i>#define v2_() -1</i></font>
+<font color="#818181"><i>#  define v2_() -1</i></font>
 <font color="#818181"><i>#endif</i></font>
 <font color="#818181"><i>#ifdef JIT_V3</i></font>
-<font color="#818181"><i>#define v3_() JIT_V3</i></font>
+<font color="#818181"><i>#  define v3_() JIT_V3</i></font>
 <font color="#818181"><i>#else</i></font>
-<font color="#818181"><i>#define v3_() -1</i></font>
+<font color="#818181"><i>#  define v3_() -1</i></font>
 <font color="#818181"><i>#endif</i></font>
 <font color="#818181"><i>#ifdef JIT_F0</i></font>
-<font color="#818181"><i>#define f0_() JIT_F0</i></font>
+<font color="#818181"><i>#  define f0_() JIT_F0</i></font>
 <font color="#818181"><i>#else</i></font>
-<font color="#818181"><i>#define f0_() -1</i></font>
+<font color="#818181"><i>#  define f0_() -1</i></font>
 <font color="#818181"><i>#endif</i></font>
 <font color="#818181"><i>#ifdef JIT_F1</i></font>
-<font color="#818181"><i>#define f1_() JIT_F1</i></font>
+<font color="#818181"><i>#  define f1_() JIT_F1</i></font>
 <font color="#818181"><i>#else</i></font>
-<font color="#818181"><i>#define f1_() -1</i></font>
+<font color="#818181"><i>#  define f1_() -1</i></font>
 <font color="#818181"><i>#endif</i></font>
 <font color="#818181"><i>#ifdef JIT_F2</i></font>
-<font color="#818181"><i>#define f2_() JIT_F2</i></font>
+<font color="#818181"><i>#  define f2_() JIT_F2</i></font>
 <font color="#818181"><i>#else</i></font>
-<font color="#818181"><i>#define f2_() -1</i></font>
+<font color="#818181"><i>#  define f2_() -1</i></font>
 <font color="#818181"><i>#endif</i></font>
 <font color="#818181"><i>#ifdef JIT_F3</i></font>
-<font color="#818181"><i>#define f3_() JIT_F3</i></font>
+<font color="#818181"><i>#  define f3_() JIT_F3</i></font>
 <font color="#818181"><i>#else</i></font>
-<font color="#818181"><i>#define f3_() -1</i></font>
+<font color="#818181"><i>#  define f3_() -1</i></font>
 <font color="#818181"><i>#endif</i></font>
 <font color="#818181"><i>#ifdef JIT_F4</i></font>
-<font color="#818181"><i>#define f4_() JIT_F4</i></font>
+<font color="#818181"><i>#  define f4_() JIT_F4</i></font>
 <font color="#818181"><i>#else</i></font>
-<font color="#818181"><i>#define f4_() -1</i></font>
+<font color="#818181"><i>#  define f4_() -1</i></font>
 <font color="#818181"><i>#endif</i></font>
 <font color="#818181"><i>#ifdef JIT_F5</i></font>
-<font color="#818181"><i>#define f5_() JIT_F5</i></font>
+<font color="#818181"><i>#  define f5_() JIT_F5</i></font>
 <font color="#818181"><i>#else</i></font>
-<font color="#818181"><i>#define f5_() -1</i></font>
+<font color="#818181"><i>#  define f5_() -1</i></font>
 <font color="#818181"><i>#endif</i></font>
 <font color="#818181"><i>#ifdef JIT_F6</i></font>
-<font color="#818181"><i>#define f6_() JIT_F6</i></font>
+<font color="#818181"><i>#  define f6_() JIT_F6</i></font>
 <font color="#818181"><i>#else</i></font>
-<font color="#818181"><i>#define f6_() -1</i></font>
+<font color="#818181"><i>#  define f6_() -1</i></font>
 <font color="#818181"><i>#endif</i></font>
 <font color="#818181"><i>#ifdef JIT_F7</i></font>
-<font color="#818181"><i>#define f7_() JIT_F7</i></font>
+<font color="#818181"><i>#  define f7_() JIT_F7</i></font>
 <font color="#818181"><i>#else</i></font>
-<font color="#818181"><i>#define f7_() -1</i></font>
+<font color="#818181"><i>#  define f7_() -1</i></font>
 <font color="#818181"><i>#endif</i></font>
 <font color="#818181"><i>#ifdef JIT_FP</i></font>
-<font color="#818181"><i>#define fp_() JIT_FP</i></font>
+<font color="#818181"><i>#  define fp_() JIT_FP</i></font>
 <font color="#818181"><i>#else</i></font>
-<font color="#818181"><i>#define fp_() -1</i></font>
+<font color="#818181"><i>#  define fp_() -1</i></font>
 <font color="#818181"><i>#endif</i></font>
 -SNOBOL OPSYN(&#39;DEF&#39;, &#39;C_WRAPPER_PROTO&#39;)
 -SNOBOL DEF(&#39;INIT_JIT(STRING)&#39;, .EMBED)
@@ -955,10 +955,14 @@ static int get_note_jit(void *p)
          LOAD(&#39;JIT_EXTR_D(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_EXTR_F_D(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
 <font color="#818181"><i>*</i></font>
+-PUBLIC JIT_TRUNCR_F_I(), JIT_TRUNCR_F(), JIT_TRUNCR_F_L()
 <font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_TRUNCR_F_I(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_TRUNCR_F(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_TRUNCR_F_L(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+-PUBLIC JIT_TRUNCR_D_I(), JIT_TRUNCR_D(), JIT_TRUNCR_D_L()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_TRUNCR_D_I(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_TRUNCR_D(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_TRUNCR_D_L(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
@@ -968,12 +972,15 @@ static int get_note_jit(void *p)
          LOAD(&#39;JIT_HTONR(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_NTOHR(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
 <font color="#818181"><i>*</i></font>
+-PUBLIC JIT_LDR(), JIT_LDR_C(), JIT_LDR_UC(), JIT_LDR_S(), JIT_LDR_US()
 <font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_LDR(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_LDR_C(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_LDR_UC(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_LDR_S(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_LDR_US(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_LDR_I(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_LDR_UI(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_LDR_L(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
@@ -1222,6 +1229,9 @@ static int get_note_jit(void *p)
          LOAD(&#39;JIT_BOSUBR_U(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BOSUBI(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BOSUBI_U(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+-PUBLIC JIT_BXSUBR(), JIT_BXSUBR_U(), JIT_BXSUBI(), JIT_BXSUBI_U()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_BXSUBR(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BXSUBR_U(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BXSUBI(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
@@ -1303,7 +1313,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Sun Jun 22 23:26:10 EDT 2014</p></td><td><p align=right>
+Mon Jun 23 02:25:11 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

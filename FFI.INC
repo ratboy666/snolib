@@ -1,7 +1,7 @@
 -MODULE FFI
 -CASE 1
 -PLUSOPS 1
--LINE 641 "FFI.lss"
+-LINE 651 "FFI.lss"
 -LINE 17 "FFI.lss"
 -IN72
 -STITL FFI
@@ -32,13 +32,13 @@
 -LINE 28 "FFI.lss"
 -LINE 31 "FFI.lss"
          ffi = 'ffi.c'
--LINE 528 "FFI.lss"
--LINE 529 "FFI.lss"
--LINE 530 "FFI.lss"
--LINE 531 "FFI.lss"
--LINE 532 "FFI.lss"
--LINE 533 "FFI.lss"
+-LINE 538 "FFI.lss"
+-LINE 539 "FFI.lss"
+-LINE 540 "FFI.lss"
+-LINE 541 "FFI.lss"
+-LINE 542 "FFI.lss"
 -LINE 543 "FFI.lss"
+-LINE 553 "FFI.lss"
          LOAD('FFI_FREE(INTEGER)', 'ffi.so')
          LOAD('FFI_CLEAR(INTEGER)', 'ffi.so')
          LOAD('FFI_NEW(STRING,STRING)INTEGER', 'ffi.so')
@@ -69,7 +69,7 @@
          LOAD('DLSYM_(INTEGER,STRING)', 'ffi.so')
          LOAD('DLCLOSE_(INTEGER)INTEGER', 'ffi.so')
 *
--LINE 578 "FFI.lss"
+-LINE 588 "FFI.lss"
 -PUBLIC DLOPEN(), DLERROR(), DLSYM(), DLCLOSE()
 *
          DEFINE('DLOPEN(S,I)')
