@@ -36,10 +36,10 @@
 *
 * THE BASIC IDEA IS THAT EACH ASSEMBLER LINE IS EXAMINED, AND LABEL,
 * OPCODE AND UP TO THREE PARAMETERS EXTRACTED. THE OPCODE MAY MATCH
-* A FUNCTIION IN THE ASSEMBLER, OR, WITH JIT_ PREPENDED, A JIT
-* GENERATION INSTRUCTION. THE FUNCTION IS THEN CALLED WITH UP TO
-* THREE PARAMETERS. EACH PARAMETER IS A STRING, A NUMBER, A SYMBOL
-* REFERENCE OR A REGISTER. EACH LABEL ON A JIT_ OPCODE IS ENTERED
+* A FUNCTION IN THE ASSEMBLER (WITH '__' APPENDED), OR, WITH JIT_
+* PREPENDED, A JIT GENERATION INSTRUCTION. THE FUNCTION IS THEN CALLED
+* WITH UP TO THREE PARAMETERS. EACH PARAMETER IS A STRING, A NUMBER, A
+* SYMBOL REFERENCE OR A REGISTER. EACH LABEL ON A JIT_ OPCODE IS ENTERED
 * INTO A LOCAL SYMBOL TABLE.
 *
 * ASM() WORKS IN TWO PHASES - THE FIRST PHASE CREATES SYMBOLS IN
@@ -47,7 +47,12 @@
 * (THIS COULD BE CONSIDERED PHASE1A - BUT WE ONLY COUNT SOURCE SCANS
 * AS PHASES). THE SECOND PHASE ACTUALLY GENERATES CODE, USING THE
 * SYMBOLS CREATED IN PHASE1. ON COMPLETIION OF PHASE2, WE RESOLVE
-* INTERNAL LOCAL SYMBOLS (BRANCHES IN THE CODE -- THIS IS PHASE 2A). 
+* INTERNAL LOCAL SYMBOLS (BRANCHES IN THE CODE -- THIS IS PHASE 2A).
+* NOTE THAT 'EXTERN' SYMBOLS ARE PUT INTO THE EXPORTS TABLE. THESE
+* CAN BE DSS, BSS OR ADDRESS SYMBOLS. THIS TABLE CAN BE MERGED WITH
+* OTHER EXPORT TABLES (USING MERGET), AND PASSED TO ASM_CREATE TO
+* ESTABLISH THE IMPORTS NEEDED. EXPORTS(ASM) ACCESSES THIS TABLE
+* FOR A MODULE.
 *
 * A = ASM_CREATE()
 * S = ASM(A, SRC) :F(ERROR)
@@ -74,7 +79,8 @@
 -PUBLIC JIT(), ENTRIES(), OBJ(), ASM_CREATE(), ASM_DESTROY() ASM()
 *
          DATA('ASM_TYPE(JIT,SYMBOLS1,SYMBOLS,REFERENCES,DSS,BSS,SZBSS,'
-+                      'DINIT,DSSBASE,BSSBASE,ENTRIES,SRC,OBJ,DAREFS)')
++                      'DINIT,DSSBASE,BSSBASE,ENTRIES,SRC,OBJ,DAREFS,'
++                      'EXPORTS)')
 *
          DEFINE('ASM_CREATE(SYMBOLS1)')
          DEFINE('ASM_DESTROY(ASM)')
@@ -86,42 +92,57 @@
          DEFINE('ASM_DSS()A,I,S')
          DEFINE('ASM_LINK()SYMBOLS,A,I,P,R,S')
          DEFINE('ASM_PHASE(ASM_PHASE)'
-+               'SRC,LINE,ELINE,R,SYMBOL,LAB,OP,P1,P2,P3')
++               'SRC,LINE,ELINE,R,SYMBOL,LAB,OP,P1,P2,P3,S')
 *
-         ASET = &UCASE &LCASE &DIGITS '_.'
+         ASET = &UCASE &LCASE &DIGITS '_.$'
          AWHT = NSPAN(' ' CHARS_TAB)
          ASM_PAT = FENCE NSPAN(ASET) . LAB
-+                  AWHT SPAN(ASET '_.') . OP
++                  AWHT SPAN(ASET) . OP
 +                  AWHT ((BREAKQ(',') . P1 ',') | NULL)
-+                  AWHT ((BREAKQ(',') . P2 ',') | NULL)
-+                  AWHT ((BREAKQ(',') . P3 ',') | NULL)
++                  AWHT ((BREAK(',') . P2 ',') | NULL)
++                  AWHT ((BREAK(',') . P3 ',') | NULL)
 *
-         DEFINE('ASM_PARM(X)')
+         DEFINE('ASM_PARM(X)OFFSET')
          DEFINE('ALIGN_BSS(A),N')
 *
-         DEFINE('PHASE1(P1)')
-         DEFINE('PHASE2(P2)')
-         DEFINE('EXTERN(P1,P2,P3)H')
-         DEFINE('USES(P1)A')
-         DEFINE('EQU(P1)')
-         DEFINE('ADDRESS()')
+         DEFINE('PHASE1__(P1)')
+         DEFINE('PHASE2__(P2)')
+         DEFINE('EXTERN__(P1,P2,P3)H')
+         DEFINE('DEFINE__(P1,P2,P3)H')
+         DEFINE('USES__(P1)A')
+         DEFINE('EQU__(P1)')
+         DEFINE('ADDRESS__()')
+         DEFINE('EXPORT__()')
 *
-         DEFINE('RESB(P1)')
-         DEFINE('RESW(P1)')
-         DEFINE('RESD(P1)')
-         DEFINE('RESQ(P1)')
+         DEFINE('RESB__(P1)')
+         DEFINE('RESW__(P1)')
+         DEFINE('RESD__(P1)')
+         DEFINE('RESQ__(P1)')
          DEFINE('RES(P1,P2)')
 *
-         DEFINE('DB(P1)')
-         DEFINE('DW(P1)')
-         DEFINE('DD(P1)')
-         DEFINE('DQ(P1)')
-         DEFINE('DA(P1)')
-         DEFINE('DS(P1)')
+         DEFINE('DB__(P1)')
+         DEFINE('DW__(P1)')
+         DEFINE('DD__(P1)')
+         DEFINE('DQ__(P1)')
+         DEFINE('DA__(P1)')
+         DEFINE('DS__(P1)')
 *
 * SET TO NON-NULL TO HAVE ASM GIVE DEBUG OUTPUT
 *
          ASM_DEBUG =
+*
+* FOR REGISTER LOOKUP - OPTIMIZATION
+*
+         AS_REGS = TABLE()
+*
+* SIZES OF TYPES
+*
+         BYTE = 1
+         WORD = 2
+         DWORD = 4
+         QWORD = 8
+         FLOAT = 4
+         DOUBLE = 8
 *
 * STORAGE USED FOR DATA CONVERSIONS.
 *
@@ -155,8 +176,8 @@
 * (FIXME - THERE ARE SOME MINOR DIFFERENCES BETWEEN 32 BIT AND 64 BIT
 * CODE GENERATION THAT SHOULD ALSO BE "HIDDEN").
 *
-USES     NE(ASM_PHASE, 1)                                     :S(RETURN)
-USES2    P1 ANY('.%') =                                        :S(USES2)
+USES__   NE(ASM_PHASE, 1)                                     :S(RETURN)
+USES2    P1 ANY('%') =                                         :S(USES2)
          P1 = CRACK(P1, ',')
          I = 1
 USES3    P1<I>                                                :F(RETURN)
@@ -169,47 +190,71 @@ USES4    TERMINAL = 'REGISTER ' P1<I> ' NOT AVAILABLE'        :(FRETURN)
 * TO AN ADDRESS WITH JIT_ADDRESS(). USEFUL FOR ENTRY POINTS AND
 * CONSTRUCTING JUMP TABLES. COULD USE NOTE(NULL, 0) HERE AS WELL.
 *
-ADDRESS  NE(ASM_PHASE, 2)                                     :S(RETURN)
+ADDRESS__
+         NE(ASM_PHASE, 2)                                     :S(RETURN)
          ENTRIES(ASM)<LAB> = SYMBOLS(ASM)<LAB> = JIT_INDIRECT()
 +                                                              :(RETURN)
 *
+* SYMBOL TO BE EXPORTED. BSS, DSS OR ADDRESS. JUST MAKE THE TABLE
+* ENTRY NON-NULL.
+*
+EXPORT__ SYMBOL = NE(ASM_PHASE, 1)                            :S(RETURN)
+         EXPORTS(ASM)<SYMBOL> = ' '
+         EXPORTS(ASM)<SYMBOL> = VDIFFER(SYMBOLS1(ASM)<SYMBOL>)
+         SYMBOL =                                              :(RETURN)
+*
 * PHASE1 EVALUATION ONLY. EVAL P1 DURING PHASE1.
 *
-PHASE1   NE(ASM_PHASE, 1)                                     :S(RETURN)
+PHASE1__
+         NE(ASM_PHASE, 1)                                     :S(RETURN)
          PHASE1 = EVAL(P1)                          :S(RETURN)F(FRETURN)
 *
 * PHASE2 EVALUATION ONLY. EVAL P1 DURING PHASE2.
 *
-PHASE2   NE(ASM_PHASE, 2)                                     :S(RETURN)
+PHASE2__
+         NE(ASM_PHASE, 2)                                     :S(RETURN)
          PHASE2 = EVAL(P1)                          :S(RETURN)F(FRETURN)
 *
-* ENTER VALUE INTO SYMBOLS1 TABLE. THERE ARE FIVE FORMS FOR THIS
-* DIRECTIVE:
+* ENTER VALUE INTO SYMBOLS1 TABLE. THIS MAY BE INTEGER OR REAL.
+* ALSO NOTE THAT VALUE WILL BE ENTERED INTO THE EXPORTS TABLE IF NEEDED.
 *
-* LABEL EXTERN REAL_CONSTANT ; DEFINE LABEL AS REAL CONSTANT
-* LABEL EXTERN INTEGER_CONSTANT  ; DEFINE LABEL AS INTEGER CONSTANT
+* NOTE THAT EXTERN ADDS TO EXPORTS ON THE DA RESOLUTION PASS, SO IT
+* ISN'T DONE HERE.
+*
+DEFINE__ NE(ASM_PHASE, 1)                                     :S(RETURN)
+         SYMBOLS1(ASM)<LAB> = INTEGER(P1) +P1               :S(DEFINE_2)
+         SYMBOLS1(ASM)<LAB> = REAL(P1) +P1                   :F(FRETURN)
+DEFINE_2 EXPORTS(ASM)<LAB> = DIFFER(EXPORTS(ASM)<LAB>)
++           SYMBOLS1(ASM)<LAB>                                 :(RETURN)
+*
+* ENTER EXTERNAL LINK INTO SYMBOLS1 TABLE. THERE ARE THREE FORMS FOR
+* THIS DIRECTIVE:
+*
 * LABEL EXTERN 'NAME' ; DEFINE LABEL AS DLSYM(, 'NAME')
 * LABEL EXTERN 'NAME','SO' ; 'NAME' IN 'SO'
 * LABEL EXTERN 'NAME','SO',FLAGS ; IN 'SO' OPEN WITH FLAGS
 *
-EXTERN   NE(ASM_PHASE, 1)                                     :S(RETURN)
-         SYMBOLS1(ASM)<LAB> = INTEGER(P1) +P1                 :S(RETURN)
-         SYMBOLS1(ASM)<LAB> = REAL(P1) +P1                    :S(RETURN)
-*
 * P1 = ENTRY NAME, P2 = MODULE NAME, P3 = OPEN FLAGS
 *
+EXTERN__ NE(ASM_PHASE, 1)                                     :S(RETURN)
          P2 = IDENT(P2) 0
          P3 = IDENT(P3) 0
          H = DL_TABLE<P2>
          DIFFER(H)                                           :S(EXTERN2)
          H = IDENT(P2) DLOPEN(P2, P3)
          DL_TABLE<P2> = H
-EXTERN2  SYMBOLS1(ASM)<LAB> = DLSYM(H, P1)                     :(RETURN)
+EXTERN2  SYMBOLS1(ASM)<LAB> = DLSYM(H, P1)
+*
+* WE CAN AMORTIZE DLOPEN/DLSYM. INSTEAD OF EXTERN IN EACH MODULE,
+* THESE CAN BE EXPORT, AND THEN WE CAN IMPORT IN ANOTHER ASSEMBLY
+*
+         EXPORTS(ASM)<LAB> = DIFFER(EXPORTS(ASM)<LAB>)
++           SYMBOLS1(ASM)<LAB>                                 :(RETURN)
 *
 * ENTER VALUE AS GLOBAL VARIABLE IN PHASE1. CAN BE USED BY
 * '(EXPRESSION)' AS PARAMETER.
 *
-EQU      NE(ASM_PHASE, 1)                                     :S(RETURN)
+EQU__    NE(ASM_PHASE, 1)                                     :S(RETURN)
          $LAB = P1                                             :(RETURN)
 *
 * FOR DATA DEFINITION, WE USE POKE AND THEN PEEK BYTES BACK TO ADD
@@ -225,40 +270,40 @@ EQU      NE(ASM_PHASE, 1)                                     :S(RETURN)
 *
 * ENTER VALUES INTO DSS
 *
-DB       NE(ASM_PHASE, 1)                                     :S(RETURN)
+DB__     NE(ASM_PHASE, 1)                                     :S(RETURN)
          DSS(ASM)<LAB> = DIFFER(LAB) SIZE(DINIT(ASM))
          DINIT(ASM) = INTEGER(P1) DINIT(ASM) CHAR(P1)          :(RETURN)
 *
-DW       NE(ASM_PHASE, 1)                                     :S(RETURN)
+DW__     NE(ASM_PHASE, 1)                                     :S(RETURN)
          DSS(ASM)<LAB> = DIFFER(LAB) SIZE(DINIT(ASM))
          POKE_S(ASM_P, P1)
          DINIT(ASM) = DINIT(ASM) CHAR(PEEK_C(ASM_P + 0))
-         DINIT(ASM) = DINIT(ASM) CHAR(PEEK_C(ASM_P + 1))       :(RETURN)
++                                CHAR(PEEK_C(ASM_P + 1))       :(RETURN)
 *
-DD       NE(ASM_PHASE, 1)                                     :S(RETURN)
+DD__     NE(ASM_PHASE, 1)                                     :S(RETURN)
          DSS(ASM)<LAB> = DIFFER(LAB) SIZE(DINIT(ASM))
          (INTEGER(P1) POKE_I(ASM_P, P1), POKE_F(ASM_P, P1))
          DINIT(ASM) = DINIT(ASM) CHAR(PEEK_C(ASM_P + 0))
-         DINIT(ASM) = DINIT(ASM) CHAR(PEEK_C(ASM_P + 1))
-         DINIT(ASM) = DINIT(ASM) CHAR(PEEK_C(ASM_P + 2))
-         DINIT(ASM) = DINIT(ASM) CHAR(PEEK_C(ASM_P + 3))       :(RETURN)
++                                CHAR(PEEK_C(ASM_P + 1))
++                                CHAR(PEEK_C(ASM_P + 2))
++                                CHAR(PEEK_C(ASM_P + 3))       :(RETURN)
 *
-DQ       NE(ASM_PHASE, 1)                                     :S(RETURN)
+DQ__     NE(ASM_PHASE, 1)                                     :S(RETURN)
          DSS(ASM)<LAB> = DIFFER(LAB) SIZE(DINIT(ASM))
          (INTEGER(P1) POKE_P(ASM_P, P1), POKE_D(ASM_P, P1))
          DINIT(ASM) = DINIT(ASM) CHAR(PEEK_C(ASM_P + 0))
-         DINIT(ASM) = DINIT(ASM) CHAR(PEEK_C(ASM_P + 1))
-         DINIT(ASM) = DINIT(ASM) CHAR(PEEK_C(ASM_P + 2))
-         DINIT(ASM) = DINIT(ASM) CHAR(PEEK_C(ASM_P + 3))
-         DINIT(ASM) = DINIT(ASM) CHAR(PEEK_C(ASM_P + 4))
-         DINIT(ASM) = DINIT(ASM) CHAR(PEEK_C(ASM_P + 5))
-         DINIT(ASM) = DINIT(ASM) CHAR(PEEK_C(ASM_P + 6))
-         DINIT(ASM) = DINIT(ASM) CHAR(PEEK_C(ASM_P + 7))       :(RETURN)
++                                CHAR(PEEK_C(ASM_P + 1))
++                                CHAR(PEEK_C(ASM_P + 2))
++                                CHAR(PEEK_C(ASM_P + 3))
++                                CHAR(PEEK_C(ASM_P + 4))
++                                CHAR(PEEK_C(ASM_P + 5))
++                                CHAR(PEEK_C(ASM_P + 6))
++                                CHAR(PEEK_C(ASM_P + 7))       :(RETURN)
 *
 * DA IS DEFINE ADDRESS - ADD TO DAREFS TABLE TO BE RESOLVED FROM
 * ENTRIES ON COMPLETION.
 *
-DA       SYMBOL = NE(ASM_PHASE, 1)                            :S(RETURN)
+DA__     SYMBOL = NE(ASM_PHASE, 1)                            :S(RETURN)
          TERMINAL = DIFFER(ASM_DEBUG) 'ADDING DA REF '
 +           SYMBOL ' DSS OFFSET ' SIZE(DINIT(ASM))
        DAREFS(ASM)<SYMBOL> = LINK(SIZE(DINIT(ASM)), DAREFS(ASM)<SYMBOL>)
@@ -266,7 +311,7 @@ DA       SYMBOL = NE(ASM_PHASE, 1)                            :S(RETURN)
          DSS(ASM)<LAB> = DIFFER(LAB) SIZE(DINIT(ASM))
          DINIT(ASM) = DINIT(ASM) DUPL(' ', 8)                  :(RETURN)
 *
-DS       NE(ASM_PHASE, 1)                                     :S(RETURN)
+DS__     NE(ASM_PHASE, 1)                                     :S(RETURN)
          DSS(ASM)<LAB> = DIFFER(LAB) SIZE(DINIT(ASM))
          DINIT(ASM) = DINIT(ASM) P1                            :(RETURN)
 *
@@ -287,10 +332,10 @@ ALIGN_BSS
 * FROM NASM: RESB/RESW/RESD/RESQ (ADDITIONALLY, RES) TO RESERVE SPACE
 * IN BSS.
 *
-RESB     RES(P1, 1)                                            :(RETURN)
-RESW     RES(P1, 2)                                            :(RETURN)
-RESD     RES(P1, 4)                                            :(RETURN)
-RESQ     RES(P1, 8)                                            :(RETURN)
+RESB__   RES(P1, 1)                                            :(RETURN)
+RESW__   RES(P1, 2)                                            :(RETURN)
+RESD__   RES(P1, 4)                                            :(RETURN)
+RESQ__   RES(P1, 8)                                            :(RETURN)
 RES      NE(ASM_PHASE, 1)                                     :S(RETURN)
          P1 = IDENT(P1) 1
          P2 = IDENT(P2) 1
@@ -298,9 +343,9 @@ RES      NE(ASM_PHASE, 1)                                     :S(RETURN)
          BSS(ASM)<LAB> = DIFFER(LAB) SZBSS(ASM)
          SZBSS(ASM) = SZBSS(ASM) + (P1 * P2)                   :(RETURN)
 *
-* PARSE PARAMETER. THE PARAMETER MAY BE .REGISTER (EG. .R0, .V1, .F2)
-* .R0-2, .V0-2 AND .F0-5 ARE ALWAYS AVAILABLE. .R3, .V3, .F6-7 MAY
-* BE AVAILABLE. .FP IS THE FRAME POINTER (IF ONE AVAILABLE).
+* PARSE PARAMETER. THE PARAMETER MAY BE %REGISTER (EG. %R0, %V1, %F2)
+* %R0-2, %V0-2 AND %F0-5 ARE ALWAYS AVAILABLE. %R3, %V3, %F6-7 MAY
+* BE AVAILABLE. %FP IS THE FRAME POINTER (IF ONE AVAILABLE).
 *
 * 'STRING' OR "STRING". 1234, -1234, +1234 (INTEGER), OR REAL.
 *
@@ -313,16 +358,50 @@ RES      NE(ASM_PHASE, 1)                                     :S(RETURN)
 *
 ASM_PARM ASM_PARM = ASM_PEMPTY
          IDENT(X)                                             :S(RETURN)
-         X FENCE ANY('.%') REM . X                             :S(ASREG)
+         X FENCE '%' REM . X                                   :S(ASREG)
          X FENCE ANY('"' "'" '(')                              :S(ASTRG)
+         &ERRLIMIT = 1
+*
+* SIMPLE INTEGER OR REAL VALUE
+*
          ASM_PARM = +X                                        :S(RETURN)
-         IDENT(SYMBOLS1(ASM)<X>)                               :S(ASSYM)
-         ASM_PARM = SYMBOLS1(ASM)<X>                           :(RETURN)
+*
+* VALUE FROM SYMBOLS1
+*
+         ASM_PARM = VDIFFER(SYMBOLS1(ASM)<X>)                 :S(RETURN)
+*
+* SYMBOLS1 SYMBOL + OR - OFFSET
+*
+         X BREAK('+-') . X (ANY('+-') REM) . OFFSET            :F(ASSYM)
+         ASM_PARM = SYMBOLS1(ASM)<TRIM(X)> + EVAL(OFFSET)      :(RETURN)
+*
+* NOT IN SYMBOLS1, THIS SYMBOL REQUIRES PATCHING DURING THE LINK
+* PROCESS
+*
 ASSYM    ASM_PARM = ASM_PSYMBOL
          SYMBOL = X                                            :(RETURN)
+*
+* PARAMETER IS A STRING DELIMITED BY SINGLE OR DOUBLE QUOTES. MAY
+* ALSO BE '(EXPRESSION)' WHICH WILL ALSO BE EVAL'D AND GIVES A
+* WAY TO GET SNOBOL ENVIRONMENT EASILY INTO THE ASSEMBLY.
+*
 ASTRG    ASM_PARM = EVAL(X)                         :S(RETURN)F(FRETURN)
-ASREG    FUNCTION(X '_')                                     :F(FRETURN)
-         ASM_PARM = APPLY(X '_',)                              :(RETURN)
+*
+* PARAMETER IS A REGISTER. SEE IF ITS CACHED. IF NOT, EVALUATE THE
+* JIT PROCEDURE TO DETERMINE THE REGISTER NUMBER. MAY YIELD -1, WHICH
+* WOULD MEANS THE REGISTER DOESN'T EXIST. 'USES' MUST BE USED TO
+* ELIMINATE THAT CASE.
+*
+ASREG    ASM_PARM = VDIFFER(AS_REGS<X>)                       :S(RETURN)
+         FUNCTION(X '_')                                     :F(FRETURN)
+         AS_REGS<X> = ASM_PARM = APPLY(X '_',)                :S(RETURN)
+*
+* THE DRIVER ASM() FUNCTION. PHASE1 EXTRACTS D?, RES?, EXTERN,
+* EXPORT, DEFINE, AND OTHER NEEDED PHASE1 INFORMATION. THEN, THE
+* BSS AND DSS SECTIONS ARE CREATED. PHASE2 THEN GENERATES THE CODE.
+* LINK RESOLVES INTERNAL BRANCH TARGETS. EMIT ACTUALLY GENERATES THE
+* MACHINE CODE. DA THEN FIXES UP DA (ADDRESS TO CODE OBJECTS), AND
+* FINAL CODE EXPORTS.
 *
 ASM      SRC(ASM) = SRC
          JIT_SET_STATE(JIT(ASM))
@@ -342,6 +421,8 @@ ASM_DA   TERMINAL = DIFFER(ASM_DEBUG) '*** DA ***'
          I = 1
 ASM_L_13 ENTRIES(ASM)<A<I>> = JIT_ADDRESS(ENTRIES(ASM)<A<I>>)
 +                                                             :F(RETURN)
+         EXPORTS(ASM)<A<I>> = DIFFER(EXPORTS(ASM)<A<I>>)
++           ENTRIES(ASM)<A<I>>
          P = DAREFS(ASM)<A<I>>
 ASM_L_16 IDENT(P)                                           :S(ASM_L_15)
          TERMINAL = DIFFER(ASM_DEBUG)
@@ -368,6 +449,8 @@ ASM_L_12 A = KEYST(DSS(ASM))                                  :F(RETURN)
          I = 1
 ASM_L_9  SYMBOLS1(ASM)<A<I>> = DSS(ASM)<A<I>> + DSSBASE(ASM)
 +                                                             :F(RETURN)
+         EXPORTS(ASM)<A<I>> = DIFFER(EXPORTS(ASM)<A<I>>)
++           SYMBOLS1(ASM)<A<I>>
 *
          TERMINAL = DIFFER(ASM_DEBUG)
 +           'PHASE 1 DSS SYMBOL ' A<I> ' = ' IH(SYMBOLS1(ASM)<A<I>>)
@@ -381,6 +464,8 @@ ASM_BSS  TERMINAL = DIFFER(ASM_DEBUG) '*** BSS ALLOCATE ***'
          A = KEYST(BSS(ASM))
          I = 1
 ASM_L_7  SYMBOLS1(ASM)<A<I>> = BSS(ASM)<A<I>> + BSSBASE(ASM)  :F(RETURN)
+         EXPORTS(ASM)<A<I>> = DIFFER(EXPORTS(ASM)<A<I>>)
++           SYMBOLS1(ASM)<A<I>>
 *
          TERMINAL = DIFFER(ASM_DEBUG)
 +           'PHASE 1 BSS SYMBOL ' A<I> ' = ' IH(SYMBOLS1(ASM)<A<I>>)
@@ -389,24 +474,60 @@ ASM_L_7  SYMBOLS1(ASM)<A<I>> = BSS(ASM)<A<I>> + BSSBASE(ASM)  :F(RETURN)
 *
 * ASM PHASE 1 OR 2.
 *
+* INTERPOLATE A FILE OR A VARIABLE. IF ITS A VARIABLE, ADD A NEWLINE
+* FOR CONVENIENCE.
+*
+ASM_INTERPOLATE
+         TERMINAL = DIFFER(ASM_DEBUG) 'INTERPOLATE ' P1
+         IDENT(P1)                                            :S(RETURN)
+         S = (
++              (?(P1 ? FENCE ANY("'" '"')) READFILE(EVAL(P1))),
++              ($P1 CHARS_NL)
++            )
+         SRC FENCE POS(BL) LEN(0) = S                           :(ASM_2)
+*
 ASM_PHASE
          TERMINAL = DIFFER(ASM_DEBUG) '*** PHASE ' ASM_PHASE '***'
          SRC = SRC(ASM)
-ASM_2    SRC BREAK(CHARS_NL) . LINE CHARS_NL =                :F(RETURN)
+         BL = 0
+         EL = 0
 *
-         TERMINAL = DIFFER(ASM_DEBUG) LINE
+* SPEED OPTIMIZATION. DON'T REMOVE EACH LINE FROM SRC AS IT IS
+* PROCESSED. ALSO, DON'T DO EVER LONGER 'TAB()' (OR POS) TO EACH LINE.
+* INSTEAD, PROCESS EACH LINE, RECORDING THE BEGINNING OF THE NEXT
+* LINE. AFTER WE ARE 4096 CHARACTERS (OR MORE) IN THE STRING,
+* REMOVE THE LEADING BLOCK. THIS REDUCES GC, AND PERFORMS ABOUT
+* TWICE AS WELL AS THE NAIVE CODE. TESTED WITH 10,000 LINES OF
+* ASM INPUT.
+*
+*        SRC FENCE BREAK(CHARS_NL) . LINE CHARS_NL =          :F(RETURN)
+ASM_2    SRC FENCE TAB(BL) BREAK(CHARS_NL) CHARS_NL @EL       :F(RETURN)
+         LINE = SUBSTR(SRC, BL + 1, EL - BL)
+         BL = EL
+         LT(BL, 4096)                                         :S(ASM_X1)
+         SRC FENCE LEN(BL - 1) =
+         BL = 0
+*
+ASM_X1   TERMINAL = DIFFER(ASM_DEBUG) LINE
 *
          LINE FENCE NSPAN(' ' CHARS_TAB) ANY(';*')             :S(ASM_2)
          LINE = TRIM(LINE)
          IDENT(LINE)                                           :S(ASM_2)
          ELINE = LINE
-         LINE BREAKQ(';') . LINE
+         LINE FENCE BREAKQ(';') . LINE
          LINE = TRIM(LINE) ',,,'
          LAB = OP = P1 = P2 = P3 = SYMBOL =
          LINE ASM_PAT                                          :S(ASM_4)
 ASM_3    TERMINAL = 'ASM: ERROR IN: ' ELINE                   :(FRETURN)
 ASM_4    IDENT(OP, 'END')                                     :S(RETURN)
-         FUNCTION(OP)                                          :S(ASM_5)
+         IDENT(OP, 'end')                                     :S(RETURN)
+*
+* INTERPOLATE A FILE OR STRING INTO THE ASSEMBLY
+* INCLUDE 'NAME', OR INCLUDE SYM
+*
+         IDENT(OP, 'INCLUDE')                        :S(ASM_INTERPOLATE)
+         IDENT(OP, 'include')                        :S(ASM_INTERPOLATE)
+         OP = FUNCTION(OP '__') OP '__'                        :S(ASM_5)
          OP = EQ(ASM_PHASE, 1)                                 :S(ASM_2)
          OP = FUNCTION('JIT_' OP) 'JIT_' OP                    :F(ASM_3)
          TERMINAL = VDIFFER(SYMBOLS(ASM)<LAB>) 'REDEFINED'     :S(ASM_3)
@@ -460,6 +581,7 @@ ASM_CREATE
          ASM_CREATE = ASM_TYPE()
          SYMBOLS1(ASM_CREATE) =
 +           (DIFFER(SYMBOLS1) COPYT(SYMBOLS1), TABLE())
+         EXPORTS(ASM_CREATE) = TABLE()
          SYMBOLS(ASM_CREATE) = TABLE()
          ENTRIES(ASM_CREATE) = TABLE()
          DAREFS(ASM_CREATE) = TABLE()
