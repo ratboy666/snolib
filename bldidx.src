@@ -1,0 +1,95 @@
+#!/usr/bin/bash
+         exec "snobol4" "-b" "$0" "$@"
+-TITLE BLDIDX
+-INCLUDE 'CHARS.INC'
+-INCLUDE 'BQ.INC'
+-INCLUDE 'CRACK.INC'
+-INCLUDE 'JSON.INC'
+-INCLUDE 'SEQ.INC'
+-INCLUDE 'VDIFFER.INC'
+-EJECT
+-STITL
+*
+************************************************************************
+*                                                                      *
+*           ######   #        ######   ###  ######   #     #           *
+*           #     #  #        #     #   #   #     #   #   #            *
+*           #     #  #        #     #   #   #     #    # #             *
+*           ######   #        #     #   #   #     #     #              *
+*           #     #  #        #     #   #   #     #    # #             *
+*           #     #  #        #     #   #   #     #   #   #            *
+*           ######   #######  ######   ###  ######   #     #           *
+*                                                                      *
+* BLDIDX            BUILD INDEX TO PUBLIC SYMBOLS                      *
+*                                                                      *
+************************************************************************
+*
+* bldidx
+*
+         TERMINAL = 'BLDIDX (MON JUN  2 10:51:10 EDT 2014)'
+*
+* CE: .MSNOBOL4;
+*
+* BUILD INDEX OF PUBLIC SYMBOLS
+*
+* BUILDS FILE IDX WHICH IS AN INDEX TO PUBLIC FUNCTIONS, VARIABLES,
+* CLASSES, METHODS AND OPERATORS
+*
+* CLASS:CLASSNAME
+* CLASSNAME:'METHODNAME'
+* FUNCTION()
+* VARIABLE
+* CA (CHARACTER, ARITY)
+*
+         FC = &UCASE &LCASE
+         SC = FC '0123456789_.'
+         SYMBOL = ANY(FC) (SPAN(SC) | NULL)
+         FUNCTION = SYMBOL '()'
+         VARIABLE = SYMBOL
+         CLASS = SYMBOL ':' SYMBOL
+         METHOD = SYMBOL ':' "'" SYMBOL "'"
+         OP = ANY('^|#%') '1'
+         WS = SPAN(' ' CHARS_TAB) | NULL
+         ELEMENT = WS (OP | METHOD | CLASS | FUNCTION | VARIABLE) . E
++                  WS (',' | RPOS(0))
+         PUBLIC = POS(0) '-' ('PUBLIC' | 'public') REM . S
+*
+         DEFINE('PROCESS(FN)FIN,L')                       :(END_PROCESS)
+PROCESS
+         INPUT(.FIN, 20,, FN)                                :F(FRETURN)
+PROC_1   L = TRIM(FIN)                                        :F(RETURN)
+         L PUBLIC                                             :F(PROC_1)
+PROC_2   S ELEMENT =                                          :F(PROC_1)
+         E OP                                                   :S(DO_O)
+         E CLASS                                                :S(DO_C)
+         E METHOD                                               :S(DO_M)
+         E FUNCTION                                             :S(DO_F)
+         E VARIABLE                                             :S(DO_V)
+         TERMINAL = 'INTERNAL ERROR'                              :(END)
+DO_O     OPERATORS<E> = FN                                     :(PROC_2)
+DO_C     CLASSES<E> = FN                                       :(PROC_2)
+DO_M     METHODS<E> = FN                                       :(PROC_2)
+DO_F     FUNCTIONS<E> = FN                                     :(PROC_2)
+DO_V     VARIABLES<E> = FN                                     :(PROC_2)
+END_PROCESS
+*
+         FUNCTIONS = TABLE()
+         FUNCTIONS<'#'> = 'FUNCTIONS'
+         VARIABLES = TABLE()
+         VARIABLES<'#'> = 'VARIABLES'
+         CLASSES = TABLE()
+         CLASSES<'#'> = 'CLASSES'
+         METHODS = TABLE()
+         METHODS<'#'> = 'METHODS'
+         OPERATORS = TABLE()
+         OPERATORS<'#'> = 'OPERATORS'
+         F = BQ('ls *.INC', CHARS_NUL)
+         F = CRACK(F, CHARS_NUL)
+         SEQ(' PROCESS(F<I>)', .I)
+         OUTPUT(.FOUT, 21,, 'IDX')
+         FOUT = JSON_ENCODE(FUNCTIONS)
+         FOUT = JSON_ENCODE(VARIABLES)
+         FOUT = JSON_ENCODE(CLASSES)
+         FOUT = JSON_ENCODE(METHODS)
+         FOUT = JSON_ENCODE(OPERATORS)
+END 
