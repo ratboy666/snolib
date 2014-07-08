@@ -117,6 +117,7 @@
          DEFINE('ADDRESS__()')
          DEFINE('EXPORT__()')
 *
+         DEFINE('COMMON__(P1)')
          DEFINE('RESB__(P1)')
          DEFINE('RESW__(P1)')
          DEFINE('RESD__(P1)')
@@ -344,6 +345,22 @@ ALIGN_BSS
          N = REMDR(SZBSS(ASM), A)
          EQ(N)                                                :S(RETURN)
          SZBSS(ASM) = SZBSS(ASM) + A - N                       :(RETURN)
+*
+* COMMON N - IF LAB IS NOT DEFINED, DEFINE IT IN BSS WITH LENGTH
+* N. MAKE IT EXPORT. IF SYMBOL DOES EXIST, IGNORE, WE ARE JUST LINKING
+* TO THE SAME THING AGAIN.
+*
+* WITHIN COMMON, VARIABLES HAVE OFFSETS FROM THE COMMON BASE. USE
+* DEFINE TO CREATE THESE.
+*
+COMMON__ NE(ASM_PHASE, 1)                                     :S(RETURN)
+         IDENT(LAB)                                           :S(RETURN)
+         DIFFER(SYMBOLS1(ASM)<LAB>)                           :S(RETURN)
+         ALIGN_BSS(16)
+         BSS(ASM)<LAB> = 
+         BSS(ASM)<LAB> = SZBSS(ASM)
+         SZBSS(ASM) = SZBSS(ASM) + P1
+         SYMBOL = LAB                                        :(EXPORT__)
 *
 * FROM NASM: RESB/RESW/RESD/RESQ (ADDITIONALLY, RES) TO RESERVE SPACE
 * IN BSS.
