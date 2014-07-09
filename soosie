@@ -33,6 +33,7 @@
 -INCLUDE 'TRIMB.INC'
 -INCLUDE 'VDIFFER.INC'
 -INCLUDE 'WRTFILE.INC'
+-INCLUDE 'MKTEMP.INC'
 
 * soosie
 *
@@ -299,7 +300,7 @@ module_edit_build
          c = array(1)
          c<1> = crepl('{{TOUCH}}', 'file=', '{{tgt}}')
 meb4     l = stringout(c, CHARS_NL) CHARS_NL
-         tmpfile = '___.TMP'
+         tmpfile = mktemp()
          writefile(tmpfile, l)
          host(HOST_SYSCMD, crepl('{{EDIT}}', 'file=', tmpfile))
          l2 = readfile(tmpfile)
@@ -326,7 +327,7 @@ module_edit_install
          c = array(1)
          c<1> = crepl('# empty install list for {{tgt}}')
 mei4     l = stringout(c, CHARS_NL) CHARS_NL
-         tmpfile = '___.TMP'
+         tmpfile = mktemp()
          writefile(tmpfile, l)
          host(HOST_SYSCMD, crepl('{{EDIT}}', 'file=', tmpfile))
          l2 = readfile(tmpfile)

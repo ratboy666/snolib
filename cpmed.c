@@ -16,7 +16,7 @@
  *                                                                    *
  *                                                                    *
  **********************************************************************/
-         
+
 /* AS MUCH AS POSSIBLE, ASCII-64 IS USED, WITH A LIMIT OF 72 CHARACTERS
  * PER LINE. HOWEVER, C REQUIRES LOWER CASE FOR BOTH LANGUAGE
  * CONSTRUCTS. AND LIBRARY CALLS. THIS IS ISOLATED INTO THE FIRST 100
@@ -154,8 +154,8 @@
 #define NOTHING
 #define FEND		-1
 
-#define CTL(C)		(C-'@')
-#define LC(C)		(C+' ')
+#define CTL(C)		((C) - '@')
+#define LC(C)		((C) + ' ')
 #define RUBOUT		127
 #define TILDE		126
 #define CHCR		13
@@ -205,7 +205,12 @@ STATIC INT      UNDO_S;
 STATIC INT      UNDO_E;
 STATIC INT      UNDO_M;
 
-STATIC INT	CBUF;			/* EDIT BUFFER 1, 2 */
+/* BUFFER 1: PRIMARY EDIT BUFFER
+ * BUFFER 2: HOLDS EDIT MACROS
+ * BUFFER 3: AVAILABLE
+ * BUFFER 4: AVAILABLE
+ */
+STATIC INT	CBUF;			/* EDIT BUFFER 1..4 */
 
 STATIC CHAR	*EBUF1;
 STATIC INT	SP1;
@@ -222,6 +227,22 @@ STATIC INT	MP2;
 STATIC INT	BSIZE2;
 STATIC INT	LN2;
 STATIC INT	TN2;
+
+STATIC CHAR	*EBUF3;
+STATIC INT	SP3;
+STATIC INT	CP3;
+STATIC INT	MP3;
+STATIC INT	BSIZE3;
+STATIC INT	LN3;
+STATIC INT	TN3;
+
+STATIC CHAR	*EBUF4;
+STATIC INT	SP4;
+STATIC INT	CP4;
+STATIC INT	MP4;
+STATIC INT	BSIZE4;
+STATIC INT	LN4;
+STATIC INT	TN4;
 
 STATIC CHAR	*EBUF;			/* EDIT BUFFER */
 STATIC INT	SP;			/* SCOPE START POINT */
@@ -461,7 +482,7 @@ STATIC VOID TAGUND()
 BEGIN
     CHAR C;
     INT T, P;
-    IF (SUBLVL == 0) BEGIN
+    IF ((SUBLVL + CSP + ISP + INMAC) == 0) BEGIN
 	T = LSTUND(&C, &P);
 	IF (T >= 0) BEGIN
 	    ADDUND(T, C, P);
@@ -1096,6 +1117,24 @@ BEGIN
 	BSIZE2 = 0;
     CP2 = MP2 = TN2 = SP2 = 0;
     LN2 = 1;
+    /* ALLOCATE ALTERNATE BUFFER 3 */
+    BSIZE3 = GETBS("REGION3", 16);
+    EBUF3 = MALLOC(BSIZE3);
+    IF (EBUF3)
+	EBUF3[0] = 0;
+    ELSE
+	BSIZE3 = 0;
+    CP3 = MP3 = TN3 = SP3 = 0;
+    LN3 = 1;
+    /* ALLOCATE ALTERNATE BUFFER 4 */
+    BSIZE4 = GETBS("REGION4", 16);
+    EBUF4 = MALLOC(BSIZE4);
+    IF (EBUF4)
+	EBUF4[0] = 0;
+    ELSE
+	BSIZE4 = 0;
+    CP4 = MP4 = TN4 = SP4 = 0;
+    LN4 = 1;
 END
 
 /* PRINT A LINE, UPPERCASING IF NEEDED. TERMINATE WITH CRLF */
@@ -1595,7 +1634,7 @@ STATIC CHAR *HELP4[] = BEGIN
 "    -E      COMMANDS ARE STARTUP COMMANDS",
 "",
 "    SOURCES .CPMEDRC FIRST, THEN EXECUTES THE COMMANDS IN THE",
-"    OPTIONAL COMMAND STRING",
+"    OPTIONAL COMMAND STRING. REGION3= REGION4= ALSO AVAILABLE",
 NULL
 END;
 STATIC CHAR *HELP5[] = BEGIN
@@ -2058,7 +2097,8 @@ IMM:		CR();
 	    CASE CTL('J'):
 	    CASE CTL('M'):
 		CMND[N] = 0;
-		STRCPY(AGAIN, CMND);
+		IF ((CSP == 0) AND (ISP == 0))
+		    STRCPY(AGAIN, CMND);
 		IF (IACTIV)
 		    CRLF();
 		STCOL = 0;
@@ -2881,17 +2921,12 @@ BEGIN
     PERR('?');
 END
 
-/* SELECT BUFFER 1 OR 2 */
+/* SELECT BUFFER 1, 2 OR 3 */
 STATIC VOID SELBUF()
 BEGIN
     IF (NUM == CBUF)
 	RETURN;
-    ELSE IF (NUM == 2) BEGIN
-	IF (EBUF2 == NULL) BEGIN
-	    PERR('?');
-	    RETURN;
-	END
-	CBUF   = 2;
+    IF (CBUF == 1) BEGIN
 	EBUF1  = EBUF;
 	SP1    = SP;
 	CP1    = CP;
@@ -2899,15 +2934,7 @@ BEGIN
 	BSIZE1 = BSIZE;
 	LN1    = LN;
 	TN1    = TN;
-	EBUF   = EBUF2;
-	SP     = SP2;
-	CP     = CP2;
-	MP     = MP2;
-	BSIZE  = BSIZE2;
-	LN     = LN2;
-	TN     = TN2;
-    END ELSE IF (NUM == 1) BEGIN
-	CBUF   = 1;
+    END ELSE IF (CBUF == 2) BEGIN
 	EBUF2  = EBUF;
 	SP2    = SP;
 	CP2    = CP;
@@ -2915,6 +2942,25 @@ BEGIN
 	BSIZE2 = BSIZE;
 	LN2    = LN;
 	TN2    = TN;
+    END ELSE IF (CBUF == 3) BEGIN
+	EBUF3  = EBUF;
+	SP3    = SP;
+	CP3    = CP;
+	MP3    = MP;
+	BSIZE3 = BSIZE;
+	LN3    = LN;
+	TN3    = TN;
+    END ELSE IF (CBUF == 4) BEGIN
+	EBUF4  = EBUF;
+	SP4    = SP;
+	CP4    = CP;
+	MP4    = MP;
+	BSIZE4 = BSIZE;
+	LN4    = LN;
+	TN4    = TN;
+    END
+    IF (NUM == 1) BEGIN
+	CBUF   = 1;
 	EBUF   = EBUF1;
 	SP     = SP1;
 	CP     = CP1;
@@ -2922,6 +2968,45 @@ BEGIN
 	BSIZE  = BSIZE1;
 	LN     = LN1;
 	TN     = TN1;
+    END ELSE IF (NUM == 2) BEGIN
+	IF (EBUF2 == NULL) BEGIN
+	    PERR('?');
+	    RETURN;
+	END
+	CBUF   = 2;
+	EBUF   = EBUF2;
+	SP     = SP2;
+	CP     = CP2;
+	MP     = MP2;
+	BSIZE  = BSIZE2;
+	LN     = LN2;
+	TN     = TN2;
+    END ELSE IF (NUM == 3) BEGIN
+	IF (EBUF == NULL) BEGIN
+	    PERR('?');
+	    RETURN;
+	END
+	CBUF   = 3;
+	EBUF   = EBUF3;
+	SP     = SP3;
+	CP     = CP3;
+	MP     = MP3;
+	BSIZE  = BSIZE3;
+	LN     = LN3;
+	TN     = TN3;
+    END ELSE IF (NUM == 4) BEGIN
+	IF (EBUF == NULL) BEGIN
+	    PERR('?');
+	    RETURN;
+	END
+	CBUF   = 4;
+	EBUF   = EBUF4;
+	SP     = SP4;
+	CP     = CP4;
+	MP     = MP4;
+	BSIZE  = BSIZE4;
+	LN     = LN4;
+	TN     = TN4;
     END ELSE
     	PERR('?');
 END
@@ -3249,6 +3334,7 @@ BEGIN
     INMAC = YES;
     KC = CMDPTR;
     IF (!EXEC) NUM = 1;
+    TAGUND();
     FOR (; !ERROR AND NUM; BUMP()) BEGIN
 	KN = NUM;
 	CMDPTR = KC;
@@ -4836,12 +4922,13 @@ CALL2:	SUBMIT(".Z");
 	RETURN;
     END
     NUM = 1;
-    SELEC = 'f';
+    SELEC = LC('F');
     SEARCH();
-    IF (ERROR) GOTO CALL2;
     LREF[1] = L;
     CREF[1] = C;
     X = EBUF + CP;
+    IF (ERROR)
+	GOTO CALL2;
     SUBMIT(".Z");
     IF (CSP >= CLIM) BEGIN
 	PERR('C');
@@ -4860,7 +4947,9 @@ BEGIN
 	RETURN;
     END
     CMDPTR = CSTK[--CSP];
-END
+// === FIXME - IF CSP IS NOW 0 WE ARE RESUMING NORMAL COMMAND BUFFER.
+// doesn't work with M, doesn't work with ^A.
+    END
 
 /* EXECUTE ONE PARSED COMMAND */
 STATIC VOID EXCMD()
@@ -4907,7 +4996,7 @@ BEGIN
 	/* ADDITIONAL FLAGS */
 	CASE 1003:	SFLAG(&FONE);	BREAK; /* .Y */
 	CASE 1001:	TAB();		BREAK; /* .T */
-	CASE 1002:	SFLAG(&CPM80);	BREAK; /* .R */
+	CASE 1002:	SFLAG(&CPM80);	BREAK; /* .8 */
 	CASE 1005:	AI();		BREAK; /* .A */
 	CASE 1012:	SFLAG(&CHAR64);	BREAK; /* .3 */
 	CASE 1013:	SFLAG(&FLITL);	BREAK; /* .L */
@@ -5073,7 +5162,7 @@ BEGIN
     S[0] = 0;
     CINSRC = STDIN;
     PREPC();
-    LOUT("CPMED (THU MAY 29 19:09:06 EDT 2014)");
+    LOUT("CPMED (TUE JUL  1 16:31:55 EDT 2014)");
     IF ((AC < 2) || (STRICM(AV[1], "-E") == 0)) BEGIN
     	/* NO ARGS, OR JUST -E ... */
 	LOUT("NO FILE");

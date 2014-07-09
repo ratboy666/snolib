@@ -28,22 +28,14 @@
 -INCLUDE 'READFILE.INC'
 -INCLUDE 'HOST.INC'
 -INCLUDE 'MERGET.INC'
+-INCLUDE 'MBUG.INC'
+-INCLUDE 'UNIX.INC'
+-INCLUDE 'MKTEMP.INC'
 *-INCLUDE 'DDT.INC'
 -STITL
 *
 *        DDT()
          TERMINAL = 'RUN (TUE JUN 24 19:53:25 EDT 2014)'
-*
-* <sys/ptrace.h>
-*
-* long int ptrace(enum __ptrace_request request,
-*    pid_t pid, void *addr, void *data)
-*
-         FFI = FFI_NEW('I', 'I,I,P,P')
-*
-* fork a child and trace with request PTRACE_TRACEME
-* PTRACE_ATTACH to trace existing process
-*
 *
          INIT_JIT('/usr/local/bin/snobol4')
          GLOBALS = TABLE()
@@ -100,7 +92,21 @@ ASM_LD3  SRC = READFILE(FN)                                   :F(FILERR)
 *
 * DISASSEMBLE THE RESULT, IF THE -d FLAG WAS GIVEN
 *
-         DIFFER(DISASSEMBLE) JIT_DISASSEMBLE()
+         T = MKTEMP()
+         PID = FORK()
+         TERMINAL = LT(PID) PERROR('FORK')                       :S(END)
+         NE(PID) :S(RUN4)
+*
+* IN CHILD PROCESS, REDIRECT AND CAPTURE DISASSEMBLY
+*
+         CLOSE(1)
+         FD = CREAT(T, DIB('644', 8))
+         JIT_DISASSEMBLE()                                        :(END)
+RUN4     WAIT()
+         S = READFILE(T)
+         DELETE(T)
+         OUTPUT = DIFFER(DISASSEMBLE) S
+         DIS = DIS S
          DISASSEMBLE =
 *
 * MERGE THE GLOBALS TABLE WITH THE NEW EXPORTS FROM THIS ASM BLOCK.
@@ -134,8 +140,10 @@ ASM_RUN  MAIN = GLOBALS<'.MAIN.'>
 *
 * CALL THE FFI (.MAIN.), RETURNING INTEGER R
 *
-* HERE IS WHERE WE SHOULD USE PROCESS DEBUG - MBUG UTILITY.
+* ENTER MACHINE DEBUGGER (MBUG). PASS MBUG GLOBAL SYMBOLS TABLE AND
+* DISASSEMBLY.
 *
+         MBUG(GLOBALS, DIS)
          R = FFI_CALL_INTEGER(FFI)
 *
 * WE COULD, BUT DON'T BOTHER WITH FREEING ANYTHING. WE ARE NOT EVEN

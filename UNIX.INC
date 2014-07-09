@@ -85,14 +85,64 @@
          FFI_SET_CALLP(FFI_GETPPID, DLSYM(0, 'getppid'))
          FFI_KILL = FFI_NEW('I', 'I,I')
          FFI_SET_CALLP(FFI_KILL, DLSYM(0, 'kill'))
+         FFI_RAISE = FFI_NEW('I', 'I')
+         FFI_SET_CALLP(FFI_RAISE, DLSYM(0, 'raise'))
+         FFI_OPEN = FFI_NEW('I', 'P,I')
+         FFI_SET_CALLP(FFI_OPEN, DLSYM(0, 'open'))
+         FFI_CREAT = FFI_NEW('I', 'P,I')
+         FFI_SET_CALLP(FFI_CREAT, DLSYM(0, 'creat'))
+         FFI_DUP = FFI_NEW('I', 'I')
+         FFI_SET_CALLP(FFI_DUP, DLSYM(0, 'dup'))
+         O_RDONLY = 0
+         O_WRONLY = 1
+         O_RDWR   = 2
 *
--PUBLIC FILENO(), READ(), WRITE(), GETPID(), GETPPID(), KILL()
+* SIGNAL DEFINITIONS
+*
+         SIGHUP    = 1
+         SIGINT    = 2
+         SIGQUIT   = 3
+         SIGILL    = 4
+         SIGTRAP   = 5
+         SIGABRT   = 6
+         SIGBUS    = 7
+         SIGFPE    = 8
+         SIGKILL   = 9
+         SIGUSR1   = 10
+         SIGSEGV   = 11
+         SIGUSR2   = 12
+         SIGPIPE   = 13
+         SIGALRM   = 14
+         SIGTERM   = 15
+         SIGSTKFLT = 16
+         SIGCHLD   = 17
+         SIGCONT   = 18
+         SIGSTOP   = 19
+         SIGTSTP   = 20
+         SIGTTIN   = 21
+         SIGTTOU   = 22
+         SIGURG    = 23
+         SIGXCPU   = 24
+         SIGXFSZ   = 25
+         SIGVTALRM = 26
+         SIGPROF   = 27
+         SIWINCH   = 28
+         SIGIO     = 29
+         SIGPWR    = 30
+         SIGSYS    = 31
+*
+-PUBLIC FILENO(), READ(), WRITE(), GETPID(), GETPPID(), KILL(), RAISE()
+-PUBLIC OPEN(), CREAT(), DUP()
 *
          DEFINE('KILL(PID,SIG)')
+         DEFINE('RAISE(SIG)')
          DEFINE('GETPID()')
          DEFINE('GETPPID()')
          DEFINE('READ(FD,BUF,NBYTES)')
          DEFINE('CLOSE(FD)')
+         DEFINE('OPEN(FN,F)')
+         DEFINE('CREAT(FN,M)')
+         DEFINE('DUP(FD)')
          DEFINE('SELECT(NFDS,READFDS,WRITEFDS,EXCEPTFDS,TIMEOUT)')
          DEFINE('FILENO(FP)')
          DEFINE('FORK()')
@@ -121,6 +171,9 @@ KILL     FFI_PAR_N_INTEGER(FFI_KILL, 1, PID)
          FFI_PAR_N_INTEGER(FFI_KILL, 2, SIG)
          KILL = FFI_CALL_INTEGER(FFI_KILL)                     :(RETURN)
 *
+RAISE    FFI_PAR_N_INTEGER(FFI_RAISE, 1, SIG)
+         RAISE = FFI_CALL_INTEGER(FFI_RAISE)                   :(RETURN)
+*
 GETPID   GETPID = FFI_CALL_INTEGER(FFI_GETPID)                 :(RETURN)
 *
 GETPPID  GETPPID = FFI_CALL_INTEGER(FFI_GETPPID)               :(RETURN)
@@ -134,6 +187,17 @@ READ     FFI_PAR_N_INTEGER(FFI_READ, 1, FD)
          FFI_PAR_N_PTR(FFI_READ, 2, BUF)
          FFI_PAR_N_PTR(FFI_READ, 3, NBYTES)
          READ = FFI_CALL_INTEGER(FFI_READ)                     :(RETURN)
+*
+OPEN     FFI_PAR_N_STRING(FFI_OPEN, 1, FN)
+         FFI_PAR_N_INTEGER(FFI_OPEN, 2, F)
+         OPEN = FFI_CALL_INTEGER(FFI_OPEN)                     :(RETURN)
+*
+CREAT    FFI_PAR_N_STRING(FFI_CREAT, 1, FN)
+         FFI_PAR_N_INTEGER(FFI_CREAT, 2, M)
+         CREAT = FFI_CALL_INTEGER(FFI_CREAT)                   :(RETURN)
+*
+DUP      FFI_PAR_N_INTEGER(FFI_DUP, 1, FD)
+         DUP = FFI_CALL_INTEGER(FFI_DUP)                       :(RETURN)
 *
 CLOSE    FFI_PAR_N_INTEGER(FFI_CLOSE, 1, FD)
          CLOSE = FFI_CALL_INTEGER(FFI_CLOSE)                   :(RETURN)
