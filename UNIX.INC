@@ -47,11 +47,13 @@
          LOAD('FD_CLR_(INTEGER,INTEGER)', 'unix.so')
          LOAD('FD_SET_(INTEGER,INTEGER)', 'unix.so')
 *
--PUBLIC FORK(), WAIT(), WAITPID(), GET_STATUS()
+-PUBLIC FORK(), WAIT(), WAITPID(), GET_STATUS(), PERROR()
 *
          LOAD('WAITPID(INTEGER,INTEGER)', 'unix.so')
          LOAD('GET_STATUS()INTEGER', 'unix.so')
 *
+         FFI_PERROR = FFI_NEW('V', 'P')
+         FFI_SET_CALLP(FFI_PERROR, DLSYM(0, 'perror'))
          FFI_MALLOC = FFI_NEW('P', 'I')
          FFI_SET_CALLP(FFI_MALLOC, DLSYM(0, 'malloc'))
          FFI_FREE = FFI_NEW('V', 'I')
@@ -106,10 +108,14 @@
 -PUBLIC SELECT()
 *
          DEFINE('PIPE()R,P')
+         DEFINE('PERROR(S)')
          DEFINE('MALLOC(N)')
          DEFINE('FREE(P)')
          DEFINE('STRDUP(S)')
          DEFINE('STRLEN(S)')                                 :(UNIX_END)
+*
+PERROR   FFI_PAR_N_STRING(FFI_PERROR, 1, S)
+         FFI_CALL_VOID(FFI_PERROR)                             :(RETURN)
 *
 KILL     FFI_PAR_N_INTEGER(FFI_KILL, 1, PID)
          FFI_PAR_N_INTEGER(FFI_KILL, 2, SIG)
