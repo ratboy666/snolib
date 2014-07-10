@@ -3,6 +3,14 @@
 -INCLUDE 'EDITLINE.INC'
 -INCLUDE 'HASH.INC'
 -INCLUDE 'TRIMB.INC'
+-INCLUDE 'UNIX.INC'
+-INCLUDE 'LOGIC.INC'
+-INCLUDE 'FFI.INC'
+-INCLUDE 'NSPAN.INC'
+-INCLUDE 'CHARS.INC'
+-INCLUDE 'KEYST.INC'
+-INCLUDE 'ARRAY0.INC'
+-INCLUDE 'DDT.INC'
 -IN72
 -STITL MBUG
 -EJECT
@@ -18,6 +26,7 @@
 *                  #     #  #     #  #     #  #     #                  *
 *                  #     #  ######    #####    #####                   *
 *                                                                      *
+* MBUG                 MACHINE LEVEL DEBUGGER                          *
 *                                                                      *
 ************************************************************************
 *
@@ -51,16 +60,14 @@
 * ALWAYS SENDS RESULTS TO STANDARD OUT -- RUN FORKS A SUBPROCESS, AND
 * IN THAT SUBPROCESS REDIRECTS STANDARD OUT. THE DISASSEMBLY IS
 * CAPTURED SO IT CAN BE SENT TO MBUG().
--TITLE MBUG
--INCLUDE 'UNIX.INC'
--INCLUDE 'LOGIC.INC'
--INCLUDE 'FFI.INC'
--INCLUDE 'NSPAN.INC'
--INCLUDE 'CHARS.INC'
--INCLUDE 'KEYST.INC'
--INCLUDE 'ARRAY0.INC'
--INCLUDE 'DDT.INC'
--STITL
+*
+* TO DO:
+*
+* ADD TYPING TO 'S' COMMAND (REAL, INTEGER). SEE IF INTEGRATION WITH
+* A DISASSEMBLER IS POSSIBLE/EASY. CHECK PEEKCODE TO SEE IF IT RETURNS
+* ONLY INSTRUCTION -- THERE WAS A CONFUSING EXAMPLE ON THE WEB WHICH
+* IMPLIED THAT. NOTE THAT INSTRUCTION COULD BE MORE THAN 8 BYTES --
+* MOVE IMMEDIATE REGISTER ABSOLUTE ADDRESS. INTERRUPT PROGRAM.
 *
 -PUBLIC MBUG()
 *
@@ -205,6 +212,9 @@ PTRACE   FFI_PAR_N_INTEGER(FFI_PTRACE, 1, REQUEST)
          FFI_PAR_N_PTR(FFI_PTRACE, 4, DATA)
          PTRACE = FFI_CALL_PTR(FFI_PTRACE)                     :(RETURN)
 *
+* MBUG ENTRY. THE 'MAIN' PROCESS NEVER RETURNS. MBUG FORK()S AND THE
+* NEW CHILD PROCESS RETURNS, BUT UNDER MBUG CONTROL.
+*
 MBUG     TERMINAL = 'MBUG (TUE JUL  8 21:08:00 EDT 2014)'
 *
 * CONVERT SRC TO ARRAY OF LINES. INDEX BY ADDRESS. THE ADDRESSES ARE
@@ -221,12 +231,23 @@ MBUG5    S = SRC<I>                                            :F(MBUG6)
          SRCIDX<IDX> = I
 MBUG7    I = I + 1                                              :(MBUG5)
 MBUG6    B = 0
+*
+* TABLE OF BREAKPOINTS (SEE MBUG.B)
+*
          BREAKPOINTS = TABLE()
+*
+* TABLE OF ORIGINAL CODE BYTES (SEE MBUG.B, MBUG.G)
+*
          ORIGINAL = TABLE()
+*
          PID = FORK()
          LT(PID)                                               :F(MBUG2)
          PERROR('FORK')                                           :(END)
 MBUG2    EQ(PID)                                               :S(MBUG3)
+*
+* 'MAIN' PROCESS. ESTABLISH COMMAND HISTORY. FIXME: THINGS LIKE
+* BREAKPOINT AND ORIGINAL CAN BE COMPLETELY MOVED HERE, BECAUSE THEY
+* SHOULD NEVER BE NEEDED IN THE CHILD.
 *
          RLAPPNAME('MBUG')
          READ_HISTORY('.MBUG')
@@ -239,7 +260,8 @@ MBUG_TOP WAITPID(-1, 0)
          TERMINAL = EQ(STATUS / 256) 'CODE UNDER MBUG EXITED'
          EC = STATUS / 256
 *
-* REMOVE BREAKPOINTS, NEED TO REWIND RIP BY ONE BYTE
+* REMOVE BREAKPOINTS, REWIND RIP BY ONE BYTE (INT3 IS A ONE BYTE
+* INSTRUCTION).
 *
          IDENT(BRKSET) :S(MBUG_PR)
          I = 1
@@ -256,13 +278,15 @@ MBUG_PR  N = PTRACE(PTRACE_GETREGS, PID, 0, MBUG_REGS)
 *
 * IF EC IS 5 AND BRKSET, WE HIT A BREAKPOINT (5 COULD ALSO BE SINGLE
 * STEP, BUT WE DON'T SET BREAKPOINTS IN THAT CASE). BACK UP RIP BY
-* ONE BYTE
+* ONE BYTE.
+*
          (EQ(EC, 5) DIFFER(BRKSET)) :F(MBUG_P2)
          N = N - 1
          POKE_P(MBUG_REGS + 8 * MBUG_RNAMES<'RIP'>, N)
          PTRACE(PTRACE_SETREGS, PID, 0, MBUG_REGS)
 *
-* PROMPT CONTAINS RIP (INSTRUCTION POINTER)
+* PROMPT CONTAINS RIP (INSTRUCTION POINTER). FIXME: SHOULD MOVE TO
+* MBUG_CMD, IN CASE X RIP COMMAND IS USED TO EDIT THE RIP.
 *
 MBUG_P2  BRKSET =
          P = 'MBUG ' IH(N) ': '
@@ -272,19 +296,23 @@ MBUG_CMD MBUG_IN = TRIM(HISTORY_EXPAND(READLINE(P)))             :F(END)
          IDENT(MBUG_IN)                                     :S(MBUG_CMD)
          ADD_HISTORY(MBUG_IN)
          CMD = FENCE NSPAN(' ' CHARS_TAB)
-+              ANY('TtDdBbXxLlSsGgEeQqYyRrKk=?') . C
++              ANY('TtDdBbXxLlSsGgEeQqYyRrKkHh=?') . C
 +              NSPAN(' ' CHARS_TAB) REM . ARGS
-         MBUG_IN CMD                                          :F(MBUG.H)
+         MBUG_IN CMD                                        :F(MBUG_BAD)
          ARGS = TRIM(ARGS)
          C = REPLACE(C, '?=', 'HE')                      :($('MBUG.' C))
+MBUG_BAD TERMINAL = 'BAD COMAND, TRY H FOR HELP'             :(MBUG_CMD)
 *
-* DUMP SYMBOL TABLE
+* DUMP SYMBOL TABLE. ARGS IS A PATTERN TO APPLY. FIXME: SHOULD
+* EVAL() TO BUILD THE PATTERN -- AS IT IS THE PATTERN IS TAKEN AS
+* A SIMPLE STRING.
 *
 MBUG.Y   A = KEYST(SYMTAB)                                  :F(MBUG_CMD)
          A = SORT(A)
          I = 1
-MBUG.Y2  TERMINAL = LPAD(IH(SYMTAB<A<I>>), 16, '0') ' ' A<I>
-+                                                           :F(MBUG_CMD)
+MBUG.Y2  A<I>                                               :F(MBUG_CMD)
+         TERMINAL = (A<I> ? ARGS)
++           LPAD(IH(SYMTAB<A<I>>), 16, '0') ' ' A<I>
          I = I + 1                                            :(MBUG.Y2)
 *
 * DISPLAY MEMORY
@@ -344,8 +372,7 @@ MBUG.L2  TERMINAL = SRC<L>                                  :F(MBUG_CMD)
          N = N - 1
          GT(N)                                    :S(MBUG.L2)F(MBUG_CMD)
 *
-MBUG.S   TERMINAL = 'S COMMAND'
-         SA = MBUG_ARG(VDIFFER(ARGS))
+MBUG.S   SA = MBUG_ARG(VDIFFER(ARGS))
 MBUG.S2  V = AND(PTRACE(PTRACE_PEEKDATA, PID, SA, 0), 255)
          V = LPAD(IH(V), 2, '0')
          V = EDITLINE(LPAD(IH(SA), 16, '0') ': ', V)
@@ -426,6 +453,8 @@ MBUG.H   TERMINAL = 'T       TRACE, SINGLE STEP'
          TERMINAL = 'R       REPORT BREAKPOINTS'
          TERMINAL = 'L ADDR  LIST CODE'
          TERMINAL = 'S ADDR  SET MEMORY'
+         TERMINAL = 'H       HELP'
+         TERMINAL = 'Y PAT   SYMBOLS, MATCHING PAT'
                                                              :(MBUG_CMD)
 *
 MBUG.T   PTRACE(PTRACE_SINGLESTEP, PID, 0, 0)                :(MBUG_TOP)

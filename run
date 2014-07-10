@@ -53,9 +53,10 @@
 * CLEAR FLAGS (-p AND -d)
          DISASSEMBLE =
          PRINT =
+         MBUG =
 *
-* GET NEXT ARGUMENT. THIS WILL BE EITHER A FLAG (-p, -d) OR A FILENAME
-* TO PROCESS
+* GET NEXT ARGUMENT. THIS WILL BE EITHER A FLAG (-p, -d, -m) OR A
+* FILENAME TO PROCESS
 *
 ASM_LOAD FN = HOST(HOST_ARGN, HOST(HOST_FIRSTARG) + PN)      :F(ASM_RUN)
 *
@@ -65,15 +66,18 @@ ASM_LOAD FN = HOST(HOST_ARGN, HOST(HOST_FIRSTARG) + PN)      :F(ASM_RUN)
 *    THE CODE IN LIGHTNING FORMAT
 * -d DISASSEMBLE THE NEXT MODULE AFTER ASM COMLETES. THIS IS A
 *    DISASSEMBLY OF THE ACTUAL MACHINE INSTRUCTIONS.
+* -m STARTS THE CODE UNDER MBUG
 *
          PRINT = IDENT(FN, '-p') 1                           :F(ASM_LD2)
          PN = PN + 1                                         :(ASM_LOAD)
 ASM_LD2  DISASSEMBLE = IDENT(FN, '-d') 1                     :F(ASM_LD3)
          PN = PN + 1                                         :(ASM_LOAD)
+ASM_LD3  MBUG = IDENT(FN, '-m') 1                            :F(ASM_LD4)
+         PN = PN + 1                                         :(ASM_LOAD)
 *
 * PROCESS A FILE. READ THE ENTIRE FILE.
 *
-ASM_LD3  SRC = READFILE(FN)                                   :F(FILERR)
+ASM_LD4  SRC = READFILE(FN)                                   :F(FILERR)
 *
 * CREATE A NEW ASM() OBJECT. PASS IN GLOBALS UP TO NOW.
 *
@@ -92,6 +96,7 @@ ASM_LD3  SRC = READFILE(FN)                                   :F(FILERR)
 *
 * DISASSEMBLE THE RESULT, IF THE -d FLAG WAS GIVEN
 *
+         (IDENT(DISASSEMBLE) IDENT(MBUG))                       :S(RUN5)
          T = MKTEMP()
          PID = FORK()
          TERMINAL = LT(PID) PERROR('FORK')                       :S(END)
@@ -102,6 +107,11 @@ ASM_LD3  SRC = READFILE(FN)                                   :F(FILERR)
          CLOSE(1)
          FD = CREAT(T, DIB('644', 8))
          JIT_DISASSEMBLE()                                        :(END)
+*
+* WAIT FOR CHILD PROCESS TO COMPLETE. READ DISASSEMBLY FILE. APPEND TO
+* DISASSEMBLY ALREADY COLLECTED. IF -d USED, OUTPUT THE DISASSEMBLY TO
+* STANDARD OUTPUT
+*
 RUN4     WAIT()
          S = READFILE(T)
          DELETE(T)
@@ -113,7 +123,7 @@ RUN4     WAIT()
 * NOTE THAT NEW EXPORTS TAKE PRECEDENCE (WHICH IS THE 'LEAST SURPRISING'
 * BEHAVIOUR).
 *
-         GLOBALS = MERGET(GLOBALS, EXPORTS(A))
+RUN5     GLOBALS = MERGET(GLOBALS, EXPORTS(A))
          PN = PN + 1                                         :(ASM_LOAD)
 *
 * ERRORS - FILE COULDN'T BE READ, ASM DIDN'T LIKE THE FILE, OR THERE
@@ -143,7 +153,7 @@ ASM_RUN  MAIN = GLOBALS<'.MAIN.'>
 * ENTER MACHINE DEBUGGER (MBUG). PASS MBUG GLOBAL SYMBOLS TABLE AND
 * DISASSEMBLY.
 *
-         MBUG(GLOBALS, DIS)
+         DIFFER(MBUG) MBUG(GLOBALS, DIS)
          R = FFI_CALL_INTEGER(FFI)
 *
 * WE COULD, BUT DON'T BOTHER WITH FREEING ANYTHING. WE ARE NOT EVEN
