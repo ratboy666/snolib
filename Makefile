@@ -37,7 +37,7 @@ T = AGT.tst      AI.tst       AOPA.tst     BALREV.tst   BALX.tst     \
     DSERVE.tst   VDIFFER.tst  FOR.tst      FREEZE.tst   ROUTING.tst  \
     GDDT.tst     DEDUPA.tst   ATOL.tst     ITERDIR.tst  SIZEL.tst    \
     SIZET.tst    APPENDA.tst  ARRAY0.tst   LOWA.tst     MKTEMP.tst   \
-    MD5.tst      COPYA.tst    PRUNET.tst   COPYT.tst    MERGET.tst   \
+    MD5.tst      PRUNET.tst   COPYT.tst    MERGET.tst   \
     KEYST.tst    EDITLINE.tst WRTFILE.tst  FORMAT.tst
 
 # Library files FIXME: TRIAL should be removed.
@@ -119,7 +119,6 @@ ARRAY0.INC:   SYSTEM.INC
 LOWA.INC:     ARRAY0.INC
 MKTEMP.INC:   BQ.INC
 MD5.INC:      BQ.INC       MKTEMP.INC   READFILE.INC
-COPYA.INC:    SEQ.INC
 UNIQUE.INC:   REPL.INC
 PRUNET.INC:   SEQ.INC      HASH.INC     VDIFFER.INC
 FCGI.INC:     FFI.INC      P64.INC      BQ.INC       CSNOBOL4.INC \
@@ -311,7 +310,7 @@ docs:         AGT.html      AI.html       ALL.html      AOPA.html     \
               FREEZE.html   ROUTING.html  in72.html     DEDUPA.html   \
               ATOL.html     ITERDIR.html  SIZEL.html    SIZET.html    \
               APPENDA.html  SIZEA.html    LOWA.html     MKTEMP.html   \
-              ARRAY0.html   MD5.html      COPYA.html    PRUNET.html   \
+              ARRAY0.html   MD5.html      PRUNET.html   \
               COPYT.html    MERGET.html   KEYST.html    EDITLINE.html \
               WRTFILE.html  FORMAT.html
 	touch docs
@@ -445,7 +444,6 @@ ARRAY0.INC: ARRAY0.SNO
 LOWA.INC: LOWA.SNO
 MKTEMP.INC: MKTEMP.SNO
 MD5.INC: MD5.SNO
-COPYA.INC: COPYA.SNO
 PRUNET.INC: PRUNET.SNO
 COPYT.INC: COPYT.SNO
 MERGET.INC: MERGET.SNO

@@ -1,0 +1,173 @@
+#!/usr/bin/bash
+         exec "snobol4" "-d8m" "-b" "$0" "$@"
+*
+************************************************************************
+*                                                                      *
+*                                                                      *
+*                      ######   #     #  #     #                       *
+*                      #     #  #     #  ##    #                       *
+*                      #     #  #     #  # #   #                       *
+*                      ######   #     #  #  #  #                       *
+*                      #   #    #     #  #   # #                       *
+*                      #    #   #     #  #    ##                       *
+*                      #     #   #####   #     #                       *
+*                                                                      *
+*                                                                      *
+************************************************************************
+*
+* THIS IS THE RUN-TIME LOADER. IT READS, ASSEMBLES AND COMBINES THE
+* FILES ON THE COMMAND LINE.
+*
+* ESTABLISHES THE ASSEMBLER/LOAD ENVIRONMENT, LOADS (ASSEMBLES) EACH
+* .MAC FILE NAMED, AND EXECUTES THE LOADED CODE FROM SYMBOL '.MAIN.'.
+*
+-TITLE RUN
+-INCLUDE 'JIT.INC'
+-INCLUDE 'FFI.INC'
+-INCLUDE 'ASM.INC'
+-INCLUDE 'READFILE.INC'
+-INCLUDE 'HOST.INC'
+-INCLUDE 'MERGET.INC'
+-INCLUDE 'MBUG.INC'
+-INCLUDE 'UNIX.INC'
+-INCLUDE 'MKTEMP.INC'
+*-INCLUDE 'DDT.INC'
+-STITL
+*
+*        DDT()
+         TERMINAL = 'RUN (TUE JUN 24 19:53:25 EDT 2014)'
+*
+         INIT_JIT('/usr/local/bin/snobol4')
+         GLOBALS = TABLE()
+*
+* OPTIONALLY ADD ANY NEEDED SYMBOLS TO GLOBALS TABLE TO ESTABLISH
+* ENVIRONMENT FOR ASM() CODE.
+*
+* READ "OBJECT" FILES, MUST BE "LORD" ORDER. EACH COMPONENT CONTRIBUTES
+* TO GLOBAL SYMBOLS, WHICH ARE THEN AVAILABLE TO THE REMAINING PARTS.
+*
+* INDEX OF THE NEXT COMMAND LINE ARGUMENT
+*
+         PN = 0
+*
+* CLEAR FLAGS (-p AND -d)
+         DISASSEMBLE =
+         PRINT =
+         MBUG =
+*
+* GET NEXT ARGUMENT. THIS WILL BE EITHER A FLAG (-p, -d, -m) OR A
+* FILENAME TO PROCESS
+*
+ASM_LOAD FN = HOST(HOST_ARGN, HOST(HOST_FIRSTARG) + PN)      :F(ASM_RUN)
+*
+* OPTIONS
+*
+* -p "PRINTS" THE NEXT MODULE AFTER ASM COMPLETES. PRINT IS VIEW OF
+*    THE CODE IN LIGHTNING FORMAT
+* -d DISASSEMBLE THE NEXT MODULE AFTER ASM COMLETES. THIS IS A
+*    DISASSEMBLY OF THE ACTUAL MACHINE INSTRUCTIONS.
+* -m STARTS THE CODE UNDER MBUG
+*
+         PRINT = IDENT(FN, '-p') 1                           :F(ASM_LD2)
+         PN = PN + 1                                         :(ASM_LOAD)
+ASM_LD2  DISASSEMBLE = IDENT(FN, '-d') 1                     :F(ASM_LD3)
+         PN = PN + 1                                         :(ASM_LOAD)
+ASM_LD3  MBUG = IDENT(FN, '-m') 1                            :F(ASM_LD4)
+         PN = PN + 1                                         :(ASM_LOAD)
+*
+* PROCESS A FILE. READ THE ENTIRE FILE.
+*
+ASM_LD4  SRC = READFILE(FN)                                   :F(FILERR)
+*
+* CREATE A NEW ASM() OBJECT. PASS IN GLOBALS UP TO NOW.
+*
+         A = ASM_CREATE(GLOBALS)
+*
+* ASSEMBLE (LOAD) THIS FILE. THIS RESULTS IN A NEW MACHINE CODE BLOCK
+* IN MEMORY (WHICH MAY HAVE RERENCES TO ANY PREVIOUS MACHINE CODE AS
+* PUBLISHED IN GLOBALS).
+*
+         ASM(A, SRC)                                          :F(ASMERR)
+*
+* "PRINT" THE RESULT, IF THE -p FLAG WAS GIVEN
+*
+         DIFFER(PRINT) JIT_PRINT()
+         PRINT =
+*
+* DISASSEMBLE THE RESULT, IF THE -d FLAG WAS GIVEN
+*
+         (IDENT(DISASSEMBLE) IDENT(MBUG))                       :S(RUN5)
+         T = MKTEMP()
+         PID = FORK()
+         TERMINAL = LT(PID) PERROR('FORK')                       :S(END)
+         NE(PID) :S(RUN4)
+*
+* IN CHILD PROCESS, REDIRECT AND CAPTURE DISASSEMBLY
+*
+         CLOSE(1)
+         FD = CREAT(T, DIB('644', 8))
+         JIT_DISASSEMBLE()                                        :(END)
+*
+* WAIT FOR CHILD PROCESS TO COMPLETE. READ DISASSEMBLY FILE. APPEND TO
+* DISASSEMBLY ALREADY COLLECTED. IF -d USED, OUTPUT THE DISASSEMBLY TO
+* STANDARD OUTPUT
+*
+RUN4     WAIT()
+         S = READFILE(T)
+         DELETE(T)
+         OUTPUT = DIFFER(DISASSEMBLE) S
+         DIS = DIS S
+         DISASSEMBLE =
+*
+* MERGE THE GLOBALS TABLE WITH THE NEW EXPORTS FROM THIS ASM BLOCK.
+* NOTE THAT NEW EXPORTS TAKE PRECEDENCE (WHICH IS THE 'LEAST SURPRISING'
+* BEHAVIOUR).
+*
+RUN5     GLOBALS = MERGET(GLOBALS, EXPORTS(A))
+         PN = PN + 1                                         :(ASM_LOAD)
+*
+* ERRORS - FILE COULDN'T BE READ, ASM DIDN'T LIKE THE FILE, OR THERE
+* IS NOT .MAIN. ENTRY POINT.
+*
+FILERR   TERMINAL = "CAN'T READ FILE " FN                         :(END)
+ASMERR   TERMINAL = "ASM ERROR IN FILE " FN                       :(END)
+MAINERR  TERMINAL = "MISSING .MAIN."                              :(END)
+*
+* EXECUTE THE CODE THAT HAS BEEN LOADED. EXECUTION BEGINS AT ENTRY POINT
+* .MAIN.
+*
+ASM_RUN  MAIN = GLOBALS<'.MAIN.'>
+         IDENT(MAIN)                                         :S(MAINERR)
+*
+* CREATE A NEW FFI OBJECT. .MAIN. HAS NO PARAMETERS AND RETURNS A STATUS
+* (INTEGER) TO RETURN TO THE OPERATING SYSTEM (&CODE).
+*
+         FFI = FFI_NEW('I', 'V')
+*
+* SET THE CALL POINTER FOR THE FF TO .MAIN.
+*
+         FFI_SET_CALLP(FFI, MAIN)
+*
+* CALL THE FFI (.MAIN.), RETURNING INTEGER R
+*
+* ENTER MACHINE DEBUGGER (MBUG). PASS MBUG GLOBAL SYMBOLS TABLE AND
+* DISASSEMBLY.
+*
+         DIFFER(MBUG) MBUG(GLOBALS, DIS)
+         R = FFI_CALL_INTEGER(FFI)
+*
+* WE COULD, BUT DON'T BOTHER WITH FREEING ANYTHING. WE ARE NOT EVEN
+* TRACKING THE ASM OBJECTS (WE COULD PUT THEM INTO A TABLE, AND FREE
+* THEM). IT IS PRESUMED THAT THIS PARTICULAR KIND OF CODE GENERATION
+* WILL BE DONE AT STARTUP, AND THE CODE REUSED DURING EXECUTION.
+*
+*        FFI_FREE(FFI)
+*        FINISH_JIT()
+*
+* ASSIGN RESULT R INTO &CODE, AND EXIT TO THE OPERATING SYSTEM.
+*
+         &CODE = R                                                :(END)
+*
+* CE: .MSNOBOL4;
+*
+END

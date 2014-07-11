@@ -35,7 +35,7 @@ SNOBOL4 statistics summary-
 [fred@dejah snolib]$ 
 ]]
 
-It taskes 36 milliseconds to compile ALL.INC on my Intel i3 (1.4Ghz).
+It takes 36 milliseconds to compile ALL.INC on my Intel i3 (1.4Ghz).
 
 <i>Building</i> the library from lss source takes a long time.
 
@@ -77,8 +77,8 @@ the html documentation (mostly in the <i>ditaa</i> utility.
 -INCLUDE 'COMB.INC'
 -INCLUDE 'COMPLEX.INC'
 -INCLUDE 'COOKIE.INC'
--INCLUDE 'COPYA.INC'
 -INCLUDE 'COPYL.INC'
+-INCLUDE 'COPYT.INC'
 -INCLUDE 'COUNT.INC'
 -INCLUDE 'CRACK.INC'
 -INCLUDE 'CSNOBOL4.INC'
@@ -122,6 +122,7 @@ the html documentation (mostly in the <i>ditaa</i> utility.
 -INCLUDE 'LOWA.INC'
 -INCLUDE 'LPROG.INC'
 -INCLUDE 'MAX.INC'
+-INCLUDE 'MBUG.INC'
 -INClUDE 'MD5.INC'
 -INCLUDE 'MDY.INC'
 -INCLUDE 'MERGET.INC'

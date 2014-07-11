@@ -10,6 +10,7 @@
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'KEYST.INC'
 -INCLUDE 'ARRAY0.INC'
+-INCLUDE 'BRKREM.INC'
 -INCLUDE 'DDT.INC'
 -IN72
 -STITL MBUG
@@ -68,6 +69,10 @@
 * ONLY INSTRUCTION -- THERE WAS A CONFUSING EXAMPLE ON THE WEB WHICH
 * IMPLIED THAT. NOTE THAT INSTRUCTION COULD BE MORE THAN 8 BYTES --
 * MOVE IMMEDIATE REGISTER ABSOLUTE ADDRESS. INTERRUPT PROGRAM.
+*
+* libbfd - read symbol table
+* libopcodes - disassemble
+* dis-asm.h
 *
 -PUBLIC MBUG()
 *
@@ -195,16 +200,34 @@
          MBUG_RNAMES = #('R15=0,R14=1,R13=2,R12=3,RBP=4,RBX=5,R11=6,'
 +                        'R10=7,R9=8,R8=9,RAX=10,RCX=11,RDX=12,RSI=13,'
 +                        'RDI=14,RIP=16,EFLAGS=18,RSP=19')
-         MBUG_R2 = KEYST(MBUG_RNAMES)
-                                                             :(MBUG_END)
+         MBUG_R2 = KEYST(MBUG_RNAMES)                        :(MBUG_END)
+*
+* AN ARGUMENT IS A REGISTER, A SYMBOL NAME, OR A HEX VALUE. IF REGISTER,
+* THE VALUE OF THE REGISTER IS USED. THE ARGUMENT MAY BE EMPTY, IN
+* WHICH CASE THE LAST ARGUMENT IS USED. THE ARGUMENT MAY BE FOLLOWED
+* BY + OR - AND A HEX VALUE. FOR EXAMPLE:
+*
+* D STRINGS, +10
+*
+* WILL DUMP FROM SYMBOL STRINGS TO STRINGS+10 BYTES.  THE RETAINED
+* ARGUMENT IS RETAINED BETWEEN COMMANDS.
 *
 MBUG_ARG S = TRIMB(S)
+         OP =
+         R = 0
+         S BRKREM('+-') . S REM . R
+         R LEN(1) . OP REM . R
+         LA = VDIFFER(S)
+         S = IDENT(S) LA
          U = REPLACE(S, &LCASE, &UCASE)
-         MBUG_ARG = PEEK_P(MBUG_REGS + 8 * VDIFFER(MBUG_RNAMES<S>))
-+                                                             :S(RETURN)
-         MBUG_ARG = VDIFFER(SYMTAB<S>)                        :S(RETURN)
-         MBUG_ARG = VDIFFER(SYMTAB<U>)                        :S(RETURN)
+         MBUG_ARG = PEEK_P(MBUG_REGS + 8 * VDIFFER(MBUG_RNAMES<U>))
++                                                           :S(MBUG_AR2)
+         MBUG_ARG = VDIFFER(SYMTAB<S>)                      :S(MBUG_AR2)
+         MBUG_ARG = VDIFFER(SYMTAB<U>)                      :S(MBUG_AR2)
          MBUG_ARG = HI(S)                                      :(RETURN)
+MBUG_AR2 IDENT(OP)                                            :S(RETURN)
+         R = HI(VDIFFER(R))
+         MBUG_ARG = EVAL(MBUG_ARG ' ' OP ' ' R)                :(RETURN)
 *
 PTRACE   FFI_PAR_N_INTEGER(FFI_PTRACE, 1, REQUEST)
          FFI_PAR_N_INTEGER(FFI_PTRACE, 2, PID)
@@ -219,7 +242,7 @@ MBUG     TERMINAL = 'MBUG (TUE JUL  8 21:08:00 EDT 2014)'
 *
 * CONVERT SRC TO ARRAY OF LINES. INDEX BY ADDRESS. THE ADDRESSES ARE
 * ABSOLUTE ADDRESSES. ON THE 'L' COMMAND AND ON BREAK, ISSUE SOURCE
-* IF POSSIBLE. ON 'L', ALSO DISPLAY 4 BYTES OF CODE.
+* IF POSSIBLE.
 *
          SRC = CRACK(SRC, CHARS_NL)
          SRCIDX = TABLE()
@@ -263,7 +286,7 @@ MBUG_TOP WAITPID(-1, 0)
 * REMOVE BREAKPOINTS, REWIND RIP BY ONE BYTE (INT3 IS A ONE BYTE
 * INSTRUCTION).
 *
-         IDENT(BRKSET) :S(MBUG_PR)
+         IDENT(BRKSET)                                       :S(MBUG_PR)
          I = 1
 MBUG_NB  BREAKA<I>                                           :F(MBUG_PR)
          V2 = PTRACE(PTRACE_PEEKDATA, PID, BREAKA<I>, 0)
@@ -280,7 +303,7 @@ MBUG_PR  N = PTRACE(PTRACE_GETREGS, PID, 0, MBUG_REGS)
 * STEP, BUT WE DON'T SET BREAKPOINTS IN THAT CASE). BACK UP RIP BY
 * ONE BYTE.
 *
-         (EQ(EC, 5) DIFFER(BRKSET)) :F(MBUG_P2)
+         (EQ(EC, 5) DIFFER(BRKSET))                          :F(MBUG_P2)
          N = N - 1
          POKE_P(MBUG_REGS + 8 * MBUG_RNAMES<'RIP'>, N)
          PTRACE(PTRACE_SETREGS, PID, 0, MBUG_REGS)
@@ -290,7 +313,7 @@ MBUG_PR  N = PTRACE(PTRACE_GETREGS, PID, 0, MBUG_REGS)
 *
 MBUG_P2  BRKSET =
          P = 'MBUG ' IH(N) ': '
-         L = SRCIDX<N> :F(MBUG_CMD)
+         L = SRCIDX<N>                                      :F(MBUG_CMD)
          TERMINAL = SRC<L>
 MBUG_CMD MBUG_IN = TRIM(HISTORY_EXPAND(READLINE(P)))             :F(END)
          IDENT(MBUG_IN)                                     :S(MBUG_CMD)
@@ -356,12 +379,12 @@ MBUG.B3  IDENT(BREAKPOINTS<A2>)                              :S(MBUG.B2)
 MBUG.B4  BREAKA = (KEYST(BREAKPOINTS), ARRAY0)               :(MBUG_CMD)
 *
 MBUG.R   I = 1
-MBUG.R2  BREAKA<I> :F(MBUG_CMD)
+MBUG.R2  BREAKA<I>                                          :F(MBUG_CMD)
          TERMINAL = LPAD(IH(BREAKA<I>), 16, '0')
 +           ' (' BREAKPOINTS<BREAKA<I>> ')'
-         I = I + 1 :(MBUG.R2)
+         I = I + 1                                            :(MBUG.R2)
 *
-MBUG.K   CT = 'CLEAR' :(MBUG.B2)
+MBUG.K   CT = 'CLEAR'                                         :(MBUG.B2)
 *
 MBUG.L   A = MBUG_ARG(VDIFFER(ARGS))                         :F(MBUG.L3)
          L = SRCIDX<A>                                      :F(MBUG_CMD)
