@@ -14,6 +14,29 @@ _c = char, _s = short, _i = int, _f = float, _d = double, _ld = long
 double). Note that long long is excluded.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">POKE_STRING(P,STRING)</font> puts a C string into memory. A zero byte is
+added to the string. This is used for compatibility with C routines.
+<font face="Source Code Pro">PEEK_STRING(P)</font> retrieves the C string at location P.
+<font face="Source Code Pro">POKE_BUFFER(P,STRING)</font> is similar to <font face="Source Code Pro">POKE_STRING</font>. <font face="Source Code Pro">POKE_BUFFER</font>
+does not add a zero byte. Note that both <font face="Source Code Pro">POKE_STRING</font> and
+<font face="Source Code Pro">POKE_BUFFER</font> copy all bytes of the string; C routines will stop at
+the first zero byte <font face="Source Code Pro">CHAR(0)</font> (which is added by <font face="Source Code Pro">POKE_STRING</font>).
+<font face="Source Code Pro">PEEK_BUFFER(P,N)</font> returns the data at location P for N bytes.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+The long long type can be supported using _buffer, if really needed.
+CSNOBOL4 does not support integers of that size -- however, these
+can be done with INFINIP.INC, and custom conversion code (but, be
+careful about the sign of the numbers).
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+<font face="Source Code Pro">PEEK_C(P)</font> is equivalent to <font face="Source Code Pro">ORD(PEEK_BUFFER(P,1))</font>, except that
+the <font face="Source Code Pro">PEEK_C</font> function is four times faster in this case. However,
+note that composing <font face="Source Code Pro">PEEK_BUFFER</font> from <font face="Source Code Pro">PEEK_C</font> will quickly
+be a loss, because running the compose code in CSNOBOL4 will be much
+slower.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
 <font face="Source Code Pro">INCLUDE</font>s used while building p64.so are:
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
@@ -33,7 +56,7 @@ double). Note that long long is excluded.
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;P64&raquo;&equiv;</b>
--SNOBOL TERMINAL = &#39;P64 (SUN NOV 10 03:57:08 EST 2013)&#39;
+-SNOBOL TERMINAL = &#39;P64 (FRI JUL 18 18:01:13 EDT 2014)&#39;
 -SNOBOL SLOAD(&#39;CRACK.INC&#39;)
 -SNOBOL SLOAD(&#39;DYNAMIC.INC&#39;)
 -SNOBOL SLOAD(&#39;SEQ.INC&#39;)
@@ -56,6 +79,46 @@ Build <font face="Source Code Pro">p64.c</font> so we can produce our shared lib
 
 <font color="#818181"><i>#include &lt;stdlib.h&gt;</i></font>
 <font color="#818181"><i>#include &lt;string.h&gt;</i></font>
+
+/* PEEK_STRING(INTEGER)STRING */
+
+PEEK_STRING( LA_ALIST ) LA_DCL
+{
+    char *p = LA_PTR(0);
+    RETSTR(p);
+}
+
+/* POKE_STRING(INTEGER,STRING) */
+
+POKE_STRING( LA_ALIST ) LA_DCL
+{
+    char *p = LA_PTR(0);
+    char *s = LA_STR_PTR(1);
+    int n = LA_STR_LEN(1);
+    memcpy(p, s, n);
+    p[n] = 0;
+    RETNULL;
+}
+
+/* PEEK_BUFFER(INTEGER,INTEGER)STRING */
+
+PEEK_BUFFER( LA_ALIST ) LA_DCL
+{
+    char *p = LA_PTR(0);
+    int n = LA_INT(1);
+    RETSTR2(p, n);
+}
+
+/* POKE_BUFFER(INTEGER,STRING) */
+
+POKE_BUFFER( LA_ALIST ) LA_DCL
+{
+    char *p = LA_PTR(0);
+    char *s = LA_STR_PTR(1);
+    int n = LA_STR_LEN(1);
+    memcpy(p, s, n);
+    RETNULL;
+}
 
 static long peek_p(long p) { return (long)*(void **)p; }
 
@@ -139,6 +202,13 @@ Build <font face="Source Code Pro">p64.so</font> shared library.
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;P64&raquo;&equiv;</b>
+-PUBLIC PEEK_STRING(), POKE_STRING(), PEEK_BUFFER(), POKE_BUFFER()
+<font color="#818181"><i>*</i></font>
+         LOAD(&#39;PEEK_STRING(INTEGER)STRING&#39;, &#39;p64.so&#39;)
+         LOAD(&#39;POKE_STRING(INTEGER,STRING)&#39;, &#39;p64.so&#39;)
+         LOAD(&#39;PEEK_BUFFER(INTEGER,INTEGER)STRING&#39;, &#39;p64.so&#39;)
+         LOAD(&#39;POKE_BUFFER(INTEGER,STRING)&#39;, &#39;p64.so&#39;)
+<font color="#818181"><i>*</i></font>
 -PUBLIC PEEK_P(), PEEK_C(), PEEK_S(), PEEK_I(), PEEK_D(), PEEK_F()
 -PUBLIC PEEK_LD()
 -PUBLIC POKE_P(), POKE_C(), POKE_S(), POKE_I(), POKE_D(), POKE_F()
@@ -206,7 +276,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Sun Jun 22 11:23:43 EDT 2014</p></td><td><p align=right>
+Fri Jul 18 18:57:57 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

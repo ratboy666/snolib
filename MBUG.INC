@@ -11,7 +11,6 @@
 -INCLUDE 'KEYST.INC'
 -INCLUDE 'ARRAY0.INC'
 -INCLUDE 'BRKREM.INC'
--INCLUDE 'DDT.INC'
 -IN72
 -STITL MBUG
 -EJECT
@@ -64,68 +63,107 @@
 *
 * TO DO:
 *
-* ADD TYPING TO 'S' COMMAND (REAL, INTEGER). SEE IF INTEGRATION WITH
-* A DISASSEMBLER IS POSSIBLE/EASY. CHECK PEEKCODE TO SEE IF IT RETURNS
-* ONLY INSTRUCTION -- THERE WAS A CONFUSING EXAMPLE ON THE WEB WHICH
-* IMPLIED THAT. NOTE THAT INSTRUCTION COULD BE MORE THAN 8 BYTES --
-* MOVE IMMEDIATE REGISTER ABSOLUTE ADDRESS. INTERRUPT PROGRAM.
+* ADD TYPING TO 'S' COMMAND (REAL, INTEGER).
 *
-* libbfd - read symbol table
-* libopcodes - disassemble
-* dis-asm.h
-*
--PUBLIC MBUG()
+-PUBLIC MBUG(), INT3
 *
          DEFINE('MBUG(SYMTAB,SRC)')
 *
-         INT3 = HI('CC')
+         INT3 = HI('CC') ;* OR CD 03
+*
+-PUBLIC PTRACE_TRACEME, PTRACE_PEEKTEXT, PTRACE_PEEKDATA
 *
          PTRACE_TRACEME            = 0
          PTRACE_PEEKTEXT           = 1
          PTRACE_PEEKDATA           = 2
+*
+-PUBLIC PTRACE_PEEKUSER, PTRACE_POKETEXT, PTRACE_POKEDATA
+*
          PTRACE_PEEKUSER           = 3
          PTRACE_POKETEXT           = 4
          PTRACE_POKEDATA           = 5
+*
+-PUBLIC PTRACE_POKEUSER, PTRACE_CONT, PTRACE_KILL, PTRACE_SINGLESTEP
+*
          PTRACE_POKEUSER           = 6
          PTRACE_CONT               = 7
          PTRACE_KILL               = 8
          PTRACE_SINGLESTEP         = 9
+*
+-PUBLIC PTRACE_GETREGS, PTRACE_SETREGS, PTRACE_GETFPREGS
+*
          PTRACE_GETREGS            = 12
          PTRACE_SETREGS            = 13
          PTRACE_GETFPREGS          = 14
+*
+-PUBLIC PTRACE_SETFPREGS, PTRACE_ATTACH, PTRACE_DETACH
+*
          PTRACE_SETFPREGS          = 15
          PTRACE_ATTACH             = 16
          PTRACE_DETACH             = 17
+*
+-PUBLIC PTRACE_GETFPXREGS, PTRACE_SETFPXREGS, PTRACE_SYSCALL
+*
          PTRACE_GETFPXREGS         = 18
          PTRACE_SETFPXREGS         = 19
          PTRACE_SYSCALL            = 24
+*
+-PUBLIC PTRACE_SETOPTIONS, PTRACE_GETEVENTMSG, PTRACE_GETSIGINFO
+*
          PTRACE_SETOPTIONS         = HI('4200')
          PTRACE_GETEVENTMSG        = HI('4201')
          PTRACE_GETSIGINFO         = HI('4202')
+*
+-PUBLIC PTRACE_SETSIGINFO, PTRACE_GETREGSET, PTRACE_SETREGSET
+*
          PTRACE_SETSIGINFO         = HI('4203')
          PTRACE_GETREGSET          = HI('4204')
          PTRACE_SETREGSET          = HI('4205')
+*
+-PUBLIC PTRACE_SEIZE, PTRACE_INTERRUPT, PTRACE_LISTEN
+*
          PTRACE_SEIZE              = HI('4206')
          PTRACE_INTERRUPT          = HI('4207')
          PTRACE_LISTEN             = HI('4208')
+*
+-PUBLIC PTRACE_PEEKSIGINFO, PTRACE_SEIZE_DEVEL, PTRACE_O_TRACESYSGOOD
+*
          PTRACE_PEEKSIGINFO        = HI('4209')
          PTRACE_SEIZE_DEVEL        = HI('80000000')
          PTRACE_O_TRACESYSGOOD     = HI('00000001')
+*
+-PUBLIC PTRACE_O_TRACEFORK, PTRACE_O_TRACEVFORK, PTRACE_O_TRACECLONE
+*
          PTRACE_O_TRACEFORK        = HI('00000002')
          PTRACE_O_TRACEVFORK       = HI('00000004')
          PTRACE_O_TRACECLONE       = HI('00000008')
+*
+-PUBLIC PTRACE_O_TRACEEXEC, PTRACE_O_TRACEVFORKDONE, PTRACE_TRACEEXIT
+*
          PTRACE_O_TRACEEXEC        = HI('00000010')
          PTRACE_O_TRACEVFORKDONE   = HI('00000020')
          PTRACE_O_TRACEEXIT        = HI('00000040')
+*
+-PUBLIC PTRACE_O_TRACESECCOMP, PTRACE_O_EXITKILL, PTRACE_O_MASK
+*
          PTRACE_O_TRACESECCOMP     = HI('00000080')
          PTRACE_O_EXITKILL         = HI('00100000')
          PTRACE_O_MASK             = HI('001000FF')
+*
+-PUBLIC PTRACE_EVENT_FORK, PTRACE_EVENT_VFORK, PTRACE_EVENT_CLONE
+*
          PTRACE_EVENT_FORK         = 1
          PTRACE_EVENT_VFORK        = 2
          PTRACE_EVENT_CLONE        = 3
+*
+-PUBLIC PTRACE_EVENT_EXEC, PTRACE_EVENT_VFORK_DONE, PTRACE_EVENT_EXIT
+*
          PTRACE_EVENT_EXEC         = 4
          PTRACE_EVENT_VFORK_DONE   = 5
          PTRACE_EVENT_EXIT         = 6
+*
+-PUBLIC PTRACE_EVENT_SECCOMP, PTRACE_PEEKSIGINFO_SHARED
+*
          PTRACE_EVENT_SECCOMP      = 5
          PTRACE_PEEKSIGINFO_SHARED = 1
 *
@@ -137,28 +175,42 @@
 * INDEX INTO ARRAY OF 8 BYTE LONGS RETURNED FROM PTRACE FOR LOCATION
 * OF THE USERS' GENERAL PURPOSE REGISTERS (216 BYTES)
 *
+-PUBLIC REGS_R15, REGS_R14, REGS_R13, REGS_R12, REGS_RBP, REGS_RBX
+*
          REGS_R15      = 0
          REGS_R14      = 1
          REGS_R13      = 2
          REGS_R12      = 3
          REGS_RBP      = 4
          REGS_RBX      = 5
+*
+-PUBLIC REGS_R11, REGS_R10, REGS_R9, REGS_R8, REGS_RAX, REGS_RCX
+*
          REGS_R11      = 6
          REGS_R10      = 7
          REGS_R9       = 8
          REGS_R8       = 9
          REGS_RAX      = 10
          REGS_RCX      = 11
+*
+-PUBLIC REGS_RDX, REGS_RSI, REGS_RDI, REGS_ORIG_RAX, REGS_RIP
+*
          REGS_RDX      = 12
          REGS_RSI      = 13
          REGS_RDI      = 14
          REGS_ORIG_RAX = 15
          REGS_RIP      = 16
+*
+-PUBLIC REGS_CS, REGS_EFLAGS, REGS_RSP, REGS_SS, REGS_FS_BASE
+*
          REGS_CS       = 17
          REGS_EFLAGS   = 18
          REGS_RSP      = 19
          REGS_SS       = 20
          REGS_FS_BASE  = 21
+*
+-PUBLIC REGS_GS_BASE, REGS_DS, REGS_ES, REGS_FS, REGS_GS
+*
          REGS_GS_BASE  = 22
          REGS_DS       = 23
          REGS_ES       = 24
@@ -166,6 +218,8 @@
          REGS_GS       = 26
 *
 * FP REGS. THESE ARE BYTE OFFSETS (user.h)
+*
+* FIXME: NOT PUBLISHED YET AS -PUBLIC, WAIT UNTIL TESTED!
 *
          FPREGS_CWD       = 0
          FPREGS_SWD       = 2
@@ -190,10 +244,63 @@
 *             VOID *ADDR, VOID *DATA)
 *
          FFI_PTRACE = FFI_NEW('L', 'I,I,P,P')
-         N = DLSYM(0, 'ptrace')
-         FFI_SET_CALLP(FFI_PTRACE, N)
+         FFI_SET_CALLP(FFI_PTRACE, DLSYM(0, 'ptrace'))
+*
+-PUBLIC PTRACE()
 *
          DEFINE('PTRACE(REQUEST,PID,ADDR,DATA)')
+*
+* NOTE: CSNOBOL4 CALLS OPENING AN ARBITRARY FD BUT DOESN'T ALLOW
+* USING A FILE*, EVEN THOUGH THE UNDERLYING I/O SYSTEM USING STREAM
+* IO. THIS IS OK, AS WE CAN RECOVER THE DATA AS A STRING ANYWAY.
+* FOR THIS REASON, WE DEFINE OPEN_MEMSTREAM BUT NOT FMEMOPEN.
+* WE ALSO DEFINE FCLOSE. NOTE THAT THE STREAM DOES NOT HAVE AN FD
+* ASSOCIATED. WHAT ABOUT io_mkfile(int, FILE*, char*) -- MATCH
+* WITH io_getfp(int)
+*
+         FFI_OPEN_MEMSTREAM = FFI_NEW('P', 'P,P')
+         FFI_SET_CALLP(FFI_OPEN_MEMSTREAM, DLSYM(0, 'open_memstream'))
+*
+-PUBLIC OPEN_MEMSTREAM()
+*
+         DEFINE('OPEN_MEMSTREAM(PS,PL)')
+*
+         FFI_FCLOSE = FFI_NEW('I', 'P')
+         FFI_SET_CALLP(FFI_FCLOSE, DLSYM(0, 'fclose'))
+*
+-PUBLIC FCLOSE()
+*
+         DEFINE('FCLOSE(F)')
+*
+* LINK TO DISASSEMBLER
+*
+-PUBLIC DISASSEMBLE_INFO_ENDIAN, BFD_ENDIAN_BIG, BFD_ENDIAN_LITTLE
+-PUBLIC BFD_ENDIAN_UNKNOWN, BFD_DISASSEMBLE_INFO_MACH, BFD_MACH_X86_64
+-PUBLIC BFD_MACH_I386_SYNTAX, DISASSEMBLE_INFO_BUFFER
+-PUBLIC DISASSEMBLE_INFO_BUFFER_LENGTH, INIT_DISASSEMBLE_INFO()
+-PUBLIC PRINT_INSN_I386()
+*
+         DISASSEMBLE_INFO_ENDIAN        = 40  ;* 4 BYTES
+         BFD_ENDIAN_BIG                 = 0
+         BFD_ENDIAN_LITTLE              = 1
+         BFD_ENDIAN_UNKNOWN             = 2
+         DISASSEMBLE_INFO_MACH          = 32  ;* 8 BYTES
+         BFD_MACH_X86_64                = 8
+         BFD_MACH_I386_INTEL_SYNTAX     = 1
+         DISASSEMBLE_INFO_BUFFER        = 152 ;* 8 BYTES
+         DISASSEMBLE_INFO_BUFFER_VMA    = 160 ;* 8 BYTES
+         DISASSEMBLE_INFO_BUFFER_LENGTH = 168 ;* 4 BYTES
+         H = DLOPEN('/usr/lib64/libopcodes-2.23.2.so', RTLD_NOW)
+         FFI_INIT_DISASSEMBLE_INFO = FFI_NEW('V', 'P,P,P')
+         FFI_SET_CALLP(FFI_INIT_DISASSEMBLE_INFO,
++           DLSYM(H, 'init_disassemble_info'))
+         DEFINE('INIT_DISASSEMBLE_INFO(DINFO,FILEP,FFUNC)')
+         FFI_PRINT_INSN_I386 = FFI_NEW('I', 'P,P')
+         FFI_SET_CALLP(FFI_PRINT_INSN_I386, DLSYM(H, 'print_insn_i386'))
+         DEFINE('PRINT_INSN_I386(VMADDR,DINFO)')
+*
+         DEFINE('DISASSEMBLE(ADDR)F,P,N,PTR,SIZ,DINFO,DIS,S,I,S2')
+*
          DEFINE('MBUG_ARG(S)')
          MBUG_REGS = MALLOC(256)
 * ORIG_RAX=15 - ORIGINAL RAX ON SYSCALL
@@ -235,6 +342,70 @@ PTRACE   FFI_PAR_N_INTEGER(FFI_PTRACE, 1, REQUEST)
          FFI_PAR_N_PTR(FFI_PTRACE, 4, DATA)
          PTRACE = FFI_CALL_PTR(FFI_PTRACE)                     :(RETURN)
 *
+FCLOSE   FFI_PAR_N_PTR(FFI_FCLOSE, 1, F)
+         FCLOSE = FFI_CALL_INTEGER(FFI_FCLOSE)                 :(RETURN)
+*
+OPEN_MEMSTREAM
+         FFI_PAR_N_PTR(FFI_OPEN_MEMSTREAM, 1, PS)
+         FFI_PAR_N_PTR(FFI_OPEN_MEMSTREAM, 2, PL)
+         OPEN_MEMSTREAM = FFI_CALL_PTR(FFI_OPEN_MEMSTREAM)     :(RETURN)
+*
+INIT_DISASSEMBLE_INFO
+         FFI_PAR_N_PTR(FFI_INIT_DISASSEMBLE_INFO, 1, DINFO)
+         FFI_PAR_N_PTR(FFI_INIT_DISASSEMBLE_INFO, 2, FILEP)
+         FFI_PAR_N_PTR(FFI_INIT_DISASSEMBLE_INFO, 3, FFUNC)
+         FFI_CALL_VOID(FFI_INIT_DISASSEMBLE_INFO)              :(RETURN)
+*
+PRINT_INSN_I386
+         FFI_PAR_N_PTR(FFI_PRINT_INSN_I386, 1, VMADDR)
+         FFI_PAR_N_PTR(FFI_PRINT_INSN_I386, 2, DINFO)
+         PRINT_INSN_I386 = FFI_CALL_INTEGER(FFI_PRINT_INSN_I386)
++                                                              :(RETURN)
+*
+DISASSEMBLE
+         S = LPAD(IH(ADDR), 16, '0') ': '
+         DIS = MALLOC(16)
+         DINFO = MALLOC(1024)
+         PTR = MALLOC(16)
+         SIZ = MALLOC(16)
+         N = PTRACE(PTRACE_PEEKTEXT, PID, ADDR + 0, 0)
+         POKE_P(DIS + 0, N)
+         N = PTRACE(PTRACE_PEEKTEXT, PID, ADDR + 8, 0)
+         POKE_P(DIS + 8, N)
+         POKE_P(PTR, 0)
+         POKE_P(SIZ, 0)
+         F = OPEN_MEMSTREAM(PTR, SIZ)
+         INIT_DISASSEMBLE_INFO(DINFO, F, DLSYM(0, 'fprintf'))
+         POKE_P(DINFO + DISASSEMBLE_INFO_MACH, BFD_MACH_X86_64)
+         POKE_I(DINFO + DISASSEMBLE_INFO_ENDIAN, BFD_ENDIAN_LITTLE)
+         POKE_P(DINFO + DISASSEMBLE_INFO_BUFFER, DIS)
+*        POKE_P(DINFO + DISASSEMBLE_INFO_BUFFER_VMA, ADDR)
+*        POKE_P(DINFO + DISASSEMBLE_INFO_BUFFER_VMA, 0)
+         POKE_I(DINFO + DISASSEMBLE_INFO_BUFFER_LENGTH, 16)
+         INSTRUCTION_BYTES = PRINT_INSN_I386(0, DINFO)
+         FCLOSE(F)
+         P = PEEK_P(PTR)
+         N = PEEK_I(SIZ)
+*        TERMINAL = 'INSTRUCTION BYTES: ' INSTRUCTION_BYTES
+         I = 0
+DIS2     S2 = '  '
+         S2 = LT(I, INSTRUCTION_BYTES) LPAD(IH(PEEK_C(DIS + I)), 2, '0')
+         S = S S2 ' '
+         I = I + 1
+         LT(I, 4)                                               :S(DIS2)
+         DISASSEMBLE = S PEEK_BUFFER(P, N)
+DIS4     GE(I, INSTRUCTION_BYTES)                               :S(DIS3)
+         DISASSEMBLE = EQ(REMDR(I, 4))
++           DISASSEMBLE CHAR(10) DUPL(' ', 18)
+         S2 = LPAD(IH(PEEK_C(DIS + I)), 2, '0')
+         DISASSEMBLE = DISASSEMBLE S2 ' '
+         I = I + 1                                               :(DIS4)
+DIS3     FREE(DIS)
+         FREE(DINFO)
+         FREE(P)
+         FREE(PTR)
+         FREE(SIZ)                                             :(RETURN)
+*
 * MBUG ENTRY. THE 'MAIN' PROCESS NEVER RETURNS. MBUG FORK()S AND THE
 * NEW CHILD PROCESS RETURNS, BUT UNDER MBUG CONTROL.
 *
@@ -258,6 +429,42 @@ MBUG6    B = 0
 * TABLE OF BREAKPOINTS (SEE MBUG.B)
 *
          BREAKPOINTS = TABLE()
+         BREAKA = ARRAY0
+*
+* MAP SIGNAL TO SIGNAL NAME
+*
+         SIGNALS = TABLE(32)
+         SIGNALS<SIGHUP>    = 'SIGHUP'
+         SIGNALS<SIGINT>    = 'SIGINT'
+         SIGNALS<SIGQUIT>   = 'SIGQUIT'
+         SIGNALS<SIGILL>    = 'SIGILL'
+         SIGNALS<SIGTRAP>   = 'SIGTRAP'
+         SIGNALS<SIGABRT>   = 'SIGABRT'
+         SIGNALS<SIGBUS>    = 'SIGBUS'
+         SIGNALS<SIGFPE>    = 'SIGFPE'
+         SIGNALS<SIGKILL>   = 'SIGKILL'
+         SIGNALS<SIGUSR1>   = 'SIGUSR1'
+         SIGNALS<SIGSEGV>   = 'SIGSEGV'
+         SIGNALS<SIGUSR2>   = 'SIGUSR2'
+         SIGNALS<SIGPIPE>   = 'SIGPIPE'
+         SIGNALS<SIGALRM>   = 'SIGALRM'
+         SIGNALS<SIGTERM>   = 'SIGTERM'
+         SIGNALS<SIGSTKFLT> = 'SIGSTKFLT'
+         SIGNALS<SIGCHLD>   = 'SIGCHLD'
+         SIGNALS<SIGCONT>   = 'SIGCONT'
+         SIGNALS<SIGSTOP>   = 'SIGSTOP'
+         SIGNALS<SIGTSTP>   = 'SIGTSTP'
+         SIGNALS<SIGTTIN>   = 'SIGTTIN'
+         SIGNALS<SIGTTOU>   = 'SIGTTOU'
+         SIGNALS<SIGURG>    = 'SIGURG'
+         SIGNALS<SIGXCPU>   = 'SIGXCPU'
+         SIGNALS<SIGXFSZ>   = 'SIGXFSZ'
+         SIGNALS<SIGVTALRM> = 'SIGVTALRM'
+         SIGNALS<SIGPROF>   = 'SIGPROF'
+         SIGNALS<SIGWINCH>  = 'SIGWINCH'
+         SIGNALS<SIGIO>     = 'SIGIO'
+         SIGNALS<SIGPWR>    = 'SIGPWR'
+         SIGNALS<SIGSYS>    = 'SIGSYS'
 *
 * TABLE OF ORIGINAL CODE BYTES (SEE MBUG.B, MBUG.G)
 *
@@ -280,13 +487,18 @@ MBUG2    EQ(PID)                                               :S(MBUG3)
 *
 MBUG_TOP WAITPID(-1, 0)
          STATUS = GET_STATUS()
-         TERMINAL = EQ(STATUS / 256) 'CODE UNDER MBUG EXITED'
          EC = STATUS / 256
+         P = 'MBUG EXITED (Q TO QUIT): '
+         EQ(EC)                                             :S(MBUG_CMD)
+         MS_DIS = MALLOC(16)
+*
+         EQ(EC, SIGTRAP)                                     :S(MBUG_RB)
+         TERMINAL = 'EC: ' EC ' ' SIGNALS<EC>
 *
 * REMOVE BREAKPOINTS, REWIND RIP BY ONE BYTE (INT3 IS A ONE BYTE
 * INSTRUCTION).
 *
-         IDENT(BRKSET)                                       :S(MBUG_PR)
+MBUG_RB  IDENT(BRKSET)                                       :S(MBUG_PR)
          I = 1
 MBUG_NB  BREAKA<I>                                           :F(MBUG_PR)
          V2 = PTRACE(PTRACE_PEEKDATA, PID, BREAKA<I>, 0)
@@ -296,30 +508,37 @@ MBUG_NB  BREAKA<I>                                           :F(MBUG_PR)
          N = PTRACE(PTRACE_POKEDATA, PID, BREAKA<I>, V2)
          I = I + 1                                            :(MBUG_NB)
 *
-MBUG_PR  N = PTRACE(PTRACE_GETREGS, PID, 0, MBUG_REGS)
-         N = PEEK_P(MBUG_REGS + 8 * MBUG_RNAMES<'RIP'>)
+MBUG_PR  PTRACE(PTRACE_GETREGS, PID, 0, MBUG_REGS)
+         RIP = PEEK_P(MBUG_REGS + 8 * MBUG_RNAMES<'RIP'>)
 *
 * IF EC IS 5 AND BRKSET, WE HIT A BREAKPOINT (5 COULD ALSO BE SINGLE
 * STEP, BUT WE DON'T SET BREAKPOINTS IN THAT CASE). BACK UP RIP BY
 * ONE BYTE.
 *
-         (EQ(EC, 5) DIFFER(BRKSET))                          :F(MBUG_P2)
-         N = N - 1
-         POKE_P(MBUG_REGS + 8 * MBUG_RNAMES<'RIP'>, N)
+         (EQ(EC, SIGTRAP) DIFFER(BRKSET))                    :F(MBUG_P2)
+         RIP = RIP - 1
+         POKE_P(MBUG_REGS + 8 * MBUG_RNAMES<'RIP'>, RIP)
          PTRACE(PTRACE_SETREGS, PID, 0, MBUG_REGS)
 *
 * PROMPT CONTAINS RIP (INSTRUCTION POINTER). FIXME: SHOULD MOVE TO
 * MBUG_CMD, IN CASE X RIP COMMAND IS USED TO EDIT THE RIP.
 *
 MBUG_P2  BRKSET =
-         P = 'MBUG ' IH(N) ': '
-         L = SRCIDX<N>                                      :F(MBUG_CMD)
-         TERMINAL = SRC<L>
+         P = 'MBUG ' IH(RIP) ': '
+         L = SRCIDX<RIP>                                    :F(MBUG_INS)
+         TERMINAL = SRC<L>                                  :S(MBUG_CMD)
+*
+MBUG_INS S = DISASSEMBLE(RIP)
+         TERMINAL = S
+*
 MBUG_CMD MBUG_IN = TRIM(HISTORY_EXPAND(READLINE(P)))             :F(END)
          IDENT(MBUG_IN)                                     :S(MBUG_CMD)
          ADD_HISTORY(MBUG_IN)
+*
+* FIXME: ADD U (UNASSEMBLE) COMMAND - LIST N INSTRUCTIONS, UPDATE
+*        SAME AS L
          CMD = FENCE NSPAN(' ' CHARS_TAB)
-+              ANY('TtDdBbXxLlSsGgEeQqYyRrKkHh=?') . C
++              ANY('TtDdBbXxLlSsGgEeQqYyRrKkHhUu=?') . C
 +              NSPAN(' ' CHARS_TAB) REM . ARGS
          MBUG_IN CMD                                        :F(MBUG_BAD)
          ARGS = TRIM(ARGS)
@@ -385,6 +604,15 @@ MBUG.R2  BREAKA<I>                                          :F(MBUG_CMD)
          I = I + 1                                            :(MBUG.R2)
 *
 MBUG.K   CT = 'CLEAR'                                         :(MBUG.B2)
+*
+MBUG.U   UA = MBUG_ARG(VDIFFER(ARGS))                        :F(MBUG.U3)
+         UA = IDENT(UA) RIP
+         TERMINAL = '(' ARGS '):'
+MBUG.U3  N = 12
+MBUG.U2  TERMINAL = DISASSEMBLE(UA)
+         UA = UA + INSTRUCTION_BYTES
+         N = N - 1
+         GT(N)                                    :S(MBUG.U2)F(MBUG_CMD)
 *
 MBUG.L   A = MBUG_ARG(VDIFFER(ARGS))                         :F(MBUG.L3)
          L = SRCIDX<A>                                      :F(MBUG_CMD)
@@ -478,6 +706,7 @@ MBUG.H   TERMINAL = 'T       TRACE, SINGLE STEP'
          TERMINAL = 'S ADDR  SET MEMORY'
          TERMINAL = 'H       HELP'
          TERMINAL = 'Y PAT   SYMBOLS, MATCHING PAT'
+         TERMINAL = 'U ADDR  UNASSEMBLE'
                                                              :(MBUG_CMD)
 *
 MBUG.T   PTRACE(PTRACE_SINGLESTEP, PID, 0, 0)                :(MBUG_TOP)

@@ -1,7 +1,7 @@
 -MODULE P64
--LINE 17 "P64.lss"
+-LINE 37 "P64.lss"
 -IN72
--LINE 150 "P64.lss"
+-LINE 217 "P64.lss"
 -CASE 1
 -STITL P64
 -EJECT
@@ -22,20 +22,27 @@
 *
 * P64.lss
 *
--LINE 20 "P64.lss"
--LINE 21 "P64.lss"
--LINE 22 "P64.lss"
--LINE 23 "P64.lss"
--LINE 24 "P64.lss"
--LINE 25 "P64.lss"
--LINE 30 "P64.lss"
+-LINE 40 "P64.lss"
+-LINE 41 "P64.lss"
+-LINE 42 "P64.lss"
+-LINE 43 "P64.lss"
+-LINE 44 "P64.lss"
+-LINE 45 "P64.lss"
+-LINE 50 "P64.lss"
          p64 = 'p64.c'
--LINE 104 "P64.lss"
--LINE 105 "P64.lss"
--LINE 106 "P64.lss"
--LINE 107 "P64.lss"
--LINE 108 "P64.lss"
--LINE 116 "P64.lss"
+-LINE 164 "P64.lss"
+-LINE 165 "P64.lss"
+-LINE 166 "P64.lss"
+-LINE 167 "P64.lss"
+-LINE 168 "P64.lss"
+-LINE 176 "P64.lss"
+-PUBLIC PEEK_STRING(), POKE_STRING(), PEEK_BUFFER(), POKE_BUFFER()
+*
+         LOAD('PEEK_STRING(INTEGER)STRING', 'p64.so')
+         LOAD('POKE_STRING(INTEGER,STRING)', 'p64.so')
+         LOAD('PEEK_BUFFER(INTEGER,INTEGER)STRING', 'p64.so')
+         LOAD('POKE_BUFFER(INTEGER,STRING)', 'p64.so')
+*
 -PUBLIC PEEK_P(), PEEK_C(), PEEK_S(), PEEK_I(), PEEK_D(), PEEK_F()
 -PUBLIC PEEK_LD()
 -PUBLIC POKE_P(), POKE_C(), POKE_S(), POKE_I(), POKE_D(), POKE_F()

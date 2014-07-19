@@ -93,11 +93,16 @@
          FFI_SET_CALLP(FFI_CREAT, DLSYM(0, 'creat'))
          FFI_DUP = FFI_NEW('I', 'I')
          FFI_SET_CALLP(FFI_DUP, DLSYM(0, 'dup'))
+*
+-PUBLIC O_RDONLY, O_WRONLY, O_RDWR
+*
          O_RDONLY = 0
          O_WRONLY = 1
          O_RDWR   = 2
 *
 * SIGNAL DEFINITIONS
+*
+-PUBLIC SIGHUP, SIGINT, SIGQUIT, SIGILL, SIGTRAP, SIGABRT, SIGBUS
 *
          SIGHUP    = 1
          SIGINT    = 2
@@ -106,6 +111,9 @@
          SIGTRAP   = 5
          SIGABRT   = 6
          SIGBUS    = 7
+*
+-PUBLIC SIGFPE, SIGKILL, SIGUSR1, SIGSEGV, SIGUSR2, SIGALRM, SIGTERM
+*
          SIGFPE    = 8
          SIGKILL   = 9
          SIGUSR1   = 10
@@ -114,6 +122,9 @@
          SIGPIPE   = 13
          SIGALRM   = 14
          SIGTERM   = 15
+*
+-PUBLIC SIGSTKFLT, SIGCHLD, SIGCONT, SIGSTOP, SIGTSTP, SIGTTIN, SIGTTOU
+*
          SIGSTKFLT = 16
          SIGCHLD   = 17
          SIGCONT   = 18
@@ -121,12 +132,18 @@
          SIGTSTP   = 20
          SIGTTIN   = 21
          SIGTTOU   = 22
+*
+-PUBLIC SIGURG, SIGXCPU, SIGXFSZ, SIGVTALRM, SIGPROF, SIGWINCH
+*
          SIGURG    = 23
          SIGXCPU   = 24
          SIGXFSZ   = 25
          SIGVTALRM = 26
          SIGPROF   = 27
-         SIWINCH   = 28
+         SIGWINCH  = 28
+*
+-PUBLIC SIGIO, SIGPWR, SIGSYS
+*
          SIGIO     = 29
          SIGPWR    = 30
          SIGSYS    = 31

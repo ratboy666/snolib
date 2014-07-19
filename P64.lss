@@ -4,6 +4,26 @@ Pointer utilities Includes peek and poke of various types (_p = pointer,
 _c = char, _s = short, _i = int, _f = float, _d = double, _ld = long
 double). Note that long long is excluded.
 
+[[POKE_STRING(P,STRING)]] puts a C string into memory. A zero byte is
+added to the string. This is used for compatibility with C routines.
+[[PEEK_STRING(P)]] retrieves the C string at location P.
+[[POKE_BUFFER(P,STRING)]] is similar to [[POKE_STRING]]. [[POKE_BUFFER]]
+does not add a zero byte. Note that both [[POKE_STRING]] and
+[[POKE_BUFFER]] copy all bytes of the string; C routines will stop at
+the first zero byte [[CHAR(0)]] (which is added by [[POKE_STRING]]).
+[[PEEK_BUFFER(P,N)]] returns the data at location P for N bytes.
+
+The long long type can be supported using _buffer, if really needed.
+CSNOBOL4 does not support integers of that size -- however, these
+can be done with INFINIP.INC, and custom conversion code (but, be
+careful about the sign of the numbers).
+
+[[PEEK_C(P)]] is equivalent to [[ORD(PEEK_BUFFER(P,1))]], except that
+the [[PEEK_C]] function is four times faster in this case. However,
+note that composing [[PEEK_BUFFER]] from [[PEEK_C]] will quickly
+be a loss, because running the compose code in CSNOBOL4 will be much
+slower.
+
 [[INCLUDE]]s used while building p64.so are:
 
 <a href="CRACK.html">CRACK</a><br>
@@ -17,7 +37,7 @@ double). Note that long long is excluded.
 @
 
 <<P64>>=
--SNOBOL TERMINAL = 'P64 (SUN NOV 10 03:57:08 EST 2013)'
+-SNOBOL TERMINAL = 'P64 (FRI JUL 18 18:01:13 EDT 2014)'
 -SNOBOL SLOAD('CRACK.INC')
 -SNOBOL SLOAD('DYNAMIC.INC')
 -SNOBOL SLOAD('SEQ.INC')
@@ -35,6 +55,46 @@ Build [[p64.c]] so we can produce our shared library.
 
 #include <stdlib.h>
 #include <string.h>
+
+/* PEEK_STRING(INTEGER)STRING */
+
+PEEK_STRING( LA_ALIST ) LA_DCL
+{
+    char *p = LA_PTR(0);
+    RETSTR(p);
+}
+
+/* POKE_STRING(INTEGER,STRING) */
+
+POKE_STRING( LA_ALIST ) LA_DCL
+{
+    char *p = LA_PTR(0);
+    char *s = LA_STR_PTR(1);
+    int n = LA_STR_LEN(1);
+    memcpy(p, s, n);
+    p[n] = 0;
+    RETNULL;
+}
+
+/* PEEK_BUFFER(INTEGER,INTEGER)STRING */
+
+PEEK_BUFFER( LA_ALIST ) LA_DCL
+{
+    char *p = LA_PTR(0);
+    int n = LA_INT(1);
+    RETSTR2(p, n);
+}
+
+/* POKE_BUFFER(INTEGER,STRING) */
+
+POKE_BUFFER( LA_ALIST ) LA_DCL
+{
+    char *p = LA_PTR(0);
+    char *s = LA_STR_PTR(1);
+    int n = LA_STR_LEN(1);
+    memcpy(p, s, n);
+    RETNULL;
+}
 
 static long peek_p(long p) { return (long)*(void **)p; }
 
@@ -113,6 +173,13 @@ Build [[p64.so]] shared library.
 @
 
 <<P64>>=
+-PUBLIC PEEK_STRING(), POKE_STRING(), PEEK_BUFFER(), POKE_BUFFER()
+*
+         LOAD('PEEK_STRING(INTEGER)STRING', 'p64.so')
+         LOAD('POKE_STRING(INTEGER,STRING)', 'p64.so')
+         LOAD('PEEK_BUFFER(INTEGER,INTEGER)STRING', 'p64.so')
+         LOAD('POKE_BUFFER(INTEGER,STRING)', 'p64.so')
+*
 -PUBLIC PEEK_P(), PEEK_C(), PEEK_S(), PEEK_I(), PEEK_D(), PEEK_F()
 -PUBLIC PEEK_LD()
 -PUBLIC POKE_P(), POKE_C(), POKE_S(), POKE_I(), POKE_D(), POKE_F()
