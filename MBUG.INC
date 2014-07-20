@@ -61,9 +61,7 @@
 * IN THAT SUBPROCESS REDIRECTS STANDARD OUT. THE DISASSEMBLY IS
 * CAPTURED SO IT CAN BE SENT TO MBUG().
 *
-* TO DO:
-*
-* ADD TYPING TO 'S' COMMAND (REAL, INTEGER).
+* TO DO: ADD TYPING TO 'S' COMMAND (REAL, INTEGER).
 *
 -PUBLIC MBUG(), INT3
 *
@@ -623,20 +621,79 @@ MBUG.L2  TERMINAL = SRC<L>                                  :F(MBUG_CMD)
          N = N - 1
          GT(N)                                    :S(MBUG.L2)F(MBUG_CMD)
 *
-MBUG.S   SA = MBUG_ARG(VDIFFER(ARGS))
-MBUG.S2  V = AND(PTRACE(PTRACE_PEEKDATA, PID, SA, 0), 255)
-         V = LPAD(IH(V), 2, '0')
+* TYPES FOR EDITING - HEX/INTEGER/REAL, WIDTH, MASKS.
+* HAVE HEX COVERED, NEED INTEGER, REAL, POSSIBLY STRING.
+*
+MBUG.S   ARGS BRKREM(',') . ARGS REM . OPTS
+         OPTS FENCE ',' =
+         OPTS = REPLACE(TRIMB(OPTS), &LCASE, &UCASE)
+         TYPEM = TABLE()
+         TYPEM<''>        = 'BYTE'
+         TYPEM<'BYTE'>    = 'BYTE'
+         TYPEM<'WORD'>    = 'WORD'
+         TYPEM<'DWORD'>   = 'DWORD'
+         TYPEM<'QWORD'>   = 'QWORD'
+         TYPEM<'B'>       = 'BYTE'
+         TYPEM<'W'>       = 'WORD'
+         TYPEM<'D'>       = 'DWORD'
+         TYPEM<'Q'>       = 'QWORD'
+         TYPEM<'I'>       = 'INTEGER'
+*
+* THREE PHASES TO THE EDIT: FETCH DATA, EDIT, PUT DATA.
+* FETCH DATA - GET 8 BYTES FROM MEMORY. 'AND' WITH MASKS
+* NOW, WE NEED TO CONVERT TO INTEGER/REAL IF NEEDED. IN THE
+* EDIT ROUTINE, WE POKE INTO MEMORY, PEEK FROM MEMORY, AND EDIT
+* ON STORE, WE NEED TO DO THE SAME -- NOT ACCURATE. THIS MUST DEAL
+* WITH ENDIAN DIFFERENCES. AFTER MASKING, WE STILL NEED ENDIAN
+* CORRECTION. FOR OUR IMMEDIATE NEEDS -- WE ARE OK. VALUE AFTER
+* MASKING IS UNSIGNED INTEGER VALUE. SIGNED IF QWORD. WE SIMPLY
+* NEED TO SIGN EXTEND THE VALUE.
+*
+         EDITT = TABLE()
+         EDITT<'BYTE'>    = 'HEX'
+         EDITT<'WORD'>    = 'HEX'
+         EDITT<'DWORD'>   = 'HEX'
+         EDITT<'QWORD'>   = 'HEX'
+         EDITT<'INTEGER'> = 'INTEGER'
+         OPTS = TYPEM<OPTS>
+         IDENT(MASKS<OPTS>)                                 :S(MBUG_BAD)
+         SA = MBUG_ARG(VDIFFER(ARGS))
+         MASKS = TABLE()
+         MASKC = TABLE()
+         SIZET = TABLE()
+         MASKS<'BYTE'>    = HI('00000000000000FF')
+         MASKC<'BYTE'>    = HI('FFFFFFFFFFFFFF00')
+         SIZET<'BYTE'>    = 1
+         MASKS<'WORD'>    = HI('000000000000FFFF')
+         MASKC<'WORD'>    = HI('FFFFFFFFFFFF0000')
+         SIZET<'WORD'>    = 2
+         MASKS<'DWORD'>   = HI('00000000FFFFFFFF')
+         MASKS<'INTEGER'> = HI('00000000FFFFFFFF')
+         MASKC<'DWORD'>   = HI('FFFFFFFF00000000')
+         MASKC<'INTEGER'> = HI('FFFFFFFF00000000')
+         SIZET<'DWORD'>   = 4
+         SIZET<'INTEGER'> = 4
+         MASKS<'QWORD'>   = HI('FFFFFFFFFFFFFFFF')
+         MASKC<'QWORD'>   = HI('0000000000000000')
+         SIZET<'QWORD'>   = 8
+MBUG.S2  V = AND(PTRACE(PTRACE_PEEKDATA, PID, SA, 0), MASKS<OPTS>)
+*
+         V = IDENT(EDITT<OPTS>, 'HEX') LPAD(IH(V), SIZET<OPTS> * 2, '0')
+*
          V = EDITLINE(LPAD(IH(SA), 16, '0') ': ', V)
          V = TRIMB(V)
          IDENT(V)                                           :S(MBUG_CMD)
-*        V ANY('./')                                        :S(MBUG_CMD)
-         V = HI(V)                                          :F(MBUG_CMD)
+         V ANY('/')                                         :S(MBUG_CMD)
+*
+         V = IDENT(EDITT<OPTS>, 'HEX') HI(V)
+*
+         V = AND(V, MASKS<OPTS>)
          V2 = PTRACE(PTRACE_PEEKDATA, PID, SA, 0)
-         M = HI('FFFFFFFFFFFFFF00')
-         V2 = AND(V2, M)
+*        M = HI('FFFFFFFFFFFFFF00')
+         V2 = AND(V2, MASKC<OPTS>)
          V2 = OR(V2, V)
          N = PTRACE(PTRACE_POKEDATA, PID, SA, V2)
-         SA = SA + 1                                          :(MBUG.S2)
+         SA = SA + SIZET<OPTS>                                :(MBUG.S2)
 *
 * G, EXECUTE
 *
@@ -645,13 +702,13 @@ MBUG.S2  V = AND(PTRACE(PTRACE_PEEKDATA, PID, SA, 0), 255)
 MBUG.G   I = 1
          BRKSET = 1
 MBUG.G3  BREAKA<I>                                           :F(MBUG.G2)
-         V = AND(PTRACE(PTRACE_PEEKDATA, PID, BREAKA<I>, 0), 255)
+         V = AND(PTRACE(PTRACE_PEEKTEXT, PID, BREAKA<I>, 0), 255)
          ORIGINAL<BREAKA<I>> = V
-         V2 = PTRACE(PTRACE_PEEKDATA, PID, BREAKA<I>, 0)
+         V2 = PTRACE(PTRACE_PEEKTEXT, PID, BREAKA<I>, 0)
          M = HI('FFFFFFFFFFFFFF00')
          V2 = AND(V2, M)
          V2 = OR(V2, INT3)
-         N = PTRACE(PTRACE_POKEDATA, PID, BREAKA<I>, V2)
+         N = PTRACE(PTRACE_POKETEXT, PID, BREAKA<I>, V2)
          I = I + 1                                            :(MBUG.G3)
 MBUG.G2  PTRACE(PTRACE_CONT, PID, 0, 0)                      :(MBUG_TOP)
 *
@@ -667,12 +724,13 @@ MBUG.X   DIFFER(ARGS)                                        :S(MBUG.X2)
 *
          I = 1
          S =
+         TWIDTH = 72
 MBUG.X3  R = MBUG_R2<I>
          N = PEEK_P(MBUG_REGS + 8 * MBUG_RNAMES<R>)
          N = R '=' IH(N)
          X = SIZE(S) + SIZE(N) + 2
-         TERMINAL = GE(X, 80) S
-         S = GE(X, 80)
+         TERMINAL = GE(X, TWIDTH) S
+         S = GE(X, TWIDTH)
          S = VDIFFER(S) ', '
          S = S N
          I = I + 1
@@ -681,7 +739,7 @@ MBUG.X3  R = MBUG_R2<I>
 *
 * X REG DISPLAYS SPECIFIC REGISTER, ALLOWS EDIT OF REGISTER VALUE.
 *
-MBUG.X2  ARGS = REPLACE(ARGS, &LCASE, &UCASE)
+MBUG.X2  ARGS = REPLACE(TRIMB(ARGS), &LCASE, &UCASE)
          IDENT(MBUG_RNAMES<ARGS>)                           :S(MBUG_CMD)
          N = PEEK_P(MBUG_REGS + 8 * MBUG_RNAMES<ARGS>)
          N = IH(N)
@@ -692,21 +750,22 @@ MBUG.X2  ARGS = REPLACE(ARGS, &LCASE, &UCASE)
 *
 * HELP FOR MBUG
 *
-MBUG.H   TERMINAL = 'T       TRACE, SINGLE STEP'
-         TERMINAL = 'X [REG] EXAMINE/CHANGE REGISTERS'
-         TERMINAL = 'G       GO'
-         TERMINAL = 'E EXPR  EVALUATE EXPRESSION'
-         TERMINAL = 'Q       QUIT MBUG - EXIT TO SYSTEM'
-         TERMINAL = 'H       HELP'
-         TERMINAL = 'D B,E   DISPLAY MEMORY'
-         TERMINAL = 'B ADDR  SET BREAKPOINT'
-         TERMINAL = 'K ADDR  REMOVE BREAKPOINT'
-         TERMINAL = 'R       REPORT BREAKPOINTS'
-         TERMINAL = 'L ADDR  LIST CODE'
-         TERMINAL = 'S ADDR  SET MEMORY'
-         TERMINAL = 'H       HELP'
-         TERMINAL = 'Y PAT   SYMBOLS, MATCHING PAT'
-         TERMINAL = 'U ADDR  UNASSEMBLE'
+MBUG.H   TERMINAL = 'MBUG COMMANDS:'
+         TERMINAL = 'T           TRACE, SINGLE STEP'
+         TERMINAL = 'X [REG]     EXAMINE/CHANGE REGISTERS'
+         TERMINAL = 'G           GO'
+         TERMINAL = 'E EXPR      EVALUATE EXPRESSION'
+         TERMINAL = 'Q           QUIT MBUG - EXIT TO SYSTEM'
+         TERMINAL = 'H           HELP'
+         TERMINAL = 'D B,E       DISPLAY MEMORY'
+         TERMINAL = 'B ADDR      SET BREAKPOINT'
+         TERMINAL = 'K ADDR      REMOVE BREAKPOINT'
+         TERMINAL = 'R           REPORT BREAKPOINTS'
+         TERMINAL = 'L ADDR      LIST CODE'
+         TERMINAL = 'S ADDR[,T]  SET/EXAMINE MEMORY'
+         TERMINAL = 'H           HELP'
+         TERMINAL = 'Y PAT       SYMBOLS, MATCHING PAT'
+         TERMINAL = 'U ADDR      UNASSEMBLE'
                                                              :(MBUG_CMD)
 *
 MBUG.T   PTRACE(PTRACE_SINGLESTEP, PID, 0, 0)                :(MBUG_TOP)

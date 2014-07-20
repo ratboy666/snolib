@@ -104,6 +104,44 @@ Example declarations:
 <b>&laquo;CVAR&raquo;&equiv;</b>
 %SET (BITS, HOST(HOST_POINTER_BITS))
 <font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* FIXME - ISOLATE BY PASSING CVARSYMS</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* THIS WILL ALLOW SUPPORT OF MULTIPLE ROUTINES. BUT... PARAMETER</i></font>
+<font color="#818181"><i>* PASSING WILL BE... DIFFICULT. RECURSION IS TOUGH. WE CAN SIMPLY</i></font>
+<font color="#818181"><i>* SET PARAMETER VARIABLES IF NEEDED. PARAMETERS ARE TOUGHER. WE</i></font>
+<font color="#818181"><i>* CAN RETRIEVE POINTER. BUT THAT DOESN&#39;T DEFINE STORAGE! ON RECURSIVE</i></font>
+<font color="#818181"><i>* CALL WE WOULD NEED TO SAVE ALL PARAMETERS TO A STACK. WHICH WOULD</i></font>
+<font color="#818181"><i>* WORK FOR DIRECT RECURSIVE CALL. ALTERNATIVE IS PUSH AND RETRIEVE,</i></font>
+<font color="#818181"><i>* AND COPY BACK ON RETURN.</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* PUSH/POP OF PARAMETERS TO ALTERNATE STACK... CRIB STACK CODE.</i></font>
+<font color="#818181"><i>* TO PUSH DOUBLE, PUSH TWO WORDS, OR ONE QWORD. REGISTER IS QWORD.</i></font>
+<font color="#818181"><i>* PUSH MEMORY_WORD, PUSH MEMORY_QWORD WOULD BE USEFUL... (AND POP</i></font>
+<font color="#818181"><i>* VARIANTS): PUSHMW PUSHMQ POPMW POPMQ, AND PUSH POP.</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* THEN,</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* FUNCTION NAME(P1,P2...PN)</i></font>
+<font color="#818181"><i>* INTEGER V(D1,D2,D3),V...</i></font>
+<font color="#818181"><i>* REAL V</i></font>
+<font color="#818181"><i>* DOUBLE PRECISION V</i></font>
+<font color="#818181"><i>* LOGICAL V</i></font>
+<font color="#818181"><i>* DIMENSION V(D1,D2,D3)</i></font>
+<font color="#818181"><i>* COMMON /NAME/ V,V,V...</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* BY DEFAULT, FUNCTION CREATE COMMON BLOCK NAME_</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* LABEL EXPR</i></font>
+<font color="#818181"><i>*       IF (EXPR) EXPR</i></font>
+<font color="#818181"><i>*       GOTO LABEL</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* CALL THIS LANGUAGE &quot;F00&quot; - MINI-FORTRAN. WE CAN INTRODUCE DO,</i></font>
+<font color="#818181"><i>* RETURN, ETC.</i></font>
+<font color="#818181"><i>*</i></font>
+-PUBLIC CVARSYMS(), CV_BASE(), CV_SYMTAB(), CV_END()
+<font color="#818181"><i>*</i></font>
+         DATA(&#39;CVARSYMS(CV_BASE,CV_SYMTAB,CV_END)&#39;)
+<font color="#818181"><i>*</i></font>
 -PUBLIC CVART(), CV_OFFSET(), CV_SIZE(), CV_DIM(), CV_SIGN(), CV_ISINT()
 <font color="#818181"><i>*</i></font>
          DATA(&#39;CVART(CV_OFFSET,CV_SIZE,CV_DIM,CV_SIGN,CV_ISINT)&#39;)
@@ -285,7 +323,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Fri Jun 13 15:12:45 EDT 2014</p></td><td><p align=right>
+Sun Jul 20 17:10:46 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

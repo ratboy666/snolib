@@ -128,6 +128,7 @@ the html documentation (mostly in the <i>ditaa</i> utility.
 -INCLUDE 'MERGET.INC'
 -INCLUDE 'MKTEMP.INC'
 -INCLUDE 'NDBM.INC'
+-INCLUDE 'NOTIFY.INC'
 -INCLUDE 'NOTP.INC'
 -INCLUDE 'NSPAN.INC'
 -INCLUDE 'ONCE.INC'
@@ -177,6 +178,7 @@ the html documentation (mostly in the <i>ditaa</i> utility.
 -INCLUDE 'VDIFFER.INC'
 -INCLUDE 'WRAPPER.INC'
 -INCLUDE 'WRTFILE.INC'
+-INCLUDE 'XTERM.INC'
 @
 
 <<>>=
