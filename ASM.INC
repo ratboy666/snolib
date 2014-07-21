@@ -205,8 +205,8 @@ ADDRESS__
 * ENTRY NON-NULL.
 *
 EXPORT__ SYMBOL = NE(ASM_PHASE, 1)                            :S(RETURN)
-         EXPORTS(ASM)<SYMBOL> = ' '
-         EXPORTS(ASM)<SYMBOL> = VDIFFER(SYMBOLS1(ASM)<SYMBOL>)
+         EXPORTS(ASM)<OP1> = ' '
+         EXPORTS(ASM)<OP1> = VDIFFER(SYMBOLS1(ASM)<OP1>)
          SYMBOL =                                              :(RETURN)
 *
 * PHASE1 EVALUATION ONLY. EVAL P1 DURING PHASE1.

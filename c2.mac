@@ -45,7 +45,19 @@ SAMPLE   DEFINE        STRINGS+0
 HELLO    DEFINE        STRINGS+8
 ;
 .COMMON. COMMON        32
+         EXPORT        HERE
+         EXPORT        HERE2
+HERE     DQ            TESTS             ; HERE POINTS TO 'SAMPLE'
+HERE2    DD            10
+         EXPORT        TESTS             ; TESTS IS UPDATED
+TESTS    DS            'HERE2'
 ;
+         EXPORT        .INIT.            ; EACH MODULE MAY HAVE .INIT.
+.INIT.   ADDRESS
+         PROLOG
+         RETI          0
+         EPILOG
+;         
          EXPORT        .MAIN.
 .MAIN.   ADDRESS
          PROLOG

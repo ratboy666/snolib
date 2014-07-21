@@ -24,10 +24,19 @@ NL       DEFINE        (ORD(CHARS_NL))
 STRINGS  DS            'HELLO '
          DB            NL
          DB            0
-         DS            'SAMPLE'
+         EXPORT        TESTS
+TESTS    DS            'SAMPLE'
          DB            NL
          DB            0
 ;
 .COMMON. COMMON        32
 ;
+; .INIT. - RETURN 0 IF OK
+;
+         EXPORT        .INIT.
+.INIT.   ADDRESS
+         PROLOG
+         RETI          0
+         EPILOG
+;         
          END

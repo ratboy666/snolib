@@ -159,7 +159,16 @@ RUN4     WAIT()
 *
 RUN5     FC = FC + 1
          GLOBALS = MERGET(GLOBALS, EXPORTS(A))
-         PN = PN + 1                                         :(ASM_LOAD)
+*
+         INIT = GLOBALS<'.INIT.'>
+         IDENT(INIT)                                            :S(RUN6)
+         GLOBALS<'.INIT.'> =
+         FFI = FFI_NEW('I', 'V')
+         FFI_SET_CALLP(FFI, INIT)
+         R = FFI_CALL_INTEGER(FFI)
+         TERMINAL = NE(R) FN ' .INIT. RETURNED ' R
+*
+RUN6     PN = PN + 1                                         :(ASM_LOAD)
 *
 * ERRORS - FILE COULDN'T BE READ, ASM DIDN'T LIKE THE FILE, OR THERE
 * IS NOT .MAIN. ENTRY POINT.
