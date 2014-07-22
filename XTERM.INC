@@ -76,7 +76,6 @@
 *
 XTERM_INIT
          XTERM_INIT = SUPER('INIT')
-*         
          |.RL_INSTREAM = DLSYM(0, 'rl_instream')
          |.RL_OUTSTREAM = DLSYM(0, 'rl_outstream')
          |.OLD_RL_INSTREAM = PEEK_P(|.RL_INSTREAM)
@@ -98,7 +97,6 @@ FDOPEN   FFI_PAR_N_INTEGER(FFI_FDOPEN, 1, FD)
 XTERM_READLINE
          |.FILEH = IDENT(|.FILEH)
 +           FDOPEN(FILENO(IO_GETFP(|.UNIT)), 'r+')
-*
          POKE_P(|.RL_INSTREAM, |.FILEH)
          POKE_P(|.RL_OUTSTREAM, |.FILEH)                       :(RETURN)
 *

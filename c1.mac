@@ -28,6 +28,13 @@ STRINGS  DS            'HELLO '
 TESTS    DS            'SAMPLE'
          DB            NL
          DB            0
+; FOR TESTING S COMMAND
+         EXPORT        ASHORT
+         EXPORT        AINTEGER
+ASHORT   DW            1234
+         DW            0X1234
+AINTEGER DD            4321
+         DD            0X4321
 ;
 .COMMON. COMMON        32
 ;

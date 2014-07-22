@@ -624,49 +624,48 @@ MBUG.L2  TERMINAL = SRC<L>                                  :F(MBUG_CMD)
 * TYPES FOR EDITING - HEX/INTEGER/REAL, WIDTH, MASKS.
 * HAVE HEX COVERED, NEED INTEGER, REAL, POSSIBLY STRING.
 *
-MBUG.S   ARGS BRKREM(',') . ARGS REM . OPTS
-         OPTS FENCE ',' =
-         OPTS = REPLACE(TRIMB(OPTS), &LCASE, &UCASE)
-         TYPEM = TABLE()
+MBUG.S   ARGS BRKREM(',') . ARGS REM . T
+         T FENCE ',' =
+         T = REPLACE(TRIMB(T), &LCASE, &UCASE)
+         TYPEM = TABLE(15)
          TYPEM<''>        = 'BYTE'
          TYPEM<'BYTE'>    = 'BYTE'
          TYPEM<'WORD'>    = 'WORD'
          TYPEM<'DWORD'>   = 'DWORD'
          TYPEM<'QWORD'>   = 'QWORD'
+         TYPEM<'INTEGER'> = 'INTEGER'
+         TYPEM<'SHORT'>   = 'SHORT'
+         TYPEM<'LONG'>    = 'LONG'
          TYPEM<'B'>       = 'BYTE'
          TYPEM<'W'>       = 'WORD'
          TYPEM<'D'>       = 'DWORD'
          TYPEM<'Q'>       = 'QWORD'
          TYPEM<'I'>       = 'INTEGER'
-*
-* THREE PHASES TO THE EDIT: FETCH DATA, EDIT, PUT DATA.
-* FETCH DATA - GET 8 BYTES FROM MEMORY. 'AND' WITH MASKS
-* NOW, WE NEED TO CONVERT TO INTEGER/REAL IF NEEDED. IN THE
-* EDIT ROUTINE, WE POKE INTO MEMORY, PEEK FROM MEMORY, AND EDIT
-* ON STORE, WE NEED TO DO THE SAME -- NOT ACCURATE. THIS MUST DEAL
-* WITH ENDIAN DIFFERENCES. AFTER MASKING, WE STILL NEED ENDIAN
-* CORRECTION. FOR OUR IMMEDIATE NEEDS -- WE ARE OK. VALUE AFTER
-* MASKING IS UNSIGNED INTEGER VALUE. SIGNED IF QWORD. WE SIMPLY
-* NEED TO SIGN EXTEND THE VALUE.
-*
-         EDITT = TABLE()
+         TYPEM<'S'>       = 'SHORT'
+         TYPEM<'L'>       = 'LONG'
+         EDITT = TABLE(7)
          EDITT<'BYTE'>    = 'HEX'
          EDITT<'WORD'>    = 'HEX'
          EDITT<'DWORD'>   = 'HEX'
          EDITT<'QWORD'>   = 'HEX'
          EDITT<'INTEGER'> = 'INTEGER'
-         OPTS = TYPEM<OPTS>
-         IDENT(MASKS<OPTS>)                                 :S(MBUG_BAD)
+         EDITT<'SHORT'>   = 'INTEGER'
+         EDITT<'LONG'>    = 'INTEGER'
+         T = TYPEM<T>
+         IDENT(MASKS<T>)                                    :S(MBUG_BAD)
          SA = MBUG_ARG(VDIFFER(ARGS))
-         MASKS = TABLE()
-         MASKC = TABLE()
-         SIZET = TABLE()
+         MASKS = TABLE(7)
+         MASKC = TABLE(7)
+         SIZET = TABLE(7)
          MASKS<'BYTE'>    = HI('00000000000000FF')
          MASKC<'BYTE'>    = HI('FFFFFFFFFFFFFF00')
          SIZET<'BYTE'>    = 1
          MASKS<'WORD'>    = HI('000000000000FFFF')
+         MASKS<'SHORT'>   = HI('000000000000FFFF')
          MASKC<'WORD'>    = HI('FFFFFFFFFFFF0000')
+         MASKC<'SHORT'>   = HI('FFFFFFFFFFFF0000')
          SIZET<'WORD'>    = 2
+         SIZET<'SHORT'>   = 2
          MASKS<'DWORD'>   = HI('00000000FFFFFFFF')
          MASKS<'INTEGER'> = HI('00000000FFFFFFFF')
          MASKC<'DWORD'>   = HI('FFFFFFFF00000000')
@@ -674,26 +673,32 @@ MBUG.S   ARGS BRKREM(',') . ARGS REM . OPTS
          SIZET<'DWORD'>   = 4
          SIZET<'INTEGER'> = 4
          MASKS<'QWORD'>   = HI('FFFFFFFFFFFFFFFF')
+         MASKS<'LONG'>    = HI('FFFFFFFFFFFFFFFF')
          MASKC<'QWORD'>   = HI('0000000000000000')
+         MASKC<'LONG'>    = HI('0000000000000000')
          SIZET<'QWORD'>   = 8
-MBUG.S2  V = AND(PTRACE(PTRACE_PEEKDATA, PID, SA, 0), MASKS<OPTS>)
+         SIZET<'LONG'>    = 8
 *
-         V = IDENT(EDITT<OPTS>, 'HEX') LPAD(IH(V), SIZET<OPTS> * 2, '0')
+MBUG.S2  V = AND(PTRACE(PTRACE_PEEKDATA, PID, SA, 0), MASKS<T>)
+*
+         V = IDENT(EDITT<T>, 'HEX') LPAD(IH(V), SIZET<T> * 2, '0')
+* FIXME: SIGN EXTENSION (FOR INTEGER/SHORT)
+         V = IDENT(EDITT<T>, 'INTEGER') V
 *
          V = EDITLINE(LPAD(IH(SA), 16, '0') ': ', V)
          V = TRIMB(V)
          IDENT(V)                                           :S(MBUG_CMD)
          V ANY('/')                                         :S(MBUG_CMD)
 *
-         V = IDENT(EDITT<OPTS>, 'HEX') HI(V)
+         V = IDENT(EDITT<T>, 'HEX') HI(V)
+         V = IDENT(EDITT<T>, 'INTEGER') +V
 *
-         V = AND(V, MASKS<OPTS>)
+         V = AND(V, MASKS<T>)
          V2 = PTRACE(PTRACE_PEEKDATA, PID, SA, 0)
-*        M = HI('FFFFFFFFFFFFFF00')
-         V2 = AND(V2, MASKC<OPTS>)
-         V2 = OR(V2, V)
-         N = PTRACE(PTRACE_POKEDATA, PID, SA, V2)
-         SA = SA + SIZET<OPTS>                                :(MBUG.S2)
+         V2 = AND(V2, MASKC<T>)
+         V3 = OR(V2, V)
+         PTRACE(PTRACE_POKEDATA, PID, SA, V3)
+         SA = SA + SIZET<T>                                   :(MBUG.S2)
 *
 * G, EXECUTE
 *

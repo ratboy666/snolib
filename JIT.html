@@ -658,7 +658,7 @@ static int get_note_jit(void *p)
          LOAD(&#39;JIT_FORWARD()INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_INDIRECT()INTEGER&#39;, &#39;jit.so&#39;)
 <font color="#818181"><i>*</i></font>
--PUBLIC JIT_LIVE(), JIT_LINK, JIT_R_NUM_(), JIT_V_NUM_(), JIT_F_NUM()
+-PUBLIC JIT_LIVE(), JIT_LINK(), JIT_R_NUM_(), JIT_V_NUM_(), JIT_F_NUM()
 <font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_LIVE(INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_LINK(INTEGER)&#39;, &#39;jit.so&#39;)
@@ -739,7 +739,7 @@ static int get_note_jit(void *p)
          LOAD(&#39;JIT_MULI_F(INTEGER,INTEGER,REAL)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_MULI_D(INTEGER,INTEGER,REAL)INTEGER&#39;, &#39;jit.so&#39;)
 <font color="#818181"><i>*</i></font>
--PUBLIC JIT_DIVR(), JIT_DIVR_U(), JIT_DIVR_F(), JI_DIVR_D()
+-PUBLIC JIT_DIVR(), JIT_DIVR_U(), JIT_DIVR_F(), JIT_DIVR_D()
 <font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_DIVR(INTEGER,INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_DIVR_U(INTEGER,INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
@@ -832,7 +832,7 @@ static int get_note_jit(void *p)
          LOAD(&#39;JIT_LEI_F(INTEGER,INTEGER,REAL)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_LEI_D(INTEGER,INTEGER,REAL)INTEGER&#39;, &#39;jit.so&#39;)
 <font color="#818181"><i>*</i></font>
--PUBLIC JIT_GTR(), JIT_GTR_U(), JIT_GTR_F(), GIT_GTR_D()
+-PUBLIC JIT_GTR(), JIT_GTR_U(), JIT_GTR_F(), JIT_GTR_D()
 <font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_GTR(INTEGER,INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_GTR_U(INTEGER,INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
@@ -924,7 +924,7 @@ static int get_note_jit(void *p)
          LOAD(&#39;JIT_UNORDR_F(INTEGER,INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_UNORDR_D(INTEGER,INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
 <font color="#818181"><i>*</i></font>
--PUBLIC JIT_MOVR(), JIT_MOVR_F, JIT_MOVR_D()
+-PUBLIC JIT_MOVR(), JIT_MOVR_F(), JIT_MOVR_D()
 <font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_MOVR(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_MOVR_F(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
@@ -1058,7 +1058,7 @@ static int get_note_jit(void *p)
          LOAD(&#39;JIT_STR_F(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_STR_D(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
 <font color="#818181"><i>*</i></font>
--PUBLIC JIT_STI(), JI_STI_C(), JIT_STI_UC(), JI_STI_S(), JIT_STI_US()
+-PUBLIC JIT_STI(), JIT_STI_C(), JIT_STI_UC(), JIT_STI_S(), JIT_STI_US()
 <font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_STI(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_STI_C(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
@@ -1151,123 +1151,219 @@ static int get_note_jit(void *p)
          LOAD(&#39;JIT_ARG_F()INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_ARG_D()INTEGER&#39;, &#39;jit.so&#39;)
 <font color="#818181"><i>*</i></font>
-<font color="#818181"><i>* ===</i></font>
+-PUBLIC JIT_GETARG(), JIT_GETARG_C(), JIT_GETARG_UC(), JIT_GETARG_S()
 <font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_GETARG(INTEGER,INTEGER)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_GETARG_C(INTEGER,INTEGER)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_GETARG_UC(INTEGER,INTEGER)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_GETARG_S(INTEGER,INTEGER)&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+-PUBLIC JIT_GETARG_US(), JIT_GETARG_I(), JIT_GETARG_UI(), JIT_GETARG_L()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_GETARG_US(INTEGER,INTEGER)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_GETARG_I(INTEGER,INTEGER)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_GETARG_UI(INTEGER,INTEGER)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_GETARG_L(INTEGER,INTEGER)&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+-PUBLIC JIT_GETARG_F(), JIT_GETARG_D()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_GETARG_F(INTEGER,INTEGER)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_GETARG_D(INTEGER,INTEGER)&#39;, &#39;jit.so&#39;)
 <font color="#818181"><i>*</i></font>
+-PUBLIC JIT_RET(), JIT_RETR(), JIT_RETR_C(), JIT_RETR_UC(), JIT_RETR_S()
 <font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_RET()&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_RETR(INTEGER)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_RETR_C(INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_RETR_UC(INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_RETR_S(INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+-PUBLIC JIT_RETR_US(), JIT_RETR_I(), JIT_RETR_UI(), JIT_RETR_L()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_RETR_US(INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_RETR_I(INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_RETR_UI(INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_RETR_L(INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+-PUBLIC JIT_RETR_F(), JIT_RETR_D()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_RETR_F(INTEGER)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_RETR_D(INTEGER)&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+-PUBLIC JIT_RETI(), JIT_RETI_C(), JIT_RETI_UC(), JIT_RETI_S()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_RETI(INTEGER)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_RETI_C(INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_RETI_UC(INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_RETI_S(INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+-PUBLIC JIT_RETI_US(), JIT_RETI_I(), JIT_RETI_UI(), JIT_RETI_L()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_RETI_US(INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_RETI_I(INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_RETI_UI(INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_RETI_L(INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+-PUBLIC JIT_RETI_F(), JIT_RETI_D()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_RETI_F(REAL)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_RETI_D(REAL)&#39;, &#39;jit.so&#39;)
 <font color="#818181"><i>*</i></font>
+-PUBLIC JIT_RETVAL(), JIT_RETVAL_C(), JIT_RETVAL_UC(), JIT_RETVAL_S()
 <font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_RETVAL(INTEGER)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_RETVAL_C(INTEGER)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_RETVAL_UC(INTEGER)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_RETVAL_S(INTEGER)&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+-PUBLIC JIT_RETVAL_US(), JIT_RETVAL_I(), JIT_RETVAL_UI(), JIT_RETVAL_L()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_RETVAL_US(INTEGER)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_RETVAL_I(INTEGER)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_RETVAL_UI(INTEGER)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_RETVAL_L(INTEGER)&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+-PUBLIC JIT_RETVAL_F(), JIT_RETVAL_D()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_RETVAL_F(INTEGER)&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_RETVAL_D(INTEGER)&#39;, &#39;jit.so&#39;)
 <font color="#818181"><i>*</i></font>
+-PUBLIC JIT_BLTR(), JIT_BLTR_U(), JIT_BLTR_F(), JIT_BLTR_D()
 <font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_BLTR(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BLTR_U(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BLTR_F(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BLTR_D(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+-PUBLIC JIT_BLTI(), JIT_BLTI_U(), JIT_BLTI_F(), JIT_BLTI_D()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_BLTI(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BLTI_U(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BLTI_F(INTEGER,REAL)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BLTI_D(INTEGER,REAL)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+-PUBLIC JIT_BLER(), JIT_BLER_U(), JIT_BLER_F(), JIT_BLER_D()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_BLER(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BLER_U(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BLER_F(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BLER_D(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+-PUBLIC JIT_BLEI(), JIT_BLEI_U(), JIT_BLEI_F(), JIT_BLEI_D()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_BLEI(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BLEI_U(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BLEI_F(INTEGER,REAL)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BLEI_D(INTEGER,REAL)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+-PUBLIC JIT_BGTR(), JIT_BGTR_U(), JIT_BGTR_F(), JIT_BGTR_D()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_BGTR(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BGTR_U(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BGTR_F(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BGTR_D(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+-PUBLIC JIT_GBTI(), JIT_BGTI_U(), JIT_BGTI_F(), JIT_BGTI_D()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_BGTI(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BGTI_U(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BGTI_F(INTEGER,REAL)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BGTI_D(INTEGER,REAL)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+-PUBLIC JIT_BGER(), JIT_BGER_U(), JIT_BGER_F(), JIT_BGER_D()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_BGER(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BGER_U(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BGER_F(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BGER_D(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+-PUBLIC JIT_BGEI(), JIT_BGEI_U(), JIT_BGEI_F(), JIT_BGEI_D()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_BGEI(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BGEI_U(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BGEI_F(INTEGER,REAL)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BGEI_D(INTEGER,REAL)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+-PUBLIC JIT_BEQR(), JIT_BEQR_F(), JIT_BEQR_D()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_BEQR(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BEQR_F(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BEQR_D(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+-PUBLIC JIT_BEQI(), JIT_BEQI_F(), JIT_BEQI_D()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_BEQI(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BEQI_F(INTEGER,REAL)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BEQI_D(INTEGER,REAL)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+-PUBLIC JIT_BNER(), JIT_BNER_F(), JIT_BNER_D()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_BNER(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BNER_F(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BNER_D(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+-PUBLIC JIT_BNEI(), JIT_BNEI_F(), JIT_BNEI_D()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_BNEI(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BNEI_F(INTEGER,REAL)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BNEI_D(INTEGER,REAL)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+-PUBLIC JIT_BUNLTR_F(), JIT_BUNLTR_D()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_BUNLTR_F(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BUNLTR_D(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+-PUBLIC JIT_BUNLER_F(), JIT_BUNLER_D()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_BUNLER_F(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BUNLER_D(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+-PUBLIC JIT_BUNGTR_F(), JIT_BUNGTR_D()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_BUNGTR_F(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BUNGTR_D(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+-PUBLIC JIT_BUNGER_F(), JIT_BUNGER_D()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_BUNGER_F(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BUNGER_D(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+-PUBLIC JIT_BUNEQR_F(), JIT_BUNEQR_D()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_BUNEQR_F(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BUNEQR_D(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+-PUBLIC JIT_BLTGTR_F(), JIT_BLTGTR_D()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_BLTGTR_F(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BLTGTR_D(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+-PUBLIC JIT_BORDR_F(), JIT_BORDR_D()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_BORDR_F(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BORDR_D(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+-PUBLIC JIT_BUNORDR_F(), JIT_BUNORDR_D()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_BUNORDR_F(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BUNORDR_D(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+-PUBLIC JIT_BMSR(), JIT_BMSI(), JIT_BMCR(), JIT_BMCI()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_BMSR(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BMSI(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BMCR(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BMCI(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+-PUBLIC JIT_BOADDR(), JIT_BOADDR_U(), JIT_BOADDI(), JIT_BOADDI_U()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_BOADDR(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BOADDR_U(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BOADDI(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BOADDI_U(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
+<font color="#818181"><i>*</i></font>
+-PUBLIC JIT_BXADDR(), JIT_BXADDR_U(), JIT_BXADDI(), JIT_BXADDI_U()
+<font color="#818181"><i>*</i></font>
          LOAD(&#39;JIT_BXADDR(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BXADDR_U(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
          LOAD(&#39;JIT_BXADDI(INTEGER,INTEGER)INTEGER&#39;, &#39;jit.so&#39;)
@@ -1363,7 +1459,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Fri Jul 18 18:57:56 EDT 2014</p></td><td><p align=right>
+Tue Jul 22 13:17:52 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>
