@@ -31,10 +31,16 @@ TESTS    DS            'SAMPLE'
 ; FOR TESTING S COMMAND
          EXPORT        ASHORT
          EXPORT        AINTEGER
+         EXPORT        AQUAD
 ASHORT   DW            1234
          DW            0X1234
-AINTEGER DD            4321
+         DW            -2
+AINTEGER DD            -1.5
+         DD            4321
          DD            0X4321
+         DD            -3
+AQUAD    DQ            1.6E15
+         DQ            -4
 ;
 .COMMON. COMMON        32
 ;

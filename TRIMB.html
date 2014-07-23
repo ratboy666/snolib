@@ -9,7 +9,8 @@
 <h1>TRIMB - Trim both left and right of string</h1>
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
-<font face="Source Code Pro">TRIMB(S)</font> applies <font face="Source Code Pro">TRIMB()</font> to both the left and right of <font face="Source Code Pro">S</font>.
+<font face="Source Code Pro">TRIMB(S)</font> applies <font face="Source Code Pro">TRIM()</font> to both the left and right of <font face="Source Code Pro">S</font>.
+<font face="Source Code Pro">LTRIM(S)</font> trims the left of string <font face="Source Code Pro">S</font>.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 <h2>Uses</h2>
@@ -24,9 +25,11 @@
 <b>&laquo;TRIMB&raquo;&equiv;</b>
 -MODULE TRIMB
 -PUBLIC TRIMB()
+         DEFINE(&#39;LTRIM(S)&#39;)
          DEFINE(&#39;TRIMB(S)&#39;)                                 <b>:(TRIMB_END)</b>
 <font color="#818181"><i>*</i></font>
-TRIMB    TRIMB = REVERSE(TRIM(REVERSE(TRIM(S))))               <b>:(RETURN)</b>
+LTRIM    LTRIM = REVERSE(TRIM(REVERSE(S)))                     <b>:(RETURN)</b>
+TRIMB    TRIMB = LTRIM(TRIM(S))                                <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 TRIMB_END
 <b>@</b>
@@ -75,7 +78,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Fri Jun 13 15:13:26 EDT 2014</p></td><td><p align=right>
+Wed Jul 23 00:16:18 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

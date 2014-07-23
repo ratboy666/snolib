@@ -61,8 +61,6 @@
 * IN THAT SUBPROCESS REDIRECTS STANDARD OUT. THE DISASSEMBLY IS
 * CAPTURED SO IT CAN BE SENT TO MBUG().
 *
-* TO DO: ADD TYPING TO 'S' COMMAND (REAL, INTEGER).
-*
 -PUBLIC MBUG(), INT3
 *
          DEFINE('MBUG(SYMTAB,SRC)')
@@ -377,6 +375,16 @@ DISASSEMBLE
          POKE_P(DINFO + DISASSEMBLE_INFO_MACH, BFD_MACH_X86_64)
          POKE_I(DINFO + DISASSEMBLE_INFO_ENDIAN, BFD_ENDIAN_LITTLE)
          POKE_P(DINFO + DISASSEMBLE_INFO_BUFFER, DIS)
+*
+* FIXME: NOTE THAT DISASSEMBLE OF RELATIVE BRANCHES NEEDS A BASE
+* ADDRESS, CURRENTLY, 0 IS USED, AND THE BRANCH THEN COMPUTES FROM
+* THE IDEA THAT THE INSTRUCTION IS LOCATED AT LOCATION 0. THIS IS
+* WRONG. WE KNOW THAT THAT THE INSTRUCTION IS ACTUALLY BASED AT
+* LOCATION ADDR. BUT, HOW DO WE TELL THE DISASSEMBLER? SETTING
+* BUFFER_VMA TO ADDR DOESN'T DO IT. WE MAY BE FORCED TO ACTUALLY
+* READ THE LIBOPCODES CODE TO DETERMINE HOW BEST TO ACCOMPLISH THIS
+* FEAT. 
+*
 *        POKE_P(DINFO + DISASSEMBLE_INFO_BUFFER_VMA, ADDR)
 *        POKE_P(DINFO + DISASSEMBLE_INFO_BUFFER_VMA, 0)
          POKE_I(DINFO + DISASSEMBLE_INFO_BUFFER_LENGTH, 16)
@@ -532,9 +540,6 @@ MBUG_INS S = DISASSEMBLE(RIP)
 MBUG_CMD MBUG_IN = TRIM(HISTORY_EXPAND(READLINE(P)))             :F(END)
          IDENT(MBUG_IN)                                     :S(MBUG_CMD)
          ADD_HISTORY(MBUG_IN)
-*
-* FIXME: ADD U (UNASSEMBLE) COMMAND - LIST N INSTRUCTIONS, UPDATE
-*        SAME AS L
          CMD = FENCE NSPAN(' ' CHARS_TAB)
 +              ANY('TtDdBbXxLlSsGgEeQqYyRrKkHhUu=?') . C
 +              NSPAN(' ' CHARS_TAB) REM . ARGS
@@ -621,13 +626,17 @@ MBUG.L2  TERMINAL = SRC<L>                                  :F(MBUG_CMD)
          N = N - 1
          GT(N)                                    :S(MBUG.L2)F(MBUG_CMD)
 *
-* TYPES FOR EDITING - HEX/INTEGER/REAL, WIDTH, MASKS.
-* HAVE HEX COVERED, NEED INTEGER, REAL, POSSIBLY STRING.
+* FIXME - STRING HAS TWO ISSUES - C STRING VS BUFFER. POSSIBLY 'C
+* FOR BYTE ENTRY
+*
+* NEED REAL EDIT
+*
+* '/' LEAVES EDIT, MAYBE ADVANCE, BACKUP? Nn> Pp<? 'C?
 *
 MBUG.S   ARGS BRKREM(',') . ARGS REM . T
          T FENCE ',' =
          T = REPLACE(TRIMB(T), &LCASE, &UCASE)
-         TYPEM = TABLE(15)
+         TYPEM = TABLE(21)
          TYPEM<''>        = 'BYTE'
          TYPEM<'BYTE'>    = 'BYTE'
          TYPEM<'WORD'>    = 'WORD'
@@ -643,6 +652,12 @@ MBUG.S   ARGS BRKREM(',') . ARGS REM . T
          TYPEM<'I'>       = 'INTEGER'
          TYPEM<'S'>       = 'SHORT'
          TYPEM<'L'>       = 'LONG'
+         TYPEM<'FLOAT'>   = 'FLOAT'
+         TYPEM<'DOUBLE'>  = 'DOUBLE'
+         TYPEM<'REAL'>    = 'FLOAT'
+         TYPEM<'F'>       = 'FLOAT'
+         TYPEM<'R'>       = 'FLOAT'
+         TYPEM<'DP'>      = 'DOUBLE'
          EDITT = TABLE(7)
          EDITT<'BYTE'>    = 'HEX'
          EDITT<'WORD'>    = 'HEX'
@@ -654,9 +669,15 @@ MBUG.S   ARGS BRKREM(',') . ARGS REM . T
          T = TYPEM<T>
          IDENT(MASKS<T>)                                    :S(MBUG_BAD)
          SA = MBUG_ARG(VDIFFER(ARGS))
-         MASKS = TABLE(7)
-         MASKC = TABLE(7)
-         SIZET = TABLE(7)
+         MASKS = TABLE(9)
+         MASKC = TABLE(9)
+         SIZET = TABLE(9)
+         SEXM = TABLE(2)
+         SEXT = TABLE(2)
+         SEXM<2>          = HI('0000000000008000')
+         SEXT<2>          = HI('FFFFFFFFFFFF8000')
+         SEXM<4>          = HI('0000000080000000')
+         SEXT<4>          = HI('FFFFFFFF80000000')
          MASKS<'BYTE'>    = HI('00000000000000FF')
          MASKC<'BYTE'>    = HI('FFFFFFFFFFFFFF00')
          SIZET<'BYTE'>    = 1
@@ -668,30 +689,49 @@ MBUG.S   ARGS BRKREM(',') . ARGS REM . T
          SIZET<'SHORT'>   = 2
          MASKS<'DWORD'>   = HI('00000000FFFFFFFF')
          MASKS<'INTEGER'> = HI('00000000FFFFFFFF')
+         MASKS<'FLOAT'>   = HI('00000000FFFFFFFF')
          MASKC<'DWORD'>   = HI('FFFFFFFF00000000')
          MASKC<'INTEGER'> = HI('FFFFFFFF00000000')
+         MASKC<'FLOAT'>   = HI('FFFFFFFF00000000')
          SIZET<'DWORD'>   = 4
          SIZET<'INTEGER'> = 4
+         SIZET<'FLOAT'>   = 4
          MASKS<'QWORD'>   = HI('FFFFFFFFFFFFFFFF')
          MASKS<'LONG'>    = HI('FFFFFFFFFFFFFFFF')
+         MASKS<'DOUBLE'>  = HI('FFFFFFFFFFFFFFFF')
          MASKC<'QWORD'>   = HI('0000000000000000')
          MASKC<'LONG'>    = HI('0000000000000000')
+         MASKC<'DOUBLE'>  = HI('0000000000000000')
          SIZET<'QWORD'>   = 8
          SIZET<'LONG'>    = 8
+         SIZET<'DOUBLE'>  = 8
+         SBUF = IDENT(SBUF) MALLOC(16)
 *
 MBUG.S2  V = AND(PTRACE(PTRACE_PEEKDATA, PID, SA, 0), MASKS<T>)
 *
          V = IDENT(EDITT<T>, 'HEX') LPAD(IH(V), SIZET<T> * 2, '0')
-* FIXME: SIGN EXTENSION (FOR INTEGER/SHORT)
          V = IDENT(EDITT<T>, 'INTEGER') V
+         V = (IDENT(EDITT<T>, 'INTEGER') DIFFER(SEXM<SIZET<T>>)
++             NE(AND(V, SEXM<SIZET<T>>))) OR(V, SEXT<SIZET<T>>)
+         IDENT(T, 'FLOAT') POKE_I(SBUF, V)
+         V = IDENT(T, 'FLOAT') PEEK_F(SBUF)
+         IDENT(T, 'DOUBLE') POKE_P(SBUF, V)
+         V = IDENT(T, 'DOUBLE') PEEK_D(SBUF)
 *
          V = EDITLINE(LPAD(IH(SA), 16, '0') ': ', V)
          V = TRIMB(V)
          IDENT(V)                                           :S(MBUG_CMD)
          V ANY('/')                                         :S(MBUG_CMD)
 *
+* FIXME: CAREFUL ABOUT FAILURE HERE
+*
+         &ERRLIMIT = 1
          V = IDENT(EDITT<T>, 'HEX') HI(V)
          V = IDENT(EDITT<T>, 'INTEGER') +V
+         IDENT(T, 'FLOAT') POKE_F(SBUF, V)
+         V = IDENT(T, 'FLOAT') PEEK_I(SBUF)
+         IDENT(T, 'DOUBLE') POKE_D(SBUF, V)
+         V = IDENT(T, 'DOUBLE') PEEK_P(SBUF)
 *
          V = AND(V, MASKS<T>)
          V2 = PTRACE(PTRACE_PEEKDATA, PID, SA, 0)
@@ -767,7 +807,9 @@ MBUG.H   TERMINAL = 'MBUG COMMANDS:'
          TERMINAL = 'K ADDR      REMOVE BREAKPOINT'
          TERMINAL = 'R           REPORT BREAKPOINTS'
          TERMINAL = 'L ADDR      LIST CODE'
-         TERMINAL = 'S ADDR[,T]  SET/EXAMINE MEMORY'
+         TERMINAL = 'S ADDR[,T]  SET/EXAMINE MEMORY TYPE T'
+         TERMINAL = '            BYTE/WORD/DWORD/QWORD FLOAT/DOUBLE'
+         TERMINAL = '            SHORT/INTEGER/LONG (BWDQFSIL OR DP)'
          TERMINAL = 'H           HELP'
          TERMINAL = 'Y PAT       SYMBOLS, MATCHING PAT'
          TERMINAL = 'U ADDR      UNASSEMBLE'

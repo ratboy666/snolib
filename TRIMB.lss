@@ -1,6 +1,7 @@
 <h1>TRIMB - Trim both left and right of string</h1>
 
-[[TRIMB(S)]] applies [[TRIMB()]] to both the left and right of [[S]].
+[[TRIMB(S)]] applies [[TRIM()]] to both the left and right of [[S]].
+[[LTRIM(S)]] trims the left of string [[S]].
 
 <h2>Uses</h2>
 
@@ -10,9 +11,11 @@
 <<TRIMB>>=
 -MODULE TRIMB
 -PUBLIC TRIMB()
+         DEFINE('LTRIM(S)')
          DEFINE('TRIMB(S)')                                 :(TRIMB_END)
 *
-TRIMB    TRIMB = REVERSE(TRIM(REVERSE(TRIM(S))))               :(RETURN)
+LTRIM    LTRIM = REVERSE(TRIM(REVERSE(S)))                     :(RETURN)
+TRIMB    TRIMB = LTRIM(TRIM(S))                                :(RETURN)
 *
 TRIMB_END
 @
