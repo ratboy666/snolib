@@ -1,7 +1,7 @@
 -MODULE FFI
 -CASE 1
 -PLUSOPS 1
--LINE 651 "FFI.lss"
+-LINE 650 "FFI.lss"
 -LINE 17 "FFI.lss"
 -IN72
 -STITL FFI
@@ -492,7 +492,6 @@ static int dlclose_(long p) { return dlclose((void *)p); }
          LOAD('FFI_PAR_N_PTR(INTEGER,INTEGER,INTEGER)', 'ffi.so')
          LOAD('FFI_PAR_N_REAL(INTEGER,INTEGER,REAL)', 'ffi.so')
          LOAD('FFI_PAR_N_STRING(INTEGER,INTEGER,STRING)', 'ffi.so')
-         LOAD('FFI_PAR_N_P(INTEGER,INTEGER,INTEGER)', 'ffi.so')
          LOAD('FFI_PAR_N_F(INTEGER,INTEGER,REAL)', 'ffi.so')
          LOAD('FFI_PAR_N_D(INTEGER,INTEGER,REAL)', 'ffi.so')
          LOAD('FFI_PAR_N_LD(INTEGER,INTEGER,REAL)', 'ffi.so')
@@ -514,7 +513,7 @@ static int dlclose_(long p) { return dlclose((void *)p); }
          LOAD('DLSYM_(INTEGER,STRING)', 'ffi.so')
          LOAD('DLCLOSE_(INTEGER)INTEGER', 'ffi.so')
 *
--LINE 588 "FFI.lss"
+-LINE 587 "FFI.lss"
 -PUBLIC DLOPEN(), DLERROR(), DLSYM(), DLCLOSE()
 *
          DEFINE('DLOPEN(S,I)')

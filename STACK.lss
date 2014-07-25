@@ -8,6 +8,7 @@ and [[TOP_A()]].
 <a href="REPL.html">REPL</a><br>
 
 <<INCLUDES>>=
+-INCLUDE 'LINK.INC'
 -INCLUDE 'REPL.INC'
 @
 

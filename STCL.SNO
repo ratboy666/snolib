@@ -1,7 +1,7 @@
 -STITL STCL
 -EJECT
 *
--LINE 43 "STCL.lss"
+-LINE 45 "STCL.lss"
 ************************************************************************
 *                                                                      *
 *                    #####   #######   #####   #                       *
@@ -29,6 +29,7 @@ STCL_LOAD
 *
 -PUBLIC STCL_CREATEINTERP(), STCL_EVALFILE(), STCL_GETVAR()
 -PUBLIC STCL_SETVAR(), STCL_EVAL(), STCL_DELETEINTERP()
+*
          LOAD('STCL_CREATEINTERP()INTEGER')
          LOAD('STCL_EVALFILE(INTEGER,STRING)STRING')
          LOAD('STCL_GETVAR(INTEGER,STRING)STRING')
@@ -39,6 +40,7 @@ STCL_LOAD
 -PUBLIC STCL_NEWSTRINGOBJ(), STCL_GETSTRINGFROMOBJ(), STCL_APPENDTOOBJ()
 -PUBLIC STCL_EVALOBJEX(), STCL_GETOBJRESULT(), STCL_OBJSETVAR2()
 -PUBLIC STCL_OBJGETVAR2(), STCL_RELEASEOBJ()
+*
          LOAD('STCL_NEWSTRINGOBJ(STRING)INTEGER')
          LOAD('STCL_GETSTRINGFROMOBJ(INTEGER)STRING')
          LOAD('STCL_APPENDTOOBJ(INTEGER,STRING)STRING')

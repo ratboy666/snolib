@@ -1,8 +1,9 @@
 -LINE 11 "STACK.lss"
+-INCLUDE 'LINK.INC'
 -INCLUDE 'REPL.INC'
 -STITL STACK
 -EJECT
--LINE 52 "STACK.lss"
+-LINE 53 "STACK.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -20,7 +21,7 @@
 *
 * STACK.lss
 *
--LINE 15 "STACK.lss"
+-LINE 16 "STACK.lss"
 -MODULE STACK
 -PUBLIC STACK()
          DEFINE('STACK(SUF)S')
