@@ -33,10 +33,9 @@
 -INCLUDE 'MBUG.INC'
 -INCLUDE 'UNIX.INC'
 -INCLUDE 'MKTEMP.INC'
-*-INCLUDE 'DDT.INC'
 -STITL
+-IN72
 *
-*        DDT()
          TERMINAL = 'RUN (TUE JUN 24 19:53:25 EDT 2014)'
 *
          INIT_JIT('/usr/local/bin/snobol4')
@@ -49,11 +48,11 @@
 *
 * STACK OPERATIONS
 *
-         GLOBALS<'PUSH..'> = DLSYM(H, 'push')
-         GLOBALS<'POP..'> = DLSYM(H, 'pop')
+         GLOBALS<'PUSH..'>    = DLSYM(H, 'push')
+         GLOBALS<'POP..'>     = DLSYM(H, 'pop')
          GLOBALS<'PRSTACK..'> = DLSYM(H, 'prstack')
 *
-* STACKS IN RUNUTL - SS..: SYSTEM STACK
+* STACKS IN RUNUTL - SS.. IS THE "SYSTEM STACK"
 *
          GLOBALS<'SS..'> = DLSYM(H, 'SS')
 *
@@ -128,13 +127,13 @@ ASM_LD4  SRC = READFILE(FN)                                   :F(FILERR)
          DIFFER(PRINT) JIT_PRINT()
          PRINT =
 *
-* DISASSEMBLE THE RESULT, IF THE -d FLAG WAS GIVEN
+* DISASSEMBLE THE RESULT, IF THE -d OR -m FLAG WAS GIVEN
 *
          (IDENT(DISASSEMBLE) IDENT(MBUG))                       :S(RUN5)
          T = MKTEMP()
          PID = FORK()
          TERMINAL = LT(PID) PERROR('FORK')                       :S(END)
-         NE(PID) :S(RUN4)
+         NE(PID)                                                :S(RUN4)
 *
 * IN CHILD PROCESS, REDIRECT AND CAPTURE DISASSEMBLY.
 *
@@ -162,16 +161,22 @@ RUN5     FC = FC + 1
 *
          INIT = GLOBALS<'.INIT.'>
          IDENT(INIT)                                            :S(RUN6)
+*
+* IF .INIT. HAS BEEN EXPORTED FROM THIS MODULE, RUN IT. DON'T LEAVE IT
+* IN THE GLOBALS TABLE (OR IT WILL BE RUN AGAIN IF THE NEXT MODULE DOES
+* NOT HAVE .INIT.). IF .INIT. DOES NOT RETURN 0, DISPLAY THE RETURN
+* CODE AND EXIT.
+*
          GLOBALS<'.INIT.'> =
          FFI = FFI_NEW('I', 'V')
          FFI_SET_CALLP(FFI, INIT)
          R = FFI_CALL_INTEGER(FFI)
-         TERMINAL = NE(R) FN ' .INIT. RETURNED ' R
+         TERMINAL = NE(R) FN ' .INIT. RETURNED ' R               :S(END)
 *
 RUN6     PN = PN + 1                                         :(ASM_LOAD)
 *
-* ERRORS - FILE COULDN'T BE READ, ASM DIDN'T LIKE THE FILE, OR THERE
-* IS NOT .MAIN. ENTRY POINT.
+* ERRORS - FILE COULDN'T BE READ, ASM DIDN'T LIKE THE FILE, THERE IS NO
+* .MAIN. ENTRY POINT, OR NO .MAC FILES HAVE BEEN LOADED.
 *
 FILERR   TERMINAL = "CAN'T READ FILE " FN                         :(END)
 ASMERR   TERMINAL = "ASM ERROR IN FILE " FN                       :(END)
@@ -186,18 +191,20 @@ ASM_RUN  EQ(FC, 0)                                            :S(NOFERR)
          IDENT(MAIN)                                         :S(MAINERR)
 *
 * CREATE A NEW FFI OBJECT. .MAIN. HAS NO PARAMETERS AND RETURNS A STATUS
-* (INTEGER) TO RETURN TO THE OPERATING SYSTEM (&CODE).
+* (INTEGER) TO RETURN TO THE OPERATING SYSTEM (IN &CODE).
 *
          FFI = FFI_NEW('I', 'V')
 *
-* SET THE CALL POINTER FOR THE FF TO .MAIN.
+* SET THE CALL POINTER OF THE FFI OBJECT TO .MAIN.
 *
          FFI_SET_CALLP(FFI, MAIN)
 *
 * CALL THE FFI (.MAIN.), RETURNING INTEGER R
 *
 * ENTER MACHINE DEBUGGER (MBUG). PASS MBUG GLOBAL SYMBOLS TABLE AND
-* DISASSEMBLY.
+* DISASSEMBLY. MBUG WILL DO DISASSEMBLY FOR INSTRUCTIONS NOT FOUND
+* IN DIS. ALL ADDRESSES ARE ABSOLUTE -- ALL RELOCATIONS HAVE BEEN
+* DONE (IN CASE YOU WANT TO ADD SYMBOLS INTO THE GLOBALS TABLE).
 *
          DIFFER(MBUG) MBUG(GLOBALS, DIS)
          R = FFI_CALL_INTEGER(FFI)
@@ -208,7 +215,10 @@ ASM_RUN  EQ(FC, 0)                                            :S(NOFERR)
 * WILL BE DONE AT STARTUP, AND THE CODE REUSED DURING EXECUTION.
 *
 * WITH PERHAPS A TIGHTER COUPLING WITH MBUG, "LOCAL" SYMBOLS COULD
-* BE PROVIDED.
+* BE PROVIDED. THIS IS NOT DONE BECAUSE WE ASSUME THAT MBUG IS USED
+* TO PROVIDE DEBUGGING TO A SINGLE ".MAC" CONSTRUCT AT A TIME. IT
+* IS PROBABLY PRUDENT TO HAVE AN OLD-FASHIONED PRINT-OUT OF THE CODE
+* PRIOR TO ATTEMPTING A DEBUG SESSION.
 *
 *        FFI_FREE(FFI)
 *        FINISH_JIT()
@@ -245,11 +255,17 @@ PUSH__   S = ' PREPARE'        CHARS_NL
 +            ' PUSHARGR {2}'   CHARS_NL
 +            ' FINISHI PUSH..' CHARS_NL
 *
-SPICE    S = REPL(S, '{1}', P1)
+SPLICE   S = REPL(S, '{1}', P1)
          S = REPL(S, '{2}', P2)
+         S = REPL(S, '{3}', P3)
          SRC POS(BL) LEN(0) = S                                :(RETURN)
 *
 * POP STACK,REG
+*
+* AGAIN, JUST SPLICE IN THE REPLACEMENT CODE. NOTE THAT {1} AND {2}
+* WILL BE REPLACED BY THE ACTUAL P1 AND P2 PARAMETERS SPECIFIED
+* (THIS IS DONE IN THE "SPLICE" FUNCTION, AS IS THE ACTUAL SPLICING
+* OF THE NEW CODE INTO THE INPUT STREAM).
 *
 POP__    S = ' PREPARE'        CHARS_NL
 +            ' PUSHARGI {1}'   CHARS_NL
@@ -267,7 +283,7 @@ ASM_HELP TERMINAL = 'run - load and run mac files'
          TERMINAL = '-m use MBUG (must be first option'
          TERMINAL = '-h help'
          TERMINAL =
-         TERMINAL = 'Input files must be in "LORD" (library order)'
+         TERMINAL = 'Input files must be in "lord" (library order)'
 *
 * CE: .MSNOBOL4;
 *
