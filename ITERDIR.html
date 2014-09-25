@@ -26,6 +26,10 @@ delete the first element, we simply forward step <font face="Source Code Pro">IT
 <font face="Source Code Pro">ITER_DIR = NEXT(ITER_DIR)</font> will delete the first element.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
+A string cannot simply be converted to a PATTERN with CONVERT().
+LEN(0) S will result in a pattern.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
 General note on iterators. The iter_() function returns an iterator
 This iterator is passed to a value function v() which returns the
 next thing being iterated. v() should fail if the end of iteration
@@ -61,28 +65,60 @@ expected.
 -INCLUDE &#39;CRACK.INC&#39;
 -INCLUDE &#39;ATOL.INC&#39;
 -INCLUDE &#39;CHARS.INC&#39;
+-INCLUDE &#39;LOGIC.INC&#39;
+-INCLUDE &#39;REPL.INC&#39;
+-INCLUDE &#39;VDIFFER.INC&#39;
+-INCLUDE &#39;LINK.INC&#39;
 <b>@</b>
 </font></pre></div>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;ITERDIR&raquo;&equiv;</b>
--PUBLIC VALUE_DIR(), ITER_DIR(), NEXT_DIR()
+-PUBLIC VALUE_DIR(), ITER_DIR(), NEXT_DIR(), READ_DIR()
 <font color="#818181"><i>*</i></font>
+         DEFINE(&#39;READ_DIR(W)P,O,V&#39;)
          DEFINE(&#39;ITER_DIR(W)P,L&#39;)
          DEFINE(&#39;VALUE_DIR(D)&#39;)
          DEFINE(&#39;NEXT_DIR(D)&#39;)                           <b>:(END_ITER_DIR)</b>
 <font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* READ DIRECTORY, RETURNING LIST OF FILES. WE USE -b TO HAVE ls ENCODE</i></font>
+<font color="#818181"><i>* FILENAMES WITH C ESCAPES, AND THEN REPLACE THE ESCAPES IN EACH NAME.</i></font>
+<font color="#818181"><i>* READ_DIR() CAN BE USED DIRECTLY, OR IS CALLED BY ITER_DIR(). THE</i></font>
+<font color="#818181"><i>* ARGUMENT PASSED IS A FILENAME PATTERN THAT CAN BE APPLIED TO ls, (NOT</i></font>
+<font color="#818181"><i>* A PATTERN).</i></font>
+<font color="#818181"><i>*</i></font>
+<font color="#818181"><i>* BE CAREFUL WITH THE WILDCARD PASSED - QUOTES (&#39; AND &quot;) WILL NOT WORK</i></font>
+<font color="#818181"><i>* SO IT IS BETTER TO GATHER THE ENTIRE DIRECTORY CONTENTS AND FILTER.</i></font>
+<font color="#818181"><i>* EVEN AN EMPTY DIRECTORY WILL HAVE . AND .. ENTRIES.</i></font>
+<font color="#818181"><i>*</i></font>
+READ_DIR READ_DIR = ATOL(CRACK(BQ(&#39;/usr/bin/ls -a -1 -b 2&gt;/dev/null &#39; W,
++                                 CHARS_NL),
++                              CHARS_NL))                    <b>:F(FRETURN)</b>
+         P = READ_DIR
+         O = ANY(&#39;01234567&#39;)
+RD_DIR2  IDENT(P)                                             <b>:S(RETURN)</b>
+RD_DIR3  VALUE(P) &#39;\&#39; (O O O) . V = CHAR(DIB(V, 8))          <b>:S(RD_DIR3)</b>
+         VALUE(P) = REPL(VALUE(P), &#39;\a&#39;, CHARS_BEL)
+         VALUE(P) = REPL(VALUE(P), &#39;\&quot;&#39;, &#39;&quot;&#39;)
+         VALUE(P) = REPL(VALUE(P), &quot;\&#39;&quot;, &quot;&#39;&quot;)
+         VALUE(P) = REPL(VALUE(P), &#39;\b&#39; CHARS_BS)
+         VALUE(P) = REPL(VALUE(P), &#39;\e&#39; CHARS_ESC)
+         VALUE(P) = REPL(VALUE(P), &#39;\f&#39; CHARS_FF)
+         VALUE(P) = REPL(VALUE(P), &#39;\n&#39; CHARS_NL)
+         VALUE(P) = REPL(VALUE(P), &#39;\r&#39; CHARS_CR)
+         VALUE(P) = REPL(VALUE(P), &#39;\t&#39; CHARS_HT)
+         VALUE(P) = REPL(VALUE(P), &#39;\v&#39; CHARS_VT)
+         VALUE(P) = REPL(VALUE(P), &#39;\\&#39;, &#39;\&#39;)
+         P = NEXT(P)                                          <b>:(RD_DIR2)</b>
+<font color="#818181"><i>*</i></font>
 VALUE_DIR
-         VALUE_DIR = DIFFER(D) VALUE(D)             <b>:S(RETURN)F(FRETURN)</b>
+         VALUE_DIR = VALUE(VDIFFER(D))              <b>:S(RETURN)F(FRETURN)</b>
 <font color="#818181"><i>*</i></font>
-ITER_DIR DIFFER(FORCEPATTERN)                               <b>:S(ITERDIR2)</b>
-         DATATYPE(W) &#39;PATTERN&#39;                              <b>:S(ITERDIR2)</b>
+ITER_DIR IDENT(DATATYPE(W), &#39;PATTERN&#39;)                      <b>:S(ITERDIR2)</b>
 <font color="#818181"><i>*</i></font>
-         ITER_DIR = ATOL(CRACK(BQ(&#39;ls 2&gt;/dev/null &#39; W, CHARS_NL),
-+           CHARS_NL))                              <b>:S(RETURN)F(FRETURN)</b>
+         ITER_DIR = READ_DIR(W)                     <b>:S(RETURN)F(FRETURN)</b>
 <font color="#818181"><i>*</i></font>
-ITERDIR2 ITER_DIR =
-+           ATOL(CRACK(BQ(&#39;ls 2&gt;/dev/null&#39;, CHARS_NL), CHARS_NL))
+ITERDIR2 ITER_DIR = READ_DIR()                               <b>:F(FRETURN)</b>
          P = ITER_DIR
 ITERDIR3 IDENT(P)                                             <b>:S(RETURN)</b>
          VALUE(P) W                                         <b>:S(ITERDIR4)</b>
@@ -92,7 +128,7 @@ ITERDIR3 IDENT(P)                                             <b>:S(RETURN)</b>
          P = NEXT(P)                                         <b>:(ITERDIR3)</b>
 ITERDIR4 L = P; P = NEXT(P)                                  <b>:(ITERDIR3)</b>
 <font color="#818181"><i>*</i></font>
-NEXT_DIR NEXT_DIR = DIFFER(D) NEXT(D)               <b>:S(RETURN)F(FRETURN)</b>
+NEXT_DIR NEXT_DIR = NEXT(VDIFFER(D))                <b>:S(RETURN)F(FRETURN)</b>
 <font color="#818181"><i>*</i></font>
 END_ITER_DIR
 <b>@</b>
@@ -151,7 +187,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Fri Jun 13 15:13:40 EDT 2014</p></td><td><p align=right>
+Sat Sep  6 08:40:53 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

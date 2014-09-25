@@ -26,7 +26,7 @@
       better than punched cards. I also used <code>WordStar 3</code>
       on CP/M-80 (in non-document mode) for entering programs. The
       WordStar interface was carried forward by Borland, but this
-      was still not my personal preference.
+      editor (WordStar) was still not my personal preference.
 
     </p>
     <p align="justify">
@@ -40,7 +40,7 @@
     <p align="justify">
       This implementation is rather crude, but it is only for my
       personal use. I truly do not expect anyone else to ever use
-      this code. Goals are to bring the size of the editor down, and
+      this code. Goals are to keep the size of the editor down, and
       increase portability. The editor has pretty much no features
       that “modern” editors have; indeed it can be considered
       almost user hostile! Help is implemented, via the <code>?</code>
@@ -81,7 +81,7 @@
       a visual interface to <code>ED</code>. VEDIT's macro language
       was originally a lot more like <code>TECO</code>, and is now
       C-like. Arguably, a lot more powerful than <code>CPMED</code>,
-      but, it doesn't come with source, and I didn't write it.
+      but, it didn't come with source, and I didn't write it.
 
     </p>
     <p align="justify">
@@ -138,7 +138,12 @@
       that memory restriction, and computers are so much faster,
       <code>CPMED</code> uses a simple character buffer approach
       (but does impose an 8 megabyte limit on edit buffer size). I
-      normally set a 2 megabyte edit buffer size.
+      normally set a 2 megabyte edit buffer size. <code>CPMED</code>
+      has four edit buffers, selected with the .Z command. Buffer 1.Z
+      is the "primary" buffer. 2.Z is for macro definitions, accesible
+      with the .C (call) command (also .R - return). Buffers 3 and 4
+      are available as scratch buffers. <code>ED</code> only supported
+      a single edit buffer.
 
     </p>
     <p align="justify">
@@ -336,15 +341,16 @@
 
       </p>
       <p align="justify">
-	<code>CPMED></code> supports variable
-	tabulation. <code>-.H</code> clears all set
-	tabs. <code><i>n</i>.H</code> (<code>7.H</code> for FORTRAN,
-	as an example) sets (or if already set, clears), a horizontal
-	tab. When <code>^W</code> is entered during the <code>I</code>
-	command, spaces are inserted to move to the next tabulation
-	column. Up to 20 tabulation columns can be set. The naked
-	<code>.H</code> command will display the tabulations that
-	are set (all 20, with 0 indicating available tabulations).
+
+	<code>CPMED</code> supports variable tabulation.
+	<code>-.H</code> clears all set tabs. <code><i>n</i>.H</code>
+	(<code>7.H</code> for FORTRAN, as an example) sets (or if
+	already set, clears), a horizontal tab. When <code>^W</code>
+	is entered during the <code>I</code> command, spaces are
+	inserted to move to the next tabulation column. Up to 20
+	tabulation columns can be set. The naked <code>.H</code>
+	command will display the tabulations that are set (all 20, with
+	0 indicating available tabulations).
 
       </p>
       <p align="justify">
@@ -418,7 +424,7 @@
 	to be very careful on entering new lines, or enable a column
 	counter (if using, say, vim). Using <code>CPMED</code>,
 	the command <code>7.G</code> would highlight the start of
-	statement column.  <code>72.G</code>H highlights the end
+	statement column.  <code>72.G</code> highlights the end
 	of statement column, allowing easy verification of the
 	input program.	<code>72.B</code> would ring a bell on
 	exceeding the statement limit. Setting a tab at column 7
@@ -528,7 +534,7 @@
 	with single-line optimizations). However, <code>2.S</code>
 	enters a scope update mode that is limited to explicit
 	updates. This and limiting the number of scope lines is useful
-	when editing files over a very slow communications link.
+	when editing files over very slow communications links.
 
       </p>
       <p align="justify">
@@ -1223,6 +1229,14 @@
     <td>Search for <i>string1</i>, replace with <i>string2</i>, and
 	then erase until <i>string3</i>.</td></tr>
 
+<tr><td><code>.J</code></td><td></td>
+  <td>Set Extension</td></tr>
+  <tr><td></td>
+    <td><code>
+      <i>n</i>.J<i>.extension</i>^Z<i>major</i>^Z<i>display</i>^Z
+      </code>. <i>-n</i> appends to <code>.M?</code> help.
+    </td>Set extension n (0..127)</td></tr>
+
 <tr><td><code>K</code></td><td></td>
   <td>Kill lines</td></tr>
   <tr><td></td><td><code>0K</code></td>
@@ -1548,16 +1562,9 @@
 
 <tr><td><code>?</code></td><td></td>
   <td>Help</td></tr>
-  <tr><td></td><td><code>?</code></td>
-    <td>Display help page - ED</td></tr>
-  <tr><td></td><td><code>2?</code></td>
-    <td>Second help page - Scripting</td></tr>
-  <tr><td></td><td><code>3?</code></td>
-    <td>Third help page - Extensions</td></tr>
-  <tr><td></td><td><code>4?</code></td>
-    <td>Fourth help page - Startup</td></tr>
-  <tr><td></td><td><code>5?</code></td>
-    <td>Fifth help page - SCAN</td></tr>
+  <tr><td></td><td><code><i>n</i>?</code></td>
+    <td>Display help page n (1..10). If n is negative, append to help
+        page.</td></tr>
 
 <tr><td><code>/</code></td><td></td>
   <td>Repeat search</td></tr>

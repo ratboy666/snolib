@@ -176,8 +176,8 @@ CGI_INIT CGI_INIT = SUPER(&#39;INIT&#39;)
 <font color="#818181"><i>* IF USING SYSTEMD LOGGER, DON&#39;T USE -n localhost</i></font>
 <font color="#818181"><i>*</i></font>
          OUTPUT(|.LOG, |.LOG_UNIT, &#39;W&#39;,
-+               &#39;|/usr/bin/logger -n localhost -t CGI&#39;)      <b>:F(FRETURN)</b>
-<font color="#818181"><i>*+              &#39;|/usr/bin/logger -t CGI&#39;)                   <b>:F(FRETURN)</b></i></font>
++               &#39;|/usr/bin/logger -t CGI&#39;)                   <b>:F(FRETURN)</b>
+<font color="#818181"><i>*+              &#39;|/usr/bin/logger -n localhost -t CGI&#39;)      <b>:F(FRETURN)</b></i></font>
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* CREATE OUT CHANNEL</i></font>
 <font color="#818181"><i>*</i></font>
@@ -666,7 +666,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Tue Jun 17 08:53:23 EDT 2014</p></td><td><p align=right>
+Sun Aug 31 15:20:03 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

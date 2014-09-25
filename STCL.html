@@ -9,7 +9,7 @@
 <h1>STCL - TCL interface for CSNOBOL4</h1>
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
-Interface to TCL.
+Interface to tck/tk.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
 <h2>Uses</h2>
@@ -49,7 +49,25 @@ STCL_LOAD
          LOAD(&#39;STCL_OBJGETVAR2(INTEGER,STRING,STRING,INTEGER)STRING&#39;)
          LOAD(&#39;STCL_RELEASEOBJ(INTEGER)STRING&#39;)
 <font color="#818181"><i>*</i></font>
-         CODE(&#39;STCL_LOAD&#39;)
+-PUBLIC INIT_TCL()
+<font color="#818181"><i>*</i></font>
+         DEFINE(&#39;INIT_TCL()V,VPAT&#39;)                          <b>:(END_STCL)</b>
+<font color="#818181"><i>*</i></font>
+INIT_TCL INIT_TCL = STCL_CREATEINTERP()
+         TCL_VERSION = STCL_GETVAR(INIT_TCL, &#39;tcl_version&#39;)
+         TERMINAL = IDENT(TCL_VERSION) &#39;COULD NOT GET TCL_VERSION&#39;
++                                                                <b>:S(END)</b>
+         VPAT = SPAN(&amp;DIGITS) &#39;.&#39; SPAN(&amp;DIGITS)
+         TCL_VERSION VPAT . V                               <b>:S(INITTCL2)</b>
+         TERMINAL = &#39;COULD NOT PARSE TCL_VERSION&#39;                 <b>:(END)</b>
+INITTCL2 LT(V, 8.4)                                         <b>:S(INITTCL3)</b>
+         STCL_EVAL(INIT_TCL, &#39;package require Tk&#39;)          <b>:F(INITTCL5)</b>
+INITTCL3 TK_VERSION = STCL_GETVAR(INIT_TCL, &#39;tk_version&#39;)   <b>:F(INITTCL4)</b>
+         DIFFER(TK_VERSION)                                   <b>:S(RETURN)</b>
+INITTCL4 TERMINAL = &#39;COULD NOT FIND TK_VERSION&#39;                   <b>:(END)</b>
+INITTCL5 TERMINAL = &#39;REQUIRE TK FAILED&#39;                           <b>:(END)</b>
+<font color="#818181"><i>*</i></font>
+END_STCL CODE(&#39;STCL_LOAD&#39;)
 <b>@</b>
 </font></pre></div>
 <div style="background-image: url(greenbar.gif)">
@@ -138,7 +156,7 @@ END START
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Wed Jul 23 00:16:17 EDT 2014</p></td><td><p align=right>
+Sun Aug 31 15:19:51 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

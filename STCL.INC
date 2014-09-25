@@ -1,7 +1,7 @@
 -STITL STCL
 -EJECT
 *
--LINE 45 "STCL.lss"
+-LINE 63 "STCL.lss"
 ************************************************************************
 *                                                                      *
 *                    #####   #######   #####   #                       *
@@ -51,6 +51,24 @@ STCL_LOAD
          LOAD('STCL_OBJGETVAR2(INTEGER,STRING,STRING,INTEGER)STRING')
          LOAD('STCL_RELEASEOBJ(INTEGER)STRING')
 *
-         CODE('STCL_LOAD')
+-PUBLIC INIT_TCL()
+*
+         DEFINE('INIT_TCL()V,VPAT')                          :(END_STCL)
+*
+INIT_TCL INIT_TCL = STCL_CREATEINTERP()
+         TCL_VERSION = STCL_GETVAR(INIT_TCL, 'tcl_version')
+         TERMINAL = IDENT(TCL_VERSION) 'COULD NOT GET TCL_VERSION'
++                                                                :S(END)
+         VPAT = SPAN(&DIGITS) '.' SPAN(&DIGITS)
+         TCL_VERSION VPAT . V                               :S(INITTCL2)
+         TERMINAL = 'COULD NOT PARSE TCL_VERSION'                 :(END)
+INITTCL2 LT(V, 8.4)                                         :S(INITTCL3)
+         STCL_EVAL(INIT_TCL, 'package require Tk')          :F(INITTCL5)
+INITTCL3 TK_VERSION = STCL_GETVAR(INIT_TCL, 'tk_version')   :F(INITTCL4)
+         DIFFER(TK_VERSION)                                   :S(RETURN)
+INITTCL4 TERMINAL = 'COULD NOT FIND TK_VERSION'                   :(END)
+INITTCL5 TERMINAL = 'REQUIRE TK FAILED'                           :(END)
+*
+END_STCL CODE('STCL_LOAD')
 *
 * CE: .MSNOBOL4;

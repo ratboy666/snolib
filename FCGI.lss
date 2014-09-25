@@ -36,7 +36,8 @@ When this is functional, we will work on performance.
 <<FCGI>>=
          FCGI_LOGUNIT = IO_FINDUNIT()
          OUTPUT(.FCGI_LOG, FCGI_LOGUNIT, 'W', 
-+               '|/usr/bin/logger -n localhost -t FCGI')
++               '|/usr/bin/logger -t FCGI')
+*+              '|/usr/bin/logger -n localhost -t FCGI')
          STDIN_FILENO = 0
          FCGI_LISTENSOCK_FILENO = STDIN_FILENO
 *

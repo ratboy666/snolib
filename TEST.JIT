@@ -24,7 +24,7 @@ DBL2     DQ          2.1               ; DSS - 8 BYTE DOUBLE
 ;
 ; C STYLE FORMAT STRING
 ;
-NL       EXTERN      (ORD(CHARS_NL))
+NL       DEFINE      (ORD(CHARS_NL))
 STR      DS          'hello, world %d %g %g %d'
          DB          NL
          DB          0

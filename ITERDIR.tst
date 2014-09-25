@@ -1,7 +1,7 @@
 #!/usr/bin/bash
          exec "snobol4" "-b" "$0" "$@"
 -INCLUDE 'ITERDIR.INC'
--LINE 87 "ITERDIR.lss"
+-LINE 122 "ITERDIR.lss"
          &CODE = 1
          DI = ITER_DIR(FENCE 'W')
 TOP1       OUTPUT = VALUE_DIR(DI)                               :F(BTM1)

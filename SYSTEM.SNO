@@ -1,7 +1,7 @@
 -MODULE SYSTEM
 -IN72
 -LINE 49 "SYSTEM.lss"
--LINE 129 "SYSTEM.lss"
+-LINE 131 "SYSTEM.lss"
 -STITL SYSTEM
 -EJECT
 *
@@ -71,6 +71,8 @@ SYSTEM   IDENT(DATATYPE(.X), 'STRING')                      :F(SYSTEM_2)
 *
 SYSTEM_0 ISASCII()                                          :F(SYSTEM_1)
          SYSTEM = 'CSNOBOL4 MAINBOL'
+         OPSYN('T', '#', 2)
+         FUNCTION('T')                                        :F(RETURN)
 *
 SYSTEM_1 E = &ERRLIMIT
          &ERRLIMIT = 1

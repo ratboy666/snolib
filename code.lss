@@ -638,7 +638,7 @@ A stack size [[-S]] of 40000 seems to be fine.
 
 <<>>=
 #!/usr/bin/bash
-         exec "snobol4" "-B" "-s" "-S 40000" "$0" "$@"
+         exec "snobol4" "-s" "-S 40000" "$0" "$@"
 *
 -PROGRAM CODE
 -TITLE CODE

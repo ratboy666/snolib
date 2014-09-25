@@ -37,17 +37,14 @@ If used with SPITBOL, reads a line at a time, adding newlines.
 <font color="#818181"><i>*</i></font>
          DEFINE(&#39;READFILE(FILE)F,U,E&#39;)                   <b>:(READFILE_END)</b>
 <font color="#818181"><i>*</i></font>
-READFILE SYSTEM() &#39;CSNOBOL4&#39;                               <b>:S(READFILE3)</b>
+READFILE SYSTEM() &#39;CSNOBOL4&#39;                                 <b>:S(RDFILE3)</b>
          U = 20
          E = CHARS_NL
-         INPUT(.F, U, FILE)                      <b>:S(READFILE2)F(FRETURN)</b>
-READFILE3
-         U = IO_FINDUNIT()                                   <b>:F(FRETURN)</b>
+         INPUT(.F, U, FILE)                        <b>:S(RDFILE2)F(FRETURN)</b>
+RDFILE3  U = IO_FINDUNIT()                                   <b>:F(FRETURN)</b>
          INPUT(.F, U, &#39;B,65536&#39;, FILE)                       <b>:F(FRETURN)</b>
-READFILE2
-         READFILE = READFILE F E                           <b>:S(READFILE2)</b>
-READFILE4
-         ENDFILE(U)
+RDFILE2  READFILE = READFILE F E                             <b>:S(RDFILE2)</b>
+RDFILE4  ENDFILE(U)
          DETACH(.F)                                            <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 READFILE_END
@@ -99,7 +96,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Sun Jun 15 22:04:38 EDT 2014</p></td><td><p align=right>
+Sun Aug 31 15:20:04 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

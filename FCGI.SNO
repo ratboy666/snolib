@@ -7,7 +7,7 @@
 -INCLUDE 'LOGIC.INC'
 -INCLUDE 'TIME.INC'
 -IN72
--LINE 305 "FCGI.lss"
+-LINE 306 "FCGI.lss"
 -STITL FCGI
 -EJECT
 *
@@ -30,7 +30,8 @@
 -LINE 37 "FCGI.lss"
          FCGI_LOGUNIT = IO_FINDUNIT()
          OUTPUT(.FCGI_LOG, FCGI_LOGUNIT, 'W',
-+               '|/usr/bin/logger -n localhost -t FCGI')
++               '|/usr/bin/logger -t FCGI')
+*+              '|/usr/bin/logger -n localhost -t FCGI')
          STDIN_FILENO = 0
          FCGI_LISTENSOCK_FILENO = STDIN_FILENO
 *

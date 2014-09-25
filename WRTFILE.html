@@ -25,32 +25,31 @@ arbitrary binary string.
 -INCLUDE &#39;BRKREM.INC&#39;
 -INCLUDE &#39;CHARS.INC&#39;
 -INCLUDE &#39;SYSTEM.INC&#39;
+-INCLUDE &#39;READFILE.INC&#39;
 <b>@</b>
 </font></pre></div>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;WRTFILE&raquo;&equiv;</b>
+<font color="#818181"><i>*</i></font>
+-USES READFILE()
+<font color="#818181"><i>*</i></font>
          DEFINE(&#39;WRITEFILE(FILE,S)F,U,E,T&#39;)               <b>:(WRTFILE_END)</b>
 <font color="#818181"><i>*</i></font>
 WRITEFILE
-         SYSTEM() &#39;CSNOBOL4&#39;                              <b>:S(WRITEFILE3)</b>
+         SYSTEM() &#39;CSNOBOL4&#39;                                 <b>:S(WRFILE3)</b>
          U = 20
          OUTPUT(.F, U, FILE)                                 <b>:F(FRETURN)</b>
-WRITEFILE2
-         S BRKREM(CHARS_NL) . T (CHARS_NL | NULL) =
+WRFILE2  S BRKREM(CHARS_NL) . T (CHARS_NL | NULL) =
          F = T
-         IDENT(S)                             <b>:S(READFILE4)F(WRITEFILE2)</b>
-WRITEFILE3
-         U = IO_FINDUNIT()
+         IDENT(S)                                  <b>:S(RDFILE4)F(WRFILE2)</b>
+WRFILE3  U = IO_FINDUNIT()
          OUTPUT(.F, U, &#39;B,65536&#39;, FILE)
-WRITEFILE4
-         T = LT(SIZE(S), 65536) S                         <b>:F(WRITEFILE6)</b>
+WRFILE4  T = LT(SIZE(S), 65536) S                            <b>:F(WRFILE6)</b>
          S =
-WRITEFILE5
-         F = T
-         IDENT(S)                             <b>:S(READFILE4)F(WRITEFILE4)</b>
-WRITEFILE6
-         S LEN(65536) . T REM . S                          <b>:(WRITEFILE5)</b>
+WRFILE5  F = T
+         IDENT(S)                                  <b>:S(RDFILE4)F(WRFILE4)</b>
+WRFILE6  S LEN(65536) . T REM . S                             <b>:(WRFILE5)</b>
 <font color="#818181"><i>*</i></font>
 WRTFILE_END
 <b>@</b>
@@ -100,7 +99,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Sat Jun 14 14:38:47 EDT 2014</p></td><td><p align=right>
+Sun Aug 31 15:20:16 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

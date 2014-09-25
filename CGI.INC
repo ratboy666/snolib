@@ -125,8 +125,8 @@ CGI_INIT CGI_INIT = SUPER('INIT')
 * IF USING SYSTEMD LOGGER, DON'T USE -n localhost
 *
          OUTPUT(|.LOG, |.LOG_UNIT, 'W',
-+               '|/usr/bin/logger -n localhost -t CGI')      :F(FRETURN)
-*+              '|/usr/bin/logger -t CGI')                   :F(FRETURN)
++               '|/usr/bin/logger -t CGI')                   :F(FRETURN)
+*+              '|/usr/bin/logger -n localhost -t CGI')      :F(FRETURN)
 *
 * CREATE OUT CHANNEL
 *

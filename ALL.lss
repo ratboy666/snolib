@@ -64,6 +64,7 @@ the html documentation (mostly in the <i>ditaa</i> utility.
 -INCLUDE 'ARRAY0.INC'
 -INCLUDE 'ASM.INC'
 -INCLUDE 'ATOL.INC'
+-INCLUDE 'AUTOLDR.INC'
 -INCLUDE 'BALREV.INC'
 -INCLUDE 'BALX.INC'
 -INCLUDE 'BLEND.INC'

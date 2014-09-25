@@ -3,8 +3,9 @@
 -INCLUDE 'BRKREM.INC'
 -INCLUDE 'CHARS.INC'
 -INCLUDE 'SYSTEM.INC'
+-INCLUDE 'READFILE.INC'
 -IN72
--LINE 57 "WRTFILE.lss"
+-LINE 56 "WRTFILE.lss"
 -STITL WRTFILE
 -EJECT
 *
@@ -24,28 +25,26 @@
 *
 * WRTFILE.lss
 *
--LINE 19 "WRTFILE.lss"
+-LINE 20 "WRTFILE.lss"
+*
+-USES READFILE()
+*
          DEFINE('WRITEFILE(FILE,S)F,U,E,T')               :(WRTFILE_END)
 *
 WRITEFILE
-         SYSTEM() 'CSNOBOL4'                              :S(WRITEFILE3)
+         SYSTEM() 'CSNOBOL4'                                 :S(WRFILE3)
          U = 20
          OUTPUT(.F, U, FILE)                                 :F(FRETURN)
-WRITEFILE2
-         S BRKREM(CHARS_NL) . T (CHARS_NL | NULL) =
+WRFILE2  S BRKREM(CHARS_NL) . T (CHARS_NL | NULL) =
          F = T
-         IDENT(S)                             :S(READFILE4)F(WRITEFILE2)
-WRITEFILE3
-         U = IO_FINDUNIT()
+         IDENT(S)                                  :S(RDFILE4)F(WRFILE2)
+WRFILE3  U = IO_FINDUNIT()
          OUTPUT(.F, U, 'B,65536', FILE)
-WRITEFILE4
-         T = LT(SIZE(S), 65536) S                         :F(WRITEFILE6)
+WRFILE4  T = LT(SIZE(S), 65536) S                            :F(WRFILE6)
          S =
-WRITEFILE5
-         F = T
-         IDENT(S)                             :S(READFILE4)F(WRITEFILE4)
-WRITEFILE6
-         S LEN(65536) . T REM . S                          :(WRITEFILE5)
+WRFILE5  F = T
+         IDENT(S)                                  :S(RDFILE4)F(WRFILE4)
+WRFILE6  S LEN(65536) . T REM . S                             :(WRFILE5)
 *
 WRTFILE_END
 *

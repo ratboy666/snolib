@@ -94,4 +94,3 @@ END_AUTOLDR
 *
 * CE: .MSNOBOL4;
 *
-END
