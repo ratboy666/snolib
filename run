@@ -33,9 +33,11 @@
 -INCLUDE 'MBUG.INC'
 -INCLUDE 'UNIX.INC'
 -INCLUDE 'MKTEMP.INC'
+-INCLUDE 'DDT.INC'
 -STITL
 -IN72
 *
+***      DDT()
          TERMINAL = 'RUN (TUE JUN 24 19:53:25 EDT 2014)'
 *
          INIT_JIT('/usr/local/bin/snobol4')
@@ -106,11 +108,11 @@ ASM_LD2  DISASSEMBLE = IDENT(FN, '-d') 1                     :F(ASM_LD3)
          PN = PN + 1                                         :(ASM_LOAD)
 ASM_LD3  MBUG = IDENT(FN, '-m') 1                            :F(ASM_LD4)
          PN = PN + 1                                         :(ASM_LOAD)
-         IDENT(FN, '-h')                                    :S(ASM_HELP)
+ASM_LD4  IDENT(FN, '-h')                                    :S(ASM_HELP)
 *
 * PROCESS A FILE. READ THE ENTIRE FILE.
 *
-ASM_LD4  SRC = READFILE(FN)                                   :F(FILERR)
+         SRC = READFILE(FN)                                   :F(FILERR)
 *
 * CREATE A NEW ASM() OBJECT. PASS IN GLOBALS UP TO NOW.
 *

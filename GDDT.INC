@@ -47,7 +47,8 @@ DDT_HOOK_3
          IDENT(DDT_BL)                                    :S(DDT_HOOK_5)
 * FIXME - used lineend?
          STCL_EVAL(TCL, '.f1.src tag configure bl -background blue')
-         STCL_EVAL(TCL, '.f1.src tag add bl ' DDT_BL '.0 ' DDT_BL + 1 '.0')
+         STCL_EVAL(TCL, '.f1.src tag add bl ' DDT_BL '.0 '
++                                             DDT_BL + 1 '.0')
          STCL_EVAL(TCL, '.f1.src see ' DDT_BL '.0')        :(DDT_HOOK_9)
 DDT_HOOK_5
          ARG = 'BREAK STNO ' ARG                           :(DDT_HOOK_6)
@@ -72,7 +73,7 @@ DDT_HOOK_9
 *
 DDT_HOOK_END
 *
-         DEFINE('GDDT(LSTF)') :(GDDT_END)
+         DEFINE('GDDT(LSTF)')                                :(GDDT_END)
 *
 * ESTABLISH HOOK FUNCTION FOR DDT
 *
@@ -118,7 +119,7 @@ HAVETK
          STCL_EVAL(TCL, 'scrollbar .f1.scroll -command {.f1.src yview}')
          STCL_EVAL(TCL, 'pack .f1.scroll -side right -fill y')
          STCL_EVAL(TCL, 'pack .f1.src -side left -fill both'
-+                       '  -expand true')
++                       ' -expand true')
          STCL_EVAL(TCL, 'pack .f1 -side top -fill both -expand true')
 *
 * COMMAND FEEDBACK WINDOW
@@ -131,7 +132,7 @@ HAVETK
          STCL_EVAL(TCL, 'scrollbar .f2.scroll -command {.f2.log yview}')
          STCL_EVAL(TCL, 'pack .f2.scroll -side right -fill y')
          STCL_EVAL(TCL, 'pack .f2.log -side left -fill both'
-+                       '  -expand true')
++                       ' -expand true')
          STCL_EVAL(TCL, 'pack .f2 -side top -fill both -expand true')
 *
 * COMMAND ENTRY AREA
@@ -143,8 +144,8 @@ HAVETK
 +                       ' -command {set go exec}')
          STCL_EVAL(TCL, 'pack .f3.go -side right')
          STCL_EVAL(TCL, 'label .f3.l -text Command: -padx 0')
-         STCL_EVAL(TCL, 'entry .f3.cmd -relief sunken '
-+                        '-textvariable command -font mono')
+         STCL_EVAL(TCL, 'entry .f3.cmd -relief sunken'
++                        ' -textvariable command -font mono')
          STCL_EVAL(TCL, 'global command')
          STCL_EVAL(TCL, 'pack .f3.l -side left')
          STCL_EVAL(TCL, 'pack .f3.cmd -side left -fill x -expand true')

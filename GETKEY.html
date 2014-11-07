@@ -97,6 +97,10 @@ terminals. Note that xterm-256color is the normaL xterm definition
 in use by my windowing system, and linux is the normal full-screen
 console type.
 </font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
+HOME and END are odd. Under Gnome 3 terminal, they are returned with
+O in the sequence.
+</font></p>
 <div style="background-image: url(greenbar.gif)">
 <pre><font face="Source Code Pro">
 <b>&laquo;GETKEY&raquo;&equiv;</b>
@@ -105,8 +109,8 @@ console type.
          KEY_RIGHT  = REPLACE(KEY_RIGHT, &#39;O&#39;, &#39;[&#39;)
          KEY_UP     = REPLACE(KEY_UP,    &#39;O&#39;, &#39;[&#39;)
          KEY_DOWN   = REPLACE(KEY_DOWN,  &#39;O&#39;, &#39;[&#39;)
-         KEY_HOME   = REPLACE(KEY_HOME,  &#39;O&#39;, &#39;[&#39;)
-         KEY_END    = REPLACE(KEY_END,   &#39;O&#39;, &#39;[&#39;)
+<font color="#818181"><i>***      KEY_HOME   = REPLACE(KEY_HOME,  &#39;O&#39;, &#39;[&#39;)</i></font>
+<font color="#818181"><i>***      KEY_END    = REPLACE(KEY_END,   &#39;O&#39;, &#39;[&#39;)</i></font>
          KEY_INS    = REPLACE(KEY_INS,   &#39;O&#39;, &#39;[&#39;)
                                                            <b>:(GETKEY_END)</b>
 <font color="#818181"><i>*</i></font>
@@ -206,7 +210,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Sun Aug 31 15:19:34 EDT 2014</p></td><td><p align=right>
+Tue Oct 14 17:05:50 EDT 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

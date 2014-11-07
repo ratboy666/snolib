@@ -9,7 +9,7 @@
  *            #     #  #        #     #  #        #     #             *
  *             #####   #        #     #  #######  ######              *
  *                                                                    *
- * cpmed.c                 THE CPMED EDITOR                           *
+ * CPMED.C                 THE CPMED EDITOR                           *
  *                                                                    *
  * COPYRIGHT (C) 1982, 2000, 2005, 2009-2014 FRIDTJOF (FRED) WEIGEL   *
  * ALL RIGHTS RESERVED                                                *
@@ -27,7 +27,7 @@
  * 18 LINES ARE THEREFORE DEDICATED TO A BANNER.
  */
 
-#define LINUX
+/* #define LINUX */
 /* #define HP_UX */
 #define USE_MEMMOVE
 
@@ -42,7 +42,7 @@
 #endif
 
 #ifdef HP_UX
-/* For select() */
+/* FOR select() */
 #include <sys/time.h>
 #else
 #include <sys/select.h>
@@ -215,7 +215,7 @@ STATIC INT      UNDO_M;
  */
 STATIC INT	CBUF;			/* EDIT BUFFER 1..4 */
 
-STATIC CHAR	*EBUF1;
+STATIC CHAR	*EBUF1;			/* BUFFER 1 */
 STATIC INT	SP1;
 STATIC INT	CP1;
 STATIC INT	MP1;
@@ -223,7 +223,7 @@ STATIC INT	BSIZE1;
 STATIC INT	LN1;
 STATIC INT	TN1;
 
-STATIC CHAR	*EBUF2;
+STATIC CHAR	*EBUF2;			/* BUFFER 2 */
 STATIC INT	SP2;
 STATIC INT	CP2;
 STATIC INT	MP2;
@@ -231,7 +231,7 @@ STATIC INT	BSIZE2;
 STATIC INT	LN2;
 STATIC INT	TN2;
 
-STATIC CHAR	*EBUF3;
+STATIC CHAR	*EBUF3;			/* BUFFER 3 */
 STATIC INT	SP3;
 STATIC INT	CP3;
 STATIC INT	MP3;
@@ -239,7 +239,7 @@ STATIC INT	BSIZE3;
 STATIC INT	LN3;
 STATIC INT	TN3;
 
-STATIC CHAR	*EBUF4;
+STATIC CHAR	*EBUF4;			/* BUFFER 4 */
 STATIC INT	SP4;
 STATIC INT	CP4;
 STATIC INT	MP4;
@@ -390,8 +390,10 @@ STATIC STRUCT BEGIN
     CHAR T2[12];
 END ELIST[128] = BEGIN 0, END;
 
+/* .M? */
 STATIC CHAR MDHELP[512] = BEGIN 0, END;
 
+/* 1? .. 10? */
 STATIC CHAR EDHELP[10][1024] = BEGIN 0, END;
 
 STATIC CHAR HEX[] = "0123456789ABCDEF";
@@ -486,7 +488,7 @@ END
 STATIC BOOL ISCNTL(C)
 INT C;
 BEGIN
-    RETURN (0 < C) AND (C < ' ');
+    RETURN (0 <= C) AND (C < ' ');
 END
 
 /* IS C NUMERIC? */
@@ -538,13 +540,24 @@ BEGIN
     RETURN C - '0';
 END
 
+/* APPLY F TO EACH CHAR OF STRING */
+STATIC CHAR *STRF(S, F)
+CHAR *S;
+VOID (*F)();
+BEGIN
+    WHILE (*S) F(*S++);
+    RETURN S;
+END
+
+STATIC VOID SNULL()
+BEGIN
+END
+
 /* LENGTH OF STRING */
 STATIC INT STRLEN(S)
 CHAR *S;
 BEGIN
-    INT I = 0;
-    WHILE (*S++) ++I;
-    RETURN I;
+    RETURN STRF(S, SNULL) - S;
 END
 
 /* COPY STRING */
@@ -932,13 +945,13 @@ END
 STATIC VOID SOUT(S)
 CHAR *S;
 BEGIN
-    WHILE (*S) COUT(*S++);
+    STRF(S, COUT);
 END
 
 STATIC VOID ROUT(S)
 CHAR *S;
 BEGIN
-    WHILE (*S) PC(*S++);
+    STRF(S, PC);
 END
 
 /* RETURN TO FIRST COLUMN (CR) */
@@ -987,9 +1000,7 @@ BEGIN
     IF (READY()) BEGIN
 	C = FGETC(STDIN);
 	IF ((C == RUBOUT) OR (C == CHBS)) BEGIN
-	    /* BREAK REQUESTED, CLOSE UP ALL SOURCE
-	     * FILES.
-	     */
+	    /* BREAK REQUESTED, CLOSE UP ALL SOURCE FILES. */
 	    WHILE (ISP > 0) BEGIN
 		FCLOSE(CINSRC);
 		CINSRC = ISTK[--ISP];

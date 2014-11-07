@@ -301,14 +301,17 @@
 *
          H_LOP = DLOPEN('/usr/lib64/libopcodes-2.23.2.so', RTLD_NOW)
          H_LOP = EQ(H_LOP)
-+        DLOPEN('/usr/lib64/libopcodes-2.23.52.0.1-9.fc19.so', RTLD_NOW)
++           DLOPEN('/usr/lib64/libopcodes-2.23.52.0.1-9.fc19.so',
++                                                              RTLD_NOW)
+         H_LOP = EQ(H_LOP)
          FFI_INIT_DISASSEMBLE_INFO = FFI_NEW('V', 'P,P,P')
          (DIFFER(H_LOP) FFI_SET_CALLP(FFI_INIT_DISASSEMBLE_INFO,
 +           DLSYM(H_LOP, 'init_disassemble_info')))
          DEFINE('INIT_DISASSEMBLE_INFO(DINFO,FILEP,FFUNC)')
          FFI_PRINT_INSN_I386 = FFI_NEW('I', 'P,P')
          (DIFFER(H_LOP)
-+   FFI_SET_CALLP(FFI_PRINT_INSN_I386, DLSYM(H_LOP, 'print_insn_i386')))
++           FFI_SET_CALLP(FFI_PRINT_INSN_I386,
++                         DLSYM(H_LOP, 'print_insn_i386')))
          DEFINE('PRINT_INSN_I386(VMADDR,DINFO)')
 *
          DEFINE('DISASSEMBLE(ADDR)F,P,N,PTR,SIZ,DINFO,DIS,S,I,S2')
