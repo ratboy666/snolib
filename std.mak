@@ -234,9 +234,8 @@ P2CC_CC=$(CC)
 # erase the target before starting. ditaa just doesn't want to play
 # well in a MAKE file, it seems!
 %.html: %.ditaa
-	@if [ ! -d null ]; then mkdir null; fi
-	@if [ ! -d images ]; then mkdir images; fi
-	@if [ ! -h null/images ]; then ln -s images null/images; fi
+	@if [ ! -d null/images ]; then mkdir -p null/images; fi
+	@if [ ! -h images ]; then ln -s null/images images; fi
 	@rm -f "$@"
 	$(DITAA) "$<" "$@" --html --overwrite >/dev/null
 	@if [ ! -f "$@" ]; then cp "$<" "$@"; fi
@@ -256,13 +255,13 @@ P2CC_CC=$(CC)
 .sno.inc:
 	@echo $< " -> " $@
 	@t=`mktemp`; \
-	$(G360) < $< | LSS=SNOBOL4 $(IFS) | $(EMBED) > $$t; \
+	$(G360) < $< | LSS=SNOBOL4 $(IFS) | $(EMBED) | in72 > $$t; \
 	cp $$t $@; \
 	rm $$t
 .SNO.INC:
 	@echo $< " -> " $@
 	@t=`mktemp`; \
-	$(G360) < $< | LSS=SNOBOL4 $(IFS) | $(EMBED) > $$t; \
+	$(G360) < $< | LSS=SNOBOL4 $(IFS) | $(EMBED) | in72 > $$t; \
 	cp $$t $@; \
 	rm $$t
 
