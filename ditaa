@@ -1,0 +1,12 @@
+#! /bin/bash
+#
+# fix ditaa script (Fedora 19 and Fedora 20) -- /usr/bin/ditaa
+
+source /usr/share/java-utils/java-functions
+
+MAIN_CLASS=org.stathissideris.ascii2image.core.CommandLineConverter
+BASE_JARS="ditaa commons-cli xml-commons-apis batik jericho-html"
+
+set_classpath $BASE_JARS
+
+run "$@"
