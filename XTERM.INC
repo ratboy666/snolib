@@ -13,7 +13,6 @@
 -INCLUDE 'LOGIC.INC'
 -INCLUDE 'P64.INC'
 -INCLUDE 'UNIQUE.INC'
--INCLUDE 'DDT.INC'
 -IN72
 -STITL XTERM
 -EJECT
@@ -83,7 +82,7 @@ XTERM_INIT
          |.OLD_RL_INSTREAM = PEEK_P(|.RL_INSTREAM)
          |.OLD_RL_OUTSTREAM = PEEK_P(|.RL_OUTSTREAM)
          |.UNIT = IO_FINDUNIT()
-         |.XTERM = UNIQUE()
+         |.XTERM = UNIT_NAME(|.UNIT)
          INPUT(|.XTERM, |.UNIT, 'U',
 +           '|/usr/bin/xterm -Sxx0 ' OPTIONS ' 2>/dev/null')
          OUTPUT(|.XTERM, |.UNIT, 'W,T')

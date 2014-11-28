@@ -69,6 +69,8 @@
          FFI_SET_CALLP(FFI_FORK, DLSYM(0, 'fork'))
          FFI_WAIT = FFI_NEW('I', '')
          FFI_SET_CALLP(FFI_WAIT, DLSYM(0, 'wait'))
+         FFI_EXIT = FFI_NEW('I', '')
+         FFI_SET_CALLP(FFI_EXIT, DLSYM(0, 'exit'))
          FFI_FILENO = FFI_NEW('I', 'P')
          FFI_SET_CALLP(FFI_FILENO, DLSYM(0, 'fileno'))
          FFI_CLOSE = FFI_NEW('I', 'I')
@@ -149,7 +151,7 @@
          SIGSYS    = 31
 *
 -PUBLIC FILENO(), READ(), WRITE(), GETPID(), GETPPID(), KILL(), RAISE()
--PUBLIC OPEN(), CREAT(), DUP()
+-PUBLIC OPEN(), CREAT(), DUP(), EXIT()
 *
          DEFINE('KILL(PID,SIG)')
          DEFINE('RAISE(SIG)')
@@ -164,6 +166,7 @@
          DEFINE('FILENO(FP)')
          DEFINE('FORK()')
          DEFINE('WAIT()')
+         DEFINE('EXIT()')
          DEFINE('FD_ZERO(FDS)')
          DEFINE('FD_ISSET(FD,FDS)')
          DEFINE('FD_CLR(FD,FDS)')
@@ -232,6 +235,8 @@ FILENO   FFI_PAR_N_PTR(FFI_FILENO, 1, FP)
 FORK     FORK = FFI_CALL_INTEGER(FFI_FORK)                     :(RETURN)
 *
 WAIT     WAIT = FFI_CALL_INTEGER(FFI_WAIT)                     :(RETURN)
+*
+EXIT     EXIT = FFI_CALL_INTEGER(FFI_EXIT)                     :(RETURN)
 *
 FD_ZERO  FD_ZERO_(FDS)                                         :(RETURN)
 *

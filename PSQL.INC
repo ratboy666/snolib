@@ -10,7 +10,7 @@
 -INCLUDE 'SEQ.INC'
 -INCLUDE 'TIMER.INC'
 -INCLUDE 'UNIQUE.INC'
--LINE 396 "PSQL.lss"
+-LINE 397 "PSQL.lss"
 -IN72
 -STITL PSQL
 -EJECT
@@ -130,8 +130,9 @@ PSQL4    PSQL_OUTPUT BREAK(CHARS_NL) CHARS_NL REM . PSQL_OUTPUT
 *
 PSQL_OPEN
          |.UNIT = IO_FINDUNIT()                              :F(FRETURN)
-         |.PIPE = UNIQUE()
-         INPUT(|.PIPE, |.UNIT, 'U', '||/usr/bin/psql -q')    :F(FRETURN)
+         |.PIPE = UNIT_NAME(|.UNIT)
+         INPUT(|.PIPE, |.UNIT, 'U', '||/usr/bin/psql -q ' A1)
++                                                            :F(FRETURN)
          OUTPUT(|.PIPE, |.UNIT)                              :F(FRETURN)
          $|.PIPE = "\set PROMPT1 '\n*\n'"                    :F(FRETURN)
          SELF('DISCARD')                                     :F(FRETURN)

@@ -255,11 +255,12 @@ PSQL2    L = $|.PIPE                                         <b>:F(FRETURN)</b>
 <font color="#818181"><i>*</i></font>
 PSQL_OPEN
          |.UNIT = IO_FINDUNIT()                              <b>:F(FRETURN)</b>
-         |.PIPE = UNIQUE()
+         |.PIPE = UNIT_NAME(|.UNIT)
 %IF (USE_PTY)
-         INPUT(|.PIPE, |.UNIT, &#39;U&#39;, &#39;||/usr/bin/psql -q&#39;)    <b>:F(FRETURN)</b>
+         INPUT(|.PIPE, |.UNIT, &#39;U&#39;, &#39;||/usr/bin/psql -q &#39; A1)
++                                                            <b>:F(FRETURN)</b>
 %ELSE
-         INPUT(|.PIPE, |.UNIT, &#39;U&#39;, &#39;|/usr/bin/psql -q&#39;)     <b>:F(FRETURN)</b>
+         INPUT(|.PIPE, |.UNIT, &#39;U&#39;, &#39;|/usr/bin/psql -q &#39; A1) <b>:F(FRETURN)</b>
 %ENDIF
          OUTPUT(|.PIPE, |.UNIT)                              <b>:F(FRETURN)</b>
 %IF (USE_PTY)
@@ -453,7 +454,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Sun Aug 31 15:20:00 EDT 2014</p></td><td><p align=right>
+Fri Nov 28 11:44:47 EST 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

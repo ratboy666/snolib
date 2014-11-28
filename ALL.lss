@@ -104,6 +104,7 @@ the html documentation (mostly in the <i>ditaa</i> utility.
 -INCLUDE 'FREEZE.INC'
 -INCLUDE 'GCD.INC'
 -INCLUDE 'GDDT.INC'
+-INCLUDE 'GENERAT.INC'
 -INCLUDE 'GETKEY.INC'
 -INCLUDE 'HASH.INC'
 -INCLUDE 'HEX.INC'

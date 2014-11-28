@@ -450,10 +450,10 @@ static int ffi_par_n_string(long p, int n, char *s)
 {
     ffi_t *ffip = (void *)p;
     if ((n &lt; 1) || (n &gt; ffip-&gt;nargs))
-        return 0;
+	return 0;
     ffip-&gt;arg_values[n - 1] = (long)strdup(s);
     if (ffip-&gt;arg_values[n - 1] == (long)NULL)
-        return 0;
+	return 0;
     ffip-&gt;arg_needfree[n - 1] = 1;
     return 1;
 }
@@ -549,9 +549,9 @@ static double call_real_ffi(long p)
     ffi_call(ffip-&gt;cif, FFI_FN(ffip-&gt;callp),
 	     &amp;result, ffip-&gt;arg_ptrs);
     return result;
-//    ffi_call(ffip-&gt;cif, FFI_FN(ffip-&gt;callp),
+//  ffi_call(ffip-&gt;cif, FFI_FN(ffip-&gt;callp),
 //	     &amp;ffip-&gt;result, ffip-&gt;arg_ptrs);
-//    return (double)ffip-&gt;result;
+//  return (double)ffip-&gt;result;
 }
 
 -SNOBOL C_WRAPPER_PROTO(&#39;CALL_REAL_FFI(LONG)REAL&#39;, .EMBED)
@@ -764,7 +764,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Sun Aug 31 15:19:32 EDT 2014</p></td><td><p align=right>
+Tue Nov 11 13:00:25 EST 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

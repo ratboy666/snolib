@@ -165,7 +165,7 @@ CGI_INIT CGI_INIT = SUPER(&#39;INIT&#39;)
 <font color="#818181"><i>* CREATE LOG CHANNEL</i></font>
 <font color="#818181"><i>*</i></font>
          |.LOG_UNIT = IO_FINDUNIT()                          <b>:F(FRETURN)</b>
-         |.LOG = UNIQUE()
+         |.LOG = UNIT_NAME(|.LOG_UNIT)
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* WITH ALL THE CHANGES GOING TO SYSTEMD, LOGGING APPEARS TO HAVE</i></font>
 <font color="#818181"><i>* SUFFERED. SPECIFICALLY, IF THE LOGGING IS ONLY FORWARDED TO</i></font>
@@ -182,7 +182,7 @@ CGI_INIT CGI_INIT = SUPER(&#39;INIT&#39;)
 <font color="#818181"><i>* CREATE OUT CHANNEL</i></font>
 <font color="#818181"><i>*</i></font>
          |.OUT_UNIT = IO_FINDUNIT()                          <b>:F(FRETURN)</b>
-         |.OUT = UNIQUE()
+         |.OUT = UNIT_NAME(|.OUT_UNIT)
          OUTPUT(|.OUT, |.OUT_UNIT, &#39;B&#39;, &#39;/dev/stdout&#39;)       <b>:F(FRETURN)</b>
 <font color="#818181"><i>*</i></font>
 <font color="#818181"><i>* COLLECT ENVIRONMENT VARIABLES INTO INSTANCE VARIABLE ENV. WE ONLY</i></font>
@@ -666,7 +666,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Sun Aug 31 15:20:03 EDT 2014</p></td><td><p align=right>
+Fri Nov 28 11:43:28 EST 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

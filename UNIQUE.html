@@ -31,6 +31,16 @@ the generated variables are cleared. This minimizes impact to other
 modules using <font face="Source Code Pro">UNIQUE()</font>.
 </font></p>
 <p align="justify"><font face="Sorts Mill Goudy">
+Function [UNIT_NAME(U)]] where <font face="Source Code Pro">U</font> is a unit number returns a name
+<font face="Source Code Pro">UNIT__U</font> which is a name that can be used for a unit (that can be
+<font face="Source Code Pro">I/O</font> associated). There are a finite number of units (256), and this
+means that the <font face="Source Code Pro">I/O</font> associated names don't need to be reclaimed. Use
+of <font face="Source Code Pro">UNIT_NAME()</font> should be able to be replaced by <font face="Source Code Pro">UNIQUE()</font> but
+that may result in more memory use. This is meant to be used for
+generators and xterms, and other areas where unique files are to persist
+across call boundaries.
+</font></p>
+<p align="justify"><font face="Sorts Mill Goudy">
 <h2>Uses</h2>
 <a href="REPL.html">REPL</a><br>
 </font></p>
@@ -44,10 +54,14 @@ modules using <font face="Source Code Pro">UNIQUE()</font>.
 <pre><font face="Source Code Pro">
 <b>&laquo;UNIQUE&raquo;&equiv;</b>
 -MODULE UNIQUE
--PUBLIC MAKE_UNIQUE(), UNIQUE()
+-PUBLIC MAKE_UNIQUE(), UNIQUE(), UNIT_NAME()
+         DEFINE(&#39;UNIT_NAME(U)&#39;)
          DEFINE(&#39;MAKE_UNIQUE(SUF)S&#39;)
          MAKE_UNIQUE()
          OPSYN(&#39;UNIQUE&#39;, &#39;UNIQUE_&#39;)                        <b>:(UNIQUE_END)</b>
+<font color="#818181"><i>*</i></font>
+UNIT_NAME
+         UNIT_NAME = &#39;UNIT__&#39; U                                <b>:(RETURN)</b>
 <font color="#818181"><i>*</i></font>
 MAKE_UNIQUE
          S =
@@ -82,6 +96,7 @@ UNIQUE_END
          IDENT($U1)                                              <b>:F(END)</b>
          IDENT($U2)                                              <b>:F(END)</b>
          EQ($U3, 3)                                              <b>:F(END)</b>
+         IDENT(UNIT_NAME(1), &#39;UNIT__1&#39;)                          <b>:F(END)</b>
          &amp;CODE = 0
 END
 <b>@</b>
@@ -118,7 +133,7 @@ END
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Sun Aug 31 15:19:56 EDT 2014</p></td><td><p align=right>
+Fri Nov 28 11:39:36 EST 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

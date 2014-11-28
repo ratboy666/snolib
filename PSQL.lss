@@ -228,11 +228,12 @@ PSQL2    L = $|.PIPE                                         :F(FRETURN)
 *
 PSQL_OPEN
          |.UNIT = IO_FINDUNIT()                              :F(FRETURN)
-         |.PIPE = UNIQUE()
+         |.PIPE = UNIT_NAME(|.UNIT)
 %IF (USE_PTY)
-         INPUT(|.PIPE, |.UNIT, 'U', '||/usr/bin/psql -q')    :F(FRETURN)
+         INPUT(|.PIPE, |.UNIT, 'U', '||/usr/bin/psql -q ' A1)
++                                                            :F(FRETURN)
 %ELSE
-         INPUT(|.PIPE, |.UNIT, 'U', '|/usr/bin/psql -q')     :F(FRETURN)
+         INPUT(|.PIPE, |.UNIT, 'U', '|/usr/bin/psql -q ' A1) :F(FRETURN)
 %ENDIF
          OUTPUT(|.PIPE, |.UNIT)                              :F(FRETURN)
 %IF (USE_PTY)

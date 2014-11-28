@@ -1,8 +1,8 @@
--LINE 24 "UNIQUE.lss"
+-LINE 33 "UNIQUE.lss"
 -INCLUDE 'REPL.INC'
 -STITL UNIQUE
 -EJECT
--LINE 73 "UNIQUE.lss"
+-LINE 87 "UNIQUE.lss"
 *
 ************************************************************************
 *                                                                      *
@@ -20,12 +20,16 @@
 *
 * UNIQUE.lss
 *
--LINE 28 "UNIQUE.lss"
+-LINE 37 "UNIQUE.lss"
 -MODULE UNIQUE
--PUBLIC MAKE_UNIQUE(), UNIQUE()
+-PUBLIC MAKE_UNIQUE(), UNIQUE(), UNIT_NAME()
+         DEFINE('UNIT_NAME(U)')
          DEFINE('MAKE_UNIQUE(SUF)S')
          MAKE_UNIQUE()
          OPSYN('UNIQUE', 'UNIQUE_')                        :(UNIQUE_END)
+*
+UNIT_NAME
+         UNIT_NAME = 'UNIT__' U                                :(RETURN)
 *
 MAKE_UNIQUE
          S =

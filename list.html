@@ -50,13 +50,19 @@ list knows to use terminal hardware scrolling if available.
          ACTIONS&lt;KEY_UP&gt;     = &#39;UP&#39;
          ACTIONS&lt;KEY_DOWN&gt;   = &#39;DOWN&#39;
          ACTIONS&lt;KEY_PAGEDN&gt; = &#39;PGDN&#39;
+         ACTIONS&lt;&#39;+&#39;&gt;        = &#39;PGDN&#39;
          ACTIONS&lt;KEY_PAGEUP&gt; = &#39;PGUP&#39;
+         ACTIONS&lt;&#39;-&#39;&gt;        = &#39;PGUP&#39;
          ACTIONS&lt;&#39;N&#39;&gt;        = &#39;TGLN&#39;
          ACTIONS&lt;&#39;n&#39;&gt;        = &#39;TGLN&#39;
          ACTIONS&lt;&#39;R&#39;&gt;        = &#39;PAGE&#39;
          ACTIONS&lt;&#39;r&#39;&gt;        = &#39;PAGE&#39;
          ACTIONS&lt;KEY_HOME&gt;   = &#39;HOME&#39;
+         ACTIONS&lt;&#39;T&#39;&gt;        = &#39;HOME&#39;
+         ACTIONS&lt;&#39;t&#39;&gt;        = &#39;HOME&#39;
          ACTIONS&lt;KEY_END&gt;    = &#39;BTM&#39;
+         ACTIONS&lt;&#39;B&#39;&gt;        = &#39;BTM&#39;
+         ACTIONS&lt;&#39;b&#39;&gt;        = &#39;BTM&#39;
          ACTIONS&lt;&#39;?&#39;&gt;        = &#39;HELP&#39;
          ACTIONS&lt;&#39;H&#39;&gt;        = &#39;HELP&#39;
          ACTIONS&lt;&#39;h&#39;&gt;        = &#39;HELP&#39;
@@ -178,18 +184,18 @@ BTM      T = L - 1                                               <b>:(PAGE)</b>
 <font color="#818181"><i>*</i></font>
 HELP     T_OUT = DS_CLEAR &#39;LIST (WED JAN  8 09:54:34 EST 2014)&#39;
          T_OUT = CHARS_CR CHARS_NL CHARS_NL
-         T_OUT = &#39;UP    - SCROLL UP LINE&#39; CHARS_CR CHARS_NL
-         T_OUT = &#39;DOWN  - SCROLL DOWN LINE&#39; CHARS_CR CHARS_NL
-         T_OUT = &#39;PGUP  - SCROLL UP PAGE&#39; CHARS_CR CHARS_NL
-         T_OUT = &#39;PGDN  - SCROLL DOWN PAGE&#39; CHARS_CR CHARS_NL
-         T_OUT = &#39;Q     - QUIT&#39; CHARS_CR CHARS_NL
-         T_OUT = &#39;H     - HELP&#39; CHARS_CR CHARS_NL
-         T_OUT = &#39;HOME  - TOP&#39; CHARS_CR CHARS_NL
-         T_OUT = &#39;END   - BOTTOM&#39; CHARS_CR CHARS_NL
-         T_OUT = &#39;F     - FIND&#39; CHARS_CR CHARS_NL
-         T_OUT = &#39;R     - REFRESH&#39; CHARS_CR CHARS_NL
-         T_OUT = &#39;N     - TOGGLE LINE NUMBERS&#39; CHARS_CR CHARS_NL
-         T_OUT = &#39;E     - EDIT&#39; CHARS_CR CHARS_NL
+         T_OUT = &#39;UP     - SCROLL UP LINE&#39; CHARS_CR CHARS_NL
+         T_OUT = &#39;DOWN   - SCROLL DOWN LINE&#39; CHARS_CR CHARS_NL
+         T_OUT = &#39;PGUP - - SCROLL UP PAGE&#39; CHARS_CR CHARS_NL
+         T_OUT = &#39;PGDN + - SCROLL DOWN PAGE&#39; CHARS_CR CHARS_NL
+         T_OUT = &#39;Q      - QUIT&#39; CHARS_CR CHARS_NL
+         T_OUT = &#39;H      - HELP&#39; CHARS_CR CHARS_NL
+         T_OUT = &#39;HOME T - TOP&#39; CHARS_CR CHARS_NL
+         T_OUT = &#39;END  B - BOTTOM&#39; CHARS_CR CHARS_NL
+         T_OUT = &#39;F      - FIND&#39; CHARS_CR CHARS_NL
+         T_OUT = &#39;R      - REFRESH&#39; CHARS_CR CHARS_NL
+         T_OUT = &#39;N      - TOGGLE LINE NUMBERS&#39; CHARS_CR CHARS_NL
+         T_OUT = &#39;E      - EDIT&#39; CHARS_CR CHARS_NL
          GETKEY(.T_IN)                                           <b>:(PAGE)</b>
 <font color="#818181"><i>*</i></font>
 EDIT     T_OUT = IDENT(FN) CHARS_BEL                             <b>:S(TOP)</b>
@@ -249,7 +255,7 @@ START
 <tr><td><p align=left>
 Produced by <code>sweave</code>
 </p></td><td><p align=center>
-Sun Aug 31 15:19:40 EDT 2014</p></td><td><p align=right>
+Tue Nov 11 13:00:26 EST 2014</p></td><td><p align=right>
 Return to <a href="index.html">index</a>
 </p></td></table></footer>
 </font></body></html>

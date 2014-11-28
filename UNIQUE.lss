@@ -17,6 +17,15 @@ its own global variable. This is preferred to using [[UNIQUE()]] if
 the generated variables are cleared. This minimizes impact to other
 modules using [[UNIQUE()]].
 
+Function [UNIT_NAME(U)]] where [[U]] is a unit number returns a name
+[[UNIT__U]] which is a name that can be used for a unit (that can be
+[[I/O]] associated). There are a finite number of units (256), and this
+means that the [[I/O]] associated names don't need to be reclaimed. Use
+of [[UNIT_NAME()]] should be able to be replaced by [[UNIQUE()]] but
+that may result in more memory use. This is meant to be used for
+generators and xterms, and other areas where unique files are to persist
+across call boundaries.
+
 <h2>Uses</h2>
 <a href="REPL.html">REPL</a><br>
 
@@ -26,10 +35,14 @@ modules using [[UNIQUE()]].
 
 <<UNIQUE>>=
 -MODULE UNIQUE
--PUBLIC MAKE_UNIQUE(), UNIQUE()
+-PUBLIC MAKE_UNIQUE(), UNIQUE(), UNIT_NAME()
+         DEFINE('UNIT_NAME(U)')
          DEFINE('MAKE_UNIQUE(SUF)S')
          MAKE_UNIQUE()
          OPSYN('UNIQUE', 'UNIQUE_')                        :(UNIQUE_END)
+*
+UNIT_NAME
+         UNIT_NAME = 'UNIT__' U                                :(RETURN)
 *
 MAKE_UNIQUE
          S =
@@ -62,6 +75,7 @@ UNIQUE_END
          IDENT($U1)                                              :F(END)
          IDENT($U2)                                              :F(END)
          EQ($U3, 3)                                              :F(END)
+         IDENT(UNIT_NAME(1), 'UNIT__1')                          :F(END)
          &CODE = 0
 END
 @
